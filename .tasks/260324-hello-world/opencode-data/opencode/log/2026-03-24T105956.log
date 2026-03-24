@@ -1,0 +1,12 @@
+INFO  2026-03-24T10:59:56 +257ms service=default version=1.3.0 args=["session","list","--format","json","-n","1"] opencode
+INFO  2026-03-24T10:59:56 +0ms service=default directory=/Users/aguy/projects/Kody-Engine-Tester creating instance
+INFO  2026-03-24T10:59:56 +0ms service=project directory=/Users/aguy/projects/Kody-Engine-Tester fromDirectory
+INFO  2026-03-24T10:59:56 +29ms service=db path=/Users/aguy/projects/Kody-Engine-Tester/.tasks/260324-hello-world/opencode-data/opencode/opencode.db opening database
+INFO  2026-03-24T10:59:56 +6ms service=db count=9 mode=bundled applying migrations
+INFO  2026-03-24T10:59:56 +4ms service=default directory=/Users/aguy/projects/Kody-Engine-Tester bootstrapping
+INFO  2026-03-24T10:59:56 +5ms service=config path=/Users/aguy/.config/opencode/config.json loading
+INFO  2026-03-24T10:59:56 +0ms service=config path=/Users/aguy/.config/opencode/opencode.json loading
+INFO  2026-03-24T10:59:56 +0ms service=config path=/Users/aguy/.config/opencode/opencode.jsonc loading
+INFO  2026-03-24T10:59:56 +5ms service=config path=/Users/aguy/.opencode/opencode.jsonc loading
+INFO  2026-03-24T10:59:56 +1ms service=config path=/Users/aguy/.opencode/opencode.json loading
+INFO  2026-03-24T10:59:56 +2ms service=plugin name=CodexAuthPlugin loading internal plugin
