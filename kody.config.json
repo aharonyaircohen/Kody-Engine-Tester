@@ -1,0 +1,17 @@
+{
+  "quality": {
+    "typecheck": "pnpm tsc --noEmit",
+    "lint": "pnpm lint",
+    "testUnit": "pnpm vitest run --config ./vitest.config.mts"
+  },
+  "git": {
+    "defaultBranch": "dev"
+  },
+  "github": {
+    "owner": "aharonyaircohen",
+    "repo": "Kody-Engine-Tester"
+  },
+  "paths": {
+    "taskDir": ".tasks"
+  }
+}

@@ -19,6 +19,8 @@
     "ci": "payload migrate && pnpm build"
   },
   "dependencies": {
+    "@aguyinvest/kody-engine": "link:/Users/aguy/projects/Kody-Engine/packages/kody-engine",
+    "@payloadcms/db-postgres": "3.80.0",
     "@payloadcms/next": "3.80.0",
     "@payloadcms/richtext-lexical": "3.80.0",
     "@payloadcms/ui": "3.80.0",
@@ -28,8 +30,7 @@
     "payload": "3.80.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "sharp": "0.34.2",
-    "@payloadcms/db-postgres": "3.80.0"
+    "sharp": "0.34.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

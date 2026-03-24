@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@aguyinvest/kody-engine':
+        specifier: link:/Users/aguy/projects/Kody-Engine/packages/kody-engine
+        version: link:../Kody-Engine/packages/kody-engine
       '@payloadcms/db-postgres':
         specifier: 3.80.0
         version: 3.80.0(payload@3.80.0(graphql@16.13.1)(typescript@5.7.3))
