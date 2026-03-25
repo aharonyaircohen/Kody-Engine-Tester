@@ -28,6 +28,10 @@ on:
   pull_request_review:
     types: [submitted]
 
+  push:
+    branches: [main, dev]
+    paths: ["src/**", "kody.config.json", "package.json"]
+
 concurrency:
   group: kody-${{ github.event.inputs.task_id || github.event.issue.number || github.event.pull_request.number || github.sha }}
   cancel-in-progress: false
@@ -120,10 +124,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
+      - name: Generate App token
+        id: app-token
+        if: vars.KODY_APP_ID != ''
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.KODY_APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: true
+          token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
 
       - uses: pnpm/action-setup@v4
         with:
@@ -149,24 +163,42 @@ jobs:
       - name: Run Kody pipeline
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           TASK_ID: ${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}
           MODE: ${{ github.event.inputs.mode || needs.parse.outputs.mode || 'full' }}
           FROM_STAGE: ${{ github.event.inputs.from_stage || needs.parse.outputs.from_stage }}
           ISSUE_NUMBER: ${{ github.event.inputs.issue_number || needs.parse.outputs.issue_number }}
           FEEDBACK: ${{ github.event.inputs.feedback || needs.parse.outputs.feedback }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: kody-engine-lite run --task-id "$TASK_ID" --issue-number "$ISSUE_NUMBER"
 
       - name: Pipeline summary
         if: always()
         run: |
           TASK_ID="${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}"
-          if [ -f ".tasks/${TASK_ID}/status.json" ]; then
-            echo "## Pipeline Status" >> $GITHUB_STEP_SUMMARY
-            echo '```json' >> $GITHUB_STEP_SUMMARY
-            cat ".tasks/${TASK_ID}/status.json" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
+          STATUS_FILE=".tasks/${TASK_ID}/status.json"
+          if [ -f "$STATUS_FILE" ]; then
+            STATE=$(jq -r '.state' "$STATUS_FILE")
+            ICON="❌"
+            [ "$STATE" = "completed" ] && ICON="✅"
+            echo "## ${ICON} Kody Pipeline: \`${TASK_ID}\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Status:** ${STATE}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Stage | State |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+            for stage in taskify plan build verify review review-fix ship; do
+              SSTATE=$(jq -r ".stages[\"$stage\"].state // \"—\"" "$STATUS_FILE")
+              case "$SSTATE" in
+                completed) SICON="✅" ;;
+                failed)    SICON="❌" ;;
+                timeout)   SICON="⏱" ;;
+                running)   SICON="▶️" ;;
+                *)         SICON="○" ;;
+              esac
+              echo "| ${stage} | ${SICON} ${SSTATE} |" >> $GITHUB_STEP_SUMMARY
+            done
           fi
 
       - name: Upload artifacts
@@ -213,3 +245,35 @@ jobs:
                 body: `❌ Pipeline failed. [View logs](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
               });
             }
+
+  # ─── Smoke Test (push trigger) ──────────────────────────────────────────────
+  smoke-test:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install Kody Engine
+        run: npm install -g @kody-ade/kody-engine-lite
+      - name: Typecheck
+        run: pnpm tsc --noEmit
+      - name: CLI loads
+        run: kody-engine-lite --help
+      - name: Dry run
+        run: |
+          mkdir -p .tasks/smoke-test
+          echo "Smoke test task" > .tasks/smoke-test/task.md
+          kody-engine-lite run --task-id smoke-test --dry-run || true
+          if [ -f ".tasks/smoke-test/status.json" ]; then
+            echo "✓ status.json created"
+            cat .tasks/smoke-test/status.json
+          fi
+          rm -rf .tasks/smoke-test
