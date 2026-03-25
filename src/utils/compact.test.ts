@@ -78,7 +78,7 @@ describe('compact', () => {
   it('should handle arrays with objects', () => {
     const obj1 = { a: 1 }
     const obj2 = { b: 2 }
-    const input: (typeof obj1 | null | undefined)[] = [obj1, null, obj2, undefined]
+    const input: ({ a: number } | { b: number } | null | undefined)[] = [obj1, null, obj2, undefined]
     expect(compact(input)).toEqual([obj1, obj2])
   })
 })
