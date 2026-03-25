@@ -19,7 +19,6 @@
     "ci": "payload migrate && pnpm build"
   },
   "dependencies": {
-    "@kody-ade/kody-engine": "0.1.0",
     "@payloadcms/db-postgres": "3.80.0",
     "@payloadcms/next": "3.80.0",
     "@payloadcms/richtext-lexical": "3.80.0",
