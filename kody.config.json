@@ -2,10 +2,10 @@
   "quality": {
     "typecheck": "pnpm tsc --noEmit",
     "lint": "pnpm lint",
-    "testUnit": "pnpm vitest run --config ./vitest.config.mts"
+    "testUnit": "pnpm vitest run --config ./vitest.config.mts --exclude 'tests/int/**'"
   },
   "git": {
-    "defaultBranch": "dev"
+    "defaultBranch": "main"
   },
   "github": {
     "owner": "aharonyaircohen",
