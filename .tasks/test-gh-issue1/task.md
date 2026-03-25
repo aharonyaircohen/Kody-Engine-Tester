@@ -1,0 +1,1 @@
+Create a utility function called groupBy that takes an array and a key function, returns an object grouping array items by the key. Save to src/utils/group-by.ts with tests in src/utils/group-by.test.ts.
