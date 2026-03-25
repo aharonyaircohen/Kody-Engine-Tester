@@ -156,7 +156,7 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.inputs.issue_number || needs.parse.outputs.issue_number }}
           FEEDBACK: ${{ github.event.inputs.feedback || needs.parse.outputs.feedback }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
-        run: kody-engine-lite
+        run: kody-engine-lite run --task-id "$TASK_ID" --issue-number "$ISSUE_NUMBER"
 
       - name: Pipeline summary
         if: always()
