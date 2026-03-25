@@ -1,0 +1,1 @@
+Create a utility function called pick that takes an object and an array of keys, returns a new object with only those keys. Save to src/utils/pick.ts with tests in src/utils/pick.test.ts

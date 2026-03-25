@@ -1,0 +1,12 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add isEmpty utility function",
+  "description": "Create a new isEmpty utility function that checks if a value is null, undefined, empty string, empty array, or empty object. Implement in src/utils/is-empty.ts with comprehensive test coverage in src/utils/is-empty.test.ts following TDD approach.",
+  "scope": [
+    "src/utils/is-empty.ts",
+    "src/utils/is-empty.test.ts"
+  ],
+  "risk_level": "low"
+}
+```

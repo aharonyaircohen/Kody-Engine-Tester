@@ -1,0 +1,12 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Create truncate utility function with tests",
+  "description": "Create a new utility function 'truncate' that takes a string and maxLength parameter, returning the string truncated with '...' if it exceeds maxLength. Include comprehensive test suite covering normal truncation, edge cases (empty strings, exact length match, maxLength < 3), and special characters.",
+  "scope": [
+    "src/utils/truncate.ts",
+    "src/utils/truncate.test.ts"
+  ],
+  "risk_level": "low"
+}
+```

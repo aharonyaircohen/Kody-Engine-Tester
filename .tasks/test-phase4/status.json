@@ -1,0 +1,47 @@
+{
+  "taskId": "test-phase4",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-25T19:52:16.611Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "completedAt": "2026-03-25T19:52:42.419Z",
+      "retries": 0,
+      "outputFile": "plan.md"
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-25T19:53:48.400Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-03-25T19:53:52.669Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "completedAt": "2026-03-25T19:54:19.213Z",
+      "retries": 0,
+      "outputFile": "review.md"
+    },
+    "review-fix": {
+      "state": "completed",
+      "completedAt": "2026-03-25T19:56:21.057Z",
+      "retries": 0
+    },
+    "ship": {
+      "state": "completed",
+      "completedAt": "2026-03-25T19:56:21.058Z",
+      "retries": 0,
+      "outputFile": "ship.md"
+    }
+  },
+  "createdAt": "2026-03-25T19:52:02.476Z",
+  "updatedAt": "2026-03-25T19:56:21.058Z"
+}

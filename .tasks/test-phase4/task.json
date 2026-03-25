@@ -1,0 +1,12 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Create debounce utility function with tests",
+  "description": "Implement a debounce utility function in src/utils/debounce.ts that takes a function and delay in milliseconds, returning a debounced version that defers execution. Include comprehensive test suite in src/utils/debounce.test.ts using vi.useFakeTimers to verify delay behavior, including normal invocations, rapid successive calls, and delayed execution.",
+  "scope": [
+    "src/utils/debounce.ts",
+    "src/utils/debounce.test.ts"
+  ],
+  "risk_level": "low"
+}
+```

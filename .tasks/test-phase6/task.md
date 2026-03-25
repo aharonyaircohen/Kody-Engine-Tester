@@ -1,0 +1,1 @@
+Create a utility function called omit that takes an object and an array of keys to exclude, returns a new object without those keys. Save to src/utils/omit.ts with tests in src/utils/omit.test.ts

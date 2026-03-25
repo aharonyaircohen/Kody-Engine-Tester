@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@aguyinvest/kody-engine':
-        specifier: link:/Users/aguy/projects/Kody-Engine/packages/kody-engine
-        version: link:../Kody-Engine/packages/kody-engine
       '@kody-ade/kody-engine':
         specifier: 0.1.0
         version: 0.1.0
@@ -69,6 +66,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: 4.5.2
         version: 4.5.2(vite@7.3.1(@types/node@22.19.9)(sass@1.77.4)(tsx@4.21.0))
+      dotenv:
+        specifier: ^17.3.1
+        version: 17.3.1
       eslint:
         specifier: ^9.16.0
         version: 9.39.4
@@ -2434,6 +2434,10 @@ packages:
 
   dotenv@17.2.3:
     resolution: {integrity: sha512-JVUnt+DUIzu87TABbhPmNfVdBDt18BLOWjMUFJMSi/Qqg7NTYtabbvSNJGOJ7afbRuv9D/lngizHtP7QyLQ+9w==}
+    engines: {node: '>=12'}
+
+  dotenv@17.3.1:
+    resolution: {integrity: sha512-IO8C/dzEb6O3F9/twg6ZLXz164a2fhTnEWb95H23Dm4OuN+92NmEAlTrupP9VW6Jm3sO26tQlqyvyi4CsnY9GA==}
     engines: {node: '>=12'}
 
   drizzle-kit@0.31.7:
@@ -6937,6 +6941,8 @@ snapshots:
       '@types/trusted-types': 2.0.7
 
   dotenv@17.2.3: {}
+
+  dotenv@17.3.1: {}
 
   drizzle-kit@0.31.7:
     dependencies:

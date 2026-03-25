@@ -1,0 +1,1 @@
+Create a utility function called formatDate that takes a Date object and returns a formatted string in ISO format (YYYY-MM-DD). Save to src/utils/format-date.ts with tests in src/utils/format-date.test.ts

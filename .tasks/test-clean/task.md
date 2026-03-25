@@ -1,0 +1,1 @@
+Create a utility function called truncate that takes a string and a maxLength number, returns the string truncated with '...' if it exceeds maxLength, save to src/utils/truncate.ts with tests in src/utils/truncate.test.ts

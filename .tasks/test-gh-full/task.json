@@ -1,0 +1,12 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Create groupBy utility function",
+  "description": "Create a groupBy utility function that accepts an array and a key function, returning an object with grouped items. The function should handle various value types, empty arrays, and maintain immutability. Includes comprehensive test coverage.",
+  "scope": [
+    "src/utils/group-by.ts",
+    "src/utils/group-by.test.ts"
+  ],
+  "risk_level": "low"
+}
+```

@@ -1,0 +1,12 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add formatDate utility function with ISO format support",
+  "description": "Create a new formatDate utility function that converts a Date object to ISO format string (YYYY-MM-DD). Include comprehensive test coverage for edge cases including invalid dates, boundary dates, and timezone handling.",
+  "scope": [
+    "src/utils/format-date.ts",
+    "src/utils/format-date.test.ts"
+  ],
+  "risk_level": "low"
+}
+```

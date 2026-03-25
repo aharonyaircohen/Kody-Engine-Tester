@@ -1,0 +1,12 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add pick utility function to select object properties",
+  "description": "Create a pick utility function that accepts an object and an array of keys, returning a new object containing only the specified keys. Includes comprehensive test coverage.",
+  "scope": [
+    "src/utils/pick.ts",
+    "src/utils/pick.test.ts"
+  ],
+  "risk_level": "low"
+}
+```

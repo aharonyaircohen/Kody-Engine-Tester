@@ -1,0 +1,1 @@
+Create a utility function called debounce that takes a function and a delay in milliseconds, returns a debounced version. Save to src/utils/debounce.ts with tests in src/utils/debounce.test.ts. Tests should verify the delay behavior using vi.useFakeTimers.

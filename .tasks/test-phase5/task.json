@@ -1,0 +1,12 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Create clamp utility function",
+  "description": "Add a clamp utility function that constrains a numeric value to a specified range [min, max]. Create src/utils/clamp.ts with comprehensive test coverage in src/utils/clamp.test.ts following existing utility patterns.",
+  "scope": [
+    "src/utils/clamp.ts",
+    "src/utils/clamp.test.ts"
+  ],
+  "risk_level": "low"
+}
+```

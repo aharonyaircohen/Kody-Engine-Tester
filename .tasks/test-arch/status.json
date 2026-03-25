@@ -1,0 +1,47 @@
+{
+  "taskId": "test-arch",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:20:15.835Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:20:51.936Z",
+      "retries": 0,
+      "outputFile": "plan.md"
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:22:03.049Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:22:07.073Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:22:44.036Z",
+      "retries": 0,
+      "outputFile": "review.md"
+    },
+    "review-fix": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:23:24.025Z",
+      "retries": 0
+    },
+    "ship": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:23:24.026Z",
+      "retries": 0,
+      "outputFile": "ship.md"
+    }
+  },
+  "createdAt": "2026-03-25T20:20:03.468Z",
+  "updatedAt": "2026-03-25T20:23:24.026Z"
+}

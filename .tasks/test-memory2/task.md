@@ -1,0 +1,1 @@
+Create a utility function called isEmpty that checks if a value is null, undefined, empty string, empty array, or empty object. Save to src/utils/is-empty.ts with tests in src/utils/is-empty.test.ts

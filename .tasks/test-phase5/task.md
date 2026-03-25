@@ -1,0 +1,1 @@
+Create a utility function called clamp that takes a value, min, and max number, returns the value clamped to the range [min, max]. Save to src/utils/clamp.ts with tests in src/utils/clamp.test.ts
