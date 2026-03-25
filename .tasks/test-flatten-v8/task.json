@@ -1,0 +1,9 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add a flatten utility function",
+  "description": "Create a flatten utility function that recursively flattens arbitrarily nested arrays into a single-level array with full type safety. Include comprehensive tests covering empty arrays, flat arrays, nested arrays, deeply nested arrays, and mixed types.",
+  "scope": ["src/utils/flatten.ts", "src/utils/flatten.test.ts"],
+  "risk_level": "low"
+}
+```
