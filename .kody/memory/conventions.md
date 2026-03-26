@@ -9,3 +9,6 @@
 - **API**: GraphQL via Payload CMS
 ## Learned 2026-03-26 (task: test-minimax-litellm)
 - Active directories: src/utils
+
+## Learned 2026-03-26 (task: 13-260326-214938)
+- Active directories: src/utils
