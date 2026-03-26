@@ -94,7 +94,7 @@ export class SlidingWindowRateLimiter {
 export function byIp(request: NextRequest): string | null {
   return (
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
-    request.ip ??
+    (request as unknown as { ip?: string }).ip ??
     null
   )
 }
