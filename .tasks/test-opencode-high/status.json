@@ -1,0 +1,47 @@
+{
+  "taskId": "test-opencode-high",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:16:19.972Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:16:38.521Z",
+      "retries": 0,
+      "outputFile": "plan.md"
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:20:05.152Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:20:08.314Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:21:34.421Z",
+      "retries": 0,
+      "outputFile": "review.md"
+    },
+    "review-fix": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:22:05.755Z",
+      "retries": 0
+    },
+    "ship": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:22:05.756Z",
+      "retries": 0,
+      "outputFile": "ship.md"
+    }
+  },
+  "createdAt": "2026-03-26T06:16:04.712Z",
+  "updatedAt": "2026-03-26T06:22:05.756Z"
+}

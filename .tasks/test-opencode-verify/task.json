@@ -1,0 +1,8 @@
+{
+  "task_type": "feature",
+  "title": "Add capitalize utility function",
+  "description": "Create a utility function called capitalize that takes a string and capitalizes the first letter, with tests covering basic cases, empty string, single char, and strings with spaces.",
+  "scope": ["src/utils/cap.ts", "src/utils/cap.test.ts"],
+  "risk_level": "low",
+  "questions": []
+}

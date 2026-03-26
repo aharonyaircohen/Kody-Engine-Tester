@@ -1,0 +1,42 @@
+{
+  "taskId": "test-minimax-litellm",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-26T19:40:51.461Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-26T19:41:27.361Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-03-26T19:41:29.996Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "completed",
+      "retries": 0
+    },
+    "ship": {
+      "state": "completed",
+      "completedAt": "2026-03-26T19:41:29.996Z",
+      "retries": 0,
+      "outputFile": "ship.md"
+    }
+  },
+  "createdAt": "2026-03-26T19:40:34.083Z",
+  "updatedAt": "2026-03-26T19:41:29.996Z"
+}

@@ -1,0 +1,42 @@
+{
+  "taskId": "test-opencode",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:05:48.647Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:06:25.335Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:07:30.285Z",
+      "retries": 1
+    },
+    "review": {
+      "state": "completed",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "completed",
+      "retries": 0
+    },
+    "ship": {
+      "state": "completed",
+      "completedAt": "2026-03-26T06:07:30.286Z",
+      "retries": 0,
+      "outputFile": "ship.md"
+    }
+  },
+  "createdAt": "2026-03-26T06:05:36.208Z",
+  "updatedAt": "2026-03-26T06:07:30.286Z"
+}

@@ -1,0 +1,1 @@
+Create a utility function called reverse that takes a string and returns it reversed. Save to src/utils/reverse.ts with tests in src/utils/reverse.test.ts
