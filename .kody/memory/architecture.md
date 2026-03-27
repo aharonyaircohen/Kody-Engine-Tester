@@ -1,21 +1,17 @@
 # Architecture
 
-**Tech Stack**: Next.js 16 + React 19 + Payload CMS 3.80 + PostgreSQL + TypeScript
-
-**Database**: PostgreSQL with Payload DB adapter (@payloadcms/db-postgres)
-**API**: GraphQL via Payload CMS
-**Frontend**: Next.js App Router with React 19
-**Storage**: Local disk adapter
+**Framework**: Next.js 16.2.1 (App Router), React 19.2.4
+**Language**: TypeScript 5.7.3 (strict mode)
+**CMS**: Payload CMS 3.80.0 (headless, admin at `/admin`)
+**Database**: PostgreSQL via @payloadcms/db-postgres
+**Auth**: JWT-based with role-based middleware (student, instructor, admin)
+**Testing**: Vitest (unit/integration), Playwright 1.58.2 (E2E)
+**Rich Text**: Lexical editor
 
 **Key Directories**:
-- `src/app/` - Next.js pages and layouts
-- `src/collections/` - Payload CMS collection definitions
-- `src/migrations/` - Database migrations
-- `src/utils/` - Utility functions and helpers
-
-**Testing**:
-- Unit tests: `src/**/*.test.ts` via Vitest
-- Integration tests: `tests/int/**/*.int.spec.ts` via Vitest
-- E2E tests: Playwright
-
-**Data Flow**: GraphQL queries/mutations → Payload CMS → PostgreSQL
+- `src/api/` - API routes and endpoints
+- `src/app/` - App Router pages
+- `src/collections/` - Payload CMS collections
+- `src/components/` - React components
+- `src/middleware/` - Auth and rate limiting
+- `tests/` - Test files

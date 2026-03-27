@@ -1,17 +1,11 @@
 # Conventions
 
-- **Testing**: Unit tests colocated with source in `src/**/*.test.ts`, integration tests in `tests/int/**/*.int.spec.ts`
-- **Code Quality**: ESLint (strict) + Prettier (via devDependencies)
-- **Type Safety**: TypeScript strict mode enabled in tsconfig
-- **Environment**: Configure DATABASE_URI in .env for PostgreSQL
-- **Utilities**: Small focused functions in `src/utils/`
-- **Collections**: Payload CMS collections in `src/collections/`
-- **API**: GraphQL via Payload CMS
-## Learned 2026-03-26 (task: test-minimax-litellm)
-- Active directories: src/utils
+**Multi-tenant LMS**: Organizations contain Users (roles: admin, instructor, student), Courses, Modules, Lessons, Quizzes, Assignments, Enrollments
 
-## Learned 2026-03-26 (task: 13-260326-214938)
-- Active directories: src/utils
+**Auth Pattern**: JWT tokens with role-based access control
 
-## Learned 2026-03-27 (task: 19-260327-124623)
-- Active directories: src/utils
+**Data Flow**: Payload CMS collections → PostgreSQL → Next.js API routes → React components
+
+**Code Style**: ESLint + TypeScript strict mode enforced
+
+**See**: README.md for complete domain model and feature roadmap
