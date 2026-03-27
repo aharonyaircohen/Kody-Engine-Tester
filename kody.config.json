@@ -3,7 +3,7 @@
   "quality": {
     "typecheck": "",
     "lint": "pnpm lint",
-    "lintFix": "",
+    "lintFix": "pnpm lint --fix",
     "format": "",
     "formatFix": "",
     "testUnit": "pnpm vitest run --config ./vitest.config.mts --exclude 'tests/int/**'"
