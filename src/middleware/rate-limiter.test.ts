@@ -159,3 +159,145 @@ describe('createRateLimiterMiddleware', () => {
     mw.limiter.destroy()
   })
 })
+
+describe('IP whitelist', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  function makeRequest(ip: string): NextRequest {
+    return new NextRequest('http://localhost/api/test', {
+      headers: { 'x-forwarded-for': ip },
+    })
+  }
+
+  it('allows whitelisted IPs to bypass rate limiting', () => {
+    const mw = createRateLimiterMiddleware({
+      maxRequests: 1,
+      windowMs: 10_000,
+      ipWhitelist: ['1.2.3.4'],
+    })
+    // Exhaust the limit
+    mw(makeRequest('1.2.3.4'))
+    // Whitelisted IP should still be allowed
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.status).not.toBe(429)
+    mw.limiter.destroy()
+  })
+
+  it('non-whitelisted IPs are still rate limited', () => {
+    const mw = createRateLimiterMiddleware({
+      maxRequests: 1,
+      windowMs: 10_000,
+      ipWhitelist: ['5.6.7.8'],
+    })
+    mw(makeRequest('1.2.3.4'))
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.status).toBe(429)
+    mw.limiter.destroy()
+  })
+
+  it('whitelist takes precedence over blacklist', () => {
+    const mw = createRateLimiterMiddleware({
+      maxRequests: 1,
+      windowMs: 10_000,
+      ipWhitelist: ['1.2.3.4'],
+      ipBlacklist: ['1.2.3.4'],
+    })
+    const res = mw(makeRequest('1.2.3.4'))
+    // Whitelist should allow through (not 403, not 429)
+    expect(res.status).not.toBe(403)
+    expect(res.status).not.toBe(429)
+    mw.limiter.destroy()
+  })
+})
+
+describe('IP blacklist', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  function makeRequest(ip: string): NextRequest {
+    return new NextRequest('http://localhost/api/test', {
+      headers: { 'x-forwarded-for': ip },
+    })
+  }
+
+  it('blacklisted IPs receive 403 Forbidden', () => {
+    const mw = createRateLimiterMiddleware({
+      maxRequests: 1,
+      windowMs: 10_000,
+      ipBlacklist: ['1.2.3.4'],
+    })
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.status).toBe(403)
+    mw.limiter.destroy()
+  })
+
+  it('non-blacklisted IPs are not affected', () => {
+    const mw = createRateLimiterMiddleware({
+      maxRequests: 1,
+      windowMs: 10_000,
+      ipBlacklist: ['9.9.9.9'],
+    })
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.status).not.toBe(403)
+    mw.limiter.destroy()
+  })
+})
+
+describe('X-RateLimit-Reset header', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  function makeRequest(ip: string): NextRequest {
+    return new NextRequest('http://localhost/api/test', {
+      headers: { 'x-forwarded-for': ip },
+    })
+  }
+
+  it('sets X-RateLimit-Reset on allowed responses by default', () => {
+    const mw = createRateLimiterMiddleware({ maxRequests: 5, windowMs: 10_000 })
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.headers.has('X-RateLimit-Reset')).toBe(true)
+    const reset = Number(res.headers.get('X-RateLimit-Reset'))
+    // Reset should be >= current Unix timestamp (for allowed, retryAfterMs=0 so reset ≈ now)
+    expect(reset).toBeGreaterThanOrEqual(Math.ceil(Date.now() / 1000))
+    mw.limiter.destroy()
+  })
+
+  it('sets X-RateLimit-Reset on rate-limited responses', () => {
+    const mw = createRateLimiterMiddleware({ maxRequests: 1, windowMs: 10_000 })
+    mw(makeRequest('1.2.3.4'))
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.headers.has('X-RateLimit-Reset')).toBe(true)
+    const reset = Number(res.headers.get('X-RateLimit-Reset'))
+    expect(reset).toBeGreaterThan(Math.ceil(Date.now() / 1000))
+    mw.limiter.destroy()
+  })
+
+  it('does not set X-RateLimit-Reset when enableRateLimitHeaders is false', () => {
+    const mw = createRateLimiterMiddleware({
+      maxRequests: 5,
+      windowMs: 10_000,
+      enableRateLimitHeaders: false,
+    })
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.headers.has('X-RateLimit-Reset')).toBe(false)
+    mw.limiter.destroy()
+  })
+
+  it('X-RateLimit-Reset is a Unix timestamp in seconds', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-03-27T21:00:00Z'))
+    const mw = createRateLimiterMiddleware({ maxRequests: 1, windowMs: 10_000 })
+    mw(makeRequest('1.2.3.4'))
+    const res = mw(makeRequest('1.2.3.4'))
+    const reset = Number(res.headers.get('X-RateLimit-Reset'))
+    // reset should be ~Date.now() + retryAfterMs in seconds
+    expect(Number.isInteger(reset)).toBe(true)
+    mw.limiter.destroy()
+    vi.useRealTimers()
+  })
+})
