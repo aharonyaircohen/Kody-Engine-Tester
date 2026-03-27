@@ -1,0 +1,32 @@
+## ✅ Retry Utility Implementation Complete
+
+I've successfully implemented the retry utility with exponential backoff. Here's what was delivered:
+
+### Implementation Details
+
+**`src/utils/retry.ts`** - Core retry function with:
+- Generic type support for any Promise-returning function
+- Configurable options with sensible defaults:
+  - `maxRetries`: 3 (default)
+  - `initialDelay`: 1000ms (default)
+  - `maxDelay`: 30000ms (default)
+  - `backoffFactor`: 2 (default)
+  - `shouldRetry`: Optional predicate for conditional retry logic
+- Exponential backoff formula: `delay = min(initialDelay × backoffFactor^attempt, maxDelay)`
+- Immediate rethrow for non-retryable errors or exhausted retries
+
+**`src/utils/retry.test.ts`** - Comprehensive test suite (12 tests):
+- ✅ Successful execution on first attempt
+- ✅ Retry on failure and eventual success
+- ✅ Throw after exhausting retries
+- ✅ Exponential backoff timing
+- ✅ Delay capped at maxDelay
+- ✅ Custom backoffFactor support
+- ✅ shouldRetry predicate behavior
+- ✅ Generic type handling
+- ✅ Default options validation
+- ✅ Last error rethrow verification
+
+All 12 tests passing ✓
+
+**Commit**: `ee8f4c6` - Ready for PR

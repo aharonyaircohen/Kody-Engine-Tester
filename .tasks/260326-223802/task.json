@@ -1,0 +1,16 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add deepMerge utility function for recursive object merging",
+  "description": "Create a deepMerge utility function that recursively merges two objects, handling nested objects and arrays. Implement in src/utils/deep-merge.ts with comprehensive test coverage in src/utils/deep-merge.test.ts following the established utility pattern (TypeScript with strict types, vitest tests covering edge cases).",
+  "scope": [
+    "src/utils/deep-merge.ts",
+    "src/utils/deep-merge.test.ts"
+  ],
+  "risk_level": "low",
+  "questions": [
+    "Should arrays be replaced entirely or merged/concatenated during the merge?",
+    "Should the function mutate the source objects or return a new merged object (immutability)?"
+  ]
+}
+```

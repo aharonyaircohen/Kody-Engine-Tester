@@ -1,0 +1,13 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add toKebabCase utility function",
+  "description": "Create a utility function that converts camelCase or PascalCase strings to kebab-case format. Implement the function in src/utils/to-kebab-case.ts with comprehensive test coverage in src/utils/to-kebab-case.test.ts. Handle edge cases including empty strings, single words, consecutive capitals, numbers, and snake_case inputs.",
+  "scope": [
+    "src/utils/to-kebab-case.ts",
+    "src/utils/to-kebab-case.test.ts"
+  ],
+  "risk_level": "low",
+  "questions": []
+}
+```

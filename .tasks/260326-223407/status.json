@@ -1,0 +1,37 @@
+{
+  "taskId": "260326-223407",
+  "state": "failed",
+  "stages": {
+    "taskify": {
+      "state": "failed",
+      "retries": 0,
+      "error": "Exit code 1\nwarn: CPU lacks AVX support, strange crashes may occur. Reinstall Bun or use *-baseline build:\n  https://github.com/oven-sh/bun/releases/download/bun-v1.3.11/bun-darwin-x64-baseline.zip\n"
+    },
+    "plan": {
+      "state": "pending",
+      "retries": 0
+    },
+    "build": {
+      "state": "pending",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-03-26T20:34:07.582Z",
+  "updatedAt": "2026-03-26T20:34:10.354Z"
+}

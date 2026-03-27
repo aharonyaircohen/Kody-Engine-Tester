@@ -1,0 +1,1 @@
+Create a utility function called deepMerge that recursively merges two objects. Save to src/utils/deep-merge.ts with tests in src/utils/deep-merge.test.ts

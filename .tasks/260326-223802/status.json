@@ -1,0 +1,40 @@
+{
+  "taskId": "260326-223802",
+  "state": "failed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-26T20:38:22.913Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-26T20:39:00.227Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "failed",
+      "retries": 2,
+      "error": "Verification failed after autofix attempts"
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-03-26T20:38:03.280Z",
+  "updatedAt": "2026-03-26T20:39:46.169Z"
+}
