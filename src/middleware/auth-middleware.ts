@@ -66,6 +66,10 @@ export function createAuthMiddleware(
       return { error: 'Session not found or expired', status: 401 }
     }
 
+    if (payload.generation < session.generation) {
+      return { error: 'Token has been superseded by a newer session', status: 401 }
+    }
+
     const user = await userStore.findById(payload.userId)
     if (!user || !user.isActive) {
       return { error: 'User not found or inactive', status: 401 }
