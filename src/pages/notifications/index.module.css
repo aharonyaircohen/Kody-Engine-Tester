@@ -1,0 +1,93 @@
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  background-color: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  transition: border-color 0.15s;
+}
+
+.item:hover {
+  border-color: #6c63ff;
+}
+
+.unread {
+  border-left: 3px solid #6c63ff;
+  background-color: rgba(108, 99, 255, 0.04);
+}
+
+.icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.unreadDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #6c63ff;
+  flex-shrink: 0;
+}
+
+.message {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category {
+  font-size: 0.72rem;
+  color: #6c63ff;
+  text-transform: capitalize;
+  background-color: rgba(108, 99, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.date {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.actionLink {
+  font-size: 0.82rem;
+  color: #6c63ff;
+  text-decoration: none;
+  flex-shrink: 0;
+  align-self: center;
+  transition: opacity 0.15s;
+}
+
+.actionLink:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
