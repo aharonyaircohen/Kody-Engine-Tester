@@ -21,9 +21,9 @@
     "runner": "claude-code",
     "defaultRunner": "claude",
     "modelMap": {
-      "cheap": "claude-haiku-4-5-20251001",
-      "mid": "claude-sonnet-4-6-20250514",
-      "strong": "claude-sonnet-4-6-20250514"
+      "cheap": "minimax/MiniMax-M2.7-highspeed",
+      "mid": "minimax/MiniMax-M2.7-highspeed",
+      "strong": "minimax/MiniMax-M2.7-highspeed"
     }
   },
   "$schema": "https://raw.githubusercontent.com/aharonyaircohen/Kody-Engine-Lite/main/kody.config.schema.json"
