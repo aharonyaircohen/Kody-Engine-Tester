@@ -92,17 +92,13 @@ jobs:
       - name: Parse inputs
         if: steps.safety.outputs.valid == 'true'
         id: parse
+        env:
+          BODY: ${{ github.event.comment.body }}
         run: |
-          BODY="${{ github.event.comment.body }}"
           # Extract: @kody [mode] [task-id] [--from stage]
           KODY_ARGS=$(echo "$BODY" | grep -oP '(?:@kody|/kody)\s+\K.*' || echo "")
           MODE=$(echo "$KODY_ARGS" | awk '{print $1}')
-          RAW_TASK_ID=$(echo "$KODY_ARGS" | awk '{print $2}')
-          # Don't treat flags (--from, --feedback) as task IDs
-          case "$RAW_TASK_ID" in
-            --*) TASK_ID="" ;;
-            *)   TASK_ID="$RAW_TASK_ID" ;;
-          esac
+          TASK_ID=$(echo "$KODY_ARGS" | awk '{print $2}')
           FROM_STAGE=$(echo "$KODY_ARGS" | grep -oP '(?<=--from )\S+' || echo "")
           FEEDBACK=$(echo "$KODY_ARGS" | grep -oP '(?<=--feedback ")[^"]*' || echo "")
 
@@ -118,29 +114,19 @@ jobs:
               ;;
           esac
 
+          # Auto-generate task-id if not provided
           ISSUE_NUM="${{ github.event.issue.number }}"
+          if [ -z "$TASK_ID" ]; then
+            TASK_ID="${ISSUE_NUM}-$(date +%y%m%d-%H%M%S)"
+          fi
 
           # For approve mode: extract answer body and convert to rerun
-          # Must run BEFORE task-id generation so we don't create a new task
-          # approve: extract answers, convert to rerun
           if [ "$MODE" = "approve" ]; then
+            # Everything after @kody approve [task-id] is the feedback
             APPROVE_BODY=$(echo "$BODY" | sed -n '/\(@kody\|\/kody\)\s*approve/,$p' | tail -n +2)
             FEEDBACK="$APPROVE_BODY"
             MODE="rerun"
-          fi
-
-          # fix: extract description as feedback, convert to fix command
-          if [ "$MODE" = "fix" ]; then
-            FIX_BODY=$(echo "$BODY" | sed -n '/\(@kody\|\/kody\)\s*fix/,$p' | tail -n +2)
-            if [ -n "$FIX_BODY" ]; then
-              FEEDBACK="$FIX_BODY"
-            fi
-            # Leave TASK_ID empty — entry.ts finds latest task for issue
-          fi
-
-          # Auto-generate task-id if not provided (only for full mode)
-          if [ -z "$TASK_ID" ] && [ "$MODE" = "full" ]; then
-            TASK_ID="${ISSUE_NUM}-$(date +%y%m%d-%H%M%S)"
+            # FROM_STAGE will be determined by entry.ts from paused state
           fi
 
           echo "task_id=$TASK_ID" >> $GITHUB_OUTPUT
@@ -179,17 +165,6 @@ jobs:
           persist-credentials: true
           token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
 
-      - name: Checkout PR branch (for fix/rerun on PRs)
-        if: github.event.issue.pull_request && (needs.parse.outputs.mode == 'fix' || needs.parse.outputs.mode == 'rerun')
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
-        run: |
-          PR_NUM="${{ github.event.issue.number }}"
-          PR_BRANCH=$(gh pr view "$PR_NUM" --json headRefName -q '.headRefName')
-          echo "Checking out PR branch: $PR_BRANCH"
-          git checkout "$PR_BRANCH"
-          git pull origin "$PR_BRANCH"
-
       - uses: pnpm/action-setup@v4
         with:
           version: latest
@@ -206,6 +181,13 @@ jobs:
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
 
+      - name: Install LiteLLM proxy
+        if: hashFiles('litellm-config.yaml') != ''
+        run: |
+          python3 -m venv /tmp/litellm-venv
+          /tmp/litellm-venv/bin/pip install 'litellm[proxy]'
+          sudo ln -sf /tmp/litellm-venv/bin/litellm /usr/local/bin/litellm
+
       - name: Configure git
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -214,6 +196,7 @@ jobs:
       - name: Run Kody pipeline
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           TASK_ID: ${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}
           MODE: ${{ github.event.inputs.mode || needs.parse.outputs.mode || 'full' }}
@@ -222,16 +205,7 @@ jobs:
           FEEDBACK: ${{ github.event.inputs.feedback || needs.parse.outputs.feedback }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          CMD="run"
-          [ "$MODE" = "rerun" ] && CMD="rerun"
-          [ "$MODE" = "fix" ] && CMD="fix"
-          ARGS="--issue-number $ISSUE_NUMBER"
-          [ -n "$TASK_ID" ] && ARGS="$ARGS --task-id $TASK_ID"
-          [ -n "$FROM_STAGE" ] && ARGS="$ARGS --from $FROM_STAGE"
-          [ -n "$FEEDBACK" ] && ARGS="$ARGS --feedback \"$FEEDBACK\""
-          [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
-          kody-engine-lite $CMD $ARGS
+        run: kody-engine-lite run --task-id "$TASK_ID" --issue-number "$ISSUE_NUMBER"
 
       - name: Pipeline summary
         if: always()
