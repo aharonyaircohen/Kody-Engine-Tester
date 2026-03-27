@@ -1,0 +1,28 @@
+.page {
+  padding: 24px;
+  min-height: 100vh;
+  background-color: #0d0d1a;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heading {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e0e0e0;
+}
+
+.board {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
