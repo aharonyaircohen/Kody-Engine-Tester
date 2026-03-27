@@ -1,0 +1,9 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add unique utility function",
+  "description": "Create a utility function that removes duplicate values from an array. Should support primitive types (strings, numbers) and return a new array with duplicates removed. Include comprehensive tests.",
+  "scope": ["src/utils/unique.ts", "src/utils/unique.test.ts"],
+  "risk_level": "low"
+}
+```
