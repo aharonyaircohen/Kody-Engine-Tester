@@ -1,0 +1,17 @@
+**Plan: Rate Limiter Middleware with Sliding Window**
+
+**Files to create:**
+- `src/middleware/rate-limiter.ts` — core implementation
+- `src/middleware/rate-limiter.test.ts` — comprehensive tests
+
+**Core design:**
+- `RateLimiter` class with `Map<string, number[]>` storing timestamps per identifier (IP or API key)
+- `check(identifier)` method implementing sliding window: filter expired timestamps, reject if at limit
+- `retryAfter` computed as `ceil((oldestTimestamp + windowMs - now) / 1000)`
+- `cleanup()` for memory management, `clear()` for test isolation
+
+**Test strategy:**
+- Use `vi.spyOn(Date, 'now')` to mock time — no real `sleep`, fully deterministic
+- Cover: normal flow, exact limit, rate exceeded, window sliding, multiple IPs, retryAfter accuracy, cleanup
+
+Approve to proceed with implementation?
