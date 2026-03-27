@@ -12,3 +12,6 @@
 
 ## Learned 2026-03-26 (task: 13-260326-214938)
 - Active directories: src/utils
+
+## Learned 2026-03-27 (task: 19-260327-124623)
+- Active directories: src/utils

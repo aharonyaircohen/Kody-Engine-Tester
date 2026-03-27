@@ -9,7 +9,7 @@
     "testUnit": "pnpm vitest run --config ./vitest.config.mts --exclude 'tests/int/**'"
   },
   "git": {
-    "defaultBranch": "main"
+    "defaultBranch": "kody"
   },
   "github": {
     "owner": "aharonyaircohen",
