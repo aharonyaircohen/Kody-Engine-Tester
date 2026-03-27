@@ -31,6 +31,23 @@
   box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
 }
 
+.inputError,
+.textareaError {
+  border-color: #e53e3e;
+}
+
+.inputError:focus,
+.textareaError:focus {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.2);
+}
+
+.error {
+  font-size: 0.8rem;
+  color: #fc8181;
+  margin-top: 2px;
+}
+
 .textarea {
   resize: vertical;
 }
