@@ -1,0 +1,45 @@
+{
+  "taskId": "test-gh-issue1",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:51:10.090Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:52:29.905Z",
+      "retries": 0,
+      "outputFile": "plan.md"
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:53:38.701Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:53:42.921Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "completedAt": "2026-03-25T20:54:18.992Z",
+      "retries": 0,
+      "outputFile": "review.md"
+    },
+    "review-fix": {
+      "state": "running",
+      "startedAt": "2026-03-25T20:54:18.992Z",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-03-25T20:50:37.058Z",
+  "updatedAt": "2026-03-25T20:54:18.992Z"
+}
