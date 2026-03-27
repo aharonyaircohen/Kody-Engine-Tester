@@ -72,6 +72,32 @@ describe('SessionStore', () => {
     })
   })
 
+  describe('generation', () => {
+    it('should start at generation 0', () => {
+      const session = store.create('user-1', 'token-1', 'refresh-1', '127.0.0.1', 'UA')
+      expect(session.generation).toBe(0)
+      expect(store.getGeneration(session.id)).toBe(0)
+    })
+
+    it('should increment generation on refresh', () => {
+      const session = store.create('user-1', 'token-1', 'refresh-1', '127.0.0.1', 'UA')
+      const refreshed = store.refresh(session.id, 'token-2', 'refresh-2')
+      expect(refreshed?.generation).toBe(1)
+      expect(store.getGeneration(session.id)).toBe(1)
+    })
+
+    it('should increment generation on multiple refreshes', () => {
+      const session = store.create('user-1', 'token-1', 'refresh-1', '127.0.0.1', 'UA')
+      store.refresh(session.id, 'token-2', 'refresh-2')
+      const refreshed2 = store.refresh(session.id, 'token-3', 'refresh-3')
+      expect(refreshed2?.generation).toBe(2)
+    })
+
+    it('should return undefined for unknown session from getGeneration', () => {
+      expect(store.getGeneration('unknown')).toBeUndefined()
+    })
+  })
+
   describe('revoke', () => {
     it('should remove session', () => {
       const session = store.create('user-1', 'token-1', 'refresh-1', '127.0.0.1', 'UA')

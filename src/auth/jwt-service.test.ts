@@ -13,6 +13,7 @@ describe('JwtService', () => {
     email: 'test@example.com',
     role: 'user' as const,
     sessionId: 'session-1',
+    generation: 0,
   }
 
   describe('signAccessToken / verify', () => {
@@ -47,6 +48,12 @@ describe('JwtService', () => {
     it('should reject an expired token', async () => {
       const token = await service.sign(basePayload, -1000) // already expired
       await expect(service.verify(token)).rejects.toThrow('Token expired')
+    })
+
+    it('should include generation in token payload', async () => {
+      const token = await service.signAccessToken({ ...basePayload, generation: 3 })
+      const payload = await service.verify(token)
+      expect(payload.generation).toBe(3)
     })
   })
 

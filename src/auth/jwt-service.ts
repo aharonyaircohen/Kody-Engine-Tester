@@ -5,6 +5,7 @@ export interface TokenPayload {
   email: string
   role: UserRole
   sessionId: string
+  generation: number
   iat: number
   exp: number
 }
@@ -91,11 +92,11 @@ export class JwtService {
   }
 
   async signAccessToken(payload: TokenInput): Promise<string> {
-    return this.sign(payload, 15 * 60 * 1000) // 15 minutes
+    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 15 * 60 * 1000) // 15 minutes
   }
 
   async signRefreshToken(payload: TokenInput): Promise<string> {
-    return this.sign(payload, 7 * 24 * 60 * 60 * 1000) // 7 days
+    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 7 * 24 * 60 * 60 * 1000) // 7 days
   }
 
   blacklist(token: string): void {

@@ -10,6 +10,7 @@ export interface Session {
   ipAddress: string
   userAgent: string
   createdAt: Date
+  generation: number
 }
 
 const MAX_SESSIONS_PER_USER = 5
@@ -34,6 +35,7 @@ export class SessionStore {
       ipAddress,
       userAgent,
       createdAt: new Date(),
+      generation: 0,
     }
 
     this.sessions.set(session.id, session)
@@ -84,6 +86,7 @@ export class SessionStore {
       refreshToken: newRefreshToken,
       expiresAt: new Date(Date.now() + ACCESS_TOKEN_EXPIRY_MS),
       refreshExpiresAt: new Date(Date.now() + REFRESH_TOKEN_EXPIRY_MS),
+      generation: session.generation + 1,
     }
 
     this.sessions.set(sessionId, updated)
@@ -106,6 +109,11 @@ export class SessionStore {
         this.revoke(session.id)
       }
     }
+  }
+
+  getGeneration(sessionId: string): number | undefined {
+    const session = this.sessions.get(sessionId)
+    return session?.generation
   }
 
   cleanup(): void {
