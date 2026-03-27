@@ -17,8 +17,8 @@ describe('profile', () => {
       expect(profile.id).toBe(user!.id)
       expect(profile.email).toBe(user!.email)
       expect(profile.role).toBe(user!.role)
-      expect((profile as any).passwordHash).toBeUndefined()
-      expect((profile as any).salt).toBeUndefined()
+      expect((profile as Record<string, unknown>).passwordHash).toBeUndefined()
+      expect((profile as Record<string, unknown>).salt).toBeUndefined()
     })
 
     it('should return 404 for unknown user', async () => {

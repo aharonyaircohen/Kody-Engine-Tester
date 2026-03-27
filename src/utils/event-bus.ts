@@ -11,7 +11,7 @@ type OnceHandlerEntry = {
   originalHandler: EventHandler
 }
 
-export class EventBus<TEventMap extends Record<string, unknown> = Record<string, unknown>> {
+export class EventBus<_TEventMap extends Record<string, unknown> = Record<string, unknown>> {
   private listenerMap: Map<string, Set<EventHandler>> = new Map()
   private maxListeners: number
   private wildcardListeners: Map<string, Set<EventHandler>> = new Map()

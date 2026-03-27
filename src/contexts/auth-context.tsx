@@ -16,6 +16,8 @@ interface AuthContextType {
   refreshToken: () => Promise<void>
 }
 
+export type { AuthContextType }
+
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
@@ -41,8 +43,23 @@ function parseJwtExpiry(token: string): number | null {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null)
+  const [user, setUser] = useState<AuthUser | null>(() => {
+    if (typeof window === 'undefined') return null
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY)
+    if (!token) return null
+    try {
+      const parts = token.split('.')
+      if (parts.length === 3) {
+        const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString())
+        if (payload.exp * 1000 > Date.now()) {
+          return { id: payload.userId, email: payload.email, role: payload.role }
+        }
+      }
+    } catch {}
+    return null
+  })
   const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const refreshTokenRef = useRef<() => Promise<void>>(async () => {})
 
   const scheduleRefresh = useCallback((accessToken: string, doRefresh: () => Promise<void>) => {
     const exp = parseJwtExpiry(accessToken)
@@ -88,8 +105,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const data = await res.json()
     localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken)
     localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken)
-    scheduleRefresh(data.accessToken, refreshToken)
+    scheduleRefresh(data.accessToken, refreshTokenRef.current)
   }, [logout, scheduleRefresh])
+
+  useEffect(() => {
+    refreshTokenRef.current = refreshToken
+  }, [refreshToken])
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN_KEY)
@@ -99,7 +120,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (parts.length === 3) {
           const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString())
           if (payload.exp * 1000 > Date.now()) {
-            setUser({ id: payload.userId, email: payload.email, role: payload.role })
             scheduleRefresh(token, refreshToken)
           }
         }

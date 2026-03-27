@@ -1,6 +1,7 @@
 'use client'
 import { useState, useContext } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { AuthContext } from '../../contexts/auth-context'
 import { AuthForm } from '../../components/auth/AuthForm'
 
@@ -48,7 +49,7 @@ export default function LoginPage() {
         </label>
       </div>
       <div style={{ marginTop: 12 }}>
-        <a href="/auth/register">Don't have an account? Register</a>
+        <Link href="/auth/register">Don&apos;t have an account? Register</Link>
       </div>
     </AuthForm>
   )

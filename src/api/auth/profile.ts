@@ -26,7 +26,7 @@ export async function getProfile(userId: string, userStore: UserStore): Promise<
   if (!user) {
     throw createError('User not found', 404)
   }
-  const { passwordHash, salt, ...profile } = user
+  const { passwordHash: _passwordHash, salt: _salt, ...profile } = user
   return profile
 }
 
@@ -74,7 +74,7 @@ export async function updateProfile(
     throw createError('User not found', 404)
   }
 
-  const { passwordHash, salt, ...profile } = updated
+  const { passwordHash: _passwordHash2, salt: _salt2, ...profile } = updated
   return profile
 }
 

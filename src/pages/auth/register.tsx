@@ -1,6 +1,7 @@
 'use client'
 import { useState, useContext } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { AuthContext } from '../../contexts/auth-context'
 import { AuthForm } from '../../components/auth/AuthForm'
 import { PasswordStrengthBar } from '../../components/auth/PasswordStrengthBar'
@@ -66,7 +67,7 @@ export default function RegisterPage() {
         </label>
       </div>
       <div style={{ marginTop: 12 }}>
-        <a href="/auth/login">Already have an account? Sign in</a>
+        <Link href="/auth/login">Already have an account? Sign in</Link>
       </div>
     </AuthForm>
   )

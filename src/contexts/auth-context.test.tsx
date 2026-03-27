@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
-import { render, screen, act, waitFor, cleanup } from '@testing-library/react'
+import { render, screen, act, cleanup } from '@testing-library/react'
 import { AuthProvider, AuthContext } from './auth-context'
-import { useContext } from 'react'
+import type { AuthContextType } from './auth-context'
+import { useContext, useEffect } from 'react'
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -57,21 +58,22 @@ describe('AuthContext', () => {
       }),
     })
 
-    let authCtx: any
-    function Capture() {
-      authCtx = useContext(AuthContext)
+    const authCtxRef = { value: null as AuthContextType | null }
+    function CaptureLogin() {
+      const ctx = useContext(AuthContext)
+      useEffect(() => { authCtxRef.value = ctx })
       return null
     }
 
     render(
       <AuthProvider>
-        <Capture />
+        <CaptureLogin />
         <TestConsumer />
       </AuthProvider>
     )
 
     await act(async () => {
-      await authCtx.login('test@example.com', 'Password1!')
+      await authCtxRef.value.login('test@example.com', 'Password1!')
     })
 
     expect(screen.getByTestId('authenticated').textContent).toBe('true')
@@ -90,25 +92,26 @@ describe('AuthContext', () => {
       })
       .mockResolvedValueOnce({ ok: true, json: async () => ({}) })
 
-    let authCtx: any
-    function Capture() {
-      authCtx = useContext(AuthContext)
+    const authCtxRef2 = { value: null as AuthContextType | null }
+    function CaptureLogout() {
+      const ctx = useContext(AuthContext)
+      useEffect(() => { authCtxRef2.value = ctx })
       return null
     }
 
     render(
       <AuthProvider>
-        <Capture />
+        <CaptureLogout />
         <TestConsumer />
       </AuthProvider>
     )
 
     await act(async () => {
-      await authCtx.login('test@example.com', 'Password1!')
+      await authCtxRef2.value.login('test@example.com', 'Password1!')
     })
 
     await act(async () => {
-      await authCtx.logout()
+      await authCtxRef2.value.logout()
     })
 
     expect(screen.getByTestId('authenticated').textContent).toBe('false')
@@ -124,21 +127,22 @@ describe('AuthContext', () => {
       }),
     })
 
-    let authCtx: any
-    function Capture() {
-      authCtx = useContext(AuthContext)
+    const authCtxRef3 = { value: null as AuthContextType | null }
+    function CaptureRegister() {
+      const ctx = useContext(AuthContext)
+      useEffect(() => { authCtxRef3.value = ctx })
       return null
     }
 
     render(
       <AuthProvider>
-        <Capture />
+        <CaptureRegister />
         <TestConsumer />
       </AuthProvider>
     )
 
     await act(async () => {
-      await authCtx.register('new@example.com', 'Pass1!xxx', 'Pass1!xxx')
+      await authCtxRef3.value.register('new@example.com', 'Pass1!xxx', 'Pass1!xxx')
     })
 
     expect(screen.getByTestId('authenticated').textContent).toBe('true')
