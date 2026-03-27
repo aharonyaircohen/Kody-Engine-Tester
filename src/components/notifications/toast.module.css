@@ -1,0 +1,93 @@
+.container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toastItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  min-width: 300px;
+  max-width: 400px;
+  pointer-events: all;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.borderInfo {
+  border-left: 4px solid #6c63ff;
+}
+
+.borderSuccess {
+  border-left: 4px solid #4caf50;
+}
+
+.borderWarning {
+  border-left: 4px solid #ff9800;
+}
+
+.borderError {
+  border-left: 4px solid #f44336;
+}
+
+.icon {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin: 0 0 2px;
+}
+
+.message {
+  font-size: 0.85rem;
+  color: #999;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dismiss {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 1.1rem;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.dismiss:hover {
+  color: #e0e0e0;
+}
