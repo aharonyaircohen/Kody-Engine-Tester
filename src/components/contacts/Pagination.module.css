@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1px solid #3a3a5c;
+  border-radius: 6px;
+  background-color: #1a1a2e;
+  color: #a0a0c0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: #2a2a3d;
+  color: #e0e0e0;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.active {
+  background-color: #6c63ff;
+  border-color: #6c63ff;
+  color: #fff;
+}
+
+.active:hover {
+  background-color: #5a52d4;
+}
+
+.ellipsis {
+  color: #666;
+  padding: 0 4px;
+  font-size: 0.9rem;
+}
