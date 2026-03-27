@@ -21,11 +21,6 @@
   "agent": {
     "runner": "claude-code",
     "defaultRunner": "claude",
-    "litellmUrl": "http://localhost:4000",
-    "modelMap": {
-      "cheap": "minimax-test",
-      "mid": "minimax-test",
-      "strong": "minimax-test"
-    }
+    "litellmUrl": "http://localhost:4000"
   }
 }
