@@ -182,7 +182,10 @@ jobs:
 
       - name: Install LiteLLM proxy
         if: hashFiles('litellm-config.yaml') != ''
-        run: sudo pip install 'litellm[proxy]'
+        run: |
+          python3 -m venv /tmp/litellm-venv
+          /tmp/litellm-venv/bin/pip install 'litellm[proxy]'
+          sudo ln -sf /tmp/litellm-venv/bin/litellm /usr/local/bin/litellm
 
       - name: Configure git
         run: |
