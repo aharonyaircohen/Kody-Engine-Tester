@@ -1,0 +1,5 @@
+model_list:
+  - model_name: minimax-test
+    litellm_params:
+      model: minimax/MiniMax-M2.7-highspeed
+      api_key: os.environ/MINIMAX_API_KEY
