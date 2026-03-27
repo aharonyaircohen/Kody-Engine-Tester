@@ -1,0 +1,1 @@
+Create a utility function called padStart that takes a string, target length, and pad character, returns the string padded from the start. Save to src/utils/pad-start.ts with tests in src/utils/pad-start.test.ts

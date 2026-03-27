@@ -1,0 +1,1 @@
+Create a utility function called capitalize that takes a string and capitalizes the first letter. Save to src/utils/cap.ts with tests in src/utils/cap.test.ts

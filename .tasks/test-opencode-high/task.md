@@ -1,0 +1,1 @@
+Create a TypeScript event emitter class called EventBus that supports: typed events with generics, on/off/emit/once methods, wildcard listeners, max listener warnings, and error event handling. Save to src/utils/event-bus.ts with comprehensive tests in src/utils/event-bus.test.ts covering all features.

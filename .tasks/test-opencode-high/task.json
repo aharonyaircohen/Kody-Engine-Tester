@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "title": "Add EventBus class with typed events and wildcards",
+  "description": "Create a TypeScript event emitter class called EventBus that supports typed events with generics, on/off/emit/once methods, wildcard listeners, max listener warnings, and error event handling. Include comprehensive tests covering all features.",
+  "scope": [
+    "src/utils/event-bus.ts",
+    "src/utils/event-bus.test.ts"
+  ],
+  "risk_level": "low",
+  "questions": []
+}

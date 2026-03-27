@@ -1,0 +1,8 @@
+{
+  "task_type": "feature",
+  "title": "Add type-safe dependency injection container",
+  "description": "Create a lightweight DI container with Token<T> branded types, register/resolve, singleton caching, transient factories, dependency chain resolution, circular dependency detection, Disposable cleanup, and child container inheritance with override support. Save to src/utils/di-container.ts with comprehensive tests in src/utils/di-container.test.ts covering all 7 requirements.",
+  "scope": ["src/utils/di-container.ts", "src/utils/di-container.test.ts"],
+  "risk_level": "medium",
+  "questions": []
+}

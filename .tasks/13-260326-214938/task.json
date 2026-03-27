@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "title": "Add toKebabCase utility function",
+  "description": "Create a toKebabCase utility function that converts camelCase or PascalCase strings to kebab-case format. Examples: 'helloWorld' → 'hello-world', 'MyComponent' → 'my-component', 'alreadyKebab' → 'already-kebab'",
+  "scope": [
+    "src/utils/to-kebab-case.ts",
+    "src/utils/to-kebab-case.test.ts"
+  ],
+  "risk_level": "low",
+  "questions": []
+}
