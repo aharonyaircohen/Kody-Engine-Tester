@@ -10,9 +10,9 @@ import type { Note } from '@/collections/notes'
 
 export default function NotesListPage() {
   const router = useRouter()
-  const [notes, setNotes] = useState<Note[]>([])
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
+  const [notes, setNotes] = useState<Note[]>(() => notesStore.getAll())
 
   useEffect(() => {
     const timer = setTimeout(() => setSearchQuery(searchInput), 300)
