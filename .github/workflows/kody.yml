@@ -182,7 +182,9 @@ jobs:
 
       - name: Install LiteLLM proxy
         if: hashFiles('litellm-config.yaml') != ''
-        run: pip install 'litellm[proxy]'
+        run: |
+          pip install 'litellm[proxy]'
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Configure git
         run: |
