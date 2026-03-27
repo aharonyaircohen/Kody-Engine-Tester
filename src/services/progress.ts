@@ -13,8 +13,21 @@ interface EnrollmentDoc {
   [key: string]: unknown
 }
 
-interface CourseDoc {
-  [key: string]: unknown
+/**
+ * Normalizes a relationship ID to a string.
+ * Payload relationship fields return { id: string } objects when populated,
+ * or plain string IDs otherwise.
+ */
+function normalizeId(value: string | { id: string }): string {
+  return typeof value === 'string' ? value : value.id
+}
+
+/**
+ * Normalizes completedLessons to an array of string IDs.
+ * Handles both string[] and { id: string }[] shapes from Payload.
+ */
+function normalizeLessonIds(raw: (string | { id: string })[] | undefined): string[] {
+  return (raw ?? []).map(normalizeId)
 }
 
 /**
@@ -41,7 +54,7 @@ export class ProgressService {
       id: enrollmentId,
     })) as unknown as EnrollmentDoc
 
-    const completedLessons = (enrollment.completedLessons as string[] | undefined) ?? []
+    const completedLessons = normalizeLessonIds(enrollment.completedLessons)
 
     // Idempotency: skip if already recorded
     if (completedLessons.includes(lessonId)) {
@@ -80,7 +93,7 @@ export class ProgressService {
       limit: 0,
     })
 
-    const completedLessons = (enrollment.completedLessons as string[] | undefined) ?? []
+    const completedLessons = normalizeLessonIds(enrollment.completedLessons)
     const completedCount = completedLessons.length
     const percentage = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0
 
@@ -108,7 +121,7 @@ export class ProgressService {
       limit: 0,
     })
 
-    const completedLessons = (enrollment.completedLessons as string[] | undefined) ?? []
+    const completedLessons = normalizeLessonIds(enrollment.completedLessons)
     const complete = totalLessons > 0 && completedLessons.length >= totalLessons
 
     if (complete && enrollment.status === 'active') {

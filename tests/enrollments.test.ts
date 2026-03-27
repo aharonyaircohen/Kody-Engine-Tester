@@ -142,11 +142,12 @@ describe('EnrollmentStore', () => {
       expect(third.status).toBe(403)
     })
 
-    it('allows re-enrollment after dropping', async () => {
+    it('blocks re-enrollment after dropping (unique constraint enforced regardless of status)', async () => {
       const { enrollment } = (await store.createEnrollment('student-1', 'course-1')) as { enrollment: EnrollmentRecord }
       await store.update(enrollment.id, { status: 'dropped' })
-      const reEnroll = await store.createEnrollment('student-1', 'course-1')
+      const reEnroll = (await store.createEnrollment('student-1', 'course-1')) as { error: string; status: number }
       expect(reEnroll.error).toBe('Already enrolled in this course')
+      expect(reEnroll.status).toBe(409)
     })
 
     it('allows new student when one enrollment is completed', async () => {

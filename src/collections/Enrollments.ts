@@ -14,8 +14,12 @@ export interface EnrollmentFields {
 export const Enrollments: CollectionConfig = {
   slug: 'enrollments',
   admin: {
-    useAsTitle: 'id',
+    useAsTitle: 'enrolledAt',
   },
+  // Database-level unique constraint: one enrollment per student per course
+  indexes: [
+    { fields: ['student', 'course'], unique: true },
+  ],
   fields: [
     {
       name: 'student',
@@ -35,7 +39,6 @@ export const Enrollments: CollectionConfig = {
     {
       name: 'enrolledAt',
       type: 'date',
-      required: true,
       admin: {
         readOnly: true,
       },
@@ -69,7 +72,7 @@ export const Enrollments: CollectionConfig = {
   hooks: {
     beforeChange: [
       ({ data, operation }) => {
-        // Set enrolledAt on create
+        // Auto-set enrolledAt on create (not required field — hook provides the default)
         if (operation === 'create' && !data.enrolledAt) {
           data.enrolledAt = new Date().toISOString() as unknown as Date
         }

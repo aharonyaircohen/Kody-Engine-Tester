@@ -111,6 +111,37 @@ describe('ProgressService', () => {
 
       expect(result.percentage).toBe(33) // 1/3 = 33.33...%
     })
+
+    it('correctly counts progress when completedLessons are populated objects { id }', async () => {
+      // Payload returns { id: string } objects when relationship fields are populated
+      mockFindById.mockResolvedValue({
+        id: 'enroll-1',
+        student: 'user-1',
+        course: 'course-1',
+        completedLessons: [{ id: 'lesson-1' }, { id: 'lesson-2' }],
+      })
+      mockFind.mockResolvedValue({ totalDocs: 4 })
+
+      const result = await service.getProgress('enroll-1')
+
+      expect(result.completedLessons).toBe(2)
+      expect(result.totalLessons).toBe(4)
+      expect(result.percentage).toBe(50)
+    })
+
+    it('correctly counts progress when completedLessons mixes strings and objects', async () => {
+      mockFindById.mockResolvedValue({
+        id: 'enroll-1',
+        student: 'user-1',
+        course: 'course-1',
+        completedLessons: ['lesson-1', { id: 'lesson-2' }],
+      })
+      mockFind.mockResolvedValue({ totalDocs: 3 })
+
+      const result = await service.getProgress('enroll-1')
+
+      expect(result.completedLessons).toBe(2)
+    })
   })
 
   describe('isComplete', () => {
@@ -244,6 +275,22 @@ describe('ProgressService', () => {
       // isComplete calls findById again to check if all lessons are done
       expect(mockFindById).toHaveBeenCalledTimes(2)
       expect(mockUpdate).toHaveBeenCalled()
+    })
+
+    it('is idempotent when completedLessons are populated objects { id }', async () => {
+      mockFindById.mockResolvedValue({
+        id: 'enroll-1',
+        student: 'user-1',
+        course: 'course-1',
+        status: 'active',
+        completedLessons: [{ id: 'lesson-1' }],
+      })
+      mockFind.mockResolvedValue({ totalDocs: 3 })
+
+      await service.markLessonComplete('enroll-1', 'lesson-1')
+
+      // update should not be called because lesson-1 is already completed
+      expect(mockUpdate).not.toHaveBeenCalled()
     })
   })
 })
