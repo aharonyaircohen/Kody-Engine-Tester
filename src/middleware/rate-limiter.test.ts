@@ -246,6 +246,152 @@ describe('IP blacklist', () => {
   })
 })
 
+describe('Concurrent request handling', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('handles rapid sequential requests within window', () => {
+    vi.useFakeTimers()
+    const localLimiter = new SlidingWindowRateLimiter({ maxRequests: 5, windowMs: 1000 })
+
+    // Simulate rapid sequential requests
+    const results: boolean[] = []
+    for (let i = 0; i < 5; i++) {
+      results.push(localLimiter.check('key').allowed)
+    }
+    expect(results).toEqual([true, true, true, true, true])
+
+    // 6th request should be blocked
+    const sixth = localLimiter.check('key')
+    expect(sixth.allowed).toBe(false)
+    expect(sixth.remaining).toBe(0)
+
+    localLimiter.destroy()
+    vi.useRealTimers()
+  })
+
+  it('allows requests after partial window expiry', () => {
+    vi.useFakeTimers()
+    const localLimiter = new SlidingWindowRateLimiter({ maxRequests: 3, windowMs: 1000 })
+
+    // Make 3 requests
+    localLimiter.check('key')
+    localLimiter.check('key')
+    localLimiter.check('key')
+    expect(localLimiter.check('key').allowed).toBe(false)
+
+    // Advance time by 600ms (only some requests expired)
+    vi.advanceTimersByTime(600)
+    expect(localLimiter.check('key').allowed).toBe(false) // Still 3 active requests
+
+    // Advance to 1001ms total (all requests expired)
+    vi.advanceTimersByTime(401)
+    expect(localLimiter.check('key').allowed).toBe(true)
+
+    localLimiter.destroy()
+    vi.useRealTimers()
+  })
+
+  it('correctly tracks concurrent requests from multiple keys', () => {
+    vi.useFakeTimers()
+    const localLimiter = new SlidingWindowRateLimiter({ maxRequests: 2, windowMs: 1000 })
+
+    // Exhaust limit for IP A
+    localLimiter.check('ip-a')
+    localLimiter.check('ip-a')
+    expect(localLimiter.check('ip-a').allowed).toBe(false)
+
+    // IP B should still have full quota
+    expect(localLimiter.check('ip-b').allowed).toBe(true)
+    expect(localLimiter.check('ip-b').allowed).toBe(true)
+    expect(localLimiter.check('ip-b').allowed).toBe(false)
+
+    // Both IPs now exhausted
+    expect(localLimiter.check('ip-a').allowed).toBe(false)
+    expect(localLimiter.check('ip-b').allowed).toBe(false)
+
+    // After expiry, both should recover independently
+    vi.advanceTimersByTime(1001)
+    expect(localLimiter.check('ip-a').allowed).toBe(true)
+    expect(localLimiter.check('ip-b').allowed).toBe(true)
+
+    localLimiter.destroy()
+    vi.useRealTimers()
+  })
+
+  it('handles requests exactly at window boundary', () => {
+    vi.useFakeTimers()
+    const localLimiter = new SlidingWindowRateLimiter({ maxRequests: 2, windowMs: 1000 })
+
+    localLimiter.check('key')
+    localLimiter.check('key')
+    expect(localLimiter.check('key').allowed).toBe(false)
+
+    // At exactly 1000ms, requests should still be blocked
+    vi.advanceTimersByTime(999)
+    expect(localLimiter.check('key').allowed).toBe(false)
+
+    // At 1000ms+, oldest requests expire
+    vi.advanceTimersByTime(2)
+    expect(localLimiter.check('key').allowed).toBe(true)
+
+    localLimiter.destroy()
+    vi.useRealTimers()
+  })
+})
+
+describe('Window expiry reset', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('resets counter after window expires', () => {
+    vi.useFakeTimers()
+    const localLimiter = new SlidingWindowRateLimiter({ maxRequests: 2, windowMs: 1000 })
+
+    // Exhaust limit
+    localLimiter.check('key')
+    localLimiter.check('key')
+    expect(localLimiter.check('key').allowed).toBe(false)
+
+    // Wait for window to expire
+    vi.advanceTimersByTime(1001)
+
+    // Should be allowed again
+    const result = localLimiter.check('key')
+    expect(result.allowed).toBe(true)
+    expect(result.remaining).toBe(1)
+
+    localLimiter.destroy()
+    vi.useRealTimers()
+  })
+
+  it('reset method clears specific key', () => {
+    const localLimiter = new SlidingWindowRateLimiter({ maxRequests: 1, windowMs: 10_000 })
+    localLimiter.check('key')
+    expect(localLimiter.check('key').allowed).toBe(false)
+
+    localLimiter.reset('key')
+    expect(localLimiter.check('key').allowed).toBe(true)
+    localLimiter.destroy()
+  })
+
+  it('reset method clears all keys when no key provided', () => {
+    vi.useFakeTimers()
+    const localLimiter = new SlidingWindowRateLimiter({ maxRequests: 1, windowMs: 10_000 })
+    localLimiter.check('ip-a')
+    localLimiter.check('ip-b')
+    expect(localLimiter.size).toBe(2)
+
+    localLimiter.reset()
+    expect(localLimiter.size).toBe(0)
+
+    localLimiter.destroy()
+    vi.useRealTimers()
+  })
+})
+
 describe('X-RateLimit-Reset header', () => {
   afterEach(() => {
     vi.useRealTimers()
