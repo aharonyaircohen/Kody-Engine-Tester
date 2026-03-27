@@ -182,8 +182,8 @@ describe('retry', () => {
     const fn = vi.fn().mockResolvedValue(user)
 
     const result = await retry(fn)
-    expect(result.id).toBe(1)
-    expect(result.name).toBe('John')
+    expect((result as User).id).toBe(1)
+    expect((result as User).name).toBe('John')
   })
 
   it('should use default options when not provided', async () => {
