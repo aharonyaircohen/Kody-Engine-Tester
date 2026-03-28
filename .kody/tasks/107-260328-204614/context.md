@@ -45,3 +45,20 @@ const handler = createInstructorRoute(userStore, sessionStore, jwtService, async
   - `createPipelineRoleGuard()` — enforces role requirements
   - `createRouteHandler()` — wires 
 ...(truncated)
+
+### review (2026-03-28T20:58:45)
+Now I have a complete picture. Let me produce the structured review.
+
+## Verdict: PASS
+
+## Summary
+New `src/middleware/pipeline.ts` composes `createAuthMiddleware` and `requireRole` into reusable route factories (`createAuthenticatedRoute`, `createInstructorRoute`, `createAdminRoute`, `createPublicRoute`). `RoleError` is exported from `role-guard.ts`. All existing middleware behavior is preserved; the diff touches no auth logic.
+
+## Findings
+
+### Critical
+None.
+
+### Major
+`src/middleware/pipelin
+...(truncated)
