@@ -1,0 +1,8 @@
+{
+  "task_type": "feature",
+  "title": "Add health check endpoint",
+  "description": "Add a simple health check API endpoint at GET /api/health that returns status, timestamp, uptime counter (process uptime in seconds), and version from package.json with 200 status code. Include tests verifying response shape and status code.",
+  "scope": ["src/app/api/health/route.ts", "src/app/api/health/route.test.ts"],
+  "risk_level": "low",
+  "questions": []
+}

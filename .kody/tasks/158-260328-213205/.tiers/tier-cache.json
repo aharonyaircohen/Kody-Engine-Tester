@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/158-260328-213205/task.md",
+      "hash": "3dca034eb4e197f1",
+      "L0": "# Add health check endpoint\nAdd a simple health check API endpoint.",
+      "L1": "# Add health check endpoint\nAdd a simple health check API endpoint.\n- GET /api/health returns { status: 'ok', timestamp: ISO string, version: from package.json }\n- Include a simple uptime counter (process uptime in seconds)\n- Return 200 status code",
+      "L2": "# Add health check endpoint\n\nAdd a simple health check API endpoint.\n\n**File:** `src/app/api/health/route.ts`\n\n**Requirements:**\n- GET /api/health returns { status: 'ok', timestamp: ISO string, version: from package.json }\n- Include a simple uptime counter (process uptime in seconds)\n- Return 200 status code\n\n**Include a test** in `src/app/api/health/route.test.ts` that verifies the response shape and status code."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/158-260328-213205/task.json",
+      "hash": "26c8b7933cbc412b",
+      "L0": "Title: Add health check endpoint | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add health check endpoint\n- description: Add a simple health check API endpoint at GET /api/health that returns status, timestamp, uptime counter (process uptime in seconds), and version from package.json with 200 status code. Include tests verifying response shape and status code.\n- scope: [2 items] src/app/api/health/route.ts, src/app/api/health/route.test.ts\n- risk_level: low\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"feature\",\n  \"title\": \"Add health check endpoint\",\n  \"description\": \"Add a simple health check API endpoint at GET /api/health that returns status, timestamp, uptime counter (process uptime in seconds), and version from package.json with 200 status code. Include tests verifying response shape and status code.\",\n  \"scope\": [\"src/app/api/health/route.ts\", \"src/app/api/health/route.test.ts\"],\n  \"risk_level\": \"low\",\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/158-260328-213205/context.md",
+      "hash": "14c67f727b227676",
+      "L0": "### taskify (2026-03-28T21:33:14)",
+      "L1": "### taskify (2026-03-28T21:33:14)\nDone. Created the health check endpoint:\n- `status: 'ok'`\n- `timestamp`: ISO string\n- `uptime`: process uptime in seconds\n- `version`: from package.json\n- Returns 200 with `application/json` content type",
+      "L2": "\n### taskify (2026-03-28T21:33:14)\nDone. Created the health check endpoint:\n\n**`src/app/api/health/route.ts`** - GET handler returning:\n- `status: 'ok'`\n- `timestamp`: ISO string\n- `uptime`: process uptime in seconds\n- `version`: from package.json\n- Returns 200 with `application/json` content type\n\n**`src/app/api/health/route.test.ts`** - 6 tests verifying:\n- Status is 'ok'\n- Response code is 200\n- Timestamp is valid ISO format\n- Version is a non-empty string\n- Uptime is a non-negative number\n- Content-Type is application/json\n\n"
+    }
+  }
+}
