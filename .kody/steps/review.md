@@ -1,4 +1,3 @@
-```markdown
 ---
 name: review
 description: Review code changes for correctness, security, and quality
@@ -48,53 +47,49 @@ Review checklist:
 
 ## Repo Patterns
 
-**Payload collection definition** (`src/collections/certificates.ts`):
+Good patterns to enforce in this repo:
+
+**Payload CMS collection with typed slug** (`src/collections/certificates.ts`):
 ```typescript
+import type { CollectionConfig, CollectionSlug } from 'payload'
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
   fields: [
     { name: 'student', type: 'relationship', relationTo: 'users' as CollectionSlug, required: true },
-    { name: 'finalGrade', type: 'number', required: true, min: 0, max: 100 },
   ],
 }
 ```
-- All collection fields must declare `required` explicitly; numeric fields use `min`/`max` constraints.
-- `relationTo` values are cast with `as CollectionSlug`.
+Always cast `relationTo` values with `as CollectionSlug`.
 
-**Service class pattern** (`src/services/discussions.ts`):
-```typescript
-export class DiscussionService {
-  constructor(private store: DiscussionsStore, private enrollmentStore: EnrollmentStore, ...) {}
-  async getThreads(lessonId: string): Promise<DiscussionThread[]> { ... }
-}
-```
-- Business logic lives in `src/services/`, injecting store dependencies via constructor.
-- All service methods are `async` and return typed interfaces defined in the same or related file.
+**Sanitization utilities** (`src/security/sanitizers.ts`): Use `sanitizeHtml`, `sanitizeUrl`, and `sanitizeSql` from this module for any user-supplied input. Never roll inline sanitization.
 
-**Sanitization** (`src/security/sanitizers.ts`): User-facing string inputs pass through `sanitizeHtml`, `sanitizeSql`, or `sanitizeUrl` before use. New API routes or service methods touching user input must use these utilities.
+**Service class with injected dependencies** (`src/services/discussions.ts`): Services accept store, checker, and user-resolver via constructor. Follow this DI pattern — no direct `import` of singleton stores inside service methods.
 
-**Auth guard**: Middleware in `src/middleware/` enforces `student | instructor | admin` roles. New routes must be covered; Payload Local API bypasses access control by default — explicit `access` functions are required on collections.
+**JWT role guard**: Access control functions live in `src/access/`. Collections must declare an `access` block; never rely on Payload's default open access.
+
+**TypeScript path aliases**: Always use `@/*` → `src/*` imports. Never use relative `../../` paths crossing domain boundaries.
 
 ## Improvement Areas
 
-- **Missing access control on collections**: Several collection files (e.g., `src/collections/certificates.ts`) define no `access` property. Any new or modified collection must include role-based `access` functions (`read`, `create`, `update`, `delete`) using the `admin`/`instructor`/`student` role pattern from `AGENTS.md`.
-- **Incomplete `CertificatesStore.generateCertificateNumber`** (`src/collections/certificates.ts`, line ~60): the method's closing brace is missing in the snippet — verify the full implementation handles concurrent sequence generation safely.
-- **No input validation schemas**: `src/validation/` exists but may not cover all new endpoints. If the task touches an API route, confirm a Zod/validation schema exists in `src/validation/` and is applied at the route boundary.
-- **`sanitizeSql` is manual escaping**: `src/security/sanitizers.ts` uses string replacement instead of parameterized queries. Flag any new code that calls `sanitizeSql` as a workaround for raw queries — prefer Payload's ORM API instead.
-- **Type generation reminder**: After any schema change in `src/collections/`, `pnpm generate:types` must be run and the updated `payload-types.ts` committed. Check that the diff includes this if collections changed.
+Flag these issues if the touched code exhibits them — do NOT fix unrelated files:
+
+- **Missing `access` block on collections** (`src/collections/certificates.ts` has no `access` property): any new or modified collection must declare explicit `access: { read, create, update, delete }` using role guards from `src/access/`.
+- **`sanitizeSql` is not a substitute for parameterized queries** (`src/security/sanitizers.ts:sanitizeSql`): flag any code that calls `sanitizeSql` before building a raw query string — Payload's Local API and `@payloadcms/db-postgres` use parameterized queries; raw string interpolation is a Critical finding.
+- **Sync vs. async inconsistency in service contracts** (`src/services/discussions.ts` — `EnrollmentChecker` is sync, `getUser` is async): new service methods must consistently return `Promise` or be explicitly sync; mixed patterns cause silent failures.
+- **Missing `min`/`max` constraints on numeric fields**: enforce `min`/`max` on all `type: 'number'` fields as shown in `src/collections/certificates.ts:finalGrade`.
+- **TypeScript `tsc --noEmit` must pass**: after schema changes, `payload generate:types` must be run and the output committed; flag any PR that modifies a collection without updating `payload-types.ts`.
 
 ## Acceptance Criteria
 
-- [ ] All new/modified Payload collections include explicit `access` control functions for `read`, `create`, `update`, and `delete`.
-- [ ] All new API routes in `src/api/` apply role guard middleware from `src/middleware/`.
-- [ ] User-supplied string inputs pass through the appropriate sanitizer from `src/security/sanitizers.ts` before use.
-- [ ] No raw SQL strings — database operations go through Payload's collection API.
-- [ ] New service classes follow the constructor-injection pattern in `src/services/`.
-- [ ] If any `src/collections/` file changed, `payload-types.ts` is regenerated (`pnpm generate:types`) and included in the diff.
-- [ ] TypeScript compiles cleanly: `tsc --noEmit` passes with no new errors.
-- [ ] Vitest integration tests pass: `pnpm test:int`.
-- [ ] No hardcoded secrets, tenant IDs, or environment-specific values — use `process.env` with documented variable names.
-- [ ] Numeric field constraints (`min`/`max`) are present on all score/grade fields (0–100 range).
+- [ ] All new/modified Payload collections include an explicit `access` block with role guards
+- [ ] No user-supplied input is interpolated into raw strings — `sanitizeHtml`/`sanitizeUrl` from `src/security/sanitizers.ts` used at API boundaries
+- [ ] `sanitizeSql` is NOT used as a substitute for parameterized queries; Payload ORM used instead
+- [ ] TypeScript compiles cleanly: `tsc --noEmit` exits 0
+- [ ] `payload generate:types` has been run if any collection schema changed (`payload-types.ts` is up to date)
+- [ ] New services follow the constructor-injection pattern from `src/services/discussions.ts`
+- [ ] All `relationTo` fields cast with `as CollectionSlug`
+- [ ] All `type: 'number'` fields declare `min`/`max` where domain-bounded
+- [ ] Vitest unit/integration tests cover new logic (`pnpm test:int` passes)
+- [ ] No hardcoded secrets or environment-specific values; env vars accessed via `process.env`
 
 {{TASK_CONTEXT}}
-```

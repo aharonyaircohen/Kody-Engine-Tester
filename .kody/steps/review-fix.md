@@ -1,4 +1,3 @@
-```markdown
 ---
 name: review-fix
 description: Fix Critical and Major issues found during code review
@@ -23,49 +22,55 @@ Read the review findings carefully. For each Critical/Major finding:
 
 ## Repo Patterns
 
-Good code in this repo follows these conventions:
-
-**Payload collection with access control** (`src/collections/certificates.ts`):
+**Auth guard on API routes** (`src/middleware/` + `src/api/`):
 ```typescript
-export const Certificates: CollectionConfig = {
-  slug: 'certificates',
-  fields: [
-    { name: 'student', type: 'relationship', relationTo: 'users' as CollectionSlug, required: true },
-    { name: 'finalGrade', type: 'number', required: true, min: 0, max: 100 },
-  ],
+// Protect routes using role guards — never expose endpoints without auth
+import { requireRole } from '@/auth/middleware'
+export const GET = requireRole(['admin', 'instructor'], handler)
+```
+
+**Payload collection access control** (`src/collections/certificates.ts`):
+```typescript
+access: {
+  read: ({ req: { user } }) => Boolean(user),
+  update: ({ req: { user } }) => user?.roles?.includes('admin'),
 }
 ```
-Always cast `relationTo` with `as CollectionSlug` and include `required: true` on key fields.
 
-**Security utilities** (`src/security/sanitizers.ts`): Input sanitization lives here. URL validation rejects `javascript:` and `data:` schemes. When fixing security issues, add or update helpers in this file rather than inlining logic.
+**Input sanitization before persistence** (`src/security/sanitizers.ts`):
+```typescript
+import { sanitizeHtml, sanitizeUrl } from '@/security/sanitizers'
+const safeContent = sanitizeHtml(userInput)
+```
 
-**Service layer** (`src/services/discussions.ts`): Business logic classes take typed constructor dependencies (`store`, `enrollmentStore`, `getUser`). Inject via constructor — do not instantiate dependencies inside service methods.
+**Service-layer enrollment checks** (`src/services/discussions.ts`):
+```typescript
+if (!this.enrollmentChecker(userId, courseId)) throw new Error('Not enrolled')
+```
 
-**TypeScript validation**: After any schema or type change run `pnpm exec tsc --noEmit`. After Payload collection changes run `pnpm payload generate:types`.
+**TypeScript path aliases** — always use `@/*` instead of relative `../../` imports.
 
-**Tests**: Integration tests with `pnpm test:int` (Vitest), e2e with `pnpm test:e2e` (Playwright).
+**Validation** — all external input validated in `src/validation/` before reaching collections or services.
 
 ## Improvement Areas
 
-Address these when the task touches related files:
-
-- **`src/collections/certificates.ts` — broken `generateCertificateNumber`**: The `for` loop is missing its closing brace (syntax error). Fix the brace before any other change in this file.
-- **`src/security/sanitizers.ts` — `sanitizeSql` is fragile**: Manual string escaping is not a substitute for parameterized queries. If review flags SQL injection risk, the fix is to use Payload's Local API or parameterized query helpers — not to improve the escape function.
-- **Access control gaps**: Any collection missing `access` field restrictions (read/create/update/delete) must have them added when touched. Use the `src/auth` role guards (`student`, `instructor`, `admin`) — do not hardcode role strings.
-- **`sanitizeHtml` lacks allowlist**: It strips all tags but has no allowlist. If fixing XSS findings, ensure untrusted input passes through `sanitizeHtml` before storage or rendering.
-- **Complex type intersections in `src/services/discussions.ts`**: `ReturnType<DiscussionsStore['getById']> & { id: string }` is hard to maintain. When touching this file, extract a named type alias.
+- `src/collections/certificates.ts`: Missing `access` control on the `Certificates` collection — any authenticated user can currently read/write certificates. Add role-based access guards (only `admin` or the owning `student` should read; only `admin` should create/update).
+- `src/services/discussions.ts`: `getThreads` does not verify the calling user is enrolled before returning lesson content. Enrollment check via `enrollmentChecker` must be called at the top of the method.
+- `src/security/sanitizers.ts`: `sanitizeSql` is a manual escape helper but the project uses Payload CMS (which uses parameterized queries via the Postgres adapter). Any call-sites using `sanitizeSql` for ORM queries should be removed — it gives false safety and may mask actual injection vectors. Fix call-sites, not the function itself.
+- API routes under `src/api/` or `src/app/api/`: Verify every route calls `requireRole` or equivalent middleware — routes missing role guards are a Critical finding.
+- After any schema/collection change, `pnpm generate:types` must be re-run; if generated types (`src/payload-types.ts`) are stale relative to collection definitions, that is a Major finding.
 
 ## Acceptance Criteria
 
-- [ ] `pnpm exec tsc --noEmit` exits with 0 errors after all fixes
-- [ ] `pnpm test:int` passes with no regressions
-- [ ] `pnpm lint` reports no new ESLint errors on changed files
-- [ ] Every fixed file uses `Edit` (surgical change) — no full-file rewrites
-- [ ] No raw SQL string escaping introduced; Payload Local API or parameterized queries used instead
-- [ ] Any touched Payload collection has explicit `access` controls for all four operations
-- [ ] `sanitizeUrl` / `sanitizeHtml` called on all user-supplied string inputs before persistence in fixed code paths
-- [ ] After any Payload collection change: `pnpm payload generate:types` has been run
-- [ ] No new `any` types introduced; strict TypeScript maintained throughout
+- [ ] All Critical findings are fixed and confirmed resolved by re-reading the affected file
+- [ ] All Major findings are fixed with minimal, surgical edits (no full-file rewrites)
+- [ ] `pnpm run test:int` passes after each fix with no new failures
+- [ ] No Payload collection is left without explicit `access` control on at least `read`, `create`, and `update`
+- [ ] No API route under `src/app/api/` or `src/api/` is missing role-guard middleware
+- [ ] All user-supplied input entering collections or services passes through a validator in `src/validation/` or a sanitizer in `src/security/sanitizers.ts`
+- [ ] TypeScript compiles cleanly: `pnpm exec tsc --noEmit` exits 0
+- [ ] No `@ts-ignore` or `as any` introduced by the fixes
+- [ ] Minor findings are left untouched (not fixed, not commented on)
+- [ ] No commits or pushes made
 
 {{TASK_CONTEXT}}
-```

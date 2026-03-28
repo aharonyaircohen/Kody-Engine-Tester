@@ -44,45 +44,48 @@ Guidelines:
 
 ## Repo Patterns
 
-Good examples to follow when classifying scope and risk:
+LearnHub follows a layered architecture. Reference these real patterns when classifying tasks:
 
-**Payload collection definition** (`src/collections/certificates.ts`):
+**Payload CMS Collection** (`src/collections/certificates.ts`):
 ```typescript
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
-  fields: [{ name: 'student', type: 'relationship', relationTo: 'users' as CollectionSlug, required: true }],
+  fields: [
+    { name: 'student', type: 'relationship', relationTo: 'users' as CollectionSlug, required: true },
+    { name: 'certificateNumber', type: 'text', required: true, unique: true },
+  ],
 }
 ```
-Any new collection or field change touches `src/collections/<name>.ts` + `src/payload.config.ts` + requires `payload generate:types` → affects `src/payload-types.ts`.
+New collections belong in `src/collections/*.ts` and must be registered in `src/payload.config.ts`.
 
-**Service layer** (`src/services/discussions.ts`): Business logic lives in `src/services/`, consuming stores from `src/collections/`. Tasks touching business rules scope both layers.
+**Service layer** (`src/services/discussions.ts`): Business logic lives in `src/services/`, consuming a store (e.g. `DiscussionsStore`) and receiving dependencies via constructor injection.
 
-**Access control**: Guards live in `src/access/`; role checks use JWT fields (`saveToJWT: true`). Any role or permission change is `high` risk.
+**Security utilities** (`src/security/sanitizers.ts`): Input sanitization (HTML, SQL, URL) lives in `src/security/`. API routes in `src/api/` and `src/app/api/` must use these before processing user input.
 
-**Input validation**: `src/validation/` for schemas; `src/security/sanitizers.ts` for HTML/URL sanitization. Tasks accepting user input must scope these directories.
+**Auth guard pattern**: Role checks are enforced via `src/middleware/` and Payload's `access` functions in collections. JWT roles (`student`, `instructor`, `admin`) gate both API routes and CMS operations.
 
-**Auth middleware**: `src/middleware/` + `src/auth/`. Changes here are always `high` risk.
+**Testing**: Unit/integration tests use Vitest (`vitest.config.mts`); e2e tests use Playwright (`playwright.config.ts`). Test files mirror source paths.
 
 ## Improvement Areas
 
-Flag these when the task touches related files — do NOT refactor unrelated code:
+When the task touches these files or areas, also address the following gaps:
 
-- **`src/collections/certificates.ts`**: Mixes Payload `CollectionConfig` with in-memory `CertificatesStore` class and interfaces. If touched, split store/interfaces into `src/services/certificates.ts`.
-- **Missing access control**: `src/collections/certificates.ts` has no `access` field. Any task touching this collection should add role guards (`admin`, `instructor`).
-- **`src/security/sanitizers.ts` — `sanitizeSql`**: This project uses Payload ORM (PostgreSQL adapter); raw SQL escaping is a code smell. Flag as `medium` risk if the task touches data access and `sanitizeSql` is in scope.
-- **`src/pages/` vs `src/app/`**: Both exist; new UI tasks should target `src/app/` (App Router) not `src/pages/`.
-- **Missing Vitest/Playwright tests**: Services in `src/services/` lack co-located test files. Tasks adding service logic should include test file paths in scope.
+- **`src/collections/`**: Several collection stubs (e.g. courses, modules, lessons, enrollments, quizzes, assignments) referenced in the README are not yet implemented — tasks touching these areas are `feature` type and `high` risk due to schema migrations.
+- **`src/security/sanitizers.ts`**: `sanitizeSql` is a manual escape helper; Payload uses parameterized queries via its ORM, so any new direct DB usage should use the Payload Local API instead of raw SQL. Flag tasks that introduce raw queries as `high` risk.
+- **`src/collections/certificates.ts`**: The `CertificatesStore` in-memory implementation is a prototype — tasks involving certificate issuance must account for replacing it with Payload Local API calls.
+- **`src/app/api/` routes**: Verify that any new route touched by the task applies auth middleware from `src/middleware/` and calls `sanitizeHtml`/`sanitizeUrl` from `src/security/sanitizers.ts` on user-supplied input.
+- **Missing `src/validation/`**: Input validation schemas should live here; tasks adding new API endpoints must include a validation file in scope.
 
 ## Acceptance Criteria
 
-- [ ] `task_type` matches the nature of the change (schema change → `feature`; wrong behavior → `bugfix`; restructure only → `refactor`)
-- [ ] `scope` lists exact file paths discoverable via Glob — including `src/payload-types.ts` for any collection/field change
-- [ ] `scope` includes `src/middleware/` and/or `src/access/` when the task involves role or permission changes
-- [ ] `risk_level` is `high` for any change touching `src/auth/`, `src/middleware/`, `src/collections/` (schema), or `src/migrations/`
-- [ ] `risk_level` is `medium` for multi-file service or API changes
-- [ ] `questions` contains only product-level unknowns (e.g., "Which roles should access this?", "Should enrolled students see draft lessons?")
-- [ ] `questions` is `[]` when role access, scope, and behavior are determinable from the codebase
-- [ ] `title` references the domain noun (Course, Enrollment, Certificate, Quiz, Discussion, Gradebook) affected
+- [ ] `task_type` correctly reflects the change category (schema change → `feature`; broken behavior → `bugfix`; cleanup → `refactor`)
+- [ ] `title` is ≤ 72 characters and starts with an imperative verb (Add, Fix, Refactor, Remove, Update)
+- [ ] `scope` lists exact file paths, including the Payload collection file (`src/collections/*.ts`), service file (`src/services/*.ts`), and API route (`src/app/api/**`) when any of these are affected
+- [ ] `scope` includes `src/payload.config.ts` when a new collection or global is introduced
+- [ ] `scope` includes a test file path (e.g. `src/__tests__/` or colocated `*.test.ts`) when testable logic is added or changed
+- [ ] `risk_level` is `high` for any task touching auth (`src/auth/`, `src/middleware/`), database schema (`src/collections/`, `src/migrations/`), or security (`src/security/`)
+- [ ] `risk_level` is `medium` for multi-file service/API changes; `low` for isolated config, docs, or style changes
+- [ ] `questions` contains only product-level unknowns; no questions about framework choice, file placement, or patterns already visible in the codebase
 - [ ] Output is valid JSON with no markdown fences or surrounding text
 
 {{TASK_CONTEXT}}

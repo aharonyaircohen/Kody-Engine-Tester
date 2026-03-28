@@ -1,11 +1,11 @@
 # Conventions
 
-- **TypeScript**: Strict mode enabled, all files typed
-- **Auth**: Role-based access control; middleware guards for `student`, `instructor`, `admin`
-- **API Design**: REST routes in `src/api`, Payload collections in `src/collections`
-- **State**: React Context in `src/contexts`, custom hooks in `src/hooks`
-- **Components**: Server Components preferred (Next.js App Router pattern)
-- **Database**: Payload collections-based schema; migrations in `src/migrations`
-- **Testing**: Vitest (`pnpm test:int`), Playwright e2e (`pnpm test:e2e`)
-- **Code Quality**: ESLint for linting, TypeScript in build, Prettier for formatting
-- **Tooling**: `pnpm` package manager; `payload generate:types` for CMS type generation
+- **Auth**: Use JWT with role guards; protect API routes in `src/api`
+- **Collections**: Payload CMS collections in `src/collections/*.ts`
+- **Components**: React components in `src/components`
+- **API Routes**: Next.js app routes under `src/app/api`
+- **Middleware**: Auth and rate limiting in `src/middleware`
+- **Validation**: Input validation in `src/validation`
+- **TypeScript**: Strict mode enabled; path aliases (`@/*` → `src/*`, `@payload-config` → `src/payload.config.ts`)
+- **Testing**: Vitest for unit/integration, Playwright for e2e
+- **Linting**: ESLint with Next.js config

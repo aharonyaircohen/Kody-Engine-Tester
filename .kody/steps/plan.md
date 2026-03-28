@@ -1,4 +1,3 @@
-```markdown
 ---
 name: plan
 description: Create a step-by-step implementation plan following Superpowers Writing Plans methodology
@@ -48,47 +47,56 @@ Bad questions: "What should I name the function?", "Should I add tests?"
 
 ## Repo Patterns
 
+Follow these established patterns from the codebase:
+
 **Payload Collection** (`src/collections/certificates.ts`):
 ```typescript
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
+  access: { read: isAdminOrSelf, create: isAdmin, update: isAdmin, delete: isAdmin },
   fields: [
     { name: 'student', type: 'relationship', relationTo: 'users' as CollectionSlug, required: true },
     { name: 'finalGrade', type: 'number', required: true, min: 0, max: 100 },
   ],
 }
 ```
-All collections use `CollectionConfig` from `payload`, typed `relationTo` with `as CollectionSlug`, and explicit `required`.
+- Always cast `relationTo` values with `as CollectionSlug`
+- Define access controls on every collection — never omit the `access` property
 
 **Service Layer** (`src/services/discussions.ts`):
-Class-based services with constructor-injected dependencies (`store`, `enrollmentStore`, `getUser`). Business logic lives in `src/services/`, not in collections or API routes.
+- Class-based services with constructor dependency injection (`store`, `enrollmentStore`, `getUser`)
+- Services live in `src/services/`, not in `src/collections/`
+- Domain interfaces (`DiscussionThread`, `EnrollmentChecker`) defined at the top of the service file
 
-**Security Utilities** (`src/security/sanitizers.ts`):
-Pure functions with JSDoc. Input validation via `src/validation/`. Use `sanitizeHtml`/`sanitizeUrl` at API boundaries — never roll new sanitization inline.
+**Security utilities** (`src/security/sanitizers.ts`):
+- Pure functions with JSDoc, exported from `src/security/`
+- Validate at system boundaries (API routes, user input); trust internal collections
 
-**Auth Guard**: Middleware in `src/middleware/` enforces `student` | `instructor` | `admin` roles. Collection `access:` fields use `({ req: { user } }) => user?.roles?.includes('...')`.
+**TypeScript**: Use `@/*` path aliases (`@/collections/...`, `@/services/...`); strict mode is enabled.
 
-**Testing**: Vitest tests in `src/**/*.test.ts` run via `pnpm test:int`. E2e via `pnpm test:e2e`.
+**After any schema/collection change**: Run `pnpm payload generate:types` then verify with `tsc --noEmit`.
 
 ## Improvement Areas
 
-- **Missing access controls**: `src/collections/certificates.ts` defines no `access:` block — any authenticated user can read/write. New and touched collections must define `read`, `create`, `update`, `delete` access functions.
-- **Type generation not automated**: After any schema change, `pnpm generate:types` must be run and `src/payload-types.ts` committed. Plans must include this step explicitly.
-- **Import map regeneration**: After adding/modifying custom React components in `src/components/`, run `pnpm generate:importmap`. Plans that touch components must include this step.
-- **Manual SQL escaping**: `src/security/sanitizers.ts:sanitizeSql` is a hand-rolled escaper — unsafe and redundant since Payload uses a PostgreSQL ORM. Do not use `sanitizeSql` in new code; rely on Payload Local API / parameterized queries.
-- **`req` threading in hooks**: Per `AGENTS.md`, always pass `req` to nested Payload operations inside hooks to preserve transaction context.
+When the task touches the following files, fix these issues as part of the work:
+
+- **`src/collections/certificates.ts`** — `CertificatesStore` class and domain interfaces (`Certificate`, `Enrollment`, `QuizResult`, etc.) are defined inside the collection file. Business logic belongs in `src/services/certificates.ts`; types belong in a shared types file or the service file.
+- **`src/collections/certificates.ts`** — Collection definition has no `access` property. Every collection must declare access controls (e.g., only admins issue/delete certificates, students read their own).
+- **`src/services/discussions.ts` line ~9** — `postsById` value type is overly complex (`ReturnType<DiscussionsStore['getById']> & { id: string }`); simplify by typing `DiscussionsStore.getById()` to return a typed interface directly.
+- **Any new API route under `src/app/api/`** — Ensure rate-limiting middleware from `src/middleware` is applied; new routes must not bypass it.
+- **Validation** — New user-facing inputs must have a corresponding schema in `src/validation/` and call `sanitizeHtml` / `sanitizeUrl` from `src/security/sanitizers.ts` before persistence.
 
 ## Acceptance Criteria
 
-- [ ] TypeScript compiles without errors: `pnpm exec tsc --noEmit`
-- [ ] Unit/integration tests pass: `pnpm test:int`
-- [ ] Every new or modified Payload collection defines explicit `access:` controls for `read`, `create`, `update`, and `delete`
-- [ ] If collection schema changed: `pnpm generate:types` run and `src/payload-types.ts` updated
-- [ ] If custom components added or modified: `pnpm generate:importmap` run
-- [ ] No use of `sanitizeSql` — all DB access goes through Payload Local API or parameterized queries
-- [ ] All hooks that call nested Payload operations pass `req` through
-- [ ] New service classes follow constructor-injection pattern matching `src/services/discussions.ts`
-- [ ] Lint passes: `pnpm lint`
+- [ ] Tests are written **before** implementation code (Vitest in `src/**/*.test.ts`)
+- [ ] All new Payload collections include an `access` property with role-based guards
+- [ ] Business logic is in `src/services/`, not `src/collections/`
+- [ ] Domain interfaces are defined in the service file or a dedicated types file, not the collection config
+- [ ] `pnpm payload generate:types` run after any collection/schema change
+- [ ] `tsc --noEmit` passes with zero errors
+- [ ] `pnpm test:int` (Vitest) passes
+- [ ] New API routes apply rate-limiting middleware from `src/middleware`
+- [ ] All user inputs sanitized via `src/security/sanitizers.ts` before persistence
+- [ ] No step exceeds 5 minutes; each has a `Verify` command
 
 {{TASK_CONTEXT}}
-```

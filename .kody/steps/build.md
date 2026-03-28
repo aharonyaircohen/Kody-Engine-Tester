@@ -1,4 +1,3 @@
-```markdown
 ---
 name: build
 description: Implement code changes following Superpowers Executing Plans methodology
@@ -26,7 +25,7 @@ Implementation discipline:
 
 ## Repo Patterns
 
-**Payload collection definition** (`src/collections/certificates.ts`):
+**Payload Collection definition** (`src/collections/certificates.ts`):
 ```typescript
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
@@ -37,43 +36,44 @@ export const Certificates: CollectionConfig = {
   ],
 }
 ```
-Always cast `relationTo` values with `as CollectionSlug`. Always set `required: true` on FK fields.
+Always cast `relationTo` with `as CollectionSlug`. Register every new collection in `src/payload.config.ts`.
 
-**Service layer pattern** (`src/services/discussions.ts`):
-- Export a class (e.g. `DiscussionService`) that takes store + dependencies via constructor
-- Business logic lives in the service; raw store access is encapsulated
-- Async methods return typed interfaces defined in the same file
+**Service layer with dependency injection** (`src/services/discussions.ts`):
+```typescript
+export class DiscussionService {
+  constructor(
+    private store: DiscussionsStore,
+    private enrollmentStore: EnrollmentStore,
+    private getUser: (id: string) => Promise<User | undefined>,
+    private enrollmentChecker: EnrollmentChecker,
+  ) {}
+}
+```
+Services live in `src/services/`, receive dependencies via constructor, and never import directly from auth or middleware layers.
 
-**Security utilities** (`src/security/sanitizers.ts`):
-- All user-facing string inputs go through `sanitizeHtml`, `sanitizeSql`, or `sanitizeUrl`
-- Validation schemas live in `src/validation/`; sanitizers in `src/security/`
+**Input sanitization** (`src/security/sanitizers.ts`): Use `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl` from `src/security/sanitizers.ts` for all user-supplied strings before persistence.
 
-**Auth pattern** (`src/auth/`):
-- Role checks use `saveToJWT: true` on the `roles` field for fast middleware guards
-- Access control functions live in `src/access/`, imported into collection configs
-
-**Type generation**: After any schema change, run `pnpm generate:types` to regenerate `payload-types.ts`.
+**Path aliases**: Always import with `@/` (maps to `src/`) and `@payload-config` for `src/payload.config.ts`.
 
 ## Improvement Areas
 
-- `src/collections/certificates.ts`: The `Certificate`, `Enrollment`, `QuizResult`, and `AssignmentResult` interfaces are defined in the collection file — domain interfaces should move to a dedicated types file (e.g. `src/types/`) or the relevant service file. Fix only when touching this file.
-- `src/collections/certificates.ts` (`CertificatesStore.generateCertificateNumber`): Missing closing brace visible in snippet — verify the full file compiles without error before editing.
-- `src/services/discussions.ts`: `getThreads` builds `postsById` but never uses it for lookup (only used in `getThreadDepth`). When touching this service, confirm the map is used or remove it to avoid dead code.
-- Any new collection that adds access control must have corresponding entries in `src/access/` — do not inline access functions directly in collection fields.
-- Always run `pnpm generate:importmap` after adding or modifying components under `src/app/(payload)/` or `src/components/`.
+- `src/collections/certificates.ts`: The `Certificates` collection has **no access control** — add `access: { read, create, update, delete }` guards using role checks (pattern: `({ req: { user } }) => user?.roles?.includes('admin')`).
+- Any collection added or modified must be **registered** in `src/payload.config.ts` under the `collections` array, or it will be silently ignored.
+- After any schema change run `pnpm payload generate:types` (per `AGENTS.md`) and commit the updated `src/payload-types.ts` — failing to do so causes downstream type drift.
+- API routes in `src/app/api` should apply rate-limiting middleware from `src/middleware` consistently; audit new routes to ensure they import and apply it.
+- Validate all external input at the boundary using utilities in `src/validation` before passing to services or collections.
 
 ## Acceptance Criteria
 
-- [ ] All modified or new Payload collections compile via `pnpm tsc --noEmit` with zero errors
-- [ ] `pnpm generate:types` has been run after any collection/schema change and `payload-types.ts` is up to date
-- [ ] All new service classes follow the constructor-injection pattern (store + deps injected, not imported directly)
-- [ ] All user-input strings pass through the appropriate sanitizer from `src/security/sanitizers.ts`
-- [ ] New or modified access control logic is placed in `src/access/`, not inlined in collection fields
-- [ ] Role checks use `saveToJWT: true` on any `roles` field that needs fast JWT-level access
-- [ ] `pnpm run test:int` passes with no failures
-- [ ] No `TODO`, stub functions, or placeholder comments remain in changed files
-- [ ] `relationTo` values use `as CollectionSlug` cast
-- [ ] `pnpm lint` reports no new errors introduced by the change
+- [ ] `pnpm tsc --noEmit` exits with zero errors
+- [ ] `pnpm test:int` (Vitest) passes with no regressions
+- [ ] All new Payload collections include explicit `access` control for `read`, `create`, `update`, and `delete`
+- [ ] All new collections are registered in `src/payload.config.ts`
+- [ ] `pnpm payload generate:types` has been run and `src/payload-types.ts` reflects the latest schema
+- [ ] New API routes apply rate-limiting and JWT auth middleware from `src/middleware`
+- [ ] User-supplied strings are sanitized via `src/security/sanitizers.ts` before persistence
+- [ ] No raw SQL strings constructed from user input (use Payload Local API or parameterized queries)
+- [ ] All new service classes follow the constructor-injection pattern in `src/services/`
+- [ ] Import paths use `@/` aliases, not relative `../../` traversals
 
 {{TASK_CONTEXT}}
-```
