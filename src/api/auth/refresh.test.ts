@@ -45,4 +45,26 @@ describe('refresh', () => {
     await expect(refresh(refreshToken, sessionStore, jwtService))
       .rejects.toMatchObject({ status: 401 })
   })
+
+  it('should invalidate old access token after refresh', async () => {
+    const { accessToken, refreshToken } = await loginUser()
+    const result = await refresh(refreshToken, sessionStore, jwtService)
+    // login() already called refresh() internally (to patch sessionId in tokens), so
+    // generation is already 1. After our refresh() it becomes 2.
+    const session2 = sessionStore.findByRefreshToken(result.refreshToken)
+    expect(session2?.generation).toBe(2)
+    // Old access token is no longer in tokenIndex so findByToken returns undefined
+    expect(sessionStore.findByToken(accessToken)).toBeUndefined()
+  })
+
+  it('should handle concurrent refresh requests safely', async () => {
+    const { refreshToken } = await loginUser()
+    const [first, second] = await Promise.allSettled([
+      refresh(refreshToken, sessionStore, jwtService),
+      refresh(refreshToken, sessionStore, jwtService),
+    ])
+    // At least one must succeed; both should not throw unexpected errors
+    const successes = [first, second].filter(r => r.status === 'fulfilled')
+    expect(successes.length).toBeGreaterThanOrEqual(1)
+  })
 })
