@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/114-260328-222319/task.md",
+      "hash": "5bf96bb4ad495c31",
+      "L0": "# Add integration tests for enrollment + progress + grading flow\nCreate an integration test suite that tests the full student journey end-to-end using the service layer (no HTTP, no UI).",
+      "L1": "# Add integration tests for enrollment + progress + grading flow\nCreate an integration test suite that tests the full student journey end-to-end using the service layer (no HTTP, no UI).",
+      "L2": "# Add integration tests for enrollment + progress + grading flow\n\nCreate an integration test suite that tests the full student journey end-to-end using the service layer (no HTTP, no UI).\n\n**Test file:** `tests/int/student-journey.test.ts`\n\n**Scenarios:**\n1. **Happy path:** Create course → enroll student → complete lessons → take quiz → submit assignment → get graded → receive certificate\n2. **Enrollment limits:** Course with maxEnrollments=2, try enrolling 3 students — third should fail\n3. **Quiz retry:** Student fails quiz, retries (up to maxAttempts), eventually passes\n4. **Late submission:** Student submits assignment after due date — should still be accepted but flagged as late\n5. **Grade calculation:** Verify weighted grade (40% quiz, 60% assignment) across multiple quizzes and assignments\n6. **Progress tracking:** Verify progress percentage updates correctly as lessons are completed\n7. **Certificate generation:** Verify certificate is issued only when all modules are complete and passing grade achieved\n\nThese tests should use the service layer directly (gradebook, progress, quiz-grader, grading services). Mock the Payload database layer."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/114-260328-222319/task.json",
+      "hash": "fe56afe6c829189d",
+      "L0": "Title: Add integration tests for enrollment + progress + grading flow | Type: chore | Risk: low",
+      "L1": "- task_type: chore\n- title: Add integration tests for enrollment + progress + grading flow\n- description: Create an integration test suite that tests the full student journey end-to-end using the service layer (no HTTP, no UI). Tests cover happy path enrollment, lesson completion, quiz grading, assignment submission, certificate generation, enrollment limits, quiz retry logic, late submission handling, progress tracking, and weighted grade calculation. All tests mock the Payload database layer and use existing services: ProgressService, GradingService, quiz-grader, and CertificatesStore.\n- scope: [1 items] tests/int/student-journey.test.ts\n- risk_level: low\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"chore\",\n  \"title\": \"Add integration tests for enrollment + progress + grading flow\",\n  \"description\": \"Create an integration test suite that tests the full student journey end-to-end using the service layer (no HTTP, no UI). Tests cover happy path enrollment, lesson completion, quiz grading, assignment submission, certificate generation, enrollment limits, quiz retry logic, late submission handling, progress tracking, and weighted grade calculation. All tests mock the Payload database layer and use existing services: ProgressService, GradingService, quiz-grader, and CertificatesStore.\",\n  \"scope\": [\n    \"tests/int/student-journey.test.ts\"\n  ],\n  \"risk_level\": \"low\",\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/114-260328-222319/context.md",
+      "hash": "9cb8f156dfc54634",
+      "L0": "### taskify (2026-03-28T22:28:42)\nAll 117 tests pass.",
+      "L1": "### taskify (2026-03-28T22:28:42)\nAll 117 tests pass. I've created a comprehensive integration test suite at `tests/int/student-journey.test.ts` with 13 tests covering all 7 scenarios:",
+      "L2": "\n### taskify (2026-03-28T22:28:42)\nAll 117 tests pass. I've created a comprehensive integration test suite at `tests/int/student-journey.test.ts` with 13 tests covering all 7 scenarios:\n\n**Test Coverage:**\n\n1. **Happy Path** - Full student journey: enroll → complete lessons → pass quiz → submit assignment → get graded → receive certificate\n\n2. **Enrollment Limits** - Verifies course with `maxEnrollments=2` rejects third student\n\n3. **Quiz Retry** - Student fails, retries multiple times, eventually passes\n\n4. **Late Submission** -\n...(truncated)\n"
+    }
+  }
+}

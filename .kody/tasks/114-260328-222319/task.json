@@ -1,0 +1,10 @@
+{
+  "task_type": "chore",
+  "title": "Add integration tests for enrollment + progress + grading flow",
+  "description": "Create an integration test suite that tests the full student journey end-to-end using the service layer (no HTTP, no UI). Tests cover happy path enrollment, lesson completion, quiz grading, assignment submission, certificate generation, enrollment limits, quiz retry logic, late submission handling, progress tracking, and weighted grade calculation. All tests mock the Payload database layer and use existing services: ProgressService, GradingService, quiz-grader, and CertificatesStore.",
+  "scope": [
+    "tests/int/student-journey.test.ts"
+  ],
+  "risk_level": "low",
+  "questions": []
+}
