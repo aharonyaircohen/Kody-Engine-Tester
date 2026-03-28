@@ -8,7 +8,7 @@
     "testUnit": "pnpm test:int"
   },
   "git": {
-    "defaultBranch": "main"
+    "defaultBranch": "kody"
   },
   "github": {
     "owner": "aharonyaircohen",
