@@ -6,6 +6,7 @@ import configPromise from '@payload-config'
 export interface QuizAttempt {
   id: string
   quizId: string
+  /** Normalized student ID. In Payload this maps from the `user` relation field. */
   studentId: string
   score: number
   maxScore: number
@@ -276,7 +277,7 @@ export class PayloadGradebookService {
   private async getEnrollmentsByStudent(studentId: string): Promise<EnrollmentRecord[]> {
     const result = await this.payload.find({
       collection: 'enrollments' as CollectionSlug,
-      where: { student: { equals: studentId } },
+      where: { student: { equals: studentId }, status: { equals: 'active' } },
       limit: 100,
     })
     return result.docs as unknown as EnrollmentRecord[]
