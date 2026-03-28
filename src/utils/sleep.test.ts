@@ -64,9 +64,9 @@ describe('withTimeout', () => {
   })
 
   it('rejects with TimeoutError when the promise does not resolve within the timeout', async () => {
-    let resolve: (value: string) => void
+    let _resolve: (value: string) => void
     const promise = new Promise<string>((r) => {
-      resolve = r
+      _resolve = r
     })
 
     const resultPromise = withTimeout(promise, 500)

@@ -208,14 +208,14 @@ describe('RetryQueue', () => {
   it('tracks retrying count during processing', async () => {
     const queue = new RetryQueue<string>({ maxRetries: 3, initialDelay: 1000 })
 
-    let statsWhileRetrying: ReturnType<typeof queue.stats> | null = null
+    let _statsWhileRetrying: ReturnType<typeof queue.stats> | null = null
 
     const handler = vi.fn().mockImplementation(async () => {
       if (handler.mock.calls.length === 1) {
         throw new Error('fail once')
       }
       // capture stats on second call (during retry processing)
-      statsWhileRetrying = queue.stats()
+      _statsWhileRetrying = queue.stats()
     })
 
     queue.enqueue('item', handler)

@@ -35,8 +35,8 @@ export function AtRiskStudentsList({ students }: AtRiskStudentsListProps) {
               <td style={{ padding: '8px' }}>{s.averageGrade !== null ? `${s.averageGrade}%` : 'N/A'}</td>
               <td style={{ padding: '8px' }}>
                 <span style={{
-                  background: s.reason === 'both' ? '#fef2f2' : '#fffbeb',
-                  color: s.reason === 'both' ? '#dc2626' : '#d97706',
+                  background: s.reason === 'both' ? '#fef2f2' : s.reason === 'low-grade' ? '#fffbeb' : '#eff6ff',
+                  color: s.reason === 'both' ? '#dc2626' : s.reason === 'low-grade' ? '#d97706' : '#2563eb',
                   padding: '2px 8px',
                   borderRadius: '4px',
                   fontSize: '12px',

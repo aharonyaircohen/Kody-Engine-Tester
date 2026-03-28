@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { ok, err, tryCatch, fromPromise, Ok, Err } from './result'
+import { ok, err, tryCatch, fromPromise, Ok as _Ok, Err } from './result'
 
 describe('Ok', () => {
   it('isOk returns true', () => {
