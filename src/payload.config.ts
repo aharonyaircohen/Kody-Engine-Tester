@@ -9,6 +9,10 @@ import { Assignments } from './collections/Assignments'
 import { Media } from './collections/Media'
 import { Submissions } from './collections/Submissions'
 import { Users } from './collections/Users'
+import { Courses } from './collections/Courses'
+import { Lessons } from './collections/Lessons'
+import { Enrollments } from './collections/Enrollments'
+import { Certificates } from './collections/certificates'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Assignments, Submissions],
+  collections: [Users, Media, Courses, Lessons, Enrollments, Certificates, Assignments, Submissions],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

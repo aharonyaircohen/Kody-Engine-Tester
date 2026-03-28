@@ -1,0 +1,102 @@
+import { NextRequest } from 'next/server'
+import type { CollectionSlug } from 'payload'
+import { userStore, sessionStore, jwtService } from '../../../auth'
+import { createAuthMiddleware } from '../../../middleware/auth-middleware'
+import { requireRole } from '../../../middleware/role-guard'
+import { getPayloadInstance } from '../../../services/progress'
+
+const auth = createAuthMiddleware(userStore, sessionStore, jwtService)
+
+export const POST = async (request: NextRequest) => {
+  const authContext = await auth({
+    authorization: request.headers.get('authorization') || undefined,
+    ip: request.headers.get('x-forwarded-for') || undefined,
+  })
+
+  if (authContext.error) {
+    return new Response(JSON.stringify({ error: authContext.error }), {
+      status: authContext.status ?? 401,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  const roleError = requireRole('student')(authContext)
+  if (roleError) {
+    return new Response(JSON.stringify({ error: roleError.error }), {
+      status: roleError.status,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  const user = authContext.user!
+  const body = await request.json()
+  const { courseId } = body
+
+  if (!courseId) {
+    return new Response(JSON.stringify({ error: 'courseId is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  const payload = await getPayloadInstance()
+
+  // Check for existing enrollment
+  const existing = await payload.find({
+    collection: 'enrollments' as CollectionSlug,
+    where: {
+      student: { equals: user.id },
+      course: { equals: courseId },
+    },
+    limit: 1,
+  })
+
+  if (existing.docs.length > 0) {
+    return new Response(JSON.stringify({ error: 'Already enrolled in this course' }), {
+      status: 409,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  // Fetch the course to check maxEnrollments
+  const course = (await payload.findByID({
+    collection: 'courses' as CollectionSlug,
+    id: courseId,
+  })) as unknown as { maxEnrollments: number }
+
+  const maxEnrollments = course.maxEnrollments
+
+  // Count active enrollments for this course
+  const { totalDocs: activeCount } = await payload.find({
+    collection: 'enrollments' as CollectionSlug,
+    where: {
+      course: { equals: courseId },
+      status: { equals: 'active' },
+    },
+    limit: 0,
+  })
+
+  if (activeCount >= maxEnrollments) {
+    return new Response(JSON.stringify({ error: 'Course has reached maximum enrollment capacity' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  const enrollment = await payload.create({
+    collection: 'enrollments' as CollectionSlug,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: {
+      student: user.id,
+      course: courseId,
+      enrolledAt: new Date().toISOString(),
+      status: 'active',
+      completedLessons: [],
+    } as any,
+  })
+
+  return new Response(JSON.stringify(enrollment), {
+    status: 201,
+    headers: { 'Content-Type': 'application/json' },
+  })
+}

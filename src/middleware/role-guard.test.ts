@@ -30,6 +30,14 @@ describe('requireRole', () => {
     const guard = requireRole('admin')
     const result = guard({})
     expect(result?.status).toBe(401)
+    expect(result?.error).toBe('Authentication required')
+  })
+
+  it('should return 401 when user exists but has no role', () => {
+    const guard = requireRole('admin')
+    const result = guard({ user: { id: '1', email: 'test@test.com' } as User })
+    expect(result?.status).toBe(401)
+    expect(result?.error).toBe('User role not configured')
   })
 
   it('should include descriptive error message', () => {

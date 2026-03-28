@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 
-export type UserRole = 'admin' | 'user' | 'guest'
+export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
 
 export interface User {
   id: string
@@ -39,8 +39,10 @@ export class UserStore {
 
   private async seed() {
     await this.createInternal({ email: 'admin@example.com', password: 'AdminPass1!', role: 'admin' })
+    await this.createInternal({ email: 'instructor@example.com', password: 'InstructorPass1!', role: 'instructor' })
+    await this.createInternal({ email: 'student@example.com', password: 'StudentPass1!', role: 'student' })
     await this.createInternal({ email: 'user@example.com', password: 'UserPass1!', role: 'user' })
-    const inactive = await this.createInternal({ email: 'inactive@example.com', password: 'InactivePass1!', role: 'user' })
+    const inactive = await this.createInternal({ email: 'inactive@example.com', password: 'InactivePass1!', role: 'student' })
     await this.update(inactive.id, { isActive: false })
   }
 

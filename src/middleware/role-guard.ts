@@ -15,6 +15,10 @@ export function requireRole(...roles: string[]) {
       return { error: 'Authentication required', status: 401 }
     }
 
+    if (!context.user.role) {
+      return { error: 'User role not configured', status: 401 }
+    }
+
     if (!roles.includes(context.user.role)) {
       return {
         error: `Forbidden: requires role ${roles.join(' or ')}`,
