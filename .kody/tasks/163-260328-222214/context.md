@@ -19,3 +19,18 @@ The implementation is complete. Here's a summary of what was done:
 - `Retry-After` header added on 429 responses (already existed, now also on the 429 path)
 - Added `enableRateLimitHeaders?: boolean` 
 ...(truncated)
+
+### autofix (2026-03-28T22:31:34)
+Confirmed — the remaining 7 errors are in `notifications.tsx`, `error-boundary.tsx`, and `error-boundary.test.tsx`, none of which are in this PR's changes. They are pre-existing.
+
+Here's a summary of the fixes applied based on the human feedback:
+
+**grading.test.ts:**
+- Removed unused `beforeEach` import
+- Removed unused `MockUser` interface
+- Removed unused `Role` type alias
+
+**quiz-grader.test.ts:**
+- Removed unused `getAttempts` and `resetAttempts` imports
+- Replaced `any[]` with `QuizQuestio
+...(truncated)
