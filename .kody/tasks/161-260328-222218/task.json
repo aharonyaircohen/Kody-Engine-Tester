@@ -1,0 +1,11 @@
+{
+  "task_type": "bugfix",
+  "title": "Fix course search API empty query handling",
+  "description": "Handle empty/whitespace query strings in course search by returning empty results with 200 status instead of 500 error. Add early return for empty queries and test coverage.",
+  "scope": [
+    "src/services/course-search.ts",
+    "src/services/course-search.test.ts"
+  ],
+  "risk_level": "low",
+  "questions": []
+}

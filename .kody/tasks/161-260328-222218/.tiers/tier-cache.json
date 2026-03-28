@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/161-260328-222218/task.md",
+      "hash": "145d93804d9ed26a",
+      "L0": "# Bug: course search API returns 500 when query parameter is empty string\nWhen calling `GET /api/courses/search?q=` with an empty string query parameter, the API throws an unhandled error instead of returning an empty result set.",
+      "L1": "# Bug: course search API returns 500 when query parameter is empty string\n## Bug Report\nWhen calling `GET /api/courses/search?q=` with an empty string query parameter, the API throws an unhandled error instead of returning an empty result set.\n- Add an early return in the search function when query is empty/whitespace-only\n- Return `{ results: [], total: 0 }` \n- Add a test case for empty query in the search tests",
+      "L2": "# Bug: course search API returns 500 when query parameter is empty string\n\n## Bug Report\n\nWhen calling `GET /api/courses/search?q=` with an empty string query parameter, the API throws an unhandled error instead of returning an empty result set.\n\n**Expected:** Returns `{ results: [], total: 0 }` with 200 status\n**Actual:** Returns 500 Internal Server Error\n\n**File:** `src/services/course-search.ts`\n\n**Root cause:** The search function doesn't handle empty/blank query strings — it passes them directly to the text search which throws on empty input.\n\n**Fix:**\n- Add an early return in the search function when query is empty/whitespace-only\n- Return `{ results: [], total: 0 }` \n- Add a test case for empty query in the search tests\n\n**Complexity:** low"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/161-260328-222218/task.json",
+      "hash": "26c9b4c4abafee21",
+      "L0": "Title: Fix course search API empty query handling | Type: bugfix | Risk: low",
+      "L1": "- task_type: bugfix\n- title: Fix course search API empty query handling\n- description: Handle empty/whitespace query strings in course search by returning empty results with 200 status instead of 500 error. Add early return for empty queries and test coverage.\n- scope: [2 items] src/services/course-search.ts, src/services/course-search.test.ts\n- risk_level: low\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"bugfix\",\n  \"title\": \"Fix course search API empty query handling\",\n  \"description\": \"Handle empty/whitespace query strings in course search by returning empty results with 200 status instead of 500 error. Add early return for empty queries and test coverage.\",\n  \"scope\": [\n    \"src/services/course-search.ts\",\n    \"src/services/course-search.test.ts\"\n  ],\n  \"risk_level\": \"low\",\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/161-260328-222218/context.md",
+      "hash": "15174a1fc697eb20",
+      "L0": "### taskify (2026-03-28T22:27:44)\n  - Empty string query.",
+      "L1": "### taskify (2026-03-28T22:27:44)\nDone. I created `src/services/course-search.ts` with the empty query handling fix and `src/services/course-search.test.ts` with test coverage.\n- Created `src/services/course-search.ts` with `CourseSearchService.search()` that returns `{ results: [], total: 0 }` for empty/whitespace-only queries\n- Created `src/services/course-search.test.ts` with 5 tests covering:\n  - Empty string query\n  - Whitespace-only query  \n  - Valid query matching",
+      "L2": "\n### taskify (2026-03-28T22:27:44)\nDone. I created `src/services/course-search.ts` with the empty query handling fix and `src/services/course-search.test.ts` with test coverage.\n\n**Summary:**\n- Created `src/services/course-search.ts` with `CourseSearchService.search()` that returns `{ results: [], total: 0 }` for empty/whitespace-only queries\n- Created `src/services/course-search.test.ts` with 5 tests covering:\n  - Empty string query\n  - Whitespace-only query  \n  - Valid query matching\n  - Case-insensitive search\n  - Description \n...(truncated)\n"
+    }
+  }
+}
