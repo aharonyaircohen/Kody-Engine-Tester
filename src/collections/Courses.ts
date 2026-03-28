@@ -112,5 +112,21 @@ export const Courses: CollectionConfig = {
       name: 'maxEnrollments',
       type: 'number',
     },
+    {
+      name: 'quizWeight',
+      type: 'number',
+      defaultValue: 40,
+      admin: {
+        description: 'Weight of quiz scores in final grade (%). Assignment weight = 100 - quizWeight.',
+      },
+    },
+    {
+      name: 'assignmentWeight',
+      type: 'number',
+      defaultValue: 60,
+      admin: {
+        description: 'Weight of assignment scores in final grade (%). Quiz weight = 100 - assignmentWeight.',
+      },
+    },
   ],
 }
