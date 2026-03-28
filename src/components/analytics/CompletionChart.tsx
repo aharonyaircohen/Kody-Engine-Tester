@@ -1,5 +1,3 @@
-'use client'
-
 import type { ModuleCompletion } from '@/services/analytics'
 
 interface CompletionChartProps {

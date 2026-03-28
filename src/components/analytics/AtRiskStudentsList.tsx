@@ -1,5 +1,3 @@
-'use client'
-
 import type { AtRiskStudent } from '@/services/analytics'
 
 interface AtRiskStudentsListProps {
@@ -37,8 +35,8 @@ export function AtRiskStudentsList({ students }: AtRiskStudentsListProps) {
               <td style={{ padding: '8px' }}>{s.averageGrade !== null ? `${s.averageGrade}%` : 'N/A'}</td>
               <td style={{ padding: '8px' }}>
                 <span style={{
-                  background: s.reason === 'both' ? '#fef2f2' : s.reason === 'low-grade' ? '#fffbeb' : '#fef2f2',
-                  color: s.reason === 'both' ? '#dc2626' : s.reason === 'low-grade' ? '#d97706' : '#dc2626',
+                  background: s.reason === 'both' ? '#fef2f2' : '#fffbeb',
+                  color: s.reason === 'both' ? '#dc2626' : '#d97706',
                   padding: '2px 8px',
                   borderRadius: '4px',
                   fontSize: '12px',

@@ -2,9 +2,13 @@ import { AnalyticsCard } from '@/components/analytics/AnalyticsCard'
 import { CompletionChart } from '@/components/analytics/CompletionChart'
 import { AtRiskStudentsList } from '@/components/analytics/AtRiskStudentsList'
 import { AnalyticsService } from '@/services/analytics'
-import type { AnalyticsServiceDeps, EnrollmentRecord, ModuleRecord, QuizAttemptRecord, SubmissionRecord } from '@/services/analytics'
+import type { AnalyticsServiceDeps, EnrollmentRecord, InstructorOverview, ModuleRecord, QuizAttemptRecord, SubmissionRecord } from '@/services/analytics'
 import { getPayloadInstance } from '@/services/progress'
+import { headers as getHeaders } from 'next/headers.js'
+import { redirect } from 'next/navigation'
+import { getPayload } from 'payload'
 import type { CollectionSlug } from 'payload'
+import config from '@/payload.config'
 
 function createPayloadDeps(): AnalyticsServiceDeps {
   return {
@@ -34,20 +38,24 @@ function createPayloadDeps(): AnalyticsServiceDeps {
         limit: 0,
       })
       const moduleDocs = modules as unknown as Record<string, unknown>[]
-      const result: ModuleRecord[] = []
-      for (const mod of moduleDocs) {
-        const { docs: lessons } = await payload.find({
-          collection: 'lessons' as CollectionSlug,
-          where: { course: { equals: courseId } },
-          limit: 0,
-        })
-        result.push({
-          id: String(mod.id),
-          title: String(mod.title),
-          lessonIds: (lessons as unknown as { id: string }[]).map((l) => String(l.id)),
-        })
+      const moduleIds = moduleDocs.map((m) => String(m.id))
+      const { docs: lessons } = await payload.find({
+        collection: 'lessons' as CollectionSlug,
+        where: { module: { in: moduleIds } },
+        limit: 0,
+      })
+      const lessonsByModule = new Map<string, string[]>()
+      for (const l of lessons as unknown as { id: string; module: string | { id: string } }[]) {
+        const modId = typeof l.module === 'string' ? l.module : l.module.id
+        const arr = lessonsByModule.get(modId) ?? []
+        arr.push(String(l.id))
+        lessonsByModule.set(modId, arr)
       }
-      return result
+      return moduleDocs.map((mod) => ({
+        id: String(mod.id),
+        title: String(mod.title),
+        lessonIds: lessonsByModule.get(String(mod.id)) ?? [],
+      }))
     },
 
     getTotalLessonsByCourse: async (courseId: string): Promise<number> => {
@@ -137,15 +145,31 @@ function createPayloadDeps(): AnalyticsServiceDeps {
 }
 
 export default async function InstructorAnalyticsPage() {
-  // TODO: Read instructor ID from auth session once wired
-  const instructorId = 'placeholder'
+  const reqHeaders = await getHeaders()
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+  const { user } = await payload.auth({ headers: reqHeaders })
 
+  if (!user) {
+    redirect('/login')
+  }
+
+  const instructorId = String(user.id)
   const deps = createPayloadDeps()
   const svc = new AnalyticsService(deps)
 
-  const overview = await svc.getInstructorOverview(instructorId)
   const courses = await deps.getCoursesByInstructor(instructorId)
-  const courseAnalytics = courses.length > 0 ? await svc.getCourseAnalytics(courses[0].id) : null
+  const allCourseAnalytics = await Promise.all(courses.map((c) => svc.getCourseAnalytics(c.id)))
+  const courseAnalytics = allCourseAnalytics[0] ?? null
+
+  const overview: InstructorOverview = {
+    totalCourses: courses.length,
+    totalStudents: allCourseAnalytics.reduce((sum, a) => sum + a.totalEnrollments, 0),
+    averageCompletionRate:
+      allCourseAnalytics.length > 0
+        ? Math.round(allCourseAnalytics.reduce((sum, a) => sum + a.completionRate, 0) / allCourseAnalytics.length)
+        : 0,
+  }
 
   return (
     <div style={{ maxWidth: '960px', margin: '0 auto', padding: '24px' }}>

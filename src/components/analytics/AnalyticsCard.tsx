@@ -1,5 +1,3 @@
-'use client'
-
 export type TrendDirection = 'up' | 'down' | 'neutral'
 
 interface AnalyticsCardProps {
