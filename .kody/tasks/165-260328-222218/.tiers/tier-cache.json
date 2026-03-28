@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/165-260328-222218/task.md",
+      "hash": "771aa5420d08867e",
+      "L0": "# Add unit tests for notification service event dispatching\nThe notification service (\\`src/services/notification-service.ts\\`) handles LMS event dispatching but lacks dedicated unit tests.",
+      "L1": "# Add unit tests for notification service event dispatching\n## Test Coverage\nThe notification service (\\`src/services/notification-service.ts\\`) handles LMS event dispatching but lacks dedicated unit tests.",
+      "L2": "# Add unit tests for notification service event dispatching\n\n## Test Coverage\n\nThe notification service (\\`src/services/notification-service.ts\\`) handles LMS event dispatching but lacks dedicated unit tests.\n\n**Test file:** \\`src/services/notification-service.test.ts\\`\n\n**Test cases needed:**\n1. Dispatching an enrollment event creates a notification for the student\n2. Dispatching a grade-posted event creates a notification for the student\n3. Dispatching a certificate-issued event creates a notification\n4. Unknown event types are silently ignored (no error thrown)\n5. Multiple subscribers receive the same event\n6. Event payload is passed through correctly to notification body\n\nMock the data layer. Focus on the dispatch logic and subscriber notification.\n\n**Complexity:** low"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/165-260328-222218/task.json",
+      "hash": "06b04736f4f177bc",
+      "L0": "Title: Add unit tests for notification service event dispatching | Type: chore | Risk: low",
+      "L1": "- task_type: chore\n- title: Add unit tests for notification service event dispatching\n- description: Add comprehensive unit tests for the notification service that handles LMS event dispatching. Tests cover enrollment, grade-posted, and certificate-issued events, subscriber notification, event payload passing, and unknown event type handling.\n- scope: [2 items] src/services/notification-service.ts, src/services/notification-service.test.ts\n- risk_level: low\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"chore\",\n  \"title\": \"Add unit tests for notification service event dispatching\",\n  \"description\": \"Add comprehensive unit tests for the notification service that handles LMS event dispatching. Tests cover enrollment, grade-posted, and certificate-issued events, subscriber notification, event payload passing, and unknown event type handling.\",\n  \"scope\": [\"src/services/notification-service.ts\", \"src/services/notification-service.test.ts\"],\n  \"risk_level\": \"low\",\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/165-260328-222218/context.md",
+      "hash": "b3803981587c1adf",
+      "L0": "### taskify (2026-03-28T22:25:27)\n  \"task_type\": \"chore\",.",
+      "L1": "### taskify (2026-03-28T22:25:27)\n{",
+      "L2": "\n### taskify (2026-03-28T22:25:27)\n{\n  \"task_type\": \"chore\",\n  \"title\": \"Add unit tests for notification service event dispatching\",\n  \"description\": \"Add comprehensive unit tests for the notification service that handles LMS event dispatching. Tests cover enrollment, grade-posted, and certificate-issued events, subscriber notification, event payload passing, and unknown event type handling.\",\n  \"scope\": [\"src/services/notification-service.ts\", \"src/services/notification-service.test.ts\"],\n  \"risk_level\": \"low\",\n  \"questions\": []\n...(truncated)\n"
+    }
+  }
+}
