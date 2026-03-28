@@ -24,3 +24,19 @@ All 18 tests pass. Here's a summary of what was implemented:
 - `src/services/analytics.test.ts` — 13 tests covering all computation paths (edge cases, empty data, exclusions, aggregation).
 - `src/components/analyt
 ...(truncated)
+
+### review (2026-03-28T19:07:20)
+## Verdict: FAIL
+
+## Summary
+Implements instructor analytics dashboard with service layer (DI pattern), three UI components, and thorough unit tests. The service logic and tests are solid, but the Payload integration layer in the page component has a significant N+1 query bug and a duplicate data-fetch issue.
+
+## Findings
+
+### Critical
+None.
+
+### Major
+
+1. `src/app/(frontend)/instructor/analytics/page.tsx:39-43` — **N+1 query in `getModulesByCourse`**: The inner loop fetches lessons for every mo
+...(truncated)
