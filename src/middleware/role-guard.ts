@@ -4,7 +4,7 @@ interface RoleContext {
   user?: User
 }
 
-interface RoleError {
+export interface RoleError {
   error: string
   status: number
 }
