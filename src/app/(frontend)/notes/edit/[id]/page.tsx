@@ -13,7 +13,7 @@ export default function NoteEditPage() {
   const [note, setNote] = useState<Note | null>(null)
 
   useEffect(() => {
-    setNote(notesStore.getById(id))
+    notesStore.getById(id).then(setNote)
   }, [id])
 
   if (!note) {
@@ -25,8 +25,8 @@ export default function NoteEditPage() {
     )
   }
 
-  function handleSubmit(data: { title: string; content: string; tags: string[] }) {
-    notesStore.update(id, data)
+  async function handleSubmit(data: { title: string; content: string; tags: string[] }) {
+    await notesStore.update(id, data)
     router.push(`/notes/${id}`)
   }
 
