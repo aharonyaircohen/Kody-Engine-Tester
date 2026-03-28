@@ -12,7 +12,7 @@ export default function NotesListPage() {
   const router = useRouter()
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-  const [notes, setNotes] = useState<Note[]>(() => notesStore.getAll())
+  const [notes, setNotes] = useState<Note[]>([])
 
   useEffect(() => {
     const timer = setTimeout(() => setSearchQuery(searchInput), 300)
@@ -20,11 +20,14 @@ export default function NotesListPage() {
   }, [searchInput])
 
   useEffect(() => {
-    if (searchQuery) {
-      setNotes(notesStore.search(searchQuery))
-    } else {
-      setNotes(notesStore.getAll())
+    const load = async () => {
+      if (searchQuery) {
+        setNotes(await notesStore.search(searchQuery))
+      } else {
+        setNotes(await notesStore.getAll())
+      }
     }
+    load()
   }, [searchQuery])
 
   return (

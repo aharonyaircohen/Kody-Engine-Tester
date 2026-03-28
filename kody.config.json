@@ -8,14 +8,14 @@
     "testUnit": ""
   },
   "git": {
-    "defaultBranch": "main"
+    "defaultBranch": "kody"
   },
   "github": {
     "owner": "aharonyaircohen",
     "repo": "Kody-Engine-Tester"
   },
   "paths": {
-    "taskDir": ".tasks"
+    "taskDir": ".kody/tasks"
   },
   "agent": {
     "runner": "claude-code",
