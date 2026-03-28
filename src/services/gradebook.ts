@@ -76,11 +76,10 @@ export class GradebookService<
    */
   async getStudentGradebook(studentId: string): Promise<StudentGradebookEntry[]> {
     const enrollments = await this.deps.getEnrollments(studentId)
-    const active = enrollments.filter((e) => (e as unknown as { status?: string }).status === 'active')
 
     const entries: StudentGradebookEntry[] = []
 
-    for (const enrollment of active) {
+    for (const enrollment of enrollments) {
       const enrollmentRecord = enrollment as unknown as { courseId?: string; course?: string | { id: string }; id: string }
       const courseId =
         enrollmentRecord.courseId ??

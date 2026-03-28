@@ -19,7 +19,7 @@ interface MockQuiz {
 interface MockQuizAttempt {
   id: string
   quizId: string
-  studentId: string
+  user: string | { id: string }
   score: number
   maxScore: number
 }
@@ -98,7 +98,9 @@ function makeStores() {
         [...quizzes.values()].filter((q) => q.courseId === courseId),
       getQuizAttempts: async (studentId: string, quizId: string) =>
         [...quizAttempts.values()].filter(
-          (a) => a.studentId === studentId && a.quizId === quizId,
+          (a) =>
+            (typeof a.user === 'string' ? a.user : a.user.id) === studentId &&
+            a.quizId === quizId,
         ),
       getAssignments: async (courseId: string) =>
         [...assignments.values()].filter((a) => a.courseId === courseId),
@@ -107,7 +109,7 @@ function makeStores() {
           (s) => s.studentId === studentId && s.assignmentId === assignmentId,
         ),
       getEnrollments: async (studentId: string) =>
-        [...enrollments.values()].filter((e) => e.studentId === studentId),
+        [...enrollments.values()].filter((e) => e.studentId === studentId && e.status === 'active'),
       getCourseEnrollments: async (courseId: string) =>
         [...enrollments.values()]
           .filter((e) => e.courseId === courseId)
@@ -160,7 +162,7 @@ function addQuizAttempt(
   score: number,
   maxScore = 100,
 ) {
-  const attempt: MockQuizAttempt = { id, studentId, quizId, score, maxScore }
+  const attempt: MockQuizAttempt = { id, user: studentId, quizId, score, maxScore }
   quizAttempts.set(id, attempt)
   return attempt
 }
@@ -242,7 +244,7 @@ describe('GradebookService', () => {
     })
 
     it('returns course gradebook with no grades when student is enrolled but has no attempts', async () => {
-      const { courses, enrollments, quizzes, assignments, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, assignments, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1')
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1')
@@ -269,7 +271,7 @@ describe('GradebookService', () => {
     })
 
     it('calculates quiz average using best attempt per quiz', async () => {
-      const { courses, enrollments, quizzes, quizAttempts, assignments, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, quizAttempts, assignments, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1')
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1')
@@ -290,7 +292,7 @@ describe('GradebookService', () => {
     })
 
     it('calculates assignment average from graded submissions only', async () => {
-      const { courses, enrollments, quizzes, assignments, submissions, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, assignments, submissions, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1')
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1')
@@ -311,7 +313,7 @@ describe('GradebookService', () => {
     })
 
     it('calculates overall grade using default weights 40/60', async () => {
-      const { courses, enrollments, quizzes, quizAttempts, assignments, submissions, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, quizAttempts, assignments, submissions, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1', { quizWeight: 40, assignmentWeight: 60 })
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1')
@@ -330,7 +332,7 @@ describe('GradebookService', () => {
     })
 
     it('uses custom per-course weights', async () => {
-      const { courses, enrollments, quizzes, quizAttempts, assignments, submissions, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, quizAttempts, assignments, submissions, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1', { quizWeight: 60, assignmentWeight: 40 })
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1')
@@ -370,7 +372,7 @@ describe('GradebookService', () => {
     })
 
     it('returns 0 progress when course has no lessons', async () => {
-      const { courses, enrollments, quizzes, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1')
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1')
@@ -385,7 +387,7 @@ describe('GradebookService', () => {
     })
 
     it('only returns gradebook for active enrollments', async () => {
-      const { courses, enrollments, quizzes, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1')
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1', 'active')
@@ -405,7 +407,7 @@ describe('GradebookService', () => {
     })
 
     it('normalizes quiz scores to percentage (0-100 scale)', async () => {
-      const { courses, enrollments, quizzes, quizAttempts, assignments, submissions, lessons, completedLessons, deps } =
+      const { courses, enrollments, quizzes, quizAttempts, assignments, submissions, lessons, deps } =
         makeStores()
       addCourse(courses, 'course-1')
       addEnrollment(enrollments, 'enroll-1', 'student-1', 'course-1')
@@ -427,7 +429,7 @@ describe('GradebookService', () => {
 
   describe('getCourseGradebook', () => {
     it('returns empty array when course has no enrollments', async () => {
-      const { courses, quizzes, assignments, lessons, completedLessons, deps } =
+      const { courses, quizzes, assignments, deps } =
         makeStores()
       addCourse(courses, 'course-1')
       addQuiz(quizzes, 'quiz-1', 'course-1')
@@ -449,7 +451,6 @@ describe('GradebookService', () => {
         assignments,
         submissions,
         lessons,
-        completedLessons,
         deps,
       } = makeStores()
       addCourse(courses, 'course-1')
