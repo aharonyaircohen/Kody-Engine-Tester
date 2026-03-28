@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/166-260328-222220/task.md",
+      "hash": "4afeb7af0709f2a7",
+      "L0": "# Bug: gradebook weighted average calculation ignores zero-weight categories\nThe gradebook aggregation service calculates weighted averages but doesn't handle the case where a category has weight=0 (e.g., extra credit that shouldn't count toward the final grade).",
+      "L1": "# Bug: gradebook weighted average calculation ignores zero-weight categories\n## Bug Report\nThe gradebook aggregation service calculates weighted averages but doesn't handle the case where a category has weight=0 (e.g., extra credit that shouldn't count toward the final grade).\n- Quiz: weight=40, score=80 → contributes 32\n- Assignment: weight=60, score=90 → contributes 54\n- Extra credit: weight=0, score=100 → contributes 0\n- Current result: (32+54+0) / (40+60+0) = 86% ✓ (works by coincidence when score contributes 0)\n- But if extra credit weight=0 and scores=[]: average should still be 86%, not affected by empty array",
+      "L2": "# Bug: gradebook weighted average calculation ignores zero-weight categories\n\n## Bug Report\n\nThe gradebook aggregation service calculates weighted averages but doesn't handle the case where a category has weight=0 (e.g., extra credit that shouldn't count toward the final grade).\n\n**File:** \\`src/services/gradebook.ts\\`\n\n**Expected:** Categories with weight=0 are excluded from the weighted average denominator\n**Actual:** They dilute the average because the total weight includes them, making the denominator larger than intended\n\n**Example:**\n- Quiz: weight=40, score=80 → contributes 32\n- Assignment: weight=60, score=90 → contributes 54\n- Extra credit: weight=0, score=100 → contributes 0\n- Current result: (32+54+0) / (40+60+0) = 86% ✓ (works by coincidence when score contributes 0)\n- But if extra credit weight=0 and scores=[]: average should still be 86%, not affected by empty array\n\nThe real bug: when a zero-weight category has no scores, the service throws a division-by-zero error.\n\n**Fix:** Filter out zero-weight categories before calculating, and handle empty score arrays gracefully.\n\n**Complexity:** low"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/166-260328-222220/task.json",
+      "hash": "3c537495671a107f",
+      "L0": "Title: Fix gradebook weighted average for zero-weight categories | Type: bugfix | Risk: low",
+      "L1": "- task_type: bugfix\n- title: Fix gradebook weighted average for zero-weight categories\n- description: The gradebook service throws division-by-zero when a category has weight=0 and no scores. Fix by filtering zero-weight categories before calculating weighted average, and handle empty score arrays gracefully. Result should exclude zero-weight categories from both breakdown and denominator.\n- scope: [2 items] src/services/gradebook.ts, src/services/gradebook.test.ts\n- risk_level: low\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"bugfix\",\n  \"title\": \"Fix gradebook weighted average for zero-weight categories\",\n  \"description\": \"The gradebook service throws division-by-zero when a category has weight=0 and no scores. Fix by filtering zero-weight categories before calculating weighted average, and handle empty score arrays gracefully. Result should exclude zero-weight categories from both breakdown and denominator.\",\n  \"scope\": [\"src/services/gradebook.ts\", \"src/services/gradebook.test.ts\"],\n  \"risk_level\": \"low\",\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/166-260328-222220/context.md",
+      "hash": "64fa31be5819f521",
+      "L0": "### taskify (2026-03-28T22:27:26)\n...(truncated).",
+      "L1": "### taskify (2026-03-28T22:27:26)\nDone. I created `src/services/gradebook.ts` with the fix for the weighted average calculation bug.\n- Created `src/services/gradebook.ts` with `computeWeightedGrade()` function\n- Created comprehensive test suite with 9 tests in `src/services/gradebook.test.ts`",
+      "L2": "\n### taskify (2026-03-28T22:27:26)\nDone. I created `src/services/gradebook.ts` with the fix for the weighted average calculation bug.\n\n**Summary:**\n- Created `src/services/gradebook.ts` with `computeWeightedGrade()` function\n- Created comprehensive test suite with 9 tests in `src/services/gradebook.test.ts`\n\n**Key fixes:**\n1. **Filters out zero-weight categories** - prevents them from diluting the average\n2. **Handles empty score arrays** - categories with no scores contribute 0 but still count toward total weight denominator\n3. \n...(truncated)\n"
+    }
+  }
+}
