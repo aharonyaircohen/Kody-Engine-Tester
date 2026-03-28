@@ -55,6 +55,7 @@ export interface GradebookDeps {
     moduleIds: string[]
   } | null>
   getQuizzesForModules: (moduleIds: string[]) => Promise<Array<{ id: string; moduleId: string; maxScore: number }>>
+  getAssignmentsForModules: (moduleIds: string[]) => Promise<Array<{ id: string; moduleId: string; maxScore: number }>>
   getQuizAttemptsForStudent: (studentId: string, quizIds: string[]) => Promise<QuizGrade[]>
   getSubmissionsForStudent: (studentId: string, assignmentIds: string[]) => Promise<AssignmentGrade[]>
 }
@@ -128,17 +129,16 @@ export class GradebookService {
     course: { id: string; title: string; quizWeight: number; assignmentWeight: number; moduleIds: string[] },
     studentId?: string,
   ): Promise<CourseGradebook> {
-    const quizzes = await this.deps.getQuizzesForModules(course.moduleIds)
+    const [quizzes, assignments] = await Promise.all([
+      this.deps.getQuizzesForModules(course.moduleIds),
+      this.deps.getAssignmentsForModules(course.moduleIds),
+    ])
     const quizIds = quizzes.map((q) => q.id)
+    const assignmentIds = assignments.map((a) => a.id)
 
     const [quizGrades, submissions] = await Promise.all([
       studentId ? this.deps.getQuizAttemptsForStudent(studentId, quizIds) : Promise.resolve([]),
-      studentId
-        ? this.deps.getSubmissionsForStudent(
-            studentId,
-            quizzes.map((q) => q.id), // assignments are keyed by quiz IDs in mock, real impl uses assignment IDs
-          )
-        : Promise.resolve([]),
+      studentId ? this.deps.getSubmissionsForStudent(studentId, assignmentIds) : Promise.resolve([]),
     ])
 
     const quizAverage = this.calcAverage(quizGrades.map((qg) => qg.percentage))
@@ -151,9 +151,10 @@ export class GradebookService {
       course.assignmentWeight,
     )
 
-    const totalItems = quizGrades.length + submissions.length
-    const gradedItems = quizGrades.length + submissions.length
-    const progress = totalItems > 0 ? Math.round((gradedItems / totalItems) * 100) : 0
+    // totalItems = all assessable items in the course; completedItems = graded ones
+    const totalItems = quizzes.length + assignments.length
+    const completedItems = quizGrades.length + submissions.length
+    const progress = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0
 
     return {
       courseId: course.id,
@@ -165,7 +166,7 @@ export class GradebookService {
       overallGrade,
       quizGrades,
       assignmentGrades: submissions,
-      completedItems: gradedItems,
+      completedItems,
       totalItems,
       progress,
     }
@@ -288,6 +289,7 @@ export class PayloadGradebookService {
       getEnrollmentsForCourse: async () => [], // not needed for student view
       getCourse: async (cid) => this.getCourse(cid),
       getQuizzesForModules: async (mids) => this.getQuizzesForModules(mids),
+      getAssignmentsForModules: async (mids) => this.getAssignmentsForModules(mids),
       getQuizAttemptsForStudent: async (sid, quizIds) => this.getQuizAttemptsForStudent(sid, quizIds),
       getSubmissionsForStudent: async (sid, assignmentIds) => this.getSubmissionsForStudent(sid, assignmentIds),
     })
@@ -300,6 +302,7 @@ export class PayloadGradebookService {
       getEnrollmentsForCourse: async (cid) => this.getEnrollmentsForCourse(cid),
       getCourse: async (cid) => this.getCourse(cid),
       getQuizzesForModules: async (mids) => this.getQuizzesForModules(mids),
+      getAssignmentsForModules: async (mids) => this.getAssignmentsForModules(mids),
       getQuizAttemptsForStudent: async (sid, quizIds) => this.getQuizAttemptsForStudent(sid, quizIds),
       getSubmissionsForStudent: async (sid, assignmentIds) => this.getSubmissionsForStudent(sid, assignmentIds),
     })
@@ -389,6 +392,25 @@ export class PayloadGradebookService {
         id: String(d.id),
         moduleId: normalizeId(d.module as string | { id: string }),
         maxScore: 100,
+      }
+    })
+  }
+
+  private async getAssignmentsForModules(moduleIds: string[]) {
+    if (moduleIds.length === 0) return []
+    const result = await this.payload.find({
+      collection: 'assignments' as CollectionSlug,
+      where: {
+        module: { in: moduleIds },
+      },
+      limit: 0,
+    })
+    return result.docs.map((doc: unknown) => {
+      const d = doc as AssignmentDoc
+      return {
+        id: String(d.id),
+        moduleId: normalizeId(d.module as string | { id: string }),
+        maxScore: d.maxScore ?? 100,
       }
     })
   }

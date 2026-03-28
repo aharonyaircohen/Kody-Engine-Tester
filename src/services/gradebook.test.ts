@@ -39,14 +39,23 @@ function makeMockDeps() {
       }
       return quizzes
     },
+    getAssignmentsForModules: async (moduleIds) => {
+      // Return 2 assignments per module
+      const assignments: Array<{ id: string; moduleId: string; maxScore: number }> = []
+      for (const mid of moduleIds) {
+        assignments.push({ id: `assign-${mid}-1`, moduleId: mid, maxScore: 100 })
+        assignments.push({ id: `assign-${mid}-2`, moduleId: mid, maxScore: 100 })
+      }
+      return assignments
+    },
     getQuizAttemptsForStudent: async (studentId, quizIds) => {
       const grades = quizAttempts.get(studentId) ?? []
       return grades.filter((g) => quizIds.includes(g.quizId))
     },
-    // getSubmissionsForStudent: called with assignmentIds from quizzes in buildCourseGradebook.
-    // The mock ignores assignmentIds and returns all submissions for the student,
-    // which is sufficient for unit-testing the GradebookService aggregation logic.
-    getSubmissionsForStudent: async (studentId, _assignmentIds) => submissions.get(studentId) ?? [],
+    getSubmissionsForStudent: async (studentId, assignmentIds) => {
+      const studentSubs = submissions.get(studentId) ?? []
+      return studentSubs.filter((s) => (assignmentIds ?? []).includes(s.assignmentId))
+    },
   })
 
   return { service, enrollments, courses, quizAttempts, submissions }
@@ -123,10 +132,10 @@ describe('getStudentGradebook', () => {
       passed: true,
       completedAt: new Date(),
     })
-    // Mock ignores assignmentIds filter, so any assignmentId works
+    // addSubmissionGrade uses assignmentId that matches what getAssignmentsForModules returns
     addSubmissionGrade(submissions, 'student-1', {
       submissionId: 'sub-1',
-      assignmentId: 'assign-1',
+      assignmentId: 'assign-module-course-1-1',
       grade: 85,
       maxScore: 100,
       percentage: 85,
@@ -330,10 +339,10 @@ describe('progress tracking', () => {
       passed: true,
       completedAt: new Date(),
     })
-    // Mock returns all submissions for student (ignores assignmentId filter)
+    // addSubmissionGrade filters by assignmentId against getAssignmentsForModules output
     addSubmissionGrade(submissions, 'student-1', {
       submissionId: 'sub-1',
-      assignmentId: 'assign-1',
+      assignmentId: 'assign-module-course-1-1',
       grade: 90,
       maxScore: 100,
       percentage: 90,
@@ -342,11 +351,12 @@ describe('progress tracking', () => {
 
     const result = await service.getStudentGradebook('student-1')
 
-    // totalItems = quizGrades.length (1) + submissions.length (1) = 2
-    expect(result.courses[0].totalItems).toBe(2)
-    // completedItems = quizGrades.length + submissions.length (all are graded)
+    // getAssignmentsForModules returns 2 assignments per module; getQuizzesForModules returns 2 quizzes
+    // totalItems = 2 quizzes + 2 assignments = 4
+    expect(result.courses[0].totalItems).toBe(4)
+    // completedItems = 1 quiz grade + 1 matching submission = 2
     expect(result.courses[0].completedItems).toBe(2)
-    expect(result.courses[0].progress).toBe(100)
+    expect(result.courses[0].progress).toBe(50)
   })
 
   it('sets progress to 0 when no items are graded', async () => {
@@ -356,7 +366,8 @@ describe('progress tracking', () => {
 
     const result = await service.getStudentGradebook('student-1')
 
-    expect(result.courses[0].totalItems).toBe(0)
+    // getAssignmentsForModules returns 2 assignments; getQuizzesForModules returns 2 quizzes
+    expect(result.courses[0].totalItems).toBe(4)
     expect(result.courses[0].completedItems).toBe(0)
     expect(result.courses[0].progress).toBe(0)
   })
