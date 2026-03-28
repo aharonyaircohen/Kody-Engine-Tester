@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/163-260328-222214/task.md",
+      "hash": "ef5191383b7612c1",
+      "L0": "# Add rate limit headers to API responses\nAdd standard rate limit headers to all API responses so clients know their remaining quota.",
+      "L1": "# Add rate limit headers to API responses\n## Feature Request\nAdd standard rate limit headers to all API responses so clients know their remaining quota.\n- Add these headers to every response that passes through the rate limiter:\n  - \\`X-RateLimit-Limit\\`: max requests per window\n  - \\`X-RateLimit-Remaining\\`: remaining requests in current window\n  - \\`X-RateLimit-Reset\\`: UTC epoch seconds when window resets\n- When rate limited (429), also include \\`Retry-After\\` header (seconds until reset)",
+      "L2": "# Add rate limit headers to API responses\n\n## Feature Request\n\nAdd standard rate limit headers to all API responses so clients know their remaining quota.\n\n**Files:** `src/middleware/rate-limiter.ts`\n\n**Requirements:**\n- Add these headers to every response that passes through the rate limiter:\n  - \\`X-RateLimit-Limit\\`: max requests per window\n  - \\`X-RateLimit-Remaining\\`: remaining requests in current window\n  - \\`X-RateLimit-Reset\\`: UTC epoch seconds when window resets\n- When rate limited (429), also include \\`Retry-After\\` header (seconds until reset)\n- Add tests verifying headers are present and values decrement correctly\n\n**Complexity:** low"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/163-260328-222214/task.json",
+      "hash": "6ee6aa20739dfa62",
+      "L0": "Title: Add rate limit headers to API responses | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add rate limit headers to API responses\n- description: Add standard rate limit headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After) to all API responses that pass through the rate limiter middleware. Headers provide clients with their remaining quota and reset time.\n- scope: [2 items] src/middleware/rate-limiter.ts, src/middleware/rate-limiter.test.ts\n- risk_level: low\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"feature\",\n  \"title\": \"Add rate limit headers to API responses\",\n  \"description\": \"Add standard rate limit headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After) to all API responses that pass through the rate limiter middleware. Headers provide clients with their remaining quota and reset time.\",\n  \"scope\": [\"src/middleware/rate-limiter.ts\", \"src/middleware/rate-limiter.test.ts\"],\n  \"risk_level\": \"low\",\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/163-260328-222214/context.md",
+      "hash": "29e8806615a55ff1",
+      "L0": "### taskify (2026-03-28T22:26:49)\nAll 32 tests pass.",
+      "L1": "### taskify (2026-03-28T22:26:49)\nAll 32 tests pass. The rate limit headers were already implemented in `src/middleware/rate-limiter.ts`. I added tests to verify:",
+      "L2": "\n### taskify (2026-03-28T22:26:49)\n\nAll 32 tests pass. The rate limit headers were already implemented in `src/middleware/rate-limiter.ts`. I added tests to verify:\n\n1. **`X-RateLimit-Limit`** header has the correct max value\n2. **`X-RateLimit-Remaining`** header decrements correctly (4 → 3 → 2 → 1 → 0)\n3. **`Retry-After`** header is included on 429 responses\n\nThe existing tests already covered `X-RateLimit-Reset` and the toggle behavior via `enableRateLimitHeaders`.\n\n"
+    }
+  }
+}

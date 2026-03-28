@@ -392,6 +392,57 @@ describe('Window expiry reset', () => {
   })
 })
 
+describe('Rate limit headers', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  function makeRequest(ip: string): NextRequest {
+    return new NextRequest('http://localhost/api/test', {
+      headers: { 'x-forwarded-for': ip },
+    })
+  }
+
+  it('adds X-RateLimit-Limit header with correct value', () => {
+    const mw = createRateLimiterMiddleware({ maxRequests: 10, windowMs: 10_000 })
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.headers.get('X-RateLimit-Limit')).toBe('10')
+    mw.limiter.destroy()
+  })
+
+  it('adds X-RateLimit-Remaining header that decrements correctly', () => {
+    const mw = createRateLimiterMiddleware({ maxRequests: 5, windowMs: 10_000 })
+
+    const r1 = mw(makeRequest('1.2.3.4'))
+    expect(r1.headers.get('X-RateLimit-Remaining')).toBe('4')
+
+    const r2 = mw(makeRequest('1.2.3.4'))
+    expect(r2.headers.get('X-RateLimit-Remaining')).toBe('3')
+
+    const r3 = mw(makeRequest('1.2.3.4'))
+    expect(r3.headers.get('X-RateLimit-Remaining')).toBe('2')
+
+    const r4 = mw(makeRequest('1.2.3.4'))
+    expect(r4.headers.get('X-RateLimit-Remaining')).toBe('1')
+
+    const r5 = mw(makeRequest('1.2.3.4'))
+    expect(r5.headers.get('X-RateLimit-Remaining')).toBe('0')
+
+    mw.limiter.destroy()
+  })
+
+  it('includes Retry-After header on 429 responses', () => {
+    const mw = createRateLimiterMiddleware({ maxRequests: 1, windowMs: 10_000 })
+    mw(makeRequest('1.2.3.4'))
+    const res = mw(makeRequest('1.2.3.4'))
+    expect(res.status).toBe(429)
+    const retryAfter = Number(res.headers.get('Retry-After'))
+    expect(retryAfter).toBeGreaterThan(0)
+    expect(retryAfter).toBeLessThanOrEqual(10)
+    mw.limiter.destroy()
+  })
+})
+
 describe('X-RateLimit-Reset header', () => {
   afterEach(() => {
     vi.useRealTimers()
