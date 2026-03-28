@@ -10,6 +10,27 @@ import { RecentActivity } from '@/components/dashboard/RecentActivity'
 import type { Deadline } from '@/components/dashboard/UpcomingDeadlines'
 import type { Activity } from '@/components/dashboard/RecentActivity'
 
+// Narrow types for Payload documents used in this page to avoid per-line eslint-disable
+type PayloadDoc = Record<string, unknown> & { id: string }
+type EnrollmentDoc = PayloadDoc & {
+  course: { id: string; title?: string } | string
+  completedLessons?: Array<string | { id: string }>
+}
+type LessonDoc = PayloadDoc & { course: { id: string } | string; title?: string }
+type AssignmentDoc = PayloadDoc & { title: string; dueDate: string }
+type ModuleDoc = PayloadDoc
+type QuizAttemptDoc = PayloadDoc & {
+  quiz: { title?: string } | string
+  passed?: boolean
+  score?: number
+  completedAt?: string
+  startedAt?: string
+}
+type SubmissionDoc = PayloadDoc & {
+  assignment: { title?: string } | string
+  submittedAt: string
+}
+
 export default async function DashboardPage() {
   const headers = await getHeaders()
   const payloadConfig = await config
@@ -20,8 +41,8 @@ export default async function DashboardPage() {
     redirect('/admin/login')
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if ((user as any).role && (user as any).role !== 'student') {
+  const userWithRole = user as unknown as PayloadDoc & { role?: string }
+  if (userWithRole.role && userWithRole.role !== 'student') {
     redirect('/')
   }
 
@@ -36,31 +57,27 @@ export default async function DashboardPage() {
   })
 
   // Batch-fetch all lessons for enrolled courses in one query to avoid N+1
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const enrolledCourseIds = (enrollments as any[])
+  const typedEnrollments = enrollments as unknown as EnrollmentDoc[]
+  const enrolledCourseIds = typedEnrollments
     .map((e) => (typeof e.course === 'object' ? e.course?.id : e.course))
     .filter(Boolean) as string[]
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let allLessons: any[] = []
+  let allLessons: LessonDoc[] = []
   if (enrolledCourseIds.length > 0) {
     const { docs } = await payload.find({
       collection: 'lessons' as CollectionSlug,
       where: { course: { in: enrolledCourseIds } },
       limit: 1000,
     })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    allLessons = docs as any[]
+    allLessons = docs as unknown as LessonDoc[]
   }
 
   // Build progress cards data
   const progressResults = await Promise.all(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (enrollments as any[]).map((enrollment) => progressService.getProgress(enrollment.id)),
+    typedEnrollments.map((enrollment) => progressService.getProgress(enrollment.id)),
   )
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const courseCards = (enrollments as any[]).map((enrollment, i) => {
+  const courseCards = typedEnrollments.map((enrollment, i) => {
     const progress = progressResults[i]
     const course = typeof enrollment.course === 'object' ? enrollment.course : null
     const courseTitle = course?.title ?? 'Unknown Course'
@@ -70,18 +87,18 @@ export default async function DashboardPage() {
       const lCourse = typeof l.course === 'object' ? l.course?.id : l.course
       return lCourse === courseId
     })
-    const completedIds = ((enrollment.completedLessons ?? []) as unknown[]).map((l) =>
-      typeof l === 'string' ? l : (l as { id: string }).id,
+    const completedIds = (enrollment.completedLessons ?? []).map((l) =>
+      typeof l === 'string' ? l : l.id,
     )
     const nextLesson = lessons.find((l) => !completedIds.includes(l.id))
 
     return {
-      id: enrollment.id as string,
+      id: enrollment.id,
       courseTitle,
       percentage: progress.percentage,
       grade: null as number | null,
-      nextLessonTitle: (nextLesson?.title as string) ?? null,
-      nextLessonHref: nextLesson ? `/lessons/${nextLesson.id as string}` : null,
+      nextLessonTitle: nextLesson?.title ?? null,
+      nextLessonHref: nextLesson ? `/lessons/${nextLesson.id}` : null,
     }
   })
 
@@ -93,24 +110,22 @@ export default async function DashboardPage() {
       where: { course: { in: enrolledCourseIds } },
       limit: 100,
     })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const moduleIds = (modules as any[]).map((m) => m.id as string)
+    const moduleIds = (modules as unknown as ModuleDoc[]).map((m) => m.id)
     if (moduleIds.length > 0) {
       const { docs: assignments } = await payload.find({
         collection: 'assignments' as CollectionSlug,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         where: {
           module: { in: moduleIds },
           dueDate: { greater_than: new Date().toISOString() },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
         sort: 'dueDate',
         limit: 5,
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      deadlines = (assignments as any[]).map((a) => ({
-        id: a.id as string,
-        title: a.title as string,
-        dueDate: a.dueDate as string,
+      deadlines = (assignments as unknown as AssignmentDoc[]).map((a) => ({
+        id: a.id,
+        title: a.title,
+        dueDate: a.dueDate,
         type: 'assignment' as const,
       }))
     }
@@ -125,12 +140,11 @@ export default async function DashboardPage() {
     limit: 5,
     depth: 1,
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  for (const attempt of recentAttempts as any[]) {
+  for (const attempt of recentAttempts as unknown as QuizAttemptDoc[]) {
     const quizTitle = typeof attempt.quiz === 'object' ? attempt.quiz?.title : 'Quiz'
     activities.push({
-      id: `qa-${attempt.id as string}`,
-      description: `Quiz attempt: ${quizTitle as string} — ${attempt.passed ? 'Passed' : 'Failed'} (${attempt.score as number}%)`,
+      id: `qa-${attempt.id}`,
+      description: `Quiz attempt: ${quizTitle} — ${attempt.passed ? 'Passed' : 'Failed'} (${attempt.score}%)`,
       timestamp: (attempt.completedAt ?? attempt.startedAt) as string,
     })
   }
@@ -141,13 +155,12 @@ export default async function DashboardPage() {
     limit: 5,
     depth: 1,
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  for (const sub of recentSubmissions as any[]) {
+  for (const sub of recentSubmissions as unknown as SubmissionDoc[]) {
     const assignTitle = typeof sub.assignment === 'object' ? sub.assignment?.title : 'Assignment'
     activities.push({
-      id: `sub-${sub.id as string}`,
-      description: `Submitted: ${assignTitle as string}`,
-      timestamp: sub.submittedAt as string,
+      id: `sub-${sub.id}`,
+      description: `Submitted: ${assignTitle}`,
+      timestamp: sub.submittedAt,
     })
   }
   activities.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
