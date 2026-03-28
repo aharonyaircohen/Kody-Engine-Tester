@@ -1,6 +1,7 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextRequest } from 'next/server'
+import { createErrorResponse, createJsonResponse } from '../../../../utils/api-response'
 
 export const GET = async (
   request: NextRequest,
@@ -17,10 +18,7 @@ export const GET = async (
   }) as any
 
   if (!quiz) {
-    return new Response(JSON.stringify({ error: 'Quiz not found' }), {
-      status: 404,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse('Quiz not found', 404)
   }
 
   // Return quiz metadata and questions (without revealing correct answers)
@@ -30,20 +28,14 @@ export const GET = async (
     options: ((q.options as any[]) ?? []).map((o: { text: string }) => ({ text: o.text })),
   }))
 
-  return new Response(
-    JSON.stringify({
-      id: quiz.id,
-      title: quiz.title,
-      module: quiz.module,
-      order: quiz.order,
-      passingScore: quiz.passingScore,
-      timeLimit: quiz.timeLimit,
-      maxAttempts: quiz.maxAttempts,
-      questions,
-    }),
-    {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    },
-  )
+  return createJsonResponse({
+    id: quiz.id,
+    title: quiz.title,
+    module: quiz.module,
+    order: quiz.order,
+    passingScore: quiz.passingScore,
+    timeLimit: quiz.timeLimit,
+    maxAttempts: quiz.maxAttempts,
+    questions,
+  })
 }

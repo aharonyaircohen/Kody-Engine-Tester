@@ -2,6 +2,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextRequest } from 'next/server'
 import { gradeQuiz, type Quiz, type QuizAnswer } from '../../../../../services/quiz-grader'
+import { createErrorResponse, createJsonResponse } from '../../../../../utils/api-response'
 
 export const POST = async (
   request: NextRequest,
@@ -13,22 +14,13 @@ export const POST = async (
   try {
     body = await request.json()
   } catch {
-    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse('Invalid JSON body', 400)
   }
 
   const { userId, answers } = body
 
   if (!userId || !Array.isArray(answers)) {
-    return new Response(
-      JSON.stringify({ error: 'userId and answers are required' }),
-      {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      },
-    )
+    return createErrorResponse('userId and answers are required', 400)
   }
 
   const payload = await getPayload({ config: configPromise })
@@ -41,10 +33,7 @@ export const POST = async (
   }) as any
 
   if (!quizDoc) {
-    return new Response(JSON.stringify({ error: 'Quiz not found' }), {
-      status: 404,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse('Quiz not found', 404)
   }
 
   // Convert Payload quiz doc to internal Quiz format
@@ -77,16 +66,9 @@ export const POST = async (
   const attemptCount = existingAttempts.totalDocs
 
   if (attemptCount >= quiz.maxAttempts) {
-    return new Response(
-      JSON.stringify({
-        error: 'Maximum attempts exceeded',
-        attemptCount,
-        maxAttempts: quiz.maxAttempts,
-      }),
-      {
-        status: 403,
-        headers: { 'Content-Type': 'application/json' },
-      },
+    return createErrorResponse(
+      `Maximum attempts exceeded: ${attemptCount}/${quiz.maxAttempts}`,
+      403,
     )
   }
 
@@ -109,8 +91,5 @@ export const POST = async (
     } as any,
   })
 
-  return new Response(JSON.stringify(result), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  })
+  return createJsonResponse(result)
 }
