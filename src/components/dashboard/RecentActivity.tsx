@@ -21,7 +21,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
           <li key={a.id} style={{ padding: '8px 0', borderBottom: '1px solid #e5e7eb' }}>
             <span>{a.description}</span>
             <span style={{ marginLeft: 8, fontSize: 14, color: '#6b7280' }}>
-              {new Date(a.timestamp).toLocaleDateString()}
+              {new Date(a.timestamp).toLocaleDateString('en-US')}
             </span>
           </li>
         ))}

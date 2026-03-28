@@ -20,6 +20,11 @@ export default async function DashboardPage() {
     redirect('/admin/login')
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if ((user as any).role && (user as any).role !== 'student') {
+    redirect('/')
+  }
+
   const progressService = new ProgressService(payload)
 
   // Fetch student enrollments
@@ -30,49 +35,62 @@ export default async function DashboardPage() {
     depth: 1,
   })
 
-  // Build progress cards data
-  const courseCards = await Promise.all(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (enrollments as any[]).map(async (enrollment) => {
-      const progress = await progressService.getProgress(enrollment.id)
-      const course = typeof enrollment.course === 'object' ? enrollment.course : null
-      const courseTitle = course?.title ?? 'Unknown Course'
-      const courseId = course?.id ?? (typeof enrollment.course === 'string' ? enrollment.course : '')
-
-      // Find next incomplete lesson
-      const { docs: lessons } = await payload.find({
-        collection: 'lessons' as CollectionSlug,
-        where: { course: { equals: courseId } },
-        limit: 100,
-      })
-      const completedIds = ((enrollment.completedLessons ?? []) as unknown[]).map((l) =>
-        typeof l === 'string' ? l : (l as { id: string }).id,
-      )
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const nextLesson = (lessons as any[]).find((l) => !completedIds.includes(l.id))
-
-      return {
-        id: enrollment.id as string,
-        courseTitle,
-        percentage: progress.percentage,
-        grade: null as number | null,
-        nextLessonTitle: (nextLesson?.title as string) ?? null,
-        nextLessonHref: nextLesson ? `/lessons/${nextLesson.id as string}` : null,
-      }
-    }),
-  )
-
-  // Fetch upcoming assignment deadlines for enrolled courses
-  const courseIds = (enrollments as unknown[])
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .map((e: any) => (typeof e.course === 'object' ? e.course?.id : e.course))
+  // Batch-fetch all lessons for enrolled courses in one query to avoid N+1
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const enrolledCourseIds = (enrollments as any[])
+    .map((e) => (typeof e.course === 'object' ? e.course?.id : e.course))
     .filter(Boolean) as string[]
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let allLessons: any[] = []
+  if (enrolledCourseIds.length > 0) {
+    const { docs } = await payload.find({
+      collection: 'lessons' as CollectionSlug,
+      where: { course: { in: enrolledCourseIds } },
+      limit: 1000,
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    allLessons = docs as any[]
+  }
+
+  // Build progress cards data
+  const progressResults = await Promise.all(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (enrollments as any[]).map((enrollment) => progressService.getProgress(enrollment.id)),
+  )
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const courseCards = (enrollments as any[]).map((enrollment, i) => {
+    const progress = progressResults[i]
+    const course = typeof enrollment.course === 'object' ? enrollment.course : null
+    const courseTitle = course?.title ?? 'Unknown Course'
+    const courseId = course?.id ?? (typeof enrollment.course === 'string' ? enrollment.course : '')
+
+    const lessons = allLessons.filter((l) => {
+      const lCourse = typeof l.course === 'object' ? l.course?.id : l.course
+      return lCourse === courseId
+    })
+    const completedIds = ((enrollment.completedLessons ?? []) as unknown[]).map((l) =>
+      typeof l === 'string' ? l : (l as { id: string }).id,
+    )
+    const nextLesson = lessons.find((l) => !completedIds.includes(l.id))
+
+    return {
+      id: enrollment.id as string,
+      courseTitle,
+      percentage: progress.percentage,
+      grade: null as number | null,
+      nextLessonTitle: (nextLesson?.title as string) ?? null,
+      nextLessonHref: nextLesson ? `/lessons/${nextLesson.id as string}` : null,
+    }
+  })
+
+  // Fetch upcoming assignment deadlines for enrolled courses
   let deadlines: Deadline[] = []
-  if (courseIds.length > 0) {
+  if (enrolledCourseIds.length > 0) {
     const { docs: modules } = await payload.find({
       collection: 'modules' as CollectionSlug,
-      where: { course: { in: courseIds } },
+      where: { course: { in: enrolledCourseIds } },
       limit: 100,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

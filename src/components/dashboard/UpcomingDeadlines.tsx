@@ -22,7 +22,7 @@ export function UpcomingDeadlines({ deadlines }: UpcomingDeadlinesProps) {
           <li key={d.id} style={{ padding: '8px 0', borderBottom: '1px solid #e5e7eb' }}>
             <strong>{d.title}</strong>
             <span style={{ marginLeft: 8, fontSize: 14, color: '#6b7280' }}>
-              {new Date(d.dueDate).toLocaleDateString()}
+              {new Date(d.dueDate).toLocaleDateString('en-US')}
             </span>
             <span style={{ marginLeft: 8, fontSize: 12, textTransform: 'uppercase', color: '#9ca3af' }}>
               {d.type}
