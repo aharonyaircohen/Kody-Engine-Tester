@@ -1,0 +1,12 @@
+{
+  "task_type": "refactor",
+  "title": "Extract auth middleware into composable pipeline",
+  "description": "Created a composable middleware pipeline system in src/middleware/pipeline.ts with createMiddlewarePipeline function and pre-built pipelines (authenticatedRoute, instructorRoute, adminRoute, publicRoute). Each pipeline composes auth check → role guard in the correct order. Updated role-guard.ts to export RoleError interface. Added comprehensive tests covering pipeline composition, middleware ordering, and role-based access control.",
+  "scope": [
+    "src/middleware/pipeline.ts",
+    "src/middleware/pipeline.test.ts",
+    "src/middleware/role-guard.ts"
+  ],
+  "risk_level": "medium",
+  "questions": []
+}
