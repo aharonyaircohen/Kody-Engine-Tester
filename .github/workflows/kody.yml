@@ -54,7 +54,6 @@ jobs:
       mode: ${{ steps.parse.outputs.mode }}
       from_stage: ${{ steps.parse.outputs.from_stage }}
       issue_number: ${{ steps.parse.outputs.issue_number }}
-      pr_number: ${{ steps.parse.outputs.pr_number }}
       feedback: ${{ steps.parse.outputs.feedback }}
       valid: ${{ steps.parse.outputs.valid }}
     steps:
@@ -93,9 +92,8 @@ jobs:
       - name: Parse inputs
         if: steps.safety.outputs.valid == 'true'
         id: parse
-        env:
-          BODY: ${{ github.event.comment.body }}
         run: |
+          BODY="${{ github.event.comment.body }}"
           # Extract: @kody [mode] [task-id] [--from stage]
           KODY_ARGS=$(echo "$BODY" | grep -oP '(?:@kody|/kody)\s+\K.*' || echo "")
           MODE=$(echo "$KODY_ARGS" | awk '{print $1}')
@@ -110,7 +108,7 @@ jobs:
 
           # Validate mode
           case "$MODE" in
-            full|rerun|fix|status|approve|review) ;;
+            full|rerun|fix|status|approve) ;;
             *)
               # If first arg isn't a mode, it might be a task-id or nothing
               if [ -n "$MODE" ] && [ "$MODE" != "" ]; then
@@ -145,22 +143,10 @@ jobs:
             TASK_ID="${ISSUE_NUM}-$(date +%y%m%d-%H%M%S)"
           fi
 
-          # Detect if this comment is on a PR (PRs are issues in GitHub API)
-          PR_NUMBER=""
-          if [ -n "${{ github.event.issue.pull_request }}" ]; then
-            PR_NUMBER="$ISSUE_NUM"
-          fi
-
-          # For review mode on a PR comment: use the PR number directly
-          if [ "$MODE" = "review" ] && [ -n "$PR_NUMBER" ]; then
-            TASK_ID="review-pr-${PR_NUMBER}-$(date +%y%m%d-%H%M%S)"
-          fi
-
           echo "task_id=$TASK_ID" >> $GITHUB_OUTPUT
           echo "mode=$MODE" >> $GITHUB_OUTPUT
           echo "from_stage=$FROM_STAGE" >> $GITHUB_OUTPUT
           echo "issue_number=$ISSUE_NUM" >> $GITHUB_OUTPUT
-          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
           {
             echo "feedback<<KODY_EOF"
             echo "$FEEDBACK"
@@ -193,8 +179,8 @@ jobs:
           persist-credentials: true
           token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
 
-      - name: Checkout PR branch (for fix/rerun/review on PRs)
-        if: github.event.issue.pull_request && (needs.parse.outputs.mode == 'fix' || needs.parse.outputs.mode == 'rerun' || needs.parse.outputs.mode == 'review')
+      - name: Checkout PR branch (for fix/rerun on PRs)
+        if: github.event.issue.pull_request && (needs.parse.outputs.mode == 'fix' || needs.parse.outputs.mode == 'rerun')
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
         run: |
@@ -220,13 +206,6 @@ jobs:
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
 
-      - name: Install LiteLLM proxy
-        if: hashFiles('litellm-config.yaml') != ''
-        run: |
-          python3 -m venv /tmp/litellm-venv
-          /tmp/litellm-venv/bin/pip install 'litellm[proxy]'
-          sudo ln -sf /tmp/litellm-venv/bin/litellm /usr/local/bin/litellm
-
       - name: Configure git
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -235,13 +214,11 @@ jobs:
       - name: Run Kody pipeline
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           TASK_ID: ${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}
           MODE: ${{ github.event.inputs.mode || needs.parse.outputs.mode || 'full' }}
           FROM_STAGE: ${{ github.event.inputs.from_stage || needs.parse.outputs.from_stage }}
           ISSUE_NUMBER: ${{ github.event.inputs.issue_number || needs.parse.outputs.issue_number }}
-          PR_NUMBER: ${{ needs.parse.outputs.pr_number }}
           FEEDBACK: ${{ github.event.inputs.feedback || needs.parse.outputs.feedback }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -249,10 +226,8 @@ jobs:
           CMD="run"
           [ "$MODE" = "rerun" ] && CMD="rerun"
           [ "$MODE" = "fix" ] && CMD="fix"
-          [ "$MODE" = "review" ] && CMD="review"
           ARGS="--issue-number $ISSUE_NUMBER"
           [ -n "$TASK_ID" ] && ARGS="$ARGS --task-id $TASK_ID"
-          [ -n "$PR_NUMBER" ] && ARGS="$ARGS --pr-number $PR_NUMBER"
           [ -n "$FROM_STAGE" ] && ARGS="$ARGS --from $FROM_STAGE"
           [ -n "$FEEDBACK" ] && ARGS="$ARGS --feedback \"$FEEDBACK\""
           [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"

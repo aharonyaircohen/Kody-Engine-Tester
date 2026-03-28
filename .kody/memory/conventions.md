@@ -1,11 +1,11 @@
 # Conventions
 
-**Multi-tenant LMS**: Organizations contain Users (roles: admin, instructor, student), Courses, Modules, Lessons, Quizzes, Assignments, Enrollments
-
-**Auth Pattern**: JWT tokens with role-based access control
-
-**Data Flow**: Payload CMS collections → PostgreSQL → Next.js API routes → React components
-
-**Code Style**: ESLint + TypeScript strict mode enforced
-
-**See**: README.md for complete domain model and feature roadmap
+- **TypeScript**: Strict mode enabled, all files typed
+- **Auth**: Role-based access control; middleware guards for `student`, `instructor`, `admin`
+- **API Design**: REST routes in `src/api`, Payload collections in `src/collections`
+- **State**: React Context in `src/contexts`, custom hooks in `src/hooks`
+- **Components**: Server Components preferred (Next.js App Router pattern)
+- **Database**: Payload collections-based schema; migrations in `src/migrations`
+- **Testing**: Vitest (`pnpm test:int`), Playwright e2e (`pnpm test:e2e`)
+- **Code Quality**: ESLint for linting, TypeScript in build, Prettier for formatting
+- **Tooling**: `pnpm` package manager; `payload generate:types` for CMS type generation
