@@ -90,8 +90,7 @@ export class GradebookService {
     const results: StudentCourseGrade[] = []
 
     for (const enrollment of active) {
-      const courseId = (enrollment as unknown as { courseId?: string }).courseId ?? (enrollment as unknown as { course?: { id: string } | string }).course
-      const courseIdStr = typeof courseId === 'string' ? courseId : (courseId as { id: string }).id
+      const courseIdStr = enrollment.courseId
 
       const course = await this.deps.getCourse(courseIdStr)
       if (!course) continue
@@ -146,9 +145,7 @@ export class GradebookService {
     const results: StudentCourseGradeResult[] = []
 
     for (const enrollment of active) {
-      const studentId = (enrollment as unknown as { studentId?: string }).studentId
-        ?? (enrollment as unknown as { student?: { id: string } | string }).student
-      const studentIdStr = typeof studentId === 'string' ? studentId : (studentId as { id: string }).id
+      const studentIdStr = enrollment.studentId
 
       const [quizAttempts, submissions] = await Promise.all([
         this.deps.getQuizAttempts(studentIdStr, courseId),
@@ -305,9 +302,9 @@ export class PayloadGradebookService {
     return {
       id: doc.id,
       title: doc.title,
-      quizWeight: (doc as unknown as { quizWeight?: number }).quizWeight ?? 40,
-      assignmentWeight: (doc as unknown as { assignmentWeight?: number }).assignmentWeight ?? 60,
-      instructorId: normalizeId((doc as unknown as PayloadCourse).instructor),
+      quizWeight: doc.quizWeight ?? 40,
+      assignmentWeight: doc.assignmentWeight ?? 60,
+      instructorId: normalizeId(doc.instructor),
     }
   }
 
@@ -366,7 +363,7 @@ export class PayloadGradebookService {
       id: enrollmentId,
     })) as unknown as PayloadEnrollment
 
-    return ((doc as unknown as PayloadEnrollment).completedLessons ?? []).map(normalizeId)
+    return (doc.completedLessons ?? []).map(normalizeId)
   }
 
   private async getTotalLessonsForCourse(courseId: string): Promise<LessonCount> {
