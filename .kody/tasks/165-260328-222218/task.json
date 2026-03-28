@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Add unit tests for notification service event dispatching",
+  "description": "Add comprehensive unit tests for the notification service that handles LMS event dispatching. Tests cover enrollment, grade-posted, and certificate-issued events, subscriber notification, event payload passing, and unknown event type handling.",
+  "scope": ["src/services/notification-service.ts", "src/services/notification-service.test.ts"],
+  "risk_level": "low",
+  "questions": []
+}
