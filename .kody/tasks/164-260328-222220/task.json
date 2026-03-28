@@ -1,0 +1,16 @@
+{
+  "task_type": "refactor",
+  "title": "Consolidate duplicate error response helpers across API routes",
+  "description": "Extract shared createErrorResponse(message, status) and createJsonResponse(data, status?) helpers into src/utils/api-response.ts, create tests, and update 5 API route files that manually construct Response objects with duplicated JSON/headers patterns.",
+  "scope": [
+    "src/utils/api-response.ts",
+    "src/utils/api-response.test.ts",
+    "src/app/api/quizzes/[id]/route.ts",
+    "src/app/api/quizzes/[id]/attempts/route.ts",
+    "src/app/api/quizzes/[id]/submit/route.ts",
+    "src/app/api/enroll/route.ts",
+    "src/app/api/csrf-token/route.ts"
+  ],
+  "risk_level": "medium",
+  "questions": []
+}

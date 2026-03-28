@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/164-260328-222220/context.md",
+      "hash": "7adca9694fda318b",
+      "L0": "### taskify (2026-03-28T22:24:55)\n  \"task_type\": \"refactor\",.",
+      "L1": "### taskify (2026-03-28T22:24:55)\n{\n### plan (2026-03-28T22:25:33)\nNow I have enough context. Here's the implementation plan:\n## Step 1: Create the shared helpers module\n**File:** `src/utils/api-response.ts`\n## Step 2: Write tests for the helpers\n**File:** `src/utils/api-re",
+      "L2": "\n### taskify (2026-03-28T22:24:55)\n{\n  \"task_type\": \"refactor\",\n  \"title\": \"Consolidate duplicate error response helpers across API routes\",\n  \"description\": \"Extract shared createErrorResponse(message, status) and createJsonResponse(data, status?) helpers into src/utils/api-response.ts, create tests, and update 5 API route files that manually construct Response objects with duplicated JSON/headers patterns.\",\n  \"scope\": [\n    \"src/utils/api-response.ts\",\n    \"src/utils/api-response.test.ts\",\n    \"src/app/api/quizzes/[id]/route.t\n...(truncated)\n\n### plan (2026-03-28T22:25:33)\nNow I have enough context. Here's the implementation plan:\n\n## Step 1: Create the shared helpers module\n**File:** `src/utils/api-response.ts`\n**Change:** Write a new file exporting `createErrorResponse(message, status)` and `createJsonResponse(data, status?)`.\n**Why:** Centralizes the repeated `new Response(JSON.stringify(...), { headers: {...} })` pattern.\n**Verify:** `pnpm test -- src/utils/api-response.test.ts` (after step 2)\n\n## Step 2: Write tests for the helpers\n**File:** `src/utils/api-re\n...(truncated)\n"
+    },
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/164-260328-222220/task.md",
+      "hash": "497ad0fab69e2daa",
+      "L0": "# Refactor: consolidate duplicate error response helpers across API routes\nMultiple API route files manually construct error response objects with duplicated patterns like:.",
+      "L1": "# Refactor: consolidate duplicate error response helpers across API routes\n## Refactor\nMultiple API route files manually construct error response objects with duplicated patterns like:\n- \\`src/utils/api-response.ts\\` — the helpers\n- \\`src/utils/api-response.test.ts\\` — tests",
+      "L2": "# Refactor: consolidate duplicate error response helpers across API routes\n\n## Refactor\n\nMultiple API route files manually construct error response objects with duplicated patterns like:\n\\`\\`\\`ts\nreturn new Response(JSON.stringify({ error: \"...\" }), { status: 4xx, headers: { \"Content-Type\": \"application/json\" } })\n\\`\\`\\`\n\n**Goal:** Extract a shared \\`createErrorResponse(message, status)\\` helper and a \\`createJsonResponse(data, status?)\\` helper.\n\n**Files to create:**\n- \\`src/utils/api-response.ts\\` — the helpers\n- \\`src/utils/api-response.test.ts\\` — tests\n\n**Then update** existing route files to use the helpers instead of inline Response construction.\n\n**Complexity:** medium"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/164-260328-222220/task.json",
+      "hash": "0a9a3776a53e5a21",
+      "L0": "Title: Consolidate duplicate error response helpers across API routes | Type: refactor | Risk: medium",
+      "L1": "- task_type: refactor\n- title: Consolidate duplicate error response helpers across API routes\n- description: Extract shared createErrorResponse(message, status) and createJsonResponse(data, status?) helpers into src/utils/api-response.ts, create tests, and update 5 API route files that manually construct Response objects with duplicated JSON/headers patterns.\n- scope: [7 items] src/utils/api-response.ts, src/utils/api-response.test.ts, src/app/api/quizzes/[id]/route.ts\n- risk_level: medium\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"refactor\",\n  \"title\": \"Consolidate duplicate error response helpers across API routes\",\n  \"description\": \"Extract shared createErrorResponse(message, status) and createJsonResponse(data, status?) helpers into src/utils/api-response.ts, create tests, and update 5 API route files that manually construct Response objects with duplicated JSON/headers patterns.\",\n  \"scope\": [\n    \"src/utils/api-response.ts\",\n    \"src/utils/api-response.test.ts\",\n    \"src/app/api/quizzes/[id]/route.ts\",\n    \"src/app/api/quizzes/[id]/attempts/route.ts\",\n    \"src/app/api/quizzes/[id]/submit/route.ts\",\n    \"src/app/api/enroll/route.ts\",\n    \"src/app/api/csrf-token/route.ts\"\n  ],\n  \"risk_level\": \"medium\",\n  \"questions\": []\n}\n"
+    }
+  }
+}

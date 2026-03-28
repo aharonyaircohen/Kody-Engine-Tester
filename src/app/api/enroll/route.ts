@@ -4,6 +4,7 @@ import { userStore, sessionStore, jwtService } from '../../../auth'
 import { createAuthMiddleware } from '../../../middleware/auth-middleware'
 import { requireRole } from '../../../middleware/role-guard'
 import { getPayloadInstance } from '../../../services/progress'
+import { createErrorResponse, createJsonResponse } from '../../../utils/api-response'
 
 const auth = createAuthMiddleware(userStore, sessionStore, jwtService)
 
@@ -14,18 +15,12 @@ export const POST = async (request: NextRequest) => {
   })
 
   if (authContext.error) {
-    return new Response(JSON.stringify({ error: authContext.error }), {
-      status: authContext.status ?? 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse(authContext.error, authContext.status ?? 401)
   }
 
   const roleError = requireRole('student')(authContext)
   if (roleError) {
-    return new Response(JSON.stringify({ error: roleError.error }), {
-      status: roleError.status,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse(roleError.error, roleError.status)
   }
 
   const user = authContext.user!
@@ -33,10 +28,7 @@ export const POST = async (request: NextRequest) => {
   const { courseId } = body
 
   if (!courseId) {
-    return new Response(JSON.stringify({ error: 'courseId is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse('courseId is required', 400)
   }
 
   const payload = await getPayloadInstance()
@@ -52,10 +44,7 @@ export const POST = async (request: NextRequest) => {
   })
 
   if (existing.docs.length > 0) {
-    return new Response(JSON.stringify({ error: 'Already enrolled in this course' }), {
-      status: 409,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse('Already enrolled in this course', 409)
   }
 
   // Fetch the course to check maxEnrollments
@@ -77,10 +66,7 @@ export const POST = async (request: NextRequest) => {
   })
 
   if (activeCount >= maxEnrollments) {
-    return new Response(JSON.stringify({ error: 'Course has reached maximum enrollment capacity' }), {
-      status: 403,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return createErrorResponse('Course has reached maximum enrollment capacity', 403)
   }
 
   const enrollment = await payload.create({
@@ -95,8 +81,5 @@ export const POST = async (request: NextRequest) => {
     } as any,
   })
 
-  return new Response(JSON.stringify(enrollment), {
-    status: 201,
-    headers: { 'Content-Type': 'application/json' },
-  })
+  return createJsonResponse(enrollment, 201)
 }
