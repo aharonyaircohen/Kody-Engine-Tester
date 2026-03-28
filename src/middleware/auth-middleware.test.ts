@@ -25,12 +25,14 @@ describe('AuthMiddleware', () => {
       email: user!.email,
       role: user!.role,
       sessionId: 'session-1',
+      generation: 0,
     })
     const refreshToken = await jwtService.signRefreshToken({
       userId: user!.id,
       email: user!.email,
       role: user!.role,
       sessionId: 'session-1',
+      generation: 0,
     })
     const session = sessionStore.create(user!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
     return { user: user!, accessToken, session }
@@ -59,7 +61,7 @@ describe('AuthMiddleware', () => {
   it('should return 401 for expired token', async () => {
     const user = await userStore.findByEmail('user@example.com')
     const expiredToken = await jwtService.sign(
-      { userId: user!.id, email: user!.email, role: user!.role, sessionId: 'session-1' },
+      { userId: user!.id, email: user!.email, role: user!.role, sessionId: 'session-1', generation: 0 },
       -1000
     )
     const result = await middleware({ authorization: `Bearer ${expiredToken}`, ip: '127.0.0.1' })
@@ -71,6 +73,30 @@ describe('AuthMiddleware', () => {
     sessionStore.revoke(session.id)
     const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '127.0.0.1' })
     expect(result.status).toBe(401)
+  })
+
+  it('should return 401 for token with older generation after refresh', async () => {
+    const user = await userStore.findByEmail('user@example.com')
+    const oldAccessToken = await jwtService.signAccessToken({
+      userId: user!.id,
+      email: user!.email,
+      role: user!.role,
+      sessionId: 'session-1',
+      generation: 0,
+    })
+    const refreshToken = await jwtService.signRefreshToken({
+      userId: user!.id,
+      email: user!.email,
+      role: user!.role,
+      sessionId: 'session-1',
+      generation: 0,
+    })
+    const session = sessionStore.create(user!.id, oldAccessToken, refreshToken, '127.0.0.1', 'TestAgent')
+    // Manually bump the session generation to simulate a refresh
+    sessionStore['sessions'].set(session.id, { ...session, generation: 1 })
+    const result = await middleware({ authorization: `Bearer ${oldAccessToken}`, ip: '127.0.0.1' })
+    expect(result.status).toBe(401)
+    expect(result.error).toBe('Token has been superseded by a newer session')
   })
 
   it('should allow requests under rate limit', async () => {
