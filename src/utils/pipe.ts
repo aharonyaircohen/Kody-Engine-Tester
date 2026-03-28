@@ -1,3 +1,4 @@
+export function pipe(): <T>(value: T) => T
 export function pipe<A>(value: A): A
 export function pipe<A, B>(fn1: (a: A) => B): (value: A) => B
 export function pipe<A, B, C>(fn1: (a: A) => B, fn2: (b: B) => C): (value: A) => C
