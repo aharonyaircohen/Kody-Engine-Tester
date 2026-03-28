@@ -35,3 +35,27 @@ All done. Here's a summary of what was implemented:
 - `src/app/api/quizzes/[id]/attempts/route.ts` — 2 Response replacements
 - `src
 ...(truncated)
+
+### review (2026-03-28T22:31:20)
+All inline Response patterns are gone from the API routes.
+
+## Verdict: PASS
+
+## Summary
+Extracted duplicated `new Response(JSON.stringify(...), { headers: {...} })` patterns into two reusable helpers (`createErrorResponse`, `createJsonResponse`) in `src/utils/api-response.ts`, with 9 tests covering status codes, headers, and body serialization. Five API route files were updated to use these helpers.
+
+## Findings
+
+### Critical
+None.
+
+### Major
+None.
+
+### Minor
+None.
+
+## Two-Pass Review
+
+**Pass 1
+...(truncated)
