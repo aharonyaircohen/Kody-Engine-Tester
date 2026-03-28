@@ -1,0 +1,8 @@
+{
+  "task_type": "bugfix",
+  "title": "Fix gradebook weighted average for zero-weight categories",
+  "description": "The gradebook service throws division-by-zero when a category has weight=0 and no scores. Fix by filtering zero-weight categories before calculating weighted average, and handle empty score arrays gracefully. Result should exclude zero-weight categories from both breakdown and denominator.",
+  "scope": ["src/services/gradebook.ts", "src/services/gradebook.test.ts"],
+  "risk_level": "low",
+  "questions": []
+}
