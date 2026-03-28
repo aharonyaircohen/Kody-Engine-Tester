@@ -2,12 +2,17 @@ import { describe, it, expect } from 'vitest'
 import { Notes } from './notes'
 import type { CollectionConfig } from 'payload'
 
+type AccessFn = (ctx?: { req: { user: unknown } }) => boolean
+
 type AccessMap = {
-  read?: () => boolean
-  create?: () => boolean
-  update?: () => boolean
-  delete?: () => boolean
+  read?: AccessFn
+  create?: AccessFn
+  update?: AccessFn
+  delete?: AccessFn
 }
+
+const authed = { req: { user: { id: '1', email: 'test@example.com' } } }
+const anon = { req: { user: null } }
 
 type FieldDef = { name: string; type: string; required?: boolean }
 
@@ -23,25 +28,40 @@ describe('Notes CollectionConfig', () => {
   it('should allow public read access', () => {
     const read = (Notes.access as AccessMap)?.read
     expect(typeof read).toBe('function')
-    expect(read?.()).toBe(true)
+    expect(read?.(anon)).toBe(true)
   })
 
-  it('should allow public create access', () => {
+  it('should deny create access to unauthenticated requests', () => {
     const create = (Notes.access as AccessMap)?.create
     expect(typeof create).toBe('function')
-    expect(create?.()).toBe(true)
+    expect(create?.(anon)).toBe(false)
   })
 
-  it('should allow public update access', () => {
+  it('should allow create access to authenticated users', () => {
+    const create = (Notes.access as AccessMap)?.create
+    expect(create?.(authed)).toBe(true)
+  })
+
+  it('should deny update access to unauthenticated requests', () => {
     const update = (Notes.access as AccessMap)?.update
     expect(typeof update).toBe('function')
-    expect(update?.()).toBe(true)
+    expect(update?.(anon)).toBe(false)
   })
 
-  it('should allow public delete access', () => {
+  it('should allow update access to authenticated users', () => {
+    const update = (Notes.access as AccessMap)?.update
+    expect(update?.(authed)).toBe(true)
+  })
+
+  it('should deny delete access to unauthenticated requests', () => {
     const del = (Notes.access as AccessMap)?.delete
     expect(typeof del).toBe('function')
-    expect(del?.()).toBe(true)
+    expect(del?.(anon)).toBe(false)
+  })
+
+  it('should allow delete access to authenticated users', () => {
+    const del = (Notes.access as AccessMap)?.delete
+    expect(del?.(authed)).toBe(true)
   })
 
   it('should have a required text title field', () => {
