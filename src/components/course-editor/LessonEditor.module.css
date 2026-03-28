@@ -1,0 +1,156 @@
+.lesson {
+  background: #16161e;
+  border: 1px solid #2a2a3e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.lessonHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.expandButton {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 4px;
+}
+
+.expandButton:hover {
+  color: #e0e0e0;
+}
+
+.typeTag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.type_text {
+  background: rgba(108, 99, 255, 0.15);
+  color: #9b94ff;
+}
+
+.type_video {
+  background: rgba(255, 107, 107, 0.15);
+  color: #ff9b9b;
+}
+
+.type_interactive {
+  background: rgba(78, 205, 196, 0.15);
+  color: #4ecdc4;
+}
+
+.lessonTitle {
+  flex: 1;
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.deleteButton:hover {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.lessonBody {
+  padding: 16px;
+  border-top: 1px solid #2a2a3e;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.input {
+  background: #1e1e2e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #6c63ff;
+}
+
+.textarea {
+  background: #1e1e2e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.textarea:focus {
+  border-color: #6c63ff;
+}
+
+.typeSelector {
+  display: flex;
+  gap: 8px;
+}
+
+.typeButton {
+  background: #1e1e2e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #888;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  text-transform: capitalize;
+  transition: all 0.2s;
+}
+
+.typeButton:hover {
+  border-color: #6c63ff;
+  color: #e0e0e0;
+}
+
+.typeButtonActive {
+  background: rgba(108, 99, 255, 0.2);
+  border-color: #6c63ff;
+  color: #9b94ff;
+}
