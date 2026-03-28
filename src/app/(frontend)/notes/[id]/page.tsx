@@ -15,7 +15,7 @@ export default function NoteDetailPage() {
   const [showDelete, setShowDelete] = useState(false)
 
   useEffect(() => {
-    setNote(notesStore.getById(id))
+    notesStore.getById(id).then(setNote)
   }, [id])
 
   if (!note) {
@@ -27,8 +27,8 @@ export default function NoteDetailPage() {
     )
   }
 
-  function handleDelete() {
-    notesStore.delete(id)
+  async function handleDelete() {
+    await notesStore.delete(id)
     router.push('/notes')
   }
 

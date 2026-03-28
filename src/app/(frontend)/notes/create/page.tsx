@@ -8,8 +8,8 @@ import { NoteForm } from '@/components/notes/NoteForm'
 export default function NoteCreatePage() {
   const router = useRouter()
 
-  function handleSubmit(data: { title: string; content: string; tags: string[] }) {
-    notesStore.create(data)
+  async function handleSubmit(data: { title: string; content: string; tags: string[] }) {
+    await notesStore.create(data)
     router.push('/notes')
   }
 

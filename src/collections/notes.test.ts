@@ -1,125 +1,76 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { NotesStore } from './notes'
+import { describe, it, expect } from 'vitest'
+import { Notes } from './notes'
+import type { CollectionConfig } from 'payload'
 
-describe('NotesStore', () => {
-  let store: NotesStore
+type AccessMap = {
+  read?: () => boolean
+  create?: () => boolean
+  update?: () => boolean
+  delete?: () => boolean
+}
 
-  beforeEach(() => {
-    store = new NotesStore()
+type FieldDef = { name: string; type: string; required?: boolean }
+
+describe('Notes CollectionConfig', () => {
+  it('should have slug "notes"', () => {
+    expect(Notes.slug).toBe('notes')
   })
 
-  describe('create', () => {
-    it('should create a note with all fields', () => {
-      const note = store.create({ title: 'Test', content: 'Body', tags: ['a', 'b'] })
-      expect(note.id).toBeDefined()
-      expect(note.title).toBe('Test')
-      expect(note.content).toBe('Body')
-      expect(note.tags).toEqual(['a', 'b'])
-      expect(note.createdAt).toBeInstanceOf(Date)
-      expect(note.updatedAt).toBeInstanceOf(Date)
-    })
-
-    it('should default tags to empty array', () => {
-      const note = store.create({ title: 'Test', content: 'Body' })
-      expect(note.tags).toEqual([])
-    })
+  it('should use title as the admin display field', () => {
+    expect((Notes.admin as { useAsTitle?: string })?.useAsTitle).toBe('title')
   })
 
-  describe('getAll', () => {
-    it('should return all notes sorted by updatedAt desc', async () => {
-      const note1 = store.create({ title: 'First', content: 'A' })
-      // Ensure different timestamps
-      await new Promise((r) => setTimeout(r, 10))
-      const note2 = store.create({ title: 'Second', content: 'B' })
-
-      const all = store.getAll()
-      expect(all).toHaveLength(2)
-      expect(all[0].id).toBe(note2.id)
-      expect(all[1].id).toBe(note1.id)
-    })
-
-    it('should return empty array when no notes exist', () => {
-      expect(store.getAll()).toEqual([])
-    })
+  it('should allow public read access', () => {
+    const read = (Notes.access as AccessMap)?.read
+    expect(typeof read).toBe('function')
+    expect(read?.()).toBe(true)
   })
 
-  describe('getById', () => {
-    it('should return a note by id', () => {
-      const created = store.create({ title: 'Test', content: 'Body' })
-      const found = store.getById(created.id)
-      expect(found).toEqual(created)
-    })
-
-    it('should return null for non-existent id', () => {
-      expect(store.getById('non-existent')).toBeNull()
-    })
+  it('should allow public create access', () => {
+    const create = (Notes.access as AccessMap)?.create
+    expect(typeof create).toBe('function')
+    expect(create?.()).toBe(true)
   })
 
-  describe('update', () => {
-    it('should update partial fields', () => {
-      const note = store.create({ title: 'Old', content: 'Body', tags: ['x'] })
-      const updated = store.update(note.id, { title: 'New' })
-      expect(updated.title).toBe('New')
-      expect(updated.content).toBe('Body')
-      expect(updated.tags).toEqual(['x'])
-    })
-
-    it('should set new updatedAt', async () => {
-      const note = store.create({ title: 'Test', content: 'Body' })
-      await new Promise((r) => setTimeout(r, 10))
-      const updated = store.update(note.id, { content: 'Updated' })
-      expect(updated.updatedAt.getTime()).toBeGreaterThan(note.updatedAt.getTime())
-    })
-
-    it('should throw for non-existent id', () => {
-      expect(() => store.update('missing', { title: 'X' })).toThrow('Note with id "missing" not found')
-    })
+  it('should allow public update access', () => {
+    const update = (Notes.access as AccessMap)?.update
+    expect(typeof update).toBe('function')
+    expect(update?.()).toBe(true)
   })
 
-  describe('delete', () => {
-    it('should delete an existing note and return true', () => {
-      const note = store.create({ title: 'Test', content: 'Body' })
-      expect(store.delete(note.id)).toBe(true)
-      expect(store.getById(note.id)).toBeNull()
-    })
-
-    it('should return false for non-existent id', () => {
-      expect(store.delete('missing')).toBe(false)
-    })
+  it('should allow public delete access', () => {
+    const del = (Notes.access as AccessMap)?.delete
+    expect(typeof del).toBe('function')
+    expect(del?.()).toBe(true)
   })
 
-  describe('search', () => {
-    beforeEach(() => {
-      store.create({ title: 'Shopping List', content: 'Buy milk and eggs' })
-      store.create({ title: 'Meeting Notes', content: 'Discuss project timeline' })
-      store.create({ title: 'Recipe', content: 'Chocolate milk shake' })
-    })
+  it('should have a required text title field', () => {
+    const fields = Notes.fields as FieldDef[]
+    const field = fields.find((f) => f.name === 'title')
+    expect(field).toBeDefined()
+    expect(field?.type).toBe('text')
+    expect(field?.required).toBe(true)
+  })
 
-    it('should search by title', () => {
-      const results = store.search('recipe')
-      expect(results).toHaveLength(1)
-      expect(results[0].title).toBe('Recipe')
-    })
+  it('should have a required textarea content field', () => {
+    const fields = Notes.fields as FieldDef[]
+    const field = fields.find((f) => f.name === 'content')
+    expect(field).toBeDefined()
+    expect(field?.type).toBe('textarea')
+    expect(field?.required).toBe(true)
+  })
 
-    it('should search by content', () => {
-      const results = store.search('timeline')
-      expect(results).toHaveLength(1)
-      expect(results[0].title).toBe('Meeting Notes')
-    })
+  it('should have a json tags field', () => {
+    const fields = Notes.fields as FieldDef[]
+    const field = fields.find((f) => f.name === 'tags')
+    expect(field).toBeDefined()
+    expect(field?.type).toBe('json')
+  })
 
-    it('should be case-insensitive', () => {
-      const results = store.search('SHOPPING')
-      expect(results).toHaveLength(1)
-      expect(results[0].title).toBe('Shopping List')
-    })
-
-    it('should match across title and content', () => {
-      const results = store.search('milk')
-      expect(results).toHaveLength(2)
-    })
-
-    it('should return empty for no match', () => {
-      expect(store.search('nonexistent')).toEqual([])
-    })
+  it('should export a valid CollectionConfig shape', () => {
+    const config: CollectionConfig = Notes
+    expect(config).toHaveProperty('slug')
+    expect(config).toHaveProperty('fields')
+    expect(config).toHaveProperty('access')
   })
 })
