@@ -1,0 +1,8 @@
+{
+  "task_type": "feature",
+  "title": "Add rate limit headers to API responses",
+  "description": "Add standard rate limit headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After) to all API responses that pass through the rate limiter middleware. Headers provide clients with their remaining quota and reset time.",
+  "scope": ["src/middleware/rate-limiter.ts", "src/middleware/rate-limiter.test.ts"],
+  "risk_level": "low",
+  "questions": []
+}
