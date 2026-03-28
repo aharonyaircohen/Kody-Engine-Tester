@@ -7,6 +7,8 @@ import sharp from 'sharp'
 
 import { Assignments } from './collections/Assignments'
 import { Media } from './collections/Media'
+import { Quizzes } from './collections/Quizzes'
+import { QuizAttempts } from './collections/QuizAttempts'
 import { Submissions } from './collections/Submissions'
 import { Users } from './collections/Users'
 import { Courses } from './collections/Courses'
@@ -24,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Courses, Lessons, Enrollments, Certificates, Assignments, Submissions],
+  collections: [Users, Media, Courses, Lessons, Enrollments, Certificates, Assignments, Submissions, Quizzes, QuizAttempts],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
