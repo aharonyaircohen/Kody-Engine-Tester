@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { NotificationsStore } from './notifications'
+import { NotificationsStore } from './NotificationsStore'
 
 describe('NotificationsStore', () => {
   let store: NotificationsStore
