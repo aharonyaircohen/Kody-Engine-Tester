@@ -5,8 +5,10 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Users } from './collections/Users'
+import { Assignments } from './collections/Assignments'
 import { Media } from './collections/Media'
+import { Submissions } from './collections/Submissions'
+import { Users } from './collections/Users'
 import { Courses } from './collections/Courses'
 import { Lessons } from './collections/Lessons'
 import { Enrollments } from './collections/Enrollments'
@@ -22,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Courses, Lessons, Enrollments, Certificates],
+  collections: [Users, Media, Courses, Lessons, Enrollments, Certificates, Assignments, Submissions],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
