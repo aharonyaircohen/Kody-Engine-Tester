@@ -71,6 +71,17 @@ Organization (tenant)
 - All custom endpoints use auth middleware + role guard
 - Response format: `{ success: boolean, data?: T, error?: string }`
 
+## Autonomous Development with Kody
+
+This project uses [Kody Engine Lite](https://github.com/aharonyaircohen/Kody-Engine-Lite) for autonomous issue-to-PR development. Comment `@kody` on any GitHub issue and Kody will classify, plan, build, test, review, and ship a pull request.
+
+Kody's pipeline is customized to this repo via `.kody/steps/` — each stage (taskify, plan, build, verify, review, review-fix) has tailored instructions that include:
+- **Repo Patterns**: Payload CMS collection patterns, service layer with constructor injection, input sanitization via `src/security/sanitizers.ts`
+- **Improvement Areas**: Collections missing access control, middleware not applied to API routes, DI container usage
+- **Acceptance Criteria**: Typecheck, lint, test gates, access control requirements, type generation after schema changes
+
+These step files are auto-generated during `kody init` and can be manually refined in `.kody/steps/`.
+
 ## Testing
 
 - Unit tests: Vitest, co-located as `*.test.ts` next to source
