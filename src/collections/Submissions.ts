@@ -27,6 +27,13 @@ export const Submissions: CollectionConfig = {
       },
     },
     {
+      name: 'courseId',
+      type: 'text',
+      admin: {
+        description: 'Course ID this submission belongs to (for gradebook filtering)',
+      },
+    },
+    {
       name: 'content',
       type: 'richText',
       admin: {

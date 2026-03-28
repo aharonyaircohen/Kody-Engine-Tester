@@ -237,6 +237,7 @@ interface PayloadQuizAttempt {
   id: string
   user: string | { id: string }
   quiz: string
+  courseId: string
   score: number
   completedAt: string
 }
@@ -245,6 +246,7 @@ interface PayloadSubmission {
   id: string
   student: string | { id: string }
   assignment: string | { id: string }
+  courseId: string
   grade: number | null
   maxScore: number
   submittedAt: string
@@ -311,42 +313,43 @@ export class PayloadGradebookService {
 
   private async getQuizAttemptsByStudentAndCourse(
     studentId: string,
-    _courseId: string,
+    courseId: string,
   ): Promise<QuizAttempt[]> {
     const result = await this.payload.find({
       collection: 'quiz-attempts' as CollectionSlug,
-      where: { user: { equals: studentId } },
+      where: {
+        user: { equals: studentId },
+        courseId: { equals: courseId },
+      },
       limit: 1000,
     })
 
-    return (result.docs as unknown as PayloadQuizAttempt[])
-      .filter((a) => {
-        const userId = normalizeId(a.user)
-        return userId === studentId
-      })
-      .map((a) => ({
-        id: a.id,
-        quizId: a.quiz,
-        studentId: normalizeId(a.user),
-        score: a.score,
-        maxScore: 100,
-        completedAt: new Date(a.completedAt),
-      }))
+    return (result.docs as unknown as PayloadQuizAttempt[]).map((a) => ({
+      id: a.id,
+      quizId: a.quiz,
+      studentId: normalizeId(a.user),
+      score: a.score,
+      maxScore: 100,
+      completedAt: new Date(a.completedAt),
+    }))
   }
 
   private async getSubmissionsByStudentAndCourse(
     studentId: string,
-    _courseId: string,
+    courseId: string,
   ): Promise<AssignmentSubmission[]> {
     const result = await this.payload.find({
       collection: 'submissions' as CollectionSlug,
-      where: { student: { equals: studentId } },
+      where: {
+        student: { equals: studentId },
+        courseId: { equals: courseId },
+      },
       depth: 0,
       limit: 1000,
     })
 
     return (result.docs as unknown as PayloadSubmission[])
-      .filter((s) => normalizeId(s.student) === studentId && s.grade !== null)
+      .filter((s) => s.grade !== null)
       .map((s) => ({
         id: s.id,
         assignmentId: normalizeId(s.assignment),

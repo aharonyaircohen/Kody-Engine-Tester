@@ -27,6 +27,13 @@ export const QuizAttempts: CollectionConfig = {
       },
     },
     {
+      name: 'courseId',
+      type: 'text',
+      admin: {
+        description: 'Course ID this attempt belongs to (for gradebook filtering)',
+      },
+    },
+    {
       name: 'score',
       type: 'number',
     },
