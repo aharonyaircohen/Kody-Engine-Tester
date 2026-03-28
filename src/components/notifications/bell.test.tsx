@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import React from 'react'
 import { NotificationBell } from './bell'
-import { NotificationsStore } from '@/collections/notifications'
+import { NotificationsStore } from '@/collections/NotificationsStore'
 
 describe('NotificationBell', () => {
   let store: NotificationsStore

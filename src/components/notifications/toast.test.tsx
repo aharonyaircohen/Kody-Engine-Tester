@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import React from 'react'
 import { Toast, ToastContainer, useToast, ToastProvider } from './toast'
-import type { NotificationType } from '@/collections/notifications'
+import type { NotificationType } from '@/collections/NotificationsStore'
 
 // Helper component to use the hook in tests
 function ToastDemo({ onToast }: { onToast: (toast: ReturnType<typeof useToast>) => void }) {

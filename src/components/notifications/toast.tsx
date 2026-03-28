@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react'
-import type { NotificationType } from '@/collections/notifications'
+import type { NotificationType } from '@/collections/NotificationsStore'
 import styles from './toast.module.css'
 
 export interface ToastData {

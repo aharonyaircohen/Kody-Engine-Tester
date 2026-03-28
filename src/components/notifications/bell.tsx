@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import type { NotificationsStore } from '@/collections/notifications'
-import type { Notification } from '@/collections/notifications'
+import type { NotificationsStore } from '@/collections/NotificationsStore'
+import type { Notification } from '@/collections/NotificationsStore'
 import styles from './bell.module.css'
 
 const MAX_PREVIEW = 5

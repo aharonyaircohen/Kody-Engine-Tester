@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { notificationsStore } from '@/collections/notifications'
-import type { Notification, NotificationCategory } from '@/collections/notifications'
+import { notificationsStore } from '@/collections/NotificationsStore'
+import type { Notification, NotificationCategory } from '@/collections/NotificationsStore'
 import styles from './index.module.css'
 
 type FilterCategory = NotificationCategory | 'all'
