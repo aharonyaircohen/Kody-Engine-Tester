@@ -3,7 +3,6 @@
     "typecheck": "",
     "lint": "pnpm lint",
     "lintFix": "",
-    "format": "",
     "formatFix": "",
     "testUnit": ""
   },
@@ -14,12 +13,7 @@
     "owner": "aharonyaircohen",
     "repo": "Kody-Engine-Tester"
   },
-  "paths": {
-    "taskDir": ".kody/tasks"
-  },
   "agent": {
-    "runner": "claude-code",
-    "defaultRunner": "claude",
     "provider": "minimax",
     "modelMap": {
       "cheap": "MiniMax-M2.7-highspeed",
