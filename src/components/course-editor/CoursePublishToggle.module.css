@@ -1,0 +1,121 @@
+.wrapper {
+  position: relative;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.badgePublished {
+  background: rgba(78, 205, 196, 0.15);
+  color: #4ecdc4;
+}
+
+.badgeDraft {
+  background: rgba(150, 150, 150, 0.15);
+  color: #999;
+}
+
+.button {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 20px;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+.buttonPublish {
+  background: #6c63ff;
+  color: #fff;
+}
+
+.buttonUnpublish {
+  background: #444;
+  color: #ccc;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.dialog {
+  background: #1e1e2e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 28px;
+  max-width: 400px;
+  width: 90%;
+}
+
+.dialogTitle {
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+
+.dialogMessage {
+  color: #999;
+  font-size: 0.9rem;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+.dialogActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  background: #2a2a3e;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 8px 18px;
+  transition: background 0.2s;
+}
+
+.cancelButton:hover {
+  background: #333;
+}
+
+.confirmButton {
+  background: #6c63ff;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 18px;
+  transition: opacity 0.2s;
+}
+
+.confirmButton:hover {
+  opacity: 0.85;
+}
