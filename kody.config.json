@@ -20,10 +20,11 @@
   "agent": {
     "runner": "claude-code",
     "defaultRunner": "claude",
+    "litellmUrl": "http://localhost:4000",
     "modelMap": {
-      "cheap": "haiku",
-      "mid": "sonnet",
-      "strong": "opus"
+      "cheap": "claude-haiku-4-5",
+      "mid": "claude-sonnet-4-6",
+      "strong": "claude-sonnet-4-6"
     }
   },
   "$schema": "https://raw.githubusercontent.com/aharonyaircohen/Kody-Engine-Lite/main/kody.config.schema.json"
