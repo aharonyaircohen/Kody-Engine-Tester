@@ -145,7 +145,7 @@ describe('middleware pipeline', () => {
         ctx.steps.push('err-2')
         ctx.error = err.message
       })
-      .use(async (ctx, next) => {
+      .use(async (ctx, _next) => {
         ctx.steps.push('throws')
         throw new Error('async boom')
       })

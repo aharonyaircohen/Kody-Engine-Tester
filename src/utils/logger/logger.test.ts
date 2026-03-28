@@ -19,10 +19,10 @@ function captureLog(
   minLevel: LogLevel = 'debug',
 ): { entry: LogEntry | null } {
   let entry: LogEntry | null = null
-  const transport = (_line: string) => {
+  const _transport = (_line: string) => {
     // reconstruct entry from formatted line for capture
   }
-  const entries: LogEntry[] = []
+  const _entries: LogEntry[] = []
   const logger = createLogger({
     level: minLevel,
     formatter: (e) => { entry = e; return '' },

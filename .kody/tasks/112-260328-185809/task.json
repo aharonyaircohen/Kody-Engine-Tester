@@ -1,0 +1,22 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Build instructor course analytics dashboard",
+  "description": "Create an instructor analytics dashboard with course statistics, module completion tracking, at-risk student identification, and instructor overview. Implement analytics service with `getCourseAnalytics(courseId)` and `getInstructorOverview(instructorId)`, dashboard page at `src/app/(frontend)/instructor/analytics/page.tsx`, and three components: AnalyticsCard, CompletionChart, and AtRiskStudentsList. Include comprehensive tests for analytics calculations across enrollment states, grade averaging, and at-risk identification.",
+  "scope": [
+    "src/services/analytics.ts",
+    "src/app/(frontend)/instructor/analytics/page.tsx",
+    "src/components/analytics/AnalyticsCard.tsx",
+    "src/components/analytics/CompletionChart.tsx",
+    "src/components/analytics/AtRiskStudentsList.tsx",
+    "src/services/analytics.test.ts",
+    "src/app/(frontend)/instructor/layout.tsx"
+  ],
+  "risk_level": "medium",
+  "questions": [
+    "For average grade calculation: should quiz and assignment scores be weighted equally, or should one have higher weight? If weighted, what are the percentages?",
+    "For at-risk student identification: what is the passing grade threshold — 50%, 60%, 70%?",
+    "Should the analytics dashboard support filtering by date range, or only show all-time statistics?"
+  ]
+}
+```

@@ -51,7 +51,7 @@ describe('zip', () => {
   it('should handle objects as elements', () => {
     const a = { x: 1 }
     const b = { y: 2 }
-    const c = { z: 3 }
+    const _c = { z: 3 }
     const result = zip([a, b], [1, 2])
     expect(result).toEqual([[{ x: 1 }, 1], [{ y: 2 }, 2]])
   })
