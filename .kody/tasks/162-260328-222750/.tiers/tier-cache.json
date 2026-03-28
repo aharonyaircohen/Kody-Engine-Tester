@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/162-260328-222750/context.md",
+      "hash": "d6200b9cc19180a7",
+      "L0": "### taskify (2026-03-28T22:30:48)\nCreated `src/services/course-search.test.ts` with 14 tests covering:.",
+      "L1": "### taskify (2026-03-28T22:30:48)\n**Implementation complete.** Created `src/services/course-search.ts` with:\n- **Pagination defaults**: `page` (default: 1), `limit` (default: 20, max: 100)\n- **Input validation**: Throws errors for `page < 1` and `limit` outside `[1, 100]`\n- **Response metadata**: `{ data, meta: { total, page, limit, totalPages } }`\n- Pagination defaults and custom values\n- Validation edge cases (page 0, negative page, limit 0, limit 101, boun\n### plan (2026-03-28T22:31:20)\nThe plan is written to `.kody/tasks/162-260328-222750/plan.md`. The pipeline manages stages externally — implementation is complete and ready for the build stage to proceed.",
+      "L2": "\n### taskify (2026-03-28T22:30:48)\n**Implementation complete.** Created `src/services/course-search.ts` with:\n\n- **Pagination defaults**: `page` (default: 1), `limit` (default: 20, max: 100)\n- **Input validation**: Throws errors for `page < 1` and `limit` outside `[1, 100]`\n- **Response metadata**: `{ data, meta: { total, page, limit, totalPages } }`\n\nCreated `src/services/course-search.test.ts` with 14 tests covering:\n- Pagination defaults and custom values\n- Validation edge cases (page 0, negative page, limit 0, limit 101, boun\n...(truncated)\n\n### plan (2026-03-28T22:31:20)\nThe plan is written to `.kody/tasks/162-260328-222750/plan.md`. The pipeline manages stages externally — implementation is complete and ready for the build stage to proceed.\n\n"
+    },
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/162-260328-222750/task.md",
+      "hash": "08624a6154a8f51c",
+      "L0": "# Add pagination support to course search API\nAdd pagination parameters to the course search endpoint.",
+      "L1": "# Add pagination support to course search API\n## Feature Request\nAdd pagination parameters to the course search endpoint.\n- Add `page` (default: 1) and `limit` (default: 20, max: 100) parameters to the search function\n- Return pagination metadata: `{ results, total, page, limit, totalPages }`\n- Add input validation (page >= 1, 1 <= limit <= 100)\n- Update existing tests and add new ones for pagination edge cases (page beyond results, limit=1, etc.)",
+      "L2": "# Add pagination support to course search API\n\n## Feature Request\n\nAdd pagination parameters to the course search endpoint.\n\n**File:** `src/services/course-search.ts`\n\n**Requirements:**\n- Add `page` (default: 1) and `limit` (default: 20, max: 100) parameters to the search function\n- Return pagination metadata: `{ results, total, page, limit, totalPages }`\n- Add input validation (page >= 1, 1 <= limit <= 100)\n- Update existing tests and add new ones for pagination edge cases (page beyond results, limit=1, etc.)\n\n**Complexity:** medium"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/162-260328-222750/task.json",
+      "hash": "9b06bb2dfb44c4bb",
+      "L0": "Title: Add pagination support to course search API | Type: feature | Risk: medium",
+      "L1": "- task_type: feature\n- title: Add pagination support to course search API\n- description: Add pagination parameters (page, limit) to course search with validation, metadata return, and comprehensive test coverage. Implementation already complete in working directory.\n- scope: [2 items] src/services/course-search.ts, src/services/course-search.test.ts\n- risk_level: medium\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"feature\",\n  \"title\": \"Add pagination support to course search API\",\n  \"description\": \"Add pagination parameters (page, limit) to course search with validation, metadata return, and comprehensive test coverage. Implementation already complete in working directory.\",\n  \"scope\": [\n    \"src/services/course-search.ts\",\n    \"src/services/course-search.test.ts\"\n  ],\n  \"risk_level\": \"medium\",\n  \"questions\": []\n}\n"
+    }
+  }
+}

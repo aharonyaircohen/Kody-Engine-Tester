@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "title": "Add pagination support to course search API",
+  "description": "Add pagination parameters (page, limit) to course search with validation, metadata return, and comprehensive test coverage. Implementation already complete in working directory.",
+  "scope": [
+    "src/services/course-search.ts",
+    "src/services/course-search.test.ts"
+  ],
+  "risk_level": "medium",
+  "questions": []
+}

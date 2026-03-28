@@ -1,72 +1,113 @@
-export interface CourseDocument {
-  id: string
-  title: string
-  slug: string
-  description: unknown
-  instructor: { id: string } | string
-  status: string
-  difficulty: string | null
-  estimatedHours: number | null
-  tags: Array<{ label: string }>
+import type { Payload, CollectionSlug, Where } from 'payload'
+
+export interface SearchFilters {
+  difficulty?: string
+  tags?: string[]
+  instructor?: string
+  status?: string
+  tagMode?: 'and' | 'or'
+}
+
+export type SortOption = 'relevance' | 'newest' | 'popularity' | 'rating'
+
+export interface SearchPagination {
+  page?: number
+  limit?: number
 }
 
 export interface CourseSearchResult {
-  id: string
-  title: string
-  slug: string
-  description: unknown
-  instructor: { id: string } | string
-  status: string
-  difficulty: string | null
-  estimatedHours: number | null
-}
-
-export interface SearchResults {
-  results: CourseSearchResult[]
-  total: number
-}
-
-export interface CoursesStore {
-  getAll(): CourseDocument[]
+  data: unknown[]
+  meta: {
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+  }
 }
 
 export class CourseSearchService {
-  constructor(private store: CoursesStore) {}
+  constructor(private payload: Payload) {}
 
-  async search(query: string): Promise<SearchResults> {
-    const trimmed = query.trim()
+  async searchCourses(
+    query: string,
+    filters: SearchFilters = {},
+    sort: SortOption = 'relevance',
+    pagination: SearchPagination = {},
+  ): Promise<CourseSearchResult> {
+    // Apply defaults
+    const page = pagination.page ?? 1
+    const limit = pagination.limit ?? 20
 
-    if (trimmed === '') {
-      return { results: [], total: 0 }
+    // Validate pagination parameters
+    if (page < 1) {
+      throw new Error('page must be greater than or equal to 1')
+    }
+    if (limit < 1 || limit > 100) {
+      throw new Error('limit must be between 1 and 100')
     }
 
-    const all = this.store.getAll()
-    const lowerQuery = trimmed.toLowerCase()
+    const conditions: Where[] = []
 
-    const results = all.filter((course) => {
-      const titleMatch = course.title?.toLowerCase().includes(lowerQuery)
-      const descMatch =
-        typeof course.description === 'object' &&
-        course.description !== null &&
-        'root' in course.description &&
-        JSON.stringify(course.description)
-          .toLowerCase()
-          .includes(lowerQuery)
-      return titleMatch || descMatch
+    // Status filter (only added when explicitly provided)
+    if (filters.status) {
+      conditions.push({ status: { equals: filters.status } })
+    }
+
+    // Full-text search across title and description
+    if (query) {
+      conditions.push({
+        or: [
+          { title: { like: query } },
+          { description: { like: query } },
+        ],
+      } as Where)
+    }
+
+    // Difficulty filter
+    if (filters.difficulty) {
+      conditions.push({ difficulty: { equals: filters.difficulty } })
+    }
+
+    // Instructor filter
+    if (filters.instructor) {
+      conditions.push({ instructor: { equals: filters.instructor } })
+    }
+
+    // Tags filter — AND mode: one condition per tag; OR mode (default): single or condition
+    if (filters.tags && filters.tags.length > 0) {
+      if (filters.tagMode === 'and') {
+        for (const tag of filters.tags) {
+          conditions.push({ 'tags.label': { equals: tag } } as unknown as Where)
+        }
+      } else {
+        conditions.push({
+          or: filters.tags.map((tag) => ({ 'tags.label': { equals: tag } } as unknown as Where)),
+        } as Where)
+      }
+    }
+
+    // Sort field: only 'newest' maps to a concrete field; others use Payload default
+    let sortField: string | undefined
+    if (sort === 'newest') {
+      sortField = '-createdAt'
+    }
+
+    const result = await this.payload.find({
+      collection: 'courses' as CollectionSlug,
+      where: conditions.length > 0 ? ({ and: conditions } as Where) : undefined,
+      sort: sortField,
+      page,
+      limit,
     })
 
     return {
-      results: results.map((c) => ({
-        id: c.id,
-        title: c.title,
-        slug: c.slug,
-        description: c.description,
-        instructor: c.instructor,
-        status: c.status,
-        difficulty: c.difficulty,
-        estimatedHours: c.estimatedHours,
-      })),
-      total: results.length,
+      data: result.docs,
+      meta: {
+        total: result.totalDocs,
+        page: result.page ?? page,
+        limit,
+        totalPages: result.totalPages,
+      },
     }
   }
 }
