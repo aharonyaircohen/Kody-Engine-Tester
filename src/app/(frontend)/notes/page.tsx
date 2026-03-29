@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { notesStore } from '@/collections/notes'
 import { NoteCard } from '@/components/notes/NoteCard'
 import { SearchBar } from '@/components/notes/SearchBar'
+import { NotesBadge } from '@/components/notes/NotesBadge'
 
 export default function NotesListPage() {
   const router = useRouter()
@@ -25,7 +26,10 @@ export default function NotesListPage() {
   return (
     <div style={{ padding: '40px', maxWidth: '900px', margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h1 style={{ margin: 0, color: '#e0e0e0' }}>Notes</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <h1 style={{ margin: 0, color: '#e0e0e0' }}>Notes</h1>
+          <NotesBadge count={notes.length} />
+        </div>
         <Link
           href="/notes/create"
           style={{

@@ -1,0 +1,15 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add note count badge next to the Notes heading",
+  "description": "Add a visual badge component next to the Notes h1 heading that displays the total note count. Badge should show filtered count when search filters are applied. Styling should be a small gray rounded pill with specified dimensions and colors.",
+  "scope": [
+    "src/components/notes/NotesBadge.tsx",
+    "src/app/(frontend)/notes/page.tsx",
+    "tests/notes.test.tsx"
+  ],
+  "risk_level": "low",
+  "hasUI": true,
+  "questions": []
+}
+```

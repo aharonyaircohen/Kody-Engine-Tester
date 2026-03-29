@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.json": {
+      "source": "/root/Kody-Engine-Tester/.kody/tasks/179-badge-test/task.json",
+      "hash": "b9f4b1cb0ed90b07",
+      "L0": "Title: Add note count badge next to the Notes heading | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add note count badge next to the Notes heading\n- description: Add a visual badge component next to the Notes h1 heading that displays the total note count. Badge should show filtered count when search filters are applied. Styling should be a small gray rounded pill with specified dimensions and colors.\n- scope: [3 items] src/components/notes/NotesBadge.tsx, src/app/(frontend)/notes/page.tsx, tests/notes.test.tsx\n- risk_level: low\n- hasUI: true\n- questions: [0 items] ",
+      "L2": "```json\n{\n  \"task_type\": \"feature\",\n  \"title\": \"Add note count badge next to the Notes heading\",\n  \"description\": \"Add a visual badge component next to the Notes h1 heading that displays the total note count. Badge should show filtered count when search filters are applied. Styling should be a small gray rounded pill with specified dimensions and colors.\",\n  \"scope\": [\n    \"src/components/notes/NotesBadge.tsx\",\n    \"src/app/(frontend)/notes/page.tsx\",\n    \"tests/notes.test.tsx\"\n  ],\n  \"risk_level\": \"low\",\n  \"hasUI\": true,\n  \"questions\": []\n}\n```\n"
+    },
+    "task.md": {
+      "source": "/root/Kody-Engine-Tester/.kody/tasks/179-badge-test/task.md",
+      "hash": "43ecf956a2fe5488",
+      "L0": "# Add note count badge next to the Notes heading\nAdd a count badge next to the \"Notes\" heading on the notes list page (`/notes`) that shows the total number of notes.",
+      "L1": "# Add note count badge next to the Notes heading\n## Description\nAdd a count badge next to the \"Notes\" heading on the notes list page (`/notes`) that shows the total number of notes.\n## Requirements\n1. Add a badge/pill element next to the \"Notes\" h1 heading showing the count (e.g., \"Notes (3)\")\n## Acceptance Criteria\n- [ ] Badge shows next to heading with correct count\n- [ ] Count updates when search filters results\n- [ ] Visual verification: start dev server and browse to /notes to confirm the badge renders correctly\n- [ ] Unit test passes",
+      "L2": "# Add note count badge next to the Notes heading\n\n## Description\n\nAdd a count badge next to the \"Notes\" heading on the notes list page (`/notes`) that shows the total number of notes.\n\n## Requirements\n\n1. Add a badge/pill element next to the \"Notes\" h1 heading showing the count (e.g., \"Notes (3)\")\n2. Style: small gray rounded pill with the number, e.g. `background: #333; color: #aaa; padding: 2px 10px; border-radius: 12px; font-size: 0.8rem`\n3. When there are 0 notes, show \"0\"\n4. The count should update when search filters results (show filtered count)\n5. Add a unit test for the badge\n\n## Acceptance Criteria\n\n- [ ] Badge shows next to heading with correct count\n- [ ] Count updates when search filters results\n- [ ] Visual verification: start dev server and browse to /notes to confirm the badge renders correctly\n- [ ] Unit test passes"
+    },
+    "context.md": {
+      "source": "/root/Kody-Engine-Tester/.kody/tasks/179-badge-test/context.md",
+      "hash": "3d333a021c38b551",
+      "L0": "### taskify (2026-03-29T22:28:55)\nThe implementation is complete! All unit tests pass.",
+      "L1": "### taskify (2026-03-29T22:28:55)\nThe implementation is complete! All unit tests pass. Here's what you can do next:\n# Then navigate to http://localhost:3000/notes\n```\n- Display \"0\" when no notes exist\n- Update in real-time as you search/filter notes\n- Show the filtered count when a search is active\n- ✅ Badge shows next to heading with correct count\n- ✅ Cou",
+      "L2": "\n### taskify (2026-03-29T22:28:55)\nThe implementation is complete! All unit tests pass. Here's what you can do next:\n\n**To verify visually:**\n```bash\nnpm run dev\n# Then navigate to http://localhost:3000/notes\n```\n\nYou should see the badge displaying the note count next to the \"Notes\" heading. The badge will:\n- Display \"0\" when no notes exist\n- Update in real-time as you search/filter notes\n- Show the filtered count when a search is active\n\nAll acceptance criteria are met:\n- ✅ Badge shows next to heading with correct count\n- ✅ Cou\n...(truncated)\n"
+    }
+  }
+}
