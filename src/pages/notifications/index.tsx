@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { notificationsStore } from '@/collections/notifications'
 import type { Notification, NotificationCategory } from '@/collections/notifications'
@@ -23,13 +23,11 @@ const TYPE_ICONS: Record<string, string> = {
 }
 
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState<Notification[]>([])
   const [activeFilter, setActiveFilter] = useState<FilterCategory>('all')
   const [refreshKey, setRefreshKey] = useState(0)
 
-  useEffect(() => {
-    setNotifications(notificationsStore.getAll())
-  }, [refreshKey])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const notifications = useMemo(() => notificationsStore.getAll(), [refreshKey])
 
   const filtered = activeFilter === 'all'
     ? notifications

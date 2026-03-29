@@ -3,9 +3,11 @@ import config from '@/payload.config'
 
 import { describe, it, beforeAll, expect } from 'vitest'
 
+const hasPayloadSecret = !!process.env.PAYLOAD_SECRET
+
 let payload: Payload
 
-describe('API', () => {
+describe.skipIf(!hasPayloadSecret)('API', () => {
   beforeAll(async () => {
     const payloadConfig = await config
     payload = await getPayload({ config: payloadConfig })

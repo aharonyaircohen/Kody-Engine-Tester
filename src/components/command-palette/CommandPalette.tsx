@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import type { Command } from '@/hooks/useCommandPalette'
 import styles from './CommandPalette.module.css'
 
@@ -35,10 +35,14 @@ export function CommandPalette({
   recentIds,
 }: CommandPaletteProps) {
   const [activeIndex, setActiveIndex] = useState(-1)
+  const [prevQuery, setPrevQuery] = useState(query)
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen)
 
-  useEffect(() => {
+  if (query !== prevQuery || isOpen !== prevIsOpen) {
     setActiveIndex(-1)
-  }, [query, isOpen])
+    setPrevQuery(query)
+    setPrevIsOpen(isOpen)
+  }
 
   const recentCommands = recentIds
     .map((id) => commands.find((c) => c.id === id))

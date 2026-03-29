@@ -12,13 +12,12 @@ export const Assignments: CollectionConfig = {
       required: true,
     },
     {
-      name: 'module',
+      name: 'course',
       type: 'relationship',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      relationTo: 'modules' as any,
+      relationTo: 'courses',
       required: true,
       admin: {
-        description: 'The module this assignment belongs to.',
+        description: 'The course this assignment belongs to.',
       },
     },
     {
