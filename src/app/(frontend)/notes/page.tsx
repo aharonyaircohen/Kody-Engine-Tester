@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { notesStore } from '@/collections/notes'
 import { NoteCard } from '@/components/notes/NoteCard'
 import { SearchBar } from '@/components/notes/SearchBar'
+import styles from './notes.module.css'
 
 export default function NotesListPage() {
   const router = useRouter()
@@ -23,30 +24,21 @@ export default function NotesListPage() {
   )
 
   return (
-    <div style={{ padding: '40px', maxWidth: '900px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h1 style={{ margin: 0, color: '#e0e0e0' }}>Notes</h1>
-        <Link
-          href="/notes/create"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#6c63ff',
-            color: 'white',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontSize: '0.9rem',
-          }}
-        >
+    <div className={styles.container}>
+      <Link href="/" className={styles.backLink}>← Back</Link>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Notes</h1>
+        <Link href="/notes/create" className={styles.newNoteButton}>
           New Note
         </Link>
       </div>
-      <div style={{ marginBottom: '24px' }}>
+      <div className={styles.searchWrapper}>
         <SearchBar value={searchInput} onChange={setSearchInput} />
       </div>
       {notes.length === 0 ? (
-        <p style={{ color: '#666' }}>{searchQuery ? 'No notes match your search.' : 'No notes yet. Create your first note!'}</p>
+        <p className={styles.empty}>{searchQuery ? 'No notes match your search.' : 'No notes yet. Create your first note!'}</p>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '16px' }}>
+        <div className={styles.grid}>
           {notes.map((note) => (
             <NoteCard key={note.id} note={note} onClick={(id) => router.push(`/notes/${id}`)} />
           ))}

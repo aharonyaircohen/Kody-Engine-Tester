@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/root/Kody-Engine-Tester/.kody/tasks/175-visual-bugfix/task.md",
+      "hash": "531f6d45b145cc73",
+      "L0": "# Bug: Notes page header and search bar overlap on narrow viewports\nOn the Notes list page (`/notes`), the header row (title + \"New Note\" button) and the search bar below it have layout problems on narrow viewports (< 600px):.",
+      "L1": "# Bug: Notes page header and search bar overlap on narrow viewports\n## Bug Description\nOn the Notes list page (`/notes`), the header row (title + \"New Note\" button) and the search bar below it have layout problems on narrow viewports (< 600px):\n## Expected Behavior\n1. On narrow viewports (< 600px), the header should stack vertically: title on top, button below, both full-width\n## Steps to Reproduce\n1. Navigate to `/notes`\n## Acceptance Criteria\n- [ ] Header wraps to vertical layout on narrow screens (< 600px)\n- [ ] Visual separator between header and search\n- [ ] Back navigation link added\n- [ ] Existing NoteCard grid layout still works correctly\n- [ ] Unit tests for any new components\n## Technical Notes\n- The Notes page is at `src/app/(frontend)/notes/page.tsx`\n- Styles are currently inline — consider extracting to a CSS module\n- The page uses client-side rendering (`'use client'`)",
+      "L2": "# Bug: Notes page header and search bar overlap on narrow viewports\n\n## Bug Description\n\nOn the Notes list page (`/notes`), the header row (title + \"New Note\" button) and the search bar below it have layout problems on narrow viewports (< 600px):\n\n1. The \"Notes\" heading and \"New Note\" button are in a horizontal flex row that doesn't wrap — on small screens the button gets cut off or overflows\n2. There is no visual separation between the header area and the search bar — they blend together\n3. The page has no navigation back to the home page\n\n## Expected Behavior\n\n1. On narrow viewports (< 600px), the header should stack vertically: title on top, button below, both full-width\n2. Add a subtle bottom border or separator between the header section and the search bar\n3. Add a \"← Back\" link at the top of the page that navigates to `/`\n\n## Steps to Reproduce\n\n1. Navigate to `/notes`\n2. Resize the browser window to < 600px width\n3. Observe the layout issues\n\n## Acceptance Criteria\n\n- [ ] Header wraps to vertical layout on narrow screens (< 600px)\n- [ ] Visual separator between header and search\n- [ ] Back navigation link added\n- [ ] Existing NoteCard grid layout still works correctly\n- [ ] Unit tests for any new components\n- [ ] **Visually verify the page renders correctly at both wide and narrow viewports using the browser**\n\n## Technical Notes\n\n- The Notes page is at `src/app/(frontend)/notes/page.tsx`\n- Styles are currently inline — consider extracting to a CSS module\n- The page uses client-side rendering (`'use client'`)"
+    },
+    "task.json": {
+      "source": "/root/Kody-Engine-Tester/.kody/tasks/175-visual-bugfix/task.json",
+      "hash": "0383b400893a4ebf",
+      "L0": "Title: Fix Notes page header layout on mobile | Type: bugfix | Risk: low",
+      "L1": "- task_type: bugfix\n- title: Fix Notes page header layout on mobile\n- description: Fix responsive layout issues on Notes list page: header should stack vertically on narrow viewports (<600px), add visual separator between header and search bar, and add back navigation link to home page.\n- scope: [1 items] src/app/(frontend)/notes/page.tsx\n- risk_level: low\n- hasUI: true\n- questions: [0 items] ",
+      "L2": "```json\n{\n  \"task_type\": \"bugfix\",\n  \"title\": \"Fix Notes page header layout on mobile\",\n  \"description\": \"Fix responsive layout issues on Notes list page: header should stack vertically on narrow viewports (<600px), add visual separator between header and search bar, and add back navigation link to home page.\",\n  \"scope\": [\n    \"src/app/(frontend)/notes/page.tsx\"\n  ],\n  \"risk_level\": \"low\",\n  \"hasUI\": true,\n  \"questions\": []\n}\n```\n"
+    },
+    "context.md": {
+      "source": "/root/Kody-Engine-Tester/.kody/tasks/175-visual-bugfix/context.md",
+      "hash": "41cf12610364caa2",
+      "L0": "### taskify (2026-03-29T21:41:34)\nI see you've provided the task context for **175-visual-bugfix** — a layout issue on the Notes page where the header and search bar overlap on narrow viewports, plus missing back navigation.",
+      "L1": "### taskify (2026-03-29T21:41:34)\nI see you've provided the task context for **175-visual-bugfix** — a layout issue on the Notes page where the header and search bar overlap on narrow viewports, plus missing back navigation.",
+      "L2": "\n### taskify (2026-03-29T21:41:34)\nI see you've provided the task context for **175-visual-bugfix** — a layout issue on the Notes page where the header and search bar overlap on narrow viewports, plus missing back navigation.\n\nWhat would you like me to do?\n\n1. **Implement the fix** — I'll examine the Notes page component and make the layout changes (header wrapping, separator, back link)\n2. **Classify/structure the task** — I'll analyze the scope and create a structured task classification\n3. **Run the tests** — I'll verify the c\n...(truncated)\n"
+    }
+  }
+}

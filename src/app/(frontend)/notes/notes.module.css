@@ -1,0 +1,77 @@
+.container {
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #a0a0a0;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.backLink:hover {
+  color: #e0e0e0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #333;
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  color: #e0e0e0;
+}
+
+.newNoteButton {
+  padding: 10px 20px;
+  background-color: #6c63ff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.newNoteButton:hover {
+  background-color: #5a52d5;
+}
+
+.searchWrapper {
+  margin-bottom: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.empty {
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .newNoteButton {
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

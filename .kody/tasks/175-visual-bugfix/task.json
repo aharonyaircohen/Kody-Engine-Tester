@@ -1,0 +1,13 @@
+```json
+{
+  "task_type": "bugfix",
+  "title": "Fix Notes page header layout on mobile",
+  "description": "Fix responsive layout issues on Notes list page: header should stack vertically on narrow viewports (<600px), add visual separator between header and search bar, and add back navigation link to home page.",
+  "scope": [
+    "src/app/(frontend)/notes/page.tsx"
+  ],
+  "risk_level": "low",
+  "hasUI": true,
+  "questions": []
+}
+```
