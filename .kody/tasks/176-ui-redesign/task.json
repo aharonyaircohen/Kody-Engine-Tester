@@ -1,0 +1,21 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Redesign Notes page from grid to master-detail list view",
+  "description": "Refactor the Notes page from a card grid layout to a master-detail layout with a scrollable list on the left (~40% width) and a preview panel on the right (~60% width). The list items should display title, content preview, date, and tag dots. The preview panel shows full note content with an edit link. Mobile screens (<768px) should display only the list, with clicks navigating to the existing detail page. Preserve search filtering and the new note button.",
+  "scope": [
+    "src/app/(frontend)/notes/page.tsx",
+    "src/components/notes/NoteListItem.tsx",
+    "src/components/notes/NoteListItem.module.css",
+    "src/components/notes/NotePreview.tsx",
+    "src/components/notes/NotePreview.module.css",
+    "src/components/notes/NoteListItem.test.tsx",
+    "src/components/notes/NotePreview.test.tsx"
+  ],
+  "risk_level": "medium",
+  "hasUI": true,
+  "questions": [
+    "Should the preview panel selection persist if the user navigates away and returns to the Notes page (e.g., via browser back button)?"
+  ]
+}
+```

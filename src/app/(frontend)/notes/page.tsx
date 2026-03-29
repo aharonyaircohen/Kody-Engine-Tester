@@ -4,13 +4,16 @@ import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { notesStore } from '@/collections/notes'
-import { NoteCard } from '@/components/notes/NoteCard'
+import { NoteListItem } from '@/components/notes/NoteListItem'
+import { NotePreview } from '@/components/notes/NotePreview'
 import { SearchBar } from '@/components/notes/SearchBar'
+import styles from './notes.module.css'
 
 export default function NotesListPage() {
   const router = useRouter()
   const [searchInput, setSearchInput] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedId, setSelectedId] = useState<string | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setSearchQuery(searchInput), 300)
@@ -22,36 +25,51 @@ export default function NotesListPage() {
     [searchQuery],
   )
 
+  const selectedNote = useMemo(
+    () => (selectedId ? notes.find((n) => n.id === selectedId) ?? null : null),
+    [selectedId, notes],
+  )
+
+  function handleNoteClick(id: string) {
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      router.push(`/notes/${id}`)
+    } else {
+      setSelectedId(id)
+    }
+  }
+
   return (
-    <div style={{ padding: '40px', maxWidth: '900px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h1 style={{ margin: 0, color: '#e0e0e0' }}>Notes</h1>
-        <Link
-          href="/notes/create"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#6c63ff',
-            color: 'white',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontSize: '0.9rem',
-          }}
-        >
+    <div className={styles.page}>
+      <div className={styles.pageHeader}>
+        <h1>Notes</h1>
+        <Link href="/notes/create" className={styles.newNoteLink}>
           New Note
         </Link>
       </div>
-      <div style={{ marginBottom: '24px' }}>
+      <div className={styles.searchWrapper}>
         <SearchBar value={searchInput} onChange={setSearchInput} />
       </div>
-      {notes.length === 0 ? (
-        <p style={{ color: '#666' }}>{searchQuery ? 'No notes match your search.' : 'No notes yet. Create your first note!'}</p>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '16px' }}>
-          {notes.map((note) => (
-            <NoteCard key={note.id} note={note} onClick={(id) => router.push(`/notes/${id}`)} />
-          ))}
+      <div className={styles.masterDetail}>
+        <div className={styles.listPanel}>
+          {notes.length === 0 ? (
+            <p className={styles.empty}>
+              {searchQuery ? 'No notes match your search.' : 'No notes yet. Create your first note!'}
+            </p>
+          ) : (
+            notes.map((note) => (
+              <NoteListItem
+                key={note.id}
+                note={note}
+                selected={note.id === selectedId}
+                onClick={handleNoteClick}
+              />
+            ))
+          )}
         </div>
-      )}
+        <div className={styles.previewPanel}>
+          <NotePreview note={selectedNote} />
+        </div>
+      </div>
     </div>
   )
 }

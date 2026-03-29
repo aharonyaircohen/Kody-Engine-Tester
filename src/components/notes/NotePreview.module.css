@@ -1,0 +1,61 @@
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.preview {
+  padding: 24px 28px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #e0e0e0;
+  flex: 1;
+}
+
+.editLink {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  background-color: #6c63ff;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.editLink:hover {
+  background-color: #574fd6;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.content {
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.content p {
+  margin: 0;
+}
