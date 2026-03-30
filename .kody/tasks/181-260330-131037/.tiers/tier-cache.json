@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/181-260330-131037/task.md",
+      "hash": "eb519c55db8b7391",
+      "L0": "# Add Announcements collection for course-wide announcements\nfeature - Feature functionality.",
+      "L1": "# Add Announcements collection for course-wide announcements\n### Category\nfeature - Feature functionality\n### Scenario\nAs an instructor, I want to post announcements to all students enrolled in a course, so they receive important updates about schedule changes, assignment deadlines, or course materials.\n### Acceptance Criteria\n- Create an `Announcements` collection with fields: title, body (textarea), course (relationship to Courses), priority (select: low/medium/high), publishedAt (date)\n- Add appropriate access control (instructors can create/edit, students can read)\n- Include a test file following existing test patterns",
+      "L2": "# Add Announcements collection for course-wide announcements\n\n### Category\nfeature - Feature functionality\n\n### Scenario\nAs an instructor, I want to post announcements to all students enrolled in a course, so they receive important updates about schedule changes, assignment deadlines, or course materials.\n\n### Acceptance Criteria\n- Create an `Announcements` collection with fields: title, body (textarea), course (relationship to Courses), priority (select: low/medium/high), publishedAt (date)\n- Add appropriate access control (instructors can create/edit, students can read)\n- Include a test file following existing test patterns"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/181-260330-131037/task.json",
+      "hash": "5c41cea17a1ff6c2",
+      "L0": "Title: Add Announcements collection for course-wide announcements | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add Announcements collection for course-wide announcements\n- description: Create an Announcements collection with fields (title, body textarea, course relationship, priority select with low/medium/high options, publishedAt date), proper access control for instructors and students, and comprehensive tests following existing collection patterns.\n- scope: [3 items] src/collections/Announcements.ts, src/collections/Announcements.test.ts, src/payload.config.ts\n- risk_level: low\n- hasUI: true\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"feature\",\n  \"title\": \"Add Announcements collection for course-wide announcements\",\n  \"description\": \"Create an Announcements collection with fields (title, body textarea, course relationship, priority select with low/medium/high options, publishedAt date), proper access control for instructors and students, and comprehensive tests following existing collection patterns.\",\n  \"scope\": [\n    \"src/collections/Announcements.ts\",\n    \"src/collections/Announcements.test.ts\",\n    \"src/payload.config.ts\"\n  ],\n  \"risk_level\": \"low\",\n  \"hasUI\": true,\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/181-260330-131037/context.md",
+      "hash": "7ab819647f0ed9f9",
+      "L0": "### taskify (2026-03-30T13:16:10)\nDone! I've created the Announcements collection with the following implementation:.",
+      "L1": "### taskify (2026-03-30T13:16:10)\nDone! I've created the Announcements collection with the following implementation:\n- `src/collections/Announcements.ts` - Collection with Payload CMS config and AnnouncementsStore class\n- `src/collections/Announcements.test.ts` - Comprehensive test suite\n- `src/payload.config.ts` - Added Announcements to collections array\n- `title` (text, required)\n- `body` (textarea, required)",
+      "L2": "\n### taskify (2026-03-30T13:16:10)\nDone! I've created the Announcements collection with the following implementation:\n\n**Files created:**\n- `src/collections/Announcements.ts` - Collection with Payload CMS config and AnnouncementsStore class\n- `src/collections/Announcements.test.ts` - Comprehensive test suite\n\n**Files modified:**\n- `src/payload.config.ts` - Added Announcements to collections array\n\n**Collection fields:**\n- `title` (text, required)\n- `body` (textarea, required)\n- `course` (relationship to Courses, required)\n- `prio\n...(truncated)\n"
+    }
+  }
+}

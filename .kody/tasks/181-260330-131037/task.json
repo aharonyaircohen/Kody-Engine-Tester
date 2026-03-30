@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add Announcements collection for course-wide announcements",
+  "description": "Create an Announcements collection with fields (title, body textarea, course relationship, priority select with low/medium/high options, publishedAt date), proper access control for instructors and students, and comprehensive tests following existing collection patterns.",
+  "scope": [
+    "src/collections/Announcements.ts",
+    "src/collections/Announcements.test.ts",
+    "src/payload.config.ts"
+  ],
+  "risk_level": "low",
+  "hasUI": true,
+  "questions": []
+}
