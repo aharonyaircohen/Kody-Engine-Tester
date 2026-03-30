@@ -279,7 +279,7 @@ describe('Student Journey Integration Tests', () => {
       )
 
       // Enroll student
-      const enrollment = store.enrollStudent('enroll-1', 'student-1', course.id)
+      store.enrollStudent('enroll-1', 'student-1', course.id)
 
       // Complete lessons one by one
       mockFindById.mockResolvedValue({

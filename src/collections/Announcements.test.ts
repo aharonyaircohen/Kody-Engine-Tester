@@ -365,7 +365,7 @@ describe('AnnouncementsStore', () => {
         course: 'c1',
         status: 'published',
       })
-      const a2 = store.create({
+      store.create({
         title: 'Unread',
         body: 'Body',
         course: 'c1',
@@ -386,7 +386,7 @@ describe('AnnouncementsStore', () => {
         course: 'c1',
         status: 'draft',
       })
-      const published = store.create({
+      store.create({
         title: 'Published',
         body: 'Body',
         course: 'c1',
