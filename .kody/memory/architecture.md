@@ -1,17 +1,22 @@
 # Architecture
 
-**Framework**: Next.js 16.2.1 (App Router), React 19.2.4
-**Language**: TypeScript 5.7.3 (strict mode)
-**CMS**: Payload CMS 3.80.0 (headless, admin at `/admin`)
-**Database**: PostgreSQL via @payloadcms/db-postgres
-**Auth**: JWT-based with role-based middleware (student, instructor, admin)
-**Testing**: Vitest (unit/integration), Playwright 1.58.2 (E2E)
-**Rich Text**: Lexical editor
+**Stack:** Next.js 16 (App Router) + Payload CMS 3.80 (headless) + PostgreSQL + React 19 + TypeScript
 
-**Key Directories**:
-- `src/api/` - API routes and endpoints
-- `src/app/` - App Router pages
-- `src/collections/` - Payload CMS collections
-- `src/components/` - React components
-- `src/middleware/` - Auth and rate limiting
-- `tests/` - Test files
+**Purpose:** LearnHub LMS — multi-tenant platform for organizations, instructors, and students to manage courses, lessons, quizzes, assignments, enrollments, and certificates.
+
+**Key Components:**
+
+- **Frontend:** Next.js App Router at `src/app/(frontend)/` with React Server Components
+- **Admin Panel:** Payload at `/admin` with custom React components in `src/components/`
+- **Database:** PostgreSQL via `@payloadcms/db-postgres` with migrations in `src/migrations/`
+- **Auth:** JWT-based (Users collection, roles: admin/instructor/student saved to JWT)
+- **Collections:** Users, Courses, Modules, Lessons, Quizzes, Assignments, Enrollments, Certificates, Discussions, Media, Notifications at `src/collections/`
+- **Business Logic:** Services in `src/services/` (e.g., discussions, enrollment, certificate generation)
+- **Security:** Access control in `src/access/`, sanitizers in `src/security/` (HTML, SQL, URL)
+- **API:** Next.js API routes in `src/api/` + Payload Local API
+
+**Data Flow:** Frontend → Next.js API routes → Payload Local API → PostgreSQL ↔ Services (business logic, hooks)
+
+**Testing:** Vitest (integration) at `vitest.config.mts` + Playwright (e2e) at `playwright.config.ts`. Commands: `pnpm test:int`, `pnpm test:e2e`, `pnpm test` (both).
+
+**Key Files:** `src/payload.config.ts` (main config), `tsconfig.json` (baseUrl: ".", path aliases @/\*), `AGENTS.md` (Payload development rules).

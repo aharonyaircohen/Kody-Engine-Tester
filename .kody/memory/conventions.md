@@ -1,11 +1,16 @@
 # Conventions
 
-**Multi-tenant LMS**: Organizations contain Users (roles: admin, instructor, student), Courses, Modules, Lessons, Quizzes, Assignments, Enrollments
+**TypeScript-First:** Strict mode enabled. Use Payload types from `payload` and generated `payload-types.ts`. Run `pnpm generate:types` after collection schema changes.
 
-**Auth Pattern**: JWT tokens with role-based access control
+**Payload Patterns:**
 
-**Data Flow**: Payload CMS collections → PostgreSQL → Next.js API routes → React components
+- Always pass `req` to nested operations in hooks (transaction safety)
+- Include `saveToJWT: true` on roles field for fast access checks
+- Run `generate:importmap` after creating custom components
+- Ensure roles exist in Users collection before adding access controls to other collections
 
-**Code Style**: ESLint + TypeScript strict mode enforced
+**Access Control:** Implement in `src/access/` functions. Local API bypasses access control by default — be explicit.
 
-**See**: README.md for complete domain model and feature roadmap
+**Project Structure:** Organize by feature: `collections/`, `services/`, `components/`, `hooks/`, `middleware/`, `api/`, `security/`, `validation/`, `contexts/`. Path aliases: `@/*` → `src/*`, `@payload-config` → `src/payload.config.ts`.
+
+**Reference:** See `AGENTS.md` for Payload development rules, field patterns, and security-critical practices.
