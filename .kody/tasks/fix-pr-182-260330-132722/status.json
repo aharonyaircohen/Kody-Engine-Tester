@@ -1,6 +1,6 @@
 {
   "taskId": "fix-pr-182-260330-132722",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "pending",
@@ -22,23 +22,26 @@
     },
     "review": {
       "state": "completed",
-      "completedAt": "2026-03-30T13:32:30.000Z",
-      "retries": 0
+      "completedAt": "2026-03-30T13:34:51.886Z",
+      "retries": 0,
+      "outputFile": "review.md"
     },
     "review-fix": {
       "state": "completed",
-      "completedAt": "2026-03-30T13:32:30.000Z",
-      "retries": 0
+      "completedAt": "2026-03-30T13:35:55.000Z",
+      "retries": 0,
+      "outputFile": "review-fix.md"
     },
     "ship": {
-      "state": "completed",
-      "completedAt": "2026-03-30T13:32:45.000Z",
+      "state": "pending",
       "retries": 0
     }
   },
   "createdAt": "2026-03-30T13:27:35.250Z",
-  "updatedAt": "2026-03-30T13:32:45.000Z",
+  "updatedAt": "2026-03-30T13:35:55.000Z",
   "sessions": {
-    "build": "fd27c765-648e-48dd-babb-96bb378e551d"
+    "build": "fd27c765-648e-48dd-babb-96bb378e551d",
+    "review": "4ca40884-3a1e-4254-8754-b17abe1d5a79",
+    "review-fix": "65a14d2f-8c3e-4b9a-9231-c7d8e5f6a0b3"
   }
 }
