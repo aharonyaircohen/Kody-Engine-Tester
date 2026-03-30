@@ -13,4 +13,8 @@
 
 **Project Structure:** Organize by feature: `collections/`, `services/`, `components/`, `hooks/`, `middleware/`, `api/`, `security/`, `validation/`, `contexts/`. Path aliases: `@/*` → `src/*`, `@payload-config` → `src/payload.config.ts`.
 
+**Security:** Implement sanitizers in `src/security/sanitizers.ts` — `sanitizeHtml()` (strip tags, decode entities), `sanitizeSql()` (escape quotes/backslashes), `sanitizeUrl()` (whitelist http/https). Validate at system boundaries (user input, external APIs).
+
+**Discussions:** Discussions in `src/services/discussions.ts` support threaded replies (max 3 nesting levels), pinning, and resolving. Implement with DiscussionService and access control via enrollments.
+
 **Reference:** See `AGENTS.md` for Payload development rules, field patterns, and security-critical practices.
