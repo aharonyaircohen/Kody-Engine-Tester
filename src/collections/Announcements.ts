@@ -1,6 +1,7 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export type AnnouncementPriority = 'low' | 'medium' | 'high'
+export type AnnouncementStatus = 'draft' | 'published' | 'archived'
 
 export interface Announcement {
   id: string
@@ -8,7 +9,9 @@ export interface Announcement {
   body: string
   course: string
   priority: AnnouncementPriority
+  status: AnnouncementStatus
   publishedAt: Date
+  readBy: string[]
   createdAt: Date
   updatedAt: Date
 }
@@ -18,6 +21,7 @@ export interface CreateAnnouncementInput {
   body: string
   course: string
   priority?: AnnouncementPriority
+  status?: AnnouncementStatus
   publishedAt?: Date
 }
 
@@ -26,6 +30,7 @@ export type UpdateAnnouncementInput = Partial<{
   body: string
   course: string
   priority: AnnouncementPriority
+  status: AnnouncementStatus
   publishedAt: Date
 }>
 
@@ -50,7 +55,9 @@ export class AnnouncementsStore {
       body: input.body,
       course: input.course,
       priority: input.priority ?? 'low',
+      status: input.status ?? 'draft',
       publishedAt: input.publishedAt ?? now,
+      readBy: [],
       createdAt: now,
       updatedAt: now,
     }
@@ -84,14 +91,43 @@ export class AnnouncementsStore {
     return this.getAll().filter((a) => a.priority === priority)
   }
 
+  getByStatus(status: AnnouncementStatus): Announcement[] {
+    return this.getAll().filter((a) => a.status === status)
+  }
+
   getPublished(): Announcement[] {
     const now = new Date()
-    return this.getAll().filter((a) => a.publishedAt <= now)
+    return this.getAll().filter((a) => a.status === 'published' && a.publishedAt <= now)
   }
 
   getUpcoming(): Announcement[] {
     const now = new Date()
-    return this.getAll().filter((a) => a.publishedAt > now)
+    return this.getAll().filter((a) => a.status === 'published' && a.publishedAt > now)
+  }
+
+  markAsRead(id: string, userId: string): Announcement {
+    const announcement = this.announcements.get(id)
+    if (!announcement) {
+      throw new Error(`Announcement with id "${id}" not found`)
+    }
+    if (!announcement.readBy.includes(userId)) {
+      const updated: Announcement = {
+        ...announcement,
+        readBy: [...announcement.readBy, userId],
+        updatedAt: new Date(),
+      }
+      this.announcements.set(id, updated)
+      return updated
+    }
+    return announcement
+  }
+
+  getUnreadForUser(userId: string): Announcement[] {
+    return this.getPublished().filter((a) => !a.readBy.includes(userId))
+  }
+
+  getReadBy(id: string): string[] {
+    return this.announcements.get(id)?.readBy ?? []
   }
 }
 
@@ -101,7 +137,7 @@ export const Announcements: CollectionConfig = {
   slug: 'announcements',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'course', 'priority', 'publishedAt'],
+    defaultColumns: ['title', 'course', 'priority', 'status', 'publishedAt'],
   },
   access: {
     create: ({ req: { user } }) => {
@@ -162,11 +198,35 @@ export const Announcements: CollectionConfig = {
       ],
     },
     {
+      name: 'status',
+      type: 'select',
+      required: true,
+      defaultValue: 'draft',
+      options: [
+        { label: 'Draft', value: 'draft' },
+        { label: 'Published', value: 'published' },
+        { label: 'Archived', value: 'archived' },
+      ],
+      admin: {
+        description: 'Draft announcements are not visible to students',
+      },
+    },
+    {
       name: 'publishedAt',
       type: 'date',
       required: true,
       admin: {
         description: 'When this announcement will be visible to students',
+      },
+    },
+    {
+      name: 'readBy',
+      type: 'relationship',
+      relationTo: 'users' as CollectionSlug,
+      hasMany: true,
+      admin: {
+        description: 'Track which users have read this announcement',
+        readOnly: true,
       },
     },
   ],
