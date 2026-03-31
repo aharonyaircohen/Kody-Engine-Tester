@@ -24,8 +24,16 @@ export class JwtService {
   private secret: string
   private blacklistedTokens = new Map<string, number>() // token -> exp timestamp
 
-  constructor(secret: string = 'dev-secret-do-not-use-in-production') {
-    this.secret = secret
+  constructor(secret?: string) {
+    const effectiveSecret = secret || process.env.JWT_SECRET
+    if (!effectiveSecret) {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('JWT_SECRET environment variable must be set in production')
+      }
+      this.secret = 'dev-secret-do-not-use-in-production'
+    } else {
+      this.secret = effectiveSecret
+    }
   }
 
   private async getKey(): Promise<CryptoKey> {
@@ -81,7 +89,12 @@ export class JwtService {
       throw new Error('Invalid token signature')
     }
 
-    const payload: TokenPayload = JSON.parse(base64urlDecode(body))
+    let payload: TokenPayload
+    try {
+      payload = JSON.parse(base64urlDecode(body))
+    } catch {
+      throw new Error('Invalid token payload')
+    }
     const now = Math.floor(Date.now() / 1000)
 
     if (payload.exp < now) {
