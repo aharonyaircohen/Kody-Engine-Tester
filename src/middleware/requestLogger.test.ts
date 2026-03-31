@@ -81,7 +81,7 @@ describe('createRequestLoggerMiddleware', () => {
   })
 
   describe('logging', () => {
-    it('logs method, pathname, status, and response time', () => {
+    it('logs method, pathname, and response time', () => {
       const mw = createRequestLoggerMiddleware({ logger: logSpy })
       const req = makeRequest('/api/users')
       mw(req)

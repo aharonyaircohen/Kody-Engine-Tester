@@ -8,7 +8,6 @@ export interface RequestLoggerConfig {
 export interface RequestLogInfo {
   method: string
   pathname: string
-  status?: number
   responseTimeMs: number
   requestId: string
 }
@@ -42,35 +41,39 @@ export function createRequestLoggerMiddleware(config: RequestLoggerConfig = {}) 
     const requestId = request.headers.get('x-request-id') ?? generateRequestId()
     const startTime = Date.now()
 
-    // Clone the request to allow reading the body for response time measurement
-    // The actual route handler status is not available in middleware - we measure
-    // the middleware processing time and note this limitation in the log
+    // Create response and set request ID header
     const response = NextResponse.next()
-
-    // Set the request ID header on the response
     response.headers.set('X-Request-ID', requestId)
 
-    const responseTimeMs = Date.now() - startTime
+    const logRequest = () => {
+      const responseTimeMs = Date.now() - startTime
+      logger({
+        method: request.method,
+        pathname,
+        responseTimeMs,
+        requestId,
+      })
+    }
 
-    // Note: response.status reflects the initial response status from NextResponse.next()
-    // The actual final status code from the route handler is not available in middleware.
-    // responseTimeMs measures middleware processing time, not full request handling time.
-    logger({
-      method: request.method,
-      pathname,
-      status: response.status,
-      responseTimeMs,
-      requestId,
-    })
+    // Use waitUntil to measure actual request processing time when available (Edge Runtime)
+    // This fires after the route handler completes, capturing true response time
+    // Fall back to synchronous logging in non-Edge environments (tests)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const responseWithWaitUntil = response as unknown as { waitUntil?: (fn: () => void) => void }
+    if (typeof responseWithWaitUntil.waitUntil === 'function') {
+      responseWithWaitUntil.waitUntil(logRequest)
+    } else {
+      logRequest()
+    }
 
     return response
   }
 }
 
 function defaultLogger(info: RequestLogInfo): void {
-  const { method, pathname, status, responseTimeMs, requestId } = info
+  const { method, pathname, responseTimeMs, requestId } = info
   const ts = new Date().toISOString()
-  console.log(`[${ts}] ${method} ${pathname} ${status ?? '-'} ${responseTimeMs}ms requestId=${requestId}`)
+  console.log(`[${ts}] ${method} ${pathname} ${responseTimeMs}ms requestId=${requestId}`)
 }
 
 export { generateRequestId, shouldSkipPath }
