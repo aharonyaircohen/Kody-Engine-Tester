@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/210-260331-160248/task.md",
+      "hash": "5c569596dc59e5f9",
+      "L0": "# [test-suite] Flag: complexity override\nCreate a full user authentication system with OAuth2 integration, session management, password hashing, and role-based access control.",
+      "L1": "# [test-suite] Flag: complexity override\nCreate a full user authentication system with OAuth2 integration, session management, password hashing, and role-based access control. This is deliberately complex but we will override to LOW.",
+      "L2": "# [test-suite] Flag: complexity override\n\nCreate a full user authentication system with OAuth2 integration, session management, password hashing, and role-based access control. This is deliberately complex but we will override to LOW.\n\nAdd comprehensive test coverage for all components."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/210-260331-160248/task.json",
+      "hash": "d89e2bb1407b44d6",
+      "L0": "Title: Add OAuth2 integration and expand auth system | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add OAuth2 integration and expand auth system\n- description: Create full user authentication system with OAuth2 integration, enhanced session management, password hashing upgrades, and role-based access control. Add comprehensive test coverage for all authentication components including OAuth2 flows, session handling, and RBAC.\n- scope: [11 items] src/auth/index.ts, src/auth/user-store.ts, src/auth/session-store.ts\n- risk_level: low\n- hasUI: true\n- questions: [0 items] ",
+      "L2": "{\"task_type\":\"feature\",\"title\":\"Add OAuth2 integration and expand auth system\",\"description\":\"Create full user authentication system with OAuth2 integration, enhanced session management, password hashing upgrades, and role-based access control. Add comprehensive test coverage for all authentication components including OAuth2 flows, session handling, and RBAC.\",\"scope\":[\"src/auth/index.ts\",\"src/auth/user-store.ts\",\"src/auth/session-store.ts\",\"src/auth/jwt-service.ts\",\"src/api/auth/login.ts\",\"src/api/auth/register.ts\",\"src/api/auth/profile.ts\",\"src/api/auth/refresh.ts\",\"src/api/auth/logout.ts\",\"src/middleware/auth-middleware.ts\",\"src/access/\"],\"risk_level\":\"low\",\"hasUI\":true,\"questions\":[]}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/210-260331-160248/context.md",
+      "hash": "d1772fd8772b129e",
+      "L0": "### taskify (2026-03-31T16:04:24)\n{\"task_type\":\"feature\",\"title\":\"Add OAuth2 integration and expand auth system\",\"description\":\"Create full user authentication system with OAuth2 integration, enhanced session management, password hashing upgrades, and role-based access control.",
+      "L1": "### taskify (2026-03-31T16:04:24)\n{\"task_type\":\"feature\",\"title\":\"Add OAuth2 integration and expand auth system\",\"description\":\"Create full user authentication system with OAuth2 integration, enhanced session management, password hashing upgrades, and role-based access control. Add comprehensive test coverage for all authentication components including OAuth2 flows, session handling, and RBAC.\",\"scope\":[\"src/auth/index.ts\",\"src/auth/user-store.ts\",\"src/auth/session-store.ts\",\"src/auth/jwt-service.ts\",\"src/api/auth/login.ts\",\"src",
+      "L2": "\n### taskify (2026-03-31T16:04:24)\n{\"task_type\":\"feature\",\"title\":\"Add OAuth2 integration and expand auth system\",\"description\":\"Create full user authentication system with OAuth2 integration, enhanced session management, password hashing upgrades, and role-based access control. Add comprehensive test coverage for all authentication components including OAuth2 flows, session handling, and RBAC.\",\"scope\":[\"src/auth/index.ts\",\"src/auth/user-store.ts\",\"src/auth/session-store.ts\",\"src/auth/jwt-service.ts\",\"src/api/auth/login.ts\",\"src\n...(truncated)\n"
+    }
+  }
+}
