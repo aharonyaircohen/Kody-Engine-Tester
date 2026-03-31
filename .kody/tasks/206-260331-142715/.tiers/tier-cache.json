@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/206-260331-142715/task.md",
+      "hash": "e1657f99ba059493",
+      "L0": "# Validate: issue auto-closes after ship stage\nAdd a `clamp(value: number, min: number, max: number): number` function to `src/lib/utils.ts` that clamps a number between min and max.",
+      "L1": "# Validate: issue auto-closes after ship stage\n## Task\nAdd a `clamp(value: number, min: number, max: number): number` function to `src/lib/utils.ts` that clamps a number between min and max. Include a unit test.\n## Purpose\nThis issue validates that the ship stage (v0.1.86) auto-closes the issue after PR creation, even when the PR targets a non-default branch.",
+      "L2": "# Validate: issue auto-closes after ship stage\n\n## Task\nAdd a `clamp(value: number, min: number, max: number): number` function to `src/lib/utils.ts` that clamps a number between min and max. Include a unit test.\n\n## Purpose\nThis issue validates that the ship stage (v0.1.86) auto-closes the issue after PR creation, even when the PR targets a non-default branch."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/206-260331-142715/task.json",
+      "hash": "b4c1f198c2cd4258",
+      "L0": "Title: Add clamp utility function | Type: chore | Risk: low",
+      "L1": "- task_type: chore\n- title: Add clamp utility function\n- description: Add a clamp(value: number, min: number, max: number): number function to src/lib/utils.ts that clamps a number between min and max. Include a unit test. This is a validation task for the Kody Engine ship stage auto-close behavior.\n- scope: [2 items] src/lib/utils.ts, src/lib/utils.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "\n{\"task_type\":\"chore\",\"title\":\"Add clamp utility function\",\"description\":\"Add a clamp(value: number, min: number, max: number): number function to src/lib/utils.ts that clamps a number between min and max. Include a unit test. This is a validation task for the Kody Engine ship stage auto-close behavior.\",\"scope\":[\"src/lib/utils.ts\",\"src/lib/utils.test.ts\"],\"risk_level\":\"low\",\"hasUI\":false,\"questions\":[]}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/206-260331-142715/context.md",
+      "hash": "e08f831bb4d03dc0",
+      "L0": "### taskify (2026-03-31T14:29:58)\nThis was a LOW complexity task validating that the ship stage (v0.1.86) auto-closes issues after PR creation when targeting a non-default branch.",
+      "L1": "### taskify (2026-03-31T14:29:58)\n**Task completed.**\n- Added `clamp(value, min, max)` function to `src/lib/utils.ts`\n- Added 6 unit tests covering: values within range, below range, above range, negative ranges, and floating point values",
+      "L2": "\n### taskify (2026-03-31T14:29:58)\n**Task completed.**\n\n**Implementation:**\n- Added `clamp(value, min, max)` function to `src/lib/utils.ts`\n- Added 6 unit tests covering: values within range, below range, above range, negative ranges, and floating point values\n\n**Test results:** All 16 tests in `src/lib/utils.test.ts` pass (10 existing + 6 new).\n\nThis was a LOW complexity task validating that the ship stage (v0.1.86) auto-closes issues after PR creation when targeting a non-default branch.\n\n"
+    }
+  }
+}

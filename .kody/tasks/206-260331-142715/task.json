@@ -1,0 +1,2 @@
+
+{"task_type":"chore","title":"Add clamp utility function","description":"Add a clamp(value: number, min: number, max: number): number function to src/lib/utils.ts that clamps a number between min and max. Include a unit test. This is a validation task for the Kody Engine ship stage auto-close behavior.","scope":["src/lib/utils.ts","src/lib/utils.test.ts"],"risk_level":"low","hasUI":false,"questions":[]}
