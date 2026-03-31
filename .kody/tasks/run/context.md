@@ -1,4 +1,3 @@
-
 ### taskify (2026-03-31T12:26:59)
 Done. Created:
 - `src/utils/truncateText.ts` - function that truncates text and appends "..." if exceeds maxLength
@@ -18,5 +17,4 @@ The TypeScript errors are pre-existing in other files, not in the truncateText f
   - Exact maxLength (no truncation)
   - Empty string
   - maxLength <= 0
-  - 
-...(truncated)
+  - Unicode characters
