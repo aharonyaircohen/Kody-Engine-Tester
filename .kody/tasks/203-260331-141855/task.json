@@ -1,0 +1,22 @@
+{
+  "task_type": "feature",
+  "title": "Refactor auth system with session-based approach",
+  "description": "Create a src/auth/ module with sessionStore.ts (in-memory session store with TTL, get/set/delete/cleanup), authMiddleware.ts (validate session tokens from Authorization header), authController.ts (login/logout/me), authRoutes.ts (POST /auth/login, POST /auth/logout, GET /auth/me). Add comprehensive tests for each module, register auth routes in the app, and create a migration script documenting the migration steps.",
+  "scope": [
+    "src/auth/authController.ts",
+    "src/auth/authController.test.ts",
+    "src/auth/authMiddleware.ts",
+    "src/auth/authRoutes.ts",
+    "src/auth/authRoutes.test.ts",
+    "src/auth/session-store.ts",
+    "src/auth/user-store.ts",
+    "src/auth/jwt-service.ts",
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/logout/route.ts",
+    "src/app/api/auth/me/route.ts",
+    "scripts/migrate-auth.ts"
+  ],
+  "risk_level": "high",
+  "hasUI": false,
+  "questions": []
+}
