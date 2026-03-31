@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Add clamp utility function",
+  "description": "Add a clamp utility function that constrains a number between a minimum and maximum value. The implementation should use Math.min(Math.max(value, min), max) pattern. Tests should cover: value within range, value below min, value above max, equal min/max, negative ranges, and decimal values.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "hasUI": false,
+  "questions": []
+}
