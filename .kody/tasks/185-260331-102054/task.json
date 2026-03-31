@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add a health endpoint to the API",
+  "description": "Add a GET /api/health endpoint that returns { status: 'ok', timestamp: Date.now() }. This will be used for monitoring.",
+  "scope": ["src/app/api/health/route.ts", "src/app/api/health/route.test.ts"],
+  "risk_level": "low",
+  "hasUI": false,
+  "questions": []
+}

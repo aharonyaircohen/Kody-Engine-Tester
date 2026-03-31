@@ -1,12 +1,8 @@
-import packageJson from '../../../../package.json'
-
 export const GET = async () => {
   return new Response(
     JSON.stringify({
       status: 'ok',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      version: packageJson.version,
+      timestamp: Date.now(),
     }),
     {
       status: 200,

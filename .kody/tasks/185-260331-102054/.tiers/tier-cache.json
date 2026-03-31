@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/185-260331-102054/task.md",
+      "hash": "952003575c62dc04",
+      "L0": "# Add a health endpoint to the API\nAdd a GET /api/health endpoint that returns { status: 'ok', timestamp: Date.now() }.",
+      "L1": "# Add a health endpoint to the API\nAdd a GET /api/health endpoint that returns { status: 'ok', timestamp: Date.now() }. This will be used for monitoring.",
+      "L2": "# Add a health endpoint to the API\n\nAdd a GET /api/health endpoint that returns { status: 'ok', timestamp: Date.now() }. This will be used for monitoring."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/185-260331-102054/task.json",
+      "hash": "b956b2ac7b4b748d",
+      "L0": "Title: Add a health endpoint to the API | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add a health endpoint to the API\n- description: Add a GET /api/health endpoint that returns { status: 'ok', timestamp: Date.now() }. This will be used for monitoring.\n- scope: [2 items] src/app/api/health/route.ts, src/app/api/health/route.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"feature\",\n  \"title\": \"Add a health endpoint to the API\",\n  \"description\": \"Add a GET /api/health endpoint that returns { status: 'ok', timestamp: Date.now() }. This will be used for monitoring.\",\n  \"scope\": [\"src/app/api/health/route.ts\", \"src/app/api/health/route.test.ts\"],\n  \"risk_level\": \"low\",\n  \"hasUI\": false,\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/185-260331-102054/context.md",
+      "hash": "1a004fd42b918917",
+      "L0": "### taskify (2026-03-31T10:24:50)\n  \"status\": \"ok\",.",
+      "L1": "### taskify (2026-03-31T10:24:50)\nDone. The health endpoint is implemented at `GET /api/health` and returns:\n- `src/app/api/health/route.ts` - Simplified to return exactly `{ status: 'ok', timestamp: Date.now() }`\n- `src/app/api/health/route.test.ts` - Updated tests to verify the new response format",
+      "L2": "\n### taskify (2026-03-31T10:24:50)\nDone. The health endpoint is implemented at `GET /api/health` and returns:\n\n```json\n{\n  \"status\": \"ok\",\n  \"timestamp\": 1743423756903\n}\n```\n\n**Changes made:**\n- `src/app/api/health/route.ts` - Simplified to return exactly `{ status: 'ok', timestamp: Date.now() }`\n- `src/app/api/health/route.test.ts` - Updated tests to verify the new response format\n\nAll 4 tests pass.\n\n"
+    }
+  }
+}
