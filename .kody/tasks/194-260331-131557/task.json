@@ -1,0 +1,6 @@
+**Summary:** The `debounce` function already exists at `src/utils/debounce.ts` with:
+- Full implementation with `leading`/`trailing` options
+- 11 unit tests using fake timers in `src/utils/debounce.test.ts`
+- All tests pass (12ms)
+
+The task description appears to have mismatched Context/Verification sections (about kody-engine-lite review-fix loop) versus the actual Task (add debounce). Since the implementation already exists and works correctly, the task is effectively complete.
