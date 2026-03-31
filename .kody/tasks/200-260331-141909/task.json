@@ -1,0 +1,8 @@
+All 18 tests pass. The `slugify` function is already implemented in `src/utils/slugify.ts` and tested in `src/utils/slugify.test.ts`. The implementation:
+
+- Converts to lowercase
+- Replaces spaces with hyphens
+- Removes non-alphanumeric characters (except hyphens)
+- Collapses multiple hyphens into one
+- Trims leading/trailing hyphens
+- Handles Unicode normalization (accents → ASCII equivalents)
