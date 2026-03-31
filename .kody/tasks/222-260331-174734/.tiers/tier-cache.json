@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/222-260331-174734/task.md",
+      "hash": "16201e7f3444f349",
+      "L0": "# [verify] E2: complexity override parsing\nAdd a retry utility function at src/utils/retry.ts that retries an async function N times with exponential backoff.",
+      "L1": "# [verify] E2: complexity override parsing\nAdd a retry utility function at src/utils/retry.ts that retries an async function N times with exponential backoff. Add tests.",
+      "L2": "# [verify] E2: complexity override parsing\n\nAdd a retry utility function at src/utils/retry.ts that retries an async function N times with exponential backoff. Add tests."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/222-260331-174734/task.json",
+      "hash": "d08575ebddd22d7b",
+      "L0": "Title: Add retry utility with exponential backoff | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add retry utility with exponential backoff\n- description: Add a retry utility function at src/utils/retry.ts that retries an async function N times with exponential backoff, with tests at src/utils/retry.test.ts. The implementation includes exponential backoff with configurable initialDelay, backoffFactor, and maxDelay, retry count via maxRetries option, selective retrying via shouldRetry predicate, and 8 comprehensive tests covering success, retries, backoff timing, max delay capping, and error handling.\n- scope: [2 items] src/utils/retry.ts, src/utils/retry.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"feature\",\n  \"title\": \"Add retry utility with exponential backoff\",\n  \"description\": \"Add a retry utility function at src/utils/retry.ts that retries an async function N times with exponential backoff, with tests at src/utils/retry.test.ts. The implementation includes exponential backoff with configurable initialDelay, backoffFactor, and maxDelay, retry count via maxRetries option, selective retrying via shouldRetry predicate, and 8 comprehensive tests covering success, retries, backoff timing, max delay capping, and error handling.\",\n  \"scope\": [\"src/utils/retry.ts\", \"src/utils/retry.test.ts\"],\n  \"risk_level\": \"low\",\n  \"hasUI\": false,\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/222-260331-174734/context.md",
+      "hash": "9bb1ea44d2dd3a1b",
+      "L0": "### taskify (2026-03-31T17:50:28)\nThe `retry` utility already exists and all tests pass (1653 passed).",
+      "L1": "### taskify (2026-03-31T17:50:28)\nThe `retry` utility already exists and all tests pass (1653 passed). The implementation at `src/utils/retry.ts` includes:\n- **Exponential backoff** with configurable `initialDelay`, `backoffFactor`, and `maxDelay`\n- **Retry count** via `maxRetries` option\n- **Selective retrying** via `shouldRetry` predicate\n- **8 comprehensive tests** covering success, retries, backoff timing, max delay capping, and error handling",
+      "L2": "\n### taskify (2026-03-31T17:50:28)\nThe `retry` utility already exists and all tests pass (1653 passed). The implementation at `src/utils/retry.ts` includes:\n\n- **Exponential backoff** with configurable `initialDelay`, `backoffFactor`, and `maxDelay`\n- **Retry count** via `maxRetries` option\n- **Selective retrying** via `shouldRetry` predicate\n- **8 comprehensive tests** covering success, retries, backoff timing, max delay capping, and error handling\n\nThe task is already complete.\n\n"
+    }
+  }
+}

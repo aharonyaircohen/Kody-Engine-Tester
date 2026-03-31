@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add retry utility with exponential backoff",
+  "description": "Add a retry utility function at src/utils/retry.ts that retries an async function N times with exponential backoff, with tests at src/utils/retry.test.ts. The implementation includes exponential backoff with configurable initialDelay, backoffFactor, and maxDelay, retry count via maxRetries option, selective retrying via shouldRetry predicate, and 8 comprehensive tests covering success, retries, backoff timing, max delay capping, and error handling.",
+  "scope": ["src/utils/retry.ts", "src/utils/retry.test.ts"],
+  "risk_level": "low",
+  "hasUI": false,
+  "questions": []
+}
