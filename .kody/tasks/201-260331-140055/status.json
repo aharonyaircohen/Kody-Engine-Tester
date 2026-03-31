@@ -1,0 +1,50 @@
+{
+  "taskId": "201-260331-140055",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-03-31T14:07:54.410Z",
+      "retries": 0,
+      "outputFile": "task.json"
+    },
+    "plan": {
+      "state": "completed",
+      "completedAt": "2026-03-31T14:08:11.603Z",
+      "retries": 0,
+      "outputFile": "plan.md"
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-03-31T14:10:33.033Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-03-31T14:10:42.234Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "completedAt": "2026-03-31T14:12:41.729Z",
+      "retries": 0,
+      "outputFile": "review.md"
+    },
+    "review-fix": {
+      "state": "completed",
+      "retries": 0
+    },
+    "ship": {
+      "state": "running",
+      "startedAt": "2026-03-31T14:12:42.936Z",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-03-31T14:02:31.551Z",
+  "updatedAt": "2026-03-31T14:12:42.936Z",
+  "sessions": {
+    "explore": "013bcfc8-f90c-44ab-91ff-d6061983af7d",
+    "build": "489c1ab2-8bb3-438d-ac74-a2657a01192c",
+    "review": "e649ae1d-ddd7-4b2f-a82a-6412ba1a09a3"
+  }
+}

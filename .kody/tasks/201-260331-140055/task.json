@@ -1,0 +1,15 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add request logging middleware with tests",
+  "description": "Implement request logging middleware that logs method, URL, status code, and response time. Attaches unique request ID, sets X-Request-ID header, and skips health check endpoints. Create comprehensive tests and register middleware before routes in Next.js.",
+  "scope": [
+    "src/middleware/requestLogger.ts",
+    "src/middleware/requestLogger.test.ts",
+    "middleware.ts"
+  ],
+  "risk_level": "medium",
+  "hasUI": false,
+  "questions": []
+}
+```
