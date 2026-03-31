@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/211-260331-160316/task.md",
+      "hash": "2c231e86e74a0c3c",
+      "L0": "# [test-suite] Rerun from specific stage\nAdd a clamp utility function that constrains a number between a minimum and maximum value.",
+      "L1": "# [test-suite] Rerun from specific stage\nAdd a clamp utility function that constrains a number between a minimum and maximum value.",
+      "L2": "# [test-suite] Rerun from specific stage\n\nAdd a clamp utility function that constrains a number between a minimum and maximum value.\n\nAdd to src/utils/clamp.ts with tests."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/211-260331-160316/task.json",
+      "hash": "3a2e50eea2042952",
+      "L0": "Title: Add clamp utility function | Type: chore | Risk: low",
+      "L1": "- task_type: chore\n- title: Add clamp utility function\n- description: Add a clamp utility function that constrains a number between a minimum and maximum value. The implementation should use Math.min(Math.max(value, min), max) pattern. Tests should cover: value within range, value below min, value above max, equal min/max, negative ranges, and decimal values.\n- scope: [2 items] src/utils/clamp.ts, src/utils/clamp.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"chore\",\n  \"title\": \"Add clamp utility function\",\n  \"description\": \"Add a clamp utility function that constrains a number between a minimum and maximum value. The implementation should use Math.min(Math.max(value, min), max) pattern. Tests should cover: value within range, value below min, value above max, equal min/max, negative ranges, and decimal values.\",\n  \"scope\": [\"src/utils/clamp.ts\", \"src/utils/clamp.test.ts\"],\n  \"risk_level\": \"low\",\n  \"hasUI\": false,\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/211-260331-160316/context.md",
+      "hash": "c58bb9d4de5548de",
+      "L0": "### taskify (2026-03-31T16:07:11)\nAll 1433 tests pass.",
+      "L1": "### taskify (2026-03-31T16:07:11)\nDone. Created:\n- `src/utils/clamp.ts` - utility function that constrains a number between min and max\n- `src/utils/clamp.test.ts` - 6 test cases covering: value in range, below min, above max, equal min/max, negative ranges, and decimal values",
+      "L2": "\n### taskify (2026-03-31T16:07:11)\nDone. Created:\n\n- `src/utils/clamp.ts` - utility function that constrains a number between min and max\n- `src/utils/clamp.test.ts` - 6 test cases covering: value in range, below min, above max, equal min/max, negative ranges, and decimal values\n\nAll 1433 tests pass.\n\n"
+    }
+  }
+}
