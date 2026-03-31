@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/task.md",
+      "hash": "804f549548f418a4",
+      "L0": "# Verify fix: Increased error truncation for better diagnosis\nkody-engine-lite v0.1.82 increased error output truncation limits:.",
+      "L1": "# Verify fix: Increased error truncation for better diagnosis\n## Context\nkody-engine-lite v0.1.82 increased error output truncation limits:\n- Diagnosis agent: 2000 → 5000 chars (observer.ts)\n- Agent runner stderr: 500 → 2000 chars (agent-runner.ts, config.ts)\n## Verification\nThis fix improves diagnosis quality on complex errors. Verify by running a task that will trigger the verify stage. The pipeline should complete without classification issues.\n## Task\nAdd a `slugify(text: string): string` function to `src/lib/utils.ts` that converts text to a URL-friendly slug (lowercase, replace spaces with hyphens, remove special chars). Include a unit test.",
+      "L2": "# Verify fix: Increased error truncation for better diagnosis\n\n## Context\nkody-engine-lite v0.1.82 increased error output truncation limits:\n- Diagnosis agent: 2000 → 5000 chars (observer.ts)\n- Agent runner stderr: 500 → 2000 chars (agent-runner.ts, config.ts)\n\nPreviously, TypeScript/ESLint errors were aggressively truncated, causing the failure diagnosis agent to misclassify errors due to missing context.\n\n## Verification\nThis fix improves diagnosis quality on complex errors. Verify by running a task that will trigger the verify stage. The pipeline should complete without classification issues.\n\n## Task\nAdd a `slugify(text: string): string` function to `src/lib/utils.ts` that converts text to a URL-friendly slug (lowercase, replace spaces with hyphens, remove special chars). Include a unit test."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/task.json",
+      "hash": "1f883d0fcc1b3485",
+      "L0": "Title: Verify slugify function implementation | Type: chore | Risk: low",
+      "L1": "- task_type: chore\n- title: Verify slugify function implementation\n- description: The slugify function was already implemented at src/utils/slugify.ts with 18 comprehensive test cases covering unicode normalization, diacritic stripping, lowercase conversion, special character removal, space/hyphen collapsing, and edge cases. Verification confirms all tests pass. No changes needed.\n- scope: [2 items] src/utils/slugify.ts, src/utils/slugify.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"chore\",\n  \"title\": \"Verify slugify function implementation\",\n  \"description\": \"The slugify function was already implemented at src/utils/slugify.ts with 18 comprehensive test cases covering unicode normalization, diacritic stripping, lowercase conversion, special character removal, space/hyphen collapsing, and edge cases. Verification confirms all tests pass. No changes needed.\",\n  \"scope\": [\n    \"src/utils/slugify.ts\",\n    \"src/utils/slugify.test.ts\"\n  ],\n  \"risk_level\": \"low\",\n  \"hasUI\": false,\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/context.md",
+      "hash": "fa450a0ce0d136ad",
+      "L0": "### taskify (2026-03-31T12:24:47)\nThe `slugify` function is already implemented:.",
+      "L1": "### taskify (2026-03-31T12:24:47)\n**Verification Complete**\n- **Location:** `src/utils/slugify.ts`\n- **Tests:** `src/utils/slugify.test.ts` with 18 test cases\n- **Test Results:** All 18 tests pass\n- Unicode normalization and diacritic stripping (é → e)\n- Lowercase conversion",
+      "L2": "\n### taskify (2026-03-31T12:24:47)\n**Verification Complete**\n\nThe `slugify` function is already implemented:\n\n- **Location:** `src/utils/slugify.ts`\n- **Tests:** `src/utils/slugify.test.ts` with 18 test cases\n- **Test Results:** All 18 tests pass\n\nThe implementation handles:\n- Unicode normalization and diacritic stripping (é → e)\n- Lowercase conversion\n- Special character removal\n- Multiple spaces/hyphens collapsing\n- Leading/trailing hyphen stripping\n- Empty/null/undefined input handling\n\nThe verification of the error truncation\n...(truncated)\n"
+    }
+  }
+}
