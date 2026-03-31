@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/201-260331-140055/context.md",
+      "hash": "bb5e53b11563a3c5",
+      "L0": "### taskify (2026-03-31T14:07:54)\n...(truncated).",
+      "L1": "### taskify (2026-03-31T14:07:54)\nDone. Here's what I implemented:\n- `createRequestLoggerMiddleware()` factory that creates a middleware function\n- Logs method, URL, status code, and response time\n- Generates unique request IDs (`req_<timestamp>_<random>`)\n- Sets `X-Request-ID` response header (uses existing header if provided)\n- Skips health check endpoints (`/api/health`, `/health`) by default\n### plan (2026-03-31T14:08:11)\nAll three deliverables are in place and verified:",
+      "L2": "\n### taskify (2026-03-31T14:07:54)\nDone. Here's what I implemented:\n\n**Created `src/middleware/requestLogger.ts`:**\n- `createRequestLoggerMiddleware()` factory that creates a middleware function\n- Logs method, URL, status code, and response time\n- Generates unique request IDs (`req_<timestamp>_<random>`)\n- Sets `X-Request-ID` response header (uses existing header if provided)\n- Skips health check endpoints (`/api/health`, `/health`) by default\n- Supports custom `skipPaths` configuration\n- Exports `generateRequestId()` and `should\n...(truncated)\n\n### plan (2026-03-31T14:08:11)\nAll three deliverables are in place and verified:\n\n| File | Status |\n|------|--------|\n| `src/middleware/requestLogger.ts` | ✓ Created |\n| `src/middleware/requestLogger.test.ts` | ✓ Created (21 tests passing) |\n| `middleware.ts` | ✓ Created at project root |\n\n**Tests:** 21 passing  \n**Lint:** Clean on new files  \n**TypeScript:** No errors in new files\n\n"
+    },
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/201-260331-140055/task.md",
+      "hash": "8a1223ce0f60d349",
+      "L0": "# [test-suite] Add middleware with tests\nAdd a request logging middleware to the Express app:.",
+      "L1": "# [test-suite] Add middleware with tests\nAdd a request logging middleware to the Express app:",
+      "L2": "# [test-suite] Add middleware with tests\n\nAdd a request logging middleware to the Express app:\n\n1. Create src/middleware/requestLogger.ts that logs method, URL, status code, and response time. Attaches a unique request ID. Sets X-Request-ID response header. Skips health check endpoints.\n\n2. Create tests in src/middleware/requestLogger.test.ts.\n\n3. Register the middleware in the app (before routes)."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/201-260331-140055/task.json",
+      "hash": "e975f0de666e73bb",
+      "L0": "Title: Add request logging middleware with tests | Type: feature | Risk: medium",
+      "L1": "- task_type: feature\n- title: Add request logging middleware with tests\n- description: Implement request logging middleware that logs method, URL, status code, and response time. Attaches unique request ID, sets X-Request-ID header, and skips health check endpoints. Create comprehensive tests and register middleware before routes in Next.js.\n- scope: [3 items] src/middleware/requestLogger.ts, src/middleware/requestLogger.test.ts, middleware.ts\n- risk_level: medium\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "```json\n{\n  \"task_type\": \"feature\",\n  \"title\": \"Add request logging middleware with tests\",\n  \"description\": \"Implement request logging middleware that logs method, URL, status code, and response time. Attaches unique request ID, sets X-Request-ID header, and skips health check endpoints. Create comprehensive tests and register middleware before routes in Next.js.\",\n  \"scope\": [\n    \"src/middleware/requestLogger.ts\",\n    \"src/middleware/requestLogger.test.ts\",\n    \"middleware.ts\"\n  ],\n  \"risk_level\": \"medium\",\n  \"hasUI\": false,\n  \"questions\": []\n}\n```\n"
+    }
+  }
+}
