@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Add capitalizeWords utility function",
+"description": "Add a capitalizeWords(str: string): string function that capitalizes the first letter of each word. The function and unit tests already exist at src/utils/capitalize-words.ts and src/utils/capitalize-words.test.ts (following project convention of placing utilities in src/utils/ rather than the non-existent src/lib/utils.ts path mentioned in the task).",
+"scope": ["src/utils/capitalize-words.ts", "src/utils/capitalize-words.test.ts"],
+"risk_level": "low",
+"hasUI": false,
+"questions": []
+}
