@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add capitalize utility function",
+  "description": "Create a simple capitalize utility function at src/utils/capitalize.ts with corresponding tests at src/utils/capitalize.test.ts. The function should capitalize the first character of a string.",
+  "scope": [
+    "src/utils/capitalize.ts",
+    "src/utils/capitalize.test.ts"
+  ],
+  "risk_level": "low",
+  "hasUI": false,
+  "questions": []
+}

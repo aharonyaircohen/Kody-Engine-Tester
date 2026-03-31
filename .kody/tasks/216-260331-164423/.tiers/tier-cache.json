@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/216-260331-164423/task.md",
+      "hash": "8d8f3c9d525e21e6",
+      "L0": "# [verify] E2+E6: complexity override + feedback logging\nAdd a simple capitalize utility function at src/utils/capitalize.ts with tests.",
+      "L1": "# [verify] E2+E6: complexity override + feedback logging\nAdd a simple capitalize utility function at src/utils/capitalize.ts with tests.",
+      "L2": "# [verify] E2+E6: complexity override + feedback logging\n\nAdd a simple capitalize utility function at src/utils/capitalize.ts with tests."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/216-260331-164423/task.json",
+      "hash": "3732766cb9f45af5",
+      "L0": "Title: Add capitalize utility function | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add capitalize utility function\n- description: Create a simple capitalize utility function at src/utils/capitalize.ts with corresponding tests at src/utils/capitalize.test.ts. The function should capitalize the first character of a string.\n- scope: [2 items] src/utils/capitalize.ts, src/utils/capitalize.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"feature\",\n  \"title\": \"Add capitalize utility function\",\n  \"description\": \"Create a simple capitalize utility function at src/utils/capitalize.ts with corresponding tests at src/utils/capitalize.test.ts. The function should capitalize the first character of a string.\",\n  \"scope\": [\n    \"src/utils/capitalize.ts\",\n    \"src/utils/capitalize.test.ts\"\n  ],\n  \"risk_level\": \"low\",\n  \"hasUI\": false,\n  \"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/216-260331-164423/context.md",
+      "hash": "7805674c7525369d",
+      "L0": "### taskify (2026-03-31T16:46:18)\nLooking at the task: the description asks to add `src/utils/capitalize.ts` with tests.",
+      "L1": "### taskify (2026-03-31T16:46:18)\nLooking at the task: the description asks to add `src/utils/capitalize.ts` with tests. I can see `src/utils/cap.ts` already exists with a `capitalize` function, but the specified path is different. This is a verification task for complexity override and feedback logging scenarios.",
+      "L2": "\n### taskify (2026-03-31T16:46:18)\n\nLooking at the task: the description asks to add `src/utils/capitalize.ts` with tests. I can see `src/utils/cap.ts` already exists with a `capitalize` function, but the specified path is different. This is a verification task for complexity override and feedback logging scenarios.\n\n{\"task_type\":\"feature\",\"title\":\"Add capitalize utility function\",\"description\":\"Add a simple capitalize utility function at src/utils/capitalize.ts with tests\",\"scope\":[\"src/utils/capitalize.ts\"],\"risk_level\":\"low\",\"\n...(truncated)\n"
+    }
+  }
+}
