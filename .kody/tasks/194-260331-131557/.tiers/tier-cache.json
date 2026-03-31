@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/194-260331-131557/context.md",
+      "hash": "5c977f2c2bc246c7",
+      "L0": "### taskify (2026-03-31T13:20:56)\nThe task description appears to have mismatched Context/Verification sections (about kody-engine-lite review-fix loop) versus the actual Task (add debounce).",
+      "L1": "### taskify (2026-03-31T13:20:56)\n**Summary:** The `debounce` function already exists at `src/utils/debounce.ts` with:\n- Full implementation with `leading`/`trailing` options\n- 11 unit tests using fake timers in `src/utils/debounce.test.ts`\n- All tests pass (12ms)\n### plan (2026-03-31T13:21:33)\n## Plan\n### Step 1: Create `src/lib/` directory and `utils.ts`\n**File:** `src/lib/utils.ts`\n### Step 2: Create unit test file\n**File:** `src/lib/utils.test.ts`",
+      "L2": "\n### taskify (2026-03-31T13:20:56)\n**Summary:** The `debounce` function already exists at `src/utils/debounce.ts` with:\n- Full implementation with `leading`/`trailing` options\n- 11 unit tests using fake timers in `src/utils/debounce.test.ts`\n- All tests pass (12ms)\n\nThe task description appears to have mismatched Context/Verification sections (about kody-engine-lite review-fix loop) versus the actual Task (add debounce). Since the implementation already exists and works correctly, the task is effectively complete.\n\n\n### plan (2026-03-31T13:21:33)\n## Plan\n\n### Step 1: Create `src/lib/` directory and `utils.ts`\n\n**File:** `src/lib/utils.ts`\n**Change:** Create new file with debounce function using the exact signature from the task: `<T extends (...args: unknown[]) => void>(fn: T, ms: number): T`\n**Why:** The task specifies this exact location and type signature\n**Verify:** `ls -la src/lib/` shows the file exists\n\n### Step 2: Create unit test file\n\n**File:** `src/lib/utils.test.ts`\n**Change:** Create test file using fake timers (vi.useFakeTi\n...(truncated)\n"
+    },
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/194-260331-131557/task.md",
+      "hash": "ca7e697daaf4df25",
+      "L0": "# Verify fix: Review-fix loop with max iterations\nkody-engine-lite v0.1.82 added a proper review-fix loop with up to 2 iterations.",
+      "L1": "# Verify fix: Review-fix loop with max iterations\n## Context\nkody-engine-lite v0.1.82 added a proper review-fix loop with up to 2 iterations.\n## Verification\nRun a task that will trigger the review stage. The pipeline logs should show the new iteration-based review flow.\n## Task\nAdd a `debounce<T extends (...args: unknown[]) => void>(fn: T, ms: number): T` function to `src/lib/utils.ts`. Include a unit test using fake timers.",
+      "L2": "# Verify fix: Review-fix loop with max iterations\n\n## Context\nkody-engine-lite v0.1.82 added a proper review-fix loop with up to 2 iterations.\n\nPreviously, after review-fix, the code re-ran review once but never re-ran review-fix again. If the first fix was insufficient, the pipeline silently shipped partially-fixed code.\n\nNow the loop runs: review → fix → review → fix → review (max 2 fix attempts). If the review still fails after 2 fix iterations, it logs a warning and returns the result (allowing the pipeline to complete with the best-effort fix rather than hard-failing).\n\n## Verification\nRun a task that will trigger the review stage. The pipeline logs should show the new iteration-based review flow.\n\n## Task\nAdd a `debounce<T extends (...args: unknown[]) => void>(fn: T, ms: number): T` function to `src/lib/utils.ts`. Include a unit test using fake timers."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/194-260331-131557/task.json",
+      "hash": "ea8c6a9dab79197e",
+      "L0": "**Summary:** The `debounce` function already exists at `src/utils/debounce.ts` with:\n- Full implementation with `leading`/`trailing` options\n- 11 unit tests using fake timers in `src/utils/debounce.test.ts`\n- All tests pass (12ms)\n\nThe task description appears to have mismatched Context/Verification sections (about kody-engine-lite review-fix loop) versus the actual Task (add debounce). Since the ",
+      "L1": "**Summary:** The `debounce` function already exists at `src/utils/debounce.ts` with:\n- Full implementation with `leading`/`trailing` options\n- 11 unit tests using fake timers in `src/utils/debounce.test.ts`\n- All tests pass (12ms)\n\nThe task description appears to have mismatched Context/Verification sections (about kody-engine-lite review-fix loop) versus the actual Task (add debounce). Since the implementation already exists and works correctly, the task is effectively complete.\n",
+      "L2": "**Summary:** The `debounce` function already exists at `src/utils/debounce.ts` with:\n- Full implementation with `leading`/`trailing` options\n- 11 unit tests using fake timers in `src/utils/debounce.test.ts`\n- All tests pass (12ms)\n\nThe task description appears to have mismatched Context/Verification sections (about kody-engine-lite review-fix loop) versus the actual Task (add debounce). Since the implementation already exists and works correctly, the task is effectively complete.\n"
+    }
+  }
+}
