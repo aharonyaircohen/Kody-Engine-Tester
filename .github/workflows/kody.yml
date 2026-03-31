@@ -25,6 +25,9 @@ on:
   issue_comment:
     types: [created]
 
+  pull_request:
+    types: [closed]
+
   pull_request_review:
     types: [submitted]
 
@@ -315,6 +318,41 @@ jobs:
           name: kody-tasks-${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}
           path: .kody/tasks/
           retention-days: 7
+
+  # ─── Close Issue on PR Merge ────────────────────────────────────────────────
+  close-issue-on-merge:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close linked issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = context.payload.pull_request.head.ref;
+            const match = branch.match(/^(\d+)--/);
+            if (!match) return;
+            const issueNumber = parseInt(match[1], 10);
+            try {
+              const { data: issue } = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+              });
+              if (issue.state === 'closed') return;
+              if (issue.pull_request) return;
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                state: 'closed',
+                state_reason: 'completed',
+              });
+              core.info(`Closed issue #${issueNumber} after PR merge`);
+            } catch (e) {
+              core.warning(`Could not close issue #${issueNumber}: ${e.message}`);
+            }
 
   # ─── Error Notifications ─────────────────────────────────────────────────────
   notify-parse-error:
