@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/task.md",
+      "hash": "3d3bfa330bf0c05c",
+      "L0": "# Verify fix: Config deep-merge preserves default modelMap\nkody-engine-lite v0.1.82 fixed config deep-merging for `agent.modelMap`.",
+      "L1": "# Verify fix: Config deep-merge preserves default modelMap\n## Context\nkody-engine-lite v0.1.82 fixed config deep-merging for `agent.modelMap`.\n## Verification\nThis fix is structural (config loading). To verify it works, simply run any @kody command — if model resolution succeeds, the fix is working.\n## Task\nAdd a `truncateText(text: string, maxLength: number): string` function to `src/lib/utils.ts` that truncates text and adds \"...\" if it exceeds maxLength. Include a unit test.",
+      "L2": "# Verify fix: Config deep-merge preserves default modelMap\n\n## Context\nkody-engine-lite v0.1.82 fixed config deep-merging for `agent.modelMap`.\n\nPreviously, if a user's `kody.config.json` had `agent: { provider: \"openai\" }` without specifying `modelMap`, the shallow spread would lose the default modelMap (cheap/mid/strong tier mappings), causing model resolution failures.\n\nNow `modelMap` is deep-merged: `{ ...DEFAULT_CONFIG.agent.modelMap, ...raw.agent?.modelMap }`.\n\n## Verification\nThis fix is structural (config loading). To verify it works, simply run any @kody command — if model resolution succeeds, the fix is working.\n\n## Task\nAdd a `truncateText(text: string, maxLength: number): string` function to `src/lib/utils.ts` that truncates text and adds \"...\" if it exceeds maxLength. Include a unit test."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/task.json",
+      "hash": "6966fb96f620ae84",
+      "L0": "Title: Add truncateText utility function | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add truncateText utility function\n- description: Add a truncateText(text: string, maxLength: number): string function that truncates text and appends '...' if it exceeds maxLength, with comprehensive unit tests covering truncation, edge cases (empty string, maxLength <= 0, unicode characters).\n- scope: [2 items] src/utils/truncateText.ts, src/utils/truncateText.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n\"task_type\": \"feature\",\n\"title\": \"Add truncateText utility function\",\n\"description\": \"Add a truncateText(text: string, maxLength: number): string function that truncates text and appends '...' if it exceeds maxLength, with comprehensive unit tests covering truncation, edge cases (empty string, maxLength <= 0, unicode characters).\",\n\"scope\": [\"src/utils/truncateText.ts\", \"src/utils/truncateText.test.ts\"],\n\"risk_level\": \"low\",\n\"hasUI\": false,\n\"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/context.md",
+      "hash": "b3b814780421bf2b",
+      "L0": "### taskify (2026-03-31T12:26:59)\nAll tests pass and TypeScript compiles without errors.",
+      "L1": "### taskify (2026-03-31T12:26:59)\nDone. Created:\n- `src/utils/truncateText.ts` - function that truncates text and appends \"...\" if exceeds maxLength\n- `src/utils/truncateText.test.ts` - 9 unit tests covering edge cases (empty string, null/undefined, exact length, unicode, maxLength <= 0)",
+      "L2": "\n### taskify (2026-03-31T12:26:59)\nDone. Created:\n- `src/utils/truncateText.ts` - function that truncates text and appends \"...\" if exceeds maxLength\n- `src/utils/truncateText.test.ts` - 9 unit tests covering edge cases (empty string, null/undefined, exact length, unicode, maxLength <= 0)\n\nAll tests pass and TypeScript compiles without errors.\n\n"
+    }
+  }
+}
