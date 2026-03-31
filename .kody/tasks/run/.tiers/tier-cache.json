@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/task.md",
+      "hash": "bab61a44e52c3677",
+      "L0": "# Verify fix: getModifiedFiles uses staged+unstaged diff\nkody-engine-lite v0.1.82 fixed `getModifiedFiles()` in `observer.ts`.",
+      "L1": "# Verify fix: getModifiedFiles uses staged+unstaged diff\n## Context\nkody-engine-lite v0.1.82 fixed `getModifiedFiles()` in `observer.ts`.\n## Verification\nCreate a task that will intentionally need an autofix cycle (e.g., a change that introduces a lint error). Verify that:\n## Task\nAdd a new utility function `formatDate(date: Date): string` to `src/lib/utils.ts` that formats a date as `YYYY-MM-DD`. The function should use template literals. Include a unit test.",
+      "L2": "# Verify fix: getModifiedFiles uses staged+unstaged diff\n\n## Context\nkody-engine-lite v0.1.82 fixed `getModifiedFiles()` in `observer.ts`.\n\nPreviously it used `git diff --name-only HEAD~1` which compared against the previous commit — but the build stage hasn't committed yet when verify runs. This caused the failure diagnosis agent to get an empty or wrong file list, making classification unreliable.\n\nNow it uses `git diff --name-only --cached` + `git diff --name-only` to capture all staged and unstaged changes.\n\n## Verification\nCreate a task that will intentionally need an autofix cycle (e.g., a change that introduces a lint error). Verify that:\n1. The verify stage's failure diagnosis correctly identifies which files were modified\n2. The autofix agent receives accurate file context\n\n## Task\nAdd a new utility function `formatDate(date: Date): string` to `src/lib/utils.ts` that formats a date as `YYYY-MM-DD`. The function should use template literals. Include a unit test."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/task.json",
+      "hash": "c16f1e72a11aca81",
+      "L0": "Title: Add formatDate utility function to src/lib/utils.ts | Type: chore | Risk: low",
+      "L1": "- task_type: chore\n- title: Add formatDate utility function to src/lib/utils.ts\n- description: Add a new utility function formatDate(date: Date): string to src/lib/utils.ts that formats a date as YYYY-MM-DD using template literals. Include unit tests. Note: The function and tests already exist in the codebase.\n- scope: [2 items] src/lib/utils.ts, src/lib/utils.test.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n\"task_type\": \"chore\",\n\"title\": \"Add formatDate utility function to src/lib/utils.ts\",\n\"description\": \"Add a new utility function formatDate(date: Date): string to src/lib/utils.ts that formats a date as YYYY-MM-DD using template literals. Include unit tests. Note: The function and tests already exist in the codebase.\",\n\"scope\": [\"src/lib/utils.ts\", \"src/lib/utils.test.ts\"],\n\"risk_level\": \"low\",\n\"hasUI\": false,\n\"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/run/context.md",
+      "hash": "ccbb50531eb5a36f",
+      "L0": "### taskify (2026-03-31T12:25:08)\nAll tests pass.",
+      "L1": "### taskify (2026-03-31T12:25:08)\nAll tests pass. Created:\n- **`src/lib/utils.ts`** - `formatDate(date: Date): string` using template literals to format as `YYYY-MM-DD`\n- **`src/lib/utils.test.ts`** - 5 unit tests covering standard dates, zero-padding, year boundaries",
+      "L2": "\n### taskify (2026-03-31T12:25:08)\nAll tests pass. Created:\n\n- **`src/lib/utils.ts`** - `formatDate(date: Date): string` using template literals to format as `YYYY-MM-DD`\n- **`src/lib/utils.test.ts`** - 5 unit tests covering standard dates, zero-padding, year boundaries\n\nTest results: 105 test files passed, 1412 tests passed.\n\n"
+    }
+  }
+}

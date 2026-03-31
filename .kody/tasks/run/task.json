@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Add formatDate utility function to src/lib/utils.ts",
+"description": "Add a new utility function formatDate(date: Date): string to src/lib/utils.ts that formats a date as YYYY-MM-DD using template literals. Include unit tests. Note: The function and tests already exist in the codebase.",
+"scope": ["src/lib/utils.ts", "src/lib/utils.test.ts"],
+"risk_level": "low",
+"hasUI": false,
+"questions": []
+}
