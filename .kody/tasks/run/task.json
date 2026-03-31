@@ -1,12 +1,9 @@
 {
-  "task_type": "chore",
-  "title": "Verify slugify function implementation",
-  "description": "The slugify function was already implemented at src/utils/slugify.ts with 18 comprehensive test cases covering unicode normalization, diacritic stripping, lowercase conversion, special character removal, space/hyphen collapsing, and edge cases. Verification confirms all tests pass. No changes needed.",
-  "scope": [
-    "src/utils/slugify.ts",
-    "src/utils/slugify.test.ts"
-  ],
-  "risk_level": "low",
-  "hasUI": false,
-  "questions": []
+"task_type": "feature",
+"title": "Add truncateText utility function",
+"description": "Add a truncateText(text: string, maxLength: number): string function that truncates text and appends '...' if it exceeds maxLength, with comprehensive unit tests covering truncation, edge cases (empty string, maxLength <= 0, unicode characters).",
+"scope": ["src/utils/truncateText.ts", "src/utils/truncateText.test.ts"],
+"risk_level": "low",
+"hasUI": false,
+"questions": []
 }

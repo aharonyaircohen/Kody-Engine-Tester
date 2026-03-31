@@ -1,14 +1,14 @@
-# Verify fix: Increased error truncation for better diagnosis
+# Verify fix: Config deep-merge preserves default modelMap
 
 ## Context
-kody-engine-lite v0.1.82 increased error output truncation limits:
-- Diagnosis agent: 2000 → 5000 chars (observer.ts)
-- Agent runner stderr: 500 → 2000 chars (agent-runner.ts, config.ts)
+kody-engine-lite v0.1.82 fixed config deep-merging for `agent.modelMap`.
 
-Previously, TypeScript/ESLint errors were aggressively truncated, causing the failure diagnosis agent to misclassify errors due to missing context.
+Previously, if a user's `kody.config.json` had `agent: { provider: "openai" }` without specifying `modelMap`, the shallow spread would lose the default modelMap (cheap/mid/strong tier mappings), causing model resolution failures.
+
+Now `modelMap` is deep-merged: `{ ...DEFAULT_CONFIG.agent.modelMap, ...raw.agent?.modelMap }`.
 
 ## Verification
-This fix improves diagnosis quality on complex errors. Verify by running a task that will trigger the verify stage. The pipeline should complete without classification issues.
+This fix is structural (config loading). To verify it works, simply run any @kody command — if model resolution succeeds, the fix is working.
 
 ## Task
-Add a `slugify(text: string): string` function to `src/lib/utils.ts` that converts text to a URL-friendly slug (lowercase, replace spaces with hyphens, remove special chars). Include a unit test.
+Add a `truncateText(text: string, maxLength: number): string` function to `src/lib/utils.ts` that truncates text and adds "..." if it exceeds maxLength. Include a unit test.
