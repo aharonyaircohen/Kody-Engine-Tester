@@ -1,0 +1,1 @@
+{"task_type":"chore","title":"Add uptime counter to health endpoint","description":"Add an uptime field to GET /api/health that returns how many seconds the server has been running.","scope":["src/app/api/health/route.ts","src/app/api/health/route.test.ts"],"risk_level":"low","hasUI":false,"questions":[]}
