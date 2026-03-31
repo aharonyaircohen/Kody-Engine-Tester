@@ -33,3 +33,39 @@ Implementation complete.
 - All tests pass (18ms)
 - No TypeScript errors in the new files
 
+
+### review (2026-03-31T13:28:44)
+## Verdict: PASS
+
+## Summary
+
+Added `debounce` function to `src/lib/utils.ts` with 11 unit tests in `src/lib/utils.test.ts` using fake timers (`vi.useFakeTimers`). All 11 tests pass (17ms). The implementation matches the task-specified type signature `T extends (...args: unknown[]) => void`.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+None.
+
+## Two-Pass Review
+
+**Pass 1 — CRITICAL:**
+
+### SQL & Data Safety
+- No SQL operations. N/A.
+
+### Race Conditions & Concurrency
+- `clearT
+...(truncated)
+
+### review-fix (2026-03-31T13:29:41)
+**Task complete.** The `debounce` function has been added to `src/lib/utils.ts` with 11 unit tests in `src/lib/utils.test.ts` using fake timers. All 1418 tests pass.
+

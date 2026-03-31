@@ -15,20 +15,24 @@
       "outputFile": "plan.md"
     },
     "build": {
-      "state": "running",
-      "startedAt": "2026-03-31T13:21:33.291Z",
+      "state": "completed",
+      "completedAt": "2026-03-31T13:25:26.970Z",
       "retries": 0
     },
     "verify": {
-      "state": "pending",
+      "state": "completed",
+      "completedAt": "2026-03-31T13:25:36.531Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
-      "retries": 0
+      "state": "completed",
+      "completedAt": "2026-03-31T13:28:44.519Z",
+      "retries": 0,
+      "outputFile": "review.md"
     },
     "review-fix": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-03-31T13:28:44.519Z",
       "retries": 0
     },
     "ship": {
@@ -37,8 +41,10 @@
     }
   },
   "createdAt": "2026-03-31T13:16:11.798Z",
-  "updatedAt": "2026-03-31T13:21:33.291Z",
+  "updatedAt": "2026-03-31T13:28:44.519Z",
   "sessions": {
-    "explore": "86fc5042-76af-4f99-bc2d-3ed230fcad97"
+    "explore": "86fc5042-76af-4f99-bc2d-3ed230fcad97",
+    "build": "734e4f99-c110-439f-b4d2-abf36f938b04",
+    "review": "edb60f60-8807-4d2e-b1bd-42888ea17994"
   }
 }
