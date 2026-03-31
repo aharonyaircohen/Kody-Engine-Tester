@@ -1,0 +1,37 @@
+{
+  "taskId": "fix-pr-205-260331-144632",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "plan": {
+      "state": "pending",
+      "retries": 0
+    },
+    "build": {
+      "state": "running",
+      "startedAt": "2026-03-31T14:46:47.376Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-03-31T14:46:44.446Z",
+  "updatedAt": "2026-03-31T14:46:47.376Z"
+}

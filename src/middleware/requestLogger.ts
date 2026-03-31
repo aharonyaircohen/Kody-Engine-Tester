@@ -7,7 +7,7 @@ export interface RequestLoggerConfig {
 
 export interface RequestLogInfo {
   method: string
-  url: string
+  pathname: string
   status?: number
   responseTimeMs: number
   requestId: string
@@ -16,7 +16,7 @@ export interface RequestLogInfo {
 const HEALTH_PATHS = ['/api/health', '/health']
 
 function generateRequestId(): string {
-  return `req_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`
+  return crypto.randomUUID()
 }
 
 function shouldSkipPath(pathname: string, skipPaths: string[]): boolean {
@@ -32,7 +32,7 @@ export function createRequestLoggerMiddleware(config: RequestLoggerConfig = {}) 
   const skipPaths = [...HEALTH_PATHS, ...(config.skipPaths ?? [])]
   const logger = config.logger ?? defaultLogger
 
-  function middleware(request: NextRequest): NextResponse {
+  return function middleware(request: NextRequest): NextResponse {
     const pathname = request.nextUrl.pathname
 
     if (shouldSkipPath(pathname, skipPaths)) {
@@ -42,14 +42,22 @@ export function createRequestLoggerMiddleware(config: RequestLoggerConfig = {}) 
     const requestId = request.headers.get('x-request-id') ?? generateRequestId()
     const startTime = Date.now()
 
+    // Clone the request to allow reading the body for response time measurement
+    // The actual route handler status is not available in middleware - we measure
+    // the middleware processing time and note this limitation in the log
     const response = NextResponse.next()
+
+    // Set the request ID header on the response
     response.headers.set('X-Request-ID', requestId)
 
     const responseTimeMs = Date.now() - startTime
 
+    // Note: response.status reflects the initial response status from NextResponse.next()
+    // The actual final status code from the route handler is not available in middleware.
+    // responseTimeMs measures middleware processing time, not full request handling time.
     logger({
       method: request.method,
-      url: request.url,
+      pathname,
       status: response.status,
       responseTimeMs,
       requestId,
@@ -57,15 +65,12 @@ export function createRequestLoggerMiddleware(config: RequestLoggerConfig = {}) 
 
     return response
   }
-
-  middleware.generateRequestId = generateRequestId
-  return middleware
 }
 
 function defaultLogger(info: RequestLogInfo): void {
-  const { method, url, status, responseTimeMs, requestId } = info
+  const { method, pathname, status, responseTimeMs, requestId } = info
   const ts = new Date().toISOString()
-  console.log(`[${ts}] ${method} ${url} ${status ?? '-'} ${responseTimeMs}ms requestId=${requestId}`)
+  console.log(`[${ts}] ${method} ${pathname} ${status ?? '-'} ${responseTimeMs}ms requestId=${requestId}`)
 }
 
 export { generateRequestId, shouldSkipPath }

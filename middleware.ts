@@ -1,12 +1,8 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
 import { createRequestLoggerMiddleware } from './src/middleware/requestLogger'
 
 const requestLogger = createRequestLoggerMiddleware()
 
-export function middleware(request: NextRequest): NextResponse | undefined {
-  return requestLogger(request)
-}
+export { requestLogger as middleware }
 
 export const config = {
   matcher: [

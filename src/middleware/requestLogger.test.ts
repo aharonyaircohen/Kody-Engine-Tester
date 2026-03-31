@@ -9,9 +9,10 @@ describe('generateRequestId', () => {
     expect(id1).not.toBe(id2)
   })
 
-  it('starts with req_ prefix', () => {
+  it('generates valid UUID format', () => {
     const id = generateRequestId()
-    expect(id.startsWith('req_')).toBe(true)
+    // UUID format: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    expect(id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/)
   })
 })
 
@@ -59,7 +60,7 @@ describe('createRequestLoggerMiddleware', () => {
       const mw = createRequestLoggerMiddleware({ logger: logSpy })
       const req = makeRequest('/api/users')
       const res = mw(req)
-      expect(res.headers.get('X-Request-ID')).toMatch(/^req_/)
+      expect(res.headers.get('X-Request-ID')).toMatch(/^[0-9a-f-]{36}$/)
     })
 
     it('uses existing X-Request-ID header if provided', () => {
@@ -80,14 +81,14 @@ describe('createRequestLoggerMiddleware', () => {
   })
 
   describe('logging', () => {
-    it('logs method, URL, status, and response time', () => {
+    it('logs method, pathname, status, and response time', () => {
       const mw = createRequestLoggerMiddleware({ logger: logSpy })
       const req = makeRequest('/api/users')
       mw(req)
       expect(logSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           method: 'GET',
-          url: expect.stringContaining('/api/users'),
+          pathname: '/api/users',
           responseTimeMs: expect.any(Number),
         })
       )
