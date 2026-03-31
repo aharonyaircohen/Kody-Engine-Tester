@@ -141,23 +141,32 @@ describe('deepClone', () => {
     expect(cloned.meta.ids).not.toBe(obj.meta.ids)
   })
 
-  // Circular references
-  it('should throw on circular object reference', () => {
+  // Circular references - structuredClone handles them correctly
+  it('should preserve circular object references', () => {
     const obj: Record<string, unknown> = { a: 1 }
     obj.self = obj
-    expect(() => deepClone(obj)).toThrow('Circular reference detected')
+    const cloned = deepClone(obj) as Record<string, unknown>
+    expect(cloned.a).toBe(1)
+    expect(cloned.self).toBe(cloned) // circular reference preserved
+    expect(cloned.self).not.toBe(obj)
+    expect(cloned.self).not.toBe(obj.self)
   })
 
-  it('should throw on circular array reference', () => {
+  it('should preserve circular array references', () => {
     const arr: unknown[] = [1, 2]
     arr.push(arr)
-    expect(() => deepClone(arr)).toThrow('Circular reference detected')
+    const cloned = deepClone(arr) as unknown[]
+    expect(cloned[0]).toBe(1)
+    expect(cloned[2]).toBe(cloned) // circular reference preserved
+    expect(cloned[2]).not.toBe(arr)
   })
 
-  it('should throw on deeply nested circular reference', () => {
+  it('should preserve deeply nested circular references', () => {
     const a: Record<string, unknown> = {}
     const b: Record<string, unknown> = { parent: a }
     a.child = b
-    expect(() => deepClone(a)).toThrow('Circular reference detected')
+    const cloned = deepClone(a) as Record<string, unknown>
+    expect((cloned as { child: Record<string, unknown> }).child.parent).toBe(cloned)
+    expect((cloned as { child: Record<string, unknown> }).child).not.toBe(b)
   })
 })

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/218-260331-172739/task.md",
+      "hash": "d71f3245dd1d00a8",
+      "L0": "# [verify] E1+E2+E6: all enhancements\nAdd a deepClone utility function at src/utils/deepClone.ts that creates a deep copy of an object using structuredClone with a fallback to JSON parse/stringify.",
+      "L1": "# [verify] E1+E2+E6: all enhancements\nAdd a deepClone utility function at src/utils/deepClone.ts that creates a deep copy of an object using structuredClone with a fallback to JSON parse/stringify. Add tests.",
+      "L2": "# [verify] E1+E2+E6: all enhancements\n\nAdd a deepClone utility function at src/utils/deepClone.ts that creates a deep copy of an object using structuredClone with a fallback to JSON parse/stringify. Add tests."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/218-260331-172739/task.json",
+      "hash": "b24feb865c9baae5",
+      "L0": "Title: Done. The `deepClone` utility was updated to use `structuredClone` with  | Type: chore | Risk: low",
+      "L1": "- task_type: chore\n- title: Done. The `deepClone` utility was updated to use `structuredClone` with \n- description: Done. The `deepClone` utility was updated to use `structuredClone` with a `JSON.parse(JSON.stringify())` fallback, and tests were adjusted to reflect that `structuredClone` correctly handles circular references (preserving them rather than throwing) in Node.js 22.\n\n**Summary of changes:**\n- `src/utils/deep-clone.ts` - Simplified to use `structuredClone` with JSON fallback\n- `src/utils/deep-clone.test.ts` - Updated circular reference tests to verify preservation instead of throwing\n\nAll 1653 test\n- scope: [0 items] \n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n  \"task_type\": \"chore\",\n  \"title\": \"Done. The `deepClone` utility was updated to use `structuredClone` with \",\n  \"description\": \"Done. The `deepClone` utility was updated to use `structuredClone` with a `JSON.parse(JSON.stringify())` fallback, and tests were adjusted to reflect that `structuredClone` correctly handles circular references (preserving them rather than throwing) in Node.js 22.\\n\\n**Summary of changes:**\\n- `src/utils/deep-clone.ts` - Simplified to use `structuredClone` with JSON fallback\\n- `src/utils/deep-clone.test.ts` - Updated circular reference tests to verify preservation instead of throwing\\n\\nAll 1653 test\",\n  \"scope\": [],\n  \"risk_level\": \"low\",\n  \"hasUI\": false,\n  \"questions\": []\n}"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/218-260331-172739/context.md",
+      "hash": "ece1d5f66d8a9248",
+      "L0": "### taskify (2026-03-31T17:34:19)\nAll 1653 test.",
+      "L1": "### taskify (2026-03-31T17:34:19)\nDone. The `deepClone` utility was updated to use `structuredClone` with a `JSON.parse(JSON.stringify())` fallback, and tests were adjusted to reflect that `structuredClone` correctly handles circular references (preserving them rather than throwing) in Node.js 22.\n- `src/utils/deep-clone.ts` - Simplified to use `structuredClone` with JSON fallback\n- `src/utils/deep-clone.test.ts` - Updated circular reference tests to verify preservation instead of throwing",
+      "L2": "\n### taskify (2026-03-31T17:34:19)\nDone. The `deepClone` utility was updated to use `structuredClone` with a `JSON.parse(JSON.stringify())` fallback, and tests were adjusted to reflect that `structuredClone` correctly handles circular references (preserving them rather than throwing) in Node.js 22.\n\n**Summary of changes:**\n- `src/utils/deep-clone.ts` - Simplified to use `structuredClone` with JSON fallback\n- `src/utils/deep-clone.test.ts` - Updated circular reference tests to verify preservation instead of throwing\n\nAll 1653 test\n...(truncated)\n"
+    }
+  }
+}
