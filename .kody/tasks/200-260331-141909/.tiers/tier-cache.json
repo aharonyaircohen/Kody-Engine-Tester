@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "entries": {
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/200-260331-141909/context.md",
+      "hash": "9a90954ec455e8e3",
+      "L0": "### taskify (2026-03-31T14:22:54)\nAll 18 tests pass.",
+      "L1": "### taskify (2026-03-31T14:22:54)\nAll 18 tests pass. The `slugify` function is already implemented in `src/utils/slugify.ts` and tested in `src/utils/slugify.test.ts`. The implementation:\n- Converts to lowercase\n- Replaces spaces with hyphens\n- Removes non-alphanumeric characters (except hyphens)\n- Collapses multiple hyphens into one\n- Trims leading/trailing hyphens\n### plan (2026-03-31T14:23:02)\n**Status: Already Complete**\n- `src/utils/slugify.ts:8` — `slugify(str: string): string` function\n- All task requirements met: lowercase, spaces→hyphens, remove non-alphanumeric (except hyphens), collapse multiple hyphens, trim leading/trailing hyphens\n- Bonus: Unicode normalization (accents stripped to ASCII: `café` → `cafe`)\n### build (2026-03-31T14:25:04)\nAll **106 test files pass** with **1427 tests passing**.\n- **Implementation**: `src/utils/slugify.ts` — 18 lines\n- **Tests**: `src/utils/slugify.test.ts` — 18 tests, all passing\n- Lowercase conversion\n- Spaces → hyphens\n- Removes non-alphanumeric (except hyphens)",
+      "L2": "\n### taskify (2026-03-31T14:22:54)\nAll 18 tests pass. The `slugify` function is already implemented in `src/utils/slugify.ts` and tested in `src/utils/slugify.test.ts`. The implementation:\n\n- Converts to lowercase\n- Replaces spaces with hyphens\n- Removes non-alphanumeric characters (except hyphens)\n- Collapses multiple hyphens into one\n- Trims leading/trailing hyphens\n- Handles Unicode normalization (accents → ASCII equivalents)\n\n\n### plan (2026-03-31T14:23:02)\n**Status: Already Complete**\n\nThe `slugify` utility function was found fully implemented at `src/utils/slugify.ts` with 18 passing tests at `src/utils/slugify.test.ts`.\n\n**Implementation summary:**\n- `src/utils/slugify.ts:8` — `slugify(str: string): string` function\n- All task requirements met: lowercase, spaces→hyphens, remove non-alphanumeric (except hyphens), collapse multiple hyphens, trim leading/trailing hyphens\n- Bonus: Unicode normalization (accents stripped to ASCII: `café` → `cafe`)\n\n*\n...(truncated)\n\n### build (2026-03-31T14:25:04)\nAll **106 test files pass** with **1427 tests passing**.\n\nThe `slugify` task is complete:\n- **Implementation**: `src/utils/slugify.ts` — 18 lines\n- **Tests**: `src/utils/slugify.test.ts` — 18 tests, all passing\n\nThe function meets all requirements:\n- Lowercase conversion\n- Spaces → hyphens\n- Removes non-alphanumeric (except hyphens)\n- Collapses multiple hyphens\n- Trims leading/trailing hyphens\n- Unicode normalization (accents → ASCII: `café` → `cafe`)\n\n"
+    },
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/200-260331-141909/task.md",
+      "hash": "ff6a72c32433f6da",
+      "L0": "# [test-suite] Simple utility function\nCreate a simple utility function `slugify(text: string): string` that converts a string to a URL-friendly slug.",
+      "L1": "# [test-suite] Simple utility function\nCreate a simple utility function `slugify(text: string): string` that converts a string to a URL-friendly slug. It should:\n- Convert to lowercase\n- Replace spaces with hyphens  \n- Remove non-alphanumeric characters (except hyphens)\n- Collapse multiple hyphens into one\n- Trim leading/trailing hyphens",
+      "L2": "# [test-suite] Simple utility function\n\nCreate a simple utility function `slugify(text: string): string` that converts a string to a URL-friendly slug. It should:\n- Convert to lowercase\n- Replace spaces with hyphens  \n- Remove non-alphanumeric characters (except hyphens)\n- Collapse multiple hyphens into one\n- Trim leading/trailing hyphens\n\nAdd it to `src/utils/slugify.ts` with unit tests in `src/utils/slugify.test.ts`."
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/200-260331-141909/task.json",
+      "hash": "120ece372107ad86",
+      "L0": "All 18 tests pass. The `slugify` function is already implemented in `src/utils/slugify.ts` and tested in `src/utils/slugify.test.ts`. The implementation:\n\n- Converts to lowercase\n- Replaces spaces with hyphens\n- Removes non-alphanumeric characters (except hyphens)\n- Collapses multiple hyphens into one\n- Trims leading/trailing hyphens\n- Handles Unicode normalization (accents → ASCII equivalents)\n",
+      "L1": "All 18 tests pass. The `slugify` function is already implemented in `src/utils/slugify.ts` and tested in `src/utils/slugify.test.ts`. The implementation:\n\n- Converts to lowercase\n- Replaces spaces with hyphens\n- Removes non-alphanumeric characters (except hyphens)\n- Collapses multiple hyphens into one\n- Trims leading/trailing hyphens\n- Handles Unicode normalization (accents → ASCII equivalents)\n",
+      "L2": "All 18 tests pass. The `slugify` function is already implemented in `src/utils/slugify.ts` and tested in `src/utils/slugify.test.ts`. The implementation:\n\n- Converts to lowercase\n- Replaces spaces with hyphens\n- Removes non-alphanumeric characters (except hyphens)\n- Collapses multiple hyphens into one\n- Trims leading/trailing hyphens\n- Handles Unicode normalization (accents → ASCII equivalents)\n"
+    },
+    "plan.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/200-260331-141909/plan.md",
+      "hash": "2adb8c161933cb33",
+      "L0": "The `slugify` utility function was found fully implemented at `src/utils/slugify.ts` with 18 passing tests at `src/utils/slugify.test.ts`.",
+      "L1": "- `src/utils/slugify.ts:8` — `slugify(str: string): string` function\n- All task requirements met: lowercase, spaces→hyphens, remove non-alphanumeric (except hyphens), collapse multiple hyphens, trim leading/trailing hyphens\n- Bonus: Unicode normalization (accents stripped to ASCII: `café` → `cafe`)",
+      "L2": "**Status: Already Complete**\n\nThe `slugify` utility function was found fully implemented at `src/utils/slugify.ts` with 18 passing tests at `src/utils/slugify.test.ts`.\n\n**Implementation summary:**\n- `src/utils/slugify.ts:8` — `slugify(str: string): string` function\n- All task requirements met: lowercase, spaces→hyphens, remove non-alphanumeric (except hyphens), collapse multiple hyphens, trim leading/trailing hyphens\n- Bonus: Unicode normalization (accents stripped to ASCII: `café` → `cafe`)\n\n**Test results:** `pnpm test:int -- --run src/utils/slugify.test.ts` — 18 tests, all passing.\n"
+    }
+  }
+}
