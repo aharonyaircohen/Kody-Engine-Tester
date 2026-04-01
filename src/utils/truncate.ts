@@ -10,3 +10,4 @@ export function truncate(str: string, maxLen: number, suffix: string = '...'): s
   const contentLen = Math.max(0, maxLen - suffix.length)
   return str.slice(0, contentLen) + suffix
 }
+
