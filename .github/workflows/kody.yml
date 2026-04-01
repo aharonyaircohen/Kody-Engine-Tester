@@ -63,6 +63,8 @@ jobs:
       valid: ${{ steps.parse.outputs.valid }}
       complexity: ${{ steps.parse.outputs.complexity }}
       ci_run_id: ${{ steps.parse.outputs.ci_run_id }}
+      ticket_id: ${{ steps.parse.outputs.ticket_id }}
+      prd_file: ${{ steps.parse.outputs.prd_file }}
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -179,6 +181,8 @@ jobs:
           FEEDBACK: ${{ github.event.inputs.feedback || needs.parse.outputs.feedback }}
           COMPLEXITY: ${{ needs.parse.outputs.complexity }}
           DRY_RUN: ${{ github.event.inputs.dry_run || needs.parse.outputs.dry_run || 'false' }}
+          TICKET_ID: ${{ needs.parse.outputs.ticket_id }}
+          PRD_FILE: ${{ needs.parse.outputs.prd_file }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           if [ "$MODE" = "bootstrap" ]; then
@@ -199,6 +203,8 @@ jobs:
             # FEEDBACK is also passed via env var (avoids shell escaping issues)
             [ -n "$FEEDBACK" ] && ARGS="$ARGS --feedback \"$FEEDBACK\""
             [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+            [ -n "$TICKET_ID" ] && ARGS="$ARGS --ticket $TICKET_ID"
+            [ -n "$PRD_FILE" ] && ARGS="$ARGS --file $PRD_FILE"
             kody-engine-lite $CMD $ARGS
           fi
 
