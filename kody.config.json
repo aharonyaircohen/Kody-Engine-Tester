@@ -1,13 +1,13 @@
 {
   "quality": {
-    "typecheck": "",
+    "typecheck": "pnpm tsc --noEmit",
     "lint": "pnpm lint",
-    "lintFix": "",
+    "lintFix": "pnpm lint --fix",
     "formatFix": "",
-    "testUnit": ""
+    "testUnit": "pnpm vitest run"
   },
   "git": {
-    "defaultBranch": "kody"
+    "defaultBranch": "main"
   },
   "github": {
     "owner": "aharonyaircohen",
@@ -19,6 +19,20 @@
       "cheap": "MiniMax-M2.7-highspeed",
       "mid": "MiniMax-M2.7-highspeed",
       "strong": "MiniMax-M2.7-highspeed"
+    }
+  },
+  "mcp": {
+    "enabled": true,
+    "servers": {
+      "playwright": {
+        "command": "npx",
+        "args": ["@anthropic-ai/mcp-server-playwright"]
+      }
+    },
+    "stages": ["build", "verify", "review", "review-fix"],
+    "devServer": {
+      "command": "pnpm dev",
+      "url": "http://localhost:3000"
     }
   },
   "$schema": "https://raw.githubusercontent.com/aharonyaircohen/Kody-Engine-Lite/main/kody.config.schema.json"
