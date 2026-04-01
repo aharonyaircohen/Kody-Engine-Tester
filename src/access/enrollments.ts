@@ -1,4 +1,5 @@
 import type { AccessContext } from './index'
+import type { UserRole } from '../auth/user-store'
 
 export interface EnrollmentsAccess {
   canCreate: (ctx: AccessContext, enrollment: { studentId?: string }) => boolean
@@ -11,12 +12,17 @@ export interface EnrollmentsAccess {
   canDrop: (ctx: AccessContext, enrollment: { studentId?: string }) => boolean
 }
 
+// Helper to check if user has at least viewer role
+function isViewerOrAbove(role?: UserRole): boolean {
+  return role === 'admin' || role === 'editor' || role === 'viewer'
+}
+
 export const enrollmentsAccess: EnrollmentsAccess = {
   canCreate(ctx, enrollment) {
-    // Students can enroll themselves
-    if (ctx.user?.role === 'student' || ctx.user?.role === 'admin') {
-      // Students can only create enrollments for themselves
-      if (ctx.user.role === 'student' && enrollment.studentId !== ctx.user.id) {
+    // Viewers, editors, and admins can enroll themselves
+    if (isViewerOrAbove(ctx.user?.role)) {
+      // Users can only create enrollments for themselves
+      if (enrollment.studentId !== ctx.user?.id) {
         return false
       }
       return true
@@ -25,36 +31,35 @@ export const enrollmentsAccess: EnrollmentsAccess = {
   },
 
   canRead(ctx, enrollment) {
-    // Students can read their own enrollments
+    // Viewers can read their own enrollments
     if (enrollment.studentId === ctx.user?.id) return true
 
     // Admins can read any enrollment
     if (ctx.user?.role === 'admin') return true
 
-    // Instructors can read enrollments for their courses
-    // Note: Course instructor check would need to be done at service level
-    if (ctx.user?.role === 'instructor') return true
+    // Editors can read enrollments for their courses
+    if (ctx.user?.role === 'editor') return true
 
     return false
   },
 
   canUpdate(ctx, enrollment) {
-    // Students can update their own enrollment status (e.g., drop)
-    if (ctx.user?.role === 'student' && enrollment.studentId === ctx.user.id) {
+    // Viewers can update their own enrollment status (e.g., drop)
+    if (isViewerOrAbove(ctx.user?.role) && enrollment.studentId === ctx.user?.id) {
       return true
     }
 
     // Admins can update any enrollment
     if (ctx.user?.role === 'admin') return true
 
-    // Instructors can update enrollments for their courses
-    if (ctx.user?.role === 'instructor') return true
+    // Editors can update enrollments for their courses
+    if (ctx.user?.role === 'editor') return true
 
     return false
   },
 
   canDelete(ctx, enrollment) {
-    // Students cannot delete their enrollments (they should drop instead)
+    // Users cannot delete their enrollments (they should drop instead)
     if (enrollment.studentId === ctx.user?.id) return false
 
     // Only admins can delete enrollments
@@ -65,21 +70,17 @@ export const enrollmentsAccess: EnrollmentsAccess = {
     // Admins can list all enrollments
     if (ctx.user?.role === 'admin') return true
 
-    // Instructors can list enrollments for their courses
-    if (ctx.user?.role === 'instructor') {
+    // Editors can list enrollments for their courses
+    if (ctx.user?.role === 'editor') {
       if (courseInstructorId && ctx.user.id === courseInstructorId) return true
     }
-
-    // Students can only list enrollments when a specific course is specified
-    // (actual enrollment check should be done at service level)
-    if (ctx.user?.role === 'student' && courseInstructorId) return true
 
     return false
   },
 
   canListForStudent(ctx, studentId) {
-    // Students can list their own enrollments
-    if (ctx.user?.role === 'student' && studentId === ctx.user.id) return true
+    // Viewers can list their own enrollments
+    if (isViewerOrAbove(ctx.user?.role) && studentId === ctx.user?.id) return true
 
     // Admins can list any student's enrollments
     if (ctx.user?.role === 'admin') return true
@@ -88,20 +89,18 @@ export const enrollmentsAccess: EnrollmentsAccess = {
   },
 
   canMarkComplete(ctx, enrollment) {
-    // Students can mark their own enrollment as complete
-    if (ctx.user?.role === 'student' && enrollment.studentId === ctx.user.id) {
-      return true
-    }
-
     // Admins can mark any enrollment complete
     if (ctx.user?.role === 'admin') return true
+
+    // Editors can mark enrollments complete for their courses
+    if (ctx.user?.role === 'editor') return true
 
     return false
   },
 
   canDrop(ctx, enrollment) {
-    // Students can drop their own enrollment
-    if (ctx.user?.role === 'student' && enrollment.studentId === ctx.user.id) {
+    // Viewers can drop their own enrollment
+    if (isViewerOrAbove(ctx.user?.role) && enrollment.studentId === ctx.user?.id) {
       return true
     }
 
@@ -120,10 +119,10 @@ export function canReadEnrollmentField(ctx: AccessContext, fieldName: string, ow
   // Users can read fields of their own enrollments
   if (ownerId && ctx.user?.id === ownerId) return true
 
-  // Instructors can read enrollment fields for course management
-  if (ctx.user?.role === 'instructor') {
-    const instructorFields = ['student', 'course', 'enrolledAt', 'status', 'completedAt', 'completedLessons']
-    return instructorFields.includes(fieldName)
+  // Editors can read enrollment fields for course management
+  if (ctx.user?.role === 'editor') {
+    const editorFields = ['student', 'course', 'enrolledAt', 'status', 'completedAt', 'completedLessons']
+    return editorFields.includes(fieldName)
   }
 
   return false
@@ -133,15 +132,15 @@ export function canWriteEnrollmentField(ctx: AccessContext, fieldName: string, o
   // Admins can write all fields
   if (ctx.user?.role === 'admin') return true
 
-  // Students can update their own enrollment status
-  if (ctx.user?.role === 'student' && ownerId === ctx.user.id) {
+  // Viewers can update their own enrollment status
+  if (isViewerOrAbove(ctx.user?.role) && ownerId === ctx.user?.id) {
     if (fieldName === 'status') return true
   }
 
-  // Instructors can update enrollment fields for their courses
-  if (ctx.user?.role === 'instructor') {
-    const instructorFields = ['status', 'completedAt', 'completedLessons']
-    return instructorFields.includes(fieldName)
+  // Editors can update enrollment fields for their courses
+  if (ctx.user?.role === 'editor') {
+    const editorFields = ['status', 'completedAt', 'completedLessons']
+    return editorFields.includes(fieldName)
   }
 
   return false
@@ -153,7 +152,7 @@ export function canAddEnrollment(course: { maxEnrollments?: number }, currentCou
   return currentCount < course.maxEnrollments
 }
 
-// Check if student is already enrolled
+// Check if viewer is already enrolled
 export function isAlreadyEnrolled(enrollments: Array<{ studentId?: string }>, studentId: string): boolean {
   return enrollments.some((e) => e.studentId === studentId)
 }

@@ -25,3 +25,26 @@ The existing auth system is already well-built with JWT, token rotation, and OAu
 ### build (2026-04-01T06:56:29)
 I've asked the 3 design questions. Once you answer them, I'll proceed with the implementation following the plan.
 
+
+### review (2026-04-01T06:57:20)
+Based on the git diff, **there are no actual code changes** — only task metadata files were modified:
+
+- `.kody/tasks/228-260401-065328/.tiers/tier-cache.json` — updated tier cache entries
+- `.kody/tasks/228-260401-065328/status.json` — stage state transitions (build completed, verify completed, review running)
+
+The build stage ran but only produced a plan with 3 design questions — no implementation code was written. The verify stage passed because it only found lint warnings in an existing test
+...(truncated)
+
+### review-fix (2026-04-01T07:14:35)
+## Implementation Complete
+
+I've completed the auth system redesign with OAuth2 and RBAC. Here's a summary:
+
+### Changes Made
+
+**1. UserStore (`src/auth/user-store.ts`)**
+- Added `LinkedAccount` interface for OAuth provider linking
+- Added `provider`, `providerId`, `linkedAccounts` fields to `User`
+- New roles: `'admin' | 'editor' | 'viewer'` (replacing old `'user' | 'instructor' | 'student' | 'guest'`)
+- New methods: `findByProvider`, `createOAuth`, `linkAccount`, `unlinkAccount`, `getLinkedAcc
+...(truncated)

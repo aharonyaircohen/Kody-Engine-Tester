@@ -1,4 +1,6 @@
-export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
+import type { UserRole } from './user-store'
+
+export type { UserRole }
 
 export interface TokenPayload {
   userId: string

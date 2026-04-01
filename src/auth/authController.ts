@@ -1,7 +1,8 @@
 import type { UserStore } from './user-store'
 import type { SessionStore } from './session-store'
 import type { JwtService } from './jwt-service'
-import type { UserRole } from './user-store'
+import type { UserRole, LinkedAccount } from './user-store'
+import type { OAuth2Provider, OAuth2UserInfo } from './oauth2'
 
 export interface LoginCredentials {
   email: string
@@ -25,6 +26,7 @@ export interface MeResult {
   createdAt: Date
   lastLoginAt?: Date
   isActive: boolean
+  linkedAccounts?: LinkedAccount[]
 }
 
 class AuthError extends Error {
@@ -141,6 +143,7 @@ export class AuthController {
       createdAt: user.createdAt,
       lastLoginAt: user.lastLoginAt,
       isActive: user.isActive,
+      linkedAccounts: user.linkedAccounts ?? [],
     }
   }
 
@@ -176,5 +179,157 @@ export class AuthController {
     this.jwtService.blacklist(refreshToken)
 
     return { accessToken: newAccessToken, refreshToken: newRefreshToken }
+  }
+
+  async handleOAuthRegister(
+    userInfo: OAuth2UserInfo,
+    ipAddress: string,
+    userAgent: string
+  ): Promise<AuthResult> {
+    const existingUser = await this.userStore.findByProvider(userInfo.provider, userInfo.providerId)
+    if (existingUser) {
+      throw createError('Provider account already registered', 409)
+    }
+
+    const user = await this.userStore.createOAuth({
+      email: userInfo.email,
+      provider: userInfo.provider,
+      providerId: userInfo.providerId,
+      role: 'viewer',
+    })
+
+    const tokenPayload = {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+      sessionId: '',
+      generation: 0,
+    }
+
+    const accessToken = await this.jwtService.signAccessToken(tokenPayload)
+    const refreshToken = await this.jwtService.signRefreshToken(tokenPayload)
+    const session = this.sessionStore.create(user.id, accessToken, refreshToken, ipAddress, userAgent)
+
+    const finalAccessToken = await this.jwtService.signAccessToken({
+      ...tokenPayload,
+      sessionId: session.id,
+    })
+    const finalRefreshToken = await this.jwtService.signRefreshToken({
+      ...tokenPayload,
+      sessionId: session.id,
+    })
+    this.sessionStore.refresh(session.id, finalAccessToken, finalRefreshToken)
+
+    return {
+      accessToken: finalAccessToken,
+      refreshToken: finalRefreshToken,
+      user: { id: user.id, email: user.email, role: user.role },
+    }
+  }
+
+  async handleOAuthLink(
+    userId: string,
+    userInfo: OAuth2UserInfo,
+    ipAddress: string,
+    userAgent: string
+  ): Promise<AuthResult> {
+    await this.userStore.linkAccount(userId, userInfo.provider, userInfo.providerId)
+
+    const user = await this.userStore.findById(userId)
+    if (!user) {
+      throw createError('User not found', 404)
+    }
+
+    const tokenPayload = {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+      sessionId: '',
+      generation: 0,
+    }
+
+    const accessToken = await this.jwtService.signAccessToken(tokenPayload)
+    const refreshToken = await this.jwtService.signRefreshToken(tokenPayload)
+    const session = this.sessionStore.create(user.id, accessToken, refreshToken, ipAddress, userAgent)
+
+    const finalAccessToken = await this.jwtService.signAccessToken({
+      ...tokenPayload,
+      sessionId: session.id,
+    })
+    const finalRefreshToken = await this.jwtService.signRefreshToken({
+      ...tokenPayload,
+      sessionId: session.id,
+    })
+    this.sessionStore.refresh(session.id, finalAccessToken, finalRefreshToken)
+
+    return {
+      accessToken: finalAccessToken,
+      refreshToken: finalRefreshToken,
+      user: { id: user.id, email: user.email, role: user.role },
+    }
+  }
+
+  async linkOAuthProvider(userId: string, provider: OAuth2Provider, providerId: string): Promise<void> {
+    await this.userStore.linkAccount(userId, provider, providerId)
+  }
+
+  async unlinkOAuthProvider(userId: string, provider: OAuth2Provider): Promise<void> {
+    const user = await this.userStore.findById(userId)
+    if (!user) {
+      throw createError('User not found', 404)
+    }
+    if (user.provider === provider) {
+      throw createError('Cannot unlink primary provider', 400)
+    }
+    await this.userStore.unlinkAccount(userId, provider)
+  }
+
+  async getLinkedAccounts(userId: string): Promise<LinkedAccount[]> {
+    return this.userStore.getLinkedAccounts(userId)
+  }
+
+  async handleOAuthLogin(
+    userInfo: OAuth2UserInfo,
+    ipAddress: string,
+    userAgent: string
+  ): Promise<AuthResult> {
+    const user = await this.userStore.findByProvider(userInfo.provider, userInfo.providerId)
+    if (!user) {
+      throw createError('Provider account not registered', 404)
+    }
+
+    if (!user.isActive) {
+      throw createError('Account is inactive', 403)
+    }
+
+    await this.userStore.update(user.id, { lastLoginAt: new Date() })
+
+    const tokenPayload = {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+      sessionId: '',
+      generation: 0,
+    }
+
+    const accessToken = await this.jwtService.signAccessToken(tokenPayload)
+    const refreshToken = await this.jwtService.signRefreshToken(tokenPayload)
+    const session = this.sessionStore.create(user.id, accessToken, refreshToken, ipAddress, userAgent)
+
+    const finalAccessToken = await this.jwtService.signAccessToken({
+      ...tokenPayload,
+      sessionId: session.id,
+    })
+    const finalRefreshToken = await this.jwtService.signRefreshToken({
+      ...tokenPayload,
+      sessionId: session.id,
+    })
+    this.sessionStore.refresh(session.id, finalAccessToken, finalRefreshToken)
+
+    return {
+      accessToken: finalAccessToken,
+      refreshToken: finalRefreshToken,
+      user: { id: user.id, email: user.email, role: user.role },
+    }
   }
 }

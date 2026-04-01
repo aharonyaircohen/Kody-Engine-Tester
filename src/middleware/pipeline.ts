@@ -3,7 +3,7 @@ import type { AuthContext } from './auth-middleware'
 import type { RoleError } from './role-guard'
 import { createAuthMiddleware } from './auth-middleware'
 import { requireRole } from './role-guard'
-import type { User } from '../auth/user-store'
+import type { User, UserRole } from '../auth/user-store'
 import type { Session } from '../auth/session-store'
 import type { JwtService } from '../auth/jwt-service'
 import type { UserStore } from '../auth/user-store'
@@ -102,7 +102,7 @@ export function createPipelineAuthMiddleware(
  * Creates a role guard middleware for the pipeline.
  * Returns 401/403 response if role check fails, otherwise passes context through.
  */
-export function createPipelineRoleGuard(...roles: string[]): PipelineMiddleware {
+export function createPipelineRoleGuard(...roles: UserRole[]): PipelineMiddleware {
   const roleGuard = requireRole(...roles)
 
   return function rolePipelineMiddleware(
@@ -171,16 +171,16 @@ export function createAuthenticatedRoute<T extends PipelineContext = PipelineCon
 }
 
 /**
- * Creates an instructor route handler (requires instructor role).
+ * Creates an editor route handler (requires editor role).
  */
-export function createInstructorRoute<T extends PipelineContext = PipelineContext>(
+export function createEditorRoute<T extends PipelineContext = PipelineContext>(
   userStore: UserStore,
   sessionStore: SessionStore,
   jwtService: JwtService,
   handler: AuthenticatedPipelineHandler<T>
 ) {
   const authMiddleware = createPipelineAuthMiddleware(userStore, sessionStore, jwtService)
-  const roleGuard = createPipelineRoleGuard('instructor')
+  const roleGuard = createPipelineRoleGuard('editor')
   return createRouteHandler<T & { user: User; session: Session }>([authMiddleware, roleGuard], handler)
 }
 
