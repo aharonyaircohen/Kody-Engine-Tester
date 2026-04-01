@@ -98,94 +98,11 @@ jobs:
         if: steps.safety.outputs.valid == 'true'
         id: parse
         env:
-          BODY: ${{ github.event.comment.body }}
-        run: |
-          # Extract: @kody [mode] [task-id] [--from stage]
-          KODY_ARGS=$(echo "$BODY" | grep -oP '(?:@kody|/kody)\s+\K.*' || echo "")
-          MODE=$(echo "$KODY_ARGS" | awk '{print $1}')
-          RAW_TASK_ID=$(echo "$KODY_ARGS" | awk '{print $2}')
-          # Don't treat flags (--from, --feedback) as task IDs
-          case "$RAW_TASK_ID" in
-            --*) TASK_ID="" ;;
-            *)   TASK_ID="$RAW_TASK_ID" ;;
-          esac
-          FROM_STAGE=$(echo "$KODY_ARGS" | grep -oP '(?<=--from )\S+' || echo "")
-          FEEDBACK=$(echo "$KODY_ARGS" | grep -oP '(?<=--feedback ")[^"]*' || echo "")
-          COMPLEXITY=""
-          if echo "$KODY_ARGS" | grep -q -- '--complexity'; then
-            COMPLEXITY=$(echo "$KODY_ARGS" | tr ' ' '\n' | grep -A1 -- '--complexity' | tail -1)
-          fi
-          DRY_RUN="false"
-          if echo "$KODY_ARGS" | grep -q -- '--dry-run'; then
-            DRY_RUN="true"
-          fi
-
-          # Validate mode
-          case "$MODE" in
-            full|rerun|fix|fix-ci|status|approve|review|resolve|bootstrap) ;;
-            *)
-              # If first arg isn't a mode, it might be a task-id or nothing
-              if [ -n "$MODE" ] && [ "$MODE" != "" ]; then
-                TASK_ID="$MODE"
-              fi
-              MODE="full"
-              ;;
-          esac
-
-          ISSUE_NUM="${{ github.event.issue.number }}"
-
-          # For approve mode: extract answer body and convert to rerun
-          # Must run BEFORE task-id generation so we don't create a new task
-          # approve: extract answers, convert to rerun
-          if [ "$MODE" = "approve" ]; then
-            APPROVE_BODY=$(echo "$BODY" | sed -n '/\(@kody\|\/kody\)\s*approve/,$p' | tail -n +2)
-            FEEDBACK="$APPROVE_BODY"
-            MODE="rerun"
-          fi
-
-          # fix: extract description as feedback, convert to fix command
-          if [ "$MODE" = "fix" ]; then
-            FIX_BODY=$(echo "$BODY" | sed -n '/\(@kody\|\/kody\)\s*fix/,$p' | tail -n +2)
-            if [ -n "$FIX_BODY" ]; then
-              FEEDBACK="$FIX_BODY"
-            fi
-            # Leave TASK_ID empty — entry.ts finds latest task for issue
-          fi
-
-          # Bootstrap mode: set task-id and skip normal pipeline
-          if [ "$MODE" = "bootstrap" ]; then
-            TASK_ID="bootstrap-$(date +%y%m%d-%H%M%S)"
-          fi
-
-          # Auto-generate task-id if not provided (only for full mode)
-          if [ -z "$TASK_ID" ] && [ "$MODE" = "full" ]; then
-            TASK_ID="${ISSUE_NUM}-$(date +%y%m%d-%H%M%S)"
-          fi
-
-          # Detect if this comment is on a PR (PRs are issues in GitHub API)
-          PR_NUMBER=""
-          if [ -n "${{ github.event.issue.pull_request }}" ]; then
-            PR_NUMBER="$ISSUE_NUM"
-          fi
-
-          # For review mode on a PR comment: use the PR number directly
-          if [ "$MODE" = "review" ] && [ -n "$PR_NUMBER" ]; then
-            TASK_ID="review-pr-${PR_NUMBER}-$(date +%y%m%d-%H%M%S)"
-          fi
-
-          echo "task_id=$TASK_ID" >> $GITHUB_OUTPUT
-          echo "mode=$MODE" >> $GITHUB_OUTPUT
-          echo "from_stage=$FROM_STAGE" >> $GITHUB_OUTPUT
-          echo "issue_number=$ISSUE_NUM" >> $GITHUB_OUTPUT
-          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
-          {
-            echo "feedback<<KODY_EOF"
-            echo "$FEEDBACK"
-            echo "KODY_EOF"
-          } >> $GITHUB_OUTPUT
-          echo "complexity=$COMPLEXITY" >> $GITHUB_OUTPUT
-          echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
-          echo "valid=true" >> $GITHUB_OUTPUT
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_IS_PR: ${{ github.event.issue.pull_request }}
+          TRIGGER_TYPE: comment
+        run: kody-engine-lite ci-parse
 
   # ─── Orchestrate ─────────────────────────────────────────────────────────────
   orchestrate:
