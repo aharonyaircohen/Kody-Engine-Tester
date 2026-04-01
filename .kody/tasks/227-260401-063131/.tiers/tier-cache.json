@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": {
+    "task.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/227-260401-063131/task.md",
+      "hash": "569c0fb54d802458",
+      "L0": "# [test-suite] Add request correlation ID middleware with logging\nCreate a correlation ID middleware in src/middleware/correlation-id.ts that:.",
+      "L1": "# [test-suite] Add request correlation ID middleware with logging\nCreate a correlation ID middleware in src/middleware/correlation-id.ts that:",
+      "L2": "# [test-suite] Add request correlation ID middleware with logging\n\nCreate a correlation ID middleware in src/middleware/correlation-id.ts that:\n1. Generates a unique request ID (UUID v4) for each incoming request\n2. Attaches it to the request object and response headers (X-Correlation-ID)\n3. Creates a request logger in src/middleware/request-logger.ts that logs request method, path, status code, duration, and correlation ID\n4. Add comprehensive tests for both middleware components in correlation-id.test.ts and request-logger.test.ts\n5. Export both from src/middleware/index.ts"
+    },
+    "task.json": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/227-260401-063131/task.json",
+      "hash": "0e8d435ba4dc8bd8",
+      "L0": "Title: Add request correlation ID middleware with logging | Type: feature | Risk: low",
+      "L1": "- task_type: feature\n- title: Add request correlation ID middleware with logging\n- description: Create correlation ID middleware that generates UUID v4 for each request, attaches it to request object and X-Correlation-ID response header, plus a request logger that logs request method, path, status code, duration, and correlation ID with comprehensive tests for both components.\n- scope: [5 items] src/middleware/correlation-id.ts, src/middleware/correlation-id.test.ts, src/middleware/request-logger.ts\n- risk_level: low\n- hasUI: false\n- questions: [0 items] ",
+      "L2": "{\n\"task_type\": \"feature\",\n\"title\": \"Add request correlation ID middleware with logging\",\n\"description\": \"Create correlation ID middleware that generates UUID v4 for each request, attaches it to request object and X-Correlation-ID response header, plus a request logger that logs request method, path, status code, duration, and correlation ID with comprehensive tests for both components.\",\n\"scope\": [\"src/middleware/correlation-id.ts\", \"src/middleware/correlation-id.test.ts\", \"src/middleware/request-logger.ts\", \"src/middleware/request-logger.test.ts\", \"src/middleware/index.ts\"],\n\"risk_level\": \"low\",\n\"hasUI\": false,\n\"questions\": []\n}\n"
+    },
+    "context.md": {
+      "source": "/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/tasks/227-260401-063131/context.md",
+      "hash": "1cc52e2fac819855",
+      "L0": "### taskify (2026-04-01T06:42:16)\nAll tasks completed successfully.",
+      "L1": "### taskify (2026-04-01T06:42:16)\nAll tasks completed successfully. Here's a summary of what was created:\n   - Generates UUID v4 correlation IDs using `crypto.randomUUID()`\n   - Attaches them to response headers (`X-Correlation-ID`)\n   - Reuses existing correlation IDs from incoming headers\n   - Supports custom header names and generators\n   - Logs request m",
+      "L2": "\n### taskify (2026-04-01T06:42:16)\nAll tasks completed successfully. Here's a summary of what was created:\n\n**Created files:**\n\n1. **`src/middleware/correlation-id.ts`** - Correlation ID middleware that:\n   - Generates UUID v4 correlation IDs using `crypto.randomUUID()`\n   - Attaches them to response headers (`X-Correlation-ID`)\n   - Reuses existing correlation IDs from incoming headers\n   - Supports custom header names and generators\n\n2. **`src/middleware/request-logger.ts`** - Request logger middleware that:\n   - Logs request m\n...(truncated)\n"
+    }
+  }
+}

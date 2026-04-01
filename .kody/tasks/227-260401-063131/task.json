@@ -1,0 +1,9 @@
+{
+"task_type": "feature",
+"title": "Add request correlation ID middleware with logging",
+"description": "Create correlation ID middleware that generates UUID v4 for each request, attaches it to request object and X-Correlation-ID response header, plus a request logger that logs request method, path, status code, duration, and correlation ID with comprehensive tests for both components.",
+"scope": ["src/middleware/correlation-id.ts", "src/middleware/correlation-id.test.ts", "src/middleware/request-logger.ts", "src/middleware/request-logger.test.ts", "src/middleware/index.ts"],
+"risk_level": "low",
+"hasUI": false,
+"questions": []
+}
