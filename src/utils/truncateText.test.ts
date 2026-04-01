@@ -39,4 +39,16 @@ describe('truncateText', () => {
   it('truncates correctly when text length equals maxLength + 1', () => {
     expect(truncateText('abcdef', 5)).toBe('abcde...')
   })
+
+  it('uses custom suffix when provided', () => {
+    expect(truncateText('Hello World', 5, ' [truncated]')).toBe('Hello [truncated]')
+  })
+
+  it('uses single character suffix', () => {
+    expect(truncateText('Hello World', 5, '…')).toBe('Hello…')
+  })
+
+  it('returns original text with custom suffix when within maxLength', () => {
+    expect(truncateText('Hi', 10, '...')).toBe('Hi')
+  })
 })
