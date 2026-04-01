@@ -1,0 +1,1 @@
+{"task_type":"feature","title":"Add priority queue utility","description":"Create a priority queue utility in src/utils/priority-queue.ts supporting enqueue with priority, dequeue, and peek operations using functional immutable style. Add tests in priority-queue.test.ts.","scope":["src/utils/priority-queue.ts","src/utils/priority-queue.test.ts"],"risk_level":"low","questions":[]}
