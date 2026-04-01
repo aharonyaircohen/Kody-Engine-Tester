@@ -36,3 +36,50 @@ The implementation is complete and verified:
   - `src/middleware/request-validator.test.ts` - 51 comprehensive tests covering all validation scenarios
   - 
 ...(truncated)
+
+### review (2026-04-01T10:20:33)
+## Verdict: FAIL
+
+## Summary
+
+Three files were added: `src/middleware/request-validator.ts` (middleware with JSON Schema Draft-07 subset validator), `src/middleware/request-validator.test.ts` (51 tests), and `src/middleware/index.ts` (barrel exports updated). The implementation is functional and tests pass, but there is a **ReDoS (Regular Expression Denial of Service) vulnerability** in the `pattern` validation at `request-validator.ts:159`.
+
+## Findings
+
+### Critical
+
+- `src/middleware/request-
+...(truncated)
+
+### review-fix (2026-04-01T10:21:35)
+**Fix applied successfully:**
+
+**ReDoS Vulnerability Fixed** at `src/middleware/request-validator.ts`:
+
+1. **Added regex cache** (line 60) - Avoids re-compilation of same patterns
+2. **Added pattern length limit** (line 61, `MAX_PATTERN_LENGTH = 500`) - Prevents DoS via huge patterns
+3. **Added `createSafeRegex()` method** (lines 68-89) that:
+   - Returns `null` for patterns > 500 chars
+   - Caches compiled regexes
+   - Sets `regex.timeout = 1000` on Node 20+ to limit execution time
+   - Wraps c
+...(truncated)
+
+### review (2026-04-01T10:22:13)
+## Verdict: PASS
+
+## Summary
+
+Three files were added: `src/middleware/request-validator.ts` (middleware with JSON Schema Draft-07 subset validator), `src/middleware/request-validator.test.ts` (51 tests), and `src/middleware/index.ts` (barrel exports updated). The ReDoS vulnerability identified in the prior review has been addressed via `createSafeRegex` with pattern length limits, regex caching, and Node 20+ timeout support. All 51 tests pass.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+...(truncated)
