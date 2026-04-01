@@ -188,6 +188,13 @@ jobs:
           if [ "$MODE" = "bootstrap" ]; then
             echo "Running bootstrap..."
             kody-engine-lite bootstrap
+          elif [ "$MODE" = "taskify" ]; then
+            ARGS=""
+            [ -n "$TICKET_ID" ] && ARGS="$ARGS --ticket $TICKET_ID"
+            [ -n "$PRD_FILE" ] && ARGS="$ARGS --file $PRD_FILE"
+            [ -n "$ISSUE_NUMBER" ] && ARGS="$ARGS --issue-number $ISSUE_NUMBER"
+            [ -n "$TASK_ID" ] && ARGS="$ARGS --task-id $TASK_ID"
+            kody-engine-lite taskify $ARGS
           else
             CMD="run"
             [ "$MODE" = "rerun" ] && CMD="rerun"
@@ -203,8 +210,6 @@ jobs:
             # FEEDBACK is also passed via env var (avoids shell escaping issues)
             [ -n "$FEEDBACK" ] && ARGS="$ARGS --feedback \"$FEEDBACK\""
             [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
-            [ -n "$TICKET_ID" ] && ARGS="$ARGS --ticket $TICKET_ID"
-            [ -n "$PRD_FILE" ] && ARGS="$ARGS --file $PRD_FILE"
             kody-engine-lite $CMD $ARGS
           fi
 
