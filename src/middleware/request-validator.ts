@@ -229,7 +229,7 @@ class JSONSchemaValidator {
             if (!regexResult.test(data)) {
               errors.push({
                 field: path,
-                message: `String must match pattern: ${schema.pattern}`,
+                message: `String must match pattern: ${JSON.stringify(schema.pattern)}`,
                 value: data,
               })
             }
@@ -237,7 +237,7 @@ class JSONSchemaValidator {
             // Timeout or other regex error - treat as validation failure
             errors.push({
               field: path,
-              message: `Pattern validation timed out or failed: ${schema.pattern}`,
+              message: `Pattern validation timed out or failed: ${JSON.stringify(schema.pattern)}`,
               value: data,
             })
           }
