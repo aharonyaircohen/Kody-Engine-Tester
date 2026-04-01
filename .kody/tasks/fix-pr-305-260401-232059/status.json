@@ -1,6 +1,6 @@
 {
   "taskId": "fix-pr-305-260401-232059",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "pending",
@@ -12,32 +12,31 @@
     },
     "build": {
       "state": "completed",
-      "startedAt": "2026-04-01T23:21:12.441Z",
-      "completedAt": "2026-04-01T23:26:00.000Z",
+      "completedAt": "2026-04-01T23:27:20.341Z",
       "retries": 0
     },
     "verify": {
       "state": "completed",
-      "completedAt": "2026-04-01T23:27:00.000Z",
+      "completedAt": "2026-04-01T23:28:18.073Z",
       "retries": 0
     },
     "review": {
       "state": "completed",
-      "completedAt": "2026-04-01T23:27:30.000Z",
       "retries": 0
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "completed",
-      "startedAt": "2026-04-01T23:27:30.000Z",
-      "completedAt": "2026-04-01T23:28:00.000Z",
+      "state": "running",
+      "startedAt": "2026-04-01T23:28:18.849Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-01T23:21:10.665Z",
-  "updatedAt": "2026-04-01T23:28:00.000Z",
-  "notes": "The truncate function already correctly uses '...' as the default suffix. Only fixed missing trailing newline in truncate.ts. All tests pass."
+  "updatedAt": "2026-04-01T23:28:18.849Z",
+  "sessions": {
+    "build": "1b014ba1-ae62-4e99-92f8-edeb2f5c8604"
+  }
 }
