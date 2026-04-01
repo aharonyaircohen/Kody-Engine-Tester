@@ -1,0 +1,29 @@
+{
+"task_type": "feature",
+"title": "Redesign authentication system with OAuth2 and full RBAC",
+"description": "Replace session-based auth in src/auth/ with OAuth2-compatible flow supporting Google, GitHub, and email/password providers. Migrate user schema to support multiple OAuth providers per user with provider_id, provider_type, and linked_accounts fields. Implement RBAC system with admin, editor, and viewer roles, adding role-based access control to all API routes. Add token refresh mechanism with rotation and revocation. Create database migration scripts in src/migrations/. Update all existing middleware to use the new auth system. Add comprehensive integration tests for auth flows, token refresh, role checks, and provider linking.",
+"scope": [
+"src/auth/index.ts",
+"src/auth/user-store.ts",
+"src/auth/session-store.ts",
+"src/auth/jwt-service.ts",
+"src/auth/oauth2.ts",
+"src/auth/authController.ts",
+"src/auth/authRoutes.ts",
+"src/auth/authMiddleware.ts",
+"src/collections/Users.ts",
+"src/middleware/auth-middleware.ts",
+"src/middleware/role-guard.ts",
+"src/middleware/pipeline.ts",
+"src/api/auth/login.ts",
+"src/api/auth/register.ts",
+"src/api/auth/refresh.ts",
+"src/api/auth/logout.ts",
+"src/api/auth/profile.ts",
+"src/migrations/20260322_233123_initial.ts",
+"src/access/"
+],
+"risk_level": "high",
+"hasUI": false,
+"questions": []
+}
