@@ -19,7 +19,9 @@ function validatePasswordStrength(password: string): string | null {
   return null
 }
 
-type ProfileOutput = Omit<User, 'passwordHash' | 'salt'>
+type ProfileOutput = Omit<User, 'passwordHash' | 'salt' | 'provider' | 'providerId' | 'linkedAccounts'> & {
+  linkedAccounts?: User['linkedAccounts']
+}
 
 export async function getProfile(userId: string, userStore: UserStore): Promise<ProfileOutput> {
   const user = await userStore.findById(userId)
@@ -27,7 +29,7 @@ export async function getProfile(userId: string, userStore: UserStore): Promise<
     throw createError('User not found', 404)
   }
   const { passwordHash: _passwordHash, salt: _salt, ...profile } = user
-  return profile
+  return profile as ProfileOutput
 }
 
 interface UpdateProfileInput {
@@ -75,7 +77,7 @@ export async function updateProfile(
   }
 
   const { passwordHash: _passwordHash2, salt: _salt2, ...profile } = updated
-  return profile
+  return profile as ProfileOutput
 }
 
 async function hashNewPassword(password: string): Promise<{ hash: string; salt: string }> {

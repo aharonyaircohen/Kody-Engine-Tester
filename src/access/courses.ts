@@ -1,4 +1,5 @@
 import type { AccessContext } from './index'
+import type { UserRole } from '../auth/user-store'
 
 export interface CoursesAccess {
   canCreate: (ctx: AccessContext) => boolean
@@ -9,10 +10,15 @@ export interface CoursesAccess {
   canArchive: (ctx: AccessContext, course: { instructor?: { id?: string } }) => boolean
 }
 
+// Helper to check if user has at least editor role
+function isEditorOrAbove(role?: UserRole): boolean {
+  return role === 'admin' || role === 'editor'
+}
+
 export const coursesAccess: CoursesAccess = {
   canCreate(ctx) {
-    // Only instructors and admins can create courses
-    return ctx.user?.role === 'instructor' || ctx.user?.role === 'admin'
+    // Editors and admins can create courses
+    return isEditorOrAbove(ctx.user?.role)
   },
 
   canRead(ctx, course) {
@@ -22,14 +28,11 @@ export const coursesAccess: CoursesAccess = {
     // Admins can read all courses
     if (ctx.user?.role === 'admin') return true
 
-    // Instructors can read their own courses
-    if (ctx.user?.role === 'instructor') {
+    // Editors can read courses they own
+    if (ctx.user?.role === 'editor') {
       const instructorId = course.instructor?.id
       if (instructorId && ctx.user.id === instructorId) return true
     }
-
-    // Students can read courses they're enrolled in
-    // Note: Enrollment check would need to be done at service level
 
     return false
   },
@@ -38,8 +41,8 @@ export const coursesAccess: CoursesAccess = {
     // Admins can update any course
     if (ctx.user?.role === 'admin') return true
 
-    // Instructors can update their own courses
-    if (ctx.user?.role === 'instructor') {
+    // Editors can update their own courses
+    if (ctx.user?.role === 'editor') {
       const instructorId = course.instructor?.id
       if (instructorId && ctx.user.id === instructorId) return true
     }
@@ -51,32 +54,19 @@ export const coursesAccess: CoursesAccess = {
     // Only admins can delete courses
     if (ctx.user?.role === 'admin') return true
 
-    // Instructors cannot delete courses (only archive)
     return false
   },
 
   canPublish(ctx, course) {
-    // Admins can publish any course
+    // Only admins can publish courses
     if (ctx.user?.role === 'admin') return true
-
-    // Instructors can publish their own courses
-    if (ctx.user?.role === 'instructor') {
-      const instructorId = course.instructor?.id
-      if (instructorId && ctx.user.id === instructorId) return true
-    }
 
     return false
   },
 
   canArchive(ctx, course) {
-    // Admins can archive any course
+    // Only admins can archive courses
     if (ctx.user?.role === 'admin') return true
-
-    // Instructors can archive their own courses
-    if (ctx.user?.role === 'instructor') {
-      const instructorId = course.instructor?.id
-      if (instructorId && ctx.user.id === instructorId) return true
-    }
 
     return false
   },
@@ -104,13 +94,13 @@ export function canWriteCourseField(ctx: AccessContext, fieldName: string, owner
   // Admins can write all fields
   if (ctx.user?.role === 'admin') return true
 
-  // Instructors can write certain fields for their own courses
-  if (ctx.user?.role === 'instructor' && ownerId && ctx.user.id === ownerId) {
-    const instructorFields = [
+  // Editors can write certain fields for their own courses
+  if (ctx.user?.role === 'editor' && ownerId && ctx.user.id === ownerId) {
+    const editorFields = [
       'title', 'description', 'thumbnail', 'status', 'difficulty',
       'estimatedHours', 'tags', 'maxEnrollments',
     ]
-    return instructorFields.includes(fieldName)
+    return editorFields.includes(fieldName)
   }
 
   return false
@@ -121,16 +111,18 @@ export function canEnrollInCourse(ctx: AccessContext, course: { status?: string;
   // Must be authenticated
   if (!ctx.user) return false
 
-  // Students and admins can enroll
-  if (ctx.user.role !== 'student' && ctx.user.role !== 'admin') return false
+  // Viewers, editors, and admins can enroll (all except guests/anonymous)
+  if (ctx.user.role === 'viewer' || ctx.user.role === 'editor' || ctx.user.role === 'admin') {
+    // Course must be published
+    if (course.status !== 'published') return false
 
-  // Course must be published
-  if (course.status !== 'published') return false
+    // Check max enrollments
+    if (course.maxEnrollments && currentEnrollmentCount !== undefined) {
+      if (currentEnrollmentCount >= course.maxEnrollments) return false
+    }
 
-  // Check max enrollments
-  if (course.maxEnrollments && currentEnrollmentCount !== undefined) {
-    if (currentEnrollmentCount >= course.maxEnrollments) return false
+    return true
   }
 
-  return true
+  return false
 }

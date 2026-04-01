@@ -21,8 +21,8 @@ export const usersAccess: UsersAccess = {
     if (ctx.user?.id === userId) return true
     // Admins can read any user
     if (ctx.user?.role === 'admin') return true
-    // Instructors can read student profiles
-    if (ctx.user?.role === 'instructor') return true
+    // Editors can read user profiles
+    if (ctx.user?.role === 'editor') return true
     return false
   },
 
@@ -69,8 +69,8 @@ export function canReadUserField(ctx: AccessContext, fieldName: string, ownerId?
   // Users can read their own fields
   if (ownerId && ctx.user?.id === ownerId) return true
 
-  // Instructors can read student email for course communication
-  if (ctx.user?.role === 'instructor' && fieldName === 'email') return true
+  // Editors can read user email for course communication
+  if (ctx.user?.role === 'editor' && fieldName === 'email') return true
 
   // Public fields
   const publicFields = ['id', 'role', 'createdAt']

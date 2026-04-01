@@ -51,7 +51,7 @@ export async function register(
     throw createError('Email already in use', 409)
   }
 
-  await userStore.create({ email, password, role: 'user' })
+  await userStore.create({ email, password, role: 'viewer' })
 
   return login(email, password, ipAddress, userAgent, userStore, sessionStore, jwtService)
 }

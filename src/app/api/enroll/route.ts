@@ -18,7 +18,7 @@ export const POST = async (request: NextRequest) => {
     return createErrorResponse(authContext.error, authContext.status ?? 401)
   }
 
-  const roleError = requireRole('student')(authContext)
+  const roleError = requireRole('viewer')(authContext)
   if (roleError) {
     return createErrorResponse(roleError.error, roleError.status)
   }
