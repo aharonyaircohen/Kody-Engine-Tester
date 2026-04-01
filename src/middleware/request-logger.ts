@@ -8,8 +8,6 @@ export interface RequestLoggerConfig {
   level?: LogLevel
   format?: OutputFormat
   excludePaths?: string[]
-  includeBody?: boolean
-  includeHeaders?: boolean
   logger?: {
     debug: (msg: string, data?: Record<string, unknown>) => void
     info: (msg: string, data?: Record<string, unknown>) => void
@@ -153,9 +151,8 @@ export function createRequestLogger(config: RequestLoggerConfig = {}): RequestLo
   function completeAndLog(request: NextRequest, response: NextResponse): LogEntry {
     const requestId = response.headers.get('x-request-id') ?? generateRequestId()
     const status = response.status
-    const responseTimeMs = Date.now()
 
-    // Try to get stored start time, or use current time
+    // Try to get stored start time, or use current time as fallback
     const requestData = inFlightRequests.get(requestId)
     const startTime = requestData?.startTime ?? Date.now()
 
