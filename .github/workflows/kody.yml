@@ -67,6 +67,7 @@ jobs:
       ticket_id: ${{ steps.parse.outputs.ticket_id }}
       prd_file: ${{ steps.parse.outputs.prd_file }}
       dry_run: ${{ steps.parse.outputs.dry_run }}
+      complexity: ${{ steps.parse.outputs.complexity }}
       valid: ${{ steps.parse.outputs.valid }}
     steps:
       - uses: actions/setup-node@v4
