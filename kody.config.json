@@ -21,8 +21,5 @@
       "strong": "MiniMax-M2.7-highspeed"
     }
   },
-  "$schema": "https://raw.githubusercontent.com/aharonyaircohen/Kody-Engine-Lite/main/kody.config.schema.json",
-  "mcp": {
-    "devServer": "pnpm dev"
-  }
+  "$schema": "https://raw.githubusercontent.com/aharonyaircohen/Kody-Engine-Lite/main/kody.config.schema.json"
 }
