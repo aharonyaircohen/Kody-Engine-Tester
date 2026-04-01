@@ -1,0 +1,9 @@
+{
+"task_type": "feature",
+"title": "Add request validation middleware with schema support",
+"description": "Create a request validation middleware in src/middleware/request-validator.ts that accepts JSON schema definitions for body, query params, and path params; validates incoming requests against the schema; returns 400 with structured error messages for validation failures; supports custom error formatters; with comprehensive tests in request-validator.test.ts and exports from middleware barrel file.",
+"scope": ["src/middleware/request-validator.ts", "src/middleware/request-validator.test.ts", "src/middleware/index.ts"],
+"risk_level": "medium",
+"hasUI": false,
+"questions": []
+}
