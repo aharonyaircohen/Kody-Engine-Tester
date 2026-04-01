@@ -61,6 +61,8 @@ jobs:
       feedback: ${{ steps.parse.outputs.feedback }}
       dry_run: ${{ steps.parse.outputs.dry_run }}
       valid: ${{ steps.parse.outputs.valid }}
+      complexity: ${{ steps.parse.outputs.complexity }}
+      ci_run_id: ${{ steps.parse.outputs.ci_run_id }}
     steps:
       - uses: actions/setup-node@v4
         with:
