@@ -1,0 +1,8 @@
+{
+  "task_type": "feature",
+  "title": "Add trie data structure utility with tests",
+  "description": "Create a trie data structure utility in src/utils/trie.ts that supports insert, search, and startsWith operations. Add comprehensive tests in src/utils/trie.test.ts.",
+  "scope": ["src/utils/trie.ts", "src/utils/trie.test.ts"],
+  "risk_level": "low",
+  "questions": []
+}
