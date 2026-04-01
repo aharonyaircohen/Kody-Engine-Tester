@@ -67,14 +67,14 @@ describe('AuthController', () => {
     it('should lock account after 5 failed attempts', async () => {
       for (let i = 0; i < 5; i++) {
         try {
-          await controller.login({ email: 'user@example.com', password: 'wrong' }, '127.0.0.1', 'TestAgent')
+          await controller.login({ email: 'viewer@example.com', password: 'wrong' }, '127.0.0.1', 'TestAgent')
         } catch {
           // Expected
         }
       }
 
       await expect(
-        controller.login({ email: 'user@example.com', password: 'UserPass1!' }, '127.0.0.1', 'TestAgent')
+        controller.login({ email: 'viewer@example.com', password: 'ViewerPass1!' }, '127.0.0.1', 'TestAgent')
       ).rejects.toMatchObject({ message: 'Account is locked. Please try again later.', status: 423 })
     })
 
@@ -93,16 +93,16 @@ describe('AuthController', () => {
     })
 
     it('should reset failed login attempts on success', async () => {
-      const user = await userStore.findByEmail('user@example.com')
+      const user = await userStore.findByEmail('viewer@example.com')
       for (let i = 0; i < 3; i++) {
         try {
-          await controller.login({ email: 'user@example.com', password: 'wrong' }, '127.0.0.1', 'TestAgent')
+          await controller.login({ email: 'viewer@example.com', password: 'wrong' }, '127.0.0.1', 'TestAgent')
         } catch {
           // Expected
         }
       }
 
-      await controller.login({ email: 'user@example.com', password: 'UserPass1!' }, '127.0.0.1', 'TestAgent')
+      await controller.login({ email: 'viewer@example.com', password: 'ViewerPass1!' }, '127.0.0.1', 'TestAgent')
 
       const updated = await userStore.findById(user!.id)
       expect(updated?.failedLoginAttempts).toBe(0)
@@ -120,13 +120,13 @@ describe('AuthController', () => {
     it('should enforce max sessions per user', async () => {
       for (let i = 0; i < 6; i++) {
         await controller.login(
-          { email: 'user@example.com', password: 'UserPass1!' },
+          { email: 'viewer@example.com', password: 'ViewerPass1!' },
           '127.0.0.1',
           'TestAgent'
         )
       }
 
-      const user = await userStore.findByEmail('user@example.com')
+      const user = await userStore.findByEmail('viewer@example.com')
       const userSessions = Array.from((sessionStore as any).sessions.values()).filter(
         (s: any) => s.userId === user!.id
       )
@@ -169,10 +169,10 @@ describe('AuthController', () => {
     })
 
     it('should revoke all sessions when allDevices is true', async () => {
-      await controller.login({ email: 'user@example.com', password: 'UserPass1!' }, '127.0.0.1', 'TestAgent')
-      await controller.login({ email: 'user@example.com', password: 'UserPass1!' }, '127.0.0.1', 'TestAgent')
+      await controller.login({ email: 'viewer@example.com', password: 'ViewerPass1!' }, '127.0.0.1', 'TestAgent')
+      await controller.login({ email: 'viewer@example.com', password: 'ViewerPass1!' }, '127.0.0.1', 'TestAgent')
 
-      const user = await userStore.findByEmail('user@example.com')
+      const user = await userStore.findByEmail('viewer@example.com')
 
       controller.logout(user!.id, 'any-session-id', 'any-token', { allDevices: true })
 

@@ -19,7 +19,7 @@ describe('AuthMiddleware', () => {
   })
 
   async function makeAuthenticatedContext() {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('viewer@example.com')
     const accessToken = await jwtService.signAccessToken({
       userId: user!.id,
       email: user!.email,
@@ -59,7 +59,7 @@ describe('AuthMiddleware', () => {
   })
 
   it('should return 401 for expired token', async () => {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('viewer@example.com')
     const expiredToken = await jwtService.sign(
       { userId: user!.id, email: user!.email, role: user!.role, sessionId: 'session-1', generation: 0 },
       -1000
@@ -76,7 +76,7 @@ describe('AuthMiddleware', () => {
   })
 
   it('should return 401 for token with older generation after refresh', async () => {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('viewer@example.com')
     const oldAccessToken = await jwtService.signAccessToken({
       userId: user!.id,
       email: user!.email,

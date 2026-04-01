@@ -14,14 +14,14 @@ describe('requireRole', () => {
   })
 
   it('should allow user with one of multiple allowed roles', () => {
-    const guard = requireRole('admin', 'user')
+    const guard = requireRole('admin', 'viewer')
     expect(guard(makeContext('admin'))).toBeUndefined()
-    expect(guard(makeContext('user'))).toBeUndefined()
+    expect(guard(makeContext('viewer'))).toBeUndefined()
   })
 
   it('should return 403 when user lacks required role', () => {
     const guard = requireRole('admin')
-    const result = guard(makeContext('user'))
+    const result = guard(makeContext('viewer'))
     expect(result?.status).toBe(403)
     expect(result?.error).toContain('admin')
   })
@@ -41,9 +41,9 @@ describe('requireRole', () => {
   })
 
   it('should include descriptive error message', () => {
-    const guard = requireRole('admin', 'moderator')
-    const result = guard(makeContext('user'))
+    const guard = requireRole('admin', 'editor')
+    const result = guard(makeContext('viewer'))
     expect(result?.error).toContain('admin')
-    expect(result?.error).toContain('moderator')
+    expect(result?.error).toContain('editor')
   })
 })

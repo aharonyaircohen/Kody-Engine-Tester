@@ -21,7 +21,7 @@ describe('register', () => {
     expect(result.accessToken).toBeDefined()
     expect(result.refreshToken).toBeDefined()
     expect(result.user.email).toBe('new@example.com')
-    expect(result.user.role).toBe('user')
+    expect(result.user.role).toBe('viewer')
   })
 
   it('should return 400 for invalid email', async () => {
@@ -64,8 +64,8 @@ describe('register', () => {
       .rejects.toMatchObject({ status: 400 })
   })
 
-  it('should assign user role', async () => {
+  it('should assign viewer role', async () => {
     const result = await register('new@example.com', 'NewPass1!', 'NewPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
-    expect(result.user.role).toBe('user')
+    expect(result.user.role).toBe('viewer')
   })
 })

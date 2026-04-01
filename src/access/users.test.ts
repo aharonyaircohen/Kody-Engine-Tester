@@ -7,12 +7,12 @@ describe('Users Access Control', () => {
     user: { id: 'admin-1', email: 'admin@test.com', role: 'admin' } as never,
   }
 
-  const instructorCtx: AccessContext = {
-    user: { id: 'instructor-1', email: 'instructor@test.com', role: 'instructor' } as never,
+  const editorCtx: AccessContext = {
+    user: { id: 'editor-1', email: 'editor@test.com', role: 'editor' } as never,
   }
 
-  const studentCtx: AccessContext = {
-    user: { id: 'student-1', email: 'student@test.com', role: 'student' } as never,
+  const viewerCtx: AccessContext = {
+    user: { id: 'viewer-1', email: 'viewer@test.com', role: 'viewer' } as never,
   }
 
   const guestCtx: AccessContext = {
@@ -24,12 +24,12 @@ describe('Users Access Control', () => {
       expect(usersAccess.canCreate(adminCtx)).toBe(true)
     })
 
-    it('should deny instructor from creating users', () => {
-      expect(usersAccess.canCreate(instructorCtx)).toBe(false)
+    it('should deny editor from creating users', () => {
+      expect(usersAccess.canCreate(editorCtx)).toBe(false)
     })
 
-    it('should deny student from creating users', () => {
-      expect(usersAccess.canCreate(studentCtx)).toBe(false)
+    it('should deny viewer from creating users', () => {
+      expect(usersAccess.canCreate(viewerCtx)).toBe(false)
     })
 
     it('should deny guest from creating users', () => {
@@ -39,91 +39,91 @@ describe('Users Access Control', () => {
 
   describe('canRead', () => {
     it('should allow user to read their own profile', () => {
-      expect(usersAccess.canRead(studentCtx, 'student-1')).toBe(true)
+      expect(usersAccess.canRead(viewerCtx, 'viewer-1')).toBe(true)
     })
 
     it('should allow admin to read any user', () => {
-      expect(usersAccess.canRead(adminCtx, 'student-1')).toBe(true)
-      expect(usersAccess.canRead(adminCtx, 'instructor-1')).toBe(true)
+      expect(usersAccess.canRead(adminCtx, 'viewer-1')).toBe(true)
+      expect(usersAccess.canRead(adminCtx, 'editor-1')).toBe(true)
     })
 
-    it('should allow instructor to read student profiles', () => {
-      expect(usersAccess.canRead(instructorCtx, 'student-1')).toBe(true)
+    it('should allow editor to read user profiles', () => {
+      expect(usersAccess.canRead(editorCtx, 'viewer-1')).toBe(true)
     })
 
-    it('should deny student from reading other user profiles', () => {
-      expect(usersAccess.canRead(studentCtx, 'instructor-1')).toBe(false)
+    it('should deny viewer from reading other user profiles', () => {
+      expect(usersAccess.canRead(viewerCtx, 'editor-1')).toBe(false)
     })
 
     it('should deny guest from reading user profiles', () => {
-      expect(usersAccess.canRead(guestCtx, 'student-1')).toBe(false)
+      expect(usersAccess.canRead(guestCtx, 'viewer-1')).toBe(false)
     })
   })
 
   describe('canUpdate', () => {
     it('should allow user to update their own profile', () => {
-      expect(usersAccess.canUpdate(studentCtx, 'student-1')).toBe(true)
+      expect(usersAccess.canUpdate(viewerCtx, 'viewer-1')).toBe(true)
     })
 
     it('should allow admin to update any user', () => {
-      expect(usersAccess.canUpdate(adminCtx, 'student-1')).toBe(true)
+      expect(usersAccess.canUpdate(adminCtx, 'viewer-1')).toBe(true)
     })
 
-    it('should deny student from updating other users', () => {
-      expect(usersAccess.canUpdate(studentCtx, 'instructor-1')).toBe(false)
+    it('should deny viewer from updating other users', () => {
+      expect(usersAccess.canUpdate(viewerCtx, 'editor-1')).toBe(false)
     })
 
-    it('should deny instructor from updating users', () => {
-      expect(usersAccess.canUpdate(instructorCtx, 'student-1')).toBe(false)
+    it('should deny editor from updating users', () => {
+      expect(usersAccess.canUpdate(editorCtx, 'viewer-1')).toBe(false)
     })
   })
 
   describe('canDelete', () => {
     it('should allow admin to delete users', () => {
-      expect(usersAccess.canDelete(adminCtx, 'student-1')).toBe(true)
+      expect(usersAccess.canDelete(adminCtx, 'viewer-1')).toBe(true)
     })
 
     it('should deny user from deleting themselves', () => {
-      expect(usersAccess.canDelete(studentCtx, 'student-1')).toBe(false)
+      expect(usersAccess.canDelete(viewerCtx, 'viewer-1')).toBe(false)
     })
 
-    it('should deny instructor from deleting users', () => {
-      expect(usersAccess.canDelete(instructorCtx, 'student-1')).toBe(false)
+    it('should deny editor from deleting users', () => {
+      expect(usersAccess.canDelete(editorCtx, 'viewer-1')).toBe(false)
     })
   })
 
   describe('canReadRole', () => {
     it('should allow user to read their own role', () => {
-      expect(usersAccess.canReadRole(studentCtx, 'student-1')).toBe(true)
+      expect(usersAccess.canReadRole(viewerCtx, 'viewer-1')).toBe(true)
     })
 
     it('should allow admin to read any role', () => {
-      expect(usersAccess.canReadRole(adminCtx, 'student-1')).toBe(true)
+      expect(usersAccess.canReadRole(adminCtx, 'viewer-1')).toBe(true)
     })
 
-    it('should deny student from reading other user roles', () => {
-      expect(usersAccess.canReadRole(studentCtx, 'instructor-1')).toBe(false)
+    it('should deny viewer from reading other user roles', () => {
+      expect(usersAccess.canReadRole(viewerCtx, 'editor-1')).toBe(false)
     })
   })
 
   describe('canUpdateRole', () => {
     it('should allow admin to update roles', () => {
-      expect(usersAccess.canUpdateRole(adminCtx, 'student-1')).toBe(true)
+      expect(usersAccess.canUpdateRole(adminCtx, 'viewer-1')).toBe(true)
     })
 
     it('should deny user from updating their own role', () => {
-      expect(usersAccess.canUpdateRole(studentCtx, 'student-1')).toBe(false)
+      expect(usersAccess.canUpdateRole(viewerCtx, 'viewer-1')).toBe(false)
     })
 
-    it('should deny instructor from updating roles', () => {
-      expect(usersAccess.canUpdateRole(instructorCtx, 'student-1')).toBe(false)
+    it('should deny editor from updating roles', () => {
+      expect(usersAccess.canUpdateRole(editorCtx, 'viewer-1')).toBe(false)
     })
   })
 
   describe('canList', () => {
     it('should allow authenticated users to list', () => {
-      expect(usersAccess.canList(studentCtx)).toBe(true)
-      expect(usersAccess.canList(instructorCtx)).toBe(true)
+      expect(usersAccess.canList(viewerCtx)).toBe(true)
+      expect(usersAccess.canList(editorCtx)).toBe(true)
       expect(usersAccess.canList(adminCtx)).toBe(true)
     })
 
@@ -139,15 +139,15 @@ describe('Users Access Control', () => {
     })
 
     it('should allow user to read their own fields', () => {
-      expect(canReadUserField(studentCtx, 'email', 'student-1')).toBe(true)
+      expect(canReadUserField(viewerCtx, 'email', 'viewer-1')).toBe(true)
     })
 
-    it('should allow instructor to read student email', () => {
-      expect(canReadUserField(instructorCtx, 'email', 'student-1')).toBe(true)
+    it('should allow editor to read user email', () => {
+      expect(canReadUserField(editorCtx, 'email', 'viewer-1')).toBe(true)
     })
 
     it('should deny access to protected fields', () => {
-      expect(canReadUserField(studentCtx, 'password', 'other')).toBe(false)
+      expect(canReadUserField(viewerCtx, 'password', 'other')).toBe(false)
     })
   })
 
@@ -158,12 +158,12 @@ describe('Users Access Control', () => {
     })
 
     it('should allow user to write their own non-protected fields', () => {
-      expect(canWriteUserField(studentCtx, 'email', 'student-1')).toBe(true)
+      expect(canWriteUserField(viewerCtx, 'email', 'viewer-1')).toBe(true)
     })
 
     it('should not allow user to write protected fields', () => {
-      expect(canWriteUserField(studentCtx, 'role', 'student-1')).toBe(false)
-      expect(canWriteUserField(studentCtx, 'isActive', 'student-1')).toBe(false)
+      expect(canWriteUserField(viewerCtx, 'role', 'viewer-1')).toBe(false)
+      expect(canWriteUserField(viewerCtx, 'isActive', 'viewer-1')).toBe(false)
     })
   })
 })

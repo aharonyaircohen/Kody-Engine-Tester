@@ -28,26 +28,26 @@ describe('profile', () => {
 
   describe('updateProfile', () => {
     it('should update email', async () => {
-      const user = await userStore.findByEmail('user@example.com')
+      const user = await userStore.findByEmail('viewer@example.com')
       const updated = await updateProfile(user!.id, { email: 'new@example.com' }, userStore)
       expect(updated.email).toBe('new@example.com')
     })
 
     it('should update password with current password verification', async () => {
-      const user = await userStore.findByEmail('user@example.com')
-      const updated = await updateProfile(user!.id, { newPassword: 'NewPass2!', currentPassword: 'UserPass1!' }, userStore)
+      const user = await userStore.findByEmail('viewer@example.com')
+      const updated = await updateProfile(user!.id, { newPassword: 'NewPass2!', currentPassword: 'ViewerPass1!' }, userStore)
       expect(updated).toBeDefined()
     })
 
     it('should return 401 for wrong current password', async () => {
-      const user = await userStore.findByEmail('user@example.com')
+      const user = await userStore.findByEmail('viewer@example.com')
       await expect(updateProfile(user!.id, { newPassword: 'NewPass2!', currentPassword: 'wrongpassword' }, userStore))
         .rejects.toMatchObject({ status: 401 })
     })
 
     it('should return 400 for weak new password', async () => {
-      const user = await userStore.findByEmail('user@example.com')
-      await expect(updateProfile(user!.id, { newPassword: 'weak', currentPassword: 'UserPass1!' }, userStore))
+      const user = await userStore.findByEmail('viewer@example.com')
+      await expect(updateProfile(user!.id, { newPassword: 'weak', currentPassword: 'ViewerPass1!' }, userStore))
         .rejects.toMatchObject({ status: 400 })
     })
 
