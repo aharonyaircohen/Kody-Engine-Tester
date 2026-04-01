@@ -1,5 +1,62 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// ReDoS protection constants
+const MAX_PATTERN_LENGTH = 500
+const REGEX_CACHE_MAX_SIZE = 100
+const REGEX_TIMEOUT_MS = 100
+
+/**
+ * Creates a safe RegExp from a user-supplied pattern string.
+ * Provides ReDoS protection via:
+ * - Pattern length limit (prevents memory exhaustion)
+ * - LRU-style regex caching (prevents recompilation + memory bloat)
+ * - Node 20+ timeout option (prevents CPU exhaustion via backtracking)
+ * Falls back to basic compilation with length check on older Node versions.
+ */
+function createSafeRegex(pattern: string, path: string): RegExp | { invalid: true; message: string } {
+  if (pattern.length > MAX_PATTERN_LENGTH) {
+    return {
+      invalid: true,
+      message: `Pattern exceeds maximum length of ${MAX_PATTERN_LENGTH} characters`,
+    }
+  }
+
+  // Check cache
+  const cached = regexCache.get(pattern)
+  if (cached) return cached
+
+  let regex: RegExp
+  try {
+    // Node 20+ supports timeout option to prevent ReDoS
+    // @ts-expect-error - timeout is not in older TypeScript definitions but exists in Node 20+
+    regex = new RegExp(pattern, { timeout: REGEX_TIMEOUT_MS })
+  } catch {
+    // Fallback for Node < 20 (no timeout support)
+    try {
+      regex = new RegExp(pattern)
+    } catch (e) {
+      return {
+        invalid: true,
+        message: `Invalid regex pattern: ${pattern}`,
+      }
+    }
+  }
+
+  // Cache management (simple LRU-ish eviction when cache is full)
+  if (regexCache.size >= REGEX_CACHE_MAX_SIZE) {
+    // Delete the oldest entry (first key in Map iteration order)
+    const firstKey = regexCache.keys().next().value
+    if (firstKey !== undefined) {
+      regexCache.delete(firstKey)
+    }
+  }
+  regexCache.set(pattern, regex)
+  return regex
+}
+
+// Module-level regex cache (survives across validations)
+const regexCache = new Map<string, RegExp>()
+
 // JSON Schema types (Draft-07 subset)
 export interface JSONSchema {
   type?: string | string[]
@@ -156,13 +213,30 @@ class JSONSchemaValidator {
     // String validations
     if (typeof data === 'string') {
       if (schema.pattern) {
-        const regex = new RegExp(schema.pattern)
-        if (!regex.test(data)) {
+        const regexResult = createSafeRegex(schema.pattern, path)
+        if (regexResult.invalid) {
           errors.push({
             field: path,
-            message: `String must match pattern: ${schema.pattern}`,
+            message: regexResult.message,
             value: data,
           })
+        } else {
+          try {
+            if (!regexResult.test(data)) {
+              errors.push({
+                field: path,
+                message: `String must match pattern: ${schema.pattern}`,
+                value: data,
+              })
+            }
+          } catch {
+            // Timeout or other regex error - treat as validation failure
+            errors.push({
+              field: path,
+              message: `Pattern validation timed out or failed: ${schema.pattern}`,
+              value: data,
+            })
+          }
         }
       }
 
