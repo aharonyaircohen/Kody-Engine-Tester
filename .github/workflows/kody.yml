@@ -75,7 +75,7 @@ jobs:
           node-version: 22
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/kody-engine-lite@latest
+        run: npm install -g @kody-ade/kody-engine-lite@0.1.120
 
       - name: Validate author
         id: safety
