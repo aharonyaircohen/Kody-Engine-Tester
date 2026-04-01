@@ -17,7 +17,7 @@ describe('logout', () => {
     jwtService = new JwtService('test-secret')
   })
 
-  async function loginUser(email = 'user@example.com', pass = 'UserPass1!') {
+  async function loginUser(email = 'viewer@example.com', pass = 'ViewerPass1!') {
     return login(email, pass, '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
   }
 

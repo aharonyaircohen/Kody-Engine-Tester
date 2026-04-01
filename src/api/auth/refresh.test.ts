@@ -18,7 +18,7 @@ describe('refresh', () => {
   })
 
   async function loginUser() {
-    return login('user@example.com', 'UserPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
+    return login('viewer@example.com', 'ViewerPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
   }
 
   it('should return new token pair on valid refresh token', async () => {

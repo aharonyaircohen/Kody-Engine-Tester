@@ -11,7 +11,7 @@ describe('JwtService', () => {
   const basePayload = {
     userId: 'user-1',
     email: 'test@example.com',
-    role: 'user' as const,
+    role: 'viewer' as const,
     sessionId: 'session-1',
     generation: 0,
   }
@@ -22,7 +22,7 @@ describe('JwtService', () => {
       const payload = await service.verify(token)
       expect(payload.userId).toBe('user-1')
       expect(payload.email).toBe('test@example.com')
-      expect(payload.role).toBe('user')
+      expect(payload.role).toBe('viewer')
       expect(payload.sessionId).toBe('session-1')
       expect(payload.iat).toBeDefined()
       expect(payload.exp).toBeDefined()

@@ -6,7 +6,7 @@ import {
   createPipelineRoleGuard,
   createRouteHandler,
   createAuthenticatedRoute,
-  createInstructorRoute,
+  createEditorRoute,
   createAdminRoute,
   createPublicRoute,
   PipelineContext,
@@ -28,7 +28,7 @@ describe('Pipeline', () => {
   })
 
   async function makeAuthenticatedContext() {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('viewer@example.com')
     const accessToken = await jwtService.signAccessToken({
       userId: user!.id,
       email: user!.email,
@@ -154,7 +154,7 @@ describe('Pipeline', () => {
   describe('createPipelineRoleGuard', () => {
     it('should allow user with required role', async () => {
       const { user, accessToken } = await makeAuthenticatedContext()
-      const roleGuard = createPipelineRoleGuard('user')
+      const roleGuard = createPipelineRoleGuard('viewer')
 
       const request = new NextRequest('http://localhost', {
         headers: { authorization: `Bearer ${accessToken}` },
@@ -260,24 +260,24 @@ describe('Pipeline', () => {
     })
   })
 
-  describe('createInstructorRoute', () => {
-    it('should execute handler for instructor', async () => {
-      const instructor = await userStore.findByEmail('instructor@example.com')
+  describe('createEditorRoute', () => {
+    it('should execute handler for editor', async () => {
+      const editor = await userStore.findByEmail('editor@example.com')
       const accessToken = await jwtService.signAccessToken({
-        userId: instructor!.id,
-        email: instructor!.email,
-        role: instructor!.role,
+        userId: editor!.id,
+        email: editor!.email,
+        role: editor!.role,
         sessionId: 'session-1',
         generation: 0,
       })
       const refreshToken = await jwtService.signRefreshToken({
-        userId: instructor!.id,
-        email: instructor!.email,
-        role: instructor!.role,
+        userId: editor!.id,
+        email: editor!.email,
+        role: editor!.role,
         sessionId: 'session-1',
         generation: 0,
       })
-      sessionStore.create(instructor!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
+      sessionStore.create(editor!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
 
       const handler = async (context: { user: { id: string } }) => {
         return new NextResponse(JSON.stringify({ userId: context.user.id }), {
@@ -286,7 +286,7 @@ describe('Pipeline', () => {
         })
       }
 
-      const route = createInstructorRoute(userStore, sessionStore, jwtService, handler)
+      const route = createEditorRoute(userStore, sessionStore, jwtService, handler)
       const request = new NextRequest('http://localhost', {
         headers: { authorization: `Bearer ${accessToken}` },
       })
@@ -295,11 +295,11 @@ describe('Pipeline', () => {
       expect(response.status).toBe(200)
     })
 
-    it('should return 403 for non-instructor user', async () => {
+    it('should return 403 for non-editor user', async () => {
       const { accessToken } = await makeAuthenticatedContext()
 
       const handler = async () => new NextResponse('success')
-      const route = createInstructorRoute(userStore, sessionStore, jwtService, handler)
+      const route = createEditorRoute(userStore, sessionStore, jwtService, handler)
       const request = new NextRequest('http://localhost', {
         headers: { authorization: `Bearer ${accessToken}` },
       })
@@ -310,7 +310,7 @@ describe('Pipeline', () => {
 
     it('should return 401 for unauthenticated request', async () => {
       const handler = async () => new NextResponse('success')
-      const route = createInstructorRoute(userStore, sessionStore, jwtService, handler)
+      const route = createEditorRoute(userStore, sessionStore, jwtService, handler)
       const request = new NextRequest('http://localhost')
       const response = await route(request)
 
@@ -419,25 +419,25 @@ describe('Pipeline', () => {
       expect(callOrder).toEqual(['auth-start', 'auth-end', 'role-start', 'role-end'])
     })
 
-    it('should allow instructor through instructor route', async () => {
-      const instructor = await userStore.findByEmail('instructor@example.com')
+    it('should allow editor through editor route', async () => {
+      const editor = await userStore.findByEmail('editor@example.com')
       const accessToken = await jwtService.signAccessToken({
-        userId: instructor!.id,
-        email: instructor!.email,
-        role: instructor!.role,
+        userId: editor!.id,
+        email: editor!.email,
+        role: editor!.role,
         sessionId: 'session-1',
         generation: 0,
       })
       const refreshToken = await jwtService.signRefreshToken({
-        userId: instructor!.id,
-        email: instructor!.email,
-        role: instructor!.role,
+        userId: editor!.id,
+        email: editor!.email,
+        role: editor!.role,
         sessionId: 'session-1',
         generation: 0,
       })
-      sessionStore.create(instructor!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
+      sessionStore.create(editor!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
 
-      const route = createInstructorRoute(userStore, sessionStore, jwtService, async (ctx) => {
+      const route = createEditorRoute(userStore, sessionStore, jwtService, async (ctx) => {
         return new NextResponse(JSON.stringify({ role: ctx.user.role }), {
           status: 200,
           headers: { 'Content-Type': 'application/json' },

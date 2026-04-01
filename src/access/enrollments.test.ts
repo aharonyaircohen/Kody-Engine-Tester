@@ -7,16 +7,16 @@ describe('Enrollments Access Control', () => {
     user: { id: 'admin-1', email: 'admin@test.com', role: 'admin' } as never,
   }
 
-  const instructorCtx: AccessContext = {
-    user: { id: 'instructor-1', email: 'instructor@test.com', role: 'instructor' } as never,
+  const editorCtx: AccessContext = {
+    user: { id: 'editor-1', email: 'editor@test.com', role: 'editor' } as never,
   }
 
-  const studentCtx: AccessContext = {
-    user: { id: 'student-1', email: 'student@test.com', role: 'student' } as never,
+  const viewerCtx: AccessContext = {
+    user: { id: 'viewer-1', email: 'viewer@test.com', role: 'viewer' } as never,
   }
 
-  const otherStudentCtx: AccessContext = {
-    user: { id: 'other-student-1', email: 'other@test.com', role: 'student' } as never,
+  const otherViewerCtx: AccessContext = {
+    user: { id: 'other-viewer-1', email: 'other@test.com', role: 'viewer' } as never,
   }
 
   const guestCtx: AccessContext = {
@@ -24,74 +24,74 @@ describe('Enrollments Access Control', () => {
   }
 
   describe('canCreate', () => {
-    it('should allow student to create enrollment for themselves', () => {
-      expect(enrollmentsAccess.canCreate(studentCtx, { studentId: 'student-1' })).toBe(true)
+    it('should allow viewer to create enrollment for themselves', () => {
+      expect(enrollmentsAccess.canCreate(viewerCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should allow admin to create enrollment for any student', () => {
-      expect(enrollmentsAccess.canCreate(adminCtx, { studentId: 'student-1' })).toBe(true)
+    it('should deny admin from creating enrollment for others', () => {
+      expect(enrollmentsAccess.canCreate(adminCtx, { studentId: 'viewer-1' })).toBe(false)
     })
 
-    it('should deny student from creating enrollment for others', () => {
-      expect(enrollmentsAccess.canCreate(studentCtx, { studentId: 'other-student-1' })).toBe(false)
+    it('should deny viewer from creating enrollment for others', () => {
+      expect(enrollmentsAccess.canCreate(viewerCtx, { studentId: 'other-viewer-1' })).toBe(false)
     })
 
-    it('should deny instructor from creating enrollments', () => {
-      expect(enrollmentsAccess.canCreate(instructorCtx, { studentId: 'student-1' })).toBe(false)
+    it('should deny editor from creating enrollments', () => {
+      expect(enrollmentsAccess.canCreate(editorCtx, { studentId: 'viewer-1' })).toBe(false)
     })
 
     it('should deny guest from creating enrollments', () => {
-      expect(enrollmentsAccess.canCreate(guestCtx, { studentId: 'student-1' })).toBe(false)
+      expect(enrollmentsAccess.canCreate(guestCtx, { studentId: 'viewer-1' })).toBe(false)
     })
   })
 
   describe('canRead', () => {
-    it('should allow student to read their own enrollment', () => {
-      expect(enrollmentsAccess.canRead(studentCtx, { studentId: 'student-1' })).toBe(true)
+    it('should allow viewer to read their own enrollment', () => {
+      expect(enrollmentsAccess.canRead(viewerCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
     it('should allow admin to read any enrollment', () => {
-      expect(enrollmentsAccess.canRead(adminCtx, { studentId: 'student-1' })).toBe(true)
+      expect(enrollmentsAccess.canRead(adminCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should allow instructor to read enrollments', () => {
-      expect(enrollmentsAccess.canRead(instructorCtx, { studentId: 'student-1' })).toBe(true)
+    it('should allow editor to read enrollments', () => {
+      expect(enrollmentsAccess.canRead(editorCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should deny student from reading others enrollments', () => {
-      expect(enrollmentsAccess.canRead(studentCtx, { studentId: 'other-student-1' })).toBe(false)
+    it('should deny viewer from reading others enrollments', () => {
+      expect(enrollmentsAccess.canRead(viewerCtx, { studentId: 'other-viewer-1' })).toBe(false)
     })
   })
 
   describe('canUpdate', () => {
-    it('should allow student to update their own enrollment', () => {
-      expect(enrollmentsAccess.canUpdate(studentCtx, { studentId: 'student-1' })).toBe(true)
+    it('should allow viewer to update their own enrollment', () => {
+      expect(enrollmentsAccess.canUpdate(viewerCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
     it('should allow admin to update any enrollment', () => {
-      expect(enrollmentsAccess.canUpdate(adminCtx, { studentId: 'student-1' })).toBe(true)
+      expect(enrollmentsAccess.canUpdate(adminCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should allow instructor to update enrollments', () => {
-      expect(enrollmentsAccess.canUpdate(instructorCtx, { studentId: 'student-1' })).toBe(true)
+    it('should allow editor to update enrollments', () => {
+      expect(enrollmentsAccess.canUpdate(editorCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should deny student from updating others enrollments', () => {
-      expect(enrollmentsAccess.canUpdate(studentCtx, { studentId: 'other-student-1' })).toBe(false)
+    it('should deny viewer from updating others enrollments', () => {
+      expect(enrollmentsAccess.canUpdate(viewerCtx, { studentId: 'other-viewer-1' })).toBe(false)
     })
   })
 
   describe('canDelete', () => {
     it('should allow admin to delete enrollments', () => {
-      expect(enrollmentsAccess.canDelete(adminCtx, { studentId: 'student-1' })).toBe(true)
+      expect(enrollmentsAccess.canDelete(adminCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should deny student from deleting their own enrollment', () => {
-      expect(enrollmentsAccess.canDelete(studentCtx, { studentId: 'student-1' })).toBe(false)
+    it('should deny viewer from deleting their own enrollment', () => {
+      expect(enrollmentsAccess.canDelete(viewerCtx, { studentId: 'viewer-1' })).toBe(false)
     })
 
-    it('should deny instructor from deleting enrollments', () => {
-      expect(enrollmentsAccess.canDelete(instructorCtx, { studentId: 'student-1' })).toBe(false)
+    it('should deny editor from deleting enrollments', () => {
+      expect(enrollmentsAccess.canDelete(editorCtx, { studentId: 'viewer-1' })).toBe(false)
     })
   })
 
@@ -100,58 +100,58 @@ describe('Enrollments Access Control', () => {
       expect(enrollmentsAccess.canListForCourse(adminCtx)).toBe(true)
     })
 
-    it('should allow instructor to list enrollments for their course', () => {
-      expect(enrollmentsAccess.canListForCourse(instructorCtx, 'instructor-1')).toBe(true)
+    it('should allow editor to list enrollments for their course', () => {
+      expect(enrollmentsAccess.canListForCourse(editorCtx, 'editor-1')).toBe(true)
     })
 
-    it('should deny instructor from listing enrollments for others course', () => {
-      expect(enrollmentsAccess.canListForCourse(instructorCtx, 'other-instructor')).toBe(false)
+    it('should deny editor from listing enrollments for others course', () => {
+      expect(enrollmentsAccess.canListForCourse(editorCtx, 'other-editor')).toBe(false)
     })
 
-    it('should deny student from listing all course enrollments', () => {
-      expect(enrollmentsAccess.canListForCourse(studentCtx)).toBe(false)
+    it('should deny viewer from listing all course enrollments', () => {
+      expect(enrollmentsAccess.canListForCourse(viewerCtx)).toBe(false)
     })
   })
 
   describe('canListForStudent', () => {
-    it('should allow student to list their own enrollments', () => {
-      expect(enrollmentsAccess.canListForStudent(studentCtx, 'student-1')).toBe(true)
+    it('should allow viewer to list their own enrollments', () => {
+      expect(enrollmentsAccess.canListForStudent(viewerCtx, 'viewer-1')).toBe(true)
     })
 
     it('should allow admin to list any student enrollments', () => {
-      expect(enrollmentsAccess.canListForStudent(adminCtx, 'student-1')).toBe(true)
+      expect(enrollmentsAccess.canListForStudent(adminCtx, 'viewer-1')).toBe(true)
     })
 
-    it('should deny student from listing others enrollments', () => {
-      expect(enrollmentsAccess.canListForStudent(studentCtx, 'other-student-1')).toBe(false)
+    it('should deny viewer from listing others enrollments', () => {
+      expect(enrollmentsAccess.canListForStudent(viewerCtx, 'other-viewer-1')).toBe(false)
     })
   })
 
   describe('canMarkComplete', () => {
-    it('should allow student to mark their own enrollment complete', () => {
-      expect(enrollmentsAccess.canMarkComplete(studentCtx, { studentId: 'student-1' })).toBe(true)
+    it('should allow editor to mark enrollment complete', () => {
+      expect(enrollmentsAccess.canMarkComplete(editorCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
     it('should allow admin to mark any enrollment complete', () => {
-      expect(enrollmentsAccess.canMarkComplete(adminCtx, { studentId: 'student-1' })).toBe(true)
+      expect(enrollmentsAccess.canMarkComplete(adminCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should deny student from marking others complete', () => {
-      expect(enrollmentsAccess.canMarkComplete(studentCtx, { studentId: 'other-student-1' })).toBe(false)
+    it('should deny viewer from marking enrollment complete', () => {
+      expect(enrollmentsAccess.canMarkComplete(viewerCtx, { studentId: 'viewer-1' })).toBe(false)
     })
   })
 
   describe('canDrop', () => {
-    it('should allow student to drop their own enrollment', () => {
-      expect(enrollmentsAccess.canDrop(studentCtx, { studentId: 'student-1' })).toBe(true)
+    it('should allow viewer to drop their own enrollment', () => {
+      expect(enrollmentsAccess.canDrop(viewerCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
     it('should allow admin to drop any enrollment', () => {
-      expect(enrollmentsAccess.canDrop(adminCtx, { studentId: 'student-1' })).toBe(true)
+      expect(enrollmentsAccess.canDrop(adminCtx, { studentId: 'viewer-1' })).toBe(true)
     })
 
-    it('should deny student from dropping others enrollment', () => {
-      expect(enrollmentsAccess.canDrop(studentCtx, { studentId: 'other-student-1' })).toBe(false)
+    it('should deny viewer from dropping others enrollment', () => {
+      expect(enrollmentsAccess.canDrop(viewerCtx, { studentId: 'other-viewer-1' })).toBe(false)
     })
   })
 
@@ -161,12 +161,12 @@ describe('Enrollments Access Control', () => {
     })
 
     it('should allow owner to read their own fields', () => {
-      expect(canReadEnrollmentField(studentCtx, 'status', 'student-1')).toBe(true)
+      expect(canReadEnrollmentField(viewerCtx, 'status', 'viewer-1')).toBe(true)
     })
 
-    it('should allow instructor to read enrollment fields', () => {
-      expect(canReadEnrollmentField(instructorCtx, 'student')).toBe(true)
-      expect(canReadEnrollmentField(instructorCtx, 'completedLessons')).toBe(true)
+    it('should allow editor to read enrollment fields', () => {
+      expect(canReadEnrollmentField(editorCtx, 'student')).toBe(true)
+      expect(canReadEnrollmentField(editorCtx, 'completedLessons')).toBe(true)
     })
   })
 
@@ -176,13 +176,13 @@ describe('Enrollments Access Control', () => {
       expect(canWriteEnrollmentField(adminCtx, 'completedLessons')).toBe(true)
     })
 
-    it('should allow student to update their own status', () => {
-      expect(canWriteEnrollmentField(studentCtx, 'status', 'student-1')).toBe(true)
+    it('should allow viewer to update their own status', () => {
+      expect(canWriteEnrollmentField(viewerCtx, 'status', 'viewer-1')).toBe(true)
     })
 
-    it('should allow instructor to update enrollment fields', () => {
-      expect(canWriteEnrollmentField(instructorCtx, 'status')).toBe(true)
-      expect(canWriteEnrollmentField(instructorCtx, 'completedLessons')).toBe(true)
+    it('should allow editor to update enrollment fields', () => {
+      expect(canWriteEnrollmentField(editorCtx, 'status')).toBe(true)
+      expect(canWriteEnrollmentField(editorCtx, 'completedLessons')).toBe(true)
     })
   })
 
@@ -206,20 +206,20 @@ describe('Enrollments Access Control', () => {
 
   describe('isAlreadyEnrolled', () => {
     const enrollments = [
-      { studentId: 'student-1' },
-      { studentId: 'student-2' },
+      { studentId: 'viewer-1' },
+      { studentId: 'viewer-2' },
     ]
 
     it('should return true if already enrolled', () => {
-      expect(isAlreadyEnrolled(enrollments, 'student-1')).toBe(true)
+      expect(isAlreadyEnrolled(enrollments, 'viewer-1')).toBe(true)
     })
 
     it('should return false if not enrolled', () => {
-      expect(isAlreadyEnrolled(enrollments, 'student-3')).toBe(false)
+      expect(isAlreadyEnrolled(enrollments, 'viewer-3')).toBe(false)
     })
 
     it('should return false for empty enrollments', () => {
-      expect(isAlreadyEnrolled([], 'student-1')).toBe(false)
+      expect(isAlreadyEnrolled([], 'viewer-1')).toBe(false)
     })
   })
 })
