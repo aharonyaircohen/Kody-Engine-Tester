@@ -189,18 +189,18 @@ describe('Users fields - role', () => {
     expect(result).toBe(true)
   })
 
-  it('should deny student from updating role', () => {
+  it('should deny viewer from updating role', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const field = findField('role') as any
-    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'student' } })
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'viewer' } })
     const result = field.access.update({ req })
     expect(result).toBe(false)
   })
 
-  it('should deny instructor from updating role', () => {
+  it('should deny editor from updating role', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const field = findField('role') as any
-    const req = makeMockReq({ user: { id: 'u2', collection: 'users', role: 'instructor' } })
+    const req = makeMockReq({ user: { id: 'u2', collection: 'users', role: 'editor' } })
     const result = field.access.update({ req })
     expect(result).toBe(false)
   })

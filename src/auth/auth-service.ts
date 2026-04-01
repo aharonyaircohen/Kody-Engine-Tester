@@ -1,5 +1,6 @@
 import type { Payload } from 'payload'
 import type { CollectionSlug } from 'payload'
+import crypto from 'crypto'
 import { JwtService } from './jwt-service'
 
 export type RbacRole = 'admin' | 'editor' | 'viewer'
@@ -29,13 +30,33 @@ export interface TokenFields {
   lastTokenUsedAt: Date | null
 }
 
-const ACCESS_TOKEN_EXPIRY_MS = 15 * 60 * 1000 // 15 minutes
 const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
 
 function createError(message: string, status: number): Error & { status: number } {
   const err = new Error(message) as Error & { status: number }
   err.status = status
   return err
+}
+
+/**
+ * Verifies a password against a Payload-stored hash using PBKDF2.
+ * Matches Payload's generatePasswordSaltHash algorithm: 25000 iterations, sha256, 512 bits.
+ */
+async function verifyPassword(password: string, hash: string, salt: string): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    crypto.pbkdf2(password, salt, 25000, 512, 'sha256', (err, derivedKey) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      const storedHashBuffer = Buffer.from(hash, 'hex')
+      if (derivedKey.length === storedHashBuffer.length && crypto.timingSafeEqual(derivedKey, storedHashBuffer)) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
 }
 
 export class AuthService {
@@ -46,12 +67,16 @@ export class AuthService {
 
   async login(
     email: string,
-    _password: string,
+    password: string,
     _ipAddress: string,
     _userAgent: string
   ): Promise<AuthResult> {
     if (!email) {
       throw createError('Email is required', 400)
+    }
+
+    if (!password) {
+      throw createError('Password is required', 400)
     }
 
     const users = await this.payload.find({
@@ -68,9 +93,21 @@ export class AuthService {
     const userId = (user as any).id
     const role = (user as any).role as RbacRole
     const isActive = (user as any).isActive ?? true
+    const hash = (user as any).hash as string | null | undefined
+    const salt = (user as any).salt as string | null | undefined
 
     if (!isActive) {
       throw createError('Account is inactive', 403)
+    }
+
+    // Verify password against stored hash
+    if (!hash || !salt) {
+      throw createError('Invalid credentials', 401)
+    }
+
+    const passwordValid = await verifyPassword(password, hash, salt)
+    if (!passwordValid) {
+      throw createError('Invalid credentials', 401)
     }
 
     // Generate tokens

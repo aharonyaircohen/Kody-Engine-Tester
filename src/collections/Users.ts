@@ -94,18 +94,30 @@ export const Users: CollectionConfig = {
       type: 'text',
       required: false,
       hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
     },
     {
       name: 'tokenExpiresAt',
       type: 'date',
       required: false,
       hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
     },
     {
       name: 'lastTokenUsedAt',
       type: 'date',
       required: false,
       hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
     },
   ],
 }

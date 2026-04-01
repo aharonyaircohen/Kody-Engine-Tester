@@ -16,6 +16,24 @@ vi.mock('@/getPayload', () => ({
 
 const TEST_JWT_SECRET = 'test-secret-key-for-auth-service'
 
+// Mock crypto module for password verification tests
+vi.mock('crypto', () => ({
+  default: {
+    pbkdf2: vi.fn((password, salt, iterations, keylen, digest, callback) => {
+      // Simulate PBKDF2 - return a fixed hash that matches the stored hash when compared
+      const testHash = Buffer.from('aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899', 'hex')
+      callback(null, testHash)
+    }),
+    randomBytes: vi.fn((bytes, callback) => {
+      callback(null, Buffer.from('testsalt123'))
+    }),
+    timingSafeEqual: vi.fn((a, b) => {
+      // In tests, always return true if lengths match (password verification succeeds)
+      return a.length === b.length
+    }),
+  },
+}))
+
 describe('AuthService', () => {
   let authService: AuthService
   let jwtService: JwtService
@@ -27,10 +45,12 @@ describe('AuthService', () => {
   })
 
   describe('login', () => {
+    // Hash must match what the mock pbkdf2 returns (hex decoded)
     const mockUser = {
       id: 1,
       email: 'admin@example.com',
-      hash: 'hashed_password',
+      hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
+      salt: 'testsalt123',
       role: 'admin',
       firstName: 'Admin',
       lastName: 'User',
@@ -263,6 +283,8 @@ describe('AuthService', () => {
       const mockUser = {
         id: 1,
         email: 'editor@example.com',
+        hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
+        salt: 'testsalt123',
         role: 'editor',
         isActive: true,
       }
