@@ -19,18 +19,18 @@ describe('AuthMiddleware', () => {
   })
 
   async function makeAuthenticatedContext() {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('admin@example.com')
     const accessToken = await jwtService.signAccessToken({
       userId: user!.id,
       email: user!.email,
-      role: user!.role,
+      role: user!.role as 'admin' | 'editor' | 'viewer',
       sessionId: 'session-1',
       generation: 0,
     })
     const refreshToken = await jwtService.signRefreshToken({
       userId: user!.id,
       email: user!.email,
-      role: user!.role,
+      role: user!.role as 'admin' | 'editor' | 'viewer',
       sessionId: 'session-1',
       generation: 0,
     })
@@ -61,7 +61,7 @@ describe('AuthMiddleware', () => {
   it('should return 401 for expired token', async () => {
     const user = await userStore.findByEmail('user@example.com')
     const expiredToken = await jwtService.sign(
-      { userId: user!.id, email: user!.email, role: user!.role, sessionId: 'session-1', generation: 0 },
+      { userId: user!.id, email: user!.email, role: user!.role as 'admin' | 'editor' | 'viewer', sessionId: 'session-1', generation: 0 },
       -1000
     )
     const result = await middleware({ authorization: `Bearer ${expiredToken}`, ip: '127.0.0.1' })
@@ -80,14 +80,14 @@ describe('AuthMiddleware', () => {
     const oldAccessToken = await jwtService.signAccessToken({
       userId: user!.id,
       email: user!.email,
-      role: user!.role,
+      role: user!.role as 'admin' | 'editor' | 'viewer',
       sessionId: 'session-1',
       generation: 0,
     })
     const refreshToken = await jwtService.signRefreshToken({
       userId: user!.id,
       email: user!.email,
-      role: user!.role,
+      role: user!.role as 'admin' | 'editor' | 'viewer',
       sessionId: 'session-1',
       generation: 0,
     })

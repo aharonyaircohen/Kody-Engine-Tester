@@ -155,18 +155,18 @@ describe('Users fields - bio', () => {
 })
 
 describe('Users fields - role', () => {
-  it('should have a role select field with student/instructor/admin options', () => {
+  it('should have a role select field with admin/editor/viewer options', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const field = findField('role') as any
     expect(field).toBeDefined()
     expect(field.type).toBe('select')
-    expect(field.options).toEqual(['student', 'instructor', 'admin'])
+    expect(field.options).toEqual(['admin', 'editor', 'viewer'])
   })
 
-  it('should default role to "student"', () => {
+  it('should default role to "viewer"', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const field = findField('role') as any
-    expect(field.defaultValue).toBe('student')
+    expect(field.defaultValue).toBe('viewer')
   })
 
   it('should be required', () => {

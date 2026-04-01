@@ -1,34 +1,24 @@
 import { NextRequest } from 'next/server'
 import type { CollectionSlug } from 'payload'
-import { userStore, sessionStore, jwtService } from '../../../auth'
-import { createAuthMiddleware } from '../../../middleware/auth-middleware'
-import { requireRole } from '../../../middleware/role-guard'
-import { getPayloadInstance } from '../../../services/progress'
+import { withAuth } from '@/auth/withAuth'
+import { getPayloadInstance } from '@/services/progress'
 
-const auth = createAuthMiddleware(userStore, sessionStore, jwtService)
-
-export const POST = async (request: NextRequest) => {
-  const authContext = await auth({
-    authorization: request.headers.get('authorization') || undefined,
-    ip: request.headers.get('x-forwarded-for') || undefined,
-  })
-
-  if (authContext.error) {
-    return new Response(JSON.stringify({ error: authContext.error }), {
-      status: authContext.status ?? 401,
+export const POST = withAuth(async (request: NextRequest, { user }) => {
+  if (!user) {
+    return new Response(JSON.stringify({ error: 'Authentication required' }), {
+      status: 401,
       headers: { 'Content-Type': 'application/json' },
     })
   }
 
-  const roleError = requireRole('student')(authContext)
-  if (roleError) {
-    return new Response(JSON.stringify({ error: roleError.error }), {
-      status: roleError.status,
+  // Only viewers (formerly students) can enroll
+  if (user.role !== 'viewer' && user.role !== 'admin') {
+    return new Response(JSON.stringify({ error: 'Forbidden: requires viewer role' }), {
+      status: 403,
       headers: { 'Content-Type': 'application/json' },
     })
   }
 
-  const user = authContext.user!
   const body = await request.json()
   const { courseId } = body
 
@@ -99,4 +89,4 @@ export const POST = async (request: NextRequest) => {
     status: 201,
     headers: { 'Content-Type': 'application/json' },
   })
-}
+}, { roles: ['viewer', 'admin'] })
