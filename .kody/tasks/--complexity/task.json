@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add array intersection utility",
+  "description": "Create an intersection utility in src/utils/intersection.ts that returns the common elements between two arrays. Supports custom comparator function and preserves order from the first array. Includes comprehensive tests in intersection.test.ts.",
+  "scope": [
+    "src/utils/intersection.ts",
+    "src/utils/intersection.test.ts"
+  ],
+  "risk_level": "low",
+  "hasUI": false,
+  "questions": []
+}
