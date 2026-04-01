@@ -1,0 +1,1 @@
+{"task_type":"feature","title":"Add circular buffer utility","description":"Create a circular buffer utility in src/utils/circular-buffer.ts with add, get, and size operations. Add tests in circular-buffer.test.ts.","scope":["src/utils/circular-buffer.ts","src/utils/circular-buffer.test.ts"],"risk_level":"low","hasUI":false,"questions":[]}
