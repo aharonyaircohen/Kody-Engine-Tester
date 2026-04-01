@@ -1,0 +1,2 @@
+
+{"task_type":"chore","title":"Validate taskify context injection with memory file","description":"Test that @kody taskify properly injects project memory (.kody/memory.md with tRPC/Prisma conventions) and file tree into its context. Validates that memory content and file tree appear in taskify stage logs without raw {{ template tokens.","scope":[".kody/memory.md",".kody/tasks/taskify/status.json",".kody/tasks/taskify/task.md",".kody/steps/taskify.md"],"risk_level":"low","hasUI":false,"questions":[]}
