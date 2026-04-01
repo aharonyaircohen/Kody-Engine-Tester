@@ -6,7 +6,7 @@ describe('truncateText', () => {
     expect(truncateText('Hello', 10)).toBe('Hello')
   })
 
-  it('truncates text and appends "..." when exceeding maxLength', () => {
+  it('truncates text and appends \'...\' when exceeding maxLength', () => {
     expect(truncateText('Hello World', 5)).toBe('Hello...')
   })
 
@@ -50,5 +50,25 @@ describe('truncateText', () => {
 
   it('returns original text with custom suffix when within maxLength', () => {
     expect(truncateText('Hi', 10, '...')).toBe('Hi')
+  })
+
+  it('handles string with single dollar sign', () => {
+    expect(truncateText('Hello$World', 8)).toBe('Hello$Wo...')
+  })
+
+  it('handles string with multiple dollar signs', () => {
+    expect(truncateText('$$$$$', 3)).toBe('$$$...')
+  })
+
+  it('handles string with dollar parenthesis pattern', () => {
+    expect(truncateText('echo $(whoami)', 12)).toBe('echo $(whoam...')
+  })
+
+  it('handles string with template literal pattern', () => {
+    expect(truncateText('Hello ${name}', 10)).toBe('Hello ${na...')
+  })
+
+  it('handles dollar signs in suffix', () => {
+    expect(truncateText('Hello World', 5, '$')).toBe('Hello$')
   })
 })
