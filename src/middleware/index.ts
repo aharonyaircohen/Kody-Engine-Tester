@@ -9,6 +9,7 @@ export {
   createRequestValidator,
   validateSchema,
   registerSchemaDefinition,
+  clearGlobalDefinitions,
   JSONSchemaValidator,
 } from './request-validator'
 export type {

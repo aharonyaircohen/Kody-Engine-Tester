@@ -117,6 +117,10 @@ class JSONSchemaValidator {
     this.definitions[name] = schema
   }
 
+  clearDefinitions(): void {
+    this.definitions = {}
+  }
+
   validate(data: unknown, schema: JSONSchema, path = 'root'): ValidationResult {
     const errors: ValidationError[] = []
 
@@ -214,7 +218,7 @@ class JSONSchemaValidator {
     if (typeof data === 'string') {
       if (schema.pattern) {
         const regexResult = createSafeRegex(schema.pattern, path)
-        if (regexResult.invalid) {
+        if ('invalid' in regexResult) {
           errors.push({
             field: path,
             message: regexResult.message,
@@ -503,8 +507,10 @@ export function createRequestValidator(config: RequestValidatorConfig) {
       const paramsObj: Record<string, unknown> = {}
       // Path params would typically come from route parsing - here we support
       // a convention where params are expected but validation happens against schema
-      const paramValues = (request as unknown as { params?: Record<string, string> }).params
-      if (paramValues) {
+      // Use safe property access to avoid unsafe type assertions
+      const requestWithParams = request as unknown as Record<string, unknown>
+      const paramValues = requestWithParams.params as Record<string, string> | undefined
+      if (paramValues && typeof paramValues === 'object' && paramValues !== null) {
         for (const [key, value] of Object.entries(paramValues)) {
           // Try to parse as number if schema expects a number
           const parsed = Number(value)
@@ -529,6 +535,14 @@ export function createRequestValidator(config: RequestValidatorConfig) {
  */
 export function registerSchemaDefinition(name: string, schema: JSONSchema): void {
   globalValidator.addDefinition(name, schema)
+}
+
+/**
+ * Utility to clear all registered schema definitions.
+ * Useful for testing to reset global validator state between test suites.
+ */
+export function clearGlobalDefinitions(): void {
+  globalValidator.clearDefinitions()
 }
 
 /**

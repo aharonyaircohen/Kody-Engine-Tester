@@ -1,9 +1,10 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { NextRequest, NextResponse } from 'next/server'
 import {
   createRequestValidator,
   validateSchema,
   registerSchemaDefinition,
+  clearGlobalDefinitions,
   JSONSchemaValidator,
   type JSONSchema,
   type ValidationError,
@@ -605,6 +606,10 @@ describe('validateSchema utility', () => {
 })
 
 describe('registerSchemaDefinition', () => {
+  afterEach(() => {
+    clearGlobalDefinitions()
+  })
+
   it('makes definition available for $ref', () => {
     registerSchemaDefinition('PhoneNumber', {
       type: 'string',
