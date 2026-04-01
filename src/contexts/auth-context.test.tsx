@@ -73,7 +73,7 @@ describe('AuthContext', () => {
     )
 
     await act(async () => {
-      await authCtxRef.value.login('test@example.com', 'Password1!')
+      await authCtxRef.value!.login('test@example.com', 'Password1!')
     })
 
     expect(screen.getByTestId('authenticated').textContent).toBe('true')
@@ -107,11 +107,11 @@ describe('AuthContext', () => {
     )
 
     await act(async () => {
-      await authCtxRef2.value.login('test@example.com', 'Password1!')
+      await authCtxRef2.value!.login('test@example.com', 'Password1!')
     })
 
     await act(async () => {
-      await authCtxRef2.value.logout()
+      await authCtxRef2.value!.logout()
     })
 
     expect(screen.getByTestId('authenticated').textContent).toBe('false')
@@ -142,7 +142,7 @@ describe('AuthContext', () => {
     )
 
     await act(async () => {
-      await authCtxRef3.value.register('new@example.com', 'Pass1!xxx', 'Pass1!xxx')
+      await authCtxRef3.value!.register('new@example.com', 'Pass1!xxx', 'Pass1!xxx')
     })
 
     expect(screen.getByTestId('authenticated').textContent).toBe('true')

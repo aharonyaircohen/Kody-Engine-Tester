@@ -1,9 +1,9 @@
-export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
+export type RbacRole = 'admin' | 'editor' | 'viewer'
 
 export interface TokenPayload {
   userId: string
   email: string
-  role: UserRole
+  role: RbacRole
   sessionId: string
   generation: number
   iat: number

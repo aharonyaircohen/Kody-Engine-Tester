@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server'
 import type { CollectionSlug, Where } from 'payload'
 import { getPayloadInstance } from '@/services/progress'
 import { sanitizeHtml } from '@/security/sanitizers'
+import { withAuth } from '@/auth/withAuth'
 import type { Note } from '@/collections/notes'
 
 type NoteDoc = {
@@ -24,7 +25,7 @@ function docToNote(doc: NoteDoc): Note {
   }
 }
 
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest) => {
   const payload = await getPayloadInstance()
   const q = request.nextUrl.searchParams.get('q')
 
@@ -47,9 +48,24 @@ export async function GET(request: NextRequest) {
   return new Response(JSON.stringify(notes), {
     headers: { 'Content-Type': 'application/json' },
   })
-}
+}, { optional: true })
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest, { user }) => {
+  if (!user) {
+    return new Response(JSON.stringify({ error: 'Authentication required' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  // Only admin and editor can create notes
+  if (user.role !== 'admin' && user.role !== 'editor') {
+    return new Response(JSON.stringify({ error: 'Forbidden: requires admin or editor role' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
   const body = await request.json()
   const title = sanitizeHtml(String(body.title ?? ''))
   const content = sanitizeHtml(String(body.content ?? ''))
@@ -75,4 +91,4 @@ export async function POST(request: NextRequest) {
     status: 201,
     headers: { 'Content-Type': 'application/json' },
   })
-}
+}, { roles: ['admin', 'editor'] })

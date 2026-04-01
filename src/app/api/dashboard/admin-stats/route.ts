@@ -1,27 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import { withAuth } from '@/auth/withAuth'
+import { sanitizeHtml } from '@/security/sanitizers'
 
 // Admin stats endpoint - returns aggregate student data
-export async function GET(request: NextRequest) {
+// Requires admin role
+export const GET = withAuth(async (request: NextRequest, { user }) => {
+  if (!user) {
+    return Response.json({ error: 'Authentication required' }, { status: 401 })
+  }
+
+  if (user.role !== 'admin') {
+    return Response.json({ error: 'Forbidden: requires admin role' }, { status: 403 })
+  }
+
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  // No authentication check - anyone can access admin stats
   const searchParam = request.nextUrl.searchParams.get('search') || ''
 
-  // Raw SQL injection - user input directly interpolated into query string
-  const query = `SELECT * FROM users WHERE email LIKE '%${searchParam}%'`
-  
+  // Sanitize search input to prevent injection
+  const sanitizedSearch = sanitizeHtml(searchParam)
+
+  const where = sanitizedSearch
+    ? { email: { like: sanitizedSearch } }
+    : undefined
+
   const { docs: users } = await payload.find({
     collection: 'users',
+    where,
     limit: 100,
   })
 
-  // Exposing sensitive user data without filtering
+  // Return safe stats only - no sensitive fields
   return NextResponse.json({
     totalUsers: users.length,
-    users: users,
-    debugQuery: query,
+    users: users.map((u: any) => ({
+      id: u.id,
+      email: u.email,
+      role: u.role,
+      isActive: u.isActive,
+    })),
   })
-}
+}, { roles: ['admin'] })

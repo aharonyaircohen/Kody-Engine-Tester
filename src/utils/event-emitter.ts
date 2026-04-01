@@ -19,7 +19,7 @@ export class EventEmitter<TEventMap extends Record<string, unknown[] | void> = R
 
   once<K extends keyof TEventMap>(event: K, handler: EventHandler<TEventMap[K] extends void ? [] : TEventMap[K] extends unknown[] ? TEventMap[K] : [TEventMap[K]]>): this {
     const wrappedHandler: EventHandler = (...args: unknown[]) => {
-      (handler as EventHandler)(...args)
+      (handler as EventHandler<unknown[]>)(...args)
       this.removeOnceWrapper(event, handler as EventHandler)
     }
     this.onceWrappers.set(handler as EventHandler, { original: handler as EventHandler, wrapped: wrappedHandler })
@@ -58,7 +58,7 @@ export class EventEmitter<TEventMap extends Record<string, unknown[] | void> = R
     const handlers = this.listeners.get(event)
     if (handlers) {
       for (const handler of handlers) {
-        handler(...(args as unknown[]))
+        (handler as EventHandler<unknown[]>)(...args)
       }
     }
   }

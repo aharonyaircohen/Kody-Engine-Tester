@@ -1,32 +1,16 @@
 import { NextRequest } from 'next/server'
-import { userStore, sessionStore, jwtService } from '@/auth'
-import { createAuthMiddleware } from '@/middleware/auth-middleware'
+import { withAuth } from '@/auth/withAuth'
 import { getPayloadInstance } from '@/services/progress'
 import { CourseSearchService } from '@/services/course-search'
 import { sanitizeHtml } from '@/security/sanitizers'
 import type { SortOption } from '@/services/course-search'
-
-const auth = createAuthMiddleware(userStore, sessionStore, jwtService)
 
 const VALID_SORT_OPTIONS = new Set<SortOption>(['relevance', 'newest', 'popularity', 'rating'])
 const VALID_DIFFICULTIES = new Set(['beginner', 'intermediate', 'advanced'])
 const MAX_LIMIT = 100
 const DEFAULT_LIMIT = 10
 
-export const GET = async (request: NextRequest) => {
-  const authContext = await auth({
-    authorization: request.headers.get('authorization') || undefined,
-    ip: request.headers.get('x-forwarded-for') || undefined,
-  })
-
-  // Auth is optional for search — but rate limit errors still block
-  if (authContext.status === 429) {
-    return new Response(JSON.stringify({ error: authContext.error }), {
-      status: 429,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
+export const GET = withAuth(async (request: NextRequest, { user }) => {
   const { searchParams } = request.nextUrl
 
   const rawQuery = searchParams.get('q') ?? ''
@@ -66,9 +50,8 @@ export const GET = async (request: NextRequest) => {
   const page = Math.max(1, parseInt(rawPage, 10) || 1)
   const limit = Math.min(MAX_LIMIT, Math.max(1, parseInt(rawLimit, 10) || DEFAULT_LIMIT))
 
-  // Students (and unauthenticated users) see only published courses
-  const user = authContext.user
-  const canSeeAll = user?.role === 'admin' || user?.role === 'instructor'
+  // Admin and editor can see all courses; viewers see only published
+  const canSeeAll = user?.role === 'admin' || user?.role === 'editor'
   const status = canSeeAll ? undefined : 'published'
 
   const payload = await getPayloadInstance()
@@ -85,4 +68,4 @@ export const GET = async (request: NextRequest) => {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   })
-}
+}, { optional: true })

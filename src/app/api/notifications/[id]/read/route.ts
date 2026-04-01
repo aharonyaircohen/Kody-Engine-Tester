@@ -1,31 +1,31 @@
 import { NextRequest } from 'next/server'
-import { userStore, sessionStore, jwtService } from '../../../../../auth'
-import { createAuthMiddleware } from '../../../../../middleware/auth-middleware'
-import { getPayloadInstance } from '../../../../../services/progress'
-import { NotificationService } from '../../../../../services/notifications'
+import { withAuth } from '@/auth/withAuth'
+import { getPayloadInstance } from '@/services/progress'
+import { NotificationService } from '@/services/notifications'
 
-const auth = createAuthMiddleware(userStore, sessionStore, jwtService)
+export const PATCH = withAuth(
+  async (
+    request: NextRequest,
+    { user },
+    routeParams?: { params: Promise<{ id: string }> },
+  ) => {
+    const params = await routeParams?.params
+    const id = params?.id
 
-export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
-  const authContext = await auth({
-    authorization: request.headers.get('authorization') || undefined,
-    ip: request.headers.get('x-forwarded-for') || undefined,
-  })
+    if (!id) {
+      return new Response(JSON.stringify({ error: 'Missing id parameter' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
 
-  if (authContext.error) {
-    return new Response(JSON.stringify({ error: authContext.error }), {
-      status: authContext.status ?? 401,
+    const payload = await getPayloadInstance()
+    const service = new NotificationService(payload)
+    const notification = await service.markRead(id)
+
+    return new Response(JSON.stringify({ notification }), {
+      status: 200,
       headers: { 'Content-Type': 'application/json' },
     })
   }
-
-  const { id } = await params
-  const payload = await getPayloadInstance()
-  const service = new NotificationService(payload)
-  const notification = await service.markRead(id)
-
-  return new Response(JSON.stringify({ notification }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  })
-}
+)

@@ -75,8 +75,8 @@ export const Users: CollectionConfig = {
     {
       name: 'role',
       type: 'select',
-      options: ['student', 'instructor', 'admin'],
-      defaultValue: 'student',
+      options: ['admin', 'editor', 'viewer'],
+      defaultValue: 'viewer',
       required: true,
       access: {
         update: ({ req: { user } }) => {
@@ -88,6 +88,36 @@ export const Users: CollectionConfig = {
       name: 'organization',
       type: 'text',
       required: false,
+    },
+    {
+      name: 'refreshToken',
+      type: 'text',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    {
+      name: 'tokenExpiresAt',
+      type: 'date',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    {
+      name: 'lastTokenUsedAt',
+      type: 'date',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
     },
   ],
 }

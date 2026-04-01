@@ -1,5 +1,6 @@
 export function pipe<A>(value: A): A
 export function pipe<A, B>(fn1: (a: A) => B): (value: A) => B
+export function pipe(): <A>(value: A) => A
 export function pipe<A, B, C>(fn1: (a: A) => B, fn2: (b: B) => C): (value: A) => C
 export function pipe<A, B, C, D>(fn1: (a: A) => B, fn2: (b: B) => C, fn3: (c: C) => D): (value: A) => D
 export function pipe<A, B, C, D, E>(fn1: (a: A) => B, fn2: (b: B) => C, fn3: (c: C) => D, fn4: (d: D) => E): (value: A) => E

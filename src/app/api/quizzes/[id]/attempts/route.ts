@@ -1,48 +1,58 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextRequest } from 'next/server'
+import { withAuth } from '@/auth/withAuth'
 
-export const GET = async (
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) => {
-  const { id } = await params
-  const { searchParams } = new URL(request.url)
-  const userId = searchParams.get('userId')
+export const GET = withAuth(
+  async (
+    _request: NextRequest,
+    { user },
+    routeParams?: { params: Promise<{ id: string }> },
+  ) => {
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'Authentication required' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
 
-  if (!userId) {
-    return new Response(JSON.stringify({ error: 'userId query parameter is required' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
+    const params = await routeParams?.params
+    const id = params?.id
+
+    if (!id) {
+      return new Response(JSON.stringify({ error: 'Missing id parameter' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+
+    const payload = await getPayload({ config: configPromise })
+
+    const attempts = await payload.find({
+      collection: 'quiz-attempts' as any,
+      where: {
+        user: { equals: user.id },
+        quiz: { equals: id },
+      },
+      sort: '-completedAt',
+      limit: 100,
     })
+
+    return new Response(
+      JSON.stringify({
+        attempts: attempts.docs.map((doc: any) => ({
+          id: doc.id,
+          score: doc.score,
+          passed: doc.passed,
+          answers: doc.answers,
+          completedAt: doc.completedAt,
+        })),
+        total: attempts.totalDocs,
+      }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
   }
-
-  const payload = await getPayload({ config: configPromise })
-
-  const attempts = await payload.find({
-    collection: 'quiz-attempts' as any,
-    where: {
-      user: { equals: userId },
-      quiz: { equals: id },
-    },
-    sort: '-completedAt',
-    limit: 100,
-  })
-
-  return new Response(
-    JSON.stringify({
-      attempts: attempts.docs.map((doc: any) => ({
-        id: doc.id,
-        score: doc.score,
-        passed: doc.passed,
-        answers: doc.answers,
-        completedAt: doc.completedAt,
-      })),
-      total: attempts.totalDocs,
-    }),
-    {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    },
-  )
-}
+)
