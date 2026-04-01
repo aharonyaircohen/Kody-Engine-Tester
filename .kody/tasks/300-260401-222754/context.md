@@ -16,3 +16,17 @@ The errors are all from `node_modules` (Vitest/Vite type resolution), not from t
 
 The implementation follows the requirements: clamps a number between min and max inclusive, th
 ...(truncated)
+
+### autofix (2026-04-01T23:33:23)
+**Summary of fix:**
+
+The issue was in `src/app/(frontend)/dashboard/page.tsx` at line 109. The code was using `'modules'` (plural) as the collection slug, but the `Modules` collection has `slug: 'module'` (singular).
+
+**Change made:**
+```diff
+- collection: 'modules' as CollectionSlug,
++ collection: 'module' as CollectionSlug,
+```
+
+**Result:** The `InvalidFieldRelationship: Field Module has invalid relationship 'modules'.` error is now resolved. The integration test now fails with a different err
+...(truncated)
