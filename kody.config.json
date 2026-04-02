@@ -18,13 +18,13 @@
   },
   "agent": {
     "modelMap": {
-      "cheap": "claude-sonnet-4-6-20260320",
-      "mid": "claude-sonnet-4-6-20260320",
-      "strong": "claude-sonnet-4-6-20260320"
+      "cheap": "claude-sonnet-4-6",
+      "mid": "claude-sonnet-4-6",
+      "strong": "claude-sonnet-4-6"
     },
     "default": {
       "provider": "claude",
-      "model": "claude-sonnet-4-6-20260320"
+      "model": "claude-sonnet-4-6"
     }
   },
   "mcp": {
