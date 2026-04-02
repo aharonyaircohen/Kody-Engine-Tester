@@ -75,7 +75,7 @@ jobs:
           node-version: 22
 
       - name: Install Kody Engine
-        run: npm install -g --registry https://registry.npmjs.org @kody-ade/kody-engine-lite@0.1.121
+        run: npm install -g --registry https://registry.npmjs.org @kody-ade/kody-engine-lite@0.1.122
 
       - name: Validate author
         id: safety
