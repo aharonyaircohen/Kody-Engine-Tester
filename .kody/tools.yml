@@ -2,3 +2,4 @@ playwright:
   detect: ["playwright.config.ts", "playwright.config.js"]
   stages: [verify]
   setup: "npx playwright install --with-deps chromium"
+  skill: "microsoft/playwright-cli@playwright-cli"
