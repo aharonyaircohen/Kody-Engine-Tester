@@ -161,7 +161,7 @@ jobs:
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Install LiteLLM proxy
-        run: pip install 'litellm[proxy]'
+        run: pip install 'litellm[proxy]' prisma
 
       - name: Configure git
         run: |
@@ -331,7 +331,9 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '❌ Failed to parse command.\n\nUsage: `@kody [full|rerun|status] <task-id> [--from <stage>] [--feedback "<text>"]`'
+              body: '❌ Failed to parse command.
+
+Usage: `@kody [full|rerun|status] <task-id> [--from <stage>] [--feedback "<text>"]`'
             })
 
   notify-orchestrate-error:
@@ -410,7 +412,9 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `@kody fix-ci\nCI failed: [View logs](${runUrl})\nRun ID: ${runId}`,
+              body: `@kody fix-ci
+CI failed: [View logs](${runUrl})
+Run ID: ${runId}`,
             });
             core.info(`Posted @kody fix-ci on PR #${prNumber} for run ${runId}`);
 
