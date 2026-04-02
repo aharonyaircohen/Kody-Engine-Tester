@@ -22,6 +22,10 @@
       "strong": "MiniMax-M2.7-highspeed"
     }
   },
+  "devServer": {
+    "command": "pnpm dev",
+    "url": "http://localhost:3000"
+  },
   "mcp": {
     "enabled": false,
     "servers": {},
