@@ -20,15 +20,15 @@
     "modelMap": {
       "cheap": "gemini-2.5-flash",
       "mid": "gemini-2.5-flash",
-      "strong": "gemini-3.1-pro"
+      "strong": "gemini-3.1-pro-preview"
     },
     "default": {
       "provider": "gemini",
       "model": "gemini-2.5-flash"
     },
     "stages": {
-      "taskify": { "provider": "gemini", "model": "gemini-3.1-pro" },
-      "plan": { "provider": "gemini", "model": "gemini-3.1-pro" }
+      "taskify": { "provider": "gemini", "model": "gemini-3.1-pro-preview" },
+      "plan": { "provider": "gemini", "model": "gemini-3.1-pro-preview" }
     }
   },
   "mcp": {
