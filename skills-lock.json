@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "nextjs-app-router-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "computedHash": "d2f0a7065f7418fdb3ae88559f1f1426f40c26f2b5aebcd394797418d4bb3b04"
+    },
+    "payload": {
+      "source": "payloadcms/skills",
+      "sourceType": "github",
+      "computedHash": "868c518cec5efe3862accee8ef3751b72fac06d7e12a27c263dc17320f27b20c"
+    },
+    "playwright-cli": {
+      "source": "microsoft/playwright-cli",
+      "sourceType": "github",
+      "computedHash": "b59ec572042f6191e62c2fcf11623846769bfdf26582540daf0ddd69bf401be3"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "1be892a3ea68b74654326ef836a58dd528d99ae0ab8d879764e2519c39068e67"
+    }
+  }
+}
