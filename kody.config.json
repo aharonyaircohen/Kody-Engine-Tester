@@ -23,13 +23,9 @@
     }
   },
   "mcp": {
-    "enabled": true,
+    "enabled": false,
     "servers": {},
-    "stages": ["build", "review"],
-    "devServer": {
-      "command": "pnpm dev",
-      "url": "http://localhost:3000"
-    }
+    "stages": []
   },
   "watch": {
     "enabled": true
