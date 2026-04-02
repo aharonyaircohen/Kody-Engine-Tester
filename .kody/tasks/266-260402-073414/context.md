@@ -24,3 +24,7 @@ Everything looks good. Here's a summary of what was done and why:
 
 **`tests/helpers/seedUser.ts`** — Added required `firstNa
 ...(truncated)
+
+### autofix (2026-04-02T07:56:23)
+Done. `src/collections/Users.test.ts:163` now expects `['admin', 'editor', 'viewer', 'student']`. The logger change at `src/utils/logger/index.ts:80` was already `const context` — no edit needed there.
+
