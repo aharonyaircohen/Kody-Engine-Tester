@@ -13,9 +13,7 @@ export const Assignments: CollectionConfig = {
     },
     {
       name: 'module',
-      type: 'relationship',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      relationTo: 'modules' as any,
+      type: 'text',
       required: true,
       admin: {
         description: 'The module this assignment belongs to.',
