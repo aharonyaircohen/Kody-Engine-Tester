@@ -18,13 +18,13 @@
   },
   "agent": {
     "modelMap": {
-      "cheap": "MiniMax-M2.7-highspeed",
-      "mid": "MiniMax-M2.7-highspeed",
-      "strong": "MiniMax-M2.7-highspeed"
+      "cheap": "gemini-2.5-flash",
+      "mid": "gemini-2.5-flash",
+      "strong": "gemini-2.5-flash"
     },
     "default": {
-      "provider": "minimax",
-      "model": "MiniMax-M2.7-highspeed"
+      "provider": "gemini",
+      "model": "gemini-2.5-flash"
     }
   },
   "mcp": {
