@@ -75,7 +75,7 @@ export const Users: CollectionConfig = {
     {
       name: 'role',
       type: 'select',
-      options: ['admin', 'editor', 'viewer'],
+      options: ['admin', 'editor', 'viewer', 'student'],
       defaultValue: 'viewer',
       required: true,
       access: {
