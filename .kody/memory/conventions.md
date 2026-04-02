@@ -37,3 +37,7 @@
 
 ## Learned 2026-04-02 (task: 343-260402-204321)
 - Uses eslint for linting
+
+## Learned 2026-04-02 (task: 343-260402-210410)
+- Uses eslint for linting
+- Test environment: node
