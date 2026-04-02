@@ -17,9 +17,9 @@
   "agent": {
     "provider": "minimax",
     "modelMap": {
-      "cheap": "MiniMax-M1",
-      "mid": "MiniMax-M1",
-      "strong": "MiniMax-M1"
+      "cheap": "MiniMax-M2.7-highspeed",
+      "mid": "MiniMax-M2.7-highspeed",
+      "strong": "MiniMax-M2.7-highspeed"
     }
   },
   "mcp": {
