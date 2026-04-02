@@ -8,16 +8,16 @@ on:
         type: string
       mode:
         type: string
-        default: 'full'
+        default: "full"
       from_stage:
         type: string
-        default: ''
+        default: ""
       issue_number:
         type: string
-        default: ''
+        default: ""
       feedback:
         type: string
-        default: ''
+        default: ""
       dry_run:
         type: boolean
         default: false
@@ -32,12 +32,12 @@ on:
     types: [submitted]
 
   workflow_run:
-    workflows: ['CI']
+    workflows: ["CI"]
     types: [completed]
 
   push:
     branches: [main, dev]
-    paths: ['src/**', 'kody.config.json', 'package.json']
+    paths: ["src/**", "kody.config.json", "package.json"]
 
 concurrency:
   group: kody-${{ github.event.inputs.task_id || github.event.issue.number || github.event.pull_request.number || github.event.workflow_run.id || github.sha }}
@@ -331,9 +331,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '❌ Failed to parse command.
-
-Usage: `@kody [full|rerun|status] <task-id> [--from <stage>] [--feedback "<text>"]`'
+              body: '❌ Failed to parse command.\n\nUsage: `@kody [full|rerun|status] <task-id> [--from <stage>] [--feedback "<text>"]`'
             })
 
   notify-orchestrate-error:
@@ -412,9 +410,7 @@ Usage: `@kody [full|rerun|status] <task-id> [--from <stage>] [--feedback "<text>
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `@kody fix-ci
-CI failed: [View logs](${runUrl})
-Run ID: ${runId}`,
+              body: `@kody fix-ci\nCI failed: [View logs](${runUrl})\nRun ID: ${runId}`,
             });
             core.info(`Posted @kody fix-ci on PR #${prNumber} for run ${runId}`);
 
