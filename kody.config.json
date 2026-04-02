@@ -18,17 +18,13 @@
   },
   "agent": {
     "modelMap": {
-      "cheap": "gemini-2.5-flash",
-      "mid": "gemini-2.5-flash",
-      "strong": "gemini-3.1-pro-preview"
+      "cheap": "claude-sonnet-4-6-20260320",
+      "mid": "claude-sonnet-4-6-20260320",
+      "strong": "claude-sonnet-4-6-20260320"
     },
     "default": {
-      "provider": "gemini",
-      "model": "gemini-2.5-flash"
-    },
-    "stages": {
-      "taskify": { "provider": "gemini", "model": "gemini-3.1-pro-preview" },
-      "plan": { "provider": "gemini", "model": "gemini-3.1-pro-preview" }
+      "provider": "claude",
+      "model": "claude-sonnet-4-6-20260320"
     }
   },
   "mcp": {
