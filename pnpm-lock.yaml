@@ -46,8 +46,8 @@ importers:
         specifier: ^3.2.0
         version: 3.3.5
       '@kody-ade/kody-engine-lite':
-        specifier: ^0.1.127
-        version: 0.1.127
+        specifier: ^0.1.130
+        version: 0.1.130
       '@playwright/test':
         specifier: 1.58.2
         version: 1.58.2
@@ -1177,8 +1177,8 @@ packages:
   '@jsdevtools/ono@7.1.3':
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
 
-  '@kody-ade/kody-engine-lite@0.1.127':
-    resolution: {integrity: sha512-qWt/KZZ0ixmvyqBhNR6BaGGLPSy1lLb9NBjFz6AZ17WbW8J9mmazxLNx9jl2yuFCUfMFwbNyBWBaqGc8MFdFqg==}
+  '@kody-ade/kody-engine-lite@0.1.130':
+    resolution: {integrity: sha512-NU0krrU6L4BiqlZq3WMTxfo9BeHLQL3VePv/44JOmpdzY6rBEfwfyKO2a3KT4Xyt8MgUcUSAqBig7ccHDilHUw==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -5093,7 +5093,7 @@ snapshots:
 
   '@jsdevtools/ono@7.1.3': {}
 
-  '@kody-ade/kody-engine-lite@0.1.127':
+  '@kody-ade/kody-engine-lite@0.1.130':
     dependencies:
       dotenv: 16.6.1
       yaml: 2.8.3
