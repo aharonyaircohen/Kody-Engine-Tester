@@ -15,11 +15,11 @@
     "repo": "Kody-Engine-Tester"
   },
   "agent": {
-    "provider": "anthropic",
+    "provider": "minimax",
     "modelMap": {
-      "cheap": "claude-haiku-4-5-20251001",
-      "mid": "claude-sonnet-4-6",
-      "strong": "claude-opus-4-6"
+      "cheap": "MiniMax-M1",
+      "mid": "MiniMax-M1",
+      "strong": "MiniMax-M1"
     }
   },
   "mcp": {
