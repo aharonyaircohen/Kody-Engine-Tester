@@ -34,3 +34,6 @@
 - No `console.log` in production code
 - Files under 800 lines; prefer many small focused files
 - No nested metadata in Payload records (flat structure only)
+
+## Learned 2026-04-02 (task: 341-260402-195914)
+- Uses eslint for linting
