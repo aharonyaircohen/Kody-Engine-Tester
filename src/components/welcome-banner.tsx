@@ -40,7 +40,7 @@ export function WelcomeBanner({ userEmail }: WelcomeBannerProps) {
         </p>
       )}
       <a
-        href="/courses"
+        href="/dashboard"
         style={{
           display: 'inline-block',
           backgroundColor: '#ffffff',
@@ -50,19 +50,17 @@ export function WelcomeBanner({ userEmail }: WelcomeBannerProps) {
           fontWeight: 600,
           fontSize: 16,
           textDecoration: 'none',
-          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-2px)'
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)'
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0)'
-          e.currentTarget.style.boxShadow = 'none'
-        }}
+        className="welcome-banner-button"
       >
         Browse Courses
       </a>
+      <style>{`
+        .welcome-banner-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+      `}</style>
     </div>
   )
 }
