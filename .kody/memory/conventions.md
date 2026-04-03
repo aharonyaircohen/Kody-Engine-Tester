@@ -34,3 +34,8 @@
 - No `console.log` in production code
 - Files under 800 lines; prefer many small focused files
 - No nested metadata in Payload records (flat structure only)
+
+## Learned 2026-04-03 (task: 362-260403-213928)
+- Uses vitest for testing
+- Uses eslint for linting
+- Active directories: src/utils, src/services, src/integration
