@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add fibonacci utility function",
+  "description": "Create a fibonacci utility function in src/utils/fibonacci.ts that generates fibonacci sequences, with unit tests in src/utils/fibonacci.test.ts following existing utility patterns.",
+  "scope": ["src/utils/fibonacci.ts", "src/utils/fibonacci.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/clamp.ts - simple pure utility function with named export, throws on invalid input",
+    "src/utils/clamp.test.ts - vitest describe/it/expect pattern, tests for edge cases including invalid input",
+    "src/utils/range.ts - generates sequences, similar pattern to fibonacci"
+  ],
+  "questions": []
+}
