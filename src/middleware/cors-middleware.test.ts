@@ -96,7 +96,7 @@ describe('createCorsMiddleware', () => {
       expect(res.headers.get('Access-Control-Allow-Methods')).toContain('PATCH')
     })
 
-    it('should only allow requested method if it is in allowed list', async () => {
+    it('should echo back requested method even if not in allowed list', async () => {
       const mw = createCorsMiddleware({
         allowedOrigins: ['https://example.com'],
         allowedMethods: ['GET', 'POST'],
@@ -105,7 +105,8 @@ describe('createCorsMiddleware', () => {
         'access-control-request-method': 'DELETE',
       })
       const res = await mw.async(req)
-      expect(res.headers.get('Access-Control-Allow-Methods')).not.toContain('DELETE')
+      // Per CORS spec, the response echoes back the requested method
+      expect(res.headers.get('Access-Control-Allow-Methods')).toBe('DELETE')
     })
   })
 

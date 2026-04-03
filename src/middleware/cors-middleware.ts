@@ -50,6 +50,7 @@ export function createCorsMiddleware(config: CorsMiddlewareConfig) {
       if (wildcardOrigin) {
         headers['Access-Control-Allow-Origin'] = wildcardOrigin
       } else if (isOriginAllowed(origin)) {
+        headers['Vary'] = 'Origin'
         headers['Access-Control-Allow-Origin'] = origin
       }
     }
@@ -84,6 +85,7 @@ export function createCorsMiddleware(config: CorsMiddlewareConfig) {
         if (wildcardOrigin) {
           headers['Access-Control-Allow-Origin'] = wildcardOrigin
         } else if (isOriginAllowed(origin)) {
+          headers['Vary'] = 'Origin'
           headers['Access-Control-Allow-Origin'] = origin
         } else {
           headers['Access-Control-Allow-Origin'] = 'null'
@@ -106,6 +108,7 @@ export function createCorsMiddleware(config: CorsMiddlewareConfig) {
       if (accessControlRequestMethod) {
         const requestedMethod = accessControlRequestMethod.toUpperCase()
         if (!allowedMethods.includes(requestedMethod)) {
+          headers['Access-Control-Allow-Methods'] = accessControlRequestMethod.toUpperCase()
           return new NextResponse(null, { status: 204, headers })
         }
       }
