@@ -1,0 +1,25 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing notification system implementation",
+  "description": "The notification system described in the task already exists in the codebase. The model is at src/collections/Notifications.ts, service at src/services/notifications.ts, API routes at src/app/api/notifications/ with GET/POST/PATCH endpoints, and unit tests exist at src/services/notifications.test.ts and src/collections/Notifications.collection.test.ts. The only missing component is src/utils/notificationHelpers.ts for formatting/filtering helpers. Note: the task specifies types (info, warning, error) but the existing implementation uses LMS-domain types (enrollment, grade, deadline, discussion, announcement) which reflect actual usage.",
+  "scope": [
+    "src/collections/Notifications.ts",
+    "src/services/notifications.ts",
+    "src/services/notifications.test.ts",
+    "src/collections/Notifications.collection.test.ts",
+    "src/app/api/notifications/route.ts",
+    "src/app/api/notifications/read-all/route.ts",
+    "src/app/api/notifications/[id]/read/route.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/collections/Notifications.ts - Payload CollectionConfig with select-based type enum and relationship fields",
+    "src/services/notifications.ts - Service class with constructor(payload: Payload) pattern, CRUD via payload.* methods",
+    "src/app/api/notifications/route.ts - Next.js route handler using withAuth middleware and getPayloadInstance()",
+    "src/services/notifications.test.ts - vitest unit tests with mockPayload pattern using vi.fn()"
+  ],
+  "questions": [
+    "Should notificationHelpers.ts be added for formatting/filtering utilities, or is the existing service sufficient?",
+    "Should the NotificationType be expanded from LMS-domain types (enrollment/grade/deadline/discussion/announcement) to include generic types (info/warning/error), or keep the domain-specific types?"
+  ]
+}
