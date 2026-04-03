@@ -26,3 +26,18 @@ Created two new files:
 
 **
 ...(truncated)
+
+### autofix (2026-04-03T22:07:13)
+The fix is complete. Here's a summary of the changes:
+
+**Root Cause:** The `Assignments` collection had a relationship field pointing to `'modules'` but no Payload collection with that slug existed.
+
+**Changes Made:**
+
+1. **`src/collections/Modules.ts`** - Added a proper Payload `Modules` collection with:
+   - `slug: 'modules'`
+   - Fields: `title`, `course` (relationship to courses), `order`, `description`
+   - Proper access controls for instructors/admins
+
+2. **`src/payload.config.ts`** - Impo
+...(truncated)
