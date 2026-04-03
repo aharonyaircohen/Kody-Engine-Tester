@@ -21,6 +21,7 @@ export interface RateLimiterMiddlewareConfig extends RateLimiterConfig {
 }
 
 export class SlidingWindowRateLimiter {
+  // TODO: Replace in-memory store with Redis for multi-instance deployments
   private store = new Map<string, number[]>()
   private cleanupTimer: ReturnType<typeof setInterval> | null = null
   private maxRequests: number

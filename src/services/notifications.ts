@@ -4,6 +4,7 @@ import type { NotificationType } from '@/collections/Notifications'
 export class NotificationService {
   constructor(private payload: Payload) {}
 
+  // FIXME: Bulk notifications are sent one-by-one — should batch for performance
   async notify(userId: string, type: NotificationType, title: string, message: string, link?: string) {
     return this.payload.create({
       collection: 'notifications' as any,

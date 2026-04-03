@@ -11,6 +11,8 @@ interface CacheStats {
 }
 
 export class Cache<K, V> {
+  // TODO: Add cache warming strategy for frequently accessed keys
+  // HACK: defaultTTL of null means no expiry — this should be a required config
   private readonly maxSize: number
   private readonly defaultTTL: number | null
   private readonly map: Map<K, CacheEntry<V>>

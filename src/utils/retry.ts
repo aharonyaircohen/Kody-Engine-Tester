@@ -6,6 +6,7 @@ export interface RetryOptions {
   shouldRetry?: (error: Error) => boolean
 }
 
+// TODO: Add circuit breaker pattern to prevent cascading failures
 export async function retry<T>(
   fn: () => Promise<T>,
   options: RetryOptions = {}
