@@ -1,0 +1,25 @@
+{
+  "task_type": "feature",
+  "title": "Add decomposed logging system with formatter, transport, and rotation",
+  "description": "Create a logging system with: (1) log formatter in src/utils/log-formatter.ts supporting JSON and text output modes, (2) log transport in src/services/logTransport.ts with console and file transports, (3) log rotation utility in src/utils/log-rotation.ts with size-based rotation, and (4) integration tests for the full logging pipeline. This decomposes logging into separate modules rather than the existing bundled logger in src/utils/logger/index.ts.",
+  "scope": [
+    "src/utils/log-formatter.ts",
+    "src/services/logTransport.ts",
+    "src/utils/log-rotation.ts",
+    "src/utils/log-formatter.test.ts",
+    "src/services/logTransport.test.ts",
+    "src/utils/log-rotation.test.ts",
+    "src/integration/logging.pipeline.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/logger/index.ts - Contains existing jsonFormatter, prettyFormatter, consoleTransport, and fileTransport that can inform the new implementations",
+    "src/utils/logger/logger.test.ts - Contains test patterns for log formatters and transports using Vitest with fs mocks",
+    "src/middleware/request-logger.ts - Shows how logging is currently used as middleware"
+  ],
+  "questions": [
+    "Should this new logging system replace the existing logger in src/utils/logger/index.ts or coexist as a separate module?",
+    "What size threshold should trigger log rotation (e.g., 10MB per file)?",
+    "Should log rotation create a fixed number of backup files or use a time-based retention policy?"
+  ]
+}
