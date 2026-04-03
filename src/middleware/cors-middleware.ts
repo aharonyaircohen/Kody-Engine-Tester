@@ -100,7 +100,7 @@ export function createCorsMiddleware(config: CorsMiddlewareConfig) {
         headers['Access-Control-Allow-Credentials'] = 'true'
       } else if (wildcardOrigin) {
         headers['Access-Control-Allow-Origin'] = wildcardOrigin
-      } else if (isOriginAllowed(origin)) {
+      } else if (origin && isOriginAllowed(origin)) {
         headers['Vary'] = 'Origin'
         headers['Access-Control-Allow-Origin'] = origin
       } else if (origin) {
