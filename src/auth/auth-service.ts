@@ -204,6 +204,10 @@ export class AuthService {
       throw createError('Refresh token expired', 401)
     }
 
+    // Blacklist the old refresh token BEFORE generating new ones
+    // This prevents race conditions where two concurrent refreshes both succeed
+    this.jwtService.blacklist(refreshToken)
+
     // Generate new tokens with incremented generation
     const newPayload = {
       ...payload,
@@ -354,18 +358,24 @@ export class AuthService {
     _userAgent: string
   ): Promise<AuthResult> {
     // Find existing user by identity provider
+    // Query by providerId which is unique per provider, then filter by provider
+    // to avoid dot-notation issues with array fields in PayloadCMS
     const users = await this.payload.find({
       collection: 'users' as CollectionSlug,
       where: {
-        and: [
-          { 'identities.provider': { equals: provider } },
-          { 'identities.providerId': { equals: userInfo.sub } },
-        ],
+        'identities.providerId': { equals: userInfo.sub },
       },
-      limit: 1,
+      limit: 10, // Get a few results to filter
     })
 
-    let user = users.docs[0]
+    // Filter to find matching provider
+    let user = users.docs.find((u) => {
+      const identities = (u as any).identities || []
+      return identities.some(
+        (i: { provider: string; providerId: string }) =>
+          i.provider === provider && i.providerId === userInfo.sub
+      )
+    })
 
     if (!user) {
       // Check if email exists - if so, link identity
@@ -485,18 +495,12 @@ export class AuthService {
       throw createError('User not found', 404)
     }
 
-    const identities = (user as any).identities || []
-
-    // Check if identity already linked
-    const existingIndex = identities.findIndex(
+    const identities = ((user as any).identities || []).filter(
       (i: { provider: string; providerId: string }) =>
-        i.provider === provider && i.providerId === providerId
+        !(i.provider === provider && i.providerId === providerId)
     )
 
-    if (existingIndex >= 0) {
-      return // Already linked
-    }
-
+    // Add new identity
     identities.push({
       provider,
       providerId,
@@ -546,33 +550,25 @@ export class AuthService {
       throw createError('Target user not found', 404)
     }
 
-    const tenantPermissions = (target.docs[0] as any).tenantPermissions || []
-
-    // Update or add tenant permission
-    const existingIndex = tenantPermissions.findIndex(
-      (tp: { tenantId: string }) => tp.tenantId === tenantId
+    // Filter out existing permission for this tenant and add new one
+    const existingTenantPermissions = ((target.docs[0] as any).tenantPermissions || []).filter(
+      (tp: { tenantId: string }) => tp.tenantId !== tenantId
     )
 
-    if (existingIndex >= 0) {
-      tenantPermissions[existingIndex] = {
+    const newTenantPermissions = [
+      ...existingTenantPermissions,
+      {
         tenantId,
         role,
         grantedAt: new Date().toISOString(),
         grantedBy: String(adminUserId),
-      }
-    } else {
-      tenantPermissions.push({
-        tenantId,
-        role,
-        grantedAt: new Date().toISOString(),
-        grantedBy: String(adminUserId),
-      })
-    }
+      },
+    ]
 
     await this.payload.update({
       collection: 'users' as CollectionSlug,
       id: targetUserId,
-      data: { tenantPermissions } as any,
+      data: { tenantPermissions: newTenantPermissions } as any,
     })
   }
 

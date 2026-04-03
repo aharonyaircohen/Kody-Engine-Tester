@@ -177,10 +177,12 @@ function normalizeUserInfo(data: Record<string, unknown>, provider: OAuth2Provid
         provider,
       }
     case 'microsoft':
+      // Validate data.id is actually a string to avoid "object Object" issues
+      const microsoftId = typeof data.id === 'string' ? data.id : String(data.id)
       return {
-        sub: data.id as string,
-        email: data.mail as string | undefined,
-        name: data.displayName as string | undefined,
+        sub: microsoftId,
+        email: typeof data.mail === 'string' ? data.mail : undefined,
+        name: typeof data.displayName === 'string' ? data.displayName : undefined,
         picture: undefined,
         provider,
       }
@@ -217,7 +219,9 @@ export function buildAuthorizationUrl(
 }
 
 /**
- * Validate state parameter to prevent CSRF attacks
+ * Validate state parameter to prevent CSRF attacks.
+ * NOTE: After successful validation, the caller MUST invalidate/delete the state
+ * from storage to prevent replay attacks. This function only validates format equality.
  */
 export function generateState(): string {
   return crypto.randomBytes(32).toString('base64url')
