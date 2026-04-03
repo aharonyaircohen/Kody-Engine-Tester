@@ -41,3 +41,7 @@
 ## Learned 2026-04-02 (task: 343-260402-210410)
 - Uses eslint for linting
 - Test environment: node
+
+## Learned 2026-04-03 (task: 343-260403-065909)
+- Uses vitest for testing
+- Uses eslint for linting
