@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add isPalindrome utility function with tests",
+  "description": "Create src/utils/is-palindrome.ts utility function and src/utils/is-palindrome.test.ts tests following existing utility patterns (e.g., reverse.ts).",
+  "scope": ["src/utils/is-palindrome.ts", "src/utils/is-palindrome.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/reverse.ts and reverse.test.ts — simple string utility with vitest tests using describe/it/expect pattern"],
+  "questions": []
+}
