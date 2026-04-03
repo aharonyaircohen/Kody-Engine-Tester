@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add string capitalize utility",
+  "description": "Create src/utils/string-capitalize.ts with a function that capitalizes only the first letter of an entire string (e.g., 'hello world' → 'Hello world'), distinct from capitalizeWords which capitalizes each word. Add corresponding test file following existing test patterns.",
+  "scope": [
+    "src/utils/string-capitalize.ts",
+    "src/utils/string-capitalize.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/capitalize-words.ts and .test.ts — pattern for similar string utility with tests",
+    "src/utils/to-kebab-case.ts and .test.ts — pattern for simple string transformation utility"
+  ],
+  "questions": []
+}
