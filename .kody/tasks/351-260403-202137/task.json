@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add formatDate utility function",
+  "description": "Add a `formatDate(date: Date, format: string): string` utility function to `src/utils/` supporting formats: `YYYY-MM-DD`, `MM/DD/YYYY`, `DD MMM YYYY`. Export from new `src/utils/index.ts` barrel file and add unit tests following existing patterns.",
+  "scope": [
+    "src/utils/format-date.ts",
+    "src/utils/format-date.test.ts",
+    "src/utils/index.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/format-number.ts — JSDoc with examples, typed interface options, locale-aware formatting pattern",
+    "src/utils/format-number.test.ts — describe/it blocks with clear test groupings, use vitest imports"
+  ],
+  "questions": []
+}
