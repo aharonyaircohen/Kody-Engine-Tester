@@ -2,8 +2,16 @@ import type { Payload } from 'payload'
 import type { CollectionSlug } from 'payload'
 import crypto from 'crypto'
 import { JwtService } from './jwt-service'
+import type { OAuth2Provider, OAuth2UserInfo } from './oauth2-pkce'
 
 export type RbacRole = 'admin' | 'editor' | 'viewer'
+
+export interface TenantPermission {
+  tenantId: string
+  role: RbacRole
+  grantedAt: string
+  grantedBy?: string
+}
 
 export interface AuthenticatedUser {
   id: number | string
@@ -12,6 +20,19 @@ export interface AuthenticatedUser {
   firstName?: string
   lastName?: string
   isActive: boolean
+  organization?: string
+  tenantPermissions?: TenantPermission[]
+  identities?: Array<{
+    provider: OAuth2Provider
+    providerId: string
+    email?: string
+    linkedAt: string
+  }>
+}
+
+export interface TenantContext {
+  tenantId: string
+  role: RbacRole
 }
 
 export interface AuthResult {
@@ -208,12 +229,12 @@ export class AuthService {
     return { accessToken: newAccessToken, refreshToken: newRefreshToken }
   }
 
-  async verifyAccessToken(accessToken: string): Promise<{ user?: AuthenticatedUser }> {
+  async verifyAccessToken(accessToken: string, tenantId?: string): Promise<{ user?: AuthenticatedUser }> {
     if (!accessToken) {
       throw createError('Access token is required', 401)
     }
 
-    let payload: { userId: string; email: string; role: RbacRole; sessionId: string; generation: number }
+    let payload: { userId: string; email: string; role: RbacRole; sessionId: string; generation: number; tenantId?: string }
     try {
       payload = await this.jwtService.verify(accessToken) as any
     } catch (err) {
@@ -237,6 +258,32 @@ export class AuthService {
       throw createError('Account is inactive', 403)
     }
 
+    // Get tenant permissions if tenantId is provided
+    let tenantPermissions: TenantPermission[] | undefined
+    const rawTenantPermissions = (user as any).tenantPermissions as Array<{
+      tenantId: string
+      role: string
+      grantedAt: string
+      grantedBy?: string
+    }> | undefined
+
+    if (rawTenantPermissions) {
+      tenantPermissions = rawTenantPermissions.map(tp => ({
+        tenantId: tp.tenantId,
+        role: tp.role as RbacRole,
+        grantedAt: tp.grantedAt,
+        grantedBy: tp.grantedBy,
+      }))
+    }
+
+    // If tenantId is provided, verify user has access to this tenant
+    if (tenantId) {
+      const hasAccess = this.checkTenantAccess(user, tenantId, tenantPermissions)
+      if (!hasAccess) {
+        throw createError('Access denied to this tenant', 403)
+      }
+    }
+
     return {
       user: {
         id: (user as any).id,
@@ -245,8 +292,288 @@ export class AuthService {
         firstName: (user as any).firstName,
         lastName: (user as any).lastName,
         isActive,
+        organization: (user as any).organization,
+        tenantPermissions,
+        identities: (user as any).identities,
       },
     }
+  }
+
+  /**
+   * Check if user has access to a specific tenant
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private checkTenantAccess(user: any, tenantId: string, tenantPermissions?: TenantPermission[]): boolean {
+    // User's primary organization
+    const userOrg = user.organization as string | undefined
+    if (userOrg === tenantId) return true
+
+    // Check tenant permissions array
+    if (tenantPermissions) {
+      return tenantPermissions.some(tp => tp.tenantId === tenantId)
+    }
+
+    return false
+  }
+
+  /**
+   * Get user's role for a specific tenant
+   */
+  getTenantRole(user: AuthenticatedUser, tenantId: string): RbacRole | null {
+    // Primary organization role
+    if (user.organization === tenantId) {
+      return user.role
+    }
+
+    // Check tenant permissions
+    if (user.tenantPermissions) {
+      const permission = user.tenantPermissions.find(tp => tp.tenantId === tenantId)
+      return permission?.role ?? null
+    }
+
+    return null
+  }
+
+  /**
+   * Verify user has required role for a specific tenant
+   */
+  verifyTenantRole(user: AuthenticatedUser, tenantId: string, requiredRoles: RbacRole[]): boolean {
+    const userRole = this.getTenantRole(user, tenantId)
+    if (!userRole) return false
+    return requiredRoles.includes(userRole)
+  }
+
+  /**
+   * Authenticate via OAuth2 provider (PKCE flow)
+   */
+  async authenticateWithOAuth2(
+    provider: OAuth2Provider,
+    userInfo: OAuth2UserInfo,
+    _codeVerifier: string,
+    _ipAddress: string,
+    _userAgent: string
+  ): Promise<AuthResult> {
+    // Find existing user by identity provider
+    const users = await this.payload.find({
+      collection: 'users' as CollectionSlug,
+      where: {
+        and: [
+          { 'identities.provider': { equals: provider } },
+          { 'identities.providerId': { equals: userInfo.sub } },
+        ],
+      },
+      limit: 1,
+    })
+
+    let user = users.docs[0]
+
+    if (!user) {
+      // Check if email exists - if so, link identity
+      if (userInfo.email) {
+        const existingByEmail = await this.payload.find({
+          collection: 'users' as CollectionSlug,
+          where: { email: { equals: userInfo.email } },
+          limit: 1,
+        })
+
+        if (existingByEmail.docs[0]) {
+          // Link identity to existing user
+          const existingUser = existingByEmail.docs[0]
+          const identities = (existingUser as any).identities || []
+          identities.push({
+            provider,
+            providerId: userInfo.sub,
+            email: userInfo.email,
+            linkedAt: new Date().toISOString(),
+          })
+
+          await this.payload.update({
+            collection: 'users' as CollectionSlug,
+            id: (existingUser as any).id,
+            data: { identities } as any,
+          })
+
+          user = existingUser
+        }
+      }
+
+      // Create new user if no existing user found
+      if (!user) {
+        const nameParts = userInfo.name?.split(' ') ?? []
+        const newUser = await this.payload.create({
+          collection: 'users' as CollectionSlug,
+          data: {
+            email: userInfo.email || `${provider}:${userInfo.sub}@placeholder.local`,
+            firstName: nameParts[0] || userInfo.name || 'Unknown',
+            lastName: nameParts.slice(1).join(' ') || provider,
+            role: 'viewer' as const,
+            isActive: true,
+            identities: [{
+              provider,
+              providerId: userInfo.sub,
+              email: userInfo.email,
+              linkedAt: new Date().toISOString(),
+            }],
+          } as any,
+        })
+        user = newUser
+      }
+    }
+
+    const userId = (user as any).id
+    const role = (user as any).role as RbacRole
+    const isActive = (user as any).isActive ?? true
+
+    if (!isActive) {
+      throw createError('Account is inactive', 403)
+    }
+
+    // Generate tokens
+    const tokenPayload = {
+      userId: String(userId),
+      email: userInfo.email || (user as any).email,
+      role,
+      sessionId: `session-${userId}-${Date.now()}`,
+      generation: 0,
+    }
+
+    const accessToken = await this.jwtService.signAccessToken(tokenPayload)
+    const refreshToken = await this.jwtService.signRefreshToken(tokenPayload)
+
+    // Calculate expiry
+    const tokenExpiresAt = new Date(Date.now() + REFRESH_TOKEN_EXPIRY_MS)
+
+    // Update user with token fields
+    await this.payload.update({
+      collection: 'users' as CollectionSlug,
+      id: userId,
+      data: {
+        refreshToken,
+        tokenExpiresAt: tokenExpiresAt.toISOString(),
+        lastTokenUsedAt: new Date().toISOString(),
+      } as any,
+    })
+
+    return {
+      accessToken,
+      refreshToken,
+      user: {
+        id: userId,
+        email: userInfo.email || (user as any).email,
+        role,
+      },
+    }
+  }
+
+  /**
+   * Link an OAuth2 identity to an existing user
+   */
+  async linkIdentity(
+    userId: number | string,
+    provider: OAuth2Provider,
+    providerId: string,
+    email?: string
+  ): Promise<void> {
+    const users = await this.payload.find({
+      collection: 'users' as CollectionSlug,
+      where: { id: { equals: String(userId) } },
+      limit: 1,
+    })
+
+    const user = users.docs[0]
+    if (!user) {
+      throw createError('User not found', 404)
+    }
+
+    const identities = (user as any).identities || []
+
+    // Check if identity already linked
+    const existingIndex = identities.findIndex(
+      (i: { provider: string; providerId: string }) =>
+        i.provider === provider && i.providerId === providerId
+    )
+
+    if (existingIndex >= 0) {
+      return // Already linked
+    }
+
+    identities.push({
+      provider,
+      providerId,
+      email,
+      linkedAt: new Date().toISOString(),
+    })
+
+    await this.payload.update({
+      collection: 'users' as CollectionSlug,
+      id: userId,
+      data: { identities } as any,
+    })
+  }
+
+  /**
+   * Grant tenant permissions to a user
+   */
+  async grantTenantPermission(
+    adminUserId: number | string,
+    targetUserId: number | string,
+    tenantId: string,
+    role: RbacRole
+  ): Promise<void> {
+    // Verify admin has permission to grant
+    const admin = await this.payload.find({
+      collection: 'users' as CollectionSlug,
+      where: { id: { equals: String(adminUserId) } },
+      limit: 1,
+    })
+
+    if (!admin.docs[0]) {
+      throw createError('Admin user not found', 404)
+    }
+
+    const adminRole = (admin.docs[0] as any).role as RbacRole
+    if (adminRole !== 'admin') {
+      throw createError('Only admins can grant tenant permissions', 403)
+    }
+
+    const target = await this.payload.find({
+      collection: 'users' as CollectionSlug,
+      where: { id: { equals: String(targetUserId) } },
+      limit: 1,
+    })
+
+    if (!target.docs[0]) {
+      throw createError('Target user not found', 404)
+    }
+
+    const tenantPermissions = (target.docs[0] as any).tenantPermissions || []
+
+    // Update or add tenant permission
+    const existingIndex = tenantPermissions.findIndex(
+      (tp: { tenantId: string }) => tp.tenantId === tenantId
+    )
+
+    if (existingIndex >= 0) {
+      tenantPermissions[existingIndex] = {
+        tenantId,
+        role,
+        grantedAt: new Date().toISOString(),
+        grantedBy: String(adminUserId),
+      }
+    } else {
+      tenantPermissions.push({
+        tenantId,
+        role,
+        grantedAt: new Date().toISOString(),
+        grantedBy: String(adminUserId),
+      })
+    }
+
+    await this.payload.update({
+      collection: 'users' as CollectionSlug,
+      id: targetUserId,
+      data: { tenantPermissions } as any,
+    })
   }
 
   async logout(userId: number | string): Promise<void> {

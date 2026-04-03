@@ -30,11 +30,38 @@ export interface RouteContext {
   user?: AuthenticatedUser
   error?: string
   status?: number
+  tenantId?: string
+  tenantRole?: RbacRole
 }
 
 export interface WithAuthOptions {
   roles?: RbacRole[]
   optional?: boolean // If true, allow unauthenticated requests (but still validate if token present)
+  tenantParam?: string // URL param name to extract tenant ID from (e.g., 'organizationId')
+  tenantHeader?: string // Header name to extract tenant ID from
+  requireTenant?: boolean // If true, tenant context is required
+}
+
+/**
+ * Extract tenant ID from request
+ */
+function extractTenantId(req: NextRequest, options: WithAuthOptions): string | undefined {
+  // Check header first
+  if (options.tenantHeader) {
+    const headerValue = req.headers.get(options.tenantHeader)
+    if (headerValue) return headerValue
+  }
+
+  // Check URL params (Next.js route params would be passed separately)
+  // This is a fallback for when tenant ID is part of the URL path
+  const url = new URL(req.url)
+  if (options.tenantParam) {
+    const paramValue = url.searchParams.get(options.tenantParam)
+    if (paramValue) return paramValue
+  }
+
+  // Also check x-tenant-id header as a convention
+  return req.headers.get('x-tenant-id') ?? undefined
 }
 
 /**
@@ -47,6 +74,14 @@ export interface WithAuthOptions {
  *   const { params } = routeParams
  *   return Response.json({ data: user })
  * }, { roles: ['admin', 'editor'] })
+ * ```
+ *
+ * Multi-tenant usage:
+ * ```
+ * export const GET = withAuth(async (req, { user, tenantId, tenantRole }, routeParams) => {
+ *   // user is authenticated and has tenant context
+ *   return Response.json({ data: user, tenant: tenantId, role: tenantRole })
+ * }, { roles: ['admin', 'editor'], tenantHeader: 'x-tenant-id' })
  * ```
  *
  * Note: The handler receives (req, context, routeParams) where routeParams
@@ -74,12 +109,25 @@ export function withAuth(
       )
     }
 
+    // Extract tenant ID if tenant-aware
+    const tenantId = extractTenantId(req, options)
+
+    // If tenant is required but not provided
+    if (options.requireTenant && !tenantId) {
+      return Response.json(
+        { error: 'Tenant context required' },
+        { status: 400 }
+      )
+    }
+
     let authContext: RouteContext
 
     try {
       const authService = getAuthService()
-      const result = await authService.verifyAccessToken(token)
+      const result = await authService.verifyAccessToken(token, tenantId)
+
       if (result.user) {
+        // Check global role if roles are specified
         const roleCheck = checkRole(result.user, options.roles)
         if (roleCheck.error) {
           return Response.json(
@@ -87,7 +135,18 @@ export function withAuth(
             { status: roleCheck.status ?? 401 }
           )
         }
-        authContext = { user: result.user }
+
+        // Get tenant-specific role if tenantId is provided
+        let tenantRole: RbacRole | undefined
+        if (tenantId) {
+          tenantRole = authService.getTenantRole(result.user, tenantId) ?? undefined
+        }
+
+        authContext = {
+          user: result.user,
+          tenantId,
+          tenantRole,
+        }
       } else {
         authContext = { error: 'User not found', status: 404 }
       }

@@ -1,0 +1,3 @@
+# [test-suite] Redesign auth system with OAuth2 PKCE flow and multi-tenant RBAC
+
+Redesign the entire authentication system: replace the current session-based auth with OAuth2 + PKCE flow, implement refresh token rotation with secure storage, add multi-tenant authentication with organization-scoped permissions, implement RBAC with admin/editor/viewer roles across all API routes, add rate limiting per tenant, and migrate the user schema to support multiple identity providers. This requires changes across auth/, middleware/, API routes, and database schema.

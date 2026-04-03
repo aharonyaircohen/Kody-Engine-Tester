@@ -1,5 +1,21 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+export type UserRole = 'admin' | 'editor' | 'viewer'
+
+export interface IdentityProvider {
+  provider: 'google' | 'github' | 'microsoft' | 'local'
+  providerId: string
+  email?: string
+  linkedAt: string
+}
+
+export interface TenantPermission {
+  tenantId: string
+  role: UserRole
+  grantedAt: string
+  grantedBy?: string
+}
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
@@ -7,9 +23,13 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   access: {
-    read: ({ req: { user } }) => {
+    read: ({ req: { user }, id }) => {
       if (!user) return false
-      return true
+      const role = (user as { role?: string }).role
+      // Admins can read all users in their tenant
+      if (role === 'admin') return true
+      // Users can only read their own profile
+      return String(user.id) === String(id)
     },
     create: () => true,
     update: ({ req: { user }, id }) => {
@@ -84,10 +104,86 @@ export const Users: CollectionConfig = {
         },
       },
     },
+    // Primary tenant (organization) for the user
     {
       name: 'organization',
       type: 'text',
       required: false,
+      admin: {
+        description: 'Primary tenant/organization ID',
+      },
+    },
+    // All tenant permissions (multi-tenant support)
+    {
+      name: 'tenantPermissions',
+      type: 'array',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        create: () => false,
+        update: ({ req: { user } }) => {
+          return (user as { role?: string } | null)?.role === 'admin'
+        },
+      },
+      fields: [
+        {
+          name: 'tenantId',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'role',
+          type: 'select',
+          options: ['admin', 'editor', 'viewer'],
+          required: true,
+        },
+        {
+          name: 'grantedAt',
+          type: 'date',
+          required: true,
+        },
+        {
+          name: 'grantedBy',
+          type: 'text',
+          required: false,
+        },
+      ],
+    },
+    // Multiple identity providers support
+    {
+      name: 'identities',
+      type: 'array',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        create: () => false,
+        update: () => false,
+      },
+      fields: [
+        {
+          name: 'provider',
+          type: 'select',
+          options: ['google', 'github', 'microsoft', 'local'],
+          required: true,
+        },
+        {
+          name: 'providerId',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'email',
+          type: 'text',
+          required: false,
+        },
+        {
+          name: 'linkedAt',
+          type: 'date',
+          required: true,
+        },
+      ],
     },
     {
       name: 'refreshToken',
@@ -112,6 +208,38 @@ export const Users: CollectionConfig = {
     {
       name: 'lastTokenUsedAt',
       type: 'date',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    // OAuth2 PKCE state for authorization flow
+    {
+      name: 'oauthState',
+      type: 'text',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    {
+      name: 'oauthCodeVerifier',
+      type: 'text',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    {
+      name: 'oauthProvider',
+      type: 'select',
+      options: ['google', 'github', 'microsoft', 'local'],
       required: false,
       hidden: true,
       access: {

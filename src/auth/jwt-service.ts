@@ -6,6 +6,7 @@ export interface TokenPayload {
   role: RbacRole
   sessionId: string
   generation: number
+  tenantId?: string
   iat: number
   exp: number
 }
