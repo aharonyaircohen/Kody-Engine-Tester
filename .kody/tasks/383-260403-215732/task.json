@@ -1,0 +1,16 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add titleCase utility function",
+  "description": "Create src/utils/title-case.ts with a titleCase function that converts strings to title case, following standard English title case conventions (capitalizing major words, leaving small words like 'the', 'of', 'and' lowercase unless first/last). Include unit tests following the existing test pattern.",
+  "scope": [
+    "src/utils/title-case.ts",
+    "src/utils/title-case.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/capitalize-words.ts — similar string transformation utility with identical pattern: input validation, split/join approach, test file with describe/it/expect vitest structure"
+  ],
+  "questions": []
+}
+```
