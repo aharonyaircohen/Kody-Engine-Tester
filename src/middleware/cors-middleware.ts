@@ -47,7 +47,10 @@ export function createCorsMiddleware(config: CorsMiddlewareConfig) {
     const wildcardOrigin = getWildcardOrigin()
 
     if (origin) {
-      if (wildcardOrigin) {
+      if (supportsCredentials) {
+        headers['Vary'] = 'Origin'
+        headers['Access-Control-Allow-Origin'] = origin
+      } else if (wildcardOrigin) {
         headers['Access-Control-Allow-Origin'] = wildcardOrigin
       } else if (isOriginAllowed(origin)) {
         headers['Vary'] = 'Origin'
@@ -55,7 +58,7 @@ export function createCorsMiddleware(config: CorsMiddlewareConfig) {
       }
     }
 
-    if (supportsCredentials && wildcardOrigin !== '*') {
+    if (supportsCredentials) {
       headers['Access-Control-Allow-Credentials'] = 'true'
     }
 
@@ -92,8 +95,16 @@ export function createCorsMiddleware(config: CorsMiddlewareConfig) {
         }
       }
 
-      if (supportsCredentials && wildcardOrigin !== '*') {
+      if (supportsCredentials && origin) {
+        headers['Access-Control-Allow-Origin'] = origin
         headers['Access-Control-Allow-Credentials'] = 'true'
+      } else if (wildcardOrigin) {
+        headers['Access-Control-Allow-Origin'] = wildcardOrigin
+      } else if (isOriginAllowed(origin)) {
+        headers['Vary'] = 'Origin'
+        headers['Access-Control-Allow-Origin'] = origin
+      } else if (origin) {
+        headers['Access-Control-Allow-Origin'] = 'null'
       }
 
       if (accessControlRequestHeaders) {

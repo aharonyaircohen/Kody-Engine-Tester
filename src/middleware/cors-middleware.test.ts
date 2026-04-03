@@ -185,11 +185,23 @@ describe('createCorsMiddleware', () => {
     it('should not include credentials header when origin is wildcard', async () => {
       const mw = createCorsMiddleware({
         allowedOrigins: ['*'],
-        supportsCredentials: true,
+        supportsCredentials: false,
       })
       const req = makeRequest('GET', 'https://any.com')
       const res = await mw.async(req)
       expect(res.headers.has('Access-Control-Allow-Credentials')).toBe(false)
+      expect(res.headers.get('Access-Control-Allow-Origin')).toBe('*')
+    })
+
+    it('does not use wildcard origin when credentials are allowed', async () => {
+      const mw = createCorsMiddleware({
+        allowedOrigins: ['*'],
+        supportsCredentials: true,
+      })
+      const req = makeRequest('GET', 'https://example.com')
+      const res = await mw.async(req)
+      expect(res.headers.get('Access-Control-Allow-Origin')).toBe('https://example.com')
+      expect(res.headers.get('Access-Control-Allow-Credentials')).toBe('true')
     })
 
     it('should not include credentials header when disabled', async () => {
