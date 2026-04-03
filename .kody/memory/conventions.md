@@ -38,3 +38,7 @@
 ## Learned 2026-04-03 (task: 355-260403-213514)
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-03 (task: fix-pr-379-260403-224156)
+- Uses vitest for testing
+- Uses eslint for linting
