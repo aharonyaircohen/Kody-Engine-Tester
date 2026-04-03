@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add isEven utility function",
+  "description": "Create isEven/isOdd utility function in src/utils/is-even.ts with corresponding vitest tests in src/utils/is-even.test.ts. Follow the existing simple utility pattern (like cap.ts).",
+  "scope": ["src/utils/is-even.ts", "src/utils/is-even.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cap.ts — simple single-responsibility utility export pattern",
+    "src/utils/cap.test.ts — vitest test file with describe/it/expect structure"
+  ],
+  "questions": []
+}
