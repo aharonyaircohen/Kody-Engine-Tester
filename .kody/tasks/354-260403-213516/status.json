@@ -26,17 +26,18 @@
       "outputFile": "review.md"
     },
     "review-fix": {
-      "state": "running",
-      "startedAt": "2026-04-03T22:13:51.397Z",
+      "state": "completed",
+      "completedAt": "2026-04-03T22:17:14.101Z",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-03T22:17:14.140Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-03T21:59:22.966Z",
-  "updatedAt": "2026-04-03T22:13:51.397Z",
+  "updatedAt": "2026-04-03T22:17:14.140Z",
   "sessions": {
     "review": "481b67dc-54b6-487c-9d9b-9d280472b798",
     "build": "7ba255c0-35cc-4042-b865-b8e06640631c"
