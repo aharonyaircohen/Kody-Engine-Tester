@@ -33,6 +33,6 @@
   },
   "watch": {
     "enabled": true,
-    "digestIssue": 320
+    "digestIssue": 369
   }
 }
