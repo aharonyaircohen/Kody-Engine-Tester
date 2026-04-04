@@ -33,7 +33,7 @@ jobs:
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/kody-engine-lite
+        run: npm install -g @kody-ade/kody-engine
 
       - name: Export project secrets
         env:
@@ -54,4 +54,4 @@ jobs:
           REPO: ${{ github.repository }}
           WATCH_DIGEST_ISSUE: ${{ vars.WATCH_DIGEST_ISSUE }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
-        run: npx kody-engine-lite watch ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}
+        run: npx kody-engine watch ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}

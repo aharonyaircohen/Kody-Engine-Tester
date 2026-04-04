@@ -287,7 +287,7 @@ This tests the Kody Watch system locally. Watch runs in CI via cron, but `--dry-
 gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json | jq -r '.content' | base64 -d | jq '.watch'
 ```
 
-1. Run locally: `kody-engine-lite watch --dry-run --cwd /path/to/Kody-Engine-Tester`
+1. Run locally: `kody-engine watch --dry-run --cwd /path/to/Kody-Engine-Tester`
 2. **Verification:**
    - Pipeline health plugin ran: check output for stalled/failed task scan
    - Security scan plugin ran (if on daily cycle): check for secrets/CVE scan
