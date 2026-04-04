@@ -1,52 +1,55 @@
-# Architecture
+# LearnHub LMS Architecture
 
 ## Stack
 
-- **Framework**: Next.js 16.2.1 (App Router, React Server Components)
-- **CMS/Backend**: Payload CMS 3.80.0 (headless, admin at `/admin`)
+- **Framework**: Next.js 16 App Router + Payload CMS 3.80 (headless)
+- **Language**: TypeScript 5.7 (ES2022 target)
 - **Database**: PostgreSQL via `@payloadcms/db-postgres`
-- **Auth**: JWT-based with role guard middleware (roles: `student`, `instructor`, `admin`)
-- **Rich Text**: Lexical editor (`@payloadcms/richtext-lexical`)
-- **Language**: TypeScript 5.7.3 strict mode, ESM (`"type": "module"`)
-- **Package Manager**: pnpm
+- **Testing**: Vitest 4.0 (integration) + Playwright 1.58 (E2E)
+- **Runtime**: Node 18+ / pnpm 9+
 
-## Key Directories
+## Directory Structure
 
 ```
 src/
-├── app/
-│   ├── (frontend)/     # Next.js frontend routes
-│   └── (payload)/      # Payload admin routes
-├── collections/        # Payload CollectionConfig definitions
-├── globals/            # Payload global configs
-├── services/           # Business logic layer (DI pattern)
-├── security/           # Sanitizers (sanitizeHtml, sanitizeSql, sanitizeUrl)
-├── auth/               # Auth types and user store
-├── middleware/         # Rate limiting, role guards
-├── hooks/              # Payload hook functions
-├── access/             # Access control functions
-├── components/         # Custom React components
-├── utils/              # Utility functions
-├── validation/         # Input validation schemas
-└── payload.config.ts   # Main Payload config
-tests/
-├── e2e/               # Playwright E2E tests
-└── (integration)/      # Vitest integration tests
+├── app/                    # Next.js App Router pages + API routes
+│   ├── (frontend)/        # Public/authenticated frontend routes
+│   └── (payload)/         # Payload admin routes (/admin)
+├── collections/           # Payload collection configs (Course, Lesson, Enrollment, etc.)
+├── components/            # Custom React components
+├── hooks/                 # Custom React hooks
+├── middleware/            # Express-style middleware (rate-limiter)
+├── auth/                  # Auth utilities (JWT service, session store, withAuth HOC)
+├── utils/                 # Pure utility functions (debounce, retry, flatten, result)
+├── services/              # Business logic services
+├── api/                   # API route handlers (login, profile, etc.)
+├── contexts/              # React contexts
+├── validation/            # Zod schemas for input validation
+├── security/              # Security utilities (password hashing, RBAC)
+├── migrations/            # Payload database migrations
+└── payload.config.ts      # Payload CMS configuration
 ```
+
+## Layer Architecture
+
+**Route Handler** → `src/api/*` → `src/auth/*` (withAuth HOC) → `src/services/*` → `src/collections/*` (Payload)
+
+## Infrastructure
+
+- **Docker**: `docker-compose.yml` (Payload app + PostgreSQL)
+- **CI**: `pnpm ci` runs `payload migrate` then `pnpm build`
+- **Admin**: Payload admin panel at `/admin`
+- **Media**: Sharp for image processing, Payload Media collection
 
 ## Data Flow
 
-1. Frontend (RSC) → Payload Local API or REST `/api/*`
-2. Payload hooks → service layer (DI injected) → PostgreSQL
-3. Admin panel → Payload REST/GraphQL → PostgreSQL
-4. Auth: JWT issued by Payload, `saveToJWT: true` for roles
+1. Client → Next.js Route Handler (`src/app/(frontend)/api/`)
+2. Auth middleware validates JWT via `src/auth/jwt-service.ts`
+3. Service layer (`src/services/`) handles business logic
+4. Payload collections (`src/collections/`) manage PostgreSQL via `@payloadcms/db-postgres`
 
-## Testing
+## Key Configs
 
-- **Integration**: Vitest (`pnpm test:int`) — `vitest.config.mts`
-- **E2E**: Playwright (`pnpm test:e2e`) — `playwright.config.ts`
-- **Type check**: `tsc --noEmit`
-
-## Domain Model
-
-Organization → Users → Courses → Modules → Lessons/Quizzes/Assignments → Enrollments → Certificates/Gradebook/Notifications
+- `payload.config.ts` — Payload DB, auth, collections, editor (Lexical)
+- `vitest.config.mts` — Integration test runner
+- `playwright.config.ts` — E2E browser testing

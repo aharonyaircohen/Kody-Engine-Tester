@@ -2,169 +2,160 @@
 
 ## Quick Reference
 
-- **Dev server**: `pnpm dev` → http://localhost:3000
-- **Login page**: http://localhost:3000/admin/login
-- **Admin panel**: http://localhost:3000/admin
+- **Dev server**: `pnpm dev` at `http://localhost:3000`
+- **Login page**: `http://localhost:3000/admin/login` (Payload admin) or `http://localhost:3000/api/auth/login` (API)
+- **Admin panel**: `http://localhost:3000/admin`
 
 ## Authentication
 
 ### Test Accounts
 
-| Role           | Email                  | Password                  |
-| -------------- | ---------------------- | ------------------------- |
-| Admin (seeded) | `dev@payloadcms.com`   | `test`                    |
-| Admin          | `$QA_ADMIN_EMAIL`      | `$QA_ADMIN_PASSWORD`      |
-| Instructor     | `$QA_INSTRUCTOR_EMAIL` | `$QA_INSTRUCTOR_PASSWORD` |
-| Student        | `$QA_STUDENT_EMAIL`    | `$QA_STUDENT_PASSWORD`    |
+Use env vars — set in `.env.local`:
+| Role | Email Env Var | Password Env Var |
+|------|---------------|------------------|
+| admin | `QA_ADMIN_EMAIL` | `QA_ADMIN_PASSWORD` |
+| instructor | `QA_INSTRUCTOR_EMAIL` | `QA_INSTRUCTOR_PASSWORD` |
+| student | `QA_STUDENT_EMAIL` | `QA_STUDENT_PASSWORD` |
 
 ### Login Steps
 
-1. Navigate to http://localhost:3000/admin/login
-2. Fill `#field-email` with email
-3. Fill `#field-password` with password
-4. Click `button[type="submit"]`
-5. Wait for redirect to `/admin`
-6. Verify `span[title="Dashboard"]` is visible
+1. Navigate to `http://localhost:3000/admin/login`
+2. Fill `email` and `password` fields
+3. Click **Login** button
+4. Verify redirect to `http://localhost:3000/admin` (dashboard)
 
 ### Auth Files
 
-- `tests/helpers/login.ts` — reusable Playwright login helper
-- `tests/helpers/seedUser.ts` — seeds/cleans `dev@payloadcms.com` test user
-- `src/middleware/` — role guard middleware
-- `src/auth/` — auth types and user store
-- `src/app/(frontend)/dashboard/page.tsx` — redirects unauthenticated users to `/admin/login`
+- `src/auth/auth-service.ts` — JWT auth with refresh token rotation
+- `src/auth/jwt-service.ts` — Web Crypto API JWT operations, in-memory blacklist
+- `src/auth/withAuth.ts` — HOC for route protection with RBAC
+- `src/auth/session-store.ts` — In-memory session management
+- `src/auth/user-store.ts` — In-memory user storage with SHA-256 hashing
+- `src/api/auth/login.ts` — Login endpoint handler
 
 ## Navigation Map
 
 ### Admin Panel
 
-- `/admin` — Dashboard. Verify `span[title="Dashboard"]` is visible in sidebar.
-- `/admin/collections/users` — Users list. Verify `h1` with text "Users" is visible. Table shows firstName, lastName, email, role columns.
-- `/admin/collections/users/create` — Create user form. Verify `input[name="email"]` is visible. Fields: email, password, firstName, lastName, role, organization.
-- `/admin/collections/courses` — Courses list. Fields: title, slug, status, difficulty, instructor.
-- `/admin/collections/courses/create` — Course form. Fields: title, slug, description, thumbnail, instructor, status (draft/published), difficulty, estimatedHours, tags.
-- `/admin/collections/lessons` — Lessons list. Fields: title, course, module, order, type, estimatedMinutes.
-- `/admin/collections/enrollments` — Enrollments list. Fields: student, course, enrolledAt, status, completedAt.
-- `/admin/collections/assignments` — Assignments list. Fields: title, module, instructions, dueDate, maxScore.
-- `/admin/collections/quizzes` — Quizzes list. Fields: title, module, passingScore, timeLimit, maxAttempts, questions array.
-- `/admin/collections/quiz-attempts` — Quiz attempts list. Fields: user, quiz, score, passed, startedAt, completedAt.
-- `/admin/collections/submissions` — Submissions list. Fields: assignment, student, content, status, grade, feedback.
-- `/admin/collections/certificates` — Certificates list. Fields: student, course, issuedAt, certificateNumber, finalGrade.
-- `/admin/collections/notifications` — Notifications list. Fields: recipient, type, title, message, isRead.
-- `/admin/collections/notes` — Notes list. Fields: title, content, tags.
-- `/admin/collections/media` — Media list. Fields: alt, filename.
+| URL                                 | What to Expect                                                                                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/admin`                            | Dashboard with sidebar nav, user info top-right                                                                                            |
+| `/admin/collections/users`          | Users list table with firstName, lastName, email, role columns                                                                             |
+| `/admin/collections/courses`        | Courses list with title, slug, instructor, status columns                                                                                  |
+| `/admin/collections/courses/create` | Course edit form: title, slug, description, thumbnail, instructor (relationship), status (select), difficulty, estimatedHours, tags, label |
+| `/admin/collections/courses/[id]`   | Course edit form with same fields as create                                                                                                |
+| `/admin/collections/lessons`        | Lessons list with title, course (rel), module, order, type columns                                                                         |
+| `/admin/collections/lessons/[id]`   | Lesson edit form: title, course (rel), module, order, type (select), content, videoUrl, estimatedMinutes                                   |
+| `/admin/collections/enrollments`    | Enrollments table: student, course, enrolledAt, status, completedAt                                                                        |
+| `/admin/collections/quizzes`        | Quizzes table: title, module, order, passingScore, timeLimit, maxAttempts                                                                  |
+| `/admin/collections/assignments`    | Assignments table: title, module, dueDate, maxScore                                                                                        |
+| `/admin/collections/notes`          | Notes table: title, content, tags                                                                                                          |
+| `/admin/collections/media`          | Media list with alt text, thumbnail preview                                                                                                |
+| `/admin/collections/notifications`  | Notifications table: recipient, type, title, isRead                                                                                        |
+| `/admin/collections/submissions`    | Submissions table: assignment, student, status, grade                                                                                      |
+| `/admin/collections/quiz-attempts`  | Quiz attempts: user, quiz, score, passed                                                                                                   |
+| `/admin/collections/certificates`   | Certificates: student, course, issuedAt, certificateNumber, finalGrade                                                                     |
 
 ### Frontend Pages
 
-- `/` — Homepage. Verify `h1` with text "Welcome to your new project." and page title matches `/Payload Blank Template/`.
-- `/dashboard` — Student dashboard (requires auth + student role). Verify `h1` "My Dashboard" is visible. Shows `CourseProgressCard` grid, `UpcomingDeadlines`, `RecentActivity` panels. Unenrolled state shows "You are not enrolled in any courses yet."
-- `/notes` — Notes list. Verify `h1` "Notes" is visible, "New Note" link is present. SearchBar input visible. Empty state shows "No notes yet. Create your first note!"
-- `/notes/create` — Note creation form. Verify title and content inputs are present, save button is visible.
-- `/notes/:id` — Note detail view. Verify note title is rendered.
-- `/notes/edit/:id` — Note edit form. Verify fields are pre-filled with existing note data.
-- `/instructor/courses/:id/edit` — Course editor (instructor only). Verify `h1` "Edit Course Content" is visible. `CoursePublishToggle` button visible in header. `ModuleList` renders below. Autosave indicator (`data-testid="autosave-indicator"`) appears after changes.
+| URL                             | Expected Content                 | Key Interactions                                                        |
+| ------------------------------- | -------------------------------- | ----------------------------------------------------------------------- |
+| `/`                             | Public landing page              | —                                                                       |
+| `/dashboard`                    | Role-specific dashboard with nav | —                                                                       |
+| `/notes`                        | Notes list                       | Create note button → `/notes/create`                                    |
+| `/notes/create`                 | Note creation form               | Fill title, content, tags; click Save                                   |
+| `/notes/[id]`                   | Note detail view                 | Edit button → `/notes/edit/[id]`                                        |
+| `/notes/edit/[id]`              | Note edit form                   | Modify fields, click Save                                               |
+| `/instructor/courses/[id]/edit` | Course editor                    | Custom CourseLessonsSorter component (drag-sortable lessons by chapter) |
 
 ### API Endpoints
 
-- `GET/POST /api/notes` — List / create notes
-- `GET/PUT/DELETE /api/notes/:id` — Single note operations
-- `GET /api/courses/search` — Course search
-- `GET /api/dashboard/admin-stats` — Admin dashboard statistics
-- `POST /api/enroll` — Enroll student in course
-- `GET /api/gradebook` — Gradebook list
-- `GET /api/gradebook/course/:id` — Per-course gradebook
-- `GET /api/notifications` — List notifications
-- `PATCH /api/notifications/:id/read` — Mark notification read
-- `PATCH /api/notifications/read-all` — Mark all notifications read
-- `GET /api/quizzes/:id` — Quiz detail
-- `GET /api/quizzes/:id/attempts` — Quiz attempt history
-- `POST /api/quizzes/:id/submit` — Submit quiz attempt
-- `GET /api/csrf-token` — CSRF token
-- `GET|POST /api/[...slug]` — Payload REST passthrough
-- `POST /api/graphql` — GraphQL endpoint
+| Path                         | Methods   | Purpose                                 |
+| ---------------------------- | --------- | --------------------------------------- |
+| `/api/auth/login`            | POST      | Authenticate user, return JWT           |
+| `/api/auth/profile`          | GET, POST | User profile management                 |
+| `/api/notes`                 | GET, POST | Note CRUD with search                   |
+| `/api/courses/search`        | GET       | Course search via `CourseSearchService` |
+| `/api/enroll`                | POST      | Enrollment (viewer role required)       |
+| `/api/quizzes/[id]`          | GET       | Quiz retrieval                          |
+| `/api/quizzes/[id]/submit`   | POST      | Quiz grading via `QuizGrader`           |
+| `/api/quizzes/[id]/attempts` | GET       | User's quiz attempts                    |
+| `/api/gradebook/course/[id]` | GET       | Grades per course (editor/admin)        |
 
 ## Component Verification Patterns
 
-### CoursePublishToggle (`/instructor/courses/:id/edit`)
+### CourseLessonsSorter
 
-1. Navigate to `/instructor/courses/[valid-id]/edit`
-2. Verify toggle button is visible in top-right header area
-3. Click toggle — verify status changes between "draft" and "published"
-4. Verify `data-testid="autosave-indicator"` shows "Saving…" then transitions to "Saved" within ~3s
+- **Location**: `/instructor/courses/[id]/edit`
+- **What to verify**: Drag handles on lesson items, chapter grouping headers, order numbers update on drop
+- **Interaction test**: Drag lesson from Chapter 1 to Chapter 2, verify order persists after page reload
 
-### ModuleList with drag-reorder (`/instructor/courses/:id/edit`)
+### Lesson Type Selector
 
-1. Navigate to `/instructor/courses/[valid-id]/edit`
-2. Verify module list renders with at least one module card
-3. Click "Add Module" — verify new module "New Module" appears in list
-4. Edit module title inline — verify autosave indicator triggers
-5. Click "Add Lesson" within a module — verify new lesson "New Lesson" appears
-6. Delete a lesson — verify it is removed from the list
-7. Delete a module — verify it and its lessons are removed
+- **Location**: `/admin/collections/lessons/[id]` form
+- **What to verify**: Type dropdown with options (video, text, quiz), conditional fields appear based on selection
+- **Interaction test**: Select "video" type → verify `videoUrl` field appears; select "quiz" → verify quiz selector appears
 
-### Notes SearchBar (`/notes`)
+### Notes Editor
 
-1. Navigate to `/notes`
-2. Type in the SearchBar — verify 300ms debounce before results filter
-3. Enter a query matching no notes — verify "No notes match your search." message
-4. Clear the search — verify all notes return
-
-### CourseProgressCard + Dashboard (`/dashboard`)
-
-1. Log in as a student with active enrollments
-2. Navigate to `/dashboard`
-3. Verify `CourseProgressCard` cards render with course title and progress percentage
-4. Verify `UpcomingDeadlines` panel is visible
-5. Verify `RecentActivity` panel is visible with quiz/submission entries
+- **Location**: `/notes/create`, `/notes/edit/[id]`
+- **What to verify**: Title input, content textarea, tags input (comma-separated)
+- **Interaction test**: Create note, navigate to list, verify note appears with correct title
 
 ## Common Test Scenarios
 
-### Admin CRUD: Course
+### Login Flow
+
+1. Navigate to `/admin/login`
+2. Enter valid credentials → verify dashboard loads
+3. Enter invalid credentials → verify error message displayed
+
+### Course CRUD
 
 1. Go to `/admin/collections/courses/create`
-2. Fill title, slug, select status "draft", choose difficulty
-3. Save — verify redirect to edit URL and success toast
-4. Navigate to `/admin/collections/courses` — verify new course appears in list
-5. Open the record, change status to "published", save — verify change persists
+2. Fill required fields (title, slug), set status, save
+3. Verify redirect to list with new course visible
+4. Click course → edit title → save
+5. Verify changes reflected in list view
 
-### Admin CRUD: User
+### Lesson Ordering
 
-1. Go to `/admin/collections/users/create`
-2. Fill email, password, firstName, lastName, set role to "student"
-3. Save — verify `input[name="email"]` shows the entered value after redirect
-4. Go to users list — verify user appears
+1. Open `/instructor/courses/[id]/edit`
+2. Verify lessons grouped by module/chapter
+3. Drag lesson to new position within chapter
+4. Reload page → verify order persists
 
-### Auth redirect: unauthenticated dashboard
+### Note Creation
 
-1. Open a fresh browser context (no auth cookies)
-2. Navigate to `/dashboard`
-3. Verify redirect to `/admin/login`
-
-### Notes CRUD flow
-
-1. Go to `/notes/create`, fill title + content, save
-2. Verify redirect to `/notes/:id` showing the note
-3. Go to `/notes/edit/:id`, change title, save
-4. Go to `/notes` — verify updated title in NoteCard grid
-5. Delete note — verify it disappears from the list
-
-### Quiz submission flow
-
-1. Log in as student
-2. `POST /api/quizzes/:id/submit` with answer payload
-3. Verify response contains `score` and `passed` fields
-4. Navigate to `/dashboard` — verify new quiz attempt appears in RecentActivity
+1. Login as any role
+2. Navigate to `/notes`
+3. Click **Create Note**
+4. Fill title, content, tags
+5. Save → verify redirect to `/notes/[newId]` with content displayed
 
 ## Environment Setup
 
-| Variable         | Purpose                            |
-| ---------------- | ---------------------------------- |
-| `DATABASE_URL`   | PostgreSQL connection string       |
-| `PAYLOAD_SECRET` | JWT signing secret for Payload CMS |
+Required in `.env.local`:
+
+```env
+DATABASE_URL=postgres://user:password@localhost:5432/learnhub
+PAYLOAD_SECRET=your-secret-here
+```
+
+Optional for testing:
+
+```env
+QA_ADMIN_EMAIL=admin@example.com
+QA_ADMIN_PASSWORD=password
+QA_INSTRUCTOR_EMAIL=instructor@example.com
+QA_INSTRUCTOR_PASSWORD=password
+QA_STUDENT_EMAIL=student@example.com
+QA_STUDENT_PASSWORD=password
+```
 
 ## Dev Server
 
 ```bash
 pnpm dev
-# → http://localhost:3000
+# Server runs at http://localhost:3000
 ```

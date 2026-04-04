@@ -32,6 +32,7 @@
     "stages": []
   },
   "watch": {
-    "enabled": true
+    "enabled": true,
+    "digestIssue": 320
   }
 }

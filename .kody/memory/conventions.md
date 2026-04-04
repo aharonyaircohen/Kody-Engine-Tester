@@ -1,36 +1,19 @@
-# Conventions
+# LearnHub Coding Conventions
 
-## TypeScript
+**Naming**: Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case (`.module.css`); collections → singular slug
 
-- Strict mode enabled; no `any`, use proper Payload types
-- ESM only (`"type": "module"`), `ES2022` target
-- Path alias: `@/*` → `src/*`, `@payload-config` → `src/payload.config.ts`
-- Run `pnpm generate:types` after every schema change
-- Run `pnpm generate:importmap` after creating/modifying components
-- Validate with `tsc --noEmit` before committing
+**Imports**: Use `import type` for types; path alias `@/*` for internal modules; named imports preferred
 
-## Payload CMS Patterns
+```typescript
+import type { Module } from '@/collections/Modules'
+import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
+import { LessonEditor } from './LessonEditor'
+```
 
-- Cast `relationTo` as `CollectionSlug`: `relationTo: 'users' as CollectionSlug`
-- Always pass `req` to nested operations in hooks (transaction safety)
-- Local API bypasses access control — use REST API for user-facing ops
-- Ensure roles exist when modifying access-controlled collections/globals
+**Exports**: Named exports for utilities/types; default export for page components only
 
-## Service Layer
+**Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
 
-- Business logic lives in `src/services/`, not in collection hooks
-- Dependency injection via constructor: `new DiscussionService(store, enrollmentStore, getUser, checker)`
-- Services accept store interfaces, not direct DB calls
+**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
 
-## Security
-
-- All user input passes through `src/security/sanitizers.ts` utilities
-- Use `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl` at system boundaries
-- No hardcoded secrets — use env vars, validated at startup
-
-## Code Style
-
-- Immutable updates only (spread operator, no mutation)
-- No `console.log` in production code
-- Files under 800 lines; prefer many small focused files
-- No nested metadata in Payload records (flat structure only)
+**Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components

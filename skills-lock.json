@@ -16,10 +16,30 @@
       "sourceType": "github",
       "computedHash": "8f5b6b588c638139854181f80a241c16575810a3bd45b0983e55078b6aed347a"
     },
+    "payload": {
+      "source": "payloadcms/payload",
+      "sourceType": "github",
+      "computedHash": "72d39c67fd7f25ed377e273276b7262e60e874399f38846a374c482e4cf18403"
+    },
+    "payload-cms": {
+      "source": "connorads/dotfiles",
+      "sourceType": "github",
+      "computedHash": "bd824eb5fadb686747bcce90619cdf0b8fc5ecc489c7f0329cbba140b28f0423"
+    },
     "playwright-cli": {
       "source": "microsoft/playwright-cli",
       "sourceType": "github",
       "computedHash": "b59ec572042f6191e62c2fcf11623846769bfdf26582540daf0ddd69bf401be3"
+    },
+    "react": {
+      "source": "vercel-labs/json-render",
+      "sourceType": "github",
+      "computedHash": "67d6daabd85c23cc58eeabea56f25b899723932dfb69c55ddae4990b43c918d2"
+    },
+    "react-vendoring": {
+      "source": "vercel/next.js",
+      "sourceType": "github",
+      "computedHash": "2ed7b7d5b9d5291cff49f048f66cc845349bf3666eab57676283429cd7fddfb6"
     },
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",
