@@ -107,6 +107,7 @@ jobs:
         id: parse
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_IS_PR: ${{ github.event.issue.pull_request && 'true' || '' }}
