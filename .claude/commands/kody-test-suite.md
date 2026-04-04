@@ -47,6 +47,7 @@ Then pick tasks that create NEW files. If a task creates files that already exis
 
 | T24 | [test-suite] Decompose: simple task falls back | `@kody decompose` | complexity_score < 6, falls back to normal pipeline, PR created via runPipeline(). See T24 details below |
 | T31 | [test-suite] Bootstrap: extend mode | `@kody bootstrap` | Generates/extends memory, step files, tools.yml, labels. See T31 details below |
+| T33 | [test-suite] Bootstrap: model override | `kody-engine-lite bootstrap --provider=minimax --model=MiniMax-M1 --force` | CLI flags override config model. See T33 details below |
 | T32 | [test-suite] Watch: health monitoring | `@kody watch --dry-run` (local) | Runs watch plugins, posts findings to digest issue. See T32 details below |
 | T25 | [test-suite] Decompose: complex multi-area task | `@kody decompose` | Scores 6+, splits into 2+ sub-tasks, parallel build, merge, verify, review, ship. PR body has "Decomposed Implementation" section. See T25 details below |
 | T26 | [test-suite] Decompose: --no-compose flag | `@kody decompose --no-compose` | Stops after parallel build. decompose-state.json saved. No PR created. See T26 details below |
@@ -278,6 +279,22 @@ This tests the bootstrap command's ability to analyze the codebase and generate 
 - PASS: All artifacts generated, labels created, skills resolved
 - FAIL: Missing artifacts, labels not created, or step files overwritten instead of extended
 
+### T33 — Bootstrap: model override via CLI flags
+
+This tests that `--provider` and `--model` flags override the model resolved from `kody.config.json`.
+
+1. Run locally in the tester repo:
+   ```bash
+   kody-engine-lite bootstrap --provider=minimax --model=MiniMax-M1 --force
+   ```
+2. **Verification:**
+   - **Log output**: First lines show `Model: MiniMax-M1 (provider: minimax)` — NOT the config default
+   - **LiteLLM proxy started**: Logs show "Starting LiteLLM proxy for minimax" (non-claude provider triggers proxy)
+   - **Artifacts generated**: `.kody/memory/` and `.kody/steps/` populated as normal
+   - **Equals and space forms**: Both `--model=MiniMax-M1` and `--model MiniMax-M1` work identically
+- PASS: Logs confirm override model/provider used, artifacts generated successfully
+- FAIL: Logs show config model instead of CLI override, or flags ignored
+
 ### T32 — Watch: health monitoring (dry-run)
 
 This tests the Kody Watch system locally. Watch runs in CI via cron, but `--dry-run` validates locally.
@@ -287,7 +304,7 @@ This tests the Kody Watch system locally. Watch runs in CI via cron, but `--dry-
 gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json | jq -r '.content' | base64 -d | jq '.watch'
 ```
 
-1. Run locally: `kody-engine watch --dry-run --cwd /path/to/Kody-Engine-Tester`
+1. Run locally: `kody-engine-lite watch --dry-run --cwd /path/to/Kody-Engine-Tester`
 2. **Verification:**
    - Pipeline health plugin ran: check output for stalled/failed task scan
    - Security scan plugin ran (if on daily cycle): check for secrets/CVE scan
