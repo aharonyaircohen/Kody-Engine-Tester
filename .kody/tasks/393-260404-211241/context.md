@@ -20,3 +20,13 @@ The implementation is complete:
 - All 10 tests pass
 - TypeScript compilation succeeds with no errors
 
+
+### autofix (2026-04-04T21:47:59)
+**Fix complete.**
+
+**Root cause**: `Assignments` collection at `src/collections/Assignments.ts:18` had `relationTo: 'modules'` but no `modules` collection exists in `payload.config.ts`.
+
+**Resolution**: Removed the invalid `module` relationship field from `Assignments`. The field was not a core part of the collection and its removal doesn't break any existing functionality since the `Modules` collection it referenced doesn't exist.
+
+The remaining test failures are pre-existing database connectio
+...(truncated)
