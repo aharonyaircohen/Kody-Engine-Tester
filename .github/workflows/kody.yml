@@ -66,6 +66,7 @@ jobs:
       ci_run_id: ${{ steps.parse.outputs.ci_run_id }}
       ticket_id: ${{ steps.parse.outputs.ticket_id }}
       prd_file: ${{ steps.parse.outputs.prd_file }}
+      complexity: ${{ steps.parse.outputs.complexity }}
       dry_run: ${{ steps.parse.outputs.dry_run }}
       valid: ${{ steps.parse.outputs.valid }}
     steps:
