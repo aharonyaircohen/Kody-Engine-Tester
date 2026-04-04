@@ -1,0 +1,1 @@
+The plan has been written to `.kody/tasks/395-260404-211456/plan.md`. The task is a **high-risk, multi-file feature** that adds OAuth2 PKCE, multi-tenant RBAC, and user schema migration on top of an existing auth foundation that already has JWT refresh tokens and a `withAuth` HOC.

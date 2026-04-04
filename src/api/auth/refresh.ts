@@ -28,7 +28,15 @@ export async function refresh(
     throw createError('Session not found or expired', 401)
   }
 
-  const tokenInput = { userId: payload.userId, email: payload.email, role: payload.role, sessionId: session.id, generation: session.generation + 1 }
+  const tokenInput = {
+    userId: payload.userId,
+    email: payload.email,
+    role: payload.role,
+    tenantId: payload.tenantId,
+    roles: payload.roles,
+    sessionId: session.id,
+    generation: session.generation + 1,
+  }
   const newAccessToken = await jwtService.signAccessToken(tokenInput)
   const newRefreshToken = await jwtService.signRefreshToken(tokenInput)
 

@@ -24,6 +24,8 @@ describe('AuthMiddleware', () => {
       userId: user!.id,
       email: user!.email,
       role: user!.role as 'admin' | 'editor' | 'viewer',
+      tenantId: 'default',
+      roles: [{ tenantId: 'default', role: user!.role as 'admin' | 'editor' | 'viewer' }],
       sessionId: 'session-1',
       generation: 0,
     })
@@ -31,6 +33,8 @@ describe('AuthMiddleware', () => {
       userId: user!.id,
       email: user!.email,
       role: user!.role as 'admin' | 'editor' | 'viewer',
+      tenantId: 'default',
+      roles: [{ tenantId: 'default', role: user!.role as 'admin' | 'editor' | 'viewer' }],
       sessionId: 'session-1',
       generation: 0,
     })
@@ -61,7 +65,7 @@ describe('AuthMiddleware', () => {
   it('should return 401 for expired token', async () => {
     const user = await userStore.findByEmail('user@example.com')
     const expiredToken = await jwtService.sign(
-      { userId: user!.id, email: user!.email, role: user!.role as 'admin' | 'editor' | 'viewer', sessionId: 'session-1', generation: 0 },
+      { userId: user!.id, email: user!.email, role: user!.role as 'admin' | 'editor' | 'viewer', tenantId: 'default', roles: [{ tenantId: 'default', role: user!.role as 'admin' | 'editor' | 'viewer' }], sessionId: 'session-1', generation: 0 },
       -1000
     )
     const result = await middleware({ authorization: `Bearer ${expiredToken}`, ip: '127.0.0.1' })
@@ -81,6 +85,8 @@ describe('AuthMiddleware', () => {
       userId: user!.id,
       email: user!.email,
       role: user!.role as 'admin' | 'editor' | 'viewer',
+      tenantId: 'default',
+      roles: [{ tenantId: 'default', role: user!.role as 'admin' | 'editor' | 'viewer' }],
       sessionId: 'session-1',
       generation: 0,
     })
@@ -88,6 +94,8 @@ describe('AuthMiddleware', () => {
       userId: user!.id,
       email: user!.email,
       role: user!.role as 'admin' | 'editor' | 'viewer',
+      tenantId: 'default',
+      roles: [{ tenantId: 'default', role: user!.role as 'admin' | 'editor' | 'viewer' }],
       sessionId: 'session-1',
       generation: 0,
     })

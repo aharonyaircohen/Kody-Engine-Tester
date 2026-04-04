@@ -107,6 +107,84 @@ export function byApiKey(request: NextRequest): string | null {
   return request.headers.get('x-api-key') ?? null
 }
 
+/**
+ * Key resolver that combines tenant ID from header with IP address.
+ * Format: "tenantId:ip"
+ */
+export function byTenantAndIp(request: NextRequest): string | null {
+  const ip = byIp(request)
+  if (!ip) return null
+  const tenantId = request.headers.get('x-tenant-id') ?? 'default'
+  return `${tenantId}:${ip}`
+}
+
+/**
+ * Per-tenant rate limiter configuration
+ */
+export interface PerTenantRateLimitConfig extends RateLimiterMiddlewareConfig {
+  tenantRateLimits?: Record<string, { maxRequests: number; windowMs: number }>
+}
+
+/**
+ * Creates a per-tenant rate limiter middleware with configurable limits per tenant
+ */
+export function createPerTenantRateLimiterMiddleware(config: PerTenantRateLimitConfig) {
+  const limiter = new SlidingWindowRateLimiter(config)
+  const keyResolver = config.keyResolver ?? byTenantAndIp
+  const message = config.message ?? 'Too Many Requests'
+  const enableHeaders = config.enableRateLimitHeaders ?? true
+  const tenantRateLimits = config.tenantRateLimits ?? {}
+
+  function middleware(request: NextRequest): NextResponse {
+    const key = keyResolver(request)
+    if (!key) return NextResponse.next()
+
+    // Extract tenant ID from key for per-tenant limit lookup
+    const [tenantId] = key.split(':')
+    const tenantLimit = tenantRateLimits[tenantId] ?? { maxRequests: config.maxRequests, windowMs: config.windowMs }
+
+    // IP blacklist — 403 immediately
+    if (config.ipBlacklist?.length && config.ipBlacklist.includes(key)) {
+      if (config.ipWhitelist?.length && config.ipWhitelist.includes(key)) {
+        return NextResponse.next()
+      }
+      return new NextResponse(JSON.stringify({ error: 'Forbidden' }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+
+    // IP whitelist — bypass rate limiting
+    if (config.ipWhitelist?.length && config.ipWhitelist.includes(key)) {
+      const response = NextResponse.next()
+      setRateLimitHeaders(response, tenantLimit.maxRequests, tenantLimit.maxRequests, 0, enableHeaders)
+      return response
+    }
+
+    const result = limiter.check(key)
+
+    if (result.allowed) {
+      const response = NextResponse.next()
+      setRateLimitHeaders(response, tenantLimit.maxRequests, result.remaining, result.retryAfterMs, enableHeaders)
+      return response
+    }
+
+    const retryAfterSeconds = Math.ceil(result.retryAfterMs / 1000)
+    const response = new NextResponse(JSON.stringify({ error: message }), {
+      status: 429,
+      headers: {
+        'Content-Type': 'application/json',
+        'Retry-After': String(retryAfterSeconds),
+      },
+    })
+    setRateLimitHeaders(response, tenantLimit.maxRequests, result.remaining, result.retryAfterMs, enableHeaders)
+    return response
+  }
+
+  middleware.limiter = limiter
+  return middleware
+}
+
 function setRateLimitHeaders(
   response: NextResponse,
   maxRequests: number,

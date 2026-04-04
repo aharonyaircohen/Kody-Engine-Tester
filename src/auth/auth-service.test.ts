@@ -148,6 +148,8 @@ describe('AuthService', () => {
         userId: '1',
         email: 'admin@example.com',
         role: 'admin',
+        tenantId: 'default',
+        roles: [{ tenantId: 'default', role: 'admin' as const }],
         sessionId: 'session-1',
         generation: 0,
       })
@@ -155,6 +157,8 @@ describe('AuthService', () => {
         userId: '2', // Different user
         email: 'other@example.com',
         role: 'viewer',
+        tenantId: 'default',
+        roles: [{ tenantId: 'default', role: 'viewer' as const }],
         sessionId: 'session-2',
         generation: 0,
       })
@@ -224,6 +228,8 @@ describe('AuthService', () => {
         userId: '1',
         email: 'admin@example.com',
         role: 'admin',
+        tenantId: 'default',
+        roles: [{ tenantId: 'default', role: 'admin' as const }],
         sessionId: 'session-1',
         generation: 0,
       })
@@ -248,7 +254,7 @@ describe('AuthService', () => {
 
     it('should throw on expired access token', async () => {
       const expiredToken = await jwtService.sign(
-        { userId: '1', email: 'admin@example.com', role: 'admin', sessionId: 'session-1', generation: 0 },
+        { userId: '1', email: 'admin@example.com', role: 'admin', tenantId: 'default', roles: [{ tenantId: 'default', role: 'admin' as const }], sessionId: 'session-1', generation: 0 },
         -1000 // Already expired
       )
 

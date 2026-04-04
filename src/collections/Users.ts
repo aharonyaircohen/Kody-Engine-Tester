@@ -1,5 +1,15 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+// Multi-tenant RBAC role types
+export type TenantRole = 'admin' | 'editor' | 'viewer' | 'guest'
+
+export interface OAuthProvider {
+  provider: 'google' | 'github'
+  providerId: string
+  email: string
+  connectedAt: string
+}
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
@@ -118,6 +128,69 @@ export const Users: CollectionConfig = {
         read: () => false,
         update: () => false,
       },
+    },
+    // Multi-tenant fields
+    {
+      name: 'tenantId',
+      type: 'text',
+      required: false,
+      defaultValue: 'default',
+      admin: {
+        description: 'Tenant identifier for multi-tenant RBAC',
+      },
+    },
+    {
+      name: 'roles',
+      type: 'array',
+      required: false,
+      admin: {
+        description: 'Per-tenant roles for multi-tenant RBAC',
+      },
+      fields: [
+        {
+          name: 'tenantId',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'role',
+          type: 'select',
+          options: ['admin', 'editor', 'viewer', 'guest'],
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'oauthProviders',
+      type: 'array',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+      },
+      fields: [
+        {
+          name: 'provider',
+          type: 'select',
+          options: ['google', 'github'],
+          required: true,
+        },
+        {
+          name: 'providerId',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'email',
+          type: 'email',
+          required: true,
+        },
+        {
+          name: 'connectedAt',
+          type: 'date',
+          required: true,
+        },
+      ],
     },
   ],
 }

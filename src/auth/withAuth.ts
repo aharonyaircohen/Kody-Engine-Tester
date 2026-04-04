@@ -3,9 +3,9 @@ import type { AuthenticatedUser, RbacRole } from './auth-service'
 import { AuthService } from './auth-service'
 import { JwtService } from './jwt-service'
 import { getPayloadInstance } from '@/services/progress'
-import { extractBearerToken, checkRole } from './_auth'
+import { extractBearerToken, checkRole, checkTenantRole } from './_auth'
 
-export { extractBearerToken, checkRole }
+export { extractBearerToken, checkRole, checkTenantRole }
 export type { AuthContext, AuthOptions } from './_auth'
 
 let jwtServiceInstance: JwtService | null = null
@@ -18,10 +18,11 @@ function getJwtService(): JwtService {
   return jwtServiceInstance
 }
 
-function getAuthService(): AuthService {
+async function getAuthService(): Promise<AuthService> {
   if (!authServiceInstance) {
+    const payload = await getPayloadInstance()
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    authServiceInstance = new AuthService(getPayloadInstance() as any, getJwtService())
+    authServiceInstance = new AuthService(payload as any, getJwtService())
   }
   return authServiceInstance
 }
@@ -35,6 +36,8 @@ export interface RouteContext {
 export interface WithAuthOptions {
   roles?: RbacRole[]
   optional?: boolean // If true, allow unauthenticated requests (but still validate if token present)
+  tenantId?: string // Required for tenant-specific role checking
+  tenantRoles?: { tenantId: string; roles: RbacRole[] }[] // Multi-tenant role requirements
 }
 
 /**
@@ -47,6 +50,13 @@ export interface WithAuthOptions {
  *   const { params } = routeParams
  *   return Response.json({ data: user })
  * }, { roles: ['admin', 'editor'] })
+ * ```
+ *
+ * For tenant-specific roles:
+ * ```
+ * export const GET = withAuth(async (req, { user }, routeParams) => {
+ *   return Response.json({ data: user })
+ * }, { tenantId: 'tenant-1', roles: ['admin'] })
  * ```
  *
  * Note: The handler receives (req, context, routeParams) where routeParams
@@ -77,15 +87,27 @@ export function withAuth(
     let authContext: RouteContext
 
     try {
-      const authService = getAuthService()
+      const authService = await getAuthService()
       const result = await authService.verifyAccessToken(token)
       if (result.user) {
-        const roleCheck = checkRole(result.user, options.roles)
-        if (roleCheck.error) {
-          return Response.json(
-            { error: roleCheck.error },
-            { status: roleCheck.status ?? 401 }
-          )
+        // Check tenant-specific roles first if tenantId is provided
+        if (options.tenantId && options.roles) {
+          const roleCheck = checkTenantRole(result.user, options.tenantId, options.roles)
+          if (roleCheck.error) {
+            return Response.json(
+              { error: roleCheck.error },
+              { status: roleCheck.status ?? 401 }
+            )
+          }
+        } else if (options.roles) {
+          // Fall back to global role check
+          const roleCheck = checkRole(result.user, options.roles)
+          if (roleCheck.error) {
+            return Response.json(
+              { error: roleCheck.error },
+              { status: roleCheck.status ?? 401 }
+            )
+          }
         }
         authContext = { user: result.user }
       } else {

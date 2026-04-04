@@ -12,6 +12,8 @@ describe('JwtService', () => {
     userId: 'user-1',
     email: 'test@example.com',
     role: 'admin' as const,
+    tenantId: 'default',
+    roles: [{ tenantId: 'default', role: 'admin' as const }],
     sessionId: 'session-1',
     generation: 0,
   }

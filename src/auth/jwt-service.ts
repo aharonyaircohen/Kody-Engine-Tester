@@ -1,9 +1,16 @@
 export type RbacRole = 'admin' | 'editor' | 'viewer'
 
+export interface TenantRole {
+  tenantId: string
+  role: 'admin' | 'editor' | 'viewer' | 'guest'
+}
+
 export interface TokenPayload {
   userId: string
   email: string
   role: RbacRole
+  tenantId: string
+  roles: TenantRole[]
   sessionId: string
   generation: number
   iat: number

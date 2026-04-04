@@ -2,6 +2,7 @@ import type { Payload } from 'payload'
 import type { CollectionSlug } from 'payload'
 import crypto from 'crypto'
 import { JwtService } from './jwt-service'
+import type { TenantRole } from './jwt-service'
 
 export type RbacRole = 'admin' | 'editor' | 'viewer'
 
@@ -9,6 +10,8 @@ export interface AuthenticatedUser {
   id: number | string
   email: string
   role: RbacRole
+  tenantId: string
+  roles: TenantRole[]
   firstName?: string
   lastName?: string
   isActive: boolean
@@ -92,6 +95,8 @@ export class AuthService {
 
     const userId = (user as any).id
     const role = (user as any).role as RbacRole
+    const tenantId = (user as any).tenantId ?? 'default'
+    const roles = (user as any).roles as TenantRole[] ?? []
     const isActive = (user as any).isActive ?? true
     const hash = (user as any).hash as string | null | undefined
     const salt = (user as any).salt as string | null | undefined
@@ -115,6 +120,8 @@ export class AuthService {
       userId: String(userId),
       email,
       role,
+      tenantId,
+      roles,
       sessionId: `session-${userId}-${Date.now()}`,
       generation: 0,
     }
@@ -152,7 +159,7 @@ export class AuthService {
       throw createError('Refresh token is required', 400)
     }
 
-    let payload: { userId: string; email: string; role: RbacRole; sessionId: string; generation: number }
+    let payload: { userId: string; email: string; role: RbacRole; tenantId: string; roles: TenantRole[]; sessionId: string; generation: number }
     try {
       payload = await this.jwtService.verify(refreshToken) as any
     } catch {
@@ -213,7 +220,7 @@ export class AuthService {
       throw createError('Access token is required', 401)
     }
 
-    let payload: { userId: string; email: string; role: RbacRole; sessionId: string; generation: number }
+    let payload: { userId: string; email: string; role: RbacRole; tenantId: string; roles: TenantRole[]; sessionId: string; generation: number }
     try {
       payload = await this.jwtService.verify(accessToken) as any
     } catch (err) {
@@ -242,6 +249,8 @@ export class AuthService {
         id: (user as any).id,
         email: (user as any).email,
         role: (user as any).role as RbacRole,
+        tenantId: (user as any).tenantId ?? payload.tenantId ?? 'default',
+        roles: (user as any).roles ?? payload.roles ?? [],
         firstName: (user as any).firstName,
         lastName: (user as any).lastName,
         isActive,

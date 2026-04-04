@@ -54,7 +54,15 @@ export async function login(
   await userStore.resetFailedAttempts(user.id)
   await userStore.update(user.id, { lastLoginAt: new Date() })
 
-  const tokenPayload = { userId: user.id, email: user.email, role: user.role as 'admin' | 'editor' | 'viewer', sessionId: '', generation: 0 }
+  const tokenPayload = {
+    userId: user.id,
+    email: user.email,
+    role: user.role as 'admin' | 'editor' | 'viewer',
+    tenantId: 'default',
+    roles: [{ tenantId: 'default', role: user.role as 'admin' | 'editor' | 'viewer' }],
+    sessionId: '',
+    generation: 0,
+  }
   const accessToken = await jwtService.signAccessToken(tokenPayload)
   const refreshToken = await jwtService.signRefreshToken(tokenPayload)
 
