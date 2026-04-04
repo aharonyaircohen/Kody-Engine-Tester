@@ -17,3 +17,7 @@ import { LessonEditor } from './LessonEditor'
 **File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
+
+## Learned 2026-04-04 (task: decompose)
+- Uses vitest for testing
+- Uses eslint for linting
