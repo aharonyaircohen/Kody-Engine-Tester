@@ -69,6 +69,16 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    courses: Course;
+    lessons: Lesson;
+    enrollments: Enrollment;
+    certificates: Certificate;
+    assignments: Assignment;
+    submissions: Submission;
+    quizzes: Quiz;
+    'quiz-attempts': QuizAttempt;
+    notifications: Notification;
+    notes: Note;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +88,16 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    courses: CoursesSelect<false> | CoursesSelect<true>;
+    lessons: LessonsSelect<false> | LessonsSelect<true>;
+    enrollments: EnrollmentsSelect<false> | EnrollmentsSelect<true>;
+    certificates: CertificatesSelect<false> | CertificatesSelect<true>;
+    assignments: AssignmentsSelect<false> | AssignmentsSelect<true>;
+    submissions: SubmissionsSelect<false> | SubmissionsSelect<true>;
+    quizzes: QuizzesSelect<false> | QuizzesSelect<true>;
+    'quiz-attempts': QuizAttemptsSelect<false> | QuizAttemptsSelect<true>;
+    notifications: NotificationsSelect<false> | NotificationsSelect<true>;
+    notes: NotesSelect<false> | NotesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -123,6 +143,39 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  firstName: string;
+  lastName: string;
+  displayName?: string | null;
+  avatar?: (number | null) | Media;
+  bio?: string | null;
+  role: 'admin' | 'editor' | 'viewer';
+  organization?: string | null;
+  refreshToken?: string | null;
+  tokenExpiresAt?: string | null;
+  lastTokenUsedAt?: string | null;
+  /**
+   * Tenant identifier for multi-tenant RBAC
+   */
+  tenantId?: string | null;
+  /**
+   * Per-tenant roles for multi-tenant RBAC
+   */
+  roles?:
+    | {
+        tenantId: string;
+        role: 'admin' | 'editor' | 'viewer' | 'guest';
+        id?: string | null;
+      }[]
+    | null;
+  oauthProviders?:
+    | {
+        provider: 'google' | 'github';
+        providerId: string;
+        email: string;
+        connectedAt: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -163,6 +216,375 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  slug?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  thumbnail?: (number | null) | Media;
+  instructor: number | User;
+  status?: ('draft' | 'published' | 'archived') | null;
+  difficulty?: ('beginner' | 'intermediate' | 'advanced') | null;
+  estimatedHours?: number | null;
+  tags?:
+    | {
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  maxEnrollments?: number | null;
+  /**
+   * Percentage weight of quizzes in overall grade (e.g. 40 = 40%)
+   */
+  quizWeight?: number | null;
+  /**
+   * Percentage weight of assignments in overall grade (e.g. 60 = 60%)
+   */
+  assignmentWeight?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lessons".
+ */
+export interface Lesson {
+  id: number;
+  title: string;
+  course: number | Course;
+  module?: string | null;
+  order?: number | null;
+  type?: ('video' | 'text' | 'interactive') | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  videoUrl?: string | null;
+  estimatedMinutes?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enrollments".
+ */
+export interface Enrollment {
+  id: number;
+  student: number | User;
+  course: number | Course;
+  enrolledAt?: string | null;
+  status: 'active' | 'completed' | 'dropped';
+  completedAt?: string | null;
+  completedLessons?: (number | Lesson)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certificates".
+ */
+export interface Certificate {
+  id: number;
+  student: number | User;
+  course: number | Course;
+  issuedAt: string;
+  certificateNumber: string;
+  finalGrade: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assignments".
+ */
+export interface Assignment {
+  id: number;
+  title: string;
+  /**
+   * The module this assignment belongs to.
+   */
+  module: string;
+  /**
+   * Detailed instructions for students.
+   */
+  instructions?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Optional deadline for submissions.
+   */
+  dueDate?: string | null;
+  /**
+   * Maximum possible score for this assignment.
+   */
+  maxScore: number;
+  /**
+   * Grading rubric criteria.
+   */
+  rubric?:
+    | {
+        /**
+         * Name of the criterion (e.g., "Content Quality").
+         */
+        criterion: string;
+        /**
+         * Maximum points for this criterion.
+         */
+        maxPoints: number;
+        /**
+         * Description of how this criterion is evaluated.
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "submissions".
+ */
+export interface Submission {
+  id: number;
+  /**
+   * The assignment this submission answers.
+   */
+  assignment: number | Assignment;
+  /**
+   * The student who submitted this work.
+   */
+  student: number | User;
+  /**
+   * The student's written response to the assignment.
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Files attached to this submission.
+   */
+  attachments?:
+    | {
+        /**
+         * Upload a file.
+         */
+        file: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Timestamp when the submission was made.
+   */
+  submittedAt?: string | null;
+  /**
+   * Current status of the submission.
+   */
+  status?: ('submitted' | 'graded' | 'returned') | null;
+  /**
+   * Score awarded by the instructor.
+   */
+  grade?: number | null;
+  /**
+   * Instructor feedback on the submission.
+   */
+  feedback?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Scores for each rubric criterion.
+   */
+  rubricScores?:
+    | {
+        /**
+         * Name of the rubric criterion.
+         */
+        criterion: string;
+        /**
+         * Points awarded for this criterion.
+         */
+        score: number;
+        /**
+         * Optional instructor comment for this criterion.
+         */
+        comment?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quizzes".
+ */
+export interface Quiz {
+  id: number;
+  title: string;
+  /**
+   * Module ID this quiz belongs to
+   */
+  module: string;
+  order?: number | null;
+  passingScore?: number | null;
+  /**
+   * Time limit in minutes (0 or empty = no limit)
+   */
+  timeLimit?: number | null;
+  maxAttempts?: number | null;
+  questions?:
+    | {
+        text: string;
+        type: 'multiple-choice' | 'true-false' | 'short-answer';
+        /**
+         * Options for multiple-choice and true/false questions
+         */
+        options?:
+          | {
+              text: string;
+              isCorrect?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Correct answer for short-answer questions (case-insensitive)
+         */
+        correctAnswer?: string | null;
+        points?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quiz-attempts".
+ */
+export interface QuizAttempt {
+  id: number;
+  /**
+   * User ID who made the attempt
+   */
+  user: string;
+  /**
+   * Quiz ID that was attempted
+   */
+  quiz: string;
+  score?: number | null;
+  passed?: boolean | null;
+  answers?:
+    | {
+        questionIndex: number;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  startedAt?: string | null;
+  completedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: number;
+  recipient: number | User;
+  type: 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'announcement';
+  title: string;
+  message: string;
+  link?: string | null;
+  isRead: boolean;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notes".
+ */
+export interface Note {
+  id: number;
+  title: string;
+  content: string;
+  tags?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -192,6 +614,46 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'courses';
+        value: number | Course;
+      } | null)
+    | ({
+        relationTo: 'lessons';
+        value: number | Lesson;
+      } | null)
+    | ({
+        relationTo: 'enrollments';
+        value: number | Enrollment;
+      } | null)
+    | ({
+        relationTo: 'certificates';
+        value: number | Certificate;
+      } | null)
+    | ({
+        relationTo: 'assignments';
+        value: number | Assignment;
+      } | null)
+    | ({
+        relationTo: 'submissions';
+        value: number | Submission;
+      } | null)
+    | ({
+        relationTo: 'quizzes';
+        value: number | Quiz;
+      } | null)
+    | ({
+        relationTo: 'quiz-attempts';
+        value: number | QuizAttempt;
+      } | null)
+    | ({
+        relationTo: 'notifications';
+        value: number | Notification;
+      } | null)
+    | ({
+        relationTo: 'notes';
+        value: number | Note;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -240,6 +702,33 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  displayName?: T;
+  avatar?: T;
+  bio?: T;
+  role?: T;
+  organization?: T;
+  refreshToken?: T;
+  tokenExpiresAt?: T;
+  lastTokenUsedAt?: T;
+  tenantId?: T;
+  roles?:
+    | T
+    | {
+        tenantId?: T;
+        role?: T;
+        id?: T;
+      };
+  oauthProviders?:
+    | T
+    | {
+        provider?: T;
+        providerId?: T;
+        email?: T;
+        connectedAt?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -274,6 +763,200 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses_select".
+ */
+export interface CoursesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  thumbnail?: T;
+  instructor?: T;
+  status?: T;
+  difficulty?: T;
+  estimatedHours?: T;
+  tags?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  maxEnrollments?: T;
+  quizWeight?: T;
+  assignmentWeight?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lessons_select".
+ */
+export interface LessonsSelect<T extends boolean = true> {
+  title?: T;
+  course?: T;
+  module?: T;
+  order?: T;
+  type?: T;
+  content?: T;
+  videoUrl?: T;
+  estimatedMinutes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enrollments_select".
+ */
+export interface EnrollmentsSelect<T extends boolean = true> {
+  student?: T;
+  course?: T;
+  enrolledAt?: T;
+  status?: T;
+  completedAt?: T;
+  completedLessons?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certificates_select".
+ */
+export interface CertificatesSelect<T extends boolean = true> {
+  student?: T;
+  course?: T;
+  issuedAt?: T;
+  certificateNumber?: T;
+  finalGrade?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "assignments_select".
+ */
+export interface AssignmentsSelect<T extends boolean = true> {
+  title?: T;
+  module?: T;
+  instructions?: T;
+  dueDate?: T;
+  maxScore?: T;
+  rubric?:
+    | T
+    | {
+        criterion?: T;
+        maxPoints?: T;
+        description?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "submissions_select".
+ */
+export interface SubmissionsSelect<T extends boolean = true> {
+  assignment?: T;
+  student?: T;
+  content?: T;
+  attachments?:
+    | T
+    | {
+        file?: T;
+        id?: T;
+      };
+  submittedAt?: T;
+  status?: T;
+  grade?: T;
+  feedback?: T;
+  rubricScores?:
+    | T
+    | {
+        criterion?: T;
+        score?: T;
+        comment?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quizzes_select".
+ */
+export interface QuizzesSelect<T extends boolean = true> {
+  title?: T;
+  module?: T;
+  order?: T;
+  passingScore?: T;
+  timeLimit?: T;
+  maxAttempts?: T;
+  questions?:
+    | T
+    | {
+        text?: T;
+        type?: T;
+        options?:
+          | T
+          | {
+              text?: T;
+              isCorrect?: T;
+              id?: T;
+            };
+        correctAnswer?: T;
+        points?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quiz-attempts_select".
+ */
+export interface QuizAttemptsSelect<T extends boolean = true> {
+  user?: T;
+  quiz?: T;
+  score?: T;
+  passed?: T;
+  answers?:
+    | T
+    | {
+        questionIndex?: T;
+        answer?: T;
+        id?: T;
+      };
+  startedAt?: T;
+  completedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications_select".
+ */
+export interface NotificationsSelect<T extends boolean = true> {
+  recipient?: T;
+  type?: T;
+  title?: T;
+  message?: T;
+  link?: T;
+  isRead?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notes_select".
+ */
+export interface NotesSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  tags?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

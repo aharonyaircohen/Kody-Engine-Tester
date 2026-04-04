@@ -18,7 +18,6 @@ type EnrollmentDoc = PayloadDoc & {
 }
 type LessonDoc = PayloadDoc & { course: { id: string } | string; title?: string }
 type AssignmentDoc = PayloadDoc & { title: string; dueDate: string }
-type ModuleDoc = PayloadDoc
 type QuizAttemptDoc = PayloadDoc & {
   quiz: { title?: string } | string
   passed?: boolean
@@ -103,32 +102,24 @@ export default async function DashboardPage() {
   })
 
   // Fetch upcoming assignment deadlines for enrolled courses
+  // Note: Assignments reference modules via text field, query assignments with due dates
   let deadlines: Deadline[] = []
   if (enrolledCourseIds.length > 0) {
-    const { docs: modules } = await payload.find({
-      collection: 'modules' as CollectionSlug,
-      where: { course: { in: enrolledCourseIds } },
-      limit: 100,
-    })
-    const moduleIds = (modules as unknown as ModuleDoc[]).map((m) => m.id)
-    if (moduleIds.length > 0) {
-      const { docs: assignments } = await payload.find({
-        collection: 'assignments' as CollectionSlug,
-        where: {
-          module: { in: moduleIds },
-          dueDate: { greater_than: new Date().toISOString() },
+    const { docs: assignments } = await payload.find({
+      collection: 'assignments' as CollectionSlug,
+      where: {
+        dueDate: { greater_than: new Date().toISOString() },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
-        sort: 'dueDate',
-        limit: 5,
-      })
-      deadlines = (assignments as unknown as AssignmentDoc[]).map((a) => ({
-        id: a.id,
-        title: a.title,
-        dueDate: a.dueDate,
-        type: 'assignment' as const,
-      }))
-    }
+      } as any,
+      sort: 'dueDate',
+      limit: 5,
+    })
+    deadlines = (assignments as unknown as AssignmentDoc[]).map((a) => ({
+      id: a.id,
+      title: a.title,
+      dueDate: a.dueDate,
+      type: 'assignment' as const,
+    }))
   }
 
   // Fetch recent activity: quiz attempts and submissions

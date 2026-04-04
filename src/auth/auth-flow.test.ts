@@ -131,6 +131,37 @@ describe('Multi-tenant Auth Flow', () => {
       const role = getTenantRole(user, 'tenant-a')
       expect(role).toBe('admin') // Falls back to global role
     })
+
+    it('should check multiple tenant roles correctly', () => {
+      const user = createMockUser([
+        { tenantId: 'tenant-a', role: 'admin' },
+        { tenantId: 'tenant-b', role: 'viewer' },
+      ])
+
+      // User should pass for tenant-a admin check
+      const resultA = checkTenantRole(user, 'tenant-a', ['admin'])
+      expect(resultA.user).toBeDefined()
+      expect(resultA.error).toBeUndefined()
+
+      // User should pass for tenant-b viewer check (has viewer there)
+      const resultB = checkTenantRole(user, 'tenant-b', ['viewer'])
+      expect(resultB.user).toBeDefined()
+      expect(resultB.error).toBeUndefined()
+    })
+
+    it('should deny access when neither tenant nor global role matches', () => {
+      const user = createMockUser([
+        { tenantId: 'tenant-a', role: 'editor' },
+        { tenantId: 'tenant-b', role: 'viewer' },
+      ])
+      // Set global role to something that doesn't match
+      user.role = 'viewer'
+
+      // User should fail for tenant-a admin check (editor there, not admin; global is viewer)
+      const result = checkTenantRole(user, 'tenant-a', ['admin'])
+      expect(result.error).toBe('Forbidden: requires role admin for tenant tenant-a')
+      expect(result.status).toBe(403)
+    })
   })
 
   describe('Token Blacklist', () => {

@@ -241,26 +241,15 @@ export class OAuthPKCEService {
     provider: OAuthProvider,
     accessToken: string
   ): Promise<{ id: string; email: string; name?: string }> {
-    let url: string
-    let responseMapping: (data: Record<string, unknown>) => { id: string; email: string; name?: string }
-
     if (provider === 'google') {
-      url = 'https://www.googleapis.com/oauth2/v3/userinfo'
-      responseMapping = (data) => ({
-        id: String(data.sub),
-        email: String(data.email),
-        name: data.name as string | undefined,
-      })
+      return this.getGoogleUserInfo(accessToken)
     } else {
-      // GitHub
-      url = 'https://api.github.com/user'
-      responseMapping = (data) => ({
-        id: String(data.id),
-        email: String(data.email),
-        name: data.name as string | undefined,
-      })
+      return this.getGitHubUserInfo(accessToken)
     }
+  }
 
+  private async getGoogleUserInfo(accessToken: string): Promise<{ id: string; email: string; name?: string }> {
+    const url = 'https://www.googleapis.com/oauth2/v3/userinfo'
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -269,11 +258,76 @@ export class OAuthPKCEService {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to get user info: ${response.statusText}`)
+      throw new Error(`Failed to get Google user info: ${response.statusText}`)
     }
 
     const data = await response.json() as Record<string, unknown>
-    return responseMapping(data)
+    return {
+      id: String(data.sub),
+      email: String(data.email),
+      name: data.name as string | undefined,
+    }
+  }
+
+  private async getGitHubUserInfo(accessToken: string): Promise<{ id: string; email: string; name?: string }> {
+    // Fetch user profile
+    const userResponse = await fetch('https://api.github.com/user', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json',
+      },
+    })
+
+    if (!userResponse.ok) {
+      throw new Error(`Failed to get GitHub user info: ${userResponse.statusText}`)
+    }
+
+    const userData = await userResponse.json() as Record<string, unknown>
+
+    // GitHub may not return email in /user endpoint if it's not public
+    // Try to get email from /user/emails endpoint
+    let email = userData.email as string | undefined
+
+    if (!email) {
+      email = await this.getGitHubPrimaryEmail(accessToken)
+    }
+
+    if (!email) {
+      throw new Error('GitHub account does not have a verified email address')
+    }
+
+    return {
+      id: String(userData.id),
+      email,
+      name: userData.name as string | undefined,
+    }
+  }
+
+  private async getGitHubPrimaryEmail(accessToken: string): Promise<string | undefined> {
+    try {
+      const emailsResponse = await fetch('https://api.github.com/user/emails', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: 'application/json',
+        },
+      })
+
+      if (!emailsResponse.ok) {
+        return undefined
+      }
+
+      const emails = await emailsResponse.json() as Array<{
+        email: string
+        primary: boolean
+        verified: boolean
+      }>
+
+      // Find primary and verified email
+      const primaryEmail = emails.find(e => e.primary && e.verified)
+      return primaryEmail?.email ?? emails.find(e => e.verified)?.email
+    } catch {
+      return undefined
+    }
   }
 
   private async findOrCreateOAuthUser(

@@ -90,8 +90,19 @@ export function withAuth(
       const authService = await getAuthService()
       const result = await authService.verifyAccessToken(token)
       if (result.user) {
-        // Check tenant-specific roles first if tenantId is provided
-        if (options.tenantId && options.roles) {
+        // Check multi-tenant roles if tenantRoles option is provided
+        if (options.tenantRoles && options.tenantRoles.length > 0) {
+          for (const tr of options.tenantRoles) {
+            const roleCheck = checkTenantRole(result.user, tr.tenantId, tr.roles)
+            if (roleCheck.error) {
+              return Response.json(
+                { error: roleCheck.error },
+                { status: roleCheck.status ?? 401 }
+              )
+            }
+          }
+        } else if (options.tenantId && options.roles) {
+          // Check tenant-specific roles first if tenantId is provided
           const roleCheck = checkTenantRole(result.user, options.tenantId, options.roles)
           if (roleCheck.error) {
             return Response.json(
