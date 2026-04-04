@@ -10,5 +10,5 @@
 - CMS: Payload CMS
 - Package manager: pnpm
 - Module system: ESM
-- Top-level directories: docs, scripts, skills, src, tests
+- Top-level directories: docs, src, tests
 - src/ structure: api, app, auth, collections, components, contexts, hooks, middleware, migrations, pages, security, services, utils, validation

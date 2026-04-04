@@ -6,6 +6,11 @@
       "sourceType": "github",
       "computedHash": "57b557ba9ee0578b4b8f9aa3ee07459e211422cb0abe53d9bfb97a27cf9b6d9c"
     },
+    "generate-translations": {
+      "source": "payloadcms/payload",
+      "sourceType": "github",
+      "computedHash": "6c04a70ba0a5c765b984e6f4922144d0e126c616008b7d660bcc1ea92ae59a48"
+    },
     "nextjs-app-router-fundamentals": {
       "source": "wsimmonds/claude-nextjs-skills",
       "sourceType": "github",
@@ -51,10 +56,20 @@
       "sourceType": "github",
       "computedHash": "67d6daabd85c23cc58eeabea56f25b899723932dfb69c55ddae4990b43c918d2"
     },
+    "react-native-best-practices": {
+      "source": "callstackincubator/agent-skills",
+      "sourceType": "github",
+      "computedHash": "6f5210e63faead5d3c0c8ff4f5ed5fda60ec7472ea2b212622c4e1ae6f12fefa"
+    },
     "react-vendoring": {
       "source": "vercel/next.js",
       "sourceType": "github",
       "computedHash": "2ed7b7d5b9d5291cff49f048f66cc845349bf3666eab57676283429cd7fddfb6"
+    },
+    "triage-ci-flake": {
+      "source": "payloadcms/payload",
+      "sourceType": "github",
+      "computedHash": "db9085da39dc22a53882551ed7bd3827120d6b1e748adcdb37a8842bb4bfe477"
     },
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",
