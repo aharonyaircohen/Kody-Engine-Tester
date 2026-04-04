@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add request compression middleware with tests",
+  "description": "Create gzip/brotli request compression middleware in src/middleware/compression.ts that compresses responses above a configurable size threshold. Unit tests in src/middleware/compression.test.ts and integration tests for JSON, HTML, and binary content types.",
+  "scope": [
+    "src/middleware/compression.ts",
+    "src/middleware/compression.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts - factory function pattern (createRateLimiterMiddleware) returning middleware with attached properties",
+    "src/middleware/request-logger.ts - factory function pattern (createRequestLogger) returning middleware with config interface",
+    "src/middleware/rate-limiter.test.ts - vitest with describe/it/expect/vi, afterEach cleanup with vi.useRealTimers(), vi.useFakeTimers() for timing"
+  ],
+  "questions": []
+}
