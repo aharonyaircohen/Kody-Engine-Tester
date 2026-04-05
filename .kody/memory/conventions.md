@@ -22,7 +22,7 @@ import { LessonEditor } from './LessonEditor'
 - Uses vitest for testing
 - Uses eslint for linting
 
-## Learned 2026-04-05 (task: 419-260405-054539)
+## Learned 2026-04-05 (task: 420-260405-054611)
 - Uses vitest for testing
 - Uses eslint for linting
-- Active directories: src/auth, src/middleware, src/collections, src/api/auth
+- Active directories: src/app/api/health
