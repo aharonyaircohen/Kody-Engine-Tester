@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add ISBN validator utility",
+  "description": "Create a new utility function in src/utils/isbn-validator.ts that validates ISBN-10 and ISBN-13 formats with check digit validation. Add comprehensive unit tests in src/utils/isbn-validator.test.ts.",
+  "scope": ["src/utils/isbn-validator.ts", "src/utils/isbn-validator.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/slugify.ts - Single-function utility with JSDoc documentation",
+    "src/utils/clamp.ts - Simple pure function with validation logic",
+    "src/utils/*.test.ts - Co-located test files using vitest with describe/it/expect pattern"
+  ],
+  "questions": []
+}
