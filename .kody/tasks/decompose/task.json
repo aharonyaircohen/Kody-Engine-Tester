@@ -1,0 +1,25 @@
+{
+  "task_type": "feature",
+  "title": "Add notification system files and endpoints",
+  "description": "The notification system exists with Notifications collection, NotificationService, and a GET /api/notifications endpoint. However, the task specifically requests: 1) src/models/notification.ts with info/warning/error types (existing types are enrollment/grade/deadline/discussion/announcement), 2) src/routes/notifications.ts as an alternative route handler, 3) src/utils/notificationHelpers.ts for formatting/filtering, and 4) POST /notifications and PATCH /notifications/:id/read endpoints which do not exist. These specific files/endpoints are missing and need to be added.",
+  "scope": [
+    "src/collections/Notifications.ts",
+    "src/services/notifications.ts",
+    "src/services/notifications.test.ts",
+    "src/app/api/notifications/route.ts",
+    "src/app/api/notifications/read-all/route.ts",
+    "src/app/api/notifications/[id]/read/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/collections/Notifications.ts - Payload CollectionConfig with NotificationType union type and relationship fields",
+    "src/services/notifications.ts - NotificationService with Payload dependency injection pattern",
+    "src/app/api/notifications/route.ts - Next.js route handler using withAuth HOC for authentication",
+    "src/services/notifications.test.ts - Vitest test pattern with vi.fn() mocks"
+  ],
+  "questions": [
+    "The task requests notification types (info, warning, error) but the existing Notifications collection uses (enrollment, grade, deadline, discussion, announcement). Should these be unified or kept as separate type systems?",
+    "Should src/routes/notifications.ts coexist with the existing src/app/api/notifications/ route structure, or replace it?",
+    "Does the existing NotificationService satisfy the CRUD requirements, or is a separate notificationService.ts in src/services/ still needed?"
+  ]
+}

@@ -2,14 +2,16 @@
 ## Result: FAIL
 
 ## Errors
-- [test]  [32m✓[39m src/utils/error-reporter.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 33[2mms[22m[39m
-- [test]  [32m✓[39m src/components/error-boundary.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 382[2mms[22m[39m
-- [test]  [32m✓[39m src/pages/error/ErrorPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 310[2mms[22m[39m
-- [test]  [32m✓[39m src/pages/error/NotFoundPage.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 265[2mms[22m[39m
-- [test] [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m117 passed[39m[22m[90m (118)[39m
+- [test]  [32m✓[39m src/components/error-boundary.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 352[2mms[22m[39m
+- [test]  [32m✓[39m src/pages/error/NotFoundPage.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 298[2mms[22m[39m
+- [test]  [32m✓[39m src/pages/error/ErrorPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 334[2mms[22m[39m
+- [test]  [32m✓[39m src/utils/error-reporter.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+- [test] [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m118 passed[39m[22m[90m (119)[39m
 - [test] [2m     Errors [22m [1m[31m1 error[39m[22m
 - [test]  ELIFECYCLE  Command failed with exit code 1.
 - [test]  ELIFECYCLE  Test failed. See above for more details.
+- [test] (node:7108) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+- [test] (Use `node --trace-warnings ...` to show where the warning was created)
 - [test] [90mstderr[2m | src/components/error-boundary.test.tsx[2m > [22m[2mErrorBoundary[2m > [22m[2mcatches errors and shows fallback[2m > [22m[2mshows default fallback UI with error message
 - [test] [22m[39mError: Child render error
 - [test]     at ThrowError [90m(/home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/[39msrc/components/error-boundary.test.tsx:9:11[90m)[39m
@@ -57,8 +59,6 @@
 - [test]   [message]: [32m'Child render error'[39m
 - [test] The above error occurred in the <ThrowError> component.
 - [test] React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
-- [test] (node:4650) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
-- [test] (Use `node --trace-warnings ...` to show where the warning was created)
 - [test] [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
 - [test] [41m[1m FAIL [22m[49m tests/int/api.int.spec.ts[2m > [22mAPI
 - [test] [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Unhandled Errors [49m[22m[31m⎯⎯⎯⎯⎯⎯[39m
@@ -200,8 +200,11 @@
 ## Raw Output
 ### test
 ```
- PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
-(Use `node --trace-warnings ...` to show where the warning was created)
+bove error occurred in the <ThrowError> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+
 
 [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
 
