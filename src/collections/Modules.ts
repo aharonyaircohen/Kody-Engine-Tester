@@ -1,3 +1,5 @@
+import type { CollectionConfig, CollectionSlug } from 'payload'
+
 export interface Module {
   id: string
   title: string
@@ -81,3 +83,52 @@ export class ModuleStore {
 }
 
 export const moduleStore = new ModuleStore()
+
+export const Modules: CollectionConfig = {
+  slug: 'modules',
+  admin: {
+    useAsTitle: 'title',
+  },
+  access: {
+    create: ({ req: { user } }) => {
+      if (!user) return false
+      const role = (user as { role?: string }).role
+      return role === 'instructor' || role === 'admin'
+    },
+    update: ({ req: { user } }) => {
+      if (!user) return false
+      const role = (user as { role?: string }).role
+      return role === 'instructor' || role === 'admin'
+    },
+    read: ({ req: { user } }) => {
+      return !!user
+    },
+    delete: ({ req: { user } }) => {
+      if (!user) return false
+      const role = (user as { role?: string }).role
+      return role === 'admin'
+    },
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'course',
+      type: 'relationship',
+      relationTo: 'courses' as CollectionSlug,
+      required: true,
+    },
+    {
+      name: 'order',
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
+      name: 'description',
+      type: 'text',
+    },
+  ],
+}

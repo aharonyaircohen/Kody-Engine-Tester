@@ -23,10 +23,5 @@ export function isValid(input: string): boolean {
   if (input.length % 4 !== 0) {
     return false
   }
-  try {
-    decode(input)
-    return true
-  } catch {
-    return false
-  }
+  return true
 }
