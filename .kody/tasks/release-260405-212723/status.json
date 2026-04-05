@@ -18,30 +18,37 @@
     },
     "build": {
       "state": "completed",
-      "completedAt": "2026-04-05T21:51:41.000Z",
+      "completedAt": "2026-04-05T21:56:05.553Z",
       "retries": 0,
-      "notes": "Fixed pre-existing test failures: contacts.test.ts sort issue and api.int.spec.ts database error handling. Skipped E2E tests due to Payload CMS infrastructure bug (schema introspection parameter binding issue with Neon PostgreSQL). Integration tests pass (1743 tests)."
+      "promptTokens": 5183
     },
     "verify": {
-      "state": "pending",
+      "state": "completed",
+      "completedAt": "2026-04-05T21:57:37.531Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
-      "retries": 0
+      "state": "completed",
+      "completedAt": "2026-04-05T21:58:05.936Z",
+      "retries": 0,
+      "outputFile": "review.md",
+      "promptTokens": 6174
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-05T21:58:06.691Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-05T21:28:37.595Z",
-  "updatedAt": "2026-04-05T21:34:09.772Z",
+  "updatedAt": "2026-04-05T21:58:06.691Z",
   "sessions": {
-    "explore": "f171e465-e56e-4910-af76-544076d91828"
+    "explore": "f171e465-e56e-4910-af76-544076d91828",
+    "build": "4509c19f-36ce-4daa-b6a7-e51380eafbd6",
+    "review": "5aa1cf21-498d-40ff-a8d7-60b2f6b077ac"
   }
 }

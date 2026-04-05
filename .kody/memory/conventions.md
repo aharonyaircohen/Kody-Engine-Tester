@@ -26,3 +26,7 @@ import { LessonEditor } from './LessonEditor'
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/app/api/health
+
+## Learned 2026-04-05 (task: release-260405-212723)
+- Uses eslint for linting
+- Active directories: .kody/tasks/release-260405-212723, .claude/commands
