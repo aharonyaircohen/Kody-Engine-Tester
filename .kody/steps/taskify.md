@@ -102,4 +102,32 @@ Guidelines:
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
 
+## Repo Patterns
+
+- **Course search**: `src/services/course-search.ts` uses `CourseSearchService` with `searchCourses(query, filters)` — implements query building and filtering strategy
+- **Progress tracking**: `src/services/progress.ts` — `EnrollmentProgress` type with `calculateProgress()` helper
+- **Certificate generation**: `src/collections/certificates.ts` — `generateCertificateNumber()` formats `LH-{courseId}-{year}-{sequence}`
+- **In-memory stores**: `src/collections/EnrollmentStore.ts`, `src/collections/NotificationsStore.ts` use `Map<id, entity>` with sequence ID generators
+- **Validation middleware**: `src/security/validation-middleware.ts` — schema-based request validation extracting structured errors by path
+- **Discussion threads**: `src/services/discussions.ts` — `getThreadDepth()` limits to 3 levels, replies chronological, pinned-first sorting
+- **Sanitization**: `src/security/sanitizers.ts` — `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl` for user input
+
+## Improvement Areas
+
+- **Dual auth coexistence**: `src/auth/user-store.ts` (SHA-256) alongside `src/auth/auth-service.ts` (PBKDF2) — two password hashing schemes; consolidate on AuthService
+- **Role enum drift**: `UserStore.UserRole = 'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole = 'admin'|'editor'|'viewer'` — no alignment between stores
+- **Unsafe type casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts; prefer proper type guards or narrowing
+- **Inconsistent test fixtures**: E2E has `seedTestUser()`/`cleanupTestUser()` pattern but integration tests lack consistent fixture helpers
+- **Payload mocking variance**: `src/services/course-search.test.ts` uses `createMockPayload()` but other service tests may use different mocking patterns
+
+## Acceptance Criteria
+
+- [ ] Classified task outputs valid JSON matching the required schema exactly
+- [ ] `scope` contains exact file paths discovered via Glob/Grep, not approximate paths
+- [ ] `task_type` is one of: feature, bugfix, refactor, docs, chore
+- [ ] `risk_level` aligns with scope size using low/medium/high heuristics
+- [ ] `existing_patterns` cites actual file paths and describes the pattern to reuse
+- [ ] `questions` array contains only product/requirements questions, max 3
+- [ ] Classification respects Superpowers Brainstorming: explore first, reuse existing solutions, challenge assumptions
+
 {{TASK_CONTEXT}}

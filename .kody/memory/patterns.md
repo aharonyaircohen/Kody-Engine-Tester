@@ -10,12 +10,15 @@
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Validation Middleware** (`src/security/validation-middleware.ts`): Request-level input validation and sanitization using schema-based parsing; extracts structured errors by path.
+- **CSRF Middleware** (`src/middleware/csrf-middleware.ts`): Double-submit cookie pattern; token rotation on success.
 
 ### Behavioral Patterns
 
 - **Strategy**: `request-logger.ts` switches between `json`/`text` output formats; log level Strategy maps HTTP status codes to `debug|info|warn|error`.
 - **Repository/Store**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` — hybrid repository-pattern store.
-- **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling.
+- **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union (`Ok`/`Err`) with `map`, `mapErr`, `andThen`, `match` combinators and `tryCatch`/`fromPromise` helpers.
+- **Context/Provider** (`src/contexts/auth-context.tsx`): React Context pattern for auth state with automatic token refresh scheduling via `setTimeout` in `AuthProvider`.
 
 ### Architectural Layers
 
@@ -42,6 +45,7 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - `Container.register<T>(token, factory)` — generic DI
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
+- `validate(config)` — schema-based request validation middleware
 - Zod schemas in `src/validation/` for input validation at API boundaries
 
 ### Anti-Patterns / Inconsistencies

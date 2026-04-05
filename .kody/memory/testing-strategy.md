@@ -20,6 +20,8 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Payload Mocking**: `createMockPayload()` factory wrapping `vi.fn()` — used in service tests (`src/services/course-search.test.ts`)
+- **Vitest Setup**: Shared setup file at `./vitest.setup.ts` (configured in `vitest.config.mts`)
 
 ## CI Quality Gates
 
