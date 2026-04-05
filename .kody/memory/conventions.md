@@ -31,3 +31,7 @@ import { LessonEditor } from './LessonEditor'
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/utils
+
+## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
+- Uses vitest for testing
+- Uses eslint for linting
