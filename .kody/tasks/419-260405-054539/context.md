@@ -29,3 +29,28 @@ All implementation tasks have been completed successfully. Here's what was chang
 - Updated `requireRole` to use the same hierarchical RBAC logic
 - Now properly enforces role inheritance (admin ca
 ...(truncated)
+
+### review (2026-04-05T06:16:08)
+## Verdict: PASS
+
+## Summary
+
+JWT-based authentication redesign completing: (1) hierarchical RBAC added to `checkRole` and `requireRole` via numeric `ROLE_HIERARCHY`, (2) `Users` collection extended with `permissions` (text) and `lastLogin` (timestamp) fields, (3) `logout.ts`, `refresh.ts`, `register.ts`, `profile.ts` migrated from `SessionStore`/`UserStore` to `AuthService`/Payload, (4) Payload migration script added for schema changes.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+- `src/migra
+...(truncated)
+
+### review-fix (2026-04-05T06:16:37)
+**Fix complete.** Changed `permissions` column type from `varchar` to `text[]` (PostgreSQL array type) to properly store an array of permission strings.
+
+- TypeScript: ✓ Zero errors
+- Auth tests: ✓ 45 passed
+

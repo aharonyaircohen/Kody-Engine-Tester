@@ -3,7 +3,7 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 export async function up({ db, payload: _payload, req: _req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
     ALTER TABLE "users" ADD COLUMN "lastLogin" timestamp(3) with time zone;
-    ALTER TABLE "users" ADD COLUMN "permissions" varchar;
+    ALTER TABLE "users" ADD COLUMN "permissions" text[];
   `)
 }
 
