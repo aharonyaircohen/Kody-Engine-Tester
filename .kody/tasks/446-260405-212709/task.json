@@ -1,0 +1,35 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of JWT auth redesign",
+  "description": "The JWT-based authentication system has been substantially implemented: JWT service with HS256 signing (task specified RS256), AuthService with login/refresh/verify/logout, user schema with roles (admin/editor/viewer) and permissions arrays, RBAC middleware via withAuth HOC, token refresh with rotation, and a database migration for new user fields. API routes (notes, quizzes, gradebook, notifications) already use withAuth. Integration tests exist in auth-service.test.ts. Note: Implementation uses HS256 instead of the specified RS256 signing algorithm.",
+  "scope": [
+    "src/auth/jwt-service.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/_auth.ts",
+    "src/middleware/role-guard.ts",
+    "src/collections/Users.ts",
+    "src/migrations/20260405_000000_add_users_permissions_lastLogin.ts",
+    "src/app/api/notes/route.ts",
+    "src/app/api/quizzes/[id]/route.ts",
+    "src/app/api/gradebook/route.ts",
+    "src/app/api/notifications/route.ts",
+    "src/auth/auth-service.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts - JWT signing with HS256, token blacklisting, access/refresh token generation",
+    "src/auth/auth-service.ts - AuthService with login, refresh, verifyAccessToken, logout using PBKDF2 password verification",
+    "src/auth/withAuth.ts - HOC wrapper for route handlers with JWT validation and role checks",
+    "src/middleware/role-guard.ts - requireRole() function for role-based access control",
+    "src/auth/_auth.ts - extractBearerToken, checkRole, ROLE_HIERARCHY for RBAC",
+    "src/collections/Users.ts - User collection with role select, refreshToken, tokenExpiresAt, lastLogin fields"
+  ],
+  "questions": [
+    "Should the HS256 JWT signing be changed to RS256 (asymmetric) as originally specified, or is the current symmetric implementation acceptable?",
+    "Are there any remaining API routes that need to be migrated to use withAuth?",
+    "Is the permissions field (currently text[]) being used for granular permissions or just the role-based hierarchy?"
+  ]
+}
+```
