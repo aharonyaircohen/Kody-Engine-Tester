@@ -1,0 +1,21 @@
+{
+  "task_type": "feature",
+  "title": "Add hex-color utility with RGB-hex conversion",
+  "description": "Create a new utility file src/utils/hex-color.ts with hexToRgb and rgbToHex functions for converting between RGB values and hex color strings, along with co-located tests in src/utils/hex-color.test.ts",
+  "scope": [
+    "src/utils/hex-color.ts",
+    "src/utils/hex-color.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    {
+      "file": "src/utils/color.ts",
+      "pattern": "RGB interface and hexToRgb/rgbToHex functions - reuse the same RGB interface and function signatures"
+    },
+    {
+      "file": "src/utils/color.test.ts",
+      "pattern": "Vitest test structure with describe/it blocks and expect assertions"
+    }
+  ],
+  "questions": []
+}
