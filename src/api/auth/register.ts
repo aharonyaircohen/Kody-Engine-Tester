@@ -1,7 +1,6 @@
-import type { UserStore } from '../../auth/user-store'
-import type { SessionStore } from '../../auth/session-store'
-import type { JwtService } from '../../auth/jwt-service'
-import { login } from './login'
+import type { AuthService } from '../../auth/auth-service'
+import type { Payload } from 'payload'
+import type { CollectionSlug } from 'payload'
 
 function createError(message: string, status: number): Error & { status: number } {
   const err = new Error(message) as Error & { status: number }
@@ -25,9 +24,8 @@ export async function register(
   confirmPassword: string,
   ipAddress: string,
   userAgent: string,
-  userStore: UserStore,
-  sessionStore: SessionStore,
-  jwtService: JwtService
+  payload: Payload,
+  authService: AuthService
 ) {
   if (!email || !password || !confirmPassword) {
     throw createError('Email, password, and confirm password are required', 400)
@@ -46,12 +44,27 @@ export async function register(
     throw createError(strengthError, 400)
   }
 
-  const existing = await userStore.findByEmail(email)
-  if (existing) {
+  // Check if user already exists via Payload
+  const existing = await payload.find({
+    collection: 'users' as CollectionSlug,
+    where: { email: { equals: email } },
+    limit: 1,
+  })
+
+  if (existing.docs.length > 0) {
     throw createError('Email already in use', 409)
   }
 
-  await userStore.create({ email, password, role: 'user' })
+  // Create user in Payload - Payload handles password hashing via its internal mechanism
+  await payload.create({
+    collection: 'users' as CollectionSlug,
+    data: {
+      email,
+      password,
+      role: 'viewer',
+    } as any,
+  })
 
-  return login(email, password, ipAddress, userAgent, userStore, sessionStore, jwtService)
+  // Log the user in to get tokens
+  return authService.login(email, password, ipAddress, userAgent)
 }

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { requireRole } from './role-guard'
 import type { User } from '../auth/user-store'
+import type { RbacRole } from '../auth/auth-service'
 
 const makeContext = (role: string) => ({
   user: { id: '1', email: 'test@example.com', role, isActive: true } as User,
@@ -17,6 +18,24 @@ describe('requireRole', () => {
     const guard = requireRole('admin', 'editor')
     expect(guard(makeContext('admin'))).toBeUndefined()
     expect(guard(makeContext('editor'))).toBeUndefined()
+  })
+
+  it('should allow admin to access editor-protected routes (hierarchical)', () => {
+    const guard = requireRole('editor')
+    const result = guard(makeContext('admin'))
+    expect(result).toBeUndefined()
+  })
+
+  it('should allow editor to access viewer-protected routes (hierarchical)', () => {
+    const guard = requireRole('viewer')
+    const result = guard(makeContext('editor'))
+    expect(result).toBeUndefined()
+  })
+
+  it('should allow admin to access viewer-protected routes (hierarchical)', () => {
+    const guard = requireRole('viewer')
+    const result = guard(makeContext('admin'))
+    expect(result).toBeUndefined()
   })
 
   it('should return 403 when user lacks required role', () => {
@@ -41,9 +60,9 @@ describe('requireRole', () => {
   })
 
   it('should include descriptive error message', () => {
-    const guard = requireRole('admin', 'moderator')
-    const result = guard(makeContext('user'))
+    const guard = requireRole('admin', 'editor')
+    const result = guard(makeContext('viewer'))
     expect(result?.error).toContain('admin')
-    expect(result?.error).toContain('moderator')
+    expect(result?.error).toContain('editor')
   })
 })

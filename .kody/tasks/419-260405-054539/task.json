@@ -1,0 +1,45 @@
+
+{
+  "task_type": "feature",
+  "title": "Complete JWT auth redesign with RBAC hierarchy and user schema migration",
+  "description": "Complete authentication system redesign with: (1) JWT-based auth replacing session store for API routes via withAuth, (2) Migrate Users collection schema to add permissions array and lastLogin timestamp fields with a migration script, (3) Implement hierarchical RBAC where admin > editor > viewer role inheritance is enforced in checkRole, (4) Ensure all protected API routes use JWT+RBAC middleware, (5) Add integration tests for full auth flow and migration script validation. Current gaps: Users collection missing permissions and lastLogin fields; checkRole lacks hierarchy support; auth-middleware.ts still uses SessionStore; no migration script for schema changes.",
+  "scope": [
+    "src/auth/_auth.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/auth-service.test.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/jwt-service.test.ts",
+    "src/auth/withAuth.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/middleware/role-guard.ts",
+    "src/middleware/role-guard.test.ts",
+    "src/collections/Users.ts",
+    "src/collections/Users.test.ts",
+    "src/api/auth/login.ts",
+    "src/api/auth/login.test.ts",
+    "src/api/auth/logout.ts",
+    "src/api/auth/logout.test.ts",
+    "src/api/auth/refresh.ts",
+    "src/api/auth/refresh.test.ts",
+    "src/api/auth/register.ts",
+    "src/api/auth/register.test.ts",
+    "src/api/auth/profile.ts",
+    "src/api/auth/profile.test.ts"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/auth-service.ts - AuthService using Payload with JWT tokens (login, refresh, verify, logout)",
+    "src/auth/jwt-service.ts - JwtService with access/refresh token pairs and token rotation via generation field",
+    "src/auth/_auth.ts - checkRole function for RBAC (currently exact-match only, needs hierarchy)",
+    "src/auth/withAuth.ts - Higher-order function wrapping route handlers with JWT validation and RBAC",
+    "src/collections/Users.ts - Payload collection with role field (admin/editor/viewer) and token fields",
+    "src/middleware/role-guard.ts - requireRole guard function for route protection",
+    "vi.fn() mocks with mockResolvedValue/mockRejectedValue for Payload SDK stubs"
+  ],
+  "questions": [
+    "Should the SessionStore be completely removed or kept for backwards compatibility with other parts of the system?",
+    "What specific permissions should be included in the permissions array for each role (admin, editor, viewer)?",
+    "Should the migration script be a Payload migration (payload.config.ts hooks) or a standalone script?"
+  ]
+}

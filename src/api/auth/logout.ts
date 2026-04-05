@@ -1,18 +1,11 @@
-import type { SessionStore } from '../../auth/session-store'
-import type { JwtService } from '../../auth/jwt-service'
+import type { AuthService } from '../../auth/auth-service'
 
-export function logout(
+export async function logout(
   userId: string,
-  sessionId: string,
-  accessToken: string,
-  allDevices: boolean,
-  sessionStore: SessionStore,
-  jwtService: JwtService
-): void {
-  if (allDevices) {
-    sessionStore.revokeAllForUser(userId)
-  } else {
-    sessionStore.revoke(sessionId)
-  }
-  jwtService.blacklist(accessToken)
+  _accessToken: string,
+  _allDevices: boolean,
+  authService: AuthService
+): Promise<void> {
+  // AuthService uses JWT token rotation - clearing refresh token invalidates all tokens
+  await authService.logout(userId)
 }
