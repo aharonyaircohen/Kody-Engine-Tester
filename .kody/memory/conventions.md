@@ -26,3 +26,8 @@ import { LessonEditor } from './LessonEditor'
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/app/api/health
+
+## Learned 2026-04-05 (task: 446-260405-212709)
+- Uses eslint for linting
+- Timezone handling is a concern in this codebase
+- Active directories: src/auth, src/middleware, src/collections, src/migrations, src/app/api/notes, src/app/api/quizzes/[id], src/app/api/gradebook, src/app/api/notifications
