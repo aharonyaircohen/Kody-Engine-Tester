@@ -80,7 +80,7 @@ src/
 ├── collections/           # Payload collection configs (Course, Lesson, Enrollment, etc.)
 ├── components/            # Custom React components
 ├── hooks/                 # Custom React hooks
-├── middleware/            # Express-style middleware (rate-limiter)
+├── middleware/             # Express-style middleware (rate-limiter)
 ├── auth/                  # Auth utilities (JWT service, session store, withAuth HOC)
 ├── utils/                 # Pure utility functions (debounce, retry, flatten, result)
 ├── services/              # Business logic services

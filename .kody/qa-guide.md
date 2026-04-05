@@ -1,15 +1,22 @@
 # QA Guide
 
+## Quick Reference
+
+- Dev server: `pnpm dev` at http://localhost:3000
+- Login page: `/login`
+- Admin panel: `/admin/:...segments?`
+
 ## Authentication
 
 ### Test Accounts
 
-<!-- Fill in your test/preview environment credentials below -->
-
-| Role  | Email             | Password  |
-| ----- | ----------------- | --------- |
-| Admin | admin@example.com | CHANGE_ME |
-| User  | user@example.com  | CHANGE_ME |
+| Role       | Email                  | Password                  |
+| ---------- | ---------------------- | ------------------------- |
+| Admin      | ${QA_ADMIN_EMAIL}      | ${QA_ADMIN_PASSWORD}      |
+| Engineer   | ${QA_ENGINEER_EMAIL}   | ${QA_ENGINEER_PASSWORD}   |
+| CEO        | ${QA_CEO_EMAIL}        | ${QA_CEO_PASSWORD}        |
+| CTO        | ${QA_CTO_EMAIL}        | ${QA_CTO_PASSWORD}        |
+| Researcher | ${QA_RESEARCHER_EMAIL} | ${QA_RESEARCHER_PASSWORD} |
 
 ### Login Steps
 
@@ -22,98 +29,65 @@
 
 - `src/auth`
 
-## Roles
+## Navigation Map
 
-- `admin`
-- `Engineer`
-- `CEO`
-- `CTO`
-- `Researcher`
+### Admin Panel
 
-## Key Pages
+- `/admin/collections/assignments` — Assignments: title, module, instructions, dueDate, maxScore, rubric, criterion, maxPoints, description
+- `/admin/collections/courses` — Courses: title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label
+- `/admin/collections/enrollments` — Enrollments: student, course, enrolledAt, status, completedAt, completedLessons
+- `/admin/collections/lessons` — Lessons: title, course, module, order, type, content, videoUrl, estimatedMinutes
+- `/admin/collections/media` — Media: alt
+- `/admin/collections/notifications` — Notifications: recipient, type, title, message, link, isRead
+- `/admin/collections/quiz-attempts` — QuizAttempts: user, quiz, score, passed, answers, questionIndex, answer, startedAt, completedAt
+- `/admin/collections/quizzes` — Quizzes: title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options
+- `/admin/collections/submissions` — Submissions: assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores
+- `/admin/collections/users` — Users: firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
+- `/admin/collections/certificates` — Certificates: student, course, issuedAt, certificateNumber, finalGrade
+- `/admin/collections/notes` — Notes: title, content, tags
 
-### Frontend
+### Frontend Pages
 
-- `/`
-- `/dashboard`
-- `/instructor/courses/:id/edit`
-- `/notes`
-- `/notes/:id`
-- `/notes/create`
-- `/notes/edit/:id`
+- `/` — Home page
+- `/dashboard` — User dashboard
+- `/instructor/courses/:id/edit` — Course editor for instructors
+- `/notes` — Notes list view
+- `/notes/:id` — Note detail view
+- `/notes/create` — Create new note
+- `/notes/edit/:id` — Edit existing note
 
-### Admin
+### API Endpoints
 
-- `/admin/:...segments?`
+- `GET/POST /api/notes` — Note CRUD with search
+- `GET/POST /api/notes/[id]` — Note by ID
+- `GET /api/quizzes/[id]` — Quiz retrieval
+- `POST /api/quizzes/[id]/submit` — Quiz grading
+- `GET /api/quizzes/[id]/attempts` — User quiz attempts
+- `GET /api/courses/search` — Course search
+- `POST /api/enroll` — Enrollment (viewer role required)
+- `GET /api/gradebook/course/[id]` — Grades per course (editor/admin)
 
-## Admin Collections
+## Component Verification Patterns
 
-### `/admin/collections/assignments`
+**Payload CMS Admin Collections**: Navigate to `/admin/collections/{slug}` — verify list view loads with expected columns, click row to open edit form, verify all fields render correctly.
 
-- **Name:** Assignments
-- **Fields:** title, module, instructions, dueDate, maxScore, rubric, criterion, maxPoints, description
+**Notes CRUD**: Navigate to `/notes/create` — fill title and content fields, submit, verify redirect to `/notes/:id`. Edit at `/notes/edit/:id`, delete and verify return to `/notes`.
 
-### `/admin/collections/courses`
+**Course Editor**: Navigate to `/instructor/courses/:id/edit` — verify CourseLessonsSorter component shows drag-sortable lessons grouped by module.
 
-- **Name:** Courses
-- **Fields:** title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label, maxEnrollments, quizWeight, assignmentWeight
+## Common Test Scenarios
 
-### `/admin/collections/enrollments`
+1. **Auth Flow**: Login → verify dashboard redirect → logout → verify protected routes redirect to `/login`
+2. **Notes CRUD**: Create note at `/notes/create`, view at `/notes/:id`, edit at `/notes/edit/:id`, verify list at `/notes`
+3. **Admin Collection CRUD**: Navigate to collection list, create new document, edit it, delete it
+4. **Role Access**: Login as each role, verify correct nav items and access restrictions
 
-- **Name:** Enrollments
-- **Fields:** student, course, enrolledAt, status, completedAt, completedLessons
+## Environment Setup
 
-### `/admin/collections/lessons`
-
-- **Name:** Lessons
-- **Fields:** title, course, module, order, type, content, videoUrl, estimatedMinutes
-
-### `/admin/collections/media`
-
-- **Name:** Media
-- **Fields:** alt
-
-### `/admin/collections/notifications`
-
-- **Name:** Notifications
-- **Fields:** recipient, type, title, message, link, isRead
-
-### `/admin/collections/quiz-attempts`
-
-- **Name:** QuizAttempts
-- **Fields:** user, quiz, score, passed, answers, questionIndex, answer, startedAt, completedAt
-
-### `/admin/collections/quizzes`
-
-- **Name:** Quizzes
-- **Fields:** title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options, isCorrect, correctAnswer, points
-
-### `/admin/collections/submissions`
-
-- **Name:** Submissions
-- **Fields:** assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores, criterion, score, comment
-
-### `/admin/collections/users`
-
-- **Name:** Users
-- **Fields:** firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
-
-### `/admin/collections/certificates`
-
-- **Name:** certificates
-- **Fields:** student, course, issuedAt, certificateNumber, finalGrade
-
-### `/admin/collections/notes`
-
-- **Name:** notes
-- **Fields:** title, content, tags
-
-## Required Environment Variables
-
-- `DATABASE_URL`
-- `PAYLOAD_SECRET`
+- `DATABASE_URL` — PostgreSQL connection string
+- `PAYLOAD_SECRET` — Secret for Payload CMS
 
 ## Dev Server
 
 - Command: `pnpm dev`
-- URL: `http://localhost:3000`
+- URL: http://localhost:3000

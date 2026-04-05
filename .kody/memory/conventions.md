@@ -10,7 +10,7 @@ import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
 import { LessonEditor } from './LessonEditor'
 ```
 
-**Exports**: Named exports for utilities/types; default export for page components only
+**Exports**: Named exports for utilities/types/classes; default export for page components only
 
 **Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
 
@@ -18,11 +18,12 @@ import { LessonEditor } from './LessonEditor'
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
+**CSS Modules**: Import as camelCase alias: `import styles from './ModuleList.module.css'`
 
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
+**Security**: Sanitization utilities in `src/security/sanitizers.ts` (sanitizeHtml, sanitizeSql, sanitizeUrl)
+
+**Stores & Services**: In-memory stores (e.g., `CertificatesStore`, `DiscussionsStore`) in `src/collections/`; service classes with dependency injection in `src/services/`
+
+**Payload Collections**: Use `as CollectionSlug` cast on relationTo fields; collection slugs are singular
+
+**API Auth**: Pass Bearer token in Authorization header; retrieve from localStorage via `localStorage.getItem('auth_access_token')`

@@ -1,18 +1,10 @@
-# LearnHub LMS Testing Strategy
-
-## Stack
-
-- **Integration**: Vitest 4.0 (`vitest.config.mts`) — `pnpm test:int`
-- **E2E**: Playwright 1.58 (`playwright.config.ts`) — `pnpm test:e2e`
-- **Runner**: `pnpm test` executes both suites sequentially
-
 ## Organization
 
 | Type              | Location                                | Pattern                                       |
 | ----------------- | --------------------------------------- | --------------------------------------------- |
 | Unit/Integration  | `src/**/*.test.ts`, `src/**/*.test.tsx` | Co-located with source                        |
 | Integration Specs | `tests/int/**/*.int.spec.ts`            | Dedicated integration folder                  |
-| E2E               | `tests/e2e/*.spec.ts`                   | Page-object style helpers in `tests/helpers/` |
+| E2E               | `tests/e2e/*.spec.ts`                   | Helpers in `tests/helpers/` (login, seedUser) |
 
 ## Patterns
 
@@ -20,6 +12,7 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Vitest include pattern**: `['src/**/*.test.ts', 'src/**/*.test.tsx', 'tests/**/*.test.ts', 'tests/int/**/*.int.spec.ts']`
 
 ## CI Quality Gates
 
