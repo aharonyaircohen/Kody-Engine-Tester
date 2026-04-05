@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add format-currency utility with locale support",
+  "description": "Create a currency formatting utility in src/utils/format-currency.ts that formats numbers as currency strings (USD, EUR, etc.) with locale support, following the existing format-number.ts pattern using Intl.NumberFormat. Add comprehensive tests in format-currency.test.ts.",
+  "scope": [
+    "src/utils/format-currency.ts",
+    "src/utils/format-currency.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/format-number.ts - uses Intl.NumberFormat for locale-aware number formatting with options interface",
+    "src/utils/format-number.test.ts - vitest test structure with describe/it/expect, co-located with implementation"
+  ],
+  "questions": []
+}
