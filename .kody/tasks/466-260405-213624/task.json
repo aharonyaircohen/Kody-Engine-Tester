@@ -1,0 +1,12 @@
+{
+"task_type": "feature",
+"title": "Add Morse code translator utility",
+"description": "Create src/utils/morse-code.ts that provides textToMorse and morseToText functions supporting A-Z and 0-9. Add co-located unit tests in src/utils/morse-code.test.ts following existing utility patterns.",
+"scope": ["src/utils/morse-code.ts", "src/utils/morse-code.test.ts"],
+"risk_level": "low",
+"existing_patterns": [
+  {"path": "src/utils/clamp.ts", "pattern": "Single-function utility file with typed inputs/outputs"},
+  {"path": "src/utils/clamp.test.ts", "pattern": "Co-located vitest test file using describe/it/expect"}
+],
+"questions": []
+}
