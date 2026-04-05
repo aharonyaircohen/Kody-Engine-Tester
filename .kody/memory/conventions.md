@@ -22,6 +22,10 @@ import { LessonEditor } from './LessonEditor'
 - Uses vitest for testing
 - Uses eslint for linting
 
-## Learned 2026-04-05 (task: decompose)
+## Learned 2026-04-05 (task: 417-260405-054611)
+- Uses vitest for testing
+- Uses eslint for linting
+
+## Learned 2026-04-05 (task: fix-pr-430-260405-062613)
 - Uses vitest for testing
 - Uses eslint for linting

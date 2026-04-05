@@ -1,0 +1,49 @@
+{
+  "taskId": "fix-pr-430-260405-062613",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "plan": {
+      "state": "pending",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-05T06:29:36.923Z",
+      "retries": 0,
+      "promptTokens": 6245
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-04-05T06:31:02.740Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "completedAt": "2026-04-05T06:34:47.828Z",
+      "retries": 0,
+      "outputFile": "review.md",
+      "promptTokens": 7169
+    },
+    "review-fix": {
+      "state": "completed",
+      "completedAt": "2026-04-05T06:35:14.223Z",
+      "retries": 0,
+      "promptTokens": 5248
+    },
+    "ship": {
+      "state": "running",
+      "startedAt": "2026-04-05T06:35:14.261Z",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-05T06:26:31.557Z",
+  "updatedAt": "2026-04-05T06:35:14.261Z",
+  "sessions": {
+    "build": "6af3a230-32f6-434e-b95b-f6fdedf5c0c9",
+    "review": "bad512ad-7071-4182-a17b-c04ef2876814"
+  }
+}
