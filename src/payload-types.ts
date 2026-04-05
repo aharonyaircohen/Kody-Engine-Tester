@@ -155,6 +155,8 @@ export interface User {
   refreshToken?: string | null;
   tokenExpiresAt?: string | null;
   lastTokenUsedAt?: string | null;
+  lastLogin?: string | null;
+  permissions?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -708,6 +710,8 @@ export interface UsersSelect<T extends boolean = true> {
   refreshToken?: T;
   tokenExpiresAt?: T;
   lastTokenUsedAt?: T;
+  lastLogin?: T;
+  permissions?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
