@@ -2,11 +2,29 @@
  * Base64 encoding and decoding utilities for UTF-8 strings.
  */
 
+/**
+ * Encodes a UTF-8 string to base64.
+ * @param input - The string to encode
+ * @returns The base64 encoded string
+ * @throws TypeError - If input is not a string
+ */
 export function encode(input: string): string {
+  if (!input || input.length === 0) {
+    return ''
+  }
   return Buffer.from(input, 'utf-8').toString('base64')
 }
 
+/**
+ * Decodes a base64 string to UTF-8.
+ * @param input - The base64 string to decode
+ * @returns The decoded UTF-8 string
+ * @throws TypeError - If input is not valid base64
+ */
 export function decode(input: string): string {
+  if (!input || input.length === 0) {
+    return ''
+  }
   return Buffer.from(input, 'base64').toString('utf-8')
 }
 
