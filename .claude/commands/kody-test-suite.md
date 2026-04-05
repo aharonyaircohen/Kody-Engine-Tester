@@ -51,8 +51,11 @@ Then pick tasks that create NEW files. If a task creates files that already exis
 | T32 | [test-suite] Watch: health monitoring | `@kody watch --dry-run` (local) | Runs watch plugins, posts findings to digest issue. See T32 details below |
 | T25 | [test-suite] Decompose: complex multi-area task | `@kody decompose` | Scores 6+, splits into 2+ sub-tasks, parallel build, merge, verify, review, ship. PR body has "Decomposed Implementation" section. See T25 details below |
 | T26 | [test-suite] Decompose: --no-compose flag | `@kody decompose --no-compose` | Stops after parallel build. decompose-state.json saved. No PR created. See T26 details below |
+| T37 | [test-suite] Hotfix: fast-track pipeline | `@kody hotfix` | Skips taskify/plan/review, runs build → verify (no tests) → ship. PR created with hotfix label. See T37 details below |
+| T40 | [test-suite] Release: dry-run | `@kody release --dry-run` | Parses conventional commits, determines bump, generates changelog — no PR created. See T40 details below |
+| T41 | [test-suite] Release: create release PR | `@kody release` | Bumps version, generates changelog, creates release PR targeting default branch. See T41 details below |
 
-**Parallelization:** T01-T04 can all trigger simultaneously (separate issues, no dependencies). T19-T26 can run in parallel with T01-T04.
+**Parallelization:** T01-T04 can all trigger simultaneously (separate issues, no dependencies). T19-T26, T37, and T40 can run in parallel with T01-T04.
 
 For each test:
 
@@ -330,6 +333,8 @@ These tests depend on Phase 1 outputs. Wait for Phase 1 to complete before start
 | T09 | Any task | `@kody rerun --from verify` | Comment on an issue with a completed task | Reruns from verify stage. Also validates state bypass — rerun on completed issue is not blocked by "already completed" lock |
 | T28 | T26 (no-compose) | `@kody compose` | Comment on T26's issue with task-id | Reads decompose-state.json, merges sub-task branches, verify, review, ship. PR created. See T28 details below |
 | T29 | T28 (compose) | `@kody compose` (retry) | Simulate compose failure then retry | Skips merge (already done), retries from verify. See T29 details below |
+| T38 | Any merged PR (Phase 4) | `@kody revert #<PR>` | Comment on any issue | Reverts the merged PR, runs full verify, creates revert PR. See T38 details below |
+| T39 | T38's issue | `@kody revert` (no target) | Comment on issue whose PR was reverted | Finds the linked merged PR via branch naming convention and reverts it. See T39 details below |
 
 ### T06 — Deep review verification
 
@@ -732,6 +737,215 @@ gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json | jq -
 - PASS: Engine manages dev server lifecycle, env vars set correctly
 - FAIL: Agent starts its own dev server, or engine doesn't stop it, or env vars missing
 
+### T37 — Hotfix: fast-track pipeline
+
+This tests the `@kody hotfix` command which runs a compressed pipeline: build → verify (typecheck+lint only, no tests) → ship, skipping taskify/plan/review/review-fix.
+
+**Setup:**
+
+1. Create a simple issue that describes an urgent fix:
+   ```bash
+   gh issue create --repo aharonyaircohen/Kody-Engine-Tester \
+     --title "[test-suite] Hotfix: fix broken export in utils" \
+     --body "The default export in src/utils/helpers.ts is missing. Add \`export default\` to the main function. This is an urgent production fix."
+   ```
+2. Trigger: `gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody hotfix"`
+
+**Verification:**
+
+1. Check parse job output:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "mode=hotfix"
+   ```
+   - Mode is `hotfix`, task-id matches `hotfix-<issue>-<timestamp>`
+
+2. Check stage execution — only build, verify, ship should run:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "stage\|Complexity"
+   ```
+   - Expected: `⚡ Complexity: hotfix — skipping taskify, plan, review, review-fix`
+   - Stages executed: build → verify → ship (3 stages only)
+   - Stages NOT executed: taskify, plan, review, review-fix
+
+3. Check verify skips tests:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "Running typecheck\|Running test\|Running lint"
+   ```
+   - Expected: `Running typecheck:` and optionally `Running lint:` appear
+   - `Running test:` should NOT appear (tests skipped for fast-track)
+
+4. Check PR creation:
+   ```bash
+   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --json number,title,labels
+   ```
+   - PR created and linked to the issue
+
+- PASS: Pipeline completes with only build→verify→ship, tests skipped, PR created
+- FAIL: Taskify/plan/review stages execute, or tests run during verify, or no PR created
+
+### T38 — Revert: explicit PR target
+
+This tests `@kody revert #<PR>` which deterministically reverts a merged PR without LLM assistance.
+
+**Precondition:** A merged PR from Phase 4 (T01 or T02) must exist. Record its PR number.
+
+**Setup:**
+
+1. Create an issue for the revert:
+   ```bash
+   gh issue create --repo aharonyaircohen/Kody-Engine-Tester \
+     --title "[test-suite] Revert: undo PR #<N>" \
+     --body "Revert the changes from PR #<N> due to a regression."
+   ```
+2. Trigger: `gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody revert #<PR_NUMBER>"`
+
+**Verification:**
+
+1. Check parse job output:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "mode=revert\|revert_target="
+   ```
+   - Mode is `revert`, revert_target is the PR number
+
+2. Check revert execution:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "revert\|merge commit\|verify"
+   ```
+   - Expected logs: PR lookup, merge commit SHA found, `git revert` executed, verify ran (full: typecheck+lint+tests)
+
+3. Check PR creation:
+   ```bash
+   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --json number,title,labels
+   ```
+   - Revert PR created with title `revert: <original title> (#<N>)`
+   - PR has `revert` label
+   - PR body contains original PR reference and verify results
+
+4. Check issue comment:
+   ```bash
+   gh issue view <n> --repo aharonyaircohen/Kody-Engine-Tester --json comments --jq '.comments[-1].body'
+   ```
+   - Comment links to the revert PR
+
+- PASS: Merged PR reverted, full verify ran, revert PR created with correct title/label/body
+- FAIL: Revert fails (conflict, PR not found), or verify not run, or PR missing metadata
+
+### T39 — Revert: auto-resolve from issue
+
+This tests `@kody revert` (no explicit target) which finds the linked merged PR by branch naming convention.
+
+**Precondition:** An issue whose PR was merged in Phase 4. The PR branch must follow the `<issue>-<slug>` convention.
+
+**Setup:**
+
+1. Comment on a Phase 4 issue whose PR was already merged:
+   ```bash
+   gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody revert"
+   ```
+
+**Verification:**
+
+1. Check that the engine resolved the PR automatically:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "searching for merged PR\|Found linked PR"
+   ```
+   - Expected: `No target specified, searching for merged PR linked to issue #<n>...` then `Found linked PR #<N>: <title>`
+
+2. Same verification as T38 — revert PR created, full verify, correct metadata
+
+- PASS: Engine auto-resolves the merged PR from issue number, revert succeeds
+- FAIL: Engine can't find the linked PR, or uses wrong PR, or revert fails
+
+### T40 — Release: dry-run
+
+This tests `@kody release --dry-run` which analyzes conventional commits and previews the release without making changes.
+
+**Precondition:** The tester repo must have at least one conventional commit since the last tag (or no tags at all). The repo should have a `package.json` with a `version` field.
+
+**Setup:**
+
+1. Trigger on any issue:
+   ```bash
+   gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody release --dry-run"
+   ```
+
+**Verification:**
+
+1. Check parse job output:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "mode=release\|dry_run="
+   ```
+   - Mode is `release`, dry_run is `true`
+
+2. Check release analysis in logs:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "bump\|version\|changelog\|dry-run\|conventional"
+   ```
+   - Expected: Logs show commit parsing, determined bump type (patch/minor/major), calculated next version
+   - `[dry-run]` prefix on all actions
+   - No PR created, no version files modified, no tags created
+
+3. Verify no side effects:
+   ```bash
+   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --head "release/" --json number
+   ```
+   - No release PR created
+
+- PASS: Commits analyzed, bump determined, changelog previewed, no side effects
+- FAIL: Actual changes made despite --dry-run, or commit parsing fails
+
+### T41 — Release: create release PR
+
+This tests `@kody release` which bumps version, generates changelog, and creates a release PR.
+
+**Precondition:** Same as T40. Additionally, the release config should be either absent (defaults used) or configured in `kody.config.json` under `release`.
+
+**Setup:**
+
+1. Ensure there are conventional commits since the last tag (if T01/T02 PRs were merged, their `feat:` / `fix:` commits qualify)
+2. Trigger on any issue:
+   ```bash
+   gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody release"
+   ```
+
+**Verification:**
+
+1. Check pre-release checks passed:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "pre-release\|CI green\|blocking"
+   ```
+   - CI status checked on default branch
+   - No blocking draft PRs (or handled gracefully)
+
+2. Check version bump:
+   ```bash
+   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "bump\|version.*→"
+   ```
+   - Version bumped correctly based on conventional commits (feat→minor, fix→patch, breaking→major)
+
+3. Check release PR created:
+   ```bash
+   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --head "release/" --json number,title,labels,body
+   ```
+   - PR exists with branch `release/v<version>`
+   - Title contains version number
+   - PR has `release` label
+   - Body contains generated changelog grouped by type (Features, Bug Fixes, etc.)
+
+4. Check package.json updated in PR:
+   ```bash
+   gh pr diff <n> --repo aharonyaircohen/Kody-Engine-Tester | grep -A2 '"version"'
+   ```
+   - Version field bumped to the new version
+
+- PASS: Version bumped, changelog generated, release PR created with correct labels and content
+- FAIL: Wrong bump type, missing changelog sections, no PR, or PR targets wrong branch
+
+**Mandatory cleanup:** After verification, close the release PR without merging (or merge if desired — but then T40/T41 can't rerun without new commits):
+```bash
+gh pr close <n> --repo aharonyaircohen/Kody-Engine-Tester --delete-branch
+```
+
 ---
 
 ## Fix-Retry Loop
@@ -912,6 +1126,21 @@ Every test must pass both functional and quality checks:
 - [ ] Engine starts dev server for UI tasks — KODY_DEV_SERVER_READY in logs (T36)
 - [ ] Engine stops dev server after stage completes — "Dev server stopped" in logs (T36)
 - [ ] Agent does NOT start its own dev server when engine manages it (T36)
+- [ ] Hotfix skips taskify/plan/review/review-fix — only build, verify, ship execute (T37)
+- [ ] Hotfix verify skips tests — only typecheck and lint run, no testUnit (T37)
+- [ ] Revert with explicit `#<PR>` target finds the merged PR and its merge commit (T38)
+- [ ] Revert runs full verify (typecheck+lint+tests) — not the hotfix reduced verify (T38)
+- [ ] Revert PR title follows `revert: <original title> (#N)` format (T38)
+- [ ] Revert PR has `revert` label applied (T38)
+- [ ] Revert without target auto-resolves PR from issue branch naming convention (T39)
+- [ ] Revert handles squash-merged PRs (retries without -m 1 on merge commit failure) (T38)
+- [ ] Release dry-run produces no side effects — no PR, no tags, no file changes (T40)
+- [ ] Release dry-run logs show commit analysis, bump type, and version preview (T40)
+- [ ] Release creates PR on `release/v<version>` branch targeting default branch (T41)
+- [ ] Release PR has `release` label applied (T41)
+- [ ] Release changelog groups commits by type (Features, Bug Fixes, etc.) (T41)
+- [ ] Release version bump matches conventional commit analysis (feat→minor, fix→patch) (T41)
+- [ ] Release pre-release checks verify CI green on default branch (T41)
 
 ---
 
