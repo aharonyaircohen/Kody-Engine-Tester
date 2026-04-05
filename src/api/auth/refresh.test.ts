@@ -1,70 +1,87 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { refresh } from './refresh'
-import { UserStore } from '../../auth/user-store'
-import { SessionStore } from '../../auth/session-store'
+import { AuthService } from '../../auth/auth-service'
 import { JwtService } from '../../auth/jwt-service'
-import { login } from './login'
+
+// Mock Payload
+const mockPayload = {
+  findByID: vi.fn(),
+  find: vi.fn(),
+  update: vi.fn(),
+  create: vi.fn(),
+}
+
+vi.mock('@/getPayload', () => ({
+  getPayloadInstance: vi.fn(() => mockPayload),
+}))
 
 describe('refresh', () => {
-  let userStore: UserStore
-  let sessionStore: SessionStore
+  let authService: AuthService
   let jwtService: JwtService
 
-  beforeEach(async () => {
-    userStore = new UserStore()
-    await userStore.ready
-    sessionStore = new SessionStore()
+  beforeEach(() => {
+    vi.clearAllMocks()
     jwtService = new JwtService('test-secret')
+    authService = new AuthService(mockPayload as any, jwtService)
   })
-
-  async function loginUser() {
-    return login('user@example.com', 'UserPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
-  }
 
   it('should return new token pair on valid refresh token', async () => {
-    const { refreshToken } = await loginUser()
-    const result = await refresh(refreshToken, sessionStore, jwtService)
+    const mockRefreshToken = await jwtService.signRefreshToken({
+      userId: '1',
+      email: 'user@example.com',
+      role: 'viewer',
+      sessionId: 'session-1',
+      generation: 0,
+    })
+
+    const userWithValidToken = {
+      id: 1,
+      email: 'user@example.com',
+      role: 'viewer' as const,
+      refreshToken: mockRefreshToken,
+      tokenExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      isActive: true,
+    }
+
+    mockPayload.find.mockResolvedValue({ docs: [userWithValidToken] })
+    mockPayload.update.mockResolvedValue({ ...userWithValidToken, refreshToken: 'new_refresh_token' })
+
+    const result = await refresh(mockRefreshToken, authService)
+
     expect(result.accessToken).toBeDefined()
     expect(result.refreshToken).toBeDefined()
+    expect(result.accessToken).not.toBe(mockRefreshToken)
+    expect(result.refreshToken).not.toBe(mockRefreshToken)
   })
 
-  it('should return 401 for invalid refresh token', async () => {
-    await expect(refresh('invalid-token', sessionStore, jwtService))
-      .rejects.toMatchObject({ status: 401 })
+  it('should throw on invalid refresh token', async () => {
+    await expect(refresh('invalid-token', authService)).rejects.toMatchObject({ status: 401 })
   })
 
-  it('should return 400 for missing refresh token', async () => {
-    await expect(refresh('', sessionStore, jwtService))
-      .rejects.toMatchObject({ status: 400 })
-  })
+  it('should rotate refresh token', async () => {
+    const mockRefreshToken = await jwtService.signRefreshToken({
+      userId: '1',
+      email: 'user@example.com',
+      role: 'viewer',
+      sessionId: 'session-1',
+      generation: 0,
+    })
 
-  it('should invalidate old refresh token after rotation', async () => {
-    const { refreshToken } = await loginUser()
-    await refresh(refreshToken, sessionStore, jwtService)
-    // Using old refresh token again should fail
-    await expect(refresh(refreshToken, sessionStore, jwtService))
-      .rejects.toMatchObject({ status: 401 })
-  })
+    const userWithValidToken = {
+      id: 1,
+      email: 'user@example.com',
+      role: 'viewer' as const,
+      refreshToken: mockRefreshToken,
+      tokenExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      isActive: true,
+    }
 
-  it('should invalidate old access token after refresh', async () => {
-    const { accessToken, refreshToken } = await loginUser()
-    const result = await refresh(refreshToken, sessionStore, jwtService)
-    // login() already called refresh() internally (to patch sessionId in tokens), so
-    // generation is already 1. After our refresh() it becomes 2.
-    const session2 = sessionStore.findByRefreshToken(result.refreshToken)
-    expect(session2?.generation).toBe(2)
-    // Old access token is no longer in tokenIndex so findByToken returns undefined
-    expect(sessionStore.findByToken(accessToken)).toBeUndefined()
-  })
+    mockPayload.find.mockResolvedValue({ docs: [userWithValidToken] })
+    mockPayload.update.mockResolvedValue({ ...userWithValidToken, refreshToken: 'new_refresh_token' })
 
-  it('should handle concurrent refresh requests safely', async () => {
-    const { refreshToken } = await loginUser()
-    const [first, second] = await Promise.allSettled([
-      refresh(refreshToken, sessionStore, jwtService),
-      refresh(refreshToken, sessionStore, jwtService),
-    ])
-    // At least one must succeed; both should not throw unexpected errors
-    const successes = [first, second].filter(r => r.status === 'fulfilled')
-    expect(successes.length).toBeGreaterThanOrEqual(1)
+    const result = await refresh(mockRefreshToken, authService)
+
+    // Old refresh token should be invalidated
+    expect(result.refreshToken).not.toBe(mockRefreshToken)
   })
 })

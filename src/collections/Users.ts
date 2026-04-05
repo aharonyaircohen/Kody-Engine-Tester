@@ -119,5 +119,31 @@ export const Users: CollectionConfig = {
         update: () => false,
       },
     },
+    {
+      name: 'lastLogin',
+      type: 'date',
+      required: false,
+      hidden: true,
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
+    {
+      name: 'permissions',
+      type: 'text',
+      required: false,
+      hidden: true,
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+    },
   ],
 }

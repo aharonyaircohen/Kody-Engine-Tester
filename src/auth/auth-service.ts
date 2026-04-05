@@ -125,7 +125,7 @@ export class AuthService {
     // Calculate expiry
     const tokenExpiresAt = new Date(Date.now() + REFRESH_TOKEN_EXPIRY_MS)
 
-    // Update user with token fields
+    // Update user with token fields and lastLogin (actual login event)
     await this.payload.update({
       collection: 'users' as CollectionSlug,
       id: userId,
@@ -133,6 +133,7 @@ export class AuthService {
         refreshToken,
         tokenExpiresAt: tokenExpiresAt.toISOString(),
         lastTokenUsedAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
       } as any,
     })
 

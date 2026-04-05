@@ -1,4 +1,6 @@
 import type { User } from '../auth/user-store'
+import { ROLE_HIERARCHY } from '../auth/_auth'
+import type { RbacRole } from '../auth/auth-service'
 
 interface RoleContext {
   user?: User
@@ -9,7 +11,7 @@ interface RoleError {
   status: number
 }
 
-export function requireRole(...roles: string[]) {
+export function requireRole(...roles: RbacRole[]) {
   return function roleGuard(context: RoleContext): RoleError | undefined {
     if (!context.user) {
       return { error: 'Authentication required', status: 401 }
@@ -19,7 +21,10 @@ export function requireRole(...roles: string[]) {
       return { error: 'User role not configured', status: 401 }
     }
 
-    if (!roles.includes(context.user.role)) {
+    const userRoleLevel = ROLE_HIERARCHY[context.user.role as RbacRole]
+    const hasSufficientRole = roles.some((requiredRole) => userRoleLevel >= ROLE_HIERARCHY[requiredRole])
+
+    if (!hasSufficientRole) {
       return {
         error: `Forbidden: requires role ${roles.join(' or ')}`,
         status: 403,
