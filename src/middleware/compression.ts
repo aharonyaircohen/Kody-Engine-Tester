@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createGzip } from 'zlib'
-import { pipeline } from 'stream'
-import { promisify } from 'util'
-
-const pipelineAsync = promisify(pipeline)
+import { createGzip, createDeflate, createBrotliCompress } from 'zlib'
 
 export type EncodingType = 'gzip' | 'deflate' | 'br'
 
@@ -56,17 +52,13 @@ function getEncodingStream(encoding: EncodingType) {
     case 'gzip':
       return createGzip()
     case 'deflate':
-      // Use zlib.createDeflate (raw deflate)
-      const { createDeflate } = require('zlib')
       return createDeflate()
     case 'br':
-      // Use brotli if available, otherwise fall back to gzip
-      try {
-        const { createBrotliCompress } = require('zlib')
+      // Brotli may not be available in all environments
+      if (createBrotliCompress) {
         return createBrotliCompress()
-      } catch {
-        return createGzip()
       }
+      return createGzip()
     default:
       return createGzip()
   }
