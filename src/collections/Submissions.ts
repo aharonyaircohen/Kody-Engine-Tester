@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export const Submissions: CollectionConfig = {
   slug: 'submissions',
@@ -10,8 +10,7 @@ export const Submissions: CollectionConfig = {
     {
       name: 'assignment',
       type: 'relationship',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      relationTo: 'assignments' as any,
+      relationTo: 'assignments' as CollectionSlug,
       required: true,
       admin: {
         description: 'The assignment this submission answers.',
@@ -43,8 +42,7 @@ export const Submissions: CollectionConfig = {
         {
           name: 'file',
           type: 'upload',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          relationTo: 'media' as any,
+          relationTo: 'media' as CollectionSlug,
           required: true,
           admin: {
             description: 'Upload a file.',

@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export const Assignments: CollectionConfig = {
   slug: 'assignments',
@@ -14,8 +14,7 @@ export const Assignments: CollectionConfig = {
     {
       name: 'module',
       type: 'relationship',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      relationTo: 'modules' as any,
+      relationTo: 'modules' as CollectionSlug,
       required: true,
       admin: {
         description: 'The module this assignment belongs to.',
