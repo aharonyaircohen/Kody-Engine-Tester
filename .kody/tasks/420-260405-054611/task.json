@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add health check endpoint at /api/health",
+  "description": "Add a health check endpoint at /api/health that returns { status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() }. Add a test for the endpoint verifying it returns the correct response structure.",
+  "scope": [
+    "src/app/api/health/route.ts",
+    "src/app/api/health/route.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/app/api/csrf-token/route.ts - simple GET endpoint returning JSON Response",
+    "src/middleware/request-logger.test.ts - vitest test patterns with describe/it/expect and NextRequest"
+  ],
+  "questions": []
+}
