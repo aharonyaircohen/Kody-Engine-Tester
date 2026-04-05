@@ -26,3 +26,8 @@ import { LessonEditor } from './LessonEditor'
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/app/api/health
+
+## Learned 2026-04-05 (task: 447-260405-212715)
+- Uses vitest for testing
+- Uses eslint for linting
+- Active directories: src/utils
