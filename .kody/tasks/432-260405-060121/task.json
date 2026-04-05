@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add format-date utility with ISO, relative, and locale formats",
+  "description": "Create src/utils/format-date.ts with a formatDate function that supports three modes: ISO string output via toISOString(), relative time (e.g. '2 hours ago') using Intl.RelativeTimeFormat, and locale-aware date formatting via Intl.DateTimeFormat. Add comprehensive tests in src/utils/format-date.test.ts following the existing format-number pattern.",
+  "scope": ["src/utils/format-date.ts", "src/utils/format-date.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/format-number.ts — FormatOptions interface pattern with locale, custom separators, and JSDoc with @example blocks",
+    "src/utils/format-number.test.ts — nested describe/it/expect vitest structure with grouped test sections"
+  ],
+  "questions": []
+}
