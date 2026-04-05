@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add request validation middleware with schema support",
+  "description": "Create a validation middleware at src/middleware/validation.ts that accepts Zod-like schema objects for body/query/params validation, returns 400 with field-level errors on failure, and attaches validated data via req.validated. Add unit tests covering valid requests, invalid body, missing required fields, and optional field defaults.",
+  "scope": [
+    "src/middleware/validation.ts",
+    "src/middleware/validation.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts - factory pattern returning middleware function (request: NextRequest) => NextResponse",
+    "src/middleware/role-guard.ts - returns error object { error: string, status: number } for early return cases",
+    "src/utils/result.ts - Result<T, E> discriminated union pattern for explicit error handling",
+    "src/middleware/request-logger.test.ts - test patterns using vi.fn() mocks and NextRequest/NextResponse"
+  ],
+  "questions": []
+}
