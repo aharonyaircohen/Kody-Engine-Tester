@@ -18,3 +18,15 @@ Implementation complete. Created:
 - URL encoding/decoding
 - Non-standard
 ...(truncated)
+
+### autofix (2026-04-05T06:13:25)
+## Summary
+
+**Root Cause**: `Assignments.ts` referenced a `'modules'` Payload collection in a relationship field, but no such collection existed. `Modules.ts` only exported an in-memory `ModuleStore` class and interfaces — not a `CollectionConfig`.
+
+**Fixes Applied**:
+
+1. **`src/collections/Modules.ts`** — Added proper `CollectionConfig` export with `slug: 'modules'`, following the same pattern as `Lessons.ts`:
+   - Fields: `title`, `course` (relationship to courses), `order`, `description`
+   -
+...(truncated)
