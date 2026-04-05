@@ -21,3 +21,8 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-04 (task: 403-260404-211531)
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-05 (task: 418-260405-054604)
+- Uses vitest for testing
+- Uses eslint for linting
+- Active directories: src/middleware
