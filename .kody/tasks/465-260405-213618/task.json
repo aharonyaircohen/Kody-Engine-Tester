@@ -1,0 +1,12 @@
+{
+"task_type": "feature",
+"title": "Add Roman numeral converter utility",
+"description": "Create src/utils/roman-numeral.ts with functions to convert integers to Roman numerals and vice versa, supporting the range 1-3999. Add unit tests in roman-numeral.test.ts following the existing test patterns (describe/it/expect).",
+"scope": ["src/utils/roman-numeral.ts", "src/utils/roman-numeral.test.ts"],
+"risk_level": "low",
+"existing_patterns": [
+{"path": "src/utils/clamp.ts", "description": "Single-function utility module with typed inputs/outputs"},
+{"path": "src/utils/clamp.test.ts", "description": "Co-located test file using vitest describe/it/expect pattern with edge case coverage"}
+],
+"questions": []
+}
