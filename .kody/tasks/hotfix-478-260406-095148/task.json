@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of null check in slugify",
+  "description": "The null/undefined guard already exists in src/utils/slugify.ts at line 9 (`if (!str) return ''`). All 18 tests pass, including explicit null/undefined tests on lines 55-58. The fix is already implemented.",
+  "scope": ["src/utils/slugify.ts", "src/utils/slugify.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/slugify.ts line 9: falsy check `if (!str) return ''` handles null/undefined/empty string"],
+  "questions": []
+}
