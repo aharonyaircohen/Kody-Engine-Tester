@@ -1,0 +1,1 @@
+{"taskId":"decompose-807-260407-212314","timestamp":"2026-04-07T21:28:18.086Z","stage":"build","patterns":["files.created:`src/utils/capitalize-first.ts,`src/utils/capitalize-first.test.ts"],"room":"utils"}
