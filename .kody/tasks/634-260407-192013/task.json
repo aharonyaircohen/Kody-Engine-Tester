@@ -1,0 +1,9 @@
+{
+  "task_type": "bugfix",
+  "title": "Fix --complexity flag parsing in ci-parse step",
+  "description": "The --complexity flag is not being parsed from issue comments by parse-inputs.js. When @kody --complexity low is used, the complexity parameter is ignored because the parser only handles --from and --feedback. This causes the pipeline to auto-detect complexity instead of using the override. Need to add --complexity parsing similar to existing --from and --feedback handlers in the same file.",
+  "scope": ["node_modules/.pnpm/@kody-ade+engine@0.1.0/node_modules/@kody-ade/engine/dist/ci/parse-inputs.js"],
+  "risk_level": "low",
+  "existing_patterns": ["parse-inputs.js already parses --from and --feedback using parts[i] pattern with i+=2 advancement and outputs via output() function to GITHUB_OUTPUT", "parse-inputs.js uses while loop to iterate through parts array checking for flag names"],
+  "questions": []
+}
