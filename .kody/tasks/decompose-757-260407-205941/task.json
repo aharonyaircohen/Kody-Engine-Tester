@@ -1,0 +1,19 @@
+{
+  "task_type": "feature",
+  "title": "Add search system with service, API route, helpers, and caching",
+  "description": "Create a complete search system with four new components: (1) searchService.ts in src/services/ for full-text search using Payload, (2) search.ts API route in src/routes/ with query parameter handling, (3) searchHelpers.ts utility in src/utils/ for query building, and (4) searchCache.ts middleware in src/middleware/ for caching layer. Reuse existing patterns from course-search.ts service, Cache class, and route middleware patterns.",
+  "scope": [
+    "src/services/searchService.ts",
+    "src/routes/search.ts",
+    "src/utils/searchHelpers.ts",
+    "src/middleware/searchCache.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/services/course-search.ts - Payload-based search service with filters, pagination, and typed interfaces",
+    "src/utils/cache.ts - Cache class with TTL, LRU eviction, and stats tracking",
+    "src/app/api/courses/search/route.ts - Next.js route handler with withAuth, query param parsing, input validation, and sanitization",
+    "src/middleware/rate-limiter.ts - Middleware pattern with config-based factory function returning chainable handler"
+  ],
+  "questions": []
+}
