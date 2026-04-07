@@ -15,31 +15,33 @@
     },
     "build": {
       "state": "completed",
-      "startedAt": "2026-04-07T21:28:06.864Z",
-      "completedAt": "2026-04-07T21:30:25.000Z",
+      "completedAt": "2026-04-07T21:31:49.852Z",
       "retries": 0,
-      "outputFile": "DECOMPOSITION.md"
+      "promptTokens": 4084
     },
     "verify": {
       "state": "completed",
+      "completedAt": "2026-04-07T21:33:16.704Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-07T21:33:16.706Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-07T21:25:32.720Z",
-  "updatedAt": "2026-04-07T21:30:25.000Z",
+  "updatedAt": "2026-04-07T21:33:16.706Z",
   "sessions": {
-    "explore": "3de1e6c5-d823-438c-81e8-c75a18e7de04"
+    "explore": "3de1e6c5-d823-438c-81e8-c75a18e7de04",
+    "build": "2f44851e-7d26-4386-add2-133b140f2f80"
   }
 }
