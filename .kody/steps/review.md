@@ -135,91 +135,64 @@ When the diff introduces a new enum value, status string, tier name, or type con
 
 ## architecture
 
-# LearnHub LMS Architecture
+# Architecture (auto-detected 2026-04-04)
 
-## Stack
+## Overview
 
-- **Framework**: Next.js 16 App Router + Payload CMS 3.80 (headless)
-- **Language**: TypeScript 5.7 (ES2022 target)
-- **Database**: PostgreSQL via `@payloadcms/db-postgres`
-- **Testing**: Vitest 4.0 (integration) + Playwright 1.58 (E2E)
-- **Runtime**: Node 18+ / pnpm 9+
+- Framework: Next.js 16.2.1
+- Language: TypeScript 5.7.3
+- Testing: vitest 4.0.18
+- Linting: eslint ^9.16.0
+- Formatting: prettier ^3.4.2
+- CMS: Payload CMS
+- Package manager: pnpm
+- Module system: ESM
+- Top-level directories: docs, scripts, skills, src, tests
+- src/ structure: api, app, auth, collections, components, contexts, hooks, middleware, migrations, models, pages, routes, security, services, utils
 
-## Directory Structure
+## Updated (2026-04-07)
 
-```
-src/
-├── app/                    # Next.js App Router pages + API routes
-│   ├── (frontend)/        # Public/authenticated frontend routes
-│   └── (payload)/         # Payload admin routes (/admin)
-├── collections/           # Payload collection configs (Course, Lesson, Enrollment, etc.)
-├── components/            # Custom React components
-├── hooks/                 # Custom React hooks
-├── middleware/            # Express-style middleware (rate-limiter)
-├── auth/                  # Auth utilities (JWT service, session store, withAuth HOC)
-├── utils/                 # Pure utility functions (debounce, retry, flatten, result)
-├── services/              # Business logic services
-├── api/                   # API route handlers (login, profile, etc.)
-├── contexts/              # React contexts
-├── validation/            # Zod schemas for input validation
-├── security/              # Security utilities (password hashing, RBAC)
-├── migrations/            # Payload database migrations
-└── payload.config.ts      # Payload CMS configuration
-```
-
-## Layer Architecture
-
-**Route Handler** → `src/api/*` → `src/auth/*` (withAuth HOC) → `src/services/*` → `src/collections/*` (Payload)
-
-## Infrastructure
-
-- **Docker**: `docker-compose.yml` (Payload app + PostgreSQL)
-- **CI**: `pnpm ci` runs `payload migrate` then `pnpm build`
-- **Admin**: Payload admin panel at `/admin`
-- **Media**: Sharp for image processing, Payload Media collection
-
-## Data Flow
-
-1. Client → Next.js Route Handler (`src/app/(frontend)/api/`)
-2. Auth middleware validates JWT via `src/auth/jwt-service.ts`
-3. Service layer (`src/services/`) handles business logic
-4. Payload collections (`src/collections/`) manage PostgreSQL via `@payloadcms/db-postgres`
-
-## Key Configs
-
-- `payload.config.ts` — Payload DB, auth, collections, editor (Lexical)
-- `vitest.config.mts` — Integration test runner
-- `playwright.config.ts` — E2E browser testing
+- src/ structure now includes `models` and `routes` directories; `validation` directory removed
+- Database: PostgreSQL via `@payloadcms/db-postgres` (see docker-compose.yml for local Postgres setup)
+- E2E testing: Playwright 1.58.2 with `playwright.config.ts`
+- CI pipeline: `payload migrate && pnpm build` (see `ci` script in package.json)
+- Docker support: Dockerfile (multi-stage) + docker-compose.yml with Payload + Postgres services
+- Key config files: `payload.config.ts`, `next.config.ts`, `vitest.config.mts`, `AGENTS.md` (Payload CMS rules)
+- Path aliases: `@/*` maps to `./src/*`, `@payload-config` maps to `./src/payload.config.ts`
+- Dependencies: `graphql`, `sharp` (image processing), `@payloadcms/next`, `@payloadcms/db-postgres`, `@payloadcms/richtext-lexical`
+- Dev dependencies: `@kody-ade/engine`, `jsdom`, `tsx`, `vite-tsconfig-paths`, `dotenv`
 
 ## conventions
 
-# LearnHub Coding Conventions
+## Learned 2026-04-07 (task: conventions-update-260407)
 
-**Naming**: Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case (`.module.css`); collections → singular slug
-
-**Imports**: Use `import type` for types; path alias `@/*` for internal modules; named imports preferred
-
-```typescript
-import type { Module } from '@/collections/Modules'
-import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
-import { LessonEditor } from './LessonEditor'
-```
-
-**Exports**: Named exports for utilities/types; default export for page components only
-
-**Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
-
-**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
-
-**Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
+- CSS modules use `.module.css` naming (see `ModuleList.module.css`)
+- Security utilities in `src/security/sanitizers.ts` (sanitizeHtml, sanitizeSql, sanitizeUrl)
+- Services layer in `src/services/` for business logic (discussions.ts)
+- Collections can export both config and TypeScript interfaces (see `src/collections/certificates.ts`)
+- Stores use private class fields (`private certificates: Map<>`) with `Map` for in-memory data
+- `'use client'` directive required on all React client components
+- Named exports for utilities, types, stores, and services; default export only for page components
+- `import type` used for Payload types to avoid bundling runtime dependencies
+- Context usage: `useContext(AuthContext)` with named import from context file
+- fetch with `Authorization: Bearer` header pattern for authenticated API calls
+- Error silencing with empty `.catch(() => {})` for non-critical fallback behavior
 
 ## domain
 
 ## LearnHub LMS Domain Model
 
-**Core Entities:** `User` (roles: admin/editor/viewer/guest/student/instructor), `Media`, `Course`, `Lesson`, `Enrollment`, `Note`, `Quiz`, `QuizAttempt`
+**Core Entities:** `User` (roles: admin/editor/viewer/guest/student/instructor), `Media`, `Course`, `Lesson`, `Enrollment`, `Note`, `Quiz`, `QuizAttempt`, `Notification` (with `NotificationSeverity`: info/warning/error), `users_sessions`
 
 **Data Flow:** Client → Next.js Route Handler (`src/app/api/*`) → `withAuth` HOC → Service Layer (`src/services/*`) → Payload Collections → PostgreSQL via `@payloadcms/db-postgres`
+
+**Database Schema:**
+
+- `users` — id, email, hash, salt, reset_password_token, login_attempts, lock_until, lastLogin, permissions (text[])
+- `users_sessions` — \_order, \_parent_id, id, created_at, expires_at
+- `media` — id, alt, url, thumbnail_u_r_l, filename, mime_type, filesize, width, height, focal_x, focal_y
+- `payload_kv` — key/value store for key-value data
+- `payload_locked_documents` — locked document tracking
 
 **API Surface:**
 
@@ -233,7 +206,9 @@ import { LessonEditor } from './LessonEditor'
 
 **Auth Architecture:** JWT via `JwtService` (Web Crypto API), sessions in `SessionStore` (in-memory), `withAuth` HOC wraps routes, RBAC via `checkRole` utility
 
-**Key Types:** `Config`, `User`, `Media`, `Note`, `Quiz`, `QuizAnswer`, `PayloadGradebookService`, `CourseSearchService`
+**Key Types:** `Config`, `User`, `Media`, `Note`, `Quiz`, `QuizAnswer`, `PayloadGradebookService`, `CourseSearchService`, `Notification`, `NotificationFilter`, `NotificationSeverity`
+
+**Utilities:** `Schema` class (mini-Zod, `src/utils/schema.ts`) with `StringSchema`, `NumberSchema`, `BooleanSchema` — supports `.optional()` and `.default()` modifiers, throws `SchemaError` on validation failure
 
 ## patterns
 
@@ -249,6 +224,7 @@ import { LessonEditor } from './LessonEditor'
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Validation Middleware**: `src/middleware/validation.ts` provides schema-based validation for request body/query/params with type conversion and typed error results (`ValidateResult` discriminated union).
 
 ### Behavioral Patterns
 
@@ -281,7 +257,8 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - `Container.register<T>(token, factory)` — generic DI
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
-- Zod schemas in `src/validation/` for input validation at API boundaries
+- `validate(schema, data, target)` from `src/middleware/validation.ts` — schema-based request validation
+- `parseUrl(url, options)` from `src/utils/url-parser.ts` — protocol/host/path/query/fragment extraction
 
 ### Anti-Patterns / Inconsistencies
 
@@ -330,65 +307,35 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 ## Repo Patterns
 
-**Auth HOC Pattern** (`src/auth/withAuth.ts`):
-
-```typescript
-export function withAuth(handler: NextHandler, options?: AuthOptions): NextHandler {
-  return async (req) => {
-    const token = extractBearerToken(req.headers.get('authorization'))
-    if (!token) return error(401, 'Missing token')
-    const payload = jwtService.verify(token)
-    if (!payload) return error(401, 'Invalid token')
-    if (options?.roles?.length && !checkRole(payload.role, options.roles)) {
-      return error(403, 'Insufficient permissions')
-    }
-    return handler(req)
-  }
-}
-```
-
-**Result Type** (`src/utils/result.ts`): Discriminated union for explicit error handling — `Result.ok()` / `Result.err()` constructors, `.isOk()` / `.isErr()` checks.
-
-**Service Layer DI** (`src/services/gradebook-service.ts`): Constructor injection via typed deps interfaces:
-
-```typescript
-type GradebookServiceDeps = {
-  gradebookRepo: GradebookRepository
-  gradingSvc: GradingService
-}
-```
-
-**Utility Functions** (`src/utils/debounce.ts`): Single-function modules with co-located `.test.ts` files. Pattern:
-
-```typescript
-export function debounce<T extends (...args: unknown[]) => unknown>(
-  fn: T,
-  delay: number,
-): (...args: Parameters<T>) => void {
-  /* implementation */
-}
-```
+- **Auth HOC pattern**: `src/auth/withAuth.ts` — wraps route handlers, extracts bearer token, validates JWT, checks RBAC via `checkRole`. Always use `withAuth` for protected API routes.
+- **Schema validation**: `src/middleware/validation.ts` — use `validate(schema, data, target)` from this module for request body/query/params validation. Returns `ValidateResult` discriminated union.
+- **Service layer registration**: Services in `src/services/*.ts` should accept dependency interfaces (e.g., `GradebookServiceDeps<T>`) and be registered in `src/utils/di-container.ts`.
+- **Repository store pattern**: `src/collections/contacts.ts` — exposes store with `getById|create|update|delete|query`. Use this hybrid pattern for in-memory or Payload-backed stores.
+- **Security sanitizers**: Always use `src/security/sanitizers.ts` (`sanitizeHtml`, `sanitizeSql`, `sanitizeUrl`) before rendering user-controlled content or constructing queries.
+- **Result type for errors**: `src/utils/result.ts` — prefer `Result<T, E>` discriminated union over throwing exceptions in service layer code.
+- **CSS modules**: UI components use `.module.css` naming (e.g., `ModuleList.module.css`).
 
 ## Improvement Areas
 
-- **Dual auth systems**: `src/auth/user-store.ts` (SHA-256, in-memory) vs `src/auth/auth-service.ts` (PBKDF2, JWT) — `src/app/(frontend)/dashboard/page.tsx:45` uses unsafe type cast `as unknown as UserRole[]` rather than proper type narrowing.
-- **Role misalignment**: `UserStore.UserRole` enum has 6 values (`admin|user|guest|student|instructor`) but `RbacRole` in `src/auth/_auth.ts` only has 3 (`admin|editor|viewer`) — `src/auth/check-role.ts` consumer may reject valid roles.
-- **In-memory stores**: `SessionStore` in `src/auth/session-store.ts` and `contactsStore` in `src/collections/contacts.ts` lose data on restart — no persistence.
-- **N+1 risk**: `src/app/(frontend)/dashboard/page.tsx` batch-fetches lessons but enrollment endpoints may iterate without eager loading.
+- **Role divergence**: `src/auth/` has `UserStore.UserRole` ('admin'|'user'|'guest'|'student'|'instructor') vs `RbacRole` ('admin'|'editor'|'viewer') — these are unaligned. Any new role additions must update both.
+- **Dual auth systems**: `UserStore` (SHA-256) coexists with `AuthService` (PBKDF2). Avoid adding new code to `UserStore`; prefer `AuthService` patterns.
+- **Type casting anti-pattern**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts instead of proper type guards. New code should use type predicates or `Result` types.
+- **N+1 risk in lessons**: Dashboard batches lesson fetches but other pages (e.g., `src/app/(frontend)/courses/*`) may iterate without eager loading. Check for `includes`/`populate` when looping over related entities.
+- **Missing input validation on API routes**: Some routes may accept raw request body without going through `src/middleware/validation.ts`. Ensure all new endpoints use schema validation.
 
 ## Acceptance Criteria
 
-- [ ] Changes follow layered architecture: Route → Auth HOC → Service → Repository/Payload
-- [ ] New auth checks use `withAuth` HOC pattern from `src/auth/withAuth.ts`
-- [ ] Error handling uses `Result<T, E>` type from `src/utils/result.ts` for service layer
-- [ ] Input validation uses Zod schemas from `src/validation/` at API boundaries
-- [ ] New services use constructor injection with typed deps interfaces
+- [ ] New enum values traced to ALL consumers via Grep before merge
+- [ ] All SQL queries use parameterized queries (no string interpolation)
+- [ ] All user-controlled HTML content sanitized via `sanitizeHtml` from `src/security/sanitizers.ts`
+- [ ] Auth-protected routes wrapped with `withAuth` HOC from `src/auth/withAuth.ts`
+- [ ] New services registered in DI container (`src/utils/di-container.ts`)
+- [ ] Request validation uses `validate()` from `src/middleware/validation.ts`
+- [ ] New API routes follow `Authorization: Bearer` header pattern
+- [ ] Tests added for negative/error paths (not just happy path)
+- [ ] No `as unknown as` casts in new TypeScript code
+- [ ] `pnpm build` succeeds before merge
 - [ ] `pnpm test:int` passes (Vitest integration tests)
 - [ ] `pnpm test:e2e` passes (Playwright E2E tests)
-- [ ] `pnpm build` succeeds with no TypeScript errors
-- [ ] No `console.log` in production code (use proper logging)
-- [ ] No hardcoded secrets or environment variable access without validation
-- [ ] New enum values traced through all consumers with `grep -r "StatusValues|UserRole|RbacRole"`
-- [ ] Unsafe type casts (`as unknown as`) replaced with proper type guards
 
 {{TASK_CONTEXT}}

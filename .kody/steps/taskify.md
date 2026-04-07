@@ -77,13 +77,14 @@ Guidelines:
 
 ## Repo Patterns
 
-- **Utility modules**: Single-function files in `src/utils/` (e.g., `debounce.ts`, `retry.ts`, `flatten.ts`) with co-located `.test.ts` files
-- **Auth HOC**: `src/auth/withAuth.ts` wraps route handlers with JWT validation and RBAC via `checkRole`
-- **Result type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling
-- **DI container**: `src/utils/di-container.ts` with token-based registration and singleton/transient lifecycles
-- **Middleware chain**: `src/middleware/request-logger.ts` and `rate-limiter.ts` use Express-style chainable pattern
-- **Service layer**: `src/services/` (e.g., `GradebookService`, `GradingService`) with typed dependency interfaces like `GradebookServiceDeps`
-- **Payload collections**: `src/collections/*.ts` define data models; avoid direct DB calls, use Payload SDK
+- **Result type**: `src/utils/result.ts` exports `Result<T, E>` discriminated union (`Ok`/`Err`) for explicit error handling — prefer over throwing
+- **Auth HOC**: `src/auth/withAuth.ts` wraps route handlers; `extractBearerToken` + `checkRole` for JWT + RBAC
+- **DI container**: `src/utils/di-container.ts` uses token-based registration (`register<T>`, `resolve<T>`) with singleton/transient lifecycles
+- **Service layer**: `src/services/GradebookService.ts`, `src/services/GradingService.ts` accept typed dep interfaces (e.g., `GradebookServiceDeps`)
+- **Validation middleware**: `src/middleware/validation.ts` exports `validate(schema, data, target)` returning `ValidateResult` discriminated union
+- **Middleware chain**: `src/middleware/request-logger.ts` and `src/middleware/rate-limiter.ts` use Express-style chainable `next()` pattern
+- **Utility modules**: Single-function files in `src/utils/` (e.g., `debounce.ts`, `retry.ts`, `flatten.ts`) with co-located `.test.ts`
+- **Payload collections**: `src/collections/*.ts` define data models; use Payload SDK, avoid direct DB calls
 
 ## Improvement Areas
 
@@ -97,9 +98,10 @@ Guidelines:
 - [ ] Scope contains exact file paths from Glob/Grep discovery
 - [ ] Title is actionable (starts with verb: Add, Fix, Refactor, Update)
 - [ ] Description captures intent and acceptance criteria from task
-- [ ] Risk level matches scope size and impact (low/medium/high heuristics)
+- [ ] Risk level matches scope size and impact
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+- [ ] Task reuses existing patterns instead of inventing new solutions
 
 {{TASK_CONTEXT}}

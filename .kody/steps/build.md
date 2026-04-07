@@ -25,6 +25,27 @@ Implementation discipline:
 - Run `pnpm tsc --noEmit` periodically to catch type errors early
 - If a test fails after your change, fix it immediately — don't continue
 
+Persistence & recovery (when a command or test fails):
+
+- Diagnose the root cause BEFORE retrying — read the error carefully, don't repeat the same failing approach
+- Try at least 2 different strategies before declaring something blocked
+- 3-failure circuit breaker: if the same sub-task fails 3 times with different approaches, document the blocker clearly and move on to the next task item
+- After applying a fix, ALWAYS re-run the failing command to verify it actually worked
+
+Parallel execution (for multi-file tasks):
+
+- Make independent file changes in parallel — don't wait for one file edit to finish before starting another
+- Batch file reads: when investigating related code, issue multiple Read/Grep/Glob calls in a single response
+- Run tests ONCE after all related changes are complete, not after each individual file edit
+- Use multiple tool calls per response whenever the operations are independent
+
+Sub-agent delegation (for complex tasks):
+
+- You have access to specialized sub-agents: researcher (explore codebase), test-writer (write tests), security-checker (review security), fixer (fix bugs)
+- Delegate to them when the task benefits from specialization
+- Low complexity tasks: handle everything yourself
+- Mid/high complexity: consider delegating to sub-agents for focused work
+
 ## Project Memory (architecture, conventions, patterns, domain, testing)
 
 # Project Memory
@@ -145,6 +166,7 @@ import { LessonEditor } from './LessonEditor'
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Validation Middleware**: `src/middleware/validation.ts` provides schema-based validation for request body/query/params with type conversion and typed error results (`ValidateResult` discriminated union).
 
 ### Behavioral Patterns
 
@@ -177,7 +199,8 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - `Container.register<T>(token, factory)` — generic DI
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
-- Zod schemas in `src/validation/` for input validation at API boundaries
+- `validate(schema, data, target)` from `src/middleware/validation.ts` — schema-based request validation
+- `parseUrl(url, options)` from `src/utils/url-parser.ts` — protocol/host/path/query/fragment extraction
 
 ### Anti-Patterns / Inconsistencies
 
@@ -224,94 +247,32 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 ## Repo Patterns
 
-### DI Container Pattern (`src/utils/di-container.ts`)
-
-```typescript
-export const container = new Container()
-container.register<string>(DI_TOKENS.JWT_SECRET, { useValue: process.env.JWT_SECRET })
-container.register<JwtService>(DI_TOKENS.JWT_SERVICE, {
-  useFactory: (di) => new JwtService(di.resolve(DI_TOKENS.JWT_SECRET)),
-})
-```
-
-Use token-based registration with factory functions. Services receive deps via constructor injection.
-
-### Result Type for Error Handling (`src/utils/result.ts`)
-
-```typescript
-export type Result<T, E = string> = { ok: true; value: T } | { ok: false; error: E }
-export const ok = <T>(value: T): Result<T> => ({ ok: true, value })
-export const err = <E>(error: E): Result<never, E> => ({ ok: false, error })
-```
-
-Use `Result<T, E>` instead of throwing; pattern: `result.ok ? result.value : handleError(result.error)`.
-
-### withAuth HOC (`src/auth/withAuth.ts`)
-
-```typescript
-export function withAuth(handler: NextHandler, options?: AuthOptions): NextHandler {
-  return async (req, res) => {
-    const token = extractBearerToken(req)
-    const payload = jwtService.verify(token)
-    if (!payload) return res.status(401).json({ error: 'Unauthorized' })
-    if (options?.roles && !checkRole(payload.role, options.roles))
-      return res.status(403).json({ error: 'Forbidden' })
-    return handler(req, res)
-  }
-}
-```
-
-Wrap API routes with `withAuth(handler, { roles: ['admin'] })`.
-
-### Service Layer Pattern (`src/services/`)
-
-```typescript
-export class GradebookService<T extends Config> {
-  constructor(private deps: GradebookServiceDeps<T>) {}
-  async calculateGrades(userId: string): Promise<number> {
-    /* ... */
-  }
-}
-```
-
-Services are classes with `deps` injected via constructor; business logic lives here.
-
-### Utility Function Pattern (`src/utils/debounce.ts`)
-
-```typescript
-export function debounce<T extends (...args: unknown[]) => unknown>(
-  fn: T,
-  delay: number,
-): (...args: Parameters<T>) => void {
-  let timeout: ReturnType<typeof setTimeout>
-  return (...args) => {
-    clearTimeout(timeout)
-    timeout = setTimeout(() => fn(...args), delay)
-  }
-}
-```
-
-Single-responsibility modules; one function per file; co-located `.test.ts`.
+- **HOC auth wrapper**: `src/auth/withAuth.ts` — wrap route handlers with `withAuth(handler, { roles: ['admin', 'editor'] })`
+- **DI container registration**: `src/utils/di-container.ts` — use `container.register(token, factory, 'singleton')` for services
+- **Repository store pattern**: `src/collections/contacts.ts` exports `contactsStore` with `getById|create|update|delete|query` methods
+- **Result type for errors**: `src/utils/result.ts` — `Result.ok(value)` / `Result.err(error)` for explicit error handling
+- **Validation middleware**: `src/middleware/validation.ts` — `validate(schema, data, 'body')` returns `ValidateResult` union
+- **Service dependency interfaces**: e.g., `GradebookServiceDeps<T>` in `src/services/` for typed dependency injection
 
 ## Improvement Areas
 
-- **Dual Auth Systems**: `src/auth/user-store.ts` (SHA-256) vs `src/auth/auth-service.ts` (PBKDF2+JWT) — inconsistent hashing. Prefer `AuthService` pattern.
-- **Role Mismatch**: `UserStore.UserRole` vs `RbacRole` enum in `src/auth/_auth.ts` — no alignment between systems. Use `RbacRole` consistently.
-- **Unsafe Type Casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` rather than proper type guards. Use `Result` type or explicit type narrowing.
-- **In-Memory Stores**: `SessionStore` and `UserStore` in `src/auth/` are in-memory only — lost on restart. Consider Persistence for production.
-- **Missing Error Boundaries**: React components lack error boundaries; unhandled promise rejections may crash the app.
+- **Dual auth systems**: `UserStore` (SHA-256) vs `AuthService` (PBKDF2) in `src/auth/user-store.ts` and `src/auth/auth-service.ts` — password hashing不一致
+- **Role misalignment**: `UserStore.UserRole` ('admin'|'user'|'guest'|'student'|'instructor') vs `RbacRole` ('admin'|'editor'|'viewer') — no single source of truth in `src/security/rbac.ts`
+- **Type safety gaps**: `src/app/dashboard/page.tsx` uses `as unknown as` casts instead of proper type guards
+- **N+1 query risk**: Dashboard batch-fetches lessons but other pages may have uncached individual fetches
+- **Missing error propagation**: Non-critical paths use `.catch(() => {})` silently swallowing errors (see `src/pages/auth/profile.tsx:27`)
 
 ## Acceptance Criteria
 
-- [ ] Code follows Layer Architecture: Route → withAuth HOC → Service → Repository
-- [ ] New utilities go in `src/utils/*.ts` with co-located `.test.ts`
-- [ ] New services follow `ServiceDeps<T>` interface pattern with constructor injection
-- [ ] API routes use `withAuth` HOC and return `Result<T, E>` for error handling
-- [ ] All async operations use try-catch with meaningful error messages
-- [ ] Run `pnpm tsc --noEmit` — zero type errors before PR
-- [ ] Run `pnpm test:int` — all Vitest tests pass
-- [ ] No `console.log` in production code; use logging library
-- [ ] No hardcoded secrets; use `process.env` with validation
-- [ ] New components include `'use client'` directive where needed
+- [ ] All new route handlers wrapped with `withAuth` HOC and specify required roles
+- [ ] Service layer uses DI container for dependency management (no direct `new Service()` calls)
+- [ ] Error handling uses `Result<T, E>` type for service methods that can fail
+- [ ] Password operations use `AuthService` (PBKDF2), not `UserStore` (SHA-256)
+- [ ] RBAC uses `RbacRole` enum consistently — no mixing with `UserRole` strings
+- [ ] API routes run `pnpm tsc --noEmit` without errors before marking done
+- [ ] New services have co-located unit tests in `*.test.ts` next to source file
+- [ ] No `as unknown as` type casts — use proper type narrowing instead
+- [ ] Integration tests use `vi.fn()` mocks for Payload SDK, not real DB calls
+- [ ] All imports use `import type` for TypeScript types; no runtime type imports
 
 {{TASK_CONTEXT}}
