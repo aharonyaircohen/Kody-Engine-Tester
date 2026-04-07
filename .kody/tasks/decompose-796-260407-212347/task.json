@@ -1,0 +1,25 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing notification system implementation",
+  "description": "The task requires a complete notification system covering model, service, API routes, helpers, and tests. All components are already implemented and verified: src/models/notification.ts (NotificationSeverity + Notification interface), src/services/notifications.ts (NotificationService with notify/getUnread/markRead/markAllRead), API routes at src/app/api/notifications/ (GET list, POST mark-all-read, PATCH mark-single-read), src/routes/notifications.ts, src/utils/notificationHelpers.ts (formatNotification, filterNotifications, getUnreadCount, sortBySeverity), and src/services/notifications.test.ts + src/utils/notificationHelpers.test.ts with 18 passing tests. No further implementation needed.",
+  "scope": [
+    "src/models/notification.ts",
+    "src/services/notifications.ts",
+    "src/services/notifications.test.ts",
+    "src/utils/notificationHelpers.ts",
+    "src/utils/notificationHelpers.test.ts",
+    "src/routes/notifications.ts",
+    "src/app/api/notifications/route.ts",
+    "src/app/api/notifications/read-all/route.ts",
+    "src/app/api/notifications/[id]/read/route.ts",
+    "src/collections/Notifications.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/withAuth.ts - route handler wrapper with JWT validation and user extraction",
+    "src/services/notifications.ts - Payload-based service class with constructor injection",
+    "src/models/notification.ts - TypeScript type exports for domain model",
+    "src/utils/notificationHelpers.ts - Pure function utility module with co-located tests"
+  ],
+  "questions": []
+}
