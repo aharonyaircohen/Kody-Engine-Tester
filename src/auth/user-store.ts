@@ -1,24 +1,30 @@
 import crypto from 'crypto'
+import type { RbacRole } from './auth-service'
 
-export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
+export type { RbacRole }
 
 export interface User {
   id: string
   email: string
   passwordHash: string
   salt: string
-  role: UserRole
+  role: RbacRole
   createdAt: Date
   lastLoginAt?: Date
   isActive: boolean
   failedLoginAttempts: number
   lockedUntil?: Date
+  // JWT-specific fields
+  refreshToken?: string | null
+  tokenExpiresAt?: Date | null
+  lastTokenUsedAt?: Date | null
+  lastLogin?: Date | null
 }
 
 export interface CreateUserInput {
   email: string
   password: string
-  role?: UserRole
+  role?: RbacRole
 }
 
 const LOCKOUT_ATTEMPTS = 5
@@ -39,10 +45,9 @@ export class UserStore {
 
   private async seed() {
     await this.createInternal({ email: 'admin@example.com', password: 'AdminPass1!', role: 'admin' })
-    await this.createInternal({ email: 'instructor@example.com', password: 'InstructorPass1!', role: 'instructor' })
-    await this.createInternal({ email: 'student@example.com', password: 'StudentPass1!', role: 'student' })
-    await this.createInternal({ email: 'user@example.com', password: 'UserPass1!', role: 'user' })
-    const inactive = await this.createInternal({ email: 'inactive@example.com', password: 'InactivePass1!', role: 'student' })
+    await this.createInternal({ email: 'editor@example.com', password: 'EditorPass1!', role: 'editor' })
+    await this.createInternal({ email: 'viewer@example.com', password: 'ViewerPass1!', role: 'viewer' })
+    const inactive = await this.createInternal({ email: 'inactive@example.com', password: 'InactivePass1!', role: 'viewer' })
     await this.update(inactive.id, { isActive: false })
   }
 
@@ -74,7 +79,7 @@ export class UserStore {
       email: input.email,
       passwordHash,
       salt,
-      role: input.role ?? 'user',
+      role: input.role ?? 'viewer',
       createdAt: new Date(),
       isActive: true,
       failedLoginAttempts: 0,

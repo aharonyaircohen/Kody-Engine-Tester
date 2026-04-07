@@ -46,18 +46,18 @@ describe('login', () => {
   })
 
   it('should return 423 for locked account', async () => {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('viewer@example.com')
     for (let i = 0; i < 5; i++) {
       await userStore.recordFailedLogin(user!.id)
     }
-    await expect(login('user@example.com', 'UserPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    await expect(login('viewer@example.com', 'ViewerPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
       .rejects.toMatchObject({ status: 423 })
   })
 
   it('should increment failed attempts on wrong password', async () => {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('viewer@example.com')
     try {
-      await login('user@example.com', 'wrong', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
+      await login('viewer@example.com', 'wrong', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
     } catch {}
     const updated = await userStore.findById(user!.id)
     expect(updated?.failedLoginAttempts).toBe(1)

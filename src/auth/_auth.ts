@@ -10,15 +10,8 @@ export interface AuthOptions {
   roles?: RbacRole[]
 }
 
-/**
- * Role hierarchy: higher numbers include permissions of lower numbers
- * admin (3) > editor (2) > viewer (1)
- */
-export const ROLE_HIERARCHY: Record<RbacRole, number> = {
-  admin: 3,
-  editor: 2,
-  viewer: 1,
-}
+import { ROLE_HIERARCHY } from './roles'
+export { ROLE_HIERARCHY }
 
 /**
  * Extract Bearer token from Authorization header

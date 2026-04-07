@@ -6,6 +6,8 @@ export const userStore = new UserStore()
 export const sessionStore = new SessionStore()
 export const jwtService = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
 
-export type { User, UserRole, CreateUserInput } from './user-store'
+export type { User, RbacRole, CreateUserInput } from './user-store'
 export type { Session } from './session-store'
 export type { TokenPayload } from './jwt-service'
+export type { RbacRole as AuthRbacRole } from './auth-service'
+export { ROLE_HIERARCHY } from './roles'

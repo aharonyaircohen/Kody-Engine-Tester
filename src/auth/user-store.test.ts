@@ -16,10 +16,16 @@ describe('UserStore', () => {
       expect(admin?.role).toBe('admin')
     })
 
-    it('should have regular user seeded', async () => {
-      const user = await store.findByEmail('user@example.com')
-      expect(user).toBeDefined()
-      expect(user?.role).toBe('user')
+    it('should have editor user seeded', async () => {
+      const editor = await store.findByEmail('editor@example.com')
+      expect(editor).toBeDefined()
+      expect(editor?.role).toBe('editor')
+    })
+
+    it('should have viewer user seeded', async () => {
+      const viewer = await store.findByEmail('viewer@example.com')
+      expect(viewer).toBeDefined()
+      expect(viewer?.role).toBe('viewer')
     })
 
     it('should have inactive user seeded', async () => {
@@ -31,17 +37,17 @@ describe('UserStore', () => {
 
   describe('create', () => {
     it('should create a user with hashed password', async () => {
-      const user = await store.create({ email: 'new@example.com', password: 'Password1!', role: 'user' })
+      const user = await store.create({ email: 'new@example.com', password: 'Password1!', role: 'viewer' })
       expect(user.id).toBeDefined()
       expect(user.email).toBe('new@example.com')
-      expect(user.role).toBe('user')
+      expect(user.role).toBe('viewer')
       expect(user.passwordHash).not.toBe('Password1!')
       expect(user.isActive).toBe(true)
       expect(user.failedLoginAttempts).toBe(0)
     })
 
     it('should throw on duplicate email', async () => {
-      await expect(store.create({ email: 'admin@example.com', password: 'Password1!', role: 'user' }))
+      await expect(store.create({ email: 'admin@example.com', password: 'Password1!', role: 'viewer' }))
         .rejects.toThrow('Email already exists')
     })
   })
@@ -68,7 +74,7 @@ describe('UserStore', () => {
 
   describe('update', () => {
     it('should update user fields', async () => {
-      const user = await store.findByEmail('user@example.com')
+      const user = await store.findByEmail('viewer@example.com')
       const updated = await store.update(user!.id, { email: 'updated@example.com' })
       expect(updated?.email).toBe('updated@example.com')
     })
@@ -81,7 +87,7 @@ describe('UserStore', () => {
 
   describe('delete', () => {
     it('should delete a user', async () => {
-      const user = await store.findByEmail('user@example.com')
+      const user = await store.findByEmail('viewer@example.com')
       const result = await store.delete(user!.id)
       expect(result).toBe(true)
       expect(await store.findById(user!.id)).toBeUndefined()
@@ -108,7 +114,7 @@ describe('UserStore', () => {
 
   describe('account lockout', () => {
     it('should lock account after 5 failed attempts', async () => {
-      const user = await store.findByEmail('user@example.com')
+      const user = await store.findByEmail('viewer@example.com')
       for (let i = 0; i < 5; i++) {
         await store.recordFailedLogin(user!.id)
       }
@@ -118,7 +124,7 @@ describe('UserStore', () => {
     })
 
     it('should not lock before 5 attempts', async () => {
-      const user = await store.findByEmail('user@example.com')
+      const user = await store.findByEmail('viewer@example.com')
       for (let i = 0; i < 4; i++) {
         await store.recordFailedLogin(user!.id)
       }
@@ -127,7 +133,7 @@ describe('UserStore', () => {
     })
 
     it('should not be locked if lockout has expired', async () => {
-      const user = await store.findByEmail('user@example.com')
+      const user = await store.findByEmail('viewer@example.com')
       for (let i = 0; i < 5; i++) {
         await store.recordFailedLogin(user!.id)
       }
@@ -138,7 +144,7 @@ describe('UserStore', () => {
     })
 
     it('should reset failed attempts', async () => {
-      const user = await store.findByEmail('user@example.com')
+      const user = await store.findByEmail('viewer@example.com')
       await store.recordFailedLogin(user!.id)
       await store.recordFailedLogin(user!.id)
       await store.resetFailedAttempts(user!.id)

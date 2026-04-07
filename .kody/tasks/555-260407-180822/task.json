@@ -1,0 +1,32 @@
+```json
+{
+  "task_type": "refactor",
+  "title": "Refactor auth system with JWT migration and RBAC alignment",
+  "description": "Complete JWT-based auth system: create missing roles.ts, migrate from HS256 to RS256 in jwt-service.ts, align UserRole with RbacRole types, add /api/auth/refresh endpoint, add token blacklist, and write migration scripts for existing users. Much of the JWT infrastructure already exists in jwt-service.ts and withAuth.ts — this task fills remaining gaps.",
+  "scope": [
+    "src/auth/jwt-service.ts",
+    "src/auth/roles.ts",
+    "src/auth/user-store.ts",
+    "src/auth/_auth.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/index.ts",
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/refresh/route.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/role-guard.ts"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts: JWT signing/verification with HS256 (to be migrated to RS256)",
+    "src/auth/withAuth.ts: Higher-order auth wrapper with RBAC role checking via checkRole()",
+    "src/auth/_auth.ts: extractBearerToken() and ROLE_HIERARCHY for role inheritance",
+    "src/auth/auth-service.ts: AuthService with login/refresh/logout using Payload and JwtService",
+    "src/middleware/role-guard.ts: requireRole() guard function using ROLE_HIERARCHY"
+  ],
+  "questions": [
+    "Should the migration use RS256 (asymmetric) or HS256 (symmetric) tokens? The task description says RS256 but the existing jwt-service.ts uses HS256 — which is correct?",
+    "Should UserRole in user-store.ts be replaced entirely with RbacRole, or should a mapping layer be added between the two role systems?",
+    "What is the expected user schema in Payload collections — should the migration add new fields (roles array, JWT-specific fields) to the existing users collection?"
+  ]
+}
+```
