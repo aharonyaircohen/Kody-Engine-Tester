@@ -1,0 +1,11 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify engine-managed dev server lifecycle",
+  "description": "Test that the engine properly manages dev server lifecycle for UI tasks: starts dev server with 'Starting dev server:' message, sets KODY_DEV_SERVER_READY env var, stops with 'Dev server stopped' message, and prevents agent from starting its own dev server. Verify kody.config.json devServer configuration is used.",
+  "scope": ["kody.config.json"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
+```
