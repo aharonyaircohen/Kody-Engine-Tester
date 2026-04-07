@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add /login and /register API endpoints",
+  "description": "Create Next.js route handlers at POST /api/auth/login and POST /api/auth/register that delegate to the existing login/register functions in src/api/auth/. The login endpoint should validate credentials and return JWT tokens; the register endpoint should create a user and return JWT tokens. Both must use getPayloadInstance() for Payload and JwtService for token generation.",
+  "scope": [
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/app/api/enroll/route.ts — Next.js route handler pattern using withAuth wrapper and getPayloadInstance()",
+    "src/api/auth/login.ts — login function to delegate to (email/password validation, JWT generation via JwtService)",
+    "src/api/auth/register.ts — register function to delegate to (email format, password strength, duplicate check, user creation)",
+    "src/auth/jwt-service.ts — JwtService for signAccessToken (15min) and signRefreshToken (7 days)",
+    "src/services/progress.ts — getPayloadInstance() for Payload singleton"
+  ],
+  "questions": []
+}
