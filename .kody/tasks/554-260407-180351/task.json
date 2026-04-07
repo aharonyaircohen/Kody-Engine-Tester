@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add CORS middleware with tests",
+  "description": "Create `src/middleware/cors-middleware.ts` with a `createCorsMiddleware` factory that handles Cross-Origin Resource Sharing. Config interface should include `origin` (allowed origins array), `methods` (allowed HTTP methods), and `credentials` (allow credentials flag). Export both the middleware factory and a default config. Write `src/middleware/cors-middleware.test.ts` with comprehensive tests covering all config options, following the same patterns as existing middleware in `src/middleware/`.",
+  "scope": [
+    "src/middleware/cors-middleware.ts",
+    "src/middleware/cors-middleware.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts: Factory pattern with `create*Middleware` function returning NextResponse, config interface with typed options",
+    "src/middleware/rate-limiter.ts: Exports both the factory and related utilities/types at the bottom of the file",
+    "src/middleware/rate-limiter.test.ts: Co-located test file with `describe` blocks per feature area, uses `afterEach` for cleanup, `makeRequest` helper for constructing NextRequest instances",
+    "src/middleware/request-logger.ts: Config interface with optional typed fields and defaults applied in factory function"
+  ],
+  "questions": []
+}
