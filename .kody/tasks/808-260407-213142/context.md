@@ -44,3 +44,34 @@ All 25 user model tests pass. Here's a summary of what was implemented:
 - `hashPassword()` - uses bcrypt with 10 rounds, produces different hash each time (auto-salted)
 - `verifyPassword
 ...(truncated)
+
+### review (2026-04-07T21:43:40)
+## Verdict: PASS
+
+## Summary
+
+Created a User domain model (`src/models/user.ts`) with `id`, `email`, and `passwordHash` fields, using bcrypt for password hashing with automatic salt generation. Includes 25 unit tests covering password hashing, verification, schema validation, and user creation.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+None.
+
+---
+
+## Two-Pass Review
+
+**Pass 1 — CRITICAL:**
+
+### SQL & Data Safety
+- Not applicable — pure domain model with no database operatio
+...(truncated)
