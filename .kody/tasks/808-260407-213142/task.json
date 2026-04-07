@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add User model with password hash field",
+  "description": "Create a User domain model with id, email, and passwordHash fields. Password hashing must use bcrypt or argon2 (never plain text). Email must be unique. Model should live in src/models/ following project conventions.",
+  "scope": [
+    "src/models/"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/models/notification.ts — domain model with TypeScript interface and related filter/severity types",
+    "src/auth/user-store.ts — existing User model with passwordHash/salt using SHA-256 (not bcrypt), in-memory store pattern"
+  ],
+  "questions": [
+    "The task specifies bcrypt or argon2, but the project improvement area notes prefer AuthService (PBKDF2 via Node crypto) for consistency with existing auth. Should I use bcrypt as specified, or PBKDF2 to align with AuthService?",
+    "The Users collection (src/collections/Users.ts) already has auth enabled with hash/salt fields managed by Payload. Is the new User model intended to be a separate domain model in src/models/, or should it integrate with/extend the existing Payload collection?",
+    "The task description mentions 'passwordHash' as a single field, but bcrypt/argon2 hashes include the salt embedded in the hash string. Should I store a single passwordHash field (salt embedded), or separate passwordHash and salt fields like the existing UserStore?"
+  ]
+}
