@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add debounce utility in timing-helpers.ts",
+  "description": "Created debounce<T extends (...args: any[]) => void>(fn: T, delayMs: number): T in src/utils/timing-helpers.ts with 9 comprehensive tests covering: delayed execution, single execution on rapid calls, last-argument capture, multiple arguments, re-execution after delay, this context preservation, zero delay, object method context, and timeout cancellation on rapid calls.",
+  "scope": ["src/utils/timing-helpers.ts", "src/utils/timing-helpers.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts - Similar debounce implementation with comprehensive test patterns using vitest fake timers",
+    "src/utils/throttle.ts - Timing utility with co-located test file",
+    "src/utils/sleep.ts - Simple timing utility following same pattern"
+  ],
+  "questions": []
+}
