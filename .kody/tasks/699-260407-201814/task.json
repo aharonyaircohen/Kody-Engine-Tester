@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add sanitizeInput middleware function",
+  "description": "Create `sanitizeInput(input: string): string` in `src/middleware/sanitize.ts` that strips HTML tags, trims whitespace, and normalizes unicode. With comprehensive tests.",
+  "scope": [
+    "src/middleware/sanitize.ts",
+    "src/middleware/sanitize.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/validation.ts - middleware utility pattern with NextRequest/NextResponse types",
+    "src/security/sanitizers.ts - existing sanitization functions (sanitizeHtml, sanitizeSql, sanitizeUrl, sanitizeFilePath) with comprehensive test coverage",
+    "src/utils/schema.ts - type-safe schema builder used in tests",
+    "vitest test co-location pattern - `.test.ts` files adjacent to source files in same directory"
+  ],
+  "questions": []
+}
