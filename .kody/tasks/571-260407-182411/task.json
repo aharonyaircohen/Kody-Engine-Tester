@@ -1,0 +1,24 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add /login and /register HTTP endpoints",
+  "description": "Create POST /register and POST /login HTTP route handlers in src/app/api/auth/. The endpoints should handle user registration with email/password and login with credential validation, returning JWT tokens. Register should follow existing register.ts business logic with password strength validation (8+ chars, uppercase, number, special char). Login should use AuthService which verifies passwords against Payload's hash/salt fields using PBKDF2. Both endpoints return proper HTTP status codes: 201 for register success, 409 for duplicate email, 200 for login success, 401 for invalid credentials.",
+  "scope": [
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/app/api/health/route.ts - basic route handler pattern with NextRequest/Response",
+    "src/app/api/enroll/route.ts - route handler using getPayloadInstance from @/services/progress",
+    "src/api/auth/register.ts - existing business logic for registration with email/password validation and password strength checks",
+    "src/auth/auth-service.ts - AuthService.login() method using PBKDF2 password verification and JWT token generation via JwtService",
+    "src/app/api/health/route.test.ts - vitest test pattern for API routes with NextRequest"
+  ],
+  "questions": [
+    "What should the default role be for newly registered users? Users collection defaults to 'viewer' but UserStore uses 'user'.",
+    "Should firstName and lastName be required fields for registration, or accept just email/password? The Users collection requires both fields, but registration could potentially create them as optional.",
+    "The acceptance criteria mentions 8+ chars for password validation. Should this be the only rule, or should we also require mixed case, numbers, and special characters like the existing register.ts validation does?"
+  ]
+}
+```
