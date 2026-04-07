@@ -1,4 +1,4 @@
-# LearnHub LMS Testing Strategy
+## LearnHub LMS Testing Strategy
 
 ## Stack
 
@@ -20,12 +20,14 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Setup File**: `vitest.setup.ts` loaded before each test suite
 
 ## CI Quality Gates
 
 - `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
 - Playwright `forbidOnly: true` prevents committed `.only()` tests
 - Retries enabled on CI (2x) to reduce flaky failure noise
+- E2E web server auto-started via `playwright.config.ts` (`pnpm dev` on port 3000)
 
 ## Coverage
 

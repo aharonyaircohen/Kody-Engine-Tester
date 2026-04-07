@@ -77,29 +77,31 @@ Guidelines:
 
 ## Repo Patterns
 
-- **Utility modules**: Single-function files in `src/utils/` (e.g., `debounce.ts`, `retry.ts`, `flatten.ts`) with co-located `.test.ts` files
-- **Auth HOC**: `src/auth/withAuth.ts` wraps route handlers with JWT validation and RBAC via `checkRole`
-- **Result type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling
-- **DI container**: `src/utils/di-container.ts` with token-based registration and singleton/transient lifecycles
-- **Middleware chain**: `src/middleware/request-logger.ts` and `rate-limiter.ts` use Express-style chainable pattern
-- **Service layer**: `src/services/` (e.g., `GradebookService`, `GradingService`) with typed dependency interfaces like `GradebookServiceDeps`
-- **Payload collections**: `src/collections/*.ts` define data models; avoid direct DB calls, use Payload SDK
+- **Service Layer**: Business logic in `src/services/`; receives store + dependencies via constructor; returns typed interfaces; uses `Map` for lookups. Example: `DiscussionService` (src/services/discussions.ts) with `getThreadDepth` recursive helper.
+- **Security Sanitizers**: `src/security/sanitizers.ts` provides `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl` — regex-based HTML/SQL/URL stripping; named export per concern.
+- **Auth HOC**: `src/auth/withAuth.ts` wraps route handlers with JWT validation and RBAC via `checkRole`; extracts bearer token with `extractBearerToken`.
+- **DI Container**: `src/utils/di-container.ts` with token-based registration and singleton/transient lifecycles; factory functions decouple services from Payload.
+- **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling.
+- **Middleware Chain**: `src/middleware/request-logger.ts` and `rate-limiter.ts` use Express-style chainable pattern; `createAuthMiddleware` factory in `auth-middleware.ts`.
+- **Repository/Store Pattern**: `EnrollmentStore`, `NotificationsStore`, `CertificatesStore` encapsulate `Map` backing with `getById|create|update|delete|query` methods.
+- **Payload Collections**: `src/collections/*.ts` define data models; avoid direct DB calls, use Payload SDK.
 
 ## Improvement Areas
 
-- **Dual auth systems**: `src/auth/user-store.ts` (SHA-256) coexists with `src/auth/auth-service.ts` (PBKDF2) — inconsistent password hashing; prefer AuthService
-- **Role mismatch**: `UserStore.UserRole` uses `'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole` uses `'admin'|'editor'|'viewer'` — no alignment
-- **Type safety**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts instead of proper type guards
-- **N+1 risk**: Dashboard page batches lesson fetches but other pages may miss optimization opportunities
+- **Dual auth systems**: `src/auth/user-store.ts` (SHA-256) coexists with `src/auth/auth-service.ts` (PBKDF2) — inconsistent password hashing; prefer AuthService.
+- **Role mismatch**: `UserStore.UserRole` uses `'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole` uses `'admin'|'editor'|'viewer'` — no alignment; role guard in `role-guard.ts` may not cover all cases.
+- **Type safety**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts instead of proper type guards; similar casts may exist in other frontend pages.
+- **N+1 risk**: Dashboard page batches lesson fetches but other API routes (e.g., `src/app/api/notes/**`) may miss optimization opportunities.
 
 ## Acceptance Criteria
 
-- [ ] Scope contains exact file paths from Glob/Grep discovery
-- [ ] Title is actionable (starts with verb: Add, Fix, Refactor, Update)
-- [ ] Description captures intent and acceptance criteria from task
-- [ ] Risk level matches scope size and impact (low/medium/high heuristics)
-- [ ] existing_patterns cites specific file paths and patterns to reuse
-- [ ] Questions (if any) are product/requirements only, max 3
-- [ ] JSON is valid with no markdown fences or extra text
+- [ ] Scope contains exact file paths discovered via Glob/Grep (e.g., `src/services/*.ts`, `src/collections/*.ts`)
+- [ ] Title is actionable and starts with a verb (Add, Fix, Refactor, Update, Verify)
+- [ ] Description captures intent and acceptance criteria from the task description
+- [ ] Risk level matches scope size and impact (low ≤1 file, medium 2-3 files, high ≥4 files or security/auth changes)
+- [ ] existing_patterns cites specific file paths and patterns to reuse (service layer, sanitizers, auth HOC, DI container, Result type)
+- [ ] Questions (if any) are product/requirements only, maximum 3, focused on ambiguity or missing edge cases
+- [ ] JSON output is valid with no markdown fences, no explanation, no extra text before or after
+- [ ] Task type is correctly classified: feature (new capability), bugfix (existing broken behavior), refactor (code quality), docs (documentation), chore (maintenance/verification)
 
 {{TASK_CONTEXT}}
