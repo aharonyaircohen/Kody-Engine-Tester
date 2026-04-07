@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp(value, min, max) utility was already implemented in src/utils/clamp.ts with 8 comprehensive tests covering: value within range, below min, above max, boundary equality, negative numbers, floating point, and error on min > max. All tests pass. Note: Task description referenced math-helpers.ts but the implementation follows the existing pattern of single-function modules (like debounce.ts, cap.ts).",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts — single-function utility module pattern",
+    "src/utils/cap.ts — similar numeric utility with co-located .test.ts"
+  ],
+  "questions": []
+}
