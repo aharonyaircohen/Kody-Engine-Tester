@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The implementation exists but doesn't match the acceptance criteria. The",
+  "description": "The implementation exists but doesn't match the acceptance criteria. The tests don't cover the specified cases. Let me fix this.\n\n```json\n{\n  \"task_type\": \"bugfix\",\n  \"title\": \"Fix range utility to match acceptance criteria\",\n  \"description\": \"The existing range() implementation has two issues: (1) it uses exclusive end (i < end) instead of inclusive (i <= end), so range(1,5) returns [1,2,3,4] instead of [1,2,3,4,5]; (2) when start > end with positive step, it throws an error instead of automati",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

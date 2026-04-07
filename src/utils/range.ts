@@ -1,33 +1,32 @@
-export function range(startOrEnd: number, end?: number, step = 1): number[] {
+export function range(startOrEnd: number, end?: number, step?: number): number[] {
   let start: number
+  let actualEnd: number
 
   if (end === undefined) {
     start = 0
-    end = startOrEnd
+    actualEnd = startOrEnd - 1
+    if (startOrEnd <= 0) {
+      return []
+    }
   } else {
     start = startOrEnd
+    actualEnd = end
   }
 
-  if (step === 0) {
+  const actualStep = step !== undefined ? step : start <= actualEnd ? 1 : -1
+
+  if (actualStep === 0) {
     throw new Error('Step cannot be zero')
-  }
-
-  if (step > 0 && start > end) {
-    throw new Error('Step must be negative when start is greater than end')
-  }
-
-  if (step < 0 && start < end) {
-    throw new Error('Step must be positive when start is less than end')
   }
 
   const result: number[] = []
 
-  if (step > 0) {
-    for (let i = start; i < end; i += step) {
+  if (actualStep > 0) {
+    for (let i = start; i <= actualEnd; i += actualStep) {
       result.push(i)
     }
   } else {
-    for (let i = start; i > end; i += step) {
+    for (let i = start; i >= actualEnd; i += actualStep) {
       result.push(i)
     }
   }
