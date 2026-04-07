@@ -1,0 +1,32 @@
+{
+  "task_type": "chore",
+  "title": "Test decompose --no-compose flag behavior",
+  "description": "Verify that `kody decompose --no-compose` stops after parallel builds, saves decompose-state.json, skips merge/verify/review/ship phases, creates no PR, and pushes sub-task branches to remote. The task description contains a copy-paste error referencing T25's notification system which is unrelated to this test.",
+  "scope": [
+    ".kody/tasks/decompose-563-260407-181528/task.md",
+    ".kody/tasks/decompose-563-260407-181528/task.json",
+    ".kody/tasks/decompose-563-260407-181528/status.json",
+    ".kody/tasks/decompose-563-260407-181528/context.md",
+    ".github/workflows/kody.yml"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    {
+      "file": ".github/workflows/kody.yml",
+      "description": "kody workflow orchestrates decompose command via kody-engine CLI with issue_comment trigger"
+    },
+    {
+      "file": "node_modules/.pnpm/@kody-ade+engine@0.1.0/node_modules/@kody-ade/engine/prompts/decompose.md",
+      "description": "decompose agent prompt defines sub-task decomposition logic with max 4 sub-tasks"
+    },
+    {
+      "file": "node_modules/.pnpm/@kody-ade+engine@0.1.0/node_modules/@kody-ade/engine/dist/bin/cli.js:8587",
+      "description": "autoCompose flag derived from !input.noCompose — controls whether Phase 3 auto-compose runs after parallel builds"
+    },
+    {
+      "file": "node_modules/.pnpm/@kody-ade+engine@0.1.0/node_modules/@kody-ade/engine/dist/bin/cli.js:8697-8704",
+      "description": "decomposeState saved to decompose-state.json after parallel build phase completes"
+    }
+  ],
+  "questions": []
+}
