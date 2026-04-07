@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of unique utility",
+  "description": "The `unique` utility function in src/utils/unique.ts and its tests in src/utils/unique.test.ts already exist and all 5 tests pass. The function uses Set to deduplicate arrays of strings or numbers and preserves order of first occurrence.",
+  "scope": ["src/utils/unique.ts", "src/utils/unique.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["Single-function utility files in src/utils/ with co-located .test.ts files following the same pattern as clamp.ts/clamp.test.ts, chunk.ts/chunk.test.ts, etc."],
+  "questions": []
+}
