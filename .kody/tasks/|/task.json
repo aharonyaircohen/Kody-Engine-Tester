@@ -1,0 +1,12 @@
+
+```json
+{
+  "task_type": "chore",
+  "title": "Verify Kody Watcher Activity Log implementation",
+  "description": "Kody Watcher activity log task that receives periodic health reports from pipeline-health, security-scan, and config-health plugins. The task is informational only, documenting test suite run results, bugs identified, and recommendations. No code implementation required.",
+  "scope": [".kody/tasks/|/task.md", ".kody/tasks/|/status.json"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
+```
