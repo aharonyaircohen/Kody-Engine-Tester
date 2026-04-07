@@ -15,7 +15,7 @@ interface RequestContext {
 }
 
 const RATE_LIMIT_MAX = 100
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000
+const RATE_LIMIT_WINDOW_MS = 60 * 1000
 
 interface RateLimitEntry {
   count: number
@@ -25,14 +25,14 @@ interface RateLimitEntry {
 let jwtServiceInstance: JwtService | null = null
 let authServiceInstance: AuthService | null = null
 
-function getJwtService(): JwtService {
+export function getJwtService(): JwtService {
   if (!jwtServiceInstance) {
     jwtServiceInstance = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
   }
   return jwtServiceInstance
 }
 
-function getAuthService(): AuthService {
+export function getAuthService(): AuthService {
   if (!authServiceInstance) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     authServiceInstance = new AuthService(getPayloadInstance() as any, getJwtService())

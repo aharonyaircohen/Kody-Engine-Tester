@@ -100,6 +100,8 @@ export class JwtService {
   }
 
   blacklist(token: string): void {
+    // Clean up expired entries before adding new one
+    this.cleanupBlacklist()
     try {
       const parts = token.split('.')
       if (parts.length === 3) {

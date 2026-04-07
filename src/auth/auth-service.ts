@@ -206,6 +206,9 @@ export class AuthService {
       } as any,
     })
 
+    // Blacklist the old refresh token after successful rotation
+    this.jwtService.blacklist(refreshToken)
+
     return { accessToken: newAccessToken, refreshToken: newRefreshToken }
   }
 

@@ -1,9 +1,5 @@
 import { NextRequest } from 'next/server'
-import { JwtService } from '@/auth/jwt-service'
-import { AuthService } from '@/auth/auth-service'
-import { getPayloadInstance } from '@/services/progress'
-
-const jwtService = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
+import { getAuthService } from '@/middleware/auth-middleware'
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -14,8 +10,7 @@ export const POST = async (req: NextRequest) => {
       return Response.json({ error: 'Refresh token is required' }, { status: 400 })
     }
 
-    const payload = await getPayloadInstance()
-    const authService = new AuthService(payload as any, jwtService)
+    const authService = getAuthService()
     const result = await authService.refresh(refreshToken)
 
     return Response.json(result, { status: 200 })

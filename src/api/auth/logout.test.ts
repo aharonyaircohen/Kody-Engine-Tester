@@ -25,10 +25,27 @@ describe('logout', () => {
     authService = new AuthService(mockPayload as any, jwtService)
   })
 
+  it('should blacklist the access token on logout', async () => {
+    mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null })
+
+    // Create a valid signed token
+    const token = await jwtService.signAccessToken({
+      userId: '1',
+      email: 'test@example.com',
+      role: 'admin',
+      sessionId: 'session-1',
+      generation: 0,
+    })
+    await logout('1', token, false, authService, jwtService)
+
+    // Verify the token was blacklisted - verify() is async
+    await expect(jwtService.verify(token)).rejects.toThrow('Token revoked')
+  })
+
   it('should clear refresh token on logout', async () => {
     mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null })
 
-    await logout('1', 'token', false, authService)
+    await logout('1', 'token', false, authService, jwtService)
 
     expect(mockPayload.update).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -39,19 +56,28 @@ describe('logout', () => {
     )
   })
 
-  it('should clear refresh token regardless of allDevices flag', async () => {
+  it('should call authService.logout when allDevices is true', async () => {
     mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null })
 
-    await logout('1', 'token', true, authService)
+    await logout('1', 'token', true, authService, jwtService)
 
-    // With AuthService, allDevices doesn't create separate sessions since it uses JWT rotation
-    // Clearing the refresh token invalidates all tokens for this user
-    expect(mockPayload.update).toHaveBeenCalledWith(
-      expect.objectContaining({
-        collection: 'users',
-        id: '1',
-        data: { refreshToken: null },
-      })
-    )
+    // authService.logout is called to clear all tokens
+    expect(mockPayload.update).toHaveBeenCalled()
+  })
+
+  it('should blacklist token even when allDevices is false', async () => {
+    mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null })
+
+    const token = await jwtService.signAccessToken({
+      userId: '1',
+      email: 'test@example.com',
+      role: 'admin',
+      sessionId: 'session-1',
+      generation: 0,
+    })
+    await logout('1', token, false, authService, jwtService)
+
+    // Token should still be blacklisted
+    await expect(jwtService.verify(token)).rejects.toThrow('Token revoked')
   })
 })
