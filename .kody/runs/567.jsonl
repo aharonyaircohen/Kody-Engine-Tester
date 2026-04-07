@@ -1,0 +1,1 @@
+{"runId":"hotfix-567-260407-181605","issueNumber":567,"command":"run","startedAt":"2026-04-07T18:17:51.407Z","completedAt":"2026-04-07T18:22:22.498Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
