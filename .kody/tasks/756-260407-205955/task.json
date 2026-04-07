@@ -1,0 +1,23 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of admin dashboard with charts and data tables",
+  "description": "Admin dashboard with charts (StatsChart.tsx) and paginated data tables (UsersTable.tsx) already exists at src/app/(frontend)/admin/dashboard/page.tsx. The AdminDashboardClient.tsx manages state and fetches from /api/dashboard/admin-stats. Responsive grid layout is implemented. Task.json needs to be converted from text description to proper JSON format with hasUI: true flag.",
+  "hasUI": true,
+  "scope": [
+    "src/app/(frontend)/admin/dashboard/page.tsx",
+    "src/components/admin-dashboard/AdminDashboardClient.tsx",
+    "src/components/admin-dashboard/StatsChart.tsx",
+    "src/components/admin-dashboard/UsersTable.tsx",
+    "src/components/admin-dashboard/UsersTable.module.css",
+    "src/app/api/dashboard/admin-stats/route.ts",
+    ".kody/tasks/756-260407-205955/task.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/components/contacts/Pagination.tsx - existing Pagination component reused in UsersTable",
+    "src/app/(frontend)/admin/dashboard/page.tsx - SSR with auth checks and redirect",
+    "src/components/admin-dashboard/StatsChart.tsx - SVG bar chart pattern with data [{label, value, color}]",
+    "src/app/api/dashboard/admin-stats/route.ts - withAuth decorator pattern with role-based access"
+  ],
+  "questions": []
+}

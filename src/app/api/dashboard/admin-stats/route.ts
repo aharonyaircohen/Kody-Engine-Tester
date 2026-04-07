@@ -19,6 +19,11 @@ export const GET = withAuth(async (request: NextRequest, { user }) => {
   const payload = await getPayload({ config: payloadConfig })
 
   const searchParam = request.nextUrl.searchParams.get('search') || ''
+  const pageParam = request.nextUrl.searchParams.get('page') || '1'
+  const limitParam = request.nextUrl.searchParams.get('limit') || '10'
+
+  const page = Math.max(1, parseInt(pageParam, 10) || 1)
+  const limit = Math.min(Math.max(1, parseInt(limitParam, 10) || 10), 100)
 
   // Sanitize search input to prevent injection
   const sanitizedSearch = sanitizeHtml(searchParam)
@@ -27,15 +32,17 @@ export const GET = withAuth(async (request: NextRequest, { user }) => {
     ? { email: { like: sanitizedSearch } }
     : undefined
 
-  const { docs: users } = await payload.find({
+  const { docs: users, totalDocs, totalPages } = await payload.find({
     collection: 'users',
     where,
-    limit: 100,
+    page,
+    limit,
   })
 
   // Return safe stats only - no sensitive fields
   return NextResponse.json({
-    totalUsers: users.length,
+    totalUsers: totalDocs ?? users.length,
+    totalPages: totalPages ?? 1,
     users: users.map((u: any) => ({
       id: u.id,
       email: u.email,
