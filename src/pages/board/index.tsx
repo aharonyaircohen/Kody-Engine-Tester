@@ -5,7 +5,7 @@ import { taskStore } from '@/collections/tasks'
 import type { Task, TaskStatus, TaskPriority } from '@/collections/tasks'
 import { Column } from '@/components/board/Column'
 import { AddTaskButton } from '@/components/board/AddTaskButton'
-import { TaskModal } from './modal'
+import TaskModal from './modal'
 import styles from './index.module.css'
 
 const COLUMNS: { status: TaskStatus; label: string }[] = [

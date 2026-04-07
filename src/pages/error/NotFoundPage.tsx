@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export function NotFoundPage() {
+export default function NotFoundPage() {
   return (
     <div style={{ padding: '4rem 2rem', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
       <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>404</div>

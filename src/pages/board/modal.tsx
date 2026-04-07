@@ -10,7 +10,7 @@ interface TaskModalProps {
   onClose: () => void
 }
 
-export function TaskModal({ initialValues, onSubmit, onClose }: TaskModalProps) {
+export default function TaskModal({ initialValues, onSubmit, onClose }: TaskModalProps) {
   const [title, setTitle] = useState(initialValues?.title ?? '')
   const [description, setDescription] = useState(initialValues?.description ?? '')
   const [priority, setPriority] = useState<TaskPriority>(initialValues?.priority ?? 'medium')

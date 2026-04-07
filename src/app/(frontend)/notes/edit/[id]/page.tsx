@@ -8,7 +8,9 @@ import { NoteForm } from '@/components/notes/NoteForm'
 import type { Note } from '@/collections/notes'
 
 export default function NoteEditPage() {
-  const { id } = useParams<{ id: string }>()
+  const params = useParams<{ id: string }>()
+  if (!params) return null
+  const { id } = params
   const router = useRouter()
   const [note, setNote] = useState<Note | null>(null)
 
