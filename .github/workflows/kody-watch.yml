@@ -56,6 +56,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          WATCH_DIGEST_ISSUE: ${{ vars.WATCH_DIGEST_ISSUE }}
+          WATCH_ACTIVITY_LOG: ${{ vars.WATCH_ACTIVITY_LOG }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
         run: kody-engine watch ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}
