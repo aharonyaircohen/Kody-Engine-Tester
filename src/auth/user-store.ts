@@ -1,5 +1,10 @@
 import crypto from 'crypto'
 
+/**
+ * @deprecated UserStore is deprecated. Use Payload's built-in users collection
+ * with AuthService for JWT-based authentication instead. This store will be
+ * removed in a future version.
+ */
 export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
 
 export interface User {
@@ -24,6 +29,11 @@ export interface CreateUserInput {
 const LOCKOUT_ATTEMPTS = 5
 const LOCKOUT_DURATION_MS = 30 * 60 * 1000 // 30 minutes
 
+/**
+ * @deprecated UserStore is deprecated. Use Payload's built-in users collection
+ * with AuthService for JWT-based authentication instead. This store will be
+ * removed in a future version.
+ */
 export class UserStore {
   private users = new Map<string, User>()
   private emailIndex = new Map<string, string>() // email -> id

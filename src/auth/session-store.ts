@@ -1,5 +1,9 @@
 import crypto from 'crypto'
 
+/**
+ * @deprecated SessionStore is deprecated. JWT-based authentication via AuthService
+ * should be used instead. This store will be removed in a future version.
+ */
 export interface Session {
   id: string
   userId: string
@@ -17,6 +21,10 @@ const MAX_SESSIONS_PER_USER = 5
 const ACCESS_TOKEN_EXPIRY_MS = 15 * 60 * 1000 // 15 minutes
 const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
 
+/**
+ * @deprecated SessionStore is deprecated. JWT-based authentication via AuthService
+ * should be used instead. This store will be removed in a future version.
+ */
 export class SessionStore {
   private sessions = new Map<string, Session>()
   private tokenIndex = new Map<string, string>() // token -> sessionId
