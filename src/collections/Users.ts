@@ -85,6 +85,21 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'roles',
+      type: 'select',
+      options: ['admin', 'editor', 'viewer'],
+      hasMany: true,
+      defaultValue: ['viewer'],
+      admin: {
+        description: 'User roles for RBAC. Primary role is used for display.',
+      },
+      access: {
+        update: ({ req: { user } }) => {
+          return (user as { role?: string } | null)?.role === 'admin'
+        },
+      },
+    },
+    {
       name: 'organization',
       type: 'text',
       required: false,

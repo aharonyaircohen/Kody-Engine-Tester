@@ -1,10 +1,8 @@
 'use client'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import { AuthContext } from '../../contexts/auth-context'
 import { ProtectedRoute } from '../../components/auth/ProtectedRoute'
 import { PasswordStrengthBar } from '../../components/auth/PasswordStrengthBar'
-import { SessionCard } from '../../components/auth/SessionCard'
-import type { Session } from '../../auth/session-store'
 
 export default function ProfilePage() {
   return (
@@ -16,23 +14,11 @@ export default function ProfilePage() {
 
 function ProfileContent() {
   const { user, logout } = useContext(AuthContext)
-  const [sessions, setSessions] = useState<Session[]>([])
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [passwordSuccess, setPasswordSuccess] = useState(false)
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem('auth_access_token')
-    if (!accessToken) return
-    fetch('/api/auth/profile', {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
-      .then(r => r.json())
-      .then(data => { if (data.sessions) setSessions(data.sessions) })
-      .catch(() => {})
-  }, [])
 
   async function handlePasswordChange(e: React.FormEvent) {
     e.preventDefault()
@@ -58,25 +44,6 @@ function ProfileContent() {
       setPasswordError(data.error ?? 'Failed to update password')
     }
   }
-
-  async function revokeSession(sessionId: string) {
-    const accessToken = localStorage.getItem('auth_access_token')
-    await fetch(`/api/auth/sessions/${sessionId}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
-    setSessions(s => s.filter(x => x.id !== sessionId))
-  }
-
-  const currentAccessToken = localStorage.getItem('auth_access_token') ?? ''
-  let currentSessionId = ''
-  try {
-    const parts = currentAccessToken.split('.')
-    if (parts.length === 3) {
-      const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString())
-      currentSessionId = payload.sessionId
-    }
-  } catch {}
 
   return (
     <div style={{ maxWidth: 600, margin: '0 auto', padding: 24 }}>
@@ -110,17 +77,10 @@ function ProfileContent() {
       </section>
 
       <section style={{ marginTop: 24 }}>
-        <h2>Active Sessions</h2>
-        {sessions.map(session => (
-          <SessionCard
-            key={session.id}
-            session={session}
-            isCurrentSession={session.id === currentSessionId}
-            onRevoke={revokeSession}
-          />
-        ))}
-        <button onClick={() => logout(true)} style={{ marginTop: 12, padding: '8px 16px', color: '#ef4444' }}>
-          Logout All Devices
+        <h2>Session</h2>
+        <p>Your session is managed via JWT tokens. To logout, use the logout button in the navigation.</p>
+        <button onClick={() => logout()} style={{ marginTop: 12, padding: '8px 16px', color: '#ef4444' }}>
+          Logout
         </button>
       </section>
     </div>

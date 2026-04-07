@@ -32,6 +32,19 @@ export interface TokenFields {
 
 const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
 
+/**
+ * Get primary role from user document, checking roles array first then falling back to role field.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getPrimaryRole(user: any): RbacRole {
+  const roles = user.roles as RbacRole[] | undefined
+  if (roles && Array.isArray(roles) && roles.length > 0) {
+    return roles[0]
+  }
+  const role = user.role as RbacRole | undefined
+  return role ?? 'viewer'
+}
+
 function createError(message: string, status: number): Error & { status: number } {
   const err = new Error(message) as Error & { status: number }
   err.status = status
@@ -91,7 +104,8 @@ export class AuthService {
     }
 
     const userId = (user as any).id
-    const role = (user as any).role as RbacRole
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const role = getPrimaryRole(user as any)
     const isActive = (user as any).isActive ?? true
     const hash = (user as any).hash as string | null | undefined
     const salt = (user as any).salt as string | null | undefined
@@ -242,7 +256,8 @@ export class AuthService {
       user: {
         id: (user as any).id,
         email: (user as any).email,
-        role: (user as any).role as RbacRole,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        role: getPrimaryRole(user as any),
         firstName: (user as any).firstName,
         lastName: (user as any).lastName,
         isActive,

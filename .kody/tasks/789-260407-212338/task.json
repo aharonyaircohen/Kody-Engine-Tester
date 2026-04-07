@@ -1,0 +1,45 @@
+```json
+{
+  "task_type": "refactor",
+  "title": "Refactor auth system: JWT replacing sessions, add RBAC roles array",
+  "description": "Replace session-based auth with stateless JWT, migrate User schema from single `role` to `roles: RbacRole[]` array, consolidate RBAC into new src/middleware/rbac.ts, update all API auth handlers (login/logout/refresh/profile/register) to use pure JWT, and provide a migration script. Current issues: session-store.ts stores tokens server-side but JWT is already available; UserStore uses UserRole ('admin'|'user'|'guest'|'student'|'instructor') which doesn't match RbacRole ('admin'|'editor'|'viewer').",
+  "scope": [
+    "src/auth/session-store.ts",
+    "src/auth/session-store.test.ts",
+    "src/auth/user-store.ts",
+    "src/auth/user-store.test.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/jwt-service.test.ts",
+    "src/auth/index.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/middleware/role-guard.ts",
+    "src/middleware/role-guard.test.ts",
+    "src/api/auth/login.ts",
+    "src/api/auth/login.test.ts",
+    "src/api/auth/logout.ts",
+    "src/api/auth/logout.test.ts",
+    "src/api/auth/refresh.ts",
+    "src/api/auth/refresh.test.ts",
+    "src/api/auth/profile.ts",
+    "src/api/auth/profile.test.ts",
+    "src/api/auth/register.ts",
+    "src/api/auth/register.test.ts",
+    "src/auth/_auth.ts"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts: JwtService class with sign/verify/signAccessToken/signRefreshToken/blacklist, already uses RbacRole='admin'|'editor'|'viewer'",
+    "src/auth/_auth.ts: ROLE_HIERARCHY map (admin:3, editor:2, viewer:1), extractBearerToken(), checkRole()",
+    "src/auth/session-store.ts: SessionStore with create/findByToken/findByRefreshToken/refresh/revoke/revokeAllForUser/cleanup",
+    "src/middleware/role-guard.ts: requireRole() HOC using ROLE_HIERARCHY, imported from _auth.ts",
+    "src/auth/user-store.ts: UserStore with SHA-256 hashing, seed data, lockout logic",
+    "src/api/auth/login.ts: login() function combining JWT signing with sessionStore.create()"
+  ],
+  "questions": [
+    "Should the migration convert existing single `role` values to a `roles` array (e.g., `admin` → `['admin']`) or keep `role` field for backwards compatibility alongside new `roles` array?",
+    "Is src/middleware/rbac.ts a new file that should be created alongside role-guard.ts, or should role-guard.ts be renamed/refactored into rbac.ts?",
+    "Should session-store.ts be deleted entirely or kept during transition period?"
+  ]
+}
+```

@@ -1,12 +1,9 @@
 import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
 import { JwtService } from '../auth/jwt-service'
 import type { User } from '../auth/user-store'
-import type { Session } from '../auth/session-store'
 
 export interface AuthContext {
   user?: User
-  session?: Session
   error?: string
   status?: number
 }
@@ -26,7 +23,6 @@ interface RateLimitEntry {
 
 export function createAuthMiddleware(
   userStore: UserStore,
-  sessionStore: SessionStore,
   jwtService: JwtService
 ) {
   const rateLimitMap = new Map<string, RateLimitEntry>()
@@ -61,20 +57,11 @@ export function createAuthMiddleware(
       return { error: message, status: 401 }
     }
 
-    const session = sessionStore.findByToken(token)
-    if (!session) {
-      return { error: 'Session not found or expired', status: 401 }
-    }
-
-    if (payload.generation < session.generation) {
-      return { error: 'Token has been superseded by a newer session', status: 401 }
-    }
-
     const user = await userStore.findById(payload.userId)
     if (!user || !user.isActive) {
       return { error: 'User not found or inactive', status: 401 }
     }
 
-    return { user, session }
+    return { user }
   }
 }

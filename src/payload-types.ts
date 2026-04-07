@@ -151,6 +151,10 @@ export interface User {
   avatar?: (number | null) | Media;
   bio?: string | null;
   role: 'admin' | 'editor' | 'viewer';
+  /**
+   * User roles for RBAC. Primary role is used for display.
+   */
+  roles?: ('admin' | 'editor' | 'viewer')[] | null;
   organization?: string | null;
   refreshToken?: string | null;
   tokenExpiresAt?: string | null;
@@ -706,6 +710,7 @@ export interface UsersSelect<T extends boolean = true> {
   avatar?: T;
   bio?: T;
   role?: T;
+  roles?: T;
   organization?: T;
   refreshToken?: T;
   tokenExpiresAt?: T;
