@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of pick utility",
+  "description": "The `pick` utility function already exists at `src/utils/pick.ts` with full implementation and comprehensive test coverage at `src/utils/pick.test.ts` (13 test cases). Implementation correctly picks specified keys from an object and the acceptance criteria are met.",
+  "scope": ["src/utils/pick.ts", "src/utils/pick.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/omit.ts - similar utility pattern for object manipulation with co-located test file",
+    "src/utils/compact.ts - utility function with .test.ts co-located"
+  ],
+  "questions": []
+}
