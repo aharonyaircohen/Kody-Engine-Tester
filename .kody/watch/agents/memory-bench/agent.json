@@ -1,0 +1,10 @@
+{
+  "name": "memory-bench",
+  "description": "Memory system benchmark — runs 20+ varied issues to measure compression savings, diary accumulation, room scoping, contradiction detection, and dedup effectiveness",
+  "schedule": {
+    "runAt": "04:00",
+    "days": 7
+  },
+  "reportOnFailure": true,
+  "timeoutMs": 7200000
+}
