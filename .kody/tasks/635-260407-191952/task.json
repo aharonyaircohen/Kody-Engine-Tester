@@ -1,0 +1,15 @@
+{
+  "task_type": "chore",
+  "title": "Verify feedback injection flag in build stage",
+  "description": "Test that `--feedback \"Use functional style\"` flag injects feedback into build stage logs. The pipeline 635-260407-191952 was triggered by the comment `@kody --feedback \"Use functional style\"` on the issue. Verification requires confirming `feedback: Use functional style` appears in build stage logs. The feedback injection logic is in kody-engine at stages/agent.js:54-55 where it logs `feedback: <text>` when running the build stage.",
+  "scope": [
+    "node_modules/@kody-ade/engine/dist/stages/agent.js"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "node_modules/@kody-ade/engine/dist/stages/agent.js:54-55 - feedback injection for build stage: `if (ctx.input.feedback && def.name === \"build\") { logger.info(\\`  feedback: ${ctx.input.feedback.slice(0, 200)}...\\`); }`",
+    ".github/workflows/kody.yml:207,262 - FEEDBACK env var passed to kody-engine run command",
+    "node_modules/@kody-ade/engine/dist/ci/parse-inputs.js - parses --feedback from issue comment"
+  ],
+  "questions": []
+}
