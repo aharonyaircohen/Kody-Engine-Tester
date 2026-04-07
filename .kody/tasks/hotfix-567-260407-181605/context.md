@@ -12,3 +12,7 @@ The `kody-engine release --dry-run` command was executed and verified successful
 | No PR created | 0 PRs | ✅ No PR created |
 | No tags cr
 ...(truncated)
+
+### autofix (2026-04-07T18:21:13)
+Changed `let context` to `const context` at line 80. The variable is initialized once and never reassigned, so `const` is appropriate.
+
