@@ -1,0 +1,11 @@
+{
+  "task_type": "chore",
+  "title": "Create broken-import utility for testing",
+  "description": "Create `src/utils/broken-import.ts` with an intentional broken import from `@/nonexistent/module` to test contradiction detection and verify failure handling",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/sleep.ts — simple utility module with exports"
+  ],
+  "questions": []
+}
