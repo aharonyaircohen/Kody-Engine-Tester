@@ -24,3 +24,12 @@
 **Acceptance criteria satisfied:**
 - `flatten([1,
 ...(truncated)
+
+### autofix (2026-04-07T21:00:44)
+
+The flatten utility is verified - all 6 tests pass. The pg_constraint query error is a pre-existing issue in Payload's drizzle-kit internals (node_modules/.pnpm/drizzle-kit@0.31.7/node_modules/drizzle-kit/api.js:44748).
+
+**Root cause investigation:**
+
+1. **Error location**: The query `SELECT conname AS primary_key FROM pg_constraint...` with params `[tableSchema, tableName]` is in `drizzle-kit/api.js` line 44748 - this is Payload's internal schema introspection code, NOT in `tests/int/api.int.s
+...(truncated)
