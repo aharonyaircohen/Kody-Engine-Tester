@@ -2,13 +2,13 @@ name: kody-watch
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: "*/30 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
         type: boolean
         default: false
-        description: 'Run without executing actions'
+        description: "Run without executing actions"
 
 concurrency:
   group: kody-watch
@@ -24,11 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure git identity
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -38,7 +33,7 @@ jobs:
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/kody-engine
+        run: npm install -g @kody-ade/engine
 
       - name: Install LiteLLM proxy
         if: hashFiles('.kody/watch/agents/*/agent.json') != ''
@@ -63,4 +58,4 @@ jobs:
           REPO: ${{ github.repository }}
           WATCH_DIGEST_ISSUE: ${{ vars.WATCH_DIGEST_ISSUE }}
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
-        run: npx kody-engine watch ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}
+        run: kody-engine watch ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}
