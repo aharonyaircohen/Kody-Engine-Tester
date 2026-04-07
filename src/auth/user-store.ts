@@ -9,6 +9,7 @@ export interface User {
   salt: string
   role: UserRole
   createdAt: Date
+  updatedAt: Date
   lastLoginAt?: Date
   isActive: boolean
   failedLoginAttempts: number
@@ -69,13 +70,15 @@ export class UserStore {
   private async createInternal(input: CreateUserInput): Promise<User> {
     const salt = this.generateSalt()
     const passwordHash = await this.hashPassword(input.password, salt)
+    const now = new Date()
     const user: User = {
       id: this.generateId(),
       email: input.email,
       passwordHash,
       salt,
       role: input.role ?? 'user',
-      createdAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
       isActive: true,
       failedLoginAttempts: 0,
     }
@@ -104,7 +107,7 @@ export class UserStore {
   async update(id: string, updates: Partial<Omit<User, 'id'>>): Promise<User | undefined> {
     const user = this.users.get(id)
     if (!user) return undefined
-    const updated = { ...user, ...updates }
+    const updated = { ...user, ...updates, updatedAt: new Date() }
     this.users.set(id, updated)
     if (updates.email && updates.email !== user.email) {
       this.emailIndex.delete(user.email)

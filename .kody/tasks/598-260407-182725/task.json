@@ -1,0 +1,16 @@
+
+{
+  "task_type": "feature",
+  "title": "Add updatedAt field and rainbow table resistance test to User model",
+  "description": "Add `updatedAt` field to the User interface in `src/auth/user-store.ts` and add a unit test verifying password hashing produces unique hashes each time (rainbow table resistance). The existing User interface already has `id`, `email`, `passwordHash`, `createdAt`, but is missing `updatedAt`. The existing tests verify password comparison but lack a test for unique hash generation per hashing operation.",
+  "scope": [
+    "src/auth/user-store.ts",
+    "src/auth/user-store.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/user-store.ts: User interface with passwordHash, salt, hashPassword and verifyPassword methods using SHA-256",
+    "src/auth/user-store.test.ts: co-located vitest tests following describe/it conventions"
+  ],
+  "questions": []
+}

@@ -104,6 +104,15 @@ describe('UserStore', () => {
       const valid = await store.verifyPassword('wrongpassword', user!.passwordHash, user!.salt)
       expect(valid).toBe(false)
     })
+
+    it('should produce different hash for same password (rainbow table resistance)', async () => {
+      const password = 'SamePassword123!'
+      const salt1 = store['generateSalt']()
+      const salt2 = store['generateSalt']()
+      const hash1 = await store.hashPassword(password, salt1)
+      const hash2 = await store.hashPassword(password, salt2)
+      expect(hash1).not.toBe(hash2)
+    })
   })
 
   describe('account lockout', () => {
