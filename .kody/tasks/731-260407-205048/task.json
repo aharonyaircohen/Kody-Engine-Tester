@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Done. Created the `merge` utility with full test coverage:  - **`src/uti",
+  "description": "Done. Created the `merge` utility with full test coverage:\n\n- **`src/utils/merge.ts`** - Deep merge function using functional style\n- **`src/utils/merge.test.ts`** - 16 tests covering:\n  - Basic merging of flat objects\n  - Conflicting key resolution (source wins)\n  - Deep nested object merging\n  - Array replacement (not deep merged)\n  - Null/undefined handling\n  - Empty object edge cases\n\nAll 16 tests pass. TypeScript compiles without errors.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
