@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add request timing middleware",
+  "description": "Create middleware in `src/middleware/request-timing.ts` that measures request duration and adds `X-Response-Time` header in milliseconds. Include integration test in `src/middleware/request-timing.test.ts` following the existing middleware factory pattern.",
+  "scope": [
+    "src/middleware/request-timing.ts",
+    "src/middleware/request-timing.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts - factory pattern returning object with `middleware(request: NextRequest): NextResponse`, measures responseTimeMs, sets headers on response",
+    "src/middleware/request-logger.test.ts - vitest test structure with fake timers, beforeEach/afterEach setup, makeRequest helper for creating NextRequest instances"
+  ],
+  "questions": []
+}
