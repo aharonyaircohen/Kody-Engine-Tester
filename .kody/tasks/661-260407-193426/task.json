@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add role hierarchy checker",
+  "description": "Create hasPermission(userRole: string, requiredRole: string): boolean in src/auth/role-hierarchy.ts with hierarchy admin > editor > viewer > guest. A user role that is higher in the hierarchy has permission to access resources requiring a lower role. Includes comprehensive tests.",
+  "scope": ["src/auth/role-hierarchy.ts", "src/auth/role-hierarchy.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/_auth.ts:ROLE_HIERARCHY - existing role hierarchy map (admin:3, editor:2, viewer:1) using numeric levels for comparison, pattern to reuse",
+    "src/utils/clamp.ts:clamp - simple pure utility function with single responsibility, pattern to follow",
+    "src/utils/clamp.test.ts - comprehensive test coverage with edge cases, pattern to follow for hasPermission tests"
+  ],
+  "questions": []
+}
