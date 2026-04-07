@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of broken-import utility",
+  "description": "File src/utils/broken-import.ts already exists with broken import from '@/nonexistent/module'. The task is to create this file for contradiction detection testing - when verified via typecheck it will fail, and a rerun should trigger contradiction detection.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}

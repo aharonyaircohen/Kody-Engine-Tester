@@ -1,0 +1,1 @@
+{"taskId":"670-260407-194446","timestamp":"2026-04-07T19:49:34.785Z","stage":"build","patterns":["files.created:`src/utils/broken-import.ts","imports:path-alias(@/)"],"room":"utils"}
