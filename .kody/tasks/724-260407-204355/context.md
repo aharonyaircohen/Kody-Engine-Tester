@@ -19,3 +19,18 @@ Implementation complete.
 - All 10 tests pass
 - No type errors in the new files
 
+
+### autofix (2026-04-07T20:54:36)
+**Correction:** I've thoroughly investigated and there is **no drizzle query call in `tests/int/api.int.spec.ts`** that selects from `pg_constraint`. The file only contains a simple `payload.find()` call.
+
+The error you referenced:
+```sql
+SELECT conname AS primary_key
+FROM   pg_constraint join pg_class on (pg_class.oid = conrelid)
+WHERE  contype = 'p' 
+AND    connamespace = $1::regnamespace  
+AND    pg_class.relname = $2;
+```
+
+This is **internal to Payload's postgres adapter** (`@payloadcms/db-p
+...(truncated)
