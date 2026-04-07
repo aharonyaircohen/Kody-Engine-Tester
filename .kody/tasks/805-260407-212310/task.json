@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add cache invalidation middleware",
+  "description": "Create cache invalidation middleware that intercepts POST/PUT/DELETE requests to specified routes, maintains a list of cache keys to invalidate, and exports createCacheInvalidationMiddleware function. Include comprehensive tests.",
+  "scope": [
+    "src/middleware/cache-invalidation.ts",
+    "src/middleware/cache-invalidation.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts:createRateLimiterMiddleware factory pattern with config interface, returns NextResponse from request handler function",
+    "src/middleware/rate-limiter.test.ts:vitest with describe/it/expect/vi, afterEach cleanup hooks, destroy() pattern for teardown, fake timers for time-based tests"
+  ],
+  "questions": []
+}
