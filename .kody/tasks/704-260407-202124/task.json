@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of session cleanup utility",
+  "description": "The session cleanup utility `cleanExpiredSessions(store: SessionStore, maxAgeMs: number): number` already exists in `src/auth/session-cleanup.ts` with comprehensive tests in `src/auth/session-cleanup.test.ts`. All 5 tests pass. Implementation iterates over sessions, compares createdAt against cutoff timestamp, revokes expired sessions, and returns count removed.",
+  "scope": ["src/auth/session-cleanup.ts", "src/auth/session-cleanup.test.ts", "src/auth/session-store.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/session-store.ts: SessionStore class with private sessions Map, revoke() method, and Session interface with createdAt field",
+    "src/utils/*.ts: Single-function utility files with co-located .test.ts files"
+  ],
+  "questions": []
+}
