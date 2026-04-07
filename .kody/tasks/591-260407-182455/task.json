@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify PR title uses issue title with type prefix",
+  "description": "Test T15b verifies that when the Kody pipeline runs via @kody command, the resulting PR title uses the issue title with a type prefix in 'feat: <issue title>' format rather than an LLM-generated verbose title. This is a verification task that creates a temp issue, triggers the pipeline, and checks the PR title format.",
+  "scope": [
+    ".kody/tasks/591-260407-182455/task.md",
+    ".kody/tasks/591-260407-182455/status.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
