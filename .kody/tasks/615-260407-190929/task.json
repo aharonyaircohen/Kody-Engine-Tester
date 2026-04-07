@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add log-context middleware with request ID and timestamp",
+  "description": "Create a new middleware in src/middleware/log-context.ts that generates a unique request ID using crypto.randomUUID(), adds request timestamp using Date.now(), attaches these to req.locals for downstream use, and adds x-request-id header to responses. Include comprehensive tests covering normal requests, missing headers, and concurrent requests.",
+  "scope": [
+    "src/middleware/log-context.ts",
+    "src/middleware/log-context.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts — factory pattern (createRequestLogger) returning middleware function, uses NextRequest/NextResponse, attaches request ID via headers",
+    "src/middleware/request-logger.test.ts — test pattern using vitest with describe/it/expect, vi.useFakeTimers(), makeRequest helper, custom logger spy injection"
+  ],
+  "questions": []
+}
