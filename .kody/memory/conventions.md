@@ -35,3 +35,8 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-07 (task: decompose-563-260407-181528)
+- Uses vitest for testing
+- Uses eslint for linting
+- Active directories: .kody/tasks/decompose-563-260407-181528, .github/workflows
