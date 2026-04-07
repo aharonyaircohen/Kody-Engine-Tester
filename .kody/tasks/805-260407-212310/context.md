@@ -32,3 +32,49 @@ Done. Implementation complete:
 - 24/24 tests passing
 - Zero lint errors in new files
 
+
+### review (2026-04-07T21:30:46)
+## Verdict: FAIL
+
+## Summary
+
+The `CacheInvalidationStore` implementation is incomplete — the `add()` method populates `keysByPattern` but `invalidate()` never reads or clears those keys. It only calls an empty callback registered via `registerInvalidation()`. This means the store tracks cache keys but doesn't invalidate them.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+- `src/middleware/cache-invalidation.ts:21-26` — `invalidate()` only calls the registered callback (which is always empty `()
+...(truncated)
+
+### review-fix (2026-04-07T21:31:33)
+Fix complete. `invalidate()` now clears the cache keys from `keysByPattern` before calling the registered callback. 24/24 tests pass, zero lint errors.
+
+
+### review (2026-04-07T21:32:12)
+The lint errors are all pre-existing in other files — none are in the new `cache-invalidation.ts` or `cache-invalidation.test.ts`.
+
+## Verdict: PASS
+
+## Summary
+
+The `CacheInvalidationStore.invalidate()` method now properly clears cache keys from `keysByPattern` before calling the registered callback. The previous major finding is resolved.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+- `src/middleware/cache-invalidation.test.ts:43,52` — Tests reach into private state via `as 
+...(truncated)
