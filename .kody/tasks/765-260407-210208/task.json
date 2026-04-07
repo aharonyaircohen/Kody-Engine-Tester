@@ -1,0 +1,19 @@
+{
+  "task_type": "chore",
+  "title": "Verify auth middleware integration test coverage",
+  "description": "Auth middleware exists at src/middleware/auth-middleware.ts with full implementation. Unit tests exist in src/middleware/auth-middleware.test.ts covering valid token, missing token, and expired/invalid token scenarios. The withAuth HOC at src/auth/withAuth.ts protects routes without modifying route structure. Integration test: protected endpoint rejects unauthenticated request, accepts authenticated request is not present.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/withAuth.ts",
+    "src/app/api/gradebook/route.ts",
+    "src/app/api/enroll/route.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/withAuth.ts - HOC pattern wrapping route handlers with JWT validation and RBAC",
+    "src/middleware/auth-middleware.ts - createAuthMiddleware factory returning AuthContext with user/session or error/status",
+    "src/middleware/auth-middleware.test.ts - vitest unit tests with UserStore, SessionStore, JwtService test fixtures"
+  ],
+  "questions": []
+}
