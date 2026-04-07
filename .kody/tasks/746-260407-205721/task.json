@@ -1,0 +1,9 @@
+{
+"task_type": "feature",
+"title": "Add CSV export utility",
+"description": "Create `toCsv(rows: Record<string, string | number>[], columns?: string[]): string` in `src/utils/csv-export.ts` that converts an array of objects to CSV format. Must handle quoting for values containing commas (wrap in double quotes, escape internal double quotes with double double quotes). Include comprehensive tests in `csv-export.test.ts` covering basic export, custom column ordering, values with commas, values with quotes, and edge cases like empty arrays.",
+"scope": ["src/utils/csv-export.ts", "src/utils/csv-export.test.ts"],
+"risk_level": "low",
+"existing_patterns": ["src/utils/flatten.ts and flatten.test.ts — single-function utility with co-located vitest tests using describe/it/expect pattern, JSDoc documentation, relative imports"],
+"questions": []
+}
