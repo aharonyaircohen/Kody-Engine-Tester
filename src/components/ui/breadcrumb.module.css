@@ -1,0 +1,45 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.text {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.active {
+  color: #1f2937;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.separator {
+  color: #d1d5db;
+  font-size: 0.875rem;
+}
