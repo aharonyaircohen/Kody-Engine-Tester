@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add deep merge utility",
+  "description": "Create `deepMerge<T>(target: T, source: Partial<T>): T` in `src/utils/object-helpers.ts` — a recursive merge function that merges source into target without mutating either. Must handle nested objects, arrays, and special types (Date, RegExp, Map, Set) similarly to `deepClone`. Include comprehensive tests in `src/utils/object-helpers.test.ts`.",
+  "scope": [
+    "src/utils/object-helpers.ts",
+    "src/utils/object-helpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts - similar recursive utility with JSDoc, handles null/typeof checks, Date, RegExp, Map, Set, circular reference detection",
+    "src/utils/deep-clone.test.ts - comprehensive vitest test suite with describe/it/expect, tests primitives, nested objects, arrays, Date, RegExp, Map, Set, circular references",
+    "General pattern: single-function utility files in src/utils/ with co-located .test.ts files, vitest framework"
+  ],
+  "questions": []
+}
