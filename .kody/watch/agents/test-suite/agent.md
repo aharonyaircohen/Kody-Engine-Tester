@@ -6,27 +6,169 @@ Your job is to systematically run every CLI command and flag combination as live
 
 **Reporting:** When the suite finishes, post the final report (Phase 5 summary) as a comment on the digest issue.
 
+---
+
+## Run ID
+
+Every test-suite execution generates a unique **RUN_ID** at startup:
+
+```
+RUN_ID="run-$(date +%Y%m%d-%H%M)"
+```
+
+Example: `run-20260407-0200`
+
+All temporary issues created during this run use:
+- **Title prefix:** `[${RUN_ID}]` (e.g., `[run-20260407-0200] T01: Simple utility function`)
+- **Label:** `test-suite-temp` (NOT `test-suite`)
+
+This ensures issues are traceable to a specific run and distinguishable from permanent bug reports.
+
+---
+
+## Test Lifecycle Protocol
+
+Every test that creates a GitHub issue follows this lifecycle:
+
+### 1. CREATE
+Create a temporary issue with `[${RUN_ID}]` prefix and `test-suite-temp` label:
+```bash
+gh issue create --title "[${RUN_ID}] Txx: <description>" \
+  --body "<task body>" \
+  --label "test-suite-temp"
+```
+
+### 2. TRIGGER
+Post the `@kody` command as a comment on the temp issue.
+
+### 3. WAIT
+Poll for workflow completion:
+```bash
+gh run list --workflow=kody.yml --limit 5
+gh run view <id>
+```
+
+### 4. VERIFY
+Run the test-specific verification steps (unchanged per test definition below).
+
+### 5. RECORD
+Record PASS or FAIL in the run state tracker.
+
+### 6. CLEANUP
+- **PASS:** Close the temp issue, close/delete any PR and branch created by the test.
+  ```bash
+  gh issue close <n>
+  gh pr close <pr_n> --delete-branch 2>/dev/null
+  ```
+- **FAIL (task/infra issue):** Enter Fix-Retry Loop. Keep temp issue open until resolved.
+- **FAIL (engine bug confirmed):** Keep temp issue open for reference, file a bug in the **engine repo** (see Bug Filing Template below).
+
+### Deferred Cleanup
+Tests whose artifacts are dependencies for Phase 2 tests set `cleanup_deferred=true`. These are cleaned up after all Phase 2 dependents complete. Specifically:
+- T01, T02 → used by T06, T07, T19 (defer cleanup)
+- T03 → used by T05 (defer cleanup)
+- T26 → used by T28, T29 (defer cleanup)
+
+---
+
+## Bug Filing Template
+
+When a test fails and diagnosis confirms an **engine bug** (not a task description issue or infrastructure flake), file a bug in the engine repo:
+
+```bash
+gh issue create --repo aharonyaircohen/Kody-Engine-Lite \
+  --title "bug: [test-suite] Txx — <short_description>" \
+  --label "bug,test-suite" \
+  --body "$(cat <<'EOF'
+## Test Suite Bug Report
+
+**Test ID:** Txx
+**Run ID:** ${RUN_ID}
+**Command:** `@kody <command>`
+**Engine Version:** <version at time of failure>
+
+## Expected
+<what should have happened>
+
+## Actual
+<what actually happened>
+
+## Logs
+<relevant log excerpts>
+
+## Workflow Run
+<link to the failed workflow run>
+EOF
+)"
+```
+
+**Rules:**
+- Bug issues are filed in `aharonyaircohen/Kody-Engine-Lite` ONLY, never in the tester repo
+- Bug issues use the `bug` and `test-suite` labels (NOT `test-suite-temp`)
+- Bug issue titles use `bug: [test-suite]` prefix (no RUN_ID — bugs are permanent)
+
+---
+
 ## Overview
 
 The suite runs in 5 phases:
 
 ```
+Run Init: Generate RUN_ID, clean stale temp issues
+    ↓
 Phase 1: Independent runs (@kody — low/med/high, dry-run, status, fix-ci)
-    ↓ creates PRs + paused pipelines
+    ↓ creates temp issues + PRs + paused pipelines
 Phase 2: Dependent commands (@kody fix, approve, rerun, review, resolve)
-    ↓ builds on phase 1 outputs
+    ↓ builds on Phase 1 outputs, then runs deferred cleanup
 Phase 3: Edge cases & flag combos (--feedback, --from <stage>, --complexity, special chars, multi-branch)
     ↓ fills remaining coverage
-Phase 4: Cleanup (merge PRs, close issues, delete branches)
+Phase 4: Final Sweep (safety net cleanup)
     ↓
 Phase 5: Reflect (verify memory, summarize, recommend enhancements)
 ```
 
 ---
 
+## Run Initialization
+
+Before starting Phase 1:
+
+1. **Generate RUN_ID:**
+   ```bash
+   RUN_ID="run-$(date +%Y%m%d-%H%M)"
+   echo "Run ID: ${RUN_ID}"
+   ```
+
+2. **Clean stale temp issues from prior failed runs** (older than 3 days):
+   ```bash
+   # Find and close stale temp issues from previous runs
+   gh issue list --label "test-suite-temp" --state open --json number,title,createdAt | \
+     jq -r '.[] | select((.createdAt | fromdateiso8601) < (now - 259200)) | .number' | \
+     while read n; do
+       echo "Closing stale temp issue #$n"
+       gh issue close "$n" --comment "Auto-closed: stale test-suite-temp issue from a previous run (>3 days old)"
+     done
+   ```
+
+3. **Clean orphaned branches from prior runs:**
+   ```bash
+   git fetch --prune origin
+   git branch -r | grep 'origin/run-' | sed 's|origin/||' | while read branch; do
+     echo "Deleting orphaned branch: $branch"
+     git push origin --delete "$branch" 2>/dev/null
+   done
+   ```
+
+4. **Ensure `test-suite-temp` label exists:**
+   ```bash
+   gh label create "test-suite-temp" --description "Temporary issues created by test-suite agent runs" --color "FBCA04" 2>/dev/null || true
+   ```
+
+---
+
 ## Phase 1: Independent Runs
 
-Create separate issues in the tester repo for each test. Use the prefix `[test-suite]` in issue titles.
+Create temporary issues in the tester repo for each test following the Test Lifecycle Protocol above.
 
 **IMPORTANT** — use unique task descriptions that don't overlap with existing code in the repo. Check what already exists first:
 
@@ -38,36 +180,38 @@ Then pick tasks that create NEW files. If a task creates files that already exis
 
 | Test ID | Issue Title | Command | Expected |
 |---------|-------------|---------|----------|
-| T01 | [test-suite] Simple utility function | `@kody` | LOW complexity, 4 stages, PR created. Uses bare `@kody` (no explicit mode) to exercise default "full" parsing path |
-| T02 | [test-suite] Add middleware with tests | `@kody full` | MEDIUM complexity, 6 stages, PR created. Uses explicit `@kody full` to contrast with T01's bare command |
-| T03 | [test-suite] Refactor auth system with migration | `@kody` | HIGH complexity, risk gate fires, pauses at plan |
-| T04 | [test-suite] Dry run validation | `@kody full --dry-run` | All stages skipped, preflight passes, no PR |
-| T19 | [test-suite] Fix-CI auto-trigger | See T19 details below | fix-ci triggers, loop guard prevents re-trigger |
-| T20 | [test-suite] Status check | `@kody status` | Prints pipeline state from status.json, no pipeline execution |
-| T21 | [test-suite] Taskify file mode | `@kody taskify --file docs/test-prd.md` | Sub-issues filed with priority labels, Test Strategy sections, topo order. See T21 details below |
-| T22 | [test-suite] Taskify context injection | `@kody taskify --file docs/test-prd.md` (with `.kody/memory.md` present) | Project memory and file tree appear in taskify stage logs. See T22 details below |
-
-| T24 | [test-suite] Decompose: simple task falls back | `@kody decompose` | complexity_score < 6, falls back to normal pipeline, PR created via runPipeline(). See T24 details below |
-| T31 | [test-suite] Bootstrap: extend mode | `@kody bootstrap` | Generates/extends memory, step files, tools.yml, labels. See T31 details below |
-| T33 | [test-suite] Bootstrap: model override | `kody-engine-lite bootstrap --provider=minimax --model=MiniMax-M1 --force` | CLI flags override config model. See T33 details below |
-| T32 | [test-suite] Watch: health monitoring | `@kody watch --dry-run` (local) | Runs watch plugins, posts findings to digest issue. See T32 details below |
-| T25 | [test-suite] Decompose: complex multi-area task | `@kody decompose` | Scores 6+, splits into 2+ sub-tasks, parallel build, merge, verify, review, ship. PR body has "Decomposed Implementation" section. See T25 details below |
-| T26 | [test-suite] Decompose: --no-compose flag | `@kody decompose --no-compose` | Stops after parallel build. decompose-state.json saved. No PR created. See T26 details below |
-| T37 | [test-suite] Hotfix: fast-track pipeline | `@kody hotfix` | Skips taskify/plan/review, runs build → verify (no tests) → ship. PR created with hotfix label. See T37 details below |
-| T40 | [test-suite] Release: dry-run | `@kody release --dry-run` | Parses conventional commits, determines bump, generates changelog — no PR created. See T40 details below |
-| T41 | [test-suite] Release: create release PR | `@kody release` | Bumps version, generates changelog, creates release PR targeting default branch. See T41 details below |
+| T01 | [${RUN_ID}] T01: Simple utility function | `@kody` | LOW complexity, 4 stages, PR created. Uses bare `@kody` (no explicit mode) to exercise default "full" parsing path |
+| T02 | [${RUN_ID}] T02: Add middleware with tests | `@kody full` | MEDIUM complexity, 6 stages, PR created. Uses explicit `@kody full` to contrast with T01's bare command |
+| T03 | [${RUN_ID}] T03: Refactor auth system with migration | `@kody` | HIGH complexity, risk gate fires, pauses at plan |
+| T04 | [${RUN_ID}] T04: Dry run validation | `@kody full --dry-run` | All stages skipped, preflight passes, no PR |
+| T19 | [${RUN_ID}] T19: Fix-CI auto-trigger | See T19 details below | fix-ci triggers, loop guard prevents re-trigger |
+| T20 | [${RUN_ID}] T20: Status check | `@kody status` | Prints pipeline state from status.json, no pipeline execution |
+| T21 | [${RUN_ID}] T21: Taskify file mode | `@kody taskify --file docs/test-prd.md` | Sub-issues filed with priority labels, Test Strategy sections, topo order. See T21 details below |
+| T22 | [${RUN_ID}] T22: Taskify context injection | `@kody taskify --file docs/test-prd.md` (with `.kody/memory.md` present) | Project memory and file tree appear in taskify stage logs. See T22 details below |
+| T24 | [${RUN_ID}] T24: Decompose: simple task falls back | `@kody decompose` | complexity_score < 6, falls back to normal pipeline, PR created via runPipeline(). See T24 details below |
+| T31 | [${RUN_ID}] T31: Bootstrap: extend mode | `@kody bootstrap` | Generates/extends memory, step files, tools.yml, labels. See T31 details below |
+| T33 | [${RUN_ID}] T33: Bootstrap: model override | `kody-engine-lite bootstrap --provider=minimax --model=MiniMax-M1 --force` | CLI flags override config model. See T33 details below |
+| T32 | [${RUN_ID}] T32: Watch: health monitoring | `@kody watch --dry-run` (local) | Runs watch plugins, posts findings to digest issue. See T32 details below |
+| T25 | [${RUN_ID}] T25: Decompose: complex multi-area task | `@kody decompose` | Scores 6+, splits into 2+ sub-tasks, parallel build, merge, verify, review, ship. PR body has "Decomposed Implementation" section. See T25 details below |
+| T26 | [${RUN_ID}] T26: Decompose: --no-compose flag | `@kody decompose --no-compose` | Stops after parallel build. decompose-state.json saved. No PR created. See T26 details below |
+| T37 | [${RUN_ID}] T37: Hotfix: fast-track pipeline | `@kody hotfix` | Skips taskify/plan/review, runs build → verify (no tests) → ship. PR created with hotfix label. See T37 details below |
+| T40 | [${RUN_ID}] T40: Release: dry-run | `@kody release --dry-run` | Parses conventional commits, determines bump, generates changelog — no PR created. See T40 details below |
+| T41 | [${RUN_ID}] T41: Release: create release PR | `@kody release` | Bumps version, generates changelog, creates release PR targeting default branch. See T41 details below |
 
 **Parallelization:** T01-T04 can all trigger simultaneously (separate issues, no dependencies). T19-T26, T37, and T40 can run in parallel with T01-T04.
 
 For each test:
 
-1. Create issue: `gh issue create --repo aharonyaircohen/Kody-Engine-Tester --title "<title>" --body "<body>"`
-2. Trigger: `gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "<command>"`
-3. Wait for workflow: `gh run list --repo aharonyaircohen/Kody-Engine-Tester --workflow=kody.yml --limit 5`
-4. Monitor: `gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester`
+1. Create temp issue: `gh issue create --title "[${RUN_ID}] Txx: <description>" --body "<body>" --label "test-suite-temp"`
+2. Trigger: `gh issue comment <n> --body "<command>"`
+3. Wait for workflow: `gh run list --workflow=kody.yml --limit 5`
+4. Monitor: `gh run view <id>`
 5. Verify: check issue comments, labels, PR creation
+6. **Cleanup per Test Lifecycle Protocol** — PASS: close temp issue + PR/branch. FAIL: keep open, enter Fix-Retry Loop or file engine bug.
 
 Launch T01-T04 in parallel — create all issues and trigger all commands at once, then monitor all runs.
+
+**Deferred cleanup:** T01, T02, T03, and T26 have Phase 2 dependents — mark `cleanup_deferred=true` and skip step 6 until after Phase 2.
 
 ### T03 — Contingency plan
 
@@ -117,18 +261,18 @@ This is the first dedicated test of the standalone `@kody taskify` command.
    2. Add /login and /register endpoints (depends on User model)
    3. Add auth middleware to protect existing routes (depends on endpoints)' | base64)"
    ```
-2. Create an issue and comment: `@kody taskify --file docs/test-prd.md`
+2. Create a temp issue and comment: `@kody taskify --file docs/test-prd.md`
 
 **Verification:**
 
 1. Wait for the workflow to complete
 2. List sub-issues created by taskify:
    ```bash
-   gh issue list --repo aharonyaircohen/Kody-Engine-Tester --state open --search "[test-suite]" --json number,title,labels,body
+   gh issue list --state open --search "[${RUN_ID}]" --json number,title,labels,body
    ```
 3. **Priority labels check** — every sub-issue must have exactly one priority label:
    ```bash
-   gh issue list --repo aharonyaircohen/Kody-Engine-Tester --json number,labels | \
+   gh issue list --json number,labels | \
      jq '.[] | {number, priority: [.labels[].name | select(startswith("priority:"))]}'
    ```
    - PASS: each issue has one of `priority:high`, `priority:medium`, `priority:low`
@@ -137,7 +281,7 @@ This is the first dedicated test of the standalone `@kody taskify` command.
 4. **Test Strategy section check** — every sub-issue body must contain `## Test Strategy`:
    ```bash
    for n in <issue-numbers>; do
-     body=$(gh issue view $n --repo aharonyaircohen/Kody-Engine-Tester --json body -q '.body')
+     body=$(gh issue view $n --json body -q '.body')
      echo "$body" | grep -q "## Test Strategy" && echo "#$n OK" || echo "#$n MISSING Test Strategy"
      echo "$body" | grep -q "## Context" && echo "#$n Context OK" || echo "#$n MISSING Context"
      echo "$body" | grep -q "## Acceptance Criteria" && echo "#$n AC OK" || echo "#$n MISSING Acceptance Criteria"
@@ -157,13 +301,13 @@ This tests that taskify receives project context (memory + file tree) instead of
 **Setup:**
 
 1. Ensure `.kody/memory.md` exists in the tester repo with project conventions
-2. Create an issue and comment: `@kody taskify --file docs/test-prd.md`
+2. Create a temp issue and comment: `@kody taskify --file docs/test-prd.md`
 
 **Verification:**
 
 1. Check workflow run logs for the taskify stage:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "memory\|file tree\|context"
+   gh run view <id> --log | grep -i "memory\|file tree\|context"
    ```
 2. **Project memory check**: Logs should show memory content being injected into the taskify prompt
 3. **File tree check**: Logs should show `git ls-files` output or similar file listing being injected
@@ -175,12 +319,12 @@ This tests that taskify receives project context (memory + file tree) instead of
 
 This tests the fail-open fallback when a task isn't complex enough to decompose.
 
-1. Create a simple issue (1-2 files, single area): e.g., "Add a string capitalize utility function in src/utils/strings.ts with tests"
+1. Create a simple temp issue (1-2 files, single area): e.g., "Add a string capitalize utility function in src/utils/strings.ts with tests"
 2. Comment `@kody decompose` on the issue
 3. **Verification:**
    - Check logs for decompose decision:
      ```bash
-     gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "complexity_score\|not decomposable\|falling back\|Delegating to normal pipeline"
+     gh run view <id> --log | grep -i "complexity_score\|not decomposable\|falling back\|Delegating to normal pipeline"
      ```
    - Expected: `complexity_score` is < 6 OR `not decomposable`, followed by "Delegating to normal pipeline"
    - Pipeline completes via normal `runPipeline()` path — PR created normally
@@ -193,9 +337,9 @@ This tests the full decompose → parallel build → compose flow end-to-end.
 
 **Setup:**
 
-Create an issue that clearly spans multiple independent areas (4+ files, 2+ directories):
+Create a temp issue that clearly spans multiple independent areas (4+ files, 2+ directories):
 ```
-Title: [test-suite] Decompose: complex multi-area task
+Title: [${RUN_ID}] T25: Decompose: complex multi-area task
 Body:
 Add a complete notification system:
 1. Create a notification model in src/models/notification.ts with types (info, warning, error) and read/unread status
@@ -209,37 +353,37 @@ Add a complete notification system:
 
 1. Check decompose analysis:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "decompose\|sub-task\|complexity_score\|parallel"
+   gh run view <id> --log | grep -i "decompose\|sub-task\|complexity_score\|parallel"
    ```
    - Expected: `complexity_score` >= 6, `decomposable: true`, 2+ sub-tasks listed
 
 2. Check parallel build:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "worktree\|part-1\|part-2\|parallel build"
+   gh run view <id> --log | grep -i "worktree\|part-1\|part-2\|parallel build"
    ```
    - Expected: Worktrees created for each sub-task, builds run concurrently
 
 3. Check merge + compose:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "merge\|compose\|verify\|review\|ship"
+   gh run view <id> --log | grep -i "merge\|compose\|verify\|review\|ship"
    ```
    - Expected: All sub-task branches merged, verify passes, review runs, PR created
 
 4. Check PR body for decompose section:
    ```bash
-   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --search "[test-suite] Decompose: complex" --json number,body | jq -r '.[0].body' | grep -A 5 "Decomposed Implementation"
+   gh pr list --state open --search "[${RUN_ID}] T25" --json number,body | jq -r '.[0].body' | grep -A 5 "Decomposed Implementation"
    ```
    - Expected: "Decomposed Implementation" section lists sub-tasks with file counts
 
 5. Check artifacts:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "decompose-state.json\|decompose.json"
+   gh run view <id> --log | grep -i "decompose-state.json\|decompose.json"
    ```
    - Expected: Both files saved in task directory
 
 6. Check worktree cleanup:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "worktree removed\|cleaned up"
+   gh run view <id> --log | grep -i "worktree removed\|cleaned up"
    ```
    - Expected: Worktrees cleaned up after merge
 
@@ -250,11 +394,11 @@ Add a complete notification system:
 
 This tests that `--no-compose` stops after parallel builds and preserves state for manual compose.
 
-1. Create a complex issue similar to T25
+1. Create a complex temp issue similar to T25
 2. Comment `@kody decompose --no-compose` on the issue
 3. **Verification:**
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "auto-compose\|no-compose\|decompose-state"
+   gh run view <id> --log | grep -i "auto-compose\|no-compose\|decompose-state"
    ```
    - Expected: Parallel builds complete, `decompose-state.json` saved, NO merge/verify/review/ship phases
    - No PR created
@@ -267,10 +411,10 @@ This tests that `--no-compose` stops after parallel builds and preserves state f
 
 This tests the bootstrap command's ability to analyze the codebase and generate project-aware artifacts.
 
-1. Comment `@kody bootstrap` on any issue in the tester repo
+1. Comment `@kody bootstrap` on any temp issue in the tester repo
 2. **Verification:**
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "memory\|step file\|tools\|skills\|label\|extend"
+   gh run view <id> --log | grep -i "memory\|step file\|tools\|skills\|label\|extend"
    ```
    - **Memory generated**: `.kody/memory/` contains `architecture.md` and/or `conventions.md`
    - **Step files generated**: `.kody/steps/` contains `taskify.md`, `plan.md`, `build.md`, `review.md`, `autofix.md`, `review-fix.md`
@@ -278,7 +422,7 @@ This tests the bootstrap command's ability to analyze the codebase and generate 
    - **Skills installed**: Check for skills from skills.sh in `.kody/tools.yml` skill fields
    - **Labels created**: 14 lifecycle labels exist on the repo:
      ```bash
-     gh label list --repo aharonyaircohen/Kody-Engine-Tester | grep "kody:"
+     gh label list | grep "kody:"
      ```
    - **Extend mode**: If `.kody/steps/` already existed, files were extended (not overwritten). Check logs for "extending" vs "creating"
 - PASS: All artifacts generated, labels created, skills resolved
@@ -319,34 +463,179 @@ gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json | jq -
 - PASS: Plugins execute, findings logged, no GitHub posts in dry-run
 - FAIL: Watch crashes, plugins don't run, or dry-run still posts to GitHub
 
+### T37 — Hotfix: fast-track pipeline
+
+This tests the `@kody hotfix` command which runs a compressed pipeline: build → verify (typecheck+lint only, no tests) → ship, skipping taskify/plan/review/review-fix.
+
+**Setup:**
+
+1. Create a simple temp issue that describes an urgent fix:
+   ```bash
+   gh issue create --title "[${RUN_ID}] T37: Hotfix: fix broken export in utils" \
+     --body "The default export in src/utils/helpers.ts is missing. Add \`export default\` to the main function. This is an urgent production fix." \
+     --label "test-suite-temp"
+   ```
+2. Trigger: `gh issue comment <n> --body "@kody hotfix"`
+
+**Verification:**
+
+1. Check parse job output:
+   ```bash
+   gh run view <id> --log | grep "mode=hotfix"
+   ```
+   - Mode is `hotfix`, task-id matches `hotfix-<issue>-<timestamp>`
+
+2. Check stage execution — only build, verify, ship should run:
+   ```bash
+   gh run view <id> --log | grep -i "stage\|Complexity"
+   ```
+   - Expected: `⚡ Complexity: hotfix — skipping taskify, plan, review, review-fix`
+   - Stages executed: build → verify → ship (3 stages only)
+   - Stages NOT executed: taskify, plan, review, review-fix
+
+3. Check verify skips tests:
+   ```bash
+   gh run view <id> --log | grep -i "Running typecheck\|Running test\|Running lint"
+   ```
+   - Expected: `Running typecheck:` and optionally `Running lint:` appear
+   - `Running test:` should NOT appear (tests skipped for fast-track)
+
+4. Check PR creation:
+   ```bash
+   gh pr list --state open --json number,title,labels
+   ```
+   - PR created and linked to the issue
+
+- PASS: Pipeline completes with only build→verify→ship, tests skipped, PR created
+- FAIL: Taskify/plan/review stages execute, or tests run during verify, or no PR created
+
+### T40 — Release: dry-run
+
+This tests `@kody release --dry-run` which analyzes conventional commits and previews the release without making changes.
+
+**Precondition:** The tester repo must have at least one conventional commit since the last tag (or no tags at all). The repo should have a `package.json` with a `version` field.
+
+**Setup:**
+
+1. Trigger on any temp issue:
+   ```bash
+   gh issue comment <n> --body "@kody release --dry-run"
+   ```
+
+**Verification:**
+
+1. Check parse job output:
+   ```bash
+   gh run view <id> --log | grep "mode=release\|dry_run="
+   ```
+   - Mode is `release`, dry_run is `true`
+
+2. Check release analysis in logs:
+   ```bash
+   gh run view <id> --log | grep -i "bump\|version\|changelog\|dry-run\|conventional"
+   ```
+   - Expected: Logs show commit parsing, determined bump type (patch/minor/major), calculated next version
+   - `[dry-run]` prefix on all actions
+   - No PR created, no version files modified, no tags created
+
+3. Verify no side effects:
+   ```bash
+   gh pr list --state open --head "release/" --json number
+   ```
+   - No release PR created
+
+- PASS: Commits analyzed, bump determined, changelog previewed, no side effects
+- FAIL: Actual changes made despite --dry-run, or commit parsing fails
+
+### T41 — Release: create release PR
+
+This tests `@kody release` which bumps version, generates changelog, and creates a release PR.
+
+**Precondition:** Same as T40. Additionally, the release config should be either absent (defaults used) or configured in `kody.config.json` under `release`.
+
+**Setup:**
+
+1. Ensure there are conventional commits since the last tag (if T01/T02 PRs were merged, their `feat:` / `fix:` commits qualify)
+2. Trigger on any temp issue:
+   ```bash
+   gh issue comment <n> --body "@kody release"
+   ```
+
+**Verification:**
+
+1. Check pre-release checks passed:
+   ```bash
+   gh run view <id> --log | grep -i "pre-release\|CI green\|blocking"
+   ```
+   - CI status checked on default branch
+   - No blocking draft PRs (or handled gracefully)
+
+2. Check version bump:
+   ```bash
+   gh run view <id> --log | grep -i "bump\|version.*→"
+   ```
+   - Version bumped correctly based on conventional commits (feat→minor, fix→patch, breaking→major)
+
+3. Check release PR created:
+   ```bash
+   gh pr list --state open --head "release/" --json number,title,labels,body
+   ```
+   - PR exists with branch `release/v<version>`
+   - Title contains version number
+   - PR has `release` label
+   - Body contains generated changelog grouped by type (Features, Bug Fixes, etc.)
+
+4. Check package.json updated in PR:
+   ```bash
+   gh pr diff <n> | grep -A2 '"version"'
+   ```
+   - Version field bumped to the new version
+
+- PASS: Version bumped, changelog generated, release PR created with correct labels and content
+- FAIL: Wrong bump type, missing changelog sections, no PR, or PR targets wrong branch
+
+**Mandatory cleanup:** After verification, close the release PR without merging (or merge if desired — but then T40/T41 can't rerun without new commits):
+```bash
+gh pr close <n> --delete-branch
+```
+
 ---
 
 ## Phase 2: Dependent Commands
 
 These tests depend on Phase 1 outputs. Wait for Phase 1 to complete before starting.
 
+**Finding Phase 1 artifacts:** Use the RUN_ID to locate temp issues and their PRs dynamically:
+```bash
+# Find a specific test's issue
+gh issue list --label "test-suite-temp" --state all --search "[${RUN_ID}] T03" --json number,title --jq '.[0].number'
+
+# Find PRs created by a test
+gh pr list --state all --search "[${RUN_ID}]" --json number,title,headRefName
+```
+
 | Test ID | Depends on | Command | Setup | Expected |
 |---------|-----------|---------|-------|----------|
-| T05 | T03 (paused) | `@kody approve` | Comment on T03's issue | Pipeline resumes from plan, completes, PR created |
+| T05 | T03 (paused) | `@kody approve` | Comment on T03's temp issue | Pipeline resumes from plan, completes, PR created |
 | T06 | T01 or T02 (PR) | `@kody review` | Comment on the PR | Review comment posted with findings referencing files from the PR diff |
 | T07 | T06 (reviewed PR) | `@kody fix` | Comment on the PR | Rebuilds from build, pushes to same PR |
 | T07b | T07 (fixed PR) | `@kody review` | Comment on the PR after fix | Re-review posted; findings should differ from T06 (fixes addressed) |
 | T08 | Any completed PR | `@kody resolve` | Create conflict on a test branch, then comment on PR | Merges base, resolves conflicts, verifies, pushes |
-| T09 | Any task | `@kody rerun --from verify` | Comment on an issue with a completed task | Reruns from verify stage. Also validates state bypass — rerun on completed issue is not blocked by "already completed" lock |
-| T28 | T26 (no-compose) | `@kody compose` | Comment on T26's issue with task-id | Reads decompose-state.json, merges sub-task branches, verify, review, ship. PR created. See T28 details below |
+| T09 | Any task | `@kody rerun --from verify` | Comment on a temp issue with a completed task | Reruns from verify stage. Also validates state bypass — rerun on completed issue is not blocked by "already completed" lock |
+| T28 | T26 (no-compose) | `@kody compose` | Comment on T26's temp issue with task-id | Reads decompose-state.json, merges sub-task branches, verify, review, ship. PR created. See T28 details below |
 | T29 | T28 (compose) | `@kody compose` (retry) | Simulate compose failure then retry | Skips merge (already done), retries from verify. See T29 details below |
-| T38 | Any merged PR (Phase 4) | `@kody revert #<PR>` | Comment on any issue | Reverts the merged PR, runs full verify, creates revert PR. See T38 details below |
+| T38 | Any merged PR (Phase 4 early merge) | `@kody revert #<PR>` | Comment on any temp issue | Reverts the merged PR, runs full verify, creates revert PR. See T38 details below |
 | T39 | T38's issue | `@kody revert` (no target) | Comment on issue whose PR was reverted | Finds the linked merged PR via branch naming convention and reverts it. See T39 details below |
 
 ### T06 — Deep review verification
 
 After `@kody review` completes, don't just check "review was posted". Verify review quality:
 
-1. Get the PR diff files: `gh pr diff <n> --repo aharonyaircohen/Kody-Engine-Tester | grep "^diff --git" | grep -v ".kody/"`
+1. Get the PR diff files: `gh pr diff <n> | grep "^diff --git" | grep -v ".kody/"`
 2. Read the review comment from issue comments
 3. Check that review findings reference files from the PR diff — not random repo files
 4. Check for the diff command in the run logs: look for `git diff origin/<base>...HEAD` (not bare `git diff`)
-   `gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "git diff"`
+   `gh run view <id> --log | grep "git diff"`
 5. If review findings don't match PR diff files, this is a critical bug — the review is reading the wrong changes
 
 ### T07 -> T07b — Review-fix-review loop
@@ -391,12 +680,12 @@ This tests the standalone compose command consuming state from T26's `--no-compo
 
 1. Get the task-id from T26's workflow run logs:
    ```bash
-   gh run view <T26-run-id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "Task:"
+   gh run view <T26-run-id> --log | grep "Task:"
    ```
-2. Comment on T26's issue: `@kody compose --task-id <task-id-from-T26>`
+2. Comment on T26's temp issue: `@kody compose --task-id <task-id-from-T26>`
 3. **Verification:**
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "compose phase\|merge\|verify\|review\|ship\|decompose-state"
+   gh run view <id> --log | grep -i "compose phase\|merge\|verify\|review\|ship\|decompose-state"
    ```
    - Expected: Reads decompose-state.json, merges all sub-task branches, runs verify+review, ships PR
    - Logs show "Compose Phase 1: Merge" → "Compose Phase 2: Verify + Review" → "Compose Phase 3: Ship"
@@ -420,7 +709,7 @@ This tests that compose skips already-completed merge and retries from verify.
 
 **Verification:**
 ```bash
-gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "merge.*skip\|already merged\|compose phase"
+gh run view <id> --log | grep -i "merge.*skip\|already merged\|compose phase"
 ```
 - Expected: "Compose Phase 1: Merge (skipped — already merged)" appears in logs
 - Verify and review re-execute (not skipped)
@@ -428,36 +717,131 @@ gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "merg
 - PASS: Merge skipped, verify/review/ship retry successfully
 - FAIL: Merge re-attempted (causing errors), or compose can't find state file
 
+### T38 — Revert: explicit PR target
+
+This tests `@kody revert #<PR>` which deterministically reverts a merged PR without LLM assistance.
+
+**Precondition:** A merged PR from a passing test must exist. To get one, merge a passing test's PR early:
+```bash
+# Merge a passing test PR (e.g., T01) to create the precondition for T38
+T01_PR=$(gh pr list --state open --search "[${RUN_ID}] T01" --json number --jq '.[0].number')
+gh pr merge $T01_PR --merge --delete-branch
+```
+
+**Setup:**
+
+1. Create a temp issue for the revert:
+   ```bash
+   gh issue create --title "[${RUN_ID}] T38: Revert: undo PR #${T01_PR}" \
+     --body "Revert the changes from PR #${T01_PR} due to a regression." \
+     --label "test-suite-temp"
+   ```
+2. Trigger: `gh issue comment <n> --body "@kody revert #${T01_PR}"`
+
+**Verification:**
+
+1. Check parse job output:
+   ```bash
+   gh run view <id> --log | grep "mode=revert\|revert_target="
+   ```
+   - Mode is `revert`, revert_target is the PR number
+
+2. Check revert execution:
+   ```bash
+   gh run view <id> --log | grep -i "revert\|merge commit\|verify"
+   ```
+   - Expected logs: PR lookup, merge commit SHA found, `git revert` executed, verify ran (full: typecheck+lint+tests)
+
+3. Check PR creation:
+   ```bash
+   gh pr list --state open --json number,title,labels
+   ```
+   - Revert PR created with title `revert: <original title> (#<N>)`
+   - PR has `revert` label
+   - PR body contains original PR reference and verify results
+
+4. Check issue comment:
+   ```bash
+   gh issue view <n> --json comments --jq '.comments[-1].body'
+   ```
+   - Comment links to the revert PR
+
+- PASS: Merged PR reverted, full verify ran, revert PR created with correct title/label/body
+- FAIL: Revert fails (conflict, PR not found), or verify not run, or PR missing metadata
+
+### T39 — Revert: auto-resolve from issue
+
+This tests `@kody revert` (no explicit target) which finds the linked merged PR by branch naming convention.
+
+**Precondition:** An issue whose PR was merged. The PR branch must follow the `<issue>-<slug>` convention.
+
+**Setup:**
+
+1. Comment on the temp issue whose PR was already merged:
+   ```bash
+   gh issue comment <n> --body "@kody revert"
+   ```
+
+**Verification:**
+
+1. Check that the engine resolved the PR automatically:
+   ```bash
+   gh run view <id> --log | grep -i "searching for merged PR\|Found linked PR"
+   ```
+   - Expected: `No target specified, searching for merged PR linked to issue #<n>...` then `Found linked PR #<N>: <title>`
+
+2. Same verification as T38 — revert PR created, full verify, correct metadata
+
+- PASS: Engine auto-resolves the merged PR from issue number, revert succeeds
+- FAIL: Engine can't find the linked PR, or uses wrong PR, or revert fails
+
+**After all Phase 2 tests complete**, run deferred cleanup for Phase 1 dependency tests (T01, T02, T03, T26):
+```bash
+# Close deferred temp issues and their PRs
+for test in T01 T02 T03 T26; do
+  issue_n=$(gh issue list --label "test-suite-temp" --state open --search "[${RUN_ID}] ${test}" --json number --jq '.[0].number')
+  if [ -n "$issue_n" ]; then
+    gh issue close "$issue_n"
+    # Close any associated PRs
+    gh pr list --state open --search "[${RUN_ID}] ${test}" --json number --jq '.[].number' | while read pr_n; do
+      gh pr close "$pr_n" --delete-branch 2>/dev/null
+    done
+  fi
+done
+```
+
 ---
 
 ## Phase 3: Edge Cases & Flag Combos
 
+All Phase 3 tests follow the Test Lifecycle Protocol — create temp issues with `[${RUN_ID}]` prefix and `test-suite-temp` label, clean up after each PASS.
+
 | Test ID | Issue Title | Command | Expected |
 |---------|-------------|---------|----------|
-| T10 | [test-suite] Flag: complexity override | `@kody --complexity low` | Forced LOW, 4 stages regardless of task. Logs show "Complexity override:" (not "auto-detected:") |
-| T11 | [test-suite] Flag: feedback injection | `@kody --feedback "Use functional style"` | Feedback appears in build stage logs: `feedback: Use functional style` |
-| T12 | [test-suite] Rerun from specific stage | `@kody rerun --from build` | Skips taskify+plan, runs from build. Logs show "Resuming from: build" |
-| T13 | [test-suite] State bypass on rerun | `@kody rerun` on completed issue | Rerun bypasses "already completed" state lock, pipeline re-executes |
-| T14 | [test-suite] UI task with MCP auto-inject | `@kody` (UI task) | hasUI=true in task.json, Playwright MCP auto-injected (check logs for MCP config) |
-| T15 | [test-suite] PR title from issue title | `@kody` | PR title uses issue title with type prefix (`feat: <issue title>`), NOT LLM-generated verbose title |
-| T16 | [test-suite] Issue stays open after PR | `@kody` | After PR created, issue remains OPEN. PR body contains `Closes #N`. Issue closes only on PR merge. |
-| T17 | [test-suite] Feedback with special chars | `@kody fix` with body: `Please use "quotes" and backticks` | Feedback parsed correctly through both shell and TS parsers, no shell injection, pipeline completes |
-| T18 | [test-suite] Force-with-lease on rerun push | `@kody rerun --from build` (after prior push) | If push fails non-fast-forward, retries with --force-with-lease. Check logs for "retrying with --force-with-lease" |
-| T23 | [test-suite] Issue attachments and metadata enrichment | `@kody` | Image attachments downloaded to `attachments/`, task.md has local paths + labels + discussion. See T23 details below |
-| T27 | [test-suite] Decompose: config disabled | `@kody decompose` (with `decompose.enabled: false`) | Falls back to normal pipeline immediately. See T27 details below |
-| T30 | [test-suite] Decompose: sub-task failure fallback | `@kody decompose` | Sub-task failure triggers cleanup + fallback. See T30 details below |
-| T33 | [test-suite] Lifecycle label progression | `@kody` | Labels progress: planning→building→verifying→review→done. See T33 details below |
-| T34 | [test-suite] Token ROI in retrospective | `@kody` | Retrospective entry in observer-log.jsonl includes tokenStats. See T34 details below |
-| T35 | [test-suite] Auto-learn before ship | `@kody` | Memory files committed in PR (auto-learn runs before ship). See T35 details below |
-| T36 | [test-suite] Engine-managed dev server | `@kody` (UI task with devServer config) | Engine starts/stops dev server, KODY_DEV_SERVER_READY in logs. See T36 details below |
+| T10 | [${RUN_ID}] T10: Flag: complexity override | `@kody --complexity low` | Forced LOW, 4 stages regardless of task. Logs show "Complexity override:" (not "auto-detected:") |
+| T11 | [${RUN_ID}] T11: Flag: feedback injection | `@kody --feedback "Use functional style"` | Feedback appears in build stage logs: `feedback: Use functional style` |
+| T12 | [${RUN_ID}] T12: Rerun from specific stage | `@kody rerun --from build` | Skips taskify+plan, runs from build. Logs show "Resuming from: build" |
+| T13 | [${RUN_ID}] T13: State bypass on rerun | `@kody rerun` on completed issue | Rerun bypasses "already completed" state lock, pipeline re-executes |
+| T14 | [${RUN_ID}] T14: UI task with MCP auto-inject | `@kody` (UI task) | hasUI=true in task.json, Playwright MCP auto-injected (check logs for MCP config) |
+| T15 | [${RUN_ID}] T15: PR title from issue title | `@kody` | PR title uses issue title with type prefix (`feat: <issue title>`), NOT LLM-generated verbose title |
+| T16 | [${RUN_ID}] T16: Issue stays open after PR | `@kody` | After PR created, issue remains OPEN. PR body contains `Closes #N`. Issue closes only on PR merge. |
+| T17 | [${RUN_ID}] T17: Feedback with special chars | `@kody fix` with body: `Please use "quotes" and backticks` | Feedback parsed correctly through both shell and TS parsers, no shell injection, pipeline completes |
+| T18 | [${RUN_ID}] T18: Force-with-lease on rerun push | `@kody rerun --from build` (after prior push) | If push fails non-fast-forward, retries with --force-with-lease. Check logs for "retrying with --force-with-lease" |
+| T23 | [${RUN_ID}] T23: Issue attachments and metadata enrichment | `@kody` | Image attachments downloaded to `attachments/`, task.md has local paths + labels + discussion. See T23 details below |
+| T27 | [${RUN_ID}] T27: Decompose: config disabled | `@kody decompose` (with `decompose.enabled: false`) | Falls back to normal pipeline immediately. See T27 details below |
+| T30 | [${RUN_ID}] T30: Decompose: sub-task failure fallback | `@kody decompose` | Sub-task failure triggers cleanup + fallback. See T30 details below |
+| T33b | [${RUN_ID}] T33b: Lifecycle label progression | `@kody` | Labels progress: planning→building→verifying→review→done. See T33b details below |
+| T34 | [${RUN_ID}] T34: Token ROI in retrospective | `@kody` | Retrospective entry in observer-log.jsonl includes tokenStats. See T34 details below |
+| T35 | [${RUN_ID}] T35: Auto-learn before ship | `@kody` | Memory files committed in PR (auto-learn runs before ship). See T35 details below |
+| T36 | [${RUN_ID}] T36: Engine-managed dev server | `@kody` (UI task with devServer config) | Engine starts/stops dev server, KODY_DEV_SERVER_READY in logs. See T36 details below |
 
 ### T10 — Complexity override verification
 
 After run completes, check logs for the specific log line:
 
 ```bash
-gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "Complexity"
-gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "COMPLEXITY="
+gh run view <id> --log | grep "Complexity"
+gh run view <id> --log | grep "COMPLEXITY="
 ```
 
 - Expected: `Complexity override: low` (taskify -> build -> verify -> ship)
@@ -469,8 +853,8 @@ gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "COMPLEX
 After run completes, check logs:
 
 ```bash
-gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "feedback:"
-gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "FEEDBACK="
+gh run view <id> --log | grep "feedback:"
+gh run view <id> --log | grep "FEEDBACK="
 ```
 
 - Expected: `feedback: Use functional style` line during the build stage
@@ -487,7 +871,7 @@ Verify in logs that:
 
 This exercises the fix from `5f8b7e9` where resolve/rerun were blocked by "already completed" state locks:
 
-1. Use an issue that already has a `kody:done` label from a prior run
+1. Use a temp issue that already has a `kody:done` label from a prior run
 2. Comment `@kody rerun`
 3. Expected: Pipeline re-executes (not blocked by "already completed" message)
 4. FAIL if: Issue comment says "Issue #N already completed"
@@ -504,7 +888,7 @@ gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json | jq -
 
 If null, add `"mcp": { "devServer": "pnpm dev" }` to kody.config.json as a setup step.
 
-Create a UI-focused issue (e.g., "Add a new dashboard page with charts and data tables"):
+Create a UI-focused temp issue (e.g., "Add a new dashboard page with charts and data tables"):
 
 1. After taskify completes, verify `task.json` has `hasUI: true`
 2. Check logs for MCP configuration showing Playwright server injection
@@ -516,7 +900,7 @@ After PR is created:
 
 1. Read the PR title via `gh pr view <n> --json title`
 2. Read the issue title via `gh issue view <n> --json title`
-3. PR title should be `<type>: <issue title>` (e.g., `feat: [test-suite] Simple utility function`)
+3. PR title should be `<type>: <issue title>` (e.g., `feat: [${RUN_ID}] T15: PR title from issue title`)
 4. PR title should NOT be a verbose LLM-generated summary from task.json
 
 ### T16 — Issue lifecycle (strengthened)
@@ -525,11 +909,11 @@ After PR is created (ship stage completes):
 
 1. Check PR body contains `Closes #<issue_number>`:
    ```bash
-   gh pr view <n> --repo aharonyaircohen/Kody-Engine-Tester --json body | jq -r '.body' | grep "Closes #"
+   gh pr view <n> --json body | jq -r '.body' | grep "Closes #"
    ```
 2. Check issue state: `gh issue view <n> --json state`
 3. Expected: `state: OPEN` (issue should NOT be closed yet — ship.ts no longer calls closeIssue)
-4. **Phase 4 verification:** After merging the PR, re-check issue state — should auto-close via the `Closes #N` keyword in the PR body
+4. **Post-merge verification:** After merging the PR in cleanup, re-check issue state — should auto-close via the `Closes #N` keyword in the PR body
 
 ### T17 — Special characters in feedback (dual parser)
 
@@ -547,7 +931,7 @@ The workflow has **two parser paths** — the shell parser in kody.yml (uses `gr
 
 This exercises the fix from `b73687d`:
 
-1. Use `@kody rerun --from build` on an issue that already has a pushed branch
+1. Use `@kody rerun --from build` on a temp issue that already has a pushed branch
 2. Check logs for push behavior:
    - If fast-forward succeeds: normal push (no retry needed)
    - If non-fast-forward: look for "Push rejected (non-fast-forward), retrying with --force-with-lease"
@@ -559,32 +943,28 @@ This tests that Kody downloads image attachments from GitHub issues and enriches
 
 **Setup:**
 
-1. Create an issue with an image in the body and at least one label:
+1. Create a temp issue with an image in the body and at least one label:
    ```bash
-   # First, upload an image to GitHub by creating an issue with an image via the web UI,
-   # or use a known GitHub-hosted asset URL from the tester repo.
-   # The issue body must contain a markdown image link like:
-   # ![mockup](https://github.com/user-attachments/assets/<uuid>/<filename>.png)
-   gh issue create --repo aharonyaircohen/Kody-Engine-Tester \
-     --title "[test-suite] Issue with image attachment" \
+   gh issue create \
+     --title "[${RUN_ID}] T23: Issue with image attachment" \
      --body "## Task\nAdd a footer component.\n\n## Design\n![mockup](https://github.com/user-attachments/assets/test-uuid/footer-design.png)\n\nSee the attached mockup for layout." \
-     --label "test-suite,ui"
+     --label "test-suite-temp,ui"
    ```
 2. Add a comment on the issue before triggering Kody (to test discussion capture):
    ```bash
-   gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "Make sure the footer is responsive"
+   gh issue comment <n> --body "Make sure the footer is responsive"
    ```
-3. Trigger: `gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody"`
+3. Trigger: `gh issue comment <n> --body "@kody"`
 
 **Verification:**
 
 1. Check workflow run logs for attachment download:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "Downloaded attachment\|attachments/"
+   gh run view <id> --log | grep -i "Downloaded attachment\|attachments/"
    ```
 2. Check logs for label and comment enrichment:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "Labels:\|Discussion"
+   gh run view <id> --log | grep -i "Labels:\|Discussion"
    ```
 3. If the image URL is unreachable (404), verify graceful fallback: original URL preserved in task.md, warning logged, pipeline continues
 4. PASS: Logs show "Downloaded attachment:" and task.md contains `attachments/` local paths, **Labels:** line, and **Discussion** section
@@ -605,11 +985,11 @@ This tests that `decompose.enabled: false` in kody.config.json causes immediate 
    # Edit to add "decompose": { "enabled": false }
    # Push the change
    ```
-2. Create an issue and comment `@kody decompose`
+2. Create a temp issue and comment `@kody decompose`
 
 **Verification:**
 ```bash
-gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "decompose disabled\|falling back"
+gh run view <id> --log | grep -i "decompose disabled\|falling back"
 ```
 - Expected: Logs show "decompose disabled in config — falling back to normal pipeline"
 - Pipeline completes via normal `runPipeline()` path
@@ -629,9 +1009,9 @@ This tests the conservative failure strategy where any sub-task failure aborts a
 
 **Setup:**
 
-Create a complex issue where one sub-task is likely to fail (e.g., a task referencing a non-existent dependency or file that will cause build errors):
+Create a complex temp issue where one sub-task is likely to fail (e.g., a task referencing a non-existent dependency or file that will cause build errors):
 ```
-Title: [test-suite] Decompose: sub-task failure fallback
+Title: [${RUN_ID}] T30: Decompose: sub-task failure fallback
 Body:
 Implement a caching system:
 1. Add Redis cache adapter in src/cache/redisAdapter.ts (requires 'ioredis' package — NOT installed)
@@ -644,7 +1024,7 @@ The Redis adapter sub-task should fail because `ioredis` isn't installed. If dec
 
 **Verification:**
 ```bash
-gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "sub-task.*failed\|cleanup\|fallback\|Delegating to normal pipeline"
+gh run view <id> --log | grep -i "sub-task.*failed\|cleanup\|fallback\|Delegating to normal pipeline"
 ```
 - Expected: Sub-task failure detected, worktrees cleaned up, falls back to `runPipeline()`
 - Normal pipeline may still succeed (single agent can handle the missing dependency better)
@@ -653,15 +1033,15 @@ gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "sub-
 - PASS: Failure detected, cleanup executed, fallback to normal pipeline
 - FAIL: Partial merge of failed sub-tasks, or worktrees left behind, or pipeline hangs
 
-### T33 — Lifecycle label progression
+### T33b — Lifecycle label progression
 
-This validates that labels update correctly through each pipeline stage. Can piggyback on any T01/T02 run or use a dedicated issue.
+This validates that labels update correctly through each pipeline stage. Can piggyback on any T01/T02 run or use a dedicated temp issue.
 
-1. Create an issue and trigger `@kody`
+1. Create a temp issue and trigger `@kody`
 2. Monitor labels during the run (poll every 30s):
    ```bash
    while true; do
-     gh issue view <n> --repo aharonyaircohen/Kody-Engine-Tester --json labels -q '[.labels[].name | select(startswith("kody:"))] | join(", ")'
+     gh issue view <n> --json labels -q '[.labels[].name | select(startswith("kody:"))] | join(", ")'
      sleep 30
    done
    ```
@@ -672,7 +1052,7 @@ This validates that labels update correctly through each pipeline stage. Can pig
    - Final state: only `kody:done` + complexity label remain
 4. Check logs for label operations:
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "label"
+   gh run view <id> --log | grep -i "label"
    ```
 - PASS: Labels progress in order, old labels removed, complexity label persists
 - FAIL: Labels accumulate (not removed), or stages skipped in label progression
@@ -703,13 +1083,13 @@ This validates that auto-learn runs before the ship stage, so learned convention
 1. Use any successful pipeline run that creates a PR
 2. Check the PR diff for memory files:
    ```bash
-   gh pr diff <n> --repo aharonyaircohen/Kody-Engine-Tester | grep "^diff --git.*\.kody/memory"
+   gh pr diff <n> | grep "^diff --git.*\.kody/memory"
    ```
 3. **Verification:**
    - `.kody/memory/` files appear in the PR diff (committed by ship stage)
    - Check run logs for auto-learn execution order:
      ```bash
-     gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "auto-learn\|learning\|conventions"
+     gh run view <id> --log | grep -i "auto-learn\|learning\|conventions"
      ```
    - Auto-learn should run BEFORE "Committed task artifacts" (ship stage)
 - PASS: Memory files in PR diff, auto-learn runs before ship
@@ -724,11 +1104,11 @@ This validates that the engine starts and stops the dev server for UI tasks, rat
 gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json | jq -r '.content' | base64 -d | jq '.devServer'
 ```
 
-1. Create a UI-focused issue (e.g., "Add a search bar component to the header")
+1. Create a UI-focused temp issue (e.g., "Add a search bar component to the header")
 2. Comment `@kody`
 3. **Verification:**
    ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "dev server\|KODY_DEV_SERVER"
+   gh run view <id> --log | grep -i "dev server\|KODY_DEV_SERVER"
    ```
    - Expected log lines:
      - `Starting dev server: <command>` (engine starts it)
@@ -739,222 +1119,13 @@ gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json | jq -
 - PASS: Engine manages dev server lifecycle, env vars set correctly
 - FAIL: Agent starts its own dev server, or engine doesn't stop it, or env vars missing
 
-### T37 — Hotfix: fast-track pipeline
-
-This tests the `@kody hotfix` command which runs a compressed pipeline: build → verify (typecheck+lint only, no tests) → ship, skipping taskify/plan/review/review-fix.
-
-**Setup:**
-
-1. Create a simple issue that describes an urgent fix:
-   ```bash
-   gh issue create --repo aharonyaircohen/Kody-Engine-Tester \
-     --title "[test-suite] Hotfix: fix broken export in utils" \
-     --body "The default export in src/utils/helpers.ts is missing. Add \`export default\` to the main function. This is an urgent production fix."
-   ```
-2. Trigger: `gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody hotfix"`
-
-**Verification:**
-
-1. Check parse job output:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "mode=hotfix"
-   ```
-   - Mode is `hotfix`, task-id matches `hotfix-<issue>-<timestamp>`
-
-2. Check stage execution — only build, verify, ship should run:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "stage\|Complexity"
-   ```
-   - Expected: `⚡ Complexity: hotfix — skipping taskify, plan, review, review-fix`
-   - Stages executed: build → verify → ship (3 stages only)
-   - Stages NOT executed: taskify, plan, review, review-fix
-
-3. Check verify skips tests:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "Running typecheck\|Running test\|Running lint"
-   ```
-   - Expected: `Running typecheck:` and optionally `Running lint:` appear
-   - `Running test:` should NOT appear (tests skipped for fast-track)
-
-4. Check PR creation:
-   ```bash
-   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --json number,title,labels
-   ```
-   - PR created and linked to the issue
-
-- PASS: Pipeline completes with only build→verify→ship, tests skipped, PR created
-- FAIL: Taskify/plan/review stages execute, or tests run during verify, or no PR created
-
-### T38 — Revert: explicit PR target
-
-This tests `@kody revert #<PR>` which deterministically reverts a merged PR without LLM assistance.
-
-**Precondition:** A merged PR from Phase 4 (T01 or T02) must exist. Record its PR number.
-
-**Setup:**
-
-1. Create an issue for the revert:
-   ```bash
-   gh issue create --repo aharonyaircohen/Kody-Engine-Tester \
-     --title "[test-suite] Revert: undo PR #<N>" \
-     --body "Revert the changes from PR #<N> due to a regression."
-   ```
-2. Trigger: `gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody revert #<PR_NUMBER>"`
-
-**Verification:**
-
-1. Check parse job output:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "mode=revert\|revert_target="
-   ```
-   - Mode is `revert`, revert_target is the PR number
-
-2. Check revert execution:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "revert\|merge commit\|verify"
-   ```
-   - Expected logs: PR lookup, merge commit SHA found, `git revert` executed, verify ran (full: typecheck+lint+tests)
-
-3. Check PR creation:
-   ```bash
-   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --json number,title,labels
-   ```
-   - Revert PR created with title `revert: <original title> (#<N>)`
-   - PR has `revert` label
-   - PR body contains original PR reference and verify results
-
-4. Check issue comment:
-   ```bash
-   gh issue view <n> --repo aharonyaircohen/Kody-Engine-Tester --json comments --jq '.comments[-1].body'
-   ```
-   - Comment links to the revert PR
-
-- PASS: Merged PR reverted, full verify ran, revert PR created with correct title/label/body
-- FAIL: Revert fails (conflict, PR not found), or verify not run, or PR missing metadata
-
-### T39 — Revert: auto-resolve from issue
-
-This tests `@kody revert` (no explicit target) which finds the linked merged PR by branch naming convention.
-
-**Precondition:** An issue whose PR was merged in Phase 4. The PR branch must follow the `<issue>-<slug>` convention.
-
-**Setup:**
-
-1. Comment on a Phase 4 issue whose PR was already merged:
-   ```bash
-   gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody revert"
-   ```
-
-**Verification:**
-
-1. Check that the engine resolved the PR automatically:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "searching for merged PR\|Found linked PR"
-   ```
-   - Expected: `No target specified, searching for merged PR linked to issue #<n>...` then `Found linked PR #<N>: <title>`
-
-2. Same verification as T38 — revert PR created, full verify, correct metadata
-
-- PASS: Engine auto-resolves the merged PR from issue number, revert succeeds
-- FAIL: Engine can't find the linked PR, or uses wrong PR, or revert fails
-
-### T40 — Release: dry-run
-
-This tests `@kody release --dry-run` which analyzes conventional commits and previews the release without making changes.
-
-**Precondition:** The tester repo must have at least one conventional commit since the last tag (or no tags at all). The repo should have a `package.json` with a `version` field.
-
-**Setup:**
-
-1. Trigger on any issue:
-   ```bash
-   gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody release --dry-run"
-   ```
-
-**Verification:**
-
-1. Check parse job output:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep "mode=release\|dry_run="
-   ```
-   - Mode is `release`, dry_run is `true`
-
-2. Check release analysis in logs:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "bump\|version\|changelog\|dry-run\|conventional"
-   ```
-   - Expected: Logs show commit parsing, determined bump type (patch/minor/major), calculated next version
-   - `[dry-run]` prefix on all actions
-   - No PR created, no version files modified, no tags created
-
-3. Verify no side effects:
-   ```bash
-   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --head "release/" --json number
-   ```
-   - No release PR created
-
-- PASS: Commits analyzed, bump determined, changelog previewed, no side effects
-- FAIL: Actual changes made despite --dry-run, or commit parsing fails
-
-### T41 — Release: create release PR
-
-This tests `@kody release` which bumps version, generates changelog, and creates a release PR.
-
-**Precondition:** Same as T40. Additionally, the release config should be either absent (defaults used) or configured in `kody.config.json` under `release`.
-
-**Setup:**
-
-1. Ensure there are conventional commits since the last tag (if T01/T02 PRs were merged, their `feat:` / `fix:` commits qualify)
-2. Trigger on any issue:
-   ```bash
-   gh issue comment <n> --repo aharonyaircohen/Kody-Engine-Tester --body "@kody release"
-   ```
-
-**Verification:**
-
-1. Check pre-release checks passed:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "pre-release\|CI green\|blocking"
-   ```
-   - CI status checked on default branch
-   - No blocking draft PRs (or handled gracefully)
-
-2. Check version bump:
-   ```bash
-   gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log | grep -i "bump\|version.*→"
-   ```
-   - Version bumped correctly based on conventional commits (feat→minor, fix→patch, breaking→major)
-
-3. Check release PR created:
-   ```bash
-   gh pr list --repo aharonyaircohen/Kody-Engine-Tester --state open --head "release/" --json number,title,labels,body
-   ```
-   - PR exists with branch `release/v<version>`
-   - Title contains version number
-   - PR has `release` label
-   - Body contains generated changelog grouped by type (Features, Bug Fixes, etc.)
-
-4. Check package.json updated in PR:
-   ```bash
-   gh pr diff <n> --repo aharonyaircohen/Kody-Engine-Tester | grep -A2 '"version"'
-   ```
-   - Version field bumped to the new version
-
-- PASS: Version bumped, changelog generated, release PR created with correct labels and content
-- FAIL: Wrong bump type, missing changelog sections, no PR, or PR targets wrong branch
-
-**Mandatory cleanup:** After verification, close the release PR without merging (or merge if desired — but then T40/T41 can't rerun without new commits):
-```bash
-gh pr close <n> --repo aharonyaircohen/Kody-Engine-Tester --delete-branch
-```
-
 ---
 
 ## Fix-Retry Loop
 
 When any test fails:
 
-1. Fetch logs: `gh run view <id> --repo aharonyaircohen/Kody-Engine-Tester --log-failed`
+1. Fetch logs: `gh run view <id> --log-failed`
 2. Diagnose: Is it a pipeline bug, task issue, infrastructure, or config problem?
 3. If **pipeline bug**:
    a. Fix in Kody-Engine-Lite
@@ -963,9 +1134,10 @@ When any test fails:
    d. Bump version: `npm version patch --no-git-tag-version`
    e. Build + publish: `pnpm build && npm publish --access public`
    f. Commit + push: `git add . && git commit -m "fix: <desc>" && git push`
-   g. Retry the same command on the same issue (don't create a new issue)
+   g. **File a bug in the engine repo** (see Bug Filing Template) with the fix commit reference
+   h. Retry the same command on the same temp issue (don't create a new issue)
 4. If **infrastructure**: Wait 1 minute, retry (max 2 retries)
-5. If **task issue**: Close issue, recreate with better description, restart test
+5. If **task issue**: Close temp issue, recreate with better description, restart test
 
 **Max retries per test:** 3 fix attempts. If still failing after 3 fixes, mark as `MANUAL_REVIEW` and move on.
 
@@ -979,24 +1151,57 @@ T01: started at 0.1.81
 
 ---
 
-## Phase 4: Cleanup
+## Phase 4: Final Sweep
 
-After all tests pass (or are marked `MANUAL_REVIEW`):
+Most cleanup happens per-test via the Test Lifecycle Protocol. Phase 4 is a **safety net** for anything missed.
 
-1. **T16 pre-merge check:** Before merging, verify all [test-suite] issues are still OPEN
-2. Merge all test PRs:
-   `gh pr merge <n> --repo aharonyaircohen/Kody-Engine-Tester --merge --delete-branch`
-3. **T16 post-merge check:** After merging, verify issues auto-closed via `Closes #N`:
+1. **Close remaining temp issues from this run:**
    ```bash
-   gh issue list --repo aharonyaircohen/Kody-Engine-Tester --state closed --label "test-suite" --json number,title
+   gh issue list --label "test-suite-temp" --state open --search "[${RUN_ID}]" --json number,title | \
+     jq -r '.[].number' | while read n; do
+       echo "Closing remaining temp issue #$n"
+       gh issue close "$n" --comment "Final sweep: closing remaining temp issue from ${RUN_ID}"
+     done
    ```
-4. Close any remaining test issues: Close all `[test-suite]` issues not auto-closed
-5. **T08 conflict cleanup:** Verify and revert conflict commit from base branch:
+
+2. **Close stale temp issues from previous runs** (>3 days old):
+   ```bash
+   gh issue list --label "test-suite-temp" --state open --json number,title,createdAt | \
+     jq -r '.[] | select((.createdAt | fromdateiso8601) < (now - 259200)) | .number' | \
+     while read n; do
+       echo "Closing stale temp issue #$n"
+       gh issue close "$n" --comment "Auto-closed: stale test-suite-temp issue (>3 days old)"
+     done
+   ```
+
+3. **Delete orphaned branches from this run:**
+   ```bash
+   git fetch --prune origin
+   git branch -r | grep "origin/.*${RUN_ID}\|origin/run-" | sed 's|origin/||' | while read branch; do
+     echo "Deleting orphaned branch: $branch"
+     git push origin --delete "$branch" 2>/dev/null
+   done
+   ```
+
+4. **Close any leftover PRs from this run:**
+   ```bash
+   gh pr list --state open --search "[${RUN_ID}]" --json number --jq '.[].number' | while read n; do
+     gh pr close "$n" --delete-branch 2>/dev/null
+   done
+   ```
+
+5. **T08 conflict cleanup** (if T08 ran): Verify and revert conflict commit from base branch:
    ```bash
    gh api repos/aharonyaircohen/Kody-Engine-Tester/commits?sha=<base>&per_page=5
    # Confirm the "test: create conflict for T08" commit is reverted
    ```
-6. Delete leftover branches: Any `[test-suite]` branches not cleaned up by PR merge
+
+6. **T41 release cleanup** (if T41 ran): Close the release PR without merging:
+   ```bash
+   gh pr list --state open --head "release/" --json number --jq '.[].number' | while read n; do
+     gh pr close "$n" --delete-branch 2>/dev/null
+   done
+   ```
 
 ---
 
@@ -1039,6 +1244,22 @@ Produce a final report with these sections:
 |---------|-----------|------------|-----|
 | 0.1.82 | T01 taskify timeout | ... | ... |
 
+**Bugs Filed in Engine Repo:**
+
+| Bug Issue | Test ID | Description | Status |
+|-----------|---------|-------------|--------|
+| Kody-Engine-Lite#N | Txx | Short description | Open |
+
+**Cleanup Summary:**
+
+| Metric | Count |
+|--------|-------|
+| Temp issues created | N |
+| Temp issues cleaned up (PASS) | N |
+| Temp issues kept open (FAIL) | N |
+| Bug issues filed in engine repo | N |
+| Branches deleted | N |
+
 **Memory Delta:**
 - New conventions learned
 - New patterns discovered
@@ -1053,7 +1274,7 @@ Produce a final report with these sections:
 
 ### 5d. Save Conclusions
 
-Write a test-suite summary to project memory. Include: date, engine version range, pass/fail counts, fixes made, top recommendations. This enables regression tracking across suite runs.
+Write a test-suite summary to project memory. Include: date, engine version range, pass/fail counts, fixes made, bugs filed, top recommendations. This enables regression tracking across suite runs.
 
 ---
 
@@ -1120,9 +1341,9 @@ Every test must pass both functional and quality checks:
 - [ ] Bootstrap generates memory, step files, tools.yml, and labels (T31)
 - [ ] Bootstrap extends existing files instead of overwriting (T31)
 - [ ] Watch plugins execute in dry-run without posting to GitHub (T32)
-- [ ] Lifecycle labels progress in order: planning→building→verifying→review→done (T33)
-- [ ] Previous stage label removed when new stage label added (T33)
-- [ ] Complexity label persists alongside stage labels (T33)
+- [ ] Lifecycle labels progress in order: planning→building→verifying→review→done (T33b)
+- [ ] Previous stage label removed when new stage label added (T33b)
+- [ ] Complexity label persists alongside stage labels (T33b)
 - [ ] Retrospective tokenStats includes totalPromptTokens and perStage breakdown (T34)
 - [ ] Auto-learn runs before ship — memory files appear in PR diff (T35)
 - [ ] Engine starts dev server for UI tasks — KODY_DEV_SERVER_READY in logs (T36)
@@ -1143,6 +1364,11 @@ Every test must pass both functional and quality checks:
 - [ ] Release changelog groups commits by type (Features, Bug Fixes, etc.) (T41)
 - [ ] Release version bump matches conventional commit analysis (feat→minor, fix→patch) (T41)
 - [ ] Release pre-release checks verify CI green on default branch (T41)
+- [ ] **All temp issues created with `[${RUN_ID}]` prefix** — no bare `[test-suite]` issues
+- [ ] **All temp issues use `test-suite-temp` label** — not `test-suite`
+- [ ] **Passing tests cleaned up immediately** — temp issue closed, PR/branch deleted
+- [ ] **Engine bugs filed in engine repo** — never in tester repo
+- [ ] **No permanent issues created in tester repo** — only temp issues with RUN_ID prefix
 
 ---
 
@@ -1158,13 +1384,23 @@ Every test must pass both functional and quality checks:
 8. **Budget cap:** Stop after 5 cumulative fix-retry version bumps across all tests. If fixes are cascading, the engine needs broader debugging — pause, report findings, and ask for guidance rather than continuing to fix per-test.
 9. **Phase timeout:** If any single phase takes more than 3 hours wall-clock, pause and report what's complete. Resume after review.
 10. **Cascade abort:** If 3+ tests in the same phase fail with the same root cause, fix once and batch-retry all affected tests rather than fixing per-test.
+11. **Never create issues in tester repo without `[${RUN_ID}]` prefix and `test-suite-temp` label** — all issues must be traceable to a specific run.
+12. **Clean as you go** — close temp issues immediately after PASS. Don't accumulate issues for Phase 4.
+13. **Bug issues filed in engine repo only** — never create permanent bug issues in the tester repo.
 
 ## Getting Started
 
 Begin by running:
 
 ```bash
-gh issue list --repo aharonyaircohen/Kody-Engine-Tester --state open --label "test-suite" 2>/dev/null
+RUN_ID="run-$(date +%Y%m%d-%H%M)"
+echo "Starting test suite with RUN_ID: ${RUN_ID}"
+
+# Check for stale temp issues from previous runs
+gh issue list --label "test-suite-temp" --state open --json number,title,createdAt 2>/dev/null
+
+# Ensure test-suite-temp label exists
+gh label create "test-suite-temp" --description "Temporary issues created by test-suite agent runs" --color "FBCA04" 2>/dev/null || true
 ```
 
-If previous test-suite issues exist, clean them up first. Then start Phase 1.
+Clean up any stale temp issues (>3 days old), then start Phase 1.
