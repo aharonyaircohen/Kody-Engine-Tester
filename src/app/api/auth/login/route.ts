@@ -19,10 +19,7 @@ export const POST = async (request: NextRequest) => {
     const jwtService = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
     const authService = new AuthService(payload as any, jwtService)
 
-    const ipAddress = request.headers.get('x-forwarded-for') ?? 'unknown'
-    const userAgent = request.headers.get('user-agent') ?? 'unknown'
-
-    const result = await authService.login(email, password, ipAddress, userAgent)
+    const result = await authService.login(email, password, '', '')
 
     return Response.json({
       accessToken: result.accessToken,

@@ -152,6 +152,7 @@ export interface User {
   bio?: string | null;
   role: 'admin' | 'editor' | 'viewer';
   organization?: string | null;
+  isActive: boolean;
   refreshToken?: string | null;
   tokenExpiresAt?: string | null;
   lastTokenUsedAt?: string | null;
@@ -707,6 +708,7 @@ export interface UsersSelect<T extends boolean = true> {
   bio?: T;
   role?: T;
   organization?: T;
+  isActive?: T;
   refreshToken?: T;
   tokenExpiresAt?: T;
   lastTokenUsedAt?: T;

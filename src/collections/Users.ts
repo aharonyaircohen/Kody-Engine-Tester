@@ -90,6 +90,12 @@ export const Users: CollectionConfig = {
       required: false,
     },
     {
+      name: 'isActive',
+      type: 'checkbox',
+      defaultValue: true,
+      required: true,
+    },
+    {
       name: 'refreshToken',
       type: 'text',
       required: false,
