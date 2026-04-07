@@ -1,0 +1,21 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add role-based access control middleware",
+  "description": "Create reusable RBAC middleware in `src/middleware/rbac.ts` that extracts JWT from Authorization header using existing `JwtService`, validates the user's role, and returns 403 if unauthorized. Support OR logic for multiple allowed roles. Add integration tests covering valid role, invalid role, missing token, and expired token scenarios. Update gradebook endpoint to use the new middleware.",
+  "scope": [
+    "src/middleware/rbac.ts",
+    "tests/int/rbac.int.spec.ts",
+    "src/app/api/gradebook/course/[id]/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts - NextMiddleware factory pattern using NextRequest/NextResponse",
+    "src/auth/_auth.ts - extractBearerToken and checkRole functions for JWT handling",
+    "src/auth/jwt-service.ts - JWT verification with sign/verify methods",
+    "src/middleware/auth-middleware.ts - AuthContext creation from request",
+    "tests/int/api.int.spec.ts - Integration test pattern with Payload initialization"
+  ],
+  "questions": []
+}
+```
