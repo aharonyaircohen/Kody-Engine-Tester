@@ -19,3 +19,7 @@ The `range` utility function is already correctly implemented and all tests pass
 - Auto-detects step direction when not provided (positive when `start <= end`, negative when `start > end`)
 - Removed error throwing for mismatched step direction (n
 ...(truncated)
+
+### autofix (2026-04-07T20:39:05)
+Fixed. Changed `let context` to `const context` on line 80 since the variable is never reassigned.
+
