@@ -4,7 +4,7 @@
  * @param size - The maximum number of elements per chunk
  * @returns An array of arrays, each with at most size elements
  */
-export function chunk<T>(arr: T[], size: number): T[][] {
+export function chunkArray<T>(arr: T[], size: number): T[][] {
   if (size <= 0) {
     throw new Error('Chunk size must be greater than 0')
   }

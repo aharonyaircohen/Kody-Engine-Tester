@@ -1,0 +1,11 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of chunk utility",
+  "description": "The chunk utility function already exists at src/utils/chunk.ts with full test coverage. However, there are naming discrepancies: the file is named chunk.ts rather than chunk-array.ts, and the function is named 'chunk' rather than 'chunkArray' as specified in the acceptance criteria. The implementation correctly satisfies the functional requirements (chunk([1,2,3,4,5], 2) returns [[1,2],[3,4],[5]] and chunk([], 3) returns []).",
+  "scope": ["src/utils/chunk.ts", "src/utils/chunk.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/chunk.ts follows the single-function-file pattern consistent with other utils like flatten.ts, compact.ts, unique.ts"],
+  "questions": []
+}
+```
