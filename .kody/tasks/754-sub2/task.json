@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add /login and /register endpoints",
+  "description": "File issue for /login and /register endpoints. Existing implementations: src/api/auth/login.ts uses UserStore (SHA-256) while src/api/auth/register.ts uses AuthService (PBKDF2). Recommend standardizing on AuthService per src/auth/auth-service.ts pattern.",
+  "scope": [
+    "src/api/auth/login.ts",
+    "src/api/auth/register.ts",
+    "src/auth/auth-service.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/auth/auth-service.ts provides login() with PBKDF2 password verification",
+    "src/api/auth/login.ts uses UserStore.findByEmail + UserStore.verifyPassword"
+  ],
+  "questions": [
+    "Should login.ts be refactored to use AuthService instead of UserStore for consistent PBKDF2 hashing?"
+  ]
+}

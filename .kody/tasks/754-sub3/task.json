@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add auth middleware to protect routes",
+  "description": "File issue for auth middleware to protect existing routes. src/middleware/auth-middleware.ts already implements createAuthMiddleware factory with rate limiting and JWT verification. Evaluate integrating with existing withAuth HOC at src/auth/withAuth.ts.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/auth/withAuth.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts createAuthMiddleware factory with rate limiting",
+    "src/auth/withAuth.ts HOC wrapping route handlers with JWT validation and RBAC"
+  ],
+  "questions": [
+    "Should auth-middleware.ts be used alongside withAuth HOC or replace it?"
+  ]
+}
