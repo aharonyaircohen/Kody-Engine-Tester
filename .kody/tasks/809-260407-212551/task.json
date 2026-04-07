@@ -1,0 +1,20 @@
+
+```json
+{
+  "task_type": "feature",
+  "title": "Add /login and /register HTTP endpoints",
+  "description": "Create Next.js route handlers (POST) at src/app/api/auth/register/route.ts and src/app/api/auth/login/route.ts that wire existing business logic (src/api/auth/register.ts and src/api/auth/login.ts) to HTTP endpoints. The endpoints accept JSON body with email/password, return JWT tokens, handle validation errors (400), duplicate email (409), and auth failures (401).",
+  "scope": [
+    "src/app/api/auth/register/route.ts",
+    "src/app/api/auth/login/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/app/api/health/route.ts - Next.js route handler pattern (POST endpoint structure)",
+    "src/api/auth/register.ts - register business logic with password validation and duplicate email check",
+    "src/api/auth/login.ts - login business logic with UserStore/SessionStore/JwtService",
+    "src/auth/jwt-service.ts - JWT signing with configurable expiry (15min access, 7d refresh)"
+  ],
+  "questions": []
+}
+```
