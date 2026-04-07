@@ -30,3 +30,23 @@ Implementation complete. Summary of changes:
 **`src/app/api/health/route.test.ts`** - Updated tests to work with auth:
 - Uses singleton auth instances from `@/aut
 ...(truncated)
+
+### review (2026-04-07T21:43:35)
+## Verdict: PASS
+
+## Summary
+
+Applied the existing `createAuthMiddleware` factory to `/api/health` route as a demonstration of auth middleware integration. The middleware validates Bearer tokens, returns 401 on missing/invalid tokens, and attaches the decoded user on success. Added integration tests covering the 401 cases.
+
+## Findings
+
+### Critical
+None.
+
+### Major
+None.
+
+### Minor
+
+- `src/app/api/health/route.test.ts:33` — `sessionStore.create()` creates a session with `sessionId: 'session-1'`
+...(truncated)

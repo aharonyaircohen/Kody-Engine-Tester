@@ -35,3 +35,7 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-07 (task: 813-260407-212621)
+- Uses @/ path aliases for imports
+- Active directories: src/middleware, src/app/api/notes, src/app/api/health
