@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Based on my analysis of the codebase, I can now classify this task:  ```",
+  "description": "Based on my analysis of the codebase, I can now classify this task:\n\n```json\n{\n  \"task_type\": \"bugfix\",\n  \"title\": \"Fix missing 'Closes #N' in PR body\",\n  \"description\": \"The PR body created by the ship stage does not contain 'Closes #<issue_number>' even though the code in ship.js lines 58-61 appears correct. The ship stage's buildPrBody function should add 'Closes #N' when ctx.input.issueNumber is set, but the test T16 fails because the PR body lacks this line. The issue may be in how the issu",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
