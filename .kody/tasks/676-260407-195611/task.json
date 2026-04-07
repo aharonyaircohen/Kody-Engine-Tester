@@ -1,0 +1,10 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of pagination helper",
+  "description": "The pagination helper `paginate<T>(items: T[], page: number, pageSize: number): { data: T[]; total: number; pages: number; hasNext: boolean }` already exists in `src/services/pagination.ts` with comprehensive tests in `src/services/pagination.test.ts`. All 15 tests pass covering: basic pagination (first/middle/last page), edge cases (empty array, pageSize larger than total, exact boundary, page size of 1), error handling (page < 1, pageSize < 1), type safety (different types, objects, reference preservation), and page calculations.",
+  "scope": ["src/services/pagination.ts", "src/services/pagination.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/services/pagination.ts uses generic function signature following existing utility patterns in src/utils/ - single-responsibility function with co-located .test.ts file", "src/services/pagination.test.ts follows vitest describe/it pattern consistent with other test files in src/utils/ and src/services/"],
+  "questions": []
+}
