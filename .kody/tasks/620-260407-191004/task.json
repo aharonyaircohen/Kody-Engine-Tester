@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify existing implementation of slugify utility",
+"description": "The slugify utility already exists at src/utils/slugify.ts with comprehensive tests in src/utils/slugify.test.ts. Implementation converts strings to URL-safe slugs with: unicode normalization, accent stripping, lowercase conversion, special char removal, space/hyphen collapsing, and leading/trailing hyphen stripping. All 18 tests pass.",
+"scope": ["src/utils/slugify.ts", "src/utils/slugify.test.ts"],
+"risk_level": "low",
+"existing_patterns": ["src/utils/slugify.ts follows the utility module pattern of single-function files in src/utils/ with co-located .test.ts tests"],
+"questions": []
+}
