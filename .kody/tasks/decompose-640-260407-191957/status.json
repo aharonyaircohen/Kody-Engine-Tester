@@ -1,0 +1,44 @@
+{
+  "taskId": "decompose-640-260407-191957",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-07T19:26:02.981Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1657
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "startedAt": "2026-04-07T19:26:06.900Z",
+      "retries": 0,
+      "completedAt": "2026-04-07T19:27:30.000Z"
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-07T19:21:44.721Z",
+  "updatedAt": "2026-04-07T19:27:30.000Z",
+  "sessions": {
+    "explore": "4cbb2d61-8e5a-4fa4-b8bf-61398ea368a3"
+  }
+}

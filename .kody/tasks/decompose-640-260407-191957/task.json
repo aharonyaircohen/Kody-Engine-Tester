@@ -1,0 +1,15 @@
+{
+  "task_type": "chore",
+  "title": "Verify force-with-lease retry mechanism (T18)",
+  "description": "Execute T18 test case to verify force-with-lease retry on non-fast-forward push. Run `@kody rerun --from build` on an issue with a prior pushed branch, then check logs for: (1) fast-forward success (normal push), or (2) non-fast-forward rejection with 'Push rejected (non-fast-forward), retrying with --force-with-lease' message. Either outcome validates the retry mechanism exists.",
+  "scope": [
+    ".github/workflows/kody.yml",
+    ".claude/commands/kody-test-suite.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".claude/commands/kody-test-suite.md:544-552 - T18 test case definition with exact verification steps",
+    ".kody/runs/575.jsonl - prior run demonstrating force-with-lease push attempt"
+  ],
+  "questions": []
+}
