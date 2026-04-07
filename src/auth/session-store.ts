@@ -1,5 +1,11 @@
 import crypto from 'crypto'
 
+/**
+ * @deprecated Use JwtService tokens instead — sessions are now self-contained in JWT.
+ * This class is kept for backward compatibility during the transition period.
+ * JWT tokens contain the generation counter and sessionId, eliminating the need
+ * for server-side session storage.
+ */
 export interface Session {
   id: string
   userId: string

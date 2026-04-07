@@ -3,10 +3,11 @@ import type { AuthenticatedUser, RbacRole } from './auth-service'
 import { AuthService } from './auth-service'
 import { JwtService } from './jwt-service'
 import { getPayloadInstance } from '@/services/progress'
-import { extractBearerToken, checkRole } from './_auth'
+import { extractBearerToken } from './_auth'
+import { checkRole } from './rbac'
 
 export { extractBearerToken, checkRole }
-export type { AuthContext, AuthOptions } from './_auth'
+export type { AuthContext, AuthOptions } from './rbac'
 
 let jwtServiceInstance: JwtService | null = null
 let authServiceInstance: AuthService | null = null

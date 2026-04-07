@@ -1,12 +1,10 @@
 import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
 import { JwtService } from '../auth/jwt-service'
 import type { User } from '../auth/user-store'
-import type { Session } from '../auth/session-store'
+import type { RbacRole } from '../auth/auth-service'
 
 export interface AuthContext {
   user?: User
-  session?: Session
   error?: string
   status?: number
 }
@@ -17,7 +15,7 @@ interface RequestContext {
 }
 
 const RATE_LIMIT_MAX = 100
-const RATE_LIMIT_WINDOW_MS = 60 * 1000
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000
 
 interface RateLimitEntry {
   count: number
@@ -26,7 +24,6 @@ interface RateLimitEntry {
 
 export function createAuthMiddleware(
   userStore: UserStore,
-  sessionStore: SessionStore,
   jwtService: JwtService
 ) {
   const rateLimitMap = new Map<string, RateLimitEntry>()
@@ -53,28 +50,22 @@ export function createAuthMiddleware(
 
     const token = authHeader.slice(7)
 
-    let payload
+    let payload: { userId: string; email: string; role: RbacRole; sessionId: string; generation: number }
     try {
-      payload = await jwtService.verify(token)
+      payload = await jwtService.verify(token) as any
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid token'
       return { error: message, status: 401 }
     }
 
-    const session = sessionStore.findByToken(token)
-    if (!session) {
-      return { error: 'Session not found or expired', status: 401 }
-    }
-
-    if (payload.generation < session.generation) {
-      return { error: 'Token has been superseded by a newer session', status: 401 }
-    }
+    // JWT tokens are self-contained - no need for session lookup
+    // The generation counter in the token itself handles token refresh/rotation
 
     const user = await userStore.findById(payload.userId)
     if (!user || !user.isActive) {
       return { error: 'User not found or inactive', status: 401 }
     }
 
-    return { user, session }
+    return { user }
   }
 }

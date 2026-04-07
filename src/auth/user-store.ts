@@ -1,13 +1,14 @@
 import crypto from 'crypto'
 
-export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
+export type RbacRole = 'admin' | 'editor' | 'viewer'
 
 export interface User {
   id: string
   email: string
   passwordHash: string
   salt: string
-  role: UserRole
+  role: RbacRole
+  roles: RbacRole[]
   createdAt: Date
   lastLoginAt?: Date
   isActive: boolean
@@ -18,7 +19,8 @@ export interface User {
 export interface CreateUserInput {
   email: string
   password: string
-  role?: UserRole
+  role?: RbacRole
+  roles?: RbacRole[]
 }
 
 const LOCKOUT_ATTEMPTS = 5
@@ -38,11 +40,11 @@ export class UserStore {
   }
 
   private async seed() {
-    await this.createInternal({ email: 'admin@example.com', password: 'AdminPass1!', role: 'admin' })
-    await this.createInternal({ email: 'instructor@example.com', password: 'InstructorPass1!', role: 'instructor' })
-    await this.createInternal({ email: 'student@example.com', password: 'StudentPass1!', role: 'student' })
-    await this.createInternal({ email: 'user@example.com', password: 'UserPass1!', role: 'user' })
-    const inactive = await this.createInternal({ email: 'inactive@example.com', password: 'InactivePass1!', role: 'student' })
+    await this.createInternal({ email: 'admin@example.com', password: 'AdminPass1!', role: 'admin', roles: ['admin'] })
+    await this.createInternal({ email: 'instructor@example.com', password: 'InstructorPass1!', role: 'editor', roles: ['editor'] })
+    await this.createInternal({ email: 'student@example.com', password: 'StudentPass1!', role: 'viewer', roles: ['viewer'] })
+    await this.createInternal({ email: 'user@example.com', password: 'UserPass1!', role: 'viewer', roles: ['viewer'] })
+    const inactive = await this.createInternal({ email: 'inactive@example.com', password: 'InactivePass1!', role: 'viewer', roles: ['viewer'] })
     await this.update(inactive.id, { isActive: false })
   }
 
@@ -51,15 +53,32 @@ export class UserStore {
   }
 
   async hashPassword(password: string, salt: string): Promise<string> {
-    const encoder = new TextEncoder()
-    const data = encoder.encode(password + salt)
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-    return Buffer.from(hashBuffer).toString('hex')
+    return new Promise((resolve, reject) => {
+      crypto.pbkdf2(password, salt, 25000, 512, 'sha256', (err, derivedKey) => {
+        if (err) {
+          reject(err)
+          return
+        }
+        resolve(Buffer.from(derivedKey).toString('hex'))
+      })
+    })
   }
 
   async verifyPassword(password: string, hash: string, salt: string): Promise<boolean> {
-    const computed = await this.hashPassword(password, salt)
-    return computed === hash
+    return new Promise((resolve, reject) => {
+      crypto.pbkdf2(password, salt, 25000, 512, 'sha256', (err, derivedKey) => {
+        if (err) {
+          reject(err)
+          return
+        }
+        const storedHashBuffer = Buffer.from(hash, 'hex')
+        if (derivedKey.length === storedHashBuffer.length && crypto.timingSafeEqual(derivedKey, storedHashBuffer)) {
+          resolve(true)
+        } else {
+          resolve(false)
+        }
+      })
+    })
   }
 
   private generateSalt(): string {
@@ -69,12 +88,15 @@ export class UserStore {
   private async createInternal(input: CreateUserInput): Promise<User> {
     const salt = this.generateSalt()
     const passwordHash = await this.hashPassword(input.password, salt)
+    const role = input.role ?? 'viewer'
+    const roles = input.roles ?? [role]
     const user: User = {
       id: this.generateId(),
       email: input.email,
       passwordHash,
       salt,
-      role: input.role ?? 'user',
+      role,
+      roles,
       createdAt: new Date(),
       isActive: true,
       failedLoginAttempts: 0,
