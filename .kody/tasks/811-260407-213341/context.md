@@ -18,3 +18,20 @@ The **User model with password hash field** task is **already fully implemented*
 | User type/interface with `id`, `email`, `passwordHash` | ✓ Implemented (lines 5-16) |
 | `passwordHash` stor
 ...(truncated)
+
+### autofix (2026-04-07T21:46:18)
+## Summary of Fixes
+
+I've made two fixes to address the verification errors:
+
+### 1. `tests/helpers/seedUser.ts`
+**Problem:** The `testUser` object was missing required fields (`firstName`, `lastName`, `role`) that are defined as `required: true` in the `Users` collection.
+
+**Fix:** Added all required fields:
+- `firstName: 'Test'`
+- `lastName: 'User'`
+- `role: 'admin' as const` (using `as const` to preserve the literal type)
+
+### 2. `tests/int/api.int.spec.ts`
+**Problem:** The `getPayload()` cal
+...(truncated)
