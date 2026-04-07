@@ -1,0 +1,21 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of JWT auth middleware",
+  "description": "The JWT auth middleware is already implemented at src/middleware/auth-middleware.ts with full test coverage. It extracts JWT from Authorization: Bearer <token> header, returns 401 for missing/invalid/expired tokens, injects decoded user payload into request context, and includes rate limiting. Tests in src/middleware/auth-middleware.test.ts cover: missing header (401), malformed token (401), expired token (401), valid token passing user payload, revoked session (401), and generation mismatch (401). The withAuth HOC in src/auth/withAuth.ts also provides route-level protection for Next.js handlers.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/jwt-service.test.ts",
+    "src/auth/withAuth.ts",
+    "src/api/auth/login.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts: Standalone auth middleware factory using JwtService, SessionStore, UserStore with rate limiting",
+    "src/auth/withAuth.ts: HOC wrapper for Next.js route handlers with JWT validation and RBAC role checking",
+    "src/auth/jwt-service.ts: JwtService class with sign/verify/accessToken/refreshToken methods and token blacklisting",
+    "src/middleware/auth-middleware.test.ts: Comprehensive test suite covering 401 cases for missing/invalid/expired tokens, revoked sessions, and rate limiting"
+  ],
+  "questions": []
+}
