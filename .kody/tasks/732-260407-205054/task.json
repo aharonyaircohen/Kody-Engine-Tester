@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of flatten utility",
+  "description": "The flatten utility function already exists at src/utils/flatten.ts with full test coverage in src/utils/flatten.test.ts. All 6 tests pass. The implementation uses recursive flattening to handle arbitrary depth. The acceptance criteria (flatten([1, [2, 3], [4]]) returns [1, 2, 3, 4]) is satisfied.",
+  "scope": ["src/utils/flatten.ts", "src/utils/flatten.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/flatten.ts follows the standard utility function pattern with Typed file, JSDoc comments, and generic type support", "src/utils/flatten.test.ts follows vitest testing patterns with describe/it/expect syntax"],
+  "questions": []
+}
