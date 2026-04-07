@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add capitalizeFirstLetter utility function",
+  "description": "Create a new `capitalizeFirstLetter` utility function in `src/utils/capitalize-first.ts` that takes a string and capitalizes only the first letter while keeping the rest lowercase. Should follow the existing utility pattern in `src/utils/`.",
+  "scope": ["src/utils/capitalize-first.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    {
+      "file": "src/utils/capitalize-words.ts",
+      "description": "Similar string utility with simple function export pattern"
+    },
+    {
+      "file": "src/utils/repeat.ts",
+      "description": "Single-function utility module pattern with validation"
+    }
+  ],
+  "questions": []
+}
