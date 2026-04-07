@@ -26,3 +26,7 @@ The clamp utility is already implemented and all 8 tests pass.
 
 All tests pass ✓
 
+
+### autofix (2026-04-07T19:15:51)
+Changed `let` to `const` at line 80. The variable `context` is captured by the `dispatch` closure but never reassigned, so `const` is appropriate.
+
