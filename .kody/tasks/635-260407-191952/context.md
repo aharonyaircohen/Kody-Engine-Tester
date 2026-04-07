@@ -18,3 +18,7 @@ Based on my investigation, I found:
    if (ctx.input.feedback && def.name === "build") {
    
 ...(truncated)
+
+### autofix (2026-04-07T19:31:06)
+Fixed. Changed `let context` to `const context` at line 80 in `src/utils/logger/index.ts`. The variable is only spread into new objects (`{ ...context, ...ctx }`) and never reassigned, so `const` is appropriate and follows functional style.
+
