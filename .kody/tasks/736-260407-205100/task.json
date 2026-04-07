@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of omit utility",
+  "description": "The omit utility function already exists at src/utils/omit.ts with full implementation and comprehensive test coverage (13 tests). All acceptance criteria are met: omit({a: 1, b: 2, c: 3}, ['b']) correctly returns {a: 1, c: 3}.",
+  "scope": ["src/utils/omit.ts", "src/utils/omit.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
