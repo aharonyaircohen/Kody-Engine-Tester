@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of User model with password hash",
+  "description": "The User type/interface with id, email, and passwordHash fields already exists in src/auth/user-store.ts (lines 5-16). Password hashing via SHA-256 with random salt is implemented in hashPassword/verifyPassword methods (lines 53-63). Unit tests exist in src/auth/user-store.test.ts covering correct password verification (line 98) and wrong password rejection (line 104). The task appears to be already implemented.",
+  "scope": [
+    "src/auth/user-store.ts",
+    "src/auth/user-store.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/user-store.ts:53-63 — hashPassword uses SHA-256 with crypto.subtle.digest, verifyPassword compares computed hash with stored hash using timing-safe comparison",
+    "src/auth/user-store.test.ts:96-107 — existing password verification tests cover correct password acceptance and wrong password rejection",
+    "src/auth/auth-service.ts:45-60 — PBKDF2-based verifyPassword matching Payload's generatePasswordSaltHash (25000 iterations, sha256, 512 bits) as alternative hashing approach"
+  ],
+  "questions": []
+}
