@@ -1,0 +1,23 @@
+{
+  "task_type": "feature",
+  "title": "Add /login and /register API route endpoints",
+  "description": "Create Next.js route handlers at src/app/api/auth/login/route.ts and src/app/api/auth/register/route.ts to expose the existing login/register business logic as POST HTTP endpoints. The existing src/api/auth/login.ts and src/api/auth/register.ts provide the business logic; this task creates the API surface layer.",
+  "scope": [
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/app/api/health/route.ts - minimal route handler pattern with JSON response",
+    "src/app/api/courses/search/route.ts - route handler using withAuth, getPayloadInstance, and JSON responses",
+    "src/api/auth/register.ts - existing register business logic using AuthService and Payload",
+    "src/api/auth/login.ts - existing login business logic using UserStore and SessionStore",
+    "src/auth/withAuth.ts - auth decorator pattern for route handlers",
+    "src/services/progress.ts - getPayloadInstance() for Payload access"
+  ],
+  "questions": [
+    "The task AC says /register accepts { email, password } but existing register.ts requires confirmPassword. Should confirmPassword be removed to match the AC?",
+    "Existing code uses AuthService (PBKDF2) for register but UserStore (SHA-256) for login — inconsistent. Should login be updated to use AuthService for consistency?",
+    "The task AC says duplicate email returns 400 but existing register.ts returns 409. Which status code should be used?"
+  ]
+}
