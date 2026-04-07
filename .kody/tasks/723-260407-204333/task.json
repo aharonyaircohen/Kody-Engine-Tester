@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add buildSearchFilter utility for Payload text search",
+  "description": "Create `buildSearchFilter(query: string, fields: string[]): object` in `src/services/search-filter.ts` that builds a Payload-compatible `Where` clause for multi-field text search using the `like` operator. Follow the existing `or` pattern from `course-search.ts` where each field gets a `{ field: { like: query } }` condition. Include co-located tests in `src/services/search-filter.test.ts`.",
+  "scope": ["src/services/search-filter.ts", "src/services/search-filter.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/services/course-search.ts:47-53 — uses `{ or: [{ title: { like: query } }, { description: { like: query } }] }` pattern for multi-field text search with `like` operator",
+    "src/utils/*.ts — single-function module pattern with co-located `.test.ts` files",
+    "src/services/*.ts — service files with corresponding test files in same directory"
+  ],
+  "questions": []
+}
