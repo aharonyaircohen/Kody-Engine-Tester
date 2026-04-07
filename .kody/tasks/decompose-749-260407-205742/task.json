@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of identity utility",
+  "description": "The identity utility function already exists at src/utils/identity.ts with full test coverage in src/utils/identity.test.ts. The implementation uses a generic function that returns its input unchanged. Tests verify it works correctly for numbers (identity(5) returns 5), strings (identity('hello') returns 'hello'), objects, arrays, null, undefined, and booleans.",
+  "scope": ["src/utils/identity.ts", "src/utils/identity.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/identity.ts follows the single-function utility pattern used in src/utils/ with co-located .test.ts file", "Tests use vitest with describe/it/expect syntax consistent with other test files"],
+  "questions": []
+}
