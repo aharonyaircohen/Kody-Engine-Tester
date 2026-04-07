@@ -1,6 +1,7 @@
 import crypto from 'crypto'
+import type { RbacRole } from './jwt-service'
 
-export type RbacRole = 'admin' | 'editor' | 'viewer'
+export type { RbacRole } from './jwt-service'
 
 export interface User {
   id: string

@@ -3,7 +3,7 @@ import { GradingService, RubricScore } from './grading'
 
 // ─── Test helpers ──────────────────────────────────────────────────────────────
 
-type Role = 'admin' | 'instructor' | 'student'
+type Role = 'admin' | 'editor' | 'viewer'
 
 interface MockUser {
   id: string
@@ -105,7 +105,7 @@ describe('Rubric validation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 40 },
@@ -116,7 +116,7 @@ describe('Rubric validation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)
@@ -127,7 +127,7 @@ describe('Rubric validation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 50 }, // max is 40
@@ -138,7 +138,7 @@ describe('Rubric validation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -150,7 +150,7 @@ describe('Rubric validation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: -5 },
@@ -161,7 +161,7 @@ describe('Rubric validation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -176,7 +176,7 @@ describe('Rubric validation', () => {
       { criterion: 'Organization', maxPoints: 45, description: 'Logical structure' },
     ]})
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 45 },
@@ -186,7 +186,7 @@ describe('Rubric validation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -197,7 +197,7 @@ describe('Rubric validation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Wrong Criterion', score: 10 },
@@ -208,7 +208,7 @@ describe('Rubric validation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -219,7 +219,7 @@ describe('Rubric validation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 30 },
@@ -230,7 +230,7 @@ describe('Rubric validation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -245,7 +245,7 @@ describe('Score calculation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 40 },
@@ -256,7 +256,7 @@ describe('Score calculation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)
@@ -267,7 +267,7 @@ describe('Score calculation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 20 },
@@ -278,7 +278,7 @@ describe('Score calculation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)
@@ -289,7 +289,7 @@ describe('Score calculation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 35, comment: 'Good depth' },
@@ -302,7 +302,7 @@ describe('Score calculation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
       feedback,
     })
 
@@ -316,7 +316,7 @@ describe('Score calculation', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 40 },
@@ -327,7 +327,7 @@ describe('Score calculation', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)
@@ -348,7 +348,7 @@ describe('Overdue submission handling', () => {
     const dueDate = new Date(Date.now() + 86_400_000) // tomorrow
     const assignment = addAssignment(assignments, { dueDate })
     const submission = addSubmission(submissions, assignment.id, 'student-1', 0) // today
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
@@ -357,7 +357,7 @@ describe('Overdue submission handling', () => {
         { criterion: 'Organization', score: 30 },
         { criterion: 'Grammar & Style', score: 30 },
       ],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)
@@ -370,7 +370,7 @@ describe('Overdue submission handling', () => {
     const dueDate = new Date(Date.now() - 3 * 86_400_000)
     const assignment = addAssignment(assignments, { dueDate })
     const submission = addSubmission(submissions, assignment.id, 'student-1', 1) // submitted 1 day ago
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
@@ -379,7 +379,7 @@ describe('Overdue submission handling', () => {
         { criterion: 'Organization', score: 30 },
         { criterion: 'Grammar & Style', score: 30 },
       ],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)
@@ -391,7 +391,7 @@ describe('Overdue submission handling', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments, { dueDate: undefined })
     const submission = addSubmission(submissions, assignment.id, 'student-1', 10)
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
@@ -400,7 +400,7 @@ describe('Overdue submission handling', () => {
         { criterion: 'Organization', score: 30 },
         { criterion: 'Grammar & Style', score: 30 },
       ],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)
@@ -411,13 +411,13 @@ describe('Overdue submission handling', () => {
 // ─── Permission checks ────────────────────────────────────────────────────────
 
 describe('Permission checks', () => {
-  it('allows an instructor who owns the course to grade', async () => {
+  it('allows an editor who owns the course to grade', async () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1', 'instructor-2'])
+    addCourse(courses, assignment.id, ['editor-1', 'editor-2'])
 
-    const allowed = await svc.canGrade({ id: 'instructor-1', role: 'instructor' }, submission.id)
+    const allowed = await svc.canGrade({ id: 'editor-1', role: 'editor' }, submission.id)
     expect(allowed).toBe(true)
   })
 
@@ -425,17 +425,17 @@ describe('Permission checks', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const allowed = await svc.canGrade({ id: 'admin-1', role: 'admin' }, submission.id)
     expect(allowed).toBe(true)
   })
 
-  it('denies a student from grading', async () => {
+  it('denies a viewer from grading', async () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const gradeResult = await svc.gradeSubmission({
       submissionId: submission.id,
@@ -444,18 +444,18 @@ describe('Permission checks', () => {
         { criterion: 'Organization', score: 30 },
         { criterion: 'Grammar & Style', score: 30 },
       ],
-      grader: { id: 'student-1', role: 'student' },
+      grader: { id: 'viewer-1', role: 'viewer' },
     })
 
     expect(gradeResult.success).toBe(false)
     expect(gradeResult.error).toContain('not authorized')
   })
 
-  it('denies an instructor from grading when not assigned to the course', async () => {
+  it('denies an editor from grading when not assigned to the course', async () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const gradeResult = await svc.gradeSubmission({
       submissionId: submission.id,
@@ -464,20 +464,20 @@ describe('Permission checks', () => {
         { criterion: 'Organization', score: 30 },
         { criterion: 'Grammar & Style', score: 30 },
       ],
-      grader: { id: 'stranger-instructor', role: 'instructor' },
+      grader: { id: 'stranger-editor', role: 'editor' },
     })
 
     expect(gradeResult.success).toBe(false)
     expect(gradeResult.error).toContain('not authorized')
   })
 
-  it('returns false for canGrade when grader is a student', async () => {
+  it('returns false for canGrade when grader is a viewer', async () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
-    const allowed = await svc.canGrade({ id: 'student-1', role: 'student' }, submission.id)
+    const allowed = await svc.canGrade({ id: 'viewer-1', role: 'viewer' }, submission.id)
     expect(allowed).toBe(false)
   })
 })
@@ -491,7 +491,7 @@ describe('Error handling', () => {
     const result = await svc.gradeSubmission({
       submissionId: 'non-existent',
       rubricScores: [{ criterion: 'Content Quality', score: 40 }],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -505,7 +505,7 @@ describe('Error handling', () => {
     const result = await svc.gradeSubmission({
       submissionId: 'submission-1',
       rubricScores: [{ criterion: 'Content Quality', score: 40 }],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -525,7 +525,7 @@ describe('Error handling', () => {
         { criterion: 'Organization', score: 30 },
         { criterion: 'Grammar & Style', score: 30 },
       ],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -536,7 +536,7 @@ describe('Error handling', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     // First grading
     await svc.gradeSubmission({
@@ -546,7 +546,7 @@ describe('Error handling', () => {
         { criterion: 'Organization', score: 30 },
         { criterion: 'Grammar & Style', score: 30 },
       ],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     // Second grading attempt
@@ -557,7 +557,7 @@ describe('Error handling', () => {
         { criterion: 'Organization', score: 15 },
         { criterion: 'Grammar & Style', score: 10 },
       ],
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(false)
@@ -568,7 +568,7 @@ describe('Error handling', () => {
     const { svc, assignments, submissions, courses } = makeService()
     const assignment = addAssignment(assignments)
     const submission = addSubmission(submissions, assignment.id, 'student-1')
-    addCourse(courses, assignment.id, ['instructor-1'])
+    addCourse(courses, assignment.id, ['editor-1'])
 
     const scores: RubricScore[] = [
       { criterion: 'Content Quality', score: 0 },
@@ -579,7 +579,7 @@ describe('Error handling', () => {
     const result = await svc.gradeSubmission({
       submissionId: submission.id,
       rubricScores: scores,
-      grader: { id: 'instructor-1', role: 'instructor' },
+      grader: { id: 'editor-1', role: 'editor' },
     })
 
     expect(result.success).toBe(true)

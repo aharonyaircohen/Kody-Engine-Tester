@@ -10,13 +10,13 @@ export const Courses: CollectionConfig = {
     create: ({ req: { user } }) => {
       if (!user) return false
       const role = (user as { role?: string }).role
-      return role === 'instructor' || role === 'admin'
+      return role === 'editor' || role === 'admin'
     },
     update: ({ req: { user }, data }) => {
       if (!user) return false
       const role = (user as { role?: string }).role
       if (role === 'admin') return true
-      if (role !== 'instructor') return false
+      if (role !== 'editor') return false
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const docInstructorId = (data as any)?.instructor?.id as string | undefined
       return docInstructorId === String(user.id)
@@ -28,7 +28,7 @@ export const Courses: CollectionConfig = {
       const status = doc?.status as string | undefined
       if (status === 'published') return true
       if (role === 'admin') return true
-      if (role !== 'instructor') return false
+      if (role !== 'editor') return false
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const docInstructorId = (doc as any)?.instructor?.id as string | undefined
       return docInstructorId === String(user.id)

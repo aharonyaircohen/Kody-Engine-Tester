@@ -93,12 +93,12 @@ export const Modules: CollectionConfig = {
     create: ({ req: { user } }) => {
       if (!user) return false
       const role = (user as { role?: string }).role
-      return role === 'instructor' || role === 'admin'
+      return role === 'editor' || role === 'admin'
     },
     update: ({ req: { user } }) => {
       if (!user) return false
       const role = (user as { role?: string }).role
-      return role === 'instructor' || role === 'admin'
+      return role === 'editor' || role === 'admin'
     },
     read: ({ req: { user } }) => {
       return !!user

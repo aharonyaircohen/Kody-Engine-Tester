@@ -2,8 +2,9 @@ import type { Payload } from 'payload'
 import type { CollectionSlug } from 'payload'
 import crypto from 'crypto'
 import { JwtService } from './jwt-service'
+import type { RbacRole } from './jwt-service'
 
-export type RbacRole = 'admin' | 'editor' | 'viewer'
+export type { RbacRole } from './jwt-service'
 
 export interface AuthenticatedUser {
   id: number | string

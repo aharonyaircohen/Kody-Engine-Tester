@@ -38,7 +38,7 @@ export interface GradingServiceDeps<A, S, C> {
 
 export interface Grader {
   id: string
-  role: 'admin' | 'instructor' | 'student'
+  role: 'admin' | 'editor' | 'viewer'
 }
 
 export interface GradeSubmissionOptions {
@@ -59,12 +59,12 @@ export class GradingService<
 
   /**
    * Check whether a grader may grade a given submission.
-   * Admins can grade any submission. Instructors may only grade submissions
+   * Admins can grade any submission. Editors may only grade submissions
    * belonging to a course they are assigned to.
    */
   async canGrade(grader: Grader, submissionId: string): Promise<boolean> {
     if (grader.role === 'admin') return true
-    if (grader.role !== 'instructor') return false
+    if (grader.role === 'viewer') return false
 
     const submission = await this.deps.getSubmission(submissionId)
     if (!submission) return false
@@ -79,7 +79,7 @@ export class GradingService<
    * Grade a submission against the assignment rubric.
    *
    * Validates:
-   * - Grader has permission (instructor or admin)
+   * - Grader has permission (editor or admin)
    * - Submission exists and belongs to the assignment
    * - Assignment exists
    * - Course exists and grader is authorized for it
@@ -98,8 +98,8 @@ export class GradingService<
       return { success: false, error: `Submission "${submissionId}" not found.` }
     }
 
-    if (grader.role === 'student') {
-      return { success: false, error: 'Students are not authorized to grade submissions.' }
+    if (grader.role === 'viewer') {
+      return { success: false, error: 'Viewers are not authorized to grade submissions.' }
     }
 
     const assignment = await this.deps.getAssignment(submission.assignmentId)
@@ -112,8 +112,8 @@ export class GradingService<
       return { success: false, error: 'Course not found — not authorized to grade this submission.' }
     }
 
-    const isInstructor = grader.role === 'instructor'
-    if (isInstructor && !course.instructorIds.includes(grader.id)) {
+    const isEditor = grader.role === 'editor'
+    if (isEditor && !course.instructorIds.includes(grader.id)) {
       return { success: false, error: 'You are not authorized to grade submissions for this course.' }
     }
 
