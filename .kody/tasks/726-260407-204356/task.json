@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of audit logger",
+  "description": "The audit logger implementation already exists at src/services/audit-logger.ts with logAuditEvent(event: { action: string; userId: string; resource: string; details?: string }): void that appends JSONL entries to a file. Comprehensive tests exist at src/services/audit-logger.test.ts with 5 test cases covering: basic JSONL append, optional details field, multiple entries without overwrite, ISO timestamp inclusion, and entries without optional details. All 5 tests pass.",
+  "scope": ["src/services/audit-logger.ts", "src/services/audit-logger.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/services/notifications.ts - Class-based service with constructor dependency",
+    "src/services/*.ts - Co-located .test.ts files with vitest",
+    "src/utils/ - Single-responsibility utility modules"
+  ],
+  "questions": []
+}
