@@ -38,3 +38,34 @@ Implementation is complete. Here's a summary:
 **`src/app/api/auth/register/route.ts`** - POST handler that:
 - Parses
 ...(truncated)
+
+### autofix (2026-04-07T21:26:11)
+## Summary
+
+I fixed the following issues:
+
+### Fixed
+
+1. **`tests/helpers/seedUser.ts`** - Added missing required fields to `testUser`:
+   - `firstName: 'Test'`
+   - `lastName: 'User'`
+   - `role: 'admin' as const`
+   
+   The Payload `User` type requires `firstName`, `lastName`, and `role` (all `required: true` in the Users collection config), but `seedUser.ts` was only passing `email` and `password`.
+
+2. **`src/utils/logger/index.ts:80`** - Changed `let context` to `const context` (auto-fixed b
+...(truncated)
+
+### review (2026-04-07T21:28:22)
+## Verdict: PASS
+
+## Summary
+
+Two new API route handlers were created: `POST /api/auth/login` and `POST /api/auth/register`. The login route delegates to the existing `login()` function using auth singletons (UserStore, SessionStore, JwtService). The register route delegates to `register()` using Payload and AuthService. Both follow the existing route handler pattern and have corresponding unit tests.
+
+## Findings
+
+### Minor
+
+**`src/app/api/auth/register/route.ts:14`** — Hardcoded fallback JWT s
+...(truncated)
