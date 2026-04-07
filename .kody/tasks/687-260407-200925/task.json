@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of deep merge utility",
+  "description": "The deepMerge function and 18 comprehensive tests already exist in src/utils/object-helpers.ts and src/utils/object-helpers.test.ts. All tests pass (18/18). Implementation includes: recursive merge without mutation, deep nested object merging, array replacement, null/primitive handling, and type preservation.",
+  "scope": ["src/utils/object-helpers.ts", "src/utils/object-helpers.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts", "src/utils/retry.ts", "src/utils/flatten.ts — single-function utility modules with co-located .test.ts files"],
+  "questions": []
+}
