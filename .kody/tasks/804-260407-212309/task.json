@@ -1,0 +1,12 @@
+{
+"task_type": "feature",
+"title": "Add left-pad utility function",
+"description": "Create a leftPad(str, length, char) function in src/utils/left-pad.ts that pads a string with a specified character to reach a given length. Must handle edge cases: string already at/above length (return original), empty string (pad entire length), empty pad character (edge case to handle). Add comprehensive unit tests in src/utils/left-pad.test.ts following existing patterns from pad-start.test.ts.",
+"scope": ["src/utils/left-pad.ts", "src/utils/left-pad.test.ts"],
+"risk_level": "low",
+"existing_patterns": [
+  {"path": "src/utils/pad-start.ts", "description": "Identical utility function (padStart) - same implementation approach with length check and string.repeat for padding"},
+  {"path": "src/utils/pad-start.test.ts", "description": "Test patterns with describe/it/expect from vitest covering: padding shorter strings, returning original at/above length, custom pad character, empty string, multi-char padding"}
+],
+"questions": []
+}
