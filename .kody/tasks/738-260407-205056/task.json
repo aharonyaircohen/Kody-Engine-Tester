@@ -1,0 +1,14 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of groupBy",
+  "description": "The groupBy utility function already exists at src/utils/group-by.ts with full test coverage at src/utils/group-by.test.ts. The implementation correctly groups array elements by a key function and passes all acceptance criteria.",
+  "scope": ["src/utils/group-by.ts", "src/utils/group-by.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/group-by.ts - utility function following single-responsibility pattern with generic typing",
+    "src/utils/group-by.test.ts - co-located test file using vitest with describe/it/expect pattern"
+  ],
+  "questions": []
+}
+```
