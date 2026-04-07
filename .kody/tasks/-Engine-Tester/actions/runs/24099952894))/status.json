@@ -1,1 +1,47 @@
-{"taskId": "-Engine-Tester/actions/runs/24099952894))","state":"incomplete","stages":{"taskify":{"state":"completed","completedAt":"2026-04-07T19:30:56.830Z"},"plan":{"state":"completed","retries":0},"build":{"state":"running","startedAt":"2026-04-07T19:31:00.537Z","issue":"Pipeline stuck at build stage for 50+ minutes"},"verify":{"state":"pending","retries":0},"review":{"state":"pending","retries":0},"review-fix":{"state":"pending","retries":0},"ship":{"state":"pending","retries":0}},"createdAt":"2026-04-07T19:25:00.843Z","updatedAt":"2026-04-07T19:38:00.000Z","sessions":{"explore":"5af0feea-ff1e-454c-b53e-4fba78508c2d"},"notes":["Issue 637 closed manually at 19:37:30 with 'Final sweep' comment","Pipeline run 24100073445 stuck at 'Run Kody pipeline' step","No PR created for issue 637","Evidence from PR 605 shows feature works correctly"]}
+{
+  "taskId": "-Engine-Tester/actions/runs/24099952894))",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-07T19:30:56.830Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1735
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-07T19:49:35.590Z",
+      "retries": 0,
+      "promptTokens": 4002
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-04-07T19:51:06.590Z",
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "completed",
+      "retries": 0
+    },
+    "ship": {
+      "state": "running",
+      "startedAt": "2026-04-07T19:51:06.593Z",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-07T19:25:00.843Z",
+  "updatedAt": "2026-04-07T19:51:06.593Z",
+  "sessions": {
+    "explore": "5af0feea-ff1e-454c-b53e-4fba78508c2d",
+    "build": "2e545706-2cd2-4079-936d-5f4fb0148754"
+  }
+}
