@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add retry utility with exponential backoff",
+  "description": "Create `retry<T>(fn: () => Promise<T>, maxAttempts: number, delayMs: number): Promise<T>` in `src/utils/async-helpers.ts` with exponential backoff. The function should retry failed operations with exponential backoff between attempts. Include comprehensive tests.",
+  "scope": [
+    "src/utils/async-helpers.ts",
+    "src/utils/async-helpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/sleep.ts - simple Promise-based utility with co-located tests",
+    "src/utils/retry.ts - existing retry implementation using options object (task wants a simpler signature with positional params)"
+  ],
+  "questions": []
+}
