@@ -1,0 +1,16 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify auto-learn-before-ship in PR #626",
+  "description": "Verification test: Check that .kody/memory/ files appear in PR #626 diff after auto-learn runs before ship. Result: FAILED - PR #626 does NOT contain .kody/memory/ files. The auto-learn-before-ship mechanism is not working.",
+  "scope": [
+    ".kody/memory/architecture.md",
+    ".kody/memory/conventions.md",
+    ".kody/memory/domain.md",
+    ".kody/memory/patterns.md",
+    ".kody/memory/testing-strategy.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
