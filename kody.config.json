@@ -33,6 +33,7 @@
   },
   "watch": {
     "enabled": true,
-    "digestIssue": 369
+    "digestIssue": 369,
+    "model": "MiniMax-M2.7-highspeed"
   }
 }
