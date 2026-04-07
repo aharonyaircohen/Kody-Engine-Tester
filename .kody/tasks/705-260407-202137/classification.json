@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add checkRateLimit utility function",
+  "description": "Create checkRateLimit(key: string, maxRequests: number, windowMs: number): { allowed: boolean; retryAfter?: number } in src/auth/rate-limiter-utils.ts using in-memory Map. With tests.",
+  "scope": [
+    "src/auth/rate-limiter-utils.ts",
+    "src/auth/rate-limiter-utils.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cache.ts - in-memory Map storage with TTL pattern",
+    "src/middleware/rate-limiter.ts - SlidingWindowRateLimiter class with timestamp-based tracking",
+    "src/utils/retry.ts - simple utility function with co-located test file"
+  ],
+  "questions": []
+}
