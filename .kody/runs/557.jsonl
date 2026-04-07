@@ -1,0 +1,1 @@
+{"runId":"fix-pr-557-260407-182530","issueNumber":557,"prNumber":557,"command":"rerun","startedAt":"2026-04-07T18:25:48.573Z","completedAt":"2026-04-07T19:04:12.089Z","outcome":"failed","failedStage":"verify","failedError":"Verification failed after autofix attempts","stagesCompleted":["build"],"feedback":"## Additional feedback\n\n\"Please","linkedIssue":553}
