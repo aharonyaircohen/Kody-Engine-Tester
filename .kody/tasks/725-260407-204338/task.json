@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add cache wrapper function",
+  "description": "Create `withCache<T>(key: string, ttlMs: number, fn: () => Promise<T>): Promise<T>` in `src/services/cache-wrapper.ts` using an in-memory Map with TTL expiry. The function should check the cache first, return cached value if not expired, otherwise call the function and cache its result. Include co-located tests in `src/services/cache-wrapper.test.ts`.",
+  "scope": [
+    "src/services/cache-wrapper.ts",
+    "src/services/cache-wrapper.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cache.ts — Cache class with TTL support and Map-based storage to reuse for TTL expiry logic",
+    "src/utils/memoize.ts — memoize pattern for wrapping functions with caching",
+    "src/utils/retry.ts — async function wrapper pattern with fn: () => Promise<T> signature"
+  ],
+  "questions": []
+}
