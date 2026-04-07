@@ -14,3 +14,16 @@ export function getCount(): string {
 
 This correctly triggers TypeScript error `TS2322` at line 2: `Type 'number' is not assignable to type 'string'`.
 
+
+### autofix (2026-04-07T21:16:57)
+Based on my investigation, the `pg_constraint` introspection error is NOT in `tests/int/api.int.spec.ts` — it's an internal drizzle-kit query executed by `@payloadcms/db-postgres` during Payload initialization in the `beforeAll` hook. The test file itself contains no Drizzle queries:
+
+```typescript
+// tests/int/api.int.spec.ts (lines 1-20)
+import { getPayload, Payload } from 'payload'
+import config from '@/payload.config'
+// ... the test only calls payload.find({ collection: 'users' })
+```
+
+The 
+...(truncated)
