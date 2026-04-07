@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify T16: Issue stays open after PR",
+  "description": "Test that issue remains OPEN after PR creation. After PR is created for this issue, verify: (1) issue state is OPEN, (2) PR body contains `Closes #N`. Issue closes only on PR merge via the `Closes #N` keyword in PR body.",
+  "scope": [
+    ".kody/watch/agents/test-suite/agent.md",
+    ".github/workflows/kody.yml"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md:827 - T16 test definition in test suite table",
+    ".kody/watch/agents/test-suite/agent.md:906-916 - T16 verification steps (PR body check + issue state check)",
+    ".github/workflows/kody.yml:352-383 - Close linked issue step after PR merge"
+  ],
+  "questions": []
+}
