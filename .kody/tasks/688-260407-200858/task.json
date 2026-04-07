@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of debounce utility",
+  "description": "The debounce utility in src/utils/timing-helpers.ts and its tests in src/utils/timing-helpers.test.ts already exist and all 8 tests pass. Verified implementation: debounce<T extends (...args: any[]) => void>(fn: T, delayMs: number): T with proper this context preservation, argument handling, and fake timer tests.",
+  "scope": ["src/utils/timing-helpers.ts", "src/utils/timing-helpers.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts — single-function utility module pattern (but implementation is in timing-helpers.ts instead)"],
+  "questions": []
+}
