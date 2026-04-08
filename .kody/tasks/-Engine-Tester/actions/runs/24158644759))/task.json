@@ -1,0 +1,15 @@
+{
+  "task_type": "chore",
+  "title": "Verify playwright tools.yml run field execution",
+  "description": "Test task to verify playwright tools.yml run field execution via workflow_dispatch. Workflow triggered on test/playwright-verify-gate-260408150844 branch. The verify stage in tools.yml should execute playwright tests from tests/e2e directory using the configured webServer and chromium project.",
+  "scope": [
+    ".kody/tools.yml",
+    "playwright.config.ts",
+    "tests/e2e/"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/tools.yml - playwright tool configuration with verify stage and microsoft/playwright-cli skill"
+  ],
+  "questions": []
+}
