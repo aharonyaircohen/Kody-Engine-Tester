@@ -44,7 +44,7 @@ h1 {
   margin: 40px 0;
   font-size: 64px;
   line-height: 70px;
-  font-weight: bold;
+  font-weight: 500;
 
   @media (max-width: 1024px) {
     margin: 24px 0;
