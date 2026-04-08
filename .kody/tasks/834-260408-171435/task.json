@@ -1,0 +1,14 @@
+{
+  "task_type": "chore",
+  "title": "Verify playwright exec fires in verify stage",
+  "description": "This task verifies that the kody pipeline correctly executes `npx playwright test` in the verify stage after running the build stage. The CSS tweak (h1 font-weight change from bold to 500) has already been committed in ce32e2d. The expected outcome is that verify.md shows `Running tool playwright: npx playwright test` and the pipeline respects playwright test results.",
+  "scope": [
+    "src/app/(frontend)/styles.css",
+    ".kody/tools.yml"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/tools.yml - playwright tool configuration with verify stage"
+  ],
+  "questions": []
+}
