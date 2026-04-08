@@ -35,3 +35,6 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-08 (task: 834-260408-171435)
+- Active directories: src/app/(frontend), .kody
