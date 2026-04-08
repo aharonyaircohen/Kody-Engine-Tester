@@ -1,0 +1,56 @@
+{
+  "taskId": "832-260408-123712",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-08T09:37:51.509Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1670
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-08T09:38:30.000Z",
+      "findings": {
+        "issueExists": true,
+        "issueNumber": 832,
+        "issueState": "OPEN",
+        "vulnerabilityConfirmed": true,
+        "package": "drizzle-orm",
+        "currentVersion": "0.44.7",
+        "vulnerableVersion": "<0.45.2",
+        "patchedVersion": ">=0.45.2",
+        "transitiveDependency": true,
+        "viaPackage": "@payloadcms/db-postgres",
+        "noNewIssueNeeded": true,
+        "reason": "Existing issue #832 already documents this vulnerability correctly"
+      }
+    },
+    "verify": {
+      "state": "completed",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-08T09:37:18.501Z",
+  "updatedAt": "2026-04-08T09:38:30.000Z",
+  "sessions": {
+    "explore": "eecd0645-e4b6-4683-847c-c5ecc46655fe"
+  }
+}
