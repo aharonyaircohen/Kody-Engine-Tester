@@ -25,3 +25,23 @@ Done. Here's a summary of what was implemented:
 - `createCacheMiddleware(config)` - returns a middleware function with `.cache` property exposing the store
 - Features: TTL support, per-request TTL override, maxSize with LRU eviction, custom key resolver, HTTP method 
 ...(truncated)
+
+### review (2026-04-09T20:14:38)
+## Verdict: PASS
+
+## Summary
+
+Implementation of `createCacheMiddleware` wrapping the existing `Cache<string, CachedResponse>` utility with TTL, LRU eviction, custom key resolvers, HTTP method filtering, and `X-Cache` headers. All 23 tests pass.
+
+## Findings
+
+### Critical
+None.
+
+### Major
+None.
+
+### Minor
+
+- `src/middleware/cache-middleware.ts:142` — `readBody(originalResponse)` is called on the bypass path but the result is discarded; `originalResponse` is passed directly to `new NextResponse(bo
+...(truncated)
