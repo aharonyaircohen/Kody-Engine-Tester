@@ -1,0 +1,22 @@
+```json
+{
+  "task_type": "refactor",
+  "title": "Move clamp utility to math-helpers.ts",
+  "description": "Move the clamp function from src/utils/clamp.ts into a new src/utils/math-helpers.ts file and create co-located tests at src/utils/math-helpers.test.ts. The function signature is clamp(value: number, min: number, max: number): number.",
+  "scope": [
+    "src/utils/clamp.ts",
+    "src/utils/clamp.test.ts",
+    "src/utils/math-helpers.ts",
+    "src/utils/math-helpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/clamp.ts — single-function utility module pattern",
+    "src/utils/clamp.test.ts — co-located test file for clamp utility",
+    "src/utils/*.test.ts — test files follow src/utils/<name>.test.ts convention"
+  ],
+  "questions": [
+    "Should src/utils/clamp.ts be deleted after moving the function to math-helpers.ts, or kept as a re-export for backwards compatibility?"
+  ]
+}
+```
