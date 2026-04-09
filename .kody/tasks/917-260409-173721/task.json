@@ -1,0 +1,20 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add breadcrumb component",
+  "description": "Create a Breadcrumb React component at src/components/ui/breadcrumb.tsx with props: items: { label: string; href?: string }[]. The active/last item should render as plain text, while other items render as links. Include a co-located unit test file.",
+  "scope": [
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/breadcrumb.test.tsx",
+    "src/components/ui/breadcrumb.module.css"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/components/notes/TagBadge.tsx - simple functional component with CSS module, 'use client' directive",
+    "src/components/contacts/Pagination.tsx - component with TypeScript interface props",
+    "src/components/contacts/Pagination.test.tsx - vitest + @testing-library/react test pattern",
+    "src/components/notes/TagBadge.module.css - CSS module with simple inline styles"
+  ],
+  "questions": []
+}
+```

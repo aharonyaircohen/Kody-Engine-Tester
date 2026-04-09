@@ -1,0 +1,48 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.text {
+  color: #a0a0c0;
+  font-size: 0.875rem;
+}
+
+.link {
+  color: #6366f1;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+.active {
+  color: #e2e8f0;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.separator {
+  color: #64748b;
+  font-size: 0.875rem;
+  user-select: none;
+}
