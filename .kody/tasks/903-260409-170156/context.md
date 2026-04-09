@@ -23,3 +23,20 @@ src/utils/broken-import.ts(1,27): error TS2307: Cannot find module '@/nonexisten
 - A function `getSomething()` that returns the imported value
 - This causes a TypeScript erro
 ...(truncated)
+
+### autofix (2026-04-09T17:08:45)
+Based on my investigation, here's my analysis:
+
+## Root Cause Analysis
+
+**Phase 1 — Investigation Complete**
+
+The test failure in `tests/int/api.int.spec.ts` occurs when `payload.find({ collection: 'users' })` is called. Payload CMS's postgres adapter internally generates this query to introspect primary key constraints:
+
+```sql
+SELECT conname AS primary_key
+FROM   pg_constraint join pg_class on (pg_class.oid = conrelid)
+WHERE  contype = 'p' 
+AND    connamespace = $1::regnamespace  
+AND    pg_cl
+...(truncated)
