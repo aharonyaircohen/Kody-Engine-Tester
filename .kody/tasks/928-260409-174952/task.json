@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add queryBuilder utility function",
+  "description": "Create src/utils/queryBuilder.ts that builds URL-encoded query strings from key-value objects. Must handle arrays by repeating the key (e.g., ?key=1&key=2), empty objects, and nested objects (stringified). Full test coverage in src/utils/queryBuilder.test.ts.",
+  "scope": ["src/utils/queryBuilder.ts", "src/utils/queryBuilder.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts — single-function utility with TypeScript types and JSDoc", "src/utils/flatten.ts — simple data transformation utility", "src/utils/debounce.test.ts — vitest test file with describe/it/expect pattern"],
+  "questions": []
+}
