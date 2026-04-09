@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of slugify utility",
+  "description": "The slugify utility in `src/utils/slugify.ts` and `src/utils/slugify.test.ts` already exists with 18 passing tests covering lowercase conversion, hyphen replacement of spaces, special character stripping, unicode normalization, edge cases (empty string, null, undefined), and real-world URL-like strings.",
+  "scope": ["src/utils/slugify.ts", "src/utils/slugify.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/*.ts - Single-function utility files with co-located .test.ts files following the vitest pattern"],
+  "questions": []
+}
