@@ -1,0 +1,14 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Run E2E test for compose after no-compose scenario",
+  "description": "Execute @kody compose --task-id decompose-1001-260409-202810 to verify the compose pipeline correctly reads decompose-state.json, merges sub-task branches, runs verify/review/ship stages, and creates a PR. This tests the compose workflow following a prior decompose --no-compose operation.",
+  "scope": [
+    ".kody/tasks/compose/task.md",
+    ".kody/tasks/compose/status.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
+```
