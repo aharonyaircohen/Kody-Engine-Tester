@@ -1,0 +1,18 @@
+```json
+{
+  "task_type": "refactor",
+  "title": "Add clamp utility to math-helpers.ts",
+  "description": "Move clamp(value: number, min: number, max: number): number from src/utils/clamp.ts to src/utils/math-helpers.ts. The function already exists with tests in clamp.ts. Create the new math-helpers.ts file and update/replace clamp.ts accordingly.",
+  "scope": [
+    "src/utils/clamp.ts",
+    "src/utils/clamp.test.ts",
+    "src/utils/math-helpers.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cap.ts - single-function utility file pattern",
+    "src/utils/clamp.ts - existing clamp implementation"
+  ],
+  "questions": []
+}
+```
