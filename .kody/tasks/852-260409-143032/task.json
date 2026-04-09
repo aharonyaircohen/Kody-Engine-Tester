@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add deepMerge utility to object-helpers",
+  "description": "Create `deepMerge<T>(target: T, source: Partial<T>): T` in `src/utils/object-helpers.ts` — a recursive merge function that combines source into target without mutating either. Must include co-located tests in `object-helpers.test.ts`.",
+  "scope": ["src/utils/object-helpers.ts", "src/utils/object-helpers.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts — JSDoc comments, TypeScript generics, circular reference handling for deep recursive utilities",
+    "src/utils/deep-clone.test.ts — vitest describe/it/expect structure, comprehensive test cases for primitives, objects, arrays, nested structures, and edge cases"
+  ],
+  "questions": []
+}
