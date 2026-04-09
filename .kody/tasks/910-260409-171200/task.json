@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of cache wrapper",
+  "description": "The task requires creating `withCache<T>(key: string, ttlMs: number, fn: () => Promise<T>): Promise<T>` in `src/services/cache-wrapper.ts` with tests. The implementation already exists with 9 passing tests covering: first call caching, TTL expiry, different keys, different result types, array results, clearCache for specific keys, clearCache for all keys, and non-existent key handling. No further work needed.",
+  "scope": ["src/services/cache-wrapper.ts", "src/services/cache-wrapper.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/services/cache-wrapper.ts uses in-memory Map with TTL expiry, matching the task requirements exactly"],
+  "questions": []
+}
