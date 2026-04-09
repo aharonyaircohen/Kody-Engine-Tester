@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of MF2 bad-types",
+  "description": "File src/utils/bad-types.ts already exists with the required content: `function getCount(): string { return 42 }`. This is intentional incorrect return type to test typecheck failure.",
+  "scope": ["src/utils/bad-types.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}

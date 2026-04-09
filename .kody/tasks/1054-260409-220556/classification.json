@@ -1,0 +1,9 @@
+{
+  "task_type": "bugfix",
+  "title": "Add bad-types.ts with wrong return type for typecheck failure",
+  "description": "Create src/utils/bad-types.ts with function getCount(): string { return 42 } to intentionally fail TypeScript type checking. This is part of a test scenario to verify the pipeline handles typecheck failures correctly.",
+  "scope": ["src/utils/bad-types.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
