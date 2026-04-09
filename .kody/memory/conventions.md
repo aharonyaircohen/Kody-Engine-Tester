@@ -41,3 +41,6 @@ import { LessonEditor } from './LessonEditor'
 
 ## Learned 2026-04-09 (task: 841-260409-105040)
 - Active directories: .kody/graph, .kody/graph/episodes
+
+## Learned 2026-04-09 (task: 840-260409-110822)
+- Active directories: .kody/graph/episodes, .kody/graph

@@ -1,6 +1,6 @@
 {
   "taskId": "840-260409-110822",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -15,11 +15,13 @@
     },
     "build": {
       "state": "completed",
-      "completedAt": "2026-04-09T08:22:55.000Z",
-      "retries": 0
+      "completedAt": "2026-04-09T08:23:55.477Z",
+      "retries": 0,
+      "promptTokens": 4168
     },
     "verify": {
       "state": "completed",
+      "completedAt": "2026-04-09T08:25:30.066Z",
       "retries": 0
     },
     "review": {
@@ -31,24 +33,15 @@
       "retries": 0
     },
     "ship": {
-      "state": "completed",
+      "state": "running",
+      "startedAt": "2026-04-09T08:25:30.069Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-09T08:08:35.789Z",
-  "updatedAt": "2026-04-09T08:22:55.000Z",
+  "updatedAt": "2026-04-09T08:25:30.069Z",
   "sessions": {
-    "explore": "a5b82c9b-73df-4ef9-b56a-6293d9764f75"
-  },
-  "verification": {
-    "testTaskId": "260409-111824",
-    "KODY_MEMORY_NUDGE": true,
-    "patternsSaved": 3,
-    "episodeCreated": "ep_nudge_001",
-    "nodesUpdated": [
-      "facts/pipeline-behavior",
-      "conventions/math-utility-pattern",
-      "facts/pre-existing-errors"
-    ]
+    "explore": "a5b82c9b-73df-4ef9-b56a-6293d9764f75",
+    "build": "32fa2bda-347f-417d-820e-a677600ed9e9"
   }
 }
