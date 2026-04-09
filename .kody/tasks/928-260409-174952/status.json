@@ -1,6 +1,6 @@
 {
   "taskId": "928-260409-174952",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -15,32 +15,33 @@
     },
     "build": {
       "state": "completed",
-      "startedAt": "2026-04-09T19:19:56.437Z",
-      "completedAt": "2026-04-09T19:22:00.000Z",
+      "completedAt": "2026-04-09T19:22:29.503Z",
       "retries": 0,
-      "notes": "Verified: Issue #928 has kody:done label, pipeline re-executed without 'already completed' block, issue remains OPEN"
+      "promptTokens": 4061
     },
     "verify": {
       "state": "completed",
-      "completedAt": "2026-04-09T19:22:00.000Z",
+      "completedAt": "2026-04-09T19:24:07.348Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-09T19:24:07.351Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-09T19:17:16.176Z",
-  "updatedAt": "2026-04-09T19:19:56.437Z",
+  "updatedAt": "2026-04-09T19:24:07.351Z",
   "sessions": {
-    "explore": "36ca0d37-0c8e-4ca5-9b8f-10d159201095"
+    "explore": "36ca0d37-0c8e-4ca5-9b8f-10d159201095",
+    "build": "dd6091cf-aad6-4385-80b6-6a8dd0ef53de"
   }
 }
