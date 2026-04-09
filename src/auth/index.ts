@@ -1,11 +1,27 @@
-import { UserStore } from './user-store'
-import { SessionStore } from './session-store'
 import { JwtService } from './jwt-service'
+import { AuthService } from './auth-service'
+import { getPayloadInstance } from '@/services/progress'
 
-export const userStore = new UserStore()
-export const sessionStore = new SessionStore()
-export const jwtService = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
+export { AuthService }
+export { JwtService }
 
-export type { User, UserRole, CreateUserInput } from './user-store'
-export type { Session } from './session-store'
+export type { RbacRole, AuthenticatedUser, AuthResult } from './auth-service'
 export type { TokenPayload } from './jwt-service'
+
+let jwtServiceInstance: JwtService | null = null
+let authServiceInstance: AuthService | null = null
+
+export function getJwtService(): JwtService {
+  if (!jwtServiceInstance) {
+    jwtServiceInstance = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
+  }
+  return jwtServiceInstance
+}
+
+export function getAuthService(): AuthService {
+  if (!authServiceInstance) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    authServiceInstance = new AuthService(getPayloadInstance() as any, getJwtService())
+  }
+  return authServiceInstance
+}

@@ -1,0 +1,33 @@
+
+{
+  "task_type": "refactor",
+  "title": "Refactor auth system to use JWT with AuthService",
+  "description": "Consolidate dual auth paths by replacing UserStore/SessionStore-based authentication with JWT+Payload AuthService. Update auth-middleware.ts to use AuthService instead of UserStore/SessionStore, refactor API routes in src/api/auth/ to consistently use AuthService, and remove deprecated in-memory stores. The Payload user schema already has correct RBAC roles (admin/editor/viewer).",
+  "scope": [
+    "src/auth/user-store.ts",
+    "src/auth/session-store.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/api/auth/login.ts",
+    "src/api/auth/logout.ts",
+    "src/api/auth/refresh.ts",
+    "src/api/auth/profile.ts",
+    "src/api/auth/register.ts",
+    "src/auth/index.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/jwt-service.ts",
+    "src/collections/Users.ts"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/auth-service.ts - Payload-based auth with JWT tokens, password verification using PBKDF2 matching Payload's algorithm",
+    "src/auth/jwt-service.ts - Custom HMAC-SHA256 JWT with access/refresh token rotation and generation-based session invalidation",
+    "src/middleware/auth-middleware.ts - Express-style middleware factory pattern with rate limiting",
+    "src/middleware/role-guard.ts - Role-based access middleware using ROLE_HIERARCHY",
+    "src/collections/Users.ts - Payload collection with role field using admin/editor/viewer values already aligned with RbacRole"
+  ],
+  "questions": [
+    "Should UserStore and SessionStore be removed entirely or kept as deprecated/backup?",
+    "Are there any API routes in src/app/api/auth/ that need to be updated to ensure they all use the same auth path?",
+    "Should the migration include updating the Payload user collection schema for the new RbacRole, or is that already aligned?"
+  ]
+}
