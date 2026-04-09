@@ -1,0 +1,11 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of CSV export utility",
+  "description": "The CSV export utility already exists at src/utils/csv-export.ts with the toCsv function and comprehensive tests in src/utils/csv-export.test.ts. All 8 tests pass.",
+  "scope": ["src/utils/csv-export.ts", "src/utils/csv-export.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/csv-export.ts: Single-function utility module following the codebase pattern of co-located .test.ts files in src/utils/"
+  ],
+  "questions": []
+}
