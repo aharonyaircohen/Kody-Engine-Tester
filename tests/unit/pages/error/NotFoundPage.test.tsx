@@ -8,7 +8,7 @@ vi.mock('next/link', () => ({
   ),
 }))
 
-import { NotFoundPage } from './NotFoundPage'
+import NotFoundPage from '@/pages/error/NotFoundPage'
 
 describe('NotFoundPage', () => {
   it('renders "Page Not Found" heading', () => {

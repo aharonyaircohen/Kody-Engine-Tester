@@ -11,7 +11,7 @@ import { CoursePublishToggle, type PublishStatus } from '@/components/course-edi
 const AUTOSAVE_DEBOUNCE_MS = 2000
 
 export default function CourseEditPage() {
-  const { id: courseId } = useParams<{ id: string }>()
+  const { id: courseId } = useParams<{ id: string }>() as { id: string }
 
   const [modules, setModules] = useState<Module[]>([])
   const [lessonsByModule, setLessonsByModule] = useState<Record<string, Lesson[]>>({})

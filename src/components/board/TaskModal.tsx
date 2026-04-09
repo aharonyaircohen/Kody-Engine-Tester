@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import type { Task, TaskPriority } from '@/collections/tasks'
-import styles from './modal.module.css'
+import styles from './TaskModal.module.css'
 
 interface TaskModalProps {
   initialValues?: Partial<Pick<Task, 'title' | 'description' | 'priority' | 'assignee'>>

@@ -9,7 +9,7 @@ import { ConfirmDialog } from '@/components/notes/ConfirmDialog'
 import type { Note } from '@/collections/notes'
 
 export default function NoteDetailPage() {
-  const { id } = useParams<{ id: string }>()
+  const { id } = useParams<{ id: string }>() as { id: string }
   const router = useRouter()
   const [note, setNote] = useState<Note | null>(null)
   const [showDelete, setShowDelete] = useState(false)

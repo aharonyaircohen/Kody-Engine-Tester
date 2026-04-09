@@ -5,7 +5,7 @@ interface ErrorPageProps {
   statusCode?: number
 }
 
-export function ErrorPage({ error, statusCode = 500 }: ErrorPageProps) {
+export default function ErrorPage({ error, statusCode = 500 }: ErrorPageProps) {
   const isDev = process.env.NODE_ENV === 'development'
 
   return (
