@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add isTokenExpired token checker",
+  "description": "Create `src/auth/token-utils.ts` with `isTokenExpired(token: string): boolean` function that decodes a JWT (without signature verification) and checks if the `exp` claim is in the past. Include comprehensive tests covering valid token, expired token, and malformed token cases.",
+  "scope": [
+    "src/auth/token-utils.ts",
+    "src/auth/token-utils.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts:6-11 - TokenPayload interface with exp claim definition",
+    "src/auth/jwt-service.ts:19-21 - base64urlDecode function to decode JWT body",
+    "src/auth/jwt-service.ts:84-89 - exp claim checking logic using `Math.floor(Date.now() / 1000)`",
+    "src/auth/jwt-service.test.ts - auth module tests co-located with implementation",
+    "src/utils/debounce.test.ts:1-11 - vitest fake timers pattern for time-sensitive tests"
+  ],
+  "questions": []
+}
