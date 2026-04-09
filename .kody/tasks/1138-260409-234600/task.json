@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add withCache wrapper in src/services/cache-wrapper.ts",
+  "description": "Create a `withCache<T>(key: string, ttlMs: number, fn: () => Promise<T>): Promise<T>` higher-order function in `src/services/cache-wrapper.ts` that wraps async functions with in-memory Map-based caching with TTL expiry. Include co-located tests in `src/services/cache-wrapper.test.ts`.",
+  "scope": ["src/services/cache-wrapper.ts", "src/services/cache-wrapper.test.ts"],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/cache.ts - existing Cache class with TTL/Map implementation to reference for TTL expiry logic",
+    "src/services/*.test.ts - service test file pattern using vitest with describe/it/expect/vi"
+  ],
+  "questions": []
+}
