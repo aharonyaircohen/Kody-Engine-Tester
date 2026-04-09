@@ -1,37 +1,11 @@
-# LearnHub Coding Conventions
+## Learned 2026-04-09 (task: conventions-update)
 
-**Naming**: Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case (`.module.css`); collections → singular slug
-
-**Imports**: Use `import type` for types; path alias `@/*` for internal modules; named imports preferred
-
-```typescript
-import type { Module } from '@/collections/Modules'
-import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
-import { LessonEditor } from './LessonEditor'
-```
-
-**Exports**: Named exports for utilities/types; default export for page components only
-
-**Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
-
-**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
-
-**Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
-
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
-
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/utils
-
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
+- Security sanitizers in `src/security/sanitizers.ts`: `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl` for XSS/SQLi/path traversal prevention
+- Auth context pattern: `AuthContext` from `@/contexts/auth-context` with `ProtectedRoute` wrapper for protected pages
+- Session management: `SessionCard` component, `Session` type from `@/auth/session-store`
+- Password handling: `PasswordStrengthBar` component, PATCH to `/api/auth/profile` for password changes
+- Stores pattern: Classes like `CertificatesStore`, `DiscussionsStore` using `Map<string, T>` for in-memory state with helper methods
+- RichTextContent type imported from `@/collections/Discussions` for discussion posts
+- Service dependency injection: `DiscussionService` takes store instances and getter functions in constructor
+- Recursion depth guards: `getThreadDepth(postId, postsById, depth)` pattern limits nesting to prevent deep recursion attacks
+- CSS Modules: component styles imported as `styles from './ComponentName.module.css'`

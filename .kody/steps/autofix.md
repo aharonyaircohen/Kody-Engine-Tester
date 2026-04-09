@@ -1,3 +1,6 @@
+Done. The `.kody/steps/autofix.md` file has been updated with the three appended sections. Here's the complete customized prompt:
+
+```markdown
 ---
 name: autofix
 description: Investigate root cause then fix verification errors (typecheck, lint, test failures)
@@ -71,26 +74,27 @@ IRON LAW: NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST. If you haven't comple
 - **Runtime**: Node 18+ / pnpm 9+
 
 ## Directory Structure
+```
 
-```
 src/
-├── app/                    # Next.js App Router pages + API routes
-│   ├── (frontend)/        # Public/authenticated frontend routes
-│   └── (payload)/         # Payload admin routes (/admin)
-├── collections/           # Payload collection configs (Course, Lesson, Enrollment, etc.)
-├── components/            # Custom React components
-├── hooks/                 # Custom React hooks
-├── middleware/            # Express-style middleware (rate-limiter)
-├── auth/                  # Auth utilities (JWT service, session store, withAuth HOC)
-├── utils/                 # Pure utility functions (debounce, retry, flatten, result)
-├── services/              # Business logic services
-├── api/                   # API route handlers (login, profile, etc.)
-├── contexts/              # React contexts
-├── validation/            # Zod schemas for input validation
-├── security/              # Security utilities (password hashing, RBAC)
-├── migrations/            # Payload database migrations
-└── payload.config.ts      # Payload CMS configuration
-```
+├── app/ # Next.js App Router pages + API routes
+│ ├── (frontend)/ # Public/authenticated frontend routes
+│ └── (payload)/ # Payload admin routes (/admin)
+├── collections/ # Payload collection configs (Course, Lesson, Enrollment, etc.)
+├── components/ # Custom React components
+├── hooks/ # Custom React hooks
+├── middleware/ # Express-style middleware (rate-limiter)
+├── auth/ # Auth utilities (JWT service, session store, withAuth HOC)
+├── utils/ # Pure utility functions (debounce, retry, flatten, result)
+├── services/ # Business logic services
+├── api/ # API route handlers (login, profile, etc.)
+├── contexts/ # React contexts
+├── validation/ # Zod schemas for input validation
+├── security/ # Security utilities (password hashing, RBAC)
+├── migrations/ # Payload database migrations
+└── payload.config.ts # Payload CMS configuration
+
+````
 
 ## Layer Architecture
 
@@ -128,7 +132,7 @@ src/
 import type { Module } from '@/collections/Modules'
 import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
 import { LessonEditor } from './LessonEditor'
-```
+````
 
 **Exports**: Named exports for utilities/types; default export for page components only
 
@@ -320,5 +324,62 @@ Lesson fetches may not batch properly on all pages; verify `findAll` calls use P
 - [ ] Changes follow layered architecture — route → auth → service → repository
 - [ ] New error paths use `Result<T, E>` pattern from `src/utils/result.ts`
 - [ ] Auth changes respect `withAuth` HOC boundary, do not duplicate auth logic
+
+## Repo Patterns
+
+**Validation middleware** (`src/middleware/validation.ts`): Schema-driven request validation with `FieldDefinition`, `ValidationSchema`, and `ValidateResult` discriminated union — validates `body`/`query`/`params` against declarative schemas before route handling.
+
+```typescript
+type ValidateResult = ValidationResult | ValidationFailure // discriminated union
+export function validate(
+  schema: ValidationSchema,
+  data: Record<string, unknown>,
+  target: 'body' | 'query' | 'params',
+): ValidateResult
+```
+
+**Test mocking** (`src/services/course-search.test.ts`): Mock Payload with `vi.fn().mockResolvedValue()` pattern:
+
+```typescript
+function createMockPayload(findResult = { docs: [], totalDocs: 0 }) {
+  return { find: vi.fn().mockResolvedValue(findResult) } as unknown as Payload
+}
+```
+
+**Security sanitizers** (`src/security/sanitizers.ts`): `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl`, `sanitizeFilePath` for XSS/SQLi/path traversal prevention.
+
+**Result type** (`src/utils/result.ts`): `Result<T, E> = { ok: true; value: T } | { ok: false; error: E }` for explicit error handling without throwing.
+
+**Store pattern**: Classes like `CertificatesStore`, `DiscussionsStore`, `NotificationsStore` use `Map<string, T>` for in-memory state with helper methods.
+
+**Mini-Zod schema** (`src/utils/schema.ts`): `Schema`, `StringSchema`, `NumberSchema`, `BooleanSchema` classes with `_type` inference, `optional()`, `default()`, `parse()` methods; throws `SchemaError`.
+
+## Improvement Areas
+
+**Type assertion abuse** in `src/app/(frontend)/dashboard/page.tsx`: Lines 44, 60, 72, 113, 125, 143, 158 use `as unknown as` casts instead of proper type guards for Payload documents. This bypasses TypeScript's type checking and masks runtime errors.
+
+**Inline `any` for where clauses** in `dashboard/page.tsx`: Lines 55, 121 use `as any` to silence Payload query typing — prefer typed where builders or proper type-safe query helpers.
+
+**Repeated Payload cast pattern**: `enrollments as unknown as EnrollmentDoc[]` at line 60 repeats after every Payload query — Payload's generated types don't align with local type definitions; fix at source or create a typed wrapper.
+
+**N+1 query risk**: Dashboard batch-fetches lessons (line 67-73) to avoid N+1, but other pages may iterate enrollments without pre-fetching related data.
+
+**Dual auth systems**: `UserStore` (SHA-256, in-memory) coexists with `AuthService` (PBKDF2, JWT) — inconsistent password hashing and user representation.
+
+**Role enum divergence**: `UserStore.UserRole = 'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole = 'admin'|'editor'|'viewer'` — no automatic mapping.
+
+## Acceptance Criteria
+
+- [ ] No `as unknown as` casts in new code — use proper type guards or fix type definitions at source
+- [ ] All user input sanitized with `sanitizeHtml`/`sanitizeSql`/`sanitizeUrl` before rendering or querying
+- [ ] API routes use validation middleware from `src/middleware/validation.ts`
+- [ ] Tests mock Payload SDK with `vi.fn().mockResolvedValue()` pattern
+- [ ] Payload queries batch related data (avoid N+1 within loops)
+- [ ] No `eslint-disable @typescript-eslint/no-explicit-any` without justification
+- [ ] `pnpm test:int` passes after any autofix
+- [ ] `pnpm build` succeeds after any autofix
+- [ ] Pre-existing failures documented, not silently fixed
+- [ ] New error paths use `Result<T, E>` from `src/utils/result.ts`
+- [ ] Single fix per iteration — re-run verification after each change
 
 {{TASK_CONTEXT}}
