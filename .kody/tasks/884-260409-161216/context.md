@@ -30,3 +30,7 @@ The `clamp` utility is already implemented and verified:
 
 The TypeScript errors in the output are p
 ...(truncated)
+
+### autofix (2026-04-09T16:17:35)
+Fixed. Changed `let context` to `const context` at line 80 since the variable is never reassigned—it's only read via closure in the `dispatch` function.
+
