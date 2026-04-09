@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add phone number formatting utility",
+  "description": "Create src/utils/formatPhone.ts with a utility function that formats phone numbers. The function should handle various phone number formats and return a consistently formatted string (e.g., (555) 123-4567 or +1 555-123-4567).",
+  "scope": ["src/utils/formatPhone.ts", "src/utils/formatPhone.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/format-number.ts - Pattern for formatting utilities with options interface, JSDoc examples, and locale-aware behavior",
+    "src/utils/format-currency.ts - Currency formatting pattern for similar utility",
+    "src/utils/format-date.ts - Date formatting utility following same structure"
+  ],
+  "questions": []
+}
