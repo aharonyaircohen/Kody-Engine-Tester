@@ -1,0 +1,19 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of auth middleware",
+  "description": "The auth middleware already exists and is being used. `src/middleware/auth-middleware.ts` provides `createAuthMiddleware` factory with full JWT validation, rate limiting, session management, and token generation checks. `src/auth/withAuth.ts` wraps route handlers and is already applied to routes like `src/app/api/notes/route.ts`. Unit tests in `src/middleware/auth-middleware.test.ts` cover: valid token passes, missing token returns 401, invalid token returns 401, expired token returns 401, revoked session returns 401, and rate limiting. All acceptance criteria are met.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/withAuth.ts",
+    "src/app/api/notes/route.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts:createAuthMiddleware factory with JwtService, SessionStore, UserStore injection",
+    "src/auth/withAuth.ts:HOC pattern wrapping Next.js route handlers with JWT validation",
+    "src/app/api/notes/route.ts:Example of withAuth applied to GET (optional) and POST (role-restricted)"
+  ],
+  "questions": []
+}
