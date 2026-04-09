@@ -1,0 +1,1 @@
+{"runId":"hotfix-944-260409-180847","issueNumber":944,"command":"run","startedAt":"2026-04-09T18:10:39.888Z","completedAt":"2026-04-09T18:13:33.875Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
