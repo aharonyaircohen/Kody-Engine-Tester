@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of toTitleCase utility",
+  "description": "The toTitleCase utility function already exists in src/utils/to-title-case.ts with full test coverage in src/utils/to-title-case.test.ts. All 7 tests pass, covering: basic conversion, single word, empty string, already title cased strings, lowercase-after-first, multiple spaces, and single character words.",
+  "scope": ["src/utils/to-title-case.ts", "src/utils/to-title-case.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts - single-function utility files in src/utils/ with co-located .test.ts files"],
+  "questions": []
+}
