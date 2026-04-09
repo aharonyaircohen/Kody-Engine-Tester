@@ -116,6 +116,10 @@ export class SessionStore {
     return session?.generation
   }
 
+  getAllSessions(): Session[] {
+    return Array.from(this.sessions.values())
+  }
+
   cleanup(): void {
     const now = new Date()
     for (const session of Array.from(this.sessions.values())) {
