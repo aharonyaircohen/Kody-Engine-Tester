@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add password strength validator",
+  "description": "Create `validatePasswordStrength(password: string): { valid: boolean; issues: string[] }` in `src/auth/password-validator.ts` that validates: 8+ characters, at least one uppercase letter, at least one lowercase letter, and at least one number. Return an object with `valid` boolean and `issues` array listing failed requirements. Include co-located tests in `password-validator.test.ts`.",
+  "scope": ["src/auth/password-validator.ts", "src/auth/password-validator.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/isbn-validator.ts - single-function validator module with JSDoc comments and boolean return", "src/utils/isbn-validator.test.ts - vitest co-located test file with describe/it blocks"],
+  "questions": []
+}
