@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add string capitalize utility function",
+  "description": "Create a new string capitalize utility function in src/utils/ with tests. The function should capitalize only the first letter of a string, handling empty strings and single characters appropriately. Should follow existing utility patterns with co-located test file.",
+  "scope": ["src/utils/capitalize.ts", "src/utils/capitalize.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cap.ts - single-function utility module with capitalize function (capitalizes first letter only)",
+    "src/utils/capitalize-words.ts - utility module with co-located test file, uses vitest describe/it/expect pattern",
+    "src/utils/*.test.ts - co-located test files using vitest with describe/it/expect conventions"
+  ],
+  "questions": []
+}
