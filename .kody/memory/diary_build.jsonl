@@ -1,1 +1,2 @@
 {"taskId":"fix\\nPlease","timestamp":"2026-04-09T19:24:11.360Z","stage":"build","patterns":["files.created:src/utils/queryBuilder.ts"],"room":"utils"}
+{"taskId":"decompose-999-260409-202739","timestamp":"2026-04-09T20:32:21.879Z","stage":"build","patterns":["files.created:`src/utils/to-capital-case.ts,`src/utils/to-capital-case.test.ts"],"room":"utils"}

@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add toCapitalCase utility function",
+  "description": "Create a new string utility function in src/utils/to-capital-case.ts that converts strings to Capital Case (first letter uppercase, rest lowercase for each word). Should include a co-located test file following existing vitest patterns. The function should handle empty strings, single words, and mixed case inputs.",
+  "scope": [
+    "src/utils/to-capital-case.ts",
+    "src/utils/to-capital-case.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/to-kebab-case.ts - follows 'to-*' naming convention for string conversion utilities",
+    "src/utils/capitalize-words.ts - similar purpose (capitalizing words) with co-located test",
+    "src/utils/capitalize-words.test.ts - vitest test pattern with describe/it blocks"
+  ],
+  "questions": []
+}
