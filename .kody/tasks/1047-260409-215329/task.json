@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add role hierarchy checker",
+  "description": "Create `hasPermission(userRole: string, requiredRole: string): boolean` in `src/auth/role-hierarchy.ts` with hierarchy admin > editor > viewer > guest. Higher roles inherit permissions of lower roles (e.g., editor can do anything viewer can). Include comprehensive tests.",
+  "scope": ["src/auth/role-hierarchy.ts", "src/auth/role-hierarchy.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/_auth.ts:17-21 — `ROLE_HIERARCHY` record mapping roles to numeric levels (admin:3, editor:2, viewer:1) — reuse the same numeric mapping approach",
+    "src/utils/clamp.test.ts — simple utility test pattern with describe/it/expect from vitest",
+    "src/auth/user-store.test.ts — auth file test pattern using beforeEach and describe blocks"
+  ],
+  "questions": []
+}
