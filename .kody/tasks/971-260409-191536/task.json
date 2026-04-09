@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add colorConverter.ts utility",
+  "description": "Create src/utils/colorConverter.ts with HEX, RGB, and HSL conversion functions (hexToRgb, rgbToHex, rgbToHsl, hslToRgb) following the existing single-function utility pattern in src/utils/. Note: src/utils/color.ts already implements this same functionality - this task requires a separate file named colorConverter.ts as specified.",
+  "scope": ["src/utils/colorConverter.ts", "src/utils/colorConverter.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/color.ts - single-function utility files in src/utils/ with co-located .test.ts files using vitest describe/it/expect"],
+  "questions": []
+}
