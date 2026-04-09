@@ -1,0 +1,15 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add isTokenExpired token-utils function",
+  "description": "Create `isTokenExpired(token: string): boolean` in `src/auth/token-utils.ts` that decodes a JWT (without verifying signature) and checks if the `exp` claim is in the past. Include co-located tests in `src/auth/token-utils.test.ts`.",
+  "scope": ["src/auth/token-utils.ts", "src/auth/token-utils.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts: base64urlDecode function - decode JWT body without signature verification",
+    "src/auth/jwt-service.test.ts: test file pattern for auth utilities with describe/it blocks",
+    "src/utils/*.test.ts: co-located test files following src/file.test.ts convention"
+  ],
+  "questions": []
+}
+```
