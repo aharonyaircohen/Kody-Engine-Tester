@@ -1,0 +1,11 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Add broken import utility",
+  "description": "Create `src/utils/broken-import.ts` that imports from `@/nonexistent/module`. This file is intentionally broken to fail at verify/typecheck stage, enabling contradiction detection testing when running `@kody rerun`.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts - single-function utility module pattern; src/utils/sleep.ts - simple utility with no dependencies"],
+  "questions": []
+}
+```
