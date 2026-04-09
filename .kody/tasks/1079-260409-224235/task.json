@@ -1,0 +1,23 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of JWT auth migration",
+  "description": "The JWT auth system migration is partially implemented. Core components exist: JwtService with access/refresh token rotation, AuthService with PBKDF2 password verification, Users collection with RBAC fields (admin/editor/viewer), and withAuth HOC. However, login.ts still uses the deprecated UserStore/SessionStore pattern instead of AuthService. Migration script is missing. This task verifies the partial implementation status.",
+  "scope": [
+    "src/auth/jwt-service.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/user-store.ts",
+    "src/auth/session-store.ts",
+    "src/auth/withAuth.ts",
+    "src/collections/Users.ts",
+    "src/api/auth/login.ts",
+    "src/api/auth/register.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts - JWT signing/verification with blacklisting",
+    "src/auth/auth-service.ts - AuthService with login/refresh/logout using Payload DB",
+    "src/auth/withAuth.ts - withAuth HOC using AuthService for route protection",
+    "src/collections/Users.ts - Payload collection with role, refreshToken, tokenExpiresAt fields"
+  ],
+  "questions": []
+}
