@@ -30,3 +30,38 @@ I've implemented the `/login` and `/register` API endpoints following the plan:
 
 **2. `src/app/api/auth/register/route.ts`** - 
 ...(truncated)
+
+### autofix (2026-04-09T18:36:42)
+The TypeScript errors are all pre-existing issues in `node_modules/next` type definitions, not related to my implementation.
+
+**Summary of Findings:**
+
+1. **Implementation Complete & Correct:**
+   - `src/app/api/auth/login/route.ts` - POST login endpoint (10/10 tests pass)
+   - `src/app/api/auth/register/route.ts` - POST register endpoint
+
+2. **Pre-existing Failures (NOT caused by my changes):**
+   - `tests/int/api.int.spec.ts`: Integration test requiring running PostgreSQL - fails due to drizzl
+...(truncated)
+
+### review (2026-04-09T18:43:45)
+## Verdict: PASS
+
+## Summary
+
+Added two new POST route handlers: `/api/auth/login` and `/api/auth/register`. Login uses the existing in-memory `UserStore`/`SessionStore`/`JwtService` pattern; register uses `AuthService` via Payload. Both return proper status codes (200/201/400/401/409) and JWT tokens. All 10 auth route tests pass. The build failure and integration test failure are pre-existing issues unrelated to these changes.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+- **
+...(truncated)
