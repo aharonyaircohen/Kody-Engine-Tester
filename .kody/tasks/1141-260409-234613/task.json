@@ -1,0 +1,10 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of request timing middleware",
+  "description": "The request timing middleware already exists at `src/middleware/request-timing.ts` with `X-Response-Time` header support, configurable header name, and path exclusion. Tests exist at `src/middleware/request-timing.test.ts` with 9 test cases covering header addition, custom headers, excluded paths, and configuration options.",
+  "scope": ["src/middleware/request-timing.ts", "src/middleware/request-timing.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/middleware/request-logger.ts - Express-style middleware chain pattern with config object, excluded paths via Set, NextResponse.next() for passthrough"],
+  "questions": []
+}
