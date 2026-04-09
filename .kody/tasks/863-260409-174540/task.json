@@ -1,0 +1,18 @@
+{
+  "task_type": "chore",
+  "title": "Verify graph memory commit after nudge",
+  "description": "Verify that graph memory (episodes and FTS index) is properly committed after nudge runs. Check that ep_nudge_*.json files exist in .kody/graph/episodes/ and that nudge episodes appear in sessions-index.json FTS index.",
+  "scope": [
+    ".kody/graph/episodes/ep_nudge_001.json",
+    ".kody/graph/episodes/ep_nudge_002.json",
+    ".kody/graph/sessions-index.json",
+    ".kody/graph/episodes/.seq",
+    "src/utils/test-fts.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/test-fts.ts - FTS index management with loadFtsIndex(), loadEpisodes(), searchFts() functions",
+    ".kody/graph/episodes/.seq - Sequence tracking file for episode sources"
+  ],
+  "questions": []
+}

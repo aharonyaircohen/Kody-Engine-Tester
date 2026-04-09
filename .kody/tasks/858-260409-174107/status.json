@@ -1,6 +1,6 @@
 {
   "taskId": "858-260409-174107",
-  "state": "running",
+  "state": "completed",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -33,13 +33,14 @@
       "retries": 0
     },
     "ship": {
-      "state": "running",
-      "startedAt": "2026-04-09T14:44:35.222Z",
-      "retries": 0
+      "state": "completed",
+      "completedAt": "2026-04-09T14:44:39.607Z",
+      "retries": 0,
+      "outputFile": "ship.md"
     }
   },
   "createdAt": "2026-04-09T14:41:17.734Z",
-  "updatedAt": "2026-04-09T14:44:35.222Z",
+  "updatedAt": "2026-04-09T14:44:39.607Z",
   "sessions": {
     "explore": "f10b1866-ad60-4f6e-a068-dc0a89879332",
     "build": "2b0dd91d-ba30-44c6-b356-2eab5e46dfcf"
