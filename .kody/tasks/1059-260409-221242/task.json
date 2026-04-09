@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of notification formatter",
+  "description": "The notification formatter with templates for 'enrollment', 'grade', and 'reminder' already exists in src/services/notification-formatter.ts. Tests pass (8/8) covering all three notification types with full data, defaults for missing optional fields, and null return for unknown types.",
+  "scope": ["src/services/notification-formatter.ts", "src/services/notification-formatter.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/services/*.test.ts - co-located test files with vitest", "src/services/quiz-grader.ts - simple pure function service pattern"],
+  "questions": []
+}
