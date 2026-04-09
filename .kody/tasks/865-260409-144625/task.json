@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add session cleanup utility",
+  "description": "Create `cleanExpiredSessions(store: SessionStore, maxAgeMs: number): number` in `src/auth/session-cleanup.ts` that removes sessions where `createdAt` is older than `Date.now() - maxAgeMs` and returns the count of removed sessions. Include tests in `src/auth/session-cleanup.test.ts`.",
+  "scope": ["src/auth/session-cleanup.ts", "src/auth/session-cleanup.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/retry.ts — single-function utility module exported directly",
+    "src/auth/session-store.test.ts — test pattern using `store['sessions']` for internal access, `beforeEach` setup with `SessionStore`",
+    "src/auth/session-store.ts:119-126 — existing `cleanup()` method shows how sessions are iterated and revoked"
+  ],
+  "questions": []
+}
