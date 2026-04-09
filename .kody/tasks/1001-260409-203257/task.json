@@ -1,0 +1,23 @@
+{
+  "task_type": "feature",
+  "title": "Add cache system with Redis and memory adapters",
+  "description": "Implement a caching system with Redis adapter (src/cache/redisAdapter.ts), in-memory adapter with TTL support (src/cache/memoryAdapter.ts), cache manager that selects adapter (src/cache/cacheManager.ts), and cache middleware (src/middleware/cacheMiddleware.ts). Should follow existing middleware patterns from rate-limiter.ts and reuse the existing Cache class from src/utils/cache.ts.",
+  "scope": [
+    "src/cache/redisAdapter.ts",
+    "src/cache/memoryAdapter.ts",
+    "src/cache/cacheManager.ts",
+    "src/middleware/cacheMiddleware.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts - factory function pattern for middleware creation",
+    "src/utils/cache.ts - existing Cache class with TTL support to potentially reuse",
+    "src/utils/result.ts - Result type for explicit error handling",
+    "src/utils/di-container.ts - token-based DI pattern"
+  ],
+  "questions": [
+    "Should the Redis adapter use a specific Redis client library (e.g., ioredis, redis), or is there an existing preference in the codebase?",
+    "What should trigger cache invalidation — manual, time-based expiry, or both?",
+    "Should the cache middleware operate per-request or per-route (global)?"
+  ]
+}
