@@ -1,0 +1,14 @@
+{
+  "task_type": "feature",
+  "title": "Add FTS search indexing test utility",
+  "description": "Create a test utility at src/utils/test-fts.ts that verifies the retrospective stage creates graph episodes after pipeline completion which are then indexed into the session FTS layer. The test should run a simple task and verify: (1) new retrospective episodes appear in .kody/graph/episodes/, (2) FTS search returns ranked results, (3) searching for 'retrospective' returns results. Currently no retrospective episodes exist in the episodes directory - the test verifies expected behavior that retrospective episodes SHOULD be created after ship stage completes.",
+  "scope": ["src/utils/test-fts.ts"],
+  "risk_level": "medium",
+  "existing_patterns": [
+    ".kody/graph/sessions-index.json - FTS index structure with vocabulary and documents indexed by episodeId",
+    ".kody/graph/episodes/ep_plan_001.json - Episode file format with id, runId, source, taskId, createdAt, rawContent, extractedNodeIds, linkedFiles fields",
+    ".kody/graph/episodes/.seq - Sequence tracking per source type (migration, plan, nudge, review)",
+    "src/utils/*.test.ts - Test file pattern in src/utils/ following describe/it conventions"
+  ],
+  "questions": []
+}
