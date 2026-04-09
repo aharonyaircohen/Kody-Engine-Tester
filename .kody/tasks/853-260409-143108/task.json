@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add debounce utility to timing-helpers.ts",
+  "description": "Create debounce<T extends (...args: any[]) => void>(fn: T, delayMs: number): T in src/utils/timing-helpers.ts with tests. The function should delay fn execution until delayMs milliseconds have elapsed since the last call, using only the last arguments.",
+  "scope": ["src/utils/timing-helpers.ts", "src/utils/timing-helpers.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts - existing debounce implementation with similar logic",
+    "src/utils/debounce.test.ts - comprehensive test patterns using vitest fake timers",
+    "src/utils/throttle.ts - timing utility pattern"
+  ],
+  "questions": []
+}
