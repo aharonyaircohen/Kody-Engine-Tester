@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add cache middleware with tests",
+  "description": "Create a cache middleware in `src/middleware/cache-middleware.ts` that caches API responses using an in-memory cache with TTL support. Include tests in `src/middleware/cache-middleware.test.ts`. Should reuse the existing `Cache` utility from `src/utils/cache.ts` and follow the middleware pattern from `rate-limiter.ts`.",
+  "scope": [
+    "src/middleware/cache-middleware.ts",
+    "src/middleware/cache-middleware.test.ts",
+    "src/utils/cache.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/cache.ts - Cache class with TTL support and LRU eviction that should be reused",
+    "src/middleware/rate-limiter.ts - Next.js middleware factory pattern with class-based store and destroy/cleanup lifecycle methods",
+    "src/middleware/rate-limiter.test.ts - Test pattern using vitest with afterEach cleanup and fake timers"
+  ],
+  "questions": []
+}
