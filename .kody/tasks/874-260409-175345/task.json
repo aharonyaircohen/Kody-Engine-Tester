@@ -1,0 +1,2 @@
+
+{"task_type":"chore","title":"Verify graph commit at end of pipeline","description":"Verify that graph memory files (nodes.json, episodes, session-index) are properly committed to git at the end of the pipeline. Check that all graph artifacts exist and the FTS index is updated.","scope":[".kody/graph/nodes.json",".kody/graph/sessions-index.json",".kody/graph/episodes/.seq"],"risk_level":"low","existing_patterns":[".kody/tasks/863-260409-174540/context.md - Graph memory verification pattern checking episode files, FTS index, and sequence tracking"],"questions":[]}
