@@ -1,0 +1,18 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add deepMerge utility function",
+  "description": "Create deepMerge<T>(target: T, source: Partial<T>): T function in src/utils/object-helpers.ts that recursively merges source into target without mutating target. Include comprehensive tests covering primitives, nested objects, arrays, and edge cases.",
+  "scope": [
+    "src/utils/object-helpers.ts",
+    "src/utils/object-helpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts - similar recursive object handling with seen WeakSet for circular reference detection",
+    "src/utils/omit.ts - single-function utility module pattern with JSDoc, co-located test file",
+    "src/utils/deep-clone.test.ts - comprehensive test coverage pattern with describe/it/expect from vitest"
+  ],
+  "questions": []
+}
+```
