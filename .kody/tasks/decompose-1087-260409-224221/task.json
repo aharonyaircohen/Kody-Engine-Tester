@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Implement caching system with Redis and memory adapters",
+  "description": "Implement a caching system with 4 components: Redis cache adapter (src/cache/redisAdapter.ts), in-memory cache adapter with TTL support (src/cache/memoryAdapter.ts), cache manager (src/cache/cacheManager.ts), and cache middleware (src/middleware/cacheMiddleware.ts). The adapters should follow the existing Cache class patterns for TTL and LRU eviction, and the middleware should follow the rate-limiter middleware pattern using NextRequest/NextResponse.",
+  "scope": [
+    "src/cache/redisAdapter.ts",
+    "src/cache/memoryAdapter.ts",
+    "src/cache/cacheManager.ts",
+    "src/middleware/cacheMiddleware.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/cache.ts - Existing in-memory Cache class with TTL support, LRU eviction, and stats tracking; reuse its interface design and TTL/eviction logic",
+    "src/middleware/rate-limiter.ts - Middleware pattern using NextRequest/NextResponse with configurable keyResolver and options",
+    "src/utils/middleware.ts - Generic pipeline middleware pattern with Middleware<TContext> and ErrorMiddleware<TContext> types"
+  ],
+  "questions": []
+}
