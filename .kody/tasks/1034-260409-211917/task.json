@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp utility was implemented in src/utils/clamp.ts (not math-helpers.ts as specified). All 8 tests pass covering: value within range, boundary conditions, negative numbers, floating point numbers, and error handling when min > max.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts — single-function utility with co-located test file",
+    "src/utils/retry.ts — similar numeric utility following same pattern"
+  ],
+  "questions": []
+}
