@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add notification formatter service",
+  "description": "Create `formatNotification(type: string, data: Record<string, string>): { subject: string; body: string }` function in `src/services/notification-formatter.ts` with templates for 'enrollment', 'grade', and 'reminder' notification types. Include co-located tests.",
+  "scope": ["src/services/notification-formatter.ts", "src/services/notification-formatter.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/notificationHelpers.ts - notification formatting utility pattern", "src/utils/truncate.ts - simple single-function utility with co-located test", "src/utils/capitalize-words.ts - simple function module pattern"],
+  "questions": []
+}
