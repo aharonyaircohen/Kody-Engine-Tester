@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add deepMerge utility to object-helpers.ts",
+  "description": "Create `deepMerge<T>(target: T, source: Partial<T>): T` in `src/utils/object-helpers.ts` that recursively merges source into target without mutating either. Must include comprehensive tests covering primitives, nested objects, arrays, Date, RegExp, Map, Set, and edge cases.",
+  "scope": [
+    "src/utils/object-helpers.ts",
+    "src/utils/object-helpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts — recursive utility with JSDoc, handles Date/RegExp/Map/Set, uses WeakSet for circular detection",
+    "src/utils/omit.ts — simple object utility with clean TypeScript types"
+  ],
+  "questions": []
+}
