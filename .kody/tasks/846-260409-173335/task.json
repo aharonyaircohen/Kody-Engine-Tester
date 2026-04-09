@@ -1,0 +1,20 @@
+{
+  "task_type": "chore",
+  "title": "Verify session FTS search auto-indexing works",
+  "description": "Verify that after pipeline runs, episodes are auto-indexed and searchable via FTS. The implementation exists in src/utils/test-fts.ts. Verify steps: (1) run a pipeline, (2) run `kody graph search . \"JWT\"` or `kody graph search . \"middleware\"`, (3) check sessions-index.json has indexed content, (4) run `kody graph status .` and confirm Episodes count > 0.",
+  "scope": [
+    "src/utils/test-fts.ts",
+    "src/utils/test-fts.types.ts",
+    "src/utils/test-fts.test.ts",
+    ".kody/graph/sessions-index.json",
+    ".kody/graph/episodes/"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/test-fts.ts - FTS implementation with loadFtsIndex, loadEpisodes, searchFts, runFtsVerification functions using TF-IDF ranking",
+    "src/utils/test-fts.types.ts - Episode and FtsIndex type definitions",
+    ".kody/graph/episodes/*.json - Episode files stored as JSON with id, runId, source, taskId, createdAt, rawContent fields",
+    ".kody/graph/sessions-index.json - TF-IDF index with vocabulary and documents maps"
+  ],
+  "questions": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "ep_plan_013",
+  "runId": "847-260409-172619",
+  "source": "plan",
+  "taskId": "847-260409-172619",
+  "createdAt": "2026-04-09T14:30:18.337Z",
+  "rawContent": "Task: 847-260409-172619 | Outcome: completed | Observation: Task 847-260409-172619 completed all 7 pipeline stages with 0 retries each (210s duration, full mode), successfully updating PR #843. The verify stage reported FAIL due to PagesPageConfig type constraint violations in .next/dev/types/validator.ts, yet the pipeline proceeded through review-fix and ship without blocking. This run exhibits the identical flaw seen in every prior run this session: verify stage FAIL does not prevent pipeline progression to ship, allowing code with typecheck failures to be shipped automatically. | Pattern: This is the ninth consecutive run (832, 841, 260409-111824, 840, 842, 844, two 419-reruns, and now 847) exhibiting the identical flaw: verify stage reports FAIL due to PagesPageConfig type constraint violations or test failures, yet the pipeline proceeds through review-fix and ship without blocking. Eight prior retrospectives across two days recommended adding a conditional gate in ship to check verify exit status, but the flaw persists unchanged. The autofix stage cannot resolve this class of structural type errors, and the pipeline lacks a mechanism to halt when verify reports FAIL. | Suggestion: Escalate to a configuration change rather than another recommendation: the verifyExitCode gate in the ship stage template has been recommended 8+ times without implementation. Add a check that reads the verify stage exit status and halts with an error when verify reports FAIL, preventing automatic shipment of code that failed typecheck validation. This requires modifying the ship stage template, not another retrospective observation. | Flaw: verify → ship gate — Verify stage FAIL status does not prevent pipeline progression to ship stage | Stages: taskify:completed, plan:completed, build:completed, verify:completed, review:completed, review-fix:completed, ship:completed",
+  "extractedNodeIds": [],
+  "linkedFiles": []
+}
