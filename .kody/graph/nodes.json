@@ -588,5 +588,35 @@
     "episodeId": "ep_migration_001",
     "validFrom": "2026-04-09T07:23:20.158Z",
     "validTo": null
+  },
+  "facts_pipelinebehavior_3953897155861208": {
+    "id": "facts_pipelinebehavior_3953897155861208",
+    "type": "facts",
+    "hall": "facts",
+    "room": "pipeline-behavior",
+    "content": "Verify stage failures do not block deployment in this pipeline — the task ships despite typecheck/lint errors",
+    "episodeId": "ep_nudge_001",
+    "validFrom": "2026-04-09T08:22:55.300Z",
+    "validTo": null
+  },
+  "conventions_mathutilitypattern_3953897156550583": {
+    "id": "conventions_mathutilitypattern_3953897156550583",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "math-utility-pattern",
+    "content": "Numeric utility functions (isEven, isOdd) are grouped in src/utils/math.ts with corresponding test files using describe/it patterns",
+    "episodeId": "ep_nudge_001",
+    "validFrom": "2026-04-09T08:22:55.300Z",
+    "validTo": null
+  },
+  "facts_preexistingerrors_3953897156876250": {
+    "id": "facts_preexistingerrors_3953897156876250",
+    "type": "facts",
+    "hall": "facts",
+    "room": "pre-existing-errors",
+    "content": "TypeScript errors in .next/dev/types/validator.ts are pre-existing Next.js cache issues unrelated to utility function changes",
+    "episodeId": "ep_nudge_001",
+    "validFrom": "2026-04-09T08:22:55.301Z",
+    "validTo": null
   }
 }

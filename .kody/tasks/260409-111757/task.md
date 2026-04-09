@@ -1,0 +1,1 @@
+Add a simple test utility function

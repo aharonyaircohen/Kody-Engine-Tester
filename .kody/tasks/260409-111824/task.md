@@ -1,0 +1,1 @@
+Create a simple isOdd utility function in src/utils/math.ts

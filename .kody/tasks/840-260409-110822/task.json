@@ -1,0 +1,18 @@
+{
+  "task_type": "chore",
+  "title": "Verify memory nudge feature end-to-end",
+  "description": "The memory nudge feature already exists in src/memory/nudge.ts of the Kody Engine. It analyzes task artifacts after successful completion and writes patterns to graph memory when KODY_MEMORY_NUDGE=true. This task is to verify the feature works end-to-end by running a task with the feature enabled and confirming ep_nudge_*.json episode files are created in .kody/graph/episodes/ and new nodes appear in nodes.json.",
+  "scope": [
+    ".kody/graph/episodes/",
+    ".kody/graph/nodes.json",
+    ".kody/graph/sessions-index.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/memory/nudge.ts - LLM-driven pattern extraction after task completion",
+    ".kody/graph/nodes.json - Graph memory node storage format",
+    ".kody/graph/episodes/ep_migration_001.json - Episode file structure with source, runId, taskId, createdAt fields",
+    ".kody/graph/sessions-index.json - FTS index with document entries including ep_nudge_* references"
+  ],
+  "questions": []
+}
