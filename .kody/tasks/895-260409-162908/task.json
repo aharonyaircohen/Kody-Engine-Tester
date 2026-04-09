@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of password strength validator",
+  "description": "The `validatePasswordStrength(password: string): { valid: boolean; issues: string[] }` function already exists in `src/auth/password-validator.ts` with all required validations (8+ chars, uppercase, lowercase, number). All 14 tests in `src/auth/password-validator.test.ts` pass.",
+  "scope": ["src/auth/password-validator.ts", "src/auth/password-validator.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/password-validator.ts — PasswordStrengthResult interface and validatePasswordStrength function following the existing auth module patterns",
+    "src/utils/*.test.ts — co-located test file convention for utility modules"
+  ],
+  "questions": []
+}
