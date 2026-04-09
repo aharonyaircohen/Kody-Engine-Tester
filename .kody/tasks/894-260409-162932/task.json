@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add isTokenExpired utility function",
+  "description": "Create `isTokenExpired(token: string): boolean` in `src/auth/token-utils.ts` that decodes a JWT using base64url decoding of the payload and checks if the `exp` claim indicates the token has expired. Include co-located tests in `src/auth/token-utils.test.ts`.",
+  "scope": ["src/auth/token-utils.ts", "src/auth/token-utils.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts - base64urlDecode function for JWT payload decoding, TokenPayload interface with exp claim",
+    "src/utils/debounce.ts - single-function utility module pattern",
+    "src/utils/debounce.test.ts - vitest test structure with describe/it/expect"
+  ],
+  "questions": []
+}
