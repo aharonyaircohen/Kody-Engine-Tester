@@ -1,0 +1,21 @@
+{
+  "task_type": "feature",
+  "title": "Add Next.js middleware.ts for route protection",
+  "description": "Create a Next.js middleware.ts at project root that uses the existing createAuthMiddleware to protect API routes via JWT validation. The middleware should: extract JWT from Authorization Bearer header, validate signature/expiration, reject unauthorized requests with 401, attach user info to request headers for downstream use, and support configurable protected route patterns with explicit exclusions for public routes like /api/health.",
+  "scope": [
+    "middleware.ts (new file at project root)"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts - createAuthMiddleware factory that validates JWT tokens and extracts user/session context",
+    "src/auth/jwt-service.ts - JwtService.verify() for token signature and expiration validation",
+    "src/auth/withAuth.ts - existing HOC pattern for per-route authentication; middleware should complement (not replace) this pattern",
+    "src/auth/user-store.ts - UserStore for user lookup",
+    "src/auth/session-store.ts - SessionStore for session validation"
+  ],
+  "questions": [
+    "Should all API routes be protected by default with specific exclusions, or should protected routes be opt-in?",
+    "Which routes should be explicitly excluded from protection (e.g., /api/health, /api/csrf-token)?",
+    "Should this middleware work alongside the existing withAuth HOC (which handles role-based access), or should the HOC be deprecated in favor of middleware?"
+  ]
+}
