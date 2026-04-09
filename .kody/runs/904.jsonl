@@ -1,1 +1,2 @@
 {"runId":"904-260409-170156","issueNumber":904,"command":"run","startedAt":"2026-04-09T17:03:43.032Z","completedAt":"2026-04-09T17:07:09.014Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
+{"runId":"904-260409-170156","issueNumber":904,"command":"rerun","startedAt":"2026-04-09T17:12:43.435Z","completedAt":"2026-04-09T17:16:23.032Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":"","parentRunId":"904-260409-170156"}
