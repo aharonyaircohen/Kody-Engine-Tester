@@ -1,0 +1,14 @@
+{
+  "task_type": "chore",
+  "title": "Verify decompose --no-compose flag behavior",
+  "description": "E2E test verification for @kody decompose --no-compose command. Pipeline is currently running (build stage). Verify: (1) parallel builds complete, (2) decompose-state.json saved with subPipelines but no compose field, (3) NO merge/verify/review/ship phases execute, (4) no PR created, (5) sub-task branches exist on remote. NOTE: The 'Task Description' section in task.md erroneously mentions implementing a caching system (src/cache/*) — this does not match the actual task title, steps, or verification criteria and should be disregarded.",
+  "scope": [
+    ".kody/tasks/decompose-940-260409-180851/task.md",
+    ".kody/tasks/decompose-940-260409-180851/status.json",
+    ".kody/tasks/decompose-940-260409-180851/plan.md",
+    ".kody/tasks/decompose-940-260409-180851/context.md"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [],
+  "questions": []
+}

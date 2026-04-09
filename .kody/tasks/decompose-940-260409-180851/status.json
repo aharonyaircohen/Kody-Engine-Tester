@@ -1,0 +1,54 @@
+{
+  "taskId": "decompose-940-260409-180851",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-09T18:12:57.210Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1791
+    },
+    "plan": {
+      "state": "completed",
+      "completedAt": "2026-04-09T18:13:29.988Z",
+      "retries": 0,
+      "outputFile": "plan.md",
+      "promptTokens": 4204
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-09T18:23:00.000Z",
+      "retries": 0,
+      "outputFile": "build.md",
+      "findings": [
+        "Issue 940 is not decomposable (complexity_score: 1 < threshold: 6)",
+        "decompose --no-compose flag has no effect on non-decomposable issues",
+        "Pipeline 24205759548 stuck running for 17+ minutes",
+        "Test verification criteria cannot be met due to non-decomposable issue"
+      ]
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-09T18:10:32.672Z",
+  "updatedAt": "2026-04-09T18:23:00.000Z",
+  "sessions": {
+    "explore": "3115f8d8-cf21-4746-864b-e6c6d81ea52d"
+  },
+  "buildNotes": "Test setup issue - issue 940 is not decomposable. Pipeline appears stuck."
+}
