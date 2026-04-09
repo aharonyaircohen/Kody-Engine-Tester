@@ -27,9 +27,15 @@
     "url": "http://localhost:3000"
   },
   "mcp": {
-    "enabled": false,
-    "servers": {},
-    "stages": []
+    "enabled": true,
+    "servers": {
+      "filesystem": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "./"],
+        "env": {}
+      }
+    },
+    "stages": ["build", "verify", "review", "review-fix"]
   },
   "watch": {
     "enabled": true,
