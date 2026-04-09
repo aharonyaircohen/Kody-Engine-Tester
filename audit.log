@@ -1,0 +1,10 @@
+{"action":"course.created","userId":"user-1","resource":"course/cs101","timestamp":"2026-04-09T17:16:11.992Z"}
+{"action":"lesson.completed","userId":"user-2","resource":"lesson/intro","details":"Watched 10min of video","timestamp":"2026-04-09T17:16:11.999Z"}
+{"action":"quiz.submitted","userId":"user-3","resource":"quiz/final","timestamp":"2026-04-09T17:16:12.000Z"}
+{"action":"event-a","userId":"u1","resource":"r1","timestamp":"2026-04-09T17:16:12.002Z"}
+{"action":"event-b","userId":"u2","resource":"r2","timestamp":"2026-04-09T17:16:12.002Z"}
+{"action":"course.created","userId":"user-1","resource":"course/cs101","timestamp":"2026-04-09T17:16:47.357Z"}
+{"action":"lesson.completed","userId":"user-2","resource":"lesson/intro","details":"Watched 10min of video","timestamp":"2026-04-09T17:16:47.361Z"}
+{"action":"quiz.submitted","userId":"user-3","resource":"quiz/final","timestamp":"2026-04-09T17:16:47.362Z"}
+{"action":"event-a","userId":"u1","resource":"r1","timestamp":"2026-04-09T17:16:47.363Z"}
+{"action":"event-b","userId":"u2","resource":"r2","timestamp":"2026-04-09T17:16:47.363Z"}
