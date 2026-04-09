@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add sanitizeInput function to middleware",
+  "description": "Create sanitizeInput(input: string): string in src/middleware/sanitize.ts that strips HTML tags, trims whitespace, and normalizes unicode to NFC form. Should reuse sanitizeHtml pattern from src/security/sanitizers.ts for HTML stripping and follow the unicode normalization approach from slugify.ts. Include co-located tests.",
+  "scope": ["src/middleware/sanitize.ts", "src/middleware/sanitize.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/security/sanitizers.ts - sanitizeHtml function uses regex to strip HTML tags and handles null bytes",
+    "src/utils/slugify.ts - uses str.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '') for unicode normalization",
+    "src/utils/truncate.ts - single-function file with simple guard clause pattern (if (!str) return '')"
+  ],
+  "questions": []
+}
