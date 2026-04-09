@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Add broken-import.ts utility for contradiction detection test",
+  "description": "Created src/utils/broken-import.ts that imports from @/nonexistent/module. This will fail at verify (typecheck) stage. After first failure, rerunning with @kody rerun should trigger contradiction detection.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/sleep.ts - simple utility file pattern"],
+  "questions": []
+}
