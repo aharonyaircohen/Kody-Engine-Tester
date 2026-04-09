@@ -1,0 +1,16 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add buildSearchFilter utility for Payload multi-field search",
+  "description": "Create `buildSearchFilter(query: string, fields: string[]): object` in `src/services/search-filter.ts` that builds a Payload-compatible where clause for multi-field text search. When query is empty or fields is empty, return empty object. Each field gets a `like` condition combined with `or`. Includes tests in `src/services/search-filter.test.ts`.",
+  "scope": [
+    "src/services/search-filter.ts",
+    "src/services/search-filter.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/services/course-search.ts: Uses `like` operator and `or` conditions to build Payload Where clauses for text search across multiple fields (title and description)"
+  ],
+  "questions": []
+}
+```
