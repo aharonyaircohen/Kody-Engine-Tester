@@ -3,7 +3,7 @@
  * - Arrays are encoded by repeating the key (e.g., ?key=1&key=2)
  * - Nested objects are JSON-stringified
  * - Values are wrapped in double quotes
- * - Dollar signs ($) are preserved as-is
+ * - Dollar signs ($) are encoded as %24
  * - null and undefined values are skipped
  */
 export function queryBuilder(params: Record<string, unknown>): string {
@@ -24,7 +24,7 @@ export function queryBuilder(params: Record<string, unknown>): string {
           continue
         }
         const encodedKey = encodeURIComponent(key)
-        const encodedValue = encodeURIComponent(String(item))
+        const encodedValue = encodeURIComponent(String(item)).replace('$', '%24')
         parts.push(`${encodedKey}="${encodedValue}"`)
       }
     } else if (typeof value === 'object') {
@@ -33,7 +33,7 @@ export function queryBuilder(params: Record<string, unknown>): string {
       parts.push(`${encodedKey}="${encodedValue}"`)
     } else {
       const encodedKey = encodeURIComponent(key)
-      const encodedValue = encodeURIComponent(String(value))
+      const encodedValue = encodeURIComponent(String(value)).replace('$', '%24')
       parts.push(`${encodedKey}="${encodedValue}"`)
     }
   }
