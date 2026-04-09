@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Done. Created `src/utils/async-helpers.ts` with:  ```typescript retry<T>",
+  "description": "Done. Created `src/utils/async-helpers.ts` with:\n\n```typescript\nretry<T>(fn: () => Promise<T>, maxAttempts: number, delayMs: number): Promise<T>\n```\n\nFeatures:\n- Exponential backoff: delay doubles each retry (`delayMs * 2^attempt`)\n- Throws the last error if all attempts fail\n- All 7 tests pass",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
