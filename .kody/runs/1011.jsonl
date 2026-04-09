@@ -1,0 +1,1 @@
+{"runId":"1011-260409-203448","issueNumber":1011,"command":"rerun","startedAt":"2026-04-09T20:35:02.737Z","completedAt":"2026-04-09T21:04:58.983Z","outcome":"failed","failedStage":"verify","failedError":"Verification failed after autofix attempts","stagesCompleted":["taskify","plan","build"],"feedback":""}
