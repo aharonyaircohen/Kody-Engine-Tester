@@ -1,4 +1,4 @@
-import type { AuthService } from '../../auth/auth-service'
+import type { AuthService, RbacRole } from '../../auth/auth-service'
 
 interface AuthError {
   message: string
@@ -14,7 +14,7 @@ function createError(message: string, status: number): AuthError & Error {
 export interface LoginResult {
   accessToken: string
   refreshToken: string
-  user: { id: string; email: string; role: string }
+  user: { id: string; email: string; role: RbacRole }
 }
 
 export async function login(
