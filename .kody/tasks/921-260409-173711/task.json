@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add sanitizeInput utility function",
+  "description": "Create `sanitizeInput(input: string): string` in `src/middleware/sanitize.ts` that strips HTML tags, trims whitespace, and normalizes unicode. Include comprehensive tests covering HTML stripping, whitespace handling, unicode normalization, and edge cases.",
+  "scope": [
+    "src/middleware/sanitize.ts",
+    "src/middleware/sanitize.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/slugify.ts - utility function pattern with normalize('NFD').replace(/[\u0300-\u036f]/g, '') for unicode normalization",
+    "src/security/sanitizers.ts - sanitizeHtml uses .replace(/<[^>]*>/g, '') for HTML tag stripping",
+    "src/utils/*.test.ts - co-located test files using vitest with describe/it/expect"
+  ],
+  "questions": []
+}
