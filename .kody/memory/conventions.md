@@ -18,20 +18,42 @@ import { LessonEditor } from './LessonEditor'
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
+**CSS Modules**: Use `*.module.css` files co-located with components; import as `styles from './Component.module.css'`
 
-## Learned 2026-04-05 (task: 420-260405-054611)
+**Security Utilities**: Sanitizers in `src/security/sanitizers.ts` for HTML (`sanitizeHtml`), SQL (`sanitizeSql`), and URL (`sanitizeUrl`) inputs
+
+**Service Layer**: Business logic in `src/services/` using class pattern with dependency injection (e.g., `DiscussionService` constructor takes store and checker dependencies)
+
+**Payload Collections**: Define config in `src/collections/` using `CollectionConfig`; co-locate interfaces and store classes with collection config
+
+**JSDoc**: Document utility functions with `@example` blocks and parameter descriptions
+
+**TypeScript ESLint Rules**: `no-unused-vars` warn with `argsIgnorePattern: '^_'`, `varsIgnorePattern: '^_'`; `no-explicit-any`: warn; `ban-ts-comment`: warn
+
+**Learned 2026-04-04 (task: 403-260404-211531)**
+
 - Uses vitest for testing
-- Uses eslint for linting
+
+**Learned 2026-04-05 (task: 420-260405-054611)**
+
 - Active directories: src/app/api/health
 
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
+**Learned 2026-04-05 (task: 444-260405-212643)**
+
 - Active directories: src/utils
 
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
+**Learned 2026-04-05 (task: fix-pr-461-260405-214201)**
+
+**Learned 2026-04-09 (task: conventions-update)**
+
+- Testing: vitest + playwright (E2E)
+- Linting: eslint ^9.16.0
+- Formatting: prettier ^3.4.2
+- Package manager: pnpm
+- CMS: Payload CMS 3.80.0 with PostgreSQL
+- Module system: ESM
+- CSS modules pattern for component styles
+- Security sanitizers for HTML/SQL/URL
+- Service layer with dependency injection pattern
+- Collection configs with co-located interfaces and stores
+- JSDoc documentation for utility functions

@@ -1,12 +1,15 @@
+Based on my analysis of the codebase, I need to extend the existing domain document with newly discovered patterns and types. Here is the updated domain document:
+
 ## LearnHub LMS Domain Model
 
-**Core Entities:** `User` (roles: admin/editor/viewer/guest/student/instructor), `Media`, `Course`, `Lesson`, `Enrollment`, `Note`, `Quiz`, `QuizAttempt`
+**Core Entities:** `User` (roles: admin/editor/viewer/guest/student/instructor), `Media`, `Course`, `Lesson`, `Enrollment`, `Note`, `Quiz`, `QuizAttempt`, `Notification`
 
 **Data Flow:** Client → Next.js Route Handler (`src/app/api/*`) → `withAuth` HOC → Service Layer (`src/services/*`) → Payload Collections → PostgreSQL via `@payloadcms/db-postgres`
 
 **API Surface:**
 
 - `GET/POST /api/notes` — Note CRUD with search
+- `GET /api/notes/[id]` — Single note retrieval
 - `GET /api/quizzes/[id]` — Quiz retrieval
 - `POST /api/quizzes/[id]/submit` — Quiz grading via `QuizGrader`
 - `GET /api/quizzes/[id]/attempts` — User's quiz attempts
@@ -17,3 +20,14 @@
 **Auth Architecture:** JWT via `JwtService` (Web Crypto API), sessions in `SessionStore` (in-memory), `withAuth` HOC wraps routes, RBAC via `checkRole` utility
 
 **Key Types:** `Config`, `User`, `Media`, `Note`, `Quiz`, `QuizAnswer`, `PayloadGradebookService`, `CourseSearchService`
+
+**Domain Models:**
+
+- `Notification` (`src/models/notification.ts`): `id`, `recipient`, `type`, `severity: NotificationSeverity ('info'|'warning'|'error')`, `title`, `message`, `link?`, `isRead`, `createdAt`
+- `NotificationFilter`: `severity?`, `isRead?`, `recipientId?`
+
+**Schema Validation:** `Schema` class hierarchy in `src/utils/schema.ts` with `SchemaError`, `StringSchema`, `NumberSchema`, `BooleanSchema` — mini-Zod type inference via `Infer<T extends AnySchema>`
+
+**Database Migrations:** `src/migrations/` — `20260322_233123_initial` (users_sessions, users, media, payload_kv, payload_locked_documents), `20260405_000000_add_users_permissions_lastLogin` (adds `lastLogin` and `permissions` columns to users)
+
+**Security:** `sanitizeHtml` from `src/security/sanitizers` applied in note and course search routes

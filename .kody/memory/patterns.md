@@ -1,52 +1,44 @@
-## LearnHub LMS Design Patterns
-
-### Creational Patterns
-
-- **Dependency Injection Container** (`src/utils/di-container.ts`): Type-safe DI with tokens, factory registration, singleton/transient lifecycles, and circular dependency detection via `resolving` Set.
-- **Factory Functions**: DI container registers factory functions; service constructors accept dep interfaces (e.g., `GradebookServiceDeps<T...>`).
-- **Singleton**: Container caches singletons in `singletons` Map; Auth exports module-level singleton instances (`userStore`, `sessionStore`, `jwtService`).
-
-### Structural Patterns
-
-- **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
-- **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
-
-### Behavioral Patterns
-
-- **Strategy**: `request-logger.ts` switches between `json`/`text` output formats; log level Strategy maps HTTP status codes to `debug|info|warn|error`.
-- **Repository/Store**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` — hybrid repository-pattern store.
-- **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling.
-
-### Architectural Layers
+### Architectural Layers (updated)
 
 ```
-Route Handlers (src/api/*, src/app/*)
+Route Handlers (src/app/api/*, src/app/*)
+    ↓
+Validation Middleware (src/middleware/validation.ts) → Schema-based body/query/params validation
     ↓
 Auth HOC (src/auth/withAuth.ts) → JWT Service → AuthService
     ↓
-Service Layer (src/services/*.ts: GradebookService, GradingService)
+Service Layer (src/services/*.ts: GradebookService, GradingService, ProgressService)
     ↓
-Repository Layer (Payload Collections, contactsStore)
+Repository Layer (Payload Collections via find/create/update, contactsStore)
     ↓
-Database (PostgreSQL via @payloadcms/db-postgres)
+Database (PostgreSQL via @payloadcms/db-postgres + raw SQL migrations)
 ```
 
-### Module Boundaries
+### Module Boundaries (updated)
 
-- **Entry points**: API routes, Next.js pages
-- **Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole`
-- **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`) decouple services from Payload
+- **Entry points**: API routes, Next.js pages, Next.js App Router server components
+- **Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole` + `AuthService`
+- **Validation boundary**: `src/middleware/validation.ts` provides `validate()` for schema-based request validation
+- **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`, `GradebookServiceDeps<...>`) decouple services from Payload
 
-### Reusable Abstractions
+### Reusable Abstractions (updated)
 
-- `Container.register<T>(token, factory)` — generic DI
-- `DIDisposable` interface for lifecycle cleanup
-- `createRequestLogger(config)` — configurable middleware factory
+- `Container.register<T>(token, factory)` — generic DI with symbol tokens
+- `validate(schema, data, target)` — schema-driven request validation for body/query/params
+- `parseUrl(url, options)` — pure function URL parser in `src/utils/url-parser.ts`
+- `createRequestLogger(config)` — configurable middleware factory in `request-logger.ts`
 - Zod schemas in `src/validation/` for input validation at API boundaries
 
-### Anti-Patterns / Inconsistencies
+### New Patterns Discovered
 
-- **Dual auth systems**: `UserStore` (SHA-256, in-memory) coexists with `AuthService` (PBKDF2, JWT) — inconsistent password hashing and user representation.
-- **Role divergence**: `UserStore.UserRole = 'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole = 'admin'|'editor'|'viewer'` — no alignment.
-- **N+1 risk**: Dashboard page batch-fetches lessons but other pages may not.
-- **Inconsistent type narrowing**: `dashboard/page.tsx` uses `as unknown as` casts rather than proper type guards.
+- **Validation Schema Pattern** (`src/middleware/validation.ts`): Declarative field definitions with type coercion (string/number/boolean), field-level required/optional, and target-specific validation (body/query/params).
+- **Seed Data Constant** (`src/collections/contacts.ts`): `SEED_CONTACTS` array provides fixture data for development/testing.
+- **Paginated Query Interface** (`src/collections/contacts.ts`): `PaginationOptions`, `PaginatedResult<T>`, `QueryOptions` with sort/filter/pagination — reusable pagination contract.
+- **Migration Pattern** (`src/migrations/*.ts`): Raw SQL via `db.execute(sql\`...\`)`with`MigrateUpArgs`/`MigrateDownArgs` convention.
+
+### Anti-Patterns / Inconsistencies (updated)
+
+- **Dual auth systems**: `UserStore` (SHA-256, in-memory) coexists with `AuthService` (PBKDF2, JWT) — inconsistent password hashing.
+- **Role divergence**: `UserStore.UserRole` vs `RbacRole` — no alignment between auth implementations.
+- **Type safety gaps**: `dashboard/page.tsx` uses `as unknown as` casts rather than proper type guards for Payload documents.
+- **Inconsistent pagination**: `contacts.ts` defines its own `PaginatedResult<T>` while Payload collections return their own pagination shape.

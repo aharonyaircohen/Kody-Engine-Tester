@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -84,6 +104,9 @@ Guidelines:
 - **Middleware chain**: `src/middleware/request-logger.ts` and `rate-limiter.ts` use Express-style chainable pattern
 - **Service layer**: `src/services/` (e.g., `GradebookService`, `GradingService`) with typed dependency interfaces like `GradebookServiceDeps`
 - **Payload collections**: `src/collections/*.ts` define data models; avoid direct DB calls, use Payload SDK
+- **Validation middleware**: `src/middleware/validation.ts` provides `validate()` for schema-based body/query/params validation
+- **Paginated queries**: `src/collections/contacts.ts` defines `PaginationOptions`, `PaginatedResult<T>` for reusable pagination
+- **Migration pattern**: `src/migrations/*.ts` use raw SQL via `db.execute(sql\`...\`)`with`MigrateUpArgs`/`MigrateDownArgs`
 
 ## Improvement Areas
 
@@ -91,15 +114,19 @@ Guidelines:
 - **Role mismatch**: `UserStore.UserRole` uses `'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole` uses `'admin'|'editor'|'viewer'` — no alignment
 - **Type safety**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts instead of proper type guards
 - **N+1 risk**: Dashboard page batches lesson fetches but other pages may miss optimization opportunities
+- **Inconsistent pagination**: `contacts.ts` defines its own `PaginatedResult<T>` while Payload collections return their own pagination shape
 
 ## Acceptance Criteria
 
-- [ ] Scope contains exact file paths from Glob/Grep discovery
+- [ ] Scope contains exact file paths discovered via Glob/Grep
 - [ ] Title is actionable (starts with verb: Add, Fix, Refactor, Update)
 - [ ] Description captures intent and acceptance criteria from task
 - [ ] Risk level matches scope size and impact (low/medium/high heuristics)
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+- [ ] Assumptions explicitly stated before output (if any were made)
+- [ ] Dual auth inconsistency flagged if task involves auth/passwords
+- [ ] Role alignment considered if task involves RBAC or permissions
 
 {{TASK_CONTEXT}}
