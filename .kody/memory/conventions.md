@@ -38,3 +38,6 @@ import { LessonEditor } from './LessonEditor'
 
 ## Learned 2026-04-08 (task: 832-260408-123712)
 - Uses Drizzle ORM
+
+## Learned 2026-04-09 (task: 841-260409-105040)
+- Active directories: .kody/graph, .kody/graph/episodes

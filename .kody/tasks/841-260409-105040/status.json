@@ -1,6 +1,6 @@
 {
   "taskId": "841-260409-105040",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -15,19 +15,13 @@
     },
     "build": {
       "state": "completed",
-      "completedAt": "2026-04-09T07:55:00.000Z",
+      "completedAt": "2026-04-09T07:56:52.479Z",
       "retries": 0,
-      "verification": {
-        "jwt": "2 sessions, scores 0.31/0.30, bold highlighting",
-        "authentication": "1 session, score 0.75, bold highlighting",
-        "postgresql": "1 session, score 0.74, bold highlighting",
-        "barrel_exports": "1 session, score 1.52, bold highlighting",
-        "orm": "1 session, score 0.74, bold highlighting"
-      }
+      "promptTokens": 5525
     },
     "verify": {
       "state": "completed",
-      "completedAt": "2026-04-09T07:55:00.000Z",
+      "completedAt": "2026-04-09T07:59:39.698Z",
       "retries": 0
     },
     "review": {
@@ -39,13 +33,15 @@
       "retries": 0
     },
     "ship": {
-      "state": "completed",
+      "state": "running",
+      "startedAt": "2026-04-09T07:59:39.701Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-09T07:51:23.220Z",
-  "updatedAt": "2026-04-09T07:55:00.000Z",
+  "updatedAt": "2026-04-09T07:59:39.701Z",
   "sessions": {
-    "explore": "08de0e0a-9de0-4ad6-87e0-1a59b672ac37"
+    "explore": "08de0e0a-9de0-4ad6-87e0-1a59b672ac37",
+    "build": "f14625ad-1d2a-473e-8eb7-f21e80f99ec2"
   }
 }
