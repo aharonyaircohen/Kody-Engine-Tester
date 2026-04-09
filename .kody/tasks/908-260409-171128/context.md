@@ -38,3 +38,33 @@ Implementation complete. Summary:
 **Verification:**
 - All 7 t
 ...(truncated)
+
+### review (2026-04-09T17:18:27)
+## Verdict: PASS
+
+## Summary
+
+Created `src/services/search-filter.ts` implementing `buildSearchFilter(query, fields)` that builds Payload-compatible Where clauses for multi-field text search using the `or` + `like` pattern from `course-search.ts:47-53`. Added 7 tests in `src/services/search-filter.test.ts` covering empty inputs, single/multiple fields, and whitespace handling.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+None.
+
+---
+
+## Two-Pass Review
+
+**Pass 1 — CRITICAL:**
+
+
+...(truncated)
