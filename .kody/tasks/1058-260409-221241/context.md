@@ -19,3 +19,7 @@ Created `src/services/search-filter.ts`:
 - Uses `or` conditions with `like` operator for each field (following the pattern from `course-search.ts:46-53`)
 - Handles edge cases: empty query, whitespace-only query, empty fields
 ...(truncated)
+
+### autofix (2026-04-09T22:18:48)
+Fixed `let context` → `const context` on line 80 of `src/utils/logger/index.ts`.
+
