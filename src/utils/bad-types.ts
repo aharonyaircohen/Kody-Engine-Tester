@@ -1,0 +1,1 @@
+function getCount(): string { return 42 }

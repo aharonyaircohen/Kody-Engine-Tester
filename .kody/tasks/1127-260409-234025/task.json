@@ -1,0 +1,11 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify typecheck failure for bad-types.ts",
+  "description": "Created src/utils/bad-types.ts with function getCount(): string { return 42 } which intentionally fails typecheck. Task is to verify the repeat fail mechanism triggers correctly.",
+  "scope": ["src/utils/bad-types.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
+```
