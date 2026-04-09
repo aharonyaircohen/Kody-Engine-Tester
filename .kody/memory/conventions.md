@@ -1,37 +1,9 @@
-# LearnHub Coding Conventions
+## Learned 2026-04-09 (task: conventions-update-260409)
 
-**Naming**: Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case (`.module.css`); collections → singular slug
-
-**Imports**: Use `import type` for types; path alias `@/*` for internal modules; named imports preferred
-
-```typescript
-import type { Module } from '@/collections/Modules'
-import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
-import { LessonEditor } from './LessonEditor'
-```
-
-**Exports**: Named exports for utilities/types; default export for page components only
-
-**Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
-
-**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
-
-**Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
-
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
-
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/utils
-
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
+- **CSS Modules**: Import styles as default from `.module.css` files; e.g., `import styles from './ModuleList.module.css'` (see `src/components/course-editor/ModuleList.tsx`)
+- **Utility function exports**: Public utility functions use named exports; e.g., `export async function generateShortCode(...)` (see `src/utils/url-shortener.ts`)
+- **Error handling in utilities**: Throw `Error` with descriptive messages for invalid input; do not use Result types (see `src/utils/url-shortener.ts:27`)
+- **Collection config pattern**: Payload collections use `CollectionConfig` with fields array; relationship fields cast `relationTo` to `CollectionSlug` type (see `src/collections/certificates.ts`)
+- **Service class pattern**: Services use constructor injection; e.g., `constructor(private store: DiscussionsStore, private enrollmentStore: EnrollmentStore, ...)` (see `src/services/discussions.ts`)
+- **Security utilities**: Named exports for sanitizers; input validation returns empty string for invalid values (see `src/security/sanitizers.ts`)
+- **Interface-first organization**: Define interfaces before the class that uses them (see `src/collections/certificates.ts` and `src/services/discussions.ts`)
