@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add deep-freeze utility function",
+  "description": "Create a `deep-freeze.ts` utility in `src/utils/` that recursively freezes an object and all nested objects and arrays, making them immutable. Must handle plain objects, arrays, Maps, and Sets. Returns the same object (frozen in place). Must be tree-shakeable via named ESM export.",
+  "scope": ["src/utils/deep-freeze.ts", "src/utils/deep-freeze.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts - similar recursive object utility with Map/Set/Date/RegExp handling, uses WeakSet for cycle detection, single named export",
+    "src/utils/deep-clone.test.ts - co-located test file using vitest with describe/it/expect pattern",
+    "src/utils/clamp.ts - single-function utility with named export, minimal boilerplate"
+  ],
+  "questions": []
+}
