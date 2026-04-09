@@ -1,0 +1,17 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add objectDiff utility in src/utils/objectDiff.ts",
+  "description": "Added a new object diff utility in src/utils/objectDiff.ts that compares two objects and returns categorized changes (added, removed, changed) with a hasChanges flag. Includes comprehensive tests covering identical objects, additions, removals, changes, empty objects, nested objects, and mixed scenarios.",
+  "scope": [
+    "src/utils/objectDiff.ts",
+    "src/utils/objectDiff.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/diff.ts - Similar diff utility with Change[] interface; objectDiff.ts provides a simpler object-specific API with categorized result structure",
+    "src/utils/diff.test.ts - Test file structure using vitest describe/it/expect pattern followed by objectDiff.test.ts"
+  ],
+  "questions": []
+}
+```
