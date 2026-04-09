@@ -51,3 +51,6 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-09 (task: 419-260405-054539)
 - Uses Payload CMS collections
 - Active directories: src/auth, src/middleware, src/collections, src/api/auth
+
+## Learned 2026-04-09 (task: 846-260409-173335)
+- Active directories: src/utils, .kody/graph, .kody/graph/episodes
