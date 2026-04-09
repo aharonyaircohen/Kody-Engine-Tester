@@ -1,0 +1,14 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add capitalize utility function",
+  "description": "Create capitalize(str: string): string utility in src/utils/string.ts that uppercases the first character and lowercases the rest of the string. Unit tests should cover: basic capitalization, already capitalized strings, empty string, single character, and strings with spaces.",
+  "scope": ["src/utils/string.ts", "src/utils/string.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cap.ts - simple single-function utility file pattern with basic string transformation",
+    "src/utils/capitalize-words.ts - similar string capitalization utility with co-located .test.ts file"
+  ],
+  "questions": []
+}
+```
