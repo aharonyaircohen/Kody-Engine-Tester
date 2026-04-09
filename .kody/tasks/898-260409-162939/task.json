@@ -1,0 +1,10 @@
+
+{
+"task_type": "chore",
+"title": "Verify existing implementation of role hierarchy checker",
+"description": "The hasPermission function in src/auth/role-hierarchy.ts and its tests in src/auth/role-hierarchy.test.ts already exist and all 7 tests pass. Implementation uses hierarchy admin > editor > viewer > guest with ROLE_HIERARCHY record and numeric level comparison.",
+"scope": ["src/auth/role-hierarchy.ts", "src/auth/role-hierarchy.test.ts"],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}
