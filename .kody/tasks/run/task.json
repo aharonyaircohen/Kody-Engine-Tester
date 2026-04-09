@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add isString type guard utility",
+  "description": "Add a simple isString(value: unknown): value is string type guard to src/utils/string.ts. Include unit tests covering: string inputs, non-string inputs (number, boolean, null, undefined, object, array), and edge cases.",
+  "scope": ["src/utils/string.ts", "src/utils/string.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/clamp.ts — single-function utility module with straightforward implementation",
+    "src/utils/clamp.test.ts — vitest describe/it/expect pattern with inline test cases"
+  ],
+  "questions": []
+}
