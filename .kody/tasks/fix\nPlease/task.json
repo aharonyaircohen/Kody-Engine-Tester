@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add queryBuilder utility with quotes and dollar sign handling",
+  "description": "Create src/utils/queryBuilder.ts that builds URL-encoded query strings from key-value objects. Must handle arrays by repeating the key (e.g., ?key=1&key=2), empty objects, nested objects (stringified), with values wrapped in double quotes and dollar signs ($) encoded as %24. Full test coverage in src/utils/queryBuilder.test.ts with 15 passing tests covering all requirements including quotes and dollar signs.",
+  "scope": [
+    "src/utils/queryBuilder.ts",
+    "src/utils/queryBuilder.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/slugify.ts: Single-function utility with JSDoc comments and vitest co-located tests",
+    "src/utils/url-parser.ts: Uses encodeURIComponent for URL encoding",
+    "Vitest testing pattern with describe/it/expect from slugify.test.ts"
+  ],
+  "questions": []
+}
