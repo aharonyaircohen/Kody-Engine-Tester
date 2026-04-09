@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp utility already exists at src/utils/clamp.ts with 8 passing tests covering: value within range, below min, above max, edge cases at min/max boundaries, negative numbers, floating point numbers, and error handling when min > max.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts - single-function utility file pattern"],
+  "questions": []
+}
