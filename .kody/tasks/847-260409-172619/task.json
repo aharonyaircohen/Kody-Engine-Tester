@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify MCP server integration for build/verify stages",
+  "description": "Verify that MCP servers configured in kody.config.json are passed to the agent during build/verify stages. Add MCP configuration to kody.config.json, trigger the pipeline, and confirm log output shows 'MCP servers enabled for build' and 'MCP servers enabled for verify' messages.",
+  "scope": [
+    "kody.config.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "node_modules/@kody-ade/engine/dist/mcp-config.js:buildMcpConfigJson() - generates Claude Code MCP config JSON from kody.config.json mcp settings",
+    "node_modules/@kody-ade/engine/dist/mcp-config.js:isMcpEnabledForStage() - gates MCP to build/verify/review stages via config.mcp.stages",
+    "node_modules/@kody-ade/engine/dist/stages/agent.js - passes mcpConfigJson to runner.run() and logs 'MCP servers enabled for {stage}'",
+    "node_modules/@kody-ade/engine/kody.config.schema.json - JSON schema defining mcp.enabled, mcp.servers, mcp.stages configuration"
+  ],
+  "questions": []
+}

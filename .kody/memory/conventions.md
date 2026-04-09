@@ -47,3 +47,7 @@ import { LessonEditor } from './LessonEditor'
 
 ## Learned 2026-04-09 (task: 842-260409-112718)
 - Active directories: node_modules/@kody-ade/engine/dist, node_modules/@kody-ade/engine/dist/stages, node_modules/@kody-ade/engine
+
+## Learned 2026-04-09 (task: 419-260405-054539)
+- Uses Payload CMS collections
+- Active directories: src/auth, src/middleware, src/collections, src/api/auth

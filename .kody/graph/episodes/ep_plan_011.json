@@ -1,0 +1,10 @@
+{
+  "id": "ep_plan_011",
+  "runId": "419-260405-054539",
+  "source": "plan",
+  "taskId": "419-260405-054539",
+  "createdAt": "2026-04-09T10:03:28.480Z",
+  "rawContent": "Task: 419-260405-054539 | Outcome: completed | Observation: Retrospective analysis unavailable | Suggestion: No suggestion | Stages: taskify:completed, plan:completed, build:completed, verify:completed, review:completed, review-fix:completed, ship:completed",
+  "extractedNodeIds": [],
+  "linkedFiles": []
+}
