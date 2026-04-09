@@ -1,0 +1,3 @@
+{"taskId":"decompose-1087-260409-224221","timestamp":"2026-04-09T23:00:19.008Z","stage":"review","patterns":["verdict:FAIL","finding:error-handling"],"room":"cache"}
+{"taskId":"decompose-1087-260409-224221","timestamp":"2026-04-09T23:05:09.694Z","stage":"review","patterns":["verdict:FAIL","finding:naming-convention"],"room":"cache"}
+{"taskId":"decompose-1087-260409-224221","timestamp":"2026-04-09T23:07:37.007Z","stage":"review","patterns":["verdict:FAIL"],"room":"cache"}
