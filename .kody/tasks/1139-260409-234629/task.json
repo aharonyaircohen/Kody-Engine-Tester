@@ -1,0 +1,13 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add audit logger service",
+  "description": "Create `logAuditEvent(event: { action: string; userId: string; resource: string; details?: string }): void` in `src/services/audit-logger.ts` that appends a JSON line to a JSONL file. Include co-located tests in `src/services/audit-logger.test.ts`.",
+  "scope": ["src/services/audit-logger.ts", "src/services/audit-logger.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/logger/index.ts:createFileTransport uses `fs.appendFileSync` to append JSON lines to a file — reuse the same append pattern for JSONL output"
+  ],
+  "questions": []
+}
+```
