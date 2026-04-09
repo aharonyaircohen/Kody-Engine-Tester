@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add request timing middleware",
+  "description": "Create middleware in `src/middleware/request-timing.ts` that measures request duration and adds `X-Response-Time` header with integration test. Should follow existing middleware patterns (factory function, NextRequest/NextResponse, excludePaths config).",
+  "scope": [
+    "src/middleware/request-timing.ts",
+    "src/middleware/request-timing.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts: Factory pattern with config object, middleware function returning NextResponse, excludePaths support, IP extraction from headers",
+    "src/middleware/rate-limiter.ts: Next.js middleware with header manipulation, createsRateLimiterMiddleware factory",
+    "src/middleware/request-logger.test.ts: Test pattern with makeRequest helper, vi.useFakeTimers(), and header verification"
+  ],
+  "questions": []
+}
