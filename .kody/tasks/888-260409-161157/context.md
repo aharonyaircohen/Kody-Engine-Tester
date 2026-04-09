@@ -30,3 +30,16 @@ Created `src/utils/timing-helpers.test.ts` with 7 tests covering:
 - Delayed execution
 - Single execution on multiple cal
 ...(truncated)
+
+### autofix (2026-04-09T16:25:59)
+**Root Cause Analysis:**
+
+The failure in `tests/int/api.int.spec.ts` is **not caused by my debounce implementation**. 
+
+**Evidence:**
+1. My changes only modified `src/utils/timing-helpers.ts` and `src/utils/timing-helpers.test.ts` (confirmed by `git diff --name-only HEAD~1`)
+2. The test failure is in `tests/int/api.int.spec.ts` which existed in the initial commit (90d8dfe), not my changes
+3. The error originates from Payload CMS's internal database introspection using drizzle-kit:
+   ```
+   Quer
+...(truncated)
