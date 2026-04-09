@@ -1,5 +1,11 @@
 import crypto from 'crypto'
 
+/**
+ * @deprecated SessionStore is deprecated. Authentication now uses pure JWT tokens via AuthService.
+ * Session tracking (generation, max sessions per user) is handled by AuthService using Payload.
+ * This store is no longer used by auth-middleware or login handlers.
+ */
+
 export interface Session {
   id: string
   userId: string

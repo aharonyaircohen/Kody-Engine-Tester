@@ -1,12 +1,8 @@
-import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
-import { JwtService } from '../auth/jwt-service'
-import type { User } from '../auth/user-store'
-import type { Session } from '../auth/session-store'
+import type { AuthenticatedUser } from '../auth/auth-service'
+import type { AuthService } from '../auth/auth-service'
 
 export interface AuthContext {
-  user?: User
-  session?: Session
+  user?: AuthenticatedUser
   error?: string
   status?: number
 }
@@ -24,11 +20,7 @@ interface RateLimitEntry {
   resetAt: number
 }
 
-export function createAuthMiddleware(
-  userStore: UserStore,
-  sessionStore: SessionStore,
-  jwtService: JwtService
-) {
+export function createAuthMiddleware(authService: AuthService) {
   const rateLimitMap = new Map<string, RateLimitEntry>()
 
   return async function authMiddleware(req: RequestContext): Promise<AuthContext> {
@@ -53,28 +45,15 @@ export function createAuthMiddleware(
 
     const token = authHeader.slice(7)
 
-    let payload
     try {
-      payload = await jwtService.verify(token)
+      const result = await authService.verifyAccessToken(token)
+      if (!result.user) {
+        return { error: 'User not found', status: 401 }
+      }
+      return { user: result.user }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid token'
       return { error: message, status: 401 }
     }
-
-    const session = sessionStore.findByToken(token)
-    if (!session) {
-      return { error: 'Session not found or expired', status: 401 }
-    }
-
-    if (payload.generation < session.generation) {
-      return { error: 'Token has been superseded by a newer session', status: 401 }
-    }
-
-    const user = await userStore.findById(payload.userId)
-    if (!user || !user.isActive) {
-      return { error: 'User not found or inactive', status: 401 }
-    }
-
-    return { user, session }
   }
 }

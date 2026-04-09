@@ -3,6 +3,7 @@ import { DiscussionService } from './discussions'
 import { DiscussionsStore } from '../collections/Discussions'
 import { EnrollmentStore } from '../collections/EnrollmentStore'
 import type { User } from '../auth/user-store'
+import type { RbacRole } from '../auth/auth-service'
 
 const makeRichText = (text: string) => ({
   root: {
@@ -10,8 +11,8 @@ const makeRichText = (text: string) => ({
   },
 })
 
-const makeUser = (id: string, role: User['role']): User =>
-  ({ id, email: `${id}@example.com`, role } as User)
+const makeUser = (id: string, roles: RbacRole[]): User =>
+  ({ id, email: `${id}@example.com`, roles } as unknown as User)
 
 describe('DiscussionService', () => {
   let store: DiscussionsStore
@@ -38,7 +39,7 @@ describe('DiscussionService', () => {
 
   describe('getThreads', () => {
     it('should return top-level posts sorted with pinned first', async () => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
+      userRegistry.set('u1', makeUser('u1', ['viewer']))
 
       const p1 = store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Regular') })
       const p2 = store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Pinned'), parentPost: null })
@@ -56,7 +57,7 @@ describe('DiscussionService', () => {
     })
 
     it('should not return replies as top-level threads', async () => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
+      userRegistry.set('u1', makeUser('u1', ['viewer']))
 
       const parent = store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Parent') })
       store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Reply'), parentPost: parent.id })
@@ -73,7 +74,7 @@ describe('DiscussionService', () => {
 
   describe('Thread nesting', () => {
     beforeEach(() => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
+      userRegistry.set('u1', makeUser('u1', ['viewer']))
       enrollmentStore.enroll('u1', 'course-1')
     })
 
@@ -108,9 +109,9 @@ describe('DiscussionService', () => {
 
   describe('Enrollment checks', () => {
     beforeEach(() => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
-      userRegistry.set('u2', makeUser('u2', 'student'))
-      userRegistry.set('u3', makeUser('u3', 'instructor'))
+      userRegistry.set('u1', makeUser('u1', ['viewer']))
+      userRegistry.set('u2', makeUser('u2', ['viewer']))
+      userRegistry.set('u3', makeUser('u3', ['editor']))
       enrollmentStore.enroll('u1', 'course-1')
       enrollmentStore.enroll('u3', 'course-1')
     })
@@ -128,7 +129,7 @@ describe('DiscussionService', () => {
     })
 
     it('should allow an instructor to create a post even without explicit enrollment', async () => {
-      // instructor role bypasses enrollment check in the enrollmentChecker
+      // editor role bypasses enrollment check in the enrollmentChecker
       await expect(
         service.createPost('lesson-1', 'u3', makeRichText('Instructor post'), 'course-1'),
       ).resolves.toMatchObject({ id: expect.any(String) })
@@ -152,10 +153,10 @@ describe('DiscussionService', () => {
 
   describe('pinPost / unpinPost', () => {
     beforeEach(() => {
-      userRegistry.set('student', makeUser('student', 'student'))
-      userRegistry.set('instructor', makeUser('instructor', 'instructor'))
-      userRegistry.set('admin', makeUser('admin', 'admin'))
-      userRegistry.set('guest', makeUser('guest', 'guest'))
+      userRegistry.set('student', makeUser('student', ['viewer']))
+      userRegistry.set('instructor', makeUser('instructor', ['editor']))
+      userRegistry.set('admin', makeUser('admin', ['admin']))
+      userRegistry.set('guest', makeUser('guest', ['viewer']))
       enrollmentStore.enroll('student', 'course-1')
       enrollmentStore.enroll('instructor', 'course-1')
       enrollmentStore.enroll('admin', 'course-1')
@@ -176,14 +177,14 @@ describe('DiscussionService', () => {
     it('should reject pin from a student', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.pinPost(id, 'student')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: editor or admin required',
       )
     })
 
     it('should reject pin from a guest', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.pinPost(id, 'guest')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: editor or admin required',
       )
     })
 
@@ -199,10 +200,10 @@ describe('DiscussionService', () => {
 
   describe('resolvePost / unresolvePost', () => {
     beforeEach(() => {
-      userRegistry.set('student', makeUser('student', 'student'))
-      userRegistry.set('instructor', makeUser('instructor', 'instructor'))
-      userRegistry.set('admin', makeUser('admin', 'admin'))
-      userRegistry.set('guest', makeUser('guest', 'guest'))
+      userRegistry.set('student', makeUser('student', ['viewer']))
+      userRegistry.set('instructor', makeUser('instructor', ['editor']))
+      userRegistry.set('admin', makeUser('admin', ['admin']))
+      userRegistry.set('guest', makeUser('guest', ['viewer']))
       enrollmentStore.enroll('student', 'course-1')
       enrollmentStore.enroll('instructor', 'course-1')
       enrollmentStore.enroll('admin', 'course-1')
@@ -223,14 +224,14 @@ describe('DiscussionService', () => {
     it('should reject resolve from a student', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.resolvePost(id, 'student')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: editor or admin required',
       )
     })
 
     it('should reject resolve from a guest', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.resolvePost(id, 'guest')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: editor or admin required',
       )
     })
 

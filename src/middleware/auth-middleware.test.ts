@@ -1,49 +1,66 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { createAuthMiddleware } from './auth-middleware'
-import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
+import { AuthService } from '../auth/auth-service'
 import { JwtService } from '../auth/jwt-service'
 
+// Mock Payload
+const mockPayload = {
+  findByID: vi.fn(),
+  find: vi.fn(),
+  update: vi.fn(),
+  create: vi.fn(),
+}
+
+vi.mock('@/getPayload', () => ({
+  getPayloadInstance: vi.fn(() => mockPayload),
+}))
+
+const TEST_JWT_SECRET = 'test-secret'
+
 describe('AuthMiddleware', () => {
-  let userStore: UserStore
-  let sessionStore: SessionStore
+  let authService: AuthService
   let jwtService: JwtService
   let middleware: ReturnType<typeof createAuthMiddleware>
 
-  beforeEach(async () => {
-    userStore = new UserStore()
-    await userStore.ready
-    sessionStore = new SessionStore()
-    jwtService = new JwtService('test-secret')
-    middleware = createAuthMiddleware(userStore, sessionStore, jwtService)
+  beforeEach(() => {
+    vi.clearAllMocks()
+    jwtService = new JwtService(TEST_JWT_SECRET)
+    authService = new AuthService(mockPayload as any, jwtService)
+    middleware = createAuthMiddleware(authService)
   })
 
-  async function makeAuthenticatedContext() {
-    const user = await userStore.findByEmail('admin@example.com')
-    const accessToken = await jwtService.signAccessToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
+  async function createValidToken(userId: string, email: string, role: 'admin' | 'editor' | 'viewer' = 'admin') {
+    return jwtService.signAccessToken({
+      userId,
+      email,
+      role,
+      sessionId: `session-${userId}`,
       generation: 0,
     })
-    const refreshToken = await jwtService.signRefreshToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
-      generation: 0,
-    })
-    const session = sessionStore.create(user!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
-    return { user: user!, accessToken, session }
   }
 
-  it('should attach user and session to context on valid token', async () => {
-    const { user, accessToken, session } = await makeAuthenticatedContext()
-    const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '127.0.0.1' })
-    expect(result.user?.id).toBe(user.id)
-    expect(result.session?.id).toBe(session.id)
+  async function createExpiredToken(userId: string, email: string) {
+    return jwtService.sign(
+      { userId, email, role: 'admin' as const, sessionId: `session-${userId}`, generation: 0 },
+      -1000
+    )
+  }
+
+  it('should return user context on valid token', async () => {
+    const mockUser = {
+      id: '123',
+      email: 'admin@example.com',
+      role: 'admin',
+      isActive: true,
+    }
+    mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+    const token = await createValidToken('123', 'admin@example.com', 'admin')
+    const result = await middleware({ authorization: `Bearer ${token}`, ip: '127.0.0.1' })
+
     expect(result.error).toBeUndefined()
+    expect(result.user).toBeDefined()
+    expect(result.user?.email).toBe('admin@example.com')
   })
 
   it('should return 401 when no token provided', async () => {
@@ -59,49 +76,44 @@ describe('AuthMiddleware', () => {
   })
 
   it('should return 401 for expired token', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    const expiredToken = await jwtService.sign(
-      { userId: user!.id, email: user!.email, role: user!.role as 'admin' | 'editor' | 'viewer', sessionId: 'session-1', generation: 0 },
-      -1000
-    )
+    const expiredToken = await createExpiredToken('123', 'admin@example.com')
     const result = await middleware({ authorization: `Bearer ${expiredToken}`, ip: '127.0.0.1' })
     expect(result.status).toBe(401)
   })
 
-  it('should return 401 for revoked session', async () => {
-    const { accessToken, session } = await makeAuthenticatedContext()
-    sessionStore.revoke(session.id)
-    const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '127.0.0.1' })
+  it('should return 401 when user not found', async () => {
+    mockPayload.find.mockResolvedValue({ docs: [] })
+
+    const token = await createValidToken('nonexistent', 'nobody@example.com')
+    const result = await middleware({ authorization: `Bearer ${token}`, ip: '127.0.0.1' })
     expect(result.status).toBe(401)
   })
 
-  it('should return 401 for token with older generation after refresh', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    const oldAccessToken = await jwtService.signAccessToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
-      generation: 0,
-    })
-    const refreshToken = await jwtService.signRefreshToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
-      generation: 0,
-    })
-    const session = sessionStore.create(user!.id, oldAccessToken, refreshToken, '127.0.0.1', 'TestAgent')
-    // Manually bump the session generation to simulate a refresh
-    sessionStore['sessions'].set(session.id, { ...session, generation: 1 })
-    const result = await middleware({ authorization: `Bearer ${oldAccessToken}`, ip: '127.0.0.1' })
+  it('should return 401 for inactive user', async () => {
+    const mockUser = {
+      id: '123',
+      email: 'admin@example.com',
+      role: 'admin',
+      isActive: false,
+    }
+    mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+    const token = await createValidToken('123', 'admin@example.com')
+    const result = await middleware({ authorization: `Bearer ${token}`, ip: '127.0.0.1' })
     expect(result.status).toBe(401)
-    expect(result.error).toBe('Token has been superseded by a newer session')
   })
 
   it('should allow requests under rate limit', async () => {
-    const { accessToken } = await makeAuthenticatedContext()
-    const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '10.0.0.1' })
+    const mockUser = {
+      id: '123',
+      email: 'admin@example.com',
+      role: 'admin',
+      isActive: true,
+    }
+    mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+    const token = await createValidToken('123', 'admin@example.com')
+    const result = await middleware({ authorization: `Bearer ${token}`, ip: '10.0.0.1' })
     expect(result.status).toBeUndefined()
     expect(result.user).toBeDefined()
   })

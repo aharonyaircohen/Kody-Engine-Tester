@@ -17,12 +17,13 @@ export function requireRole(...roles: RbacRole[]) {
       return { error: 'Authentication required', status: 401 }
     }
 
-    if (!context.user.role) {
+    if (!context.user.roles || context.user.roles.length === 0) {
       return { error: 'User role not configured', status: 401 }
     }
 
-    const userRoleLevel = ROLE_HIERARCHY[context.user.role as RbacRole]
-    const hasSufficientRole = roles.some((requiredRole) => userRoleLevel >= ROLE_HIERARCHY[requiredRole])
+    // Get the highest role level from user's roles
+    const userHighestRoleLevel = Math.max(...context.user.roles.map(r => ROLE_HIERARCHY[r]))
+    const hasSufficientRole = roles.some((requiredRole) => userHighestRoleLevel >= ROLE_HIERARCHY[requiredRole])
 
     if (!hasSufficientRole) {
       return {

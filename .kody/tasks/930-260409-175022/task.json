@@ -1,0 +1,38 @@
+```json
+{
+  "task_type": "refactor",
+  "title": "Refactor auth system to use JWT with RBAC roles array",
+  "description": "Redesign authentication from session-based to JWT token-based with RBAC. This involves: (1) Migrating UserStore from single role to roles array with admin/editor/viewer, (2) Consolidating API auth handlers (login.ts, auth-middleware.ts) to use pure JWT approach from AuthService instead of SessionStore+JWT hybrid, (3) Ensuring refresh token rotation is consistently implemented across auth flows, (4) Updating src/middleware/role-guard.ts with proper RBAC checks, (5) Updating all auth test files to work with new JWT-based auth.",
+  "scope": [
+    "src/auth/user-store.ts",
+    "src/auth/session-store.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/_auth.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/index.ts",
+    "src/middleware/role-guard.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/api/auth/login.ts",
+    "src/auth/user-store.test.ts",
+    "src/auth/session-store.test.ts",
+    "src/auth/jwt-service.test.ts",
+    "src/auth/auth-service.test.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/collections/Users.ts"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/_auth.ts:checkRole() - hierarchical role checking with ROLE_HIERARCHY map",
+    "src/auth/auth-service.ts:JwtService - JWT signing/verification with blacklist for revocation",
+    "src/auth/auth-service.ts:AuthService - Payload-based auth with refresh token rotation in login/refresh methods",
+    "src/auth/withAuth.ts:withAuth() - HOC wrapper for route handlers with role-based access control",
+    "src/middleware/auth-middleware.ts:createAuthMiddleware() - middleware factory pattern for auth context"
+  ],
+  "questions": [
+    "The task mentions 'src/auth/role-guard.ts' but only 'src/middleware/role-guard.ts' exists - should this file be created in src/auth/ or is src/middleware/role-guard.ts the target?",
+    "UserStore currently has UserRole values (student, instructor, guest) that differ from RbacRole (admin, editor, viewer). Should the migration map these legacy roles to the three-tier system, or is UserStore being deprecated in favor of AuthService (Payload-based)?",
+    "Should the migration include a data migration script to update existing user records in Payload CMS with the new roles array format, or is this only a code-level refactor?"
+  ]
+}
+```

@@ -1,6 +1,4 @@
-import type { UserStore } from '../../auth/user-store'
-import type { SessionStore } from '../../auth/session-store'
-import type { JwtService } from '../../auth/jwt-service'
+import type { AuthService } from '../../auth/auth-service'
 
 interface AuthError {
   message: string
@@ -22,52 +20,28 @@ export interface LoginResult {
 export async function login(
   email: string,
   password: string,
-  ipAddress: string,
-  userAgent: string,
-  userStore: UserStore,
-  sessionStore: SessionStore,
-  jwtService: JwtService
+  authService: AuthService
 ): Promise<LoginResult> {
   if (!email || !password) {
     throw createError('Email and password are required', 400)
   }
 
-  const user = await userStore.findByEmail(email)
-  if (!user) {
-    throw createError('Invalid credentials', 401)
-  }
-
-  if (!user.isActive) {
-    throw createError('Account is inactive', 403)
-  }
-
-  if (userStore.isLocked(user)) {
-    throw createError('Account is locked. Please try again later.', 423)
-  }
-
-  const valid = await userStore.verifyPassword(password, user.passwordHash, user.salt)
-  if (!valid) {
-    await userStore.recordFailedLogin(user.id)
-    throw createError('Invalid credentials', 401)
-  }
-
-  await userStore.resetFailedAttempts(user.id)
-  await userStore.update(user.id, { lastLoginAt: new Date() })
-
-  const tokenPayload = { userId: user.id, email: user.email, role: user.role as 'admin' | 'editor' | 'viewer', sessionId: '', generation: 0 }
-  const accessToken = await jwtService.signAccessToken(tokenPayload)
-  const refreshToken = await jwtService.signRefreshToken(tokenPayload)
-
-  const session = sessionStore.create(user.id, accessToken, refreshToken, ipAddress, userAgent)
-
-  // Update token payload with actual sessionId
-  const finalAccessToken = await jwtService.signAccessToken({ ...tokenPayload, sessionId: session.id })
-  const finalRefreshToken = await jwtService.signRefreshToken({ ...tokenPayload, sessionId: session.id })
-  sessionStore.refresh(session.id, finalAccessToken, finalRefreshToken)
-
-  return {
-    accessToken: finalAccessToken,
-    refreshToken: finalRefreshToken,
-    user: { id: user.id, email: user.email, role: user.role },
+  try {
+    const result = await authService.login(email, password, '', '')
+    return {
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+      user: {
+        id: String(result.user.id),
+        email: result.user.email,
+        role: result.user.role,
+      },
+    }
+  } catch (err) {
+    if (err instanceof Error && 'status' in err) {
+      const status = (err as AuthError & Error).status
+      throw createError(err.message, status)
+    }
+    throw createError('Login failed', 500)
   }
 }
