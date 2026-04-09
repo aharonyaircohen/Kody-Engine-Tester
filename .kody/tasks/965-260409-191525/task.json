@@ -1,0 +1,15 @@
+
+```json
+{
+  "task_type": "feature",
+  "title": "Add stringPad utility to src/utils/",
+  "description": "Create a string padding utility in src/utils/stringPad.ts that pads strings to a minimum length. This utility should accept a string, a target minimum length, and a pad character, returning the string padded to at least the target length.",
+  "scope": ["src/utils/stringPad.ts", "src/utils/stringPad.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/pad-start.ts - existing string padding utility using similar pattern (export function with targetLength and padChar params)",
+    "src/utils/repeat.ts - simple utility pattern: single exported function with basic input validation"
+  ],
+  "questions": []
+}
+```
