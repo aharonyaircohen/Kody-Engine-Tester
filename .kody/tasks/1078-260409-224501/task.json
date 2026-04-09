@@ -1,0 +1,11 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of HTTP method decorator middleware",
+  "description": "The method-guard.ts middleware and its test file already exist in src/middleware/. Implementation accepts a list of allowed HTTP methods, checks request.method, returns 405 Method Not Allowed for disallowed methods, and includes comprehensive edge case coverage (24 tests). All tests pass.",
+  "scope": ["src/middleware/method-guard.ts", "src/middleware/method-guard.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts - Next.js middleware pattern using NextRequest/NextResponse"
+  ],
+  "questions": []
+}
