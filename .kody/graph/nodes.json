@@ -648,5 +648,45 @@
     "episodeId": "ep_nudge_002",
     "validFrom": "2026-04-09T08:26:14.486Z",
     "validTo": null
+  },
+  "conventions_auth_3993559485945166": {
+    "id": "conventions_auth_3993559485945166",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "auth",
+    "content": "Use bcrypt for password hashing with min 8 chars",
+    "episodeId": "ep_test_001",
+    "validFrom": "2026-04-09T19:23:57.645Z",
+    "validTo": null
+  },
+  "facts_api_3993559487345666": {
+    "id": "facts_api_3993559487345666",
+    "type": "facts",
+    "hall": "facts",
+    "room": "api",
+    "content": "API base URL is /api/v1",
+    "episodeId": "ep_test_001",
+    "validFrom": "2026-04-09T19:23:57.646Z",
+    "validTo": null
+  },
+  "conventions_api_3993559487702083": {
+    "id": "conventions_api_3993559487702083",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "api",
+    "content": "Use NextResponse for API routes",
+    "episodeId": "ep_test_001",
+    "validFrom": "2026-04-09T19:23:57.646Z",
+    "validTo": null
+  },
+  "conventions_auth_3993775863205416": {
+    "id": "conventions_auth_3993775863205416",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "auth",
+    "content": "JWT tokens must use HMAC-SHA256 with a minimum 256-bit secret key",
+    "episodeId": "ep_test_002",
+    "validFrom": "2026-04-09T19:27:34.043Z",
+    "validTo": null
   }
 }
