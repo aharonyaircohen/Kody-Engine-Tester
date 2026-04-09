@@ -1,0 +1,21 @@
+{
+  "task_type": "feature",
+  "title": "Add health check detail endpoint",
+  "description": "Add GET /api/health/detail route in src/app/api/health/detail/route.ts returning { status, uptime, version, timestamp }. Read version from package.json. Include integration test following the existing health route test pattern (fake timers, response structure validation).",
+  "scope": [
+    "src/app/api/health/detail/route.ts",
+    "src/app/api/health/detail/route.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    {
+      "file": "src/app/api/health/route.ts",
+      "description": "GET handler returning JSON with status, uptime, timestamp using process.uptime() and new Date().toISOString()"
+    },
+    {
+      "file": "src/app/api/health/route.test.ts",
+      "description": "vitest integration test using fake timers (vi.useFakeTimers), testing response status, headers, and JSON body structure"
+    }
+  ],
+  "questions": []
+}
