@@ -1,0 +1,19 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing FTS implementation",
+  "description": "The session FTS search feature already exists and is fully functional. Verified: (1) `kody graph search . JWT` returns 2 ranked results with BM25 scores and bold highlighting. (2) `kody graph search . authentication` returns 1 result with score 0.75. (3) `kody graph search . PostgreSQL` returns database episode with score 0.74. (4) `kody graph search . \"barrel exports\"` returns review episode with score 1.52. (5) `kody graph search . ORM` returns plan episode with highlighted Drizzle ORM. All acceptance criteria met: episodes are indexed in sessions-index.json with BM25 vocabulary (idf scores) and document positions; search returns ranked results with highlighted snippets.",
+  "scope": [
+    ".kody/graph/sessions-index.json",
+    ".kody/graph/nodes.json",
+    ".kody/graph/episodes/"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "BM25 inverted index stored in sessions-index.json with vocabulary (docCount, idf) and documents (taskId, episodeId, source, content, createdAt, wordCount, positions)",
+    "kody graph search CLI subcommand already implemented with ranked scoring and snippet highlighting",
+    "Episode types include: nudge, plan, review with consistent metadata structure"
+  ],
+  "questions": []
+}
+```

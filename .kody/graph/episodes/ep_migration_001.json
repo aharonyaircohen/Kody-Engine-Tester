@@ -1,0 +1,9 @@
+{
+  "id": "ep_migration_001",
+  "runId": "migration",
+  "source": "migration",
+  "taskId": "migration",
+  "createdAt": "2026-04-09T07:23:20.143Z",
+  "rawContent": "Migrating 5 legacy .md memory files",
+  "extractedNodeIds": []
+}

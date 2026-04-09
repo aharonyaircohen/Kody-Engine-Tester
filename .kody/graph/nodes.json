@@ -1,0 +1,592 @@
+{
+  "conventions_architecture_3950321989567750": {
+    "id": "conventions_architecture_3950321989567750",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Framework: Next.js 16.2.1",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.145Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321989808041": {
+    "id": "conventions_architecture_3950321989808041",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Language: TypeScript 5.7.3",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.145Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321990006375": {
+    "id": "conventions_architecture_3950321990006375",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Testing: vitest 4.0.18",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.145Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321990163375": {
+    "id": "conventions_architecture_3950321990163375",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Linting: eslint ^9.16.0",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.146Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321990308125": {
+    "id": "conventions_architecture_3950321990308125",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Formatting: prettier ^3.4.2",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.146Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321990455500": {
+    "id": "conventions_architecture_3950321990455500",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "CMS: Payload CMS",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.146Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321990635208": {
+    "id": "conventions_architecture_3950321990635208",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Package manager: pnpm",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.146Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321990783916": {
+    "id": "conventions_architecture_3950321990783916",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Module system: ESM",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.146Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321990910708": {
+    "id": "conventions_architecture_3950321990910708",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "Top-level directories: docs, scripts, skills, src, tests",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.146Z",
+    "validTo": null
+  },
+  "conventions_architecture_3950321991089333": {
+    "id": "conventions_architecture_3950321991089333",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "architecture",
+    "content": "src/ structure: api, app, auth, collections, components, contexts, hooks, middleware, migrations, pages, security, services, utils, validation",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.147Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321991300083": {
+    "id": "conventions_conventions_3950321991300083",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses vitest for testing",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.147Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321991437041": {
+    "id": "conventions_conventions_3950321991437041",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses eslint for linting",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.147Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321991612000": {
+    "id": "conventions_conventions_3950321991612000",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses vitest for testing",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.147Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321991795250": {
+    "id": "conventions_conventions_3950321991795250",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses eslint for linting",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.147Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321991971416": {
+    "id": "conventions_conventions_3950321991971416",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Active directories: src/app/api/health",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.147Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321992144291": {
+    "id": "conventions_conventions_3950321992144291",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses vitest for testing",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.148Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321992335333": {
+    "id": "conventions_conventions_3950321992335333",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses eslint for linting",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.148Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321992526333": {
+    "id": "conventions_conventions_3950321992526333",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Active directories: src/utils",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.148Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321992733041": {
+    "id": "conventions_conventions_3950321992733041",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses vitest for testing",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.148Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321992960666": {
+    "id": "conventions_conventions_3950321992960666",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses eslint for linting",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.148Z",
+    "validTo": null
+  },
+  "conventions_conventions_3950321993192250": {
+    "id": "conventions_conventions_3950321993192250",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "conventions",
+    "content": "Uses Drizzle ORM",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.149Z",
+    "validTo": null
+  },
+  "conventions_domain_3950321993817041": {
+    "id": "conventions_domain_3950321993817041",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "domain",
+    "content": "`GET/POST /api/notes` — Note CRUD with search",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.149Z",
+    "validTo": null
+  },
+  "conventions_domain_3950321994079166": {
+    "id": "conventions_domain_3950321994079166",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "domain",
+    "content": "`GET /api/quizzes/[id]` — Quiz retrieval",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.150Z",
+    "validTo": null
+  },
+  "conventions_domain_3950321994365833": {
+    "id": "conventions_domain_3950321994365833",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "domain",
+    "content": "`POST /api/quizzes/[id]/submit` — Quiz grading via `QuizGrader`",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.150Z",
+    "validTo": null
+  },
+  "conventions_domain_3950321994730000": {
+    "id": "conventions_domain_3950321994730000",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "domain",
+    "content": "`GET /api/quizzes/[id]/attempts` — User's quiz attempts",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.150Z",
+    "validTo": null
+  },
+  "conventions_domain_3950321994941750": {
+    "id": "conventions_domain_3950321994941750",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "domain",
+    "content": "`GET /api/courses/search` — Course search with `CourseSearchService`",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.150Z",
+    "validTo": null
+  },
+  "conventions_domain_3950321995129666": {
+    "id": "conventions_domain_3950321995129666",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "domain",
+    "content": "`POST /api/enroll` — Enrollment (viewer role required)",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.151Z",
+    "validTo": null
+  },
+  "conventions_domain_3950321995312500": {
+    "id": "conventions_domain_3950321995312500",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "domain",
+    "content": "`GET /api/gradebook/course/[id]` — Grades per course (editor/admin)",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.151Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321995774125": {
+    "id": "conventions_patterns_3950321995774125",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Dependency Injection Container** (`src/utils/di-container.ts`): Type-safe DI with tokens, factory registration, singleton/transient lifecycles, and circular dependency detection via `resolving` Set.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.151Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321996037375": {
+    "id": "conventions_patterns_3950321996037375",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Factory Functions**: DI container registers factory functions; service constructors accept dep interfaces (e.g., `GradebookServiceDeps<T...>`).",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.151Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321996259791": {
+    "id": "conventions_patterns_3950321996259791",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Singleton**: Container caches singletons in `singletons` Map; Auth exports module-level singleton instances (`userStore`, `sessionStore`, `jwtService`).",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.152Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321996468875": {
+    "id": "conventions_patterns_3950321996468875",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.152Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321996680875": {
+    "id": "conventions_patterns_3950321996680875",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.152Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321996902708": {
+    "id": "conventions_patterns_3950321996902708",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Strategy**: `request-logger.ts` switches between `json`/`text` output formats; log level Strategy maps HTTP status codes to `debug|info|warn|error`.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.152Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321997157250": {
+    "id": "conventions_patterns_3950321997157250",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Repository/Store**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` — hybrid repository-pattern store.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.153Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321997414666": {
+    "id": "conventions_patterns_3950321997414666",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.153Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321997661458": {
+    "id": "conventions_patterns_3950321997661458",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Entry points**: API routes, Next.js pages",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.153Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321997891166": {
+    "id": "conventions_patterns_3950321997891166",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole`",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.153Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321998114250": {
+    "id": "conventions_patterns_3950321998114250",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`) decouple services from Payload",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.154Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321998571958": {
+    "id": "conventions_patterns_3950321998571958",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "`Container.register<T>(token, factory)` — generic DI",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.154Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321998797458": {
+    "id": "conventions_patterns_3950321998797458",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "`DIDisposable` interface for lifecycle cleanup",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.154Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321999011333": {
+    "id": "conventions_patterns_3950321999011333",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "`createRequestLogger(config)` — configurable middleware factory",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.154Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321999242916": {
+    "id": "conventions_patterns_3950321999242916",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "Zod schemas in `src/validation/` for input validation at API boundaries",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.155Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321999534583": {
+    "id": "conventions_patterns_3950321999534583",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Dual auth systems**: `UserStore` (SHA-256, in-memory) coexists with `AuthService` (PBKDF2, JWT) — inconsistent password hashing and user representation.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.155Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950321999799458": {
+    "id": "conventions_patterns_3950321999799458",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Role divergence**: `UserStore.UserRole = 'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole = 'admin'|'editor'|'viewer'` — no alignment.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.155Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950322000002250": {
+    "id": "conventions_patterns_3950322000002250",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**N+1 risk**: Dashboard page batch-fetches lessons but other pages may not.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.155Z",
+    "validTo": null
+  },
+  "conventions_patterns_3950322000200791": {
+    "id": "conventions_patterns_3950322000200791",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "patterns",
+    "content": "**Inconsistent type narrowing**: `dashboard/page.tsx` uses `as unknown as` casts rather than proper type guards.",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.156Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322000415625": {
+    "id": "conventions_testingstrategy_3950322000415625",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "**Integration**: Vitest 4.0 (`vitest.config.mts`) — `pnpm test:int`",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.156Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322000619916": {
+    "id": "conventions_testingstrategy_3950322000619916",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "**E2E**: Playwright 1.58 (`playwright.config.ts`) — `pnpm test:e2e`",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.156Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322000833125": {
+    "id": "conventions_testingstrategy_3950322000833125",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "**Runner**: `pnpm test` executes both suites sequentially",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.156Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322001026000": {
+    "id": "conventions_testingstrategy_3950322001026000",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "**Mocks**: `vi.fn()` + `mockResolvedValue` / `mockRejectedValue` for Payload SDK stubs",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.156Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322001211708": {
+    "id": "conventions_testingstrategy_3950322001211708",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "**Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.157Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322001425000": {
+    "id": "conventions_testingstrategy_3950322001425000",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "**Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.157Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322001642000": {
+    "id": "conventions_testingstrategy_3950322001642000",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "**Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.157Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322001860000": {
+    "id": "conventions_testingstrategy_3950322001860000",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "`pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.157Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322002074666": {
+    "id": "conventions_testingstrategy_3950322002074666",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "Playwright `forbidOnly: true` prevents committed `.only()` tests",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.158Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322002285958": {
+    "id": "conventions_testingstrategy_3950322002285958",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "Retries enabled on CI (2x) to reduce flaky failure noise",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.158Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322002492333": {
+    "id": "conventions_testingstrategy_3950322002492333",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "No explicit threshold configured; vitest run passes `--coverage` implicitly",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.158Z",
+    "validTo": null
+  },
+  "conventions_testingstrategy_3950322002701625": {
+    "id": "conventions_testingstrategy_3950322002701625",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "testing-strategy",
+    "content": "Example coverage: `CourseSearchService` tested via mocked Payload find calls",
+    "episodeId": "ep_migration_001",
+    "validFrom": "2026-04-09T07:23:20.158Z",
+    "validTo": null
+  }
+}
