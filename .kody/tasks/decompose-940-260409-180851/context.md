@@ -53,3 +53,25 @@ Issue 940 (T26: Decompose --no-compose flag) cannot be used to test the `--no-co
 2. **decompose.json confirms**: `decomposable: false` with reason "monitoring/verification task with no implementation steps"
 3. **No subPipelines created**: Since there's no decomposition, the `--
 ...(truncated)
+
+### review (2026-04-09T18:28:18)
+## Verdict: PASS
+
+## Summary
+
+This commit adds only task documentation/metadata files (`.kody/tasks/decompose-940-260409-180851/*`) for an E2E test verification task. The task was to verify the `--no-compose` flag for issue 940, but the issue was found to be non-decomposable (complexity_score: 1, threshold: 6). No production source code was modified — only task infrastructure files.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+1. **Commit message mismatch**: `.kody/tasks/decom
+...(truncated)
