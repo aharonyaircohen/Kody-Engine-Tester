@@ -1,0 +1,17 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add string-capitalizer utility function",
+  "description": "Add a string capitalize utility function in src/utils/string-capitalizer.ts that capitalizes the first letter of each word, with tests in src/utils/string-capitalizer.test.ts. This is a test task to verify the decompose pipeline correctly identifies simple tasks (complexity < 6) and falls back to normal runPipeline() path.",
+  "scope": [
+    "src/utils/string-capitalizer.ts",
+    "src/utils/string-capitalizer.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/capitalize-words.ts - similar capitalize function following single-responsibility utility pattern",
+    "src/utils/capitalize-words.test.ts - co-located test file with vitest"
+  ],
+  "questions": []
+}
+```
