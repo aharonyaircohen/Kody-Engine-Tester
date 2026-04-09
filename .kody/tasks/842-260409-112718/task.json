@@ -1,0 +1,22 @@
+{
+  "task_type": "chore",
+  "title": "Verify MCP server integration implementation",
+  "description": "Verify that MCP (Model Context Protocol) servers are already implemented in @kody-ade/engine and correctly configured in kody.config.json. All acceptance criteria are met by the existing engine implementation: buildMcpConfigJson() generates valid MCP JSON, isMcpEnabledForStage() gates to build/verify/review stages, withPlaywrightIfNeeded() auto-injects Playwright for UI tasks, pipeline passes mcpConfigJson to agent runner, and log output shows 'MCP servers enabled for {stage}'.",
+  "scope": [
+    "kody.config.json",
+    "node_modules/@kody-ade/engine/dist/mcp-config.js",
+    "node_modules/@kody-ade/engine/dist/mcp-config.d.ts",
+    "node_modules/@kody-ade/engine/dist/stages/agent.js",
+    "node_modules/@kody-ade/engine/kody.config.schema.json",
+    "node_modules/@kody-ade/engine/dist/config.d.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "node_modules/@kody-ade/engine/dist/mcp-config.js:buildMcpConfigJson() - generates Claude Code MCP config JSON from kody.config.json mcp settings",
+    "node_modules/@kody-ade/engine/dist/mcp-config.js:isMcpEnabledForStage() - gates MCP to build/verify/review stages via config.mcp.stages",
+    "node_modules/@kody-ade/engine/dist/mcp-config.js:withPlaywrightIfNeeded() - auto-injects @anthropic-ai/mcp-playwright when taskHasUI() is true",
+    "node_modules/@kody-ade/engine/dist/stages/agent.js:78-84 - passes mcpConfigJson to runner.run() and logs 'MCP servers enabled for {stage}'",
+    "node_modules/@kody-ade/engine/kody.config.schema.json:208-249 - JSON schema defining mcp.enabled, mcp.servers, mcp.stages configuration"
+  ],
+  "questions": []
+}

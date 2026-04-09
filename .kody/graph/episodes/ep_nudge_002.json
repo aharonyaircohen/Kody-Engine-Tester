@@ -1,0 +1,10 @@
+{
+  "id": "ep_nudge_002",
+  "runId": "840-260409-110822",
+  "source": "nudge",
+  "taskId": "840-260409-110822",
+  "createdAt": "2026-04-09T08:26:14.483Z",
+  "rawContent": "LLM nudge identified 3 pattern(s)",
+  "extractedNodeIds": [],
+  "linkedFiles": []
+}

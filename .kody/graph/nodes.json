@@ -618,5 +618,35 @@
     "episodeId": "ep_nudge_001",
     "validFrom": "2026-04-09T08:22:55.301Z",
     "validTo": null
+  },
+  "facts_memorynudgefeature_3954096342068750": {
+    "id": "facts_memorynudgefeature_3954096342068750",
+    "type": "facts",
+    "hall": "facts",
+    "room": "memory-nudge-feature",
+    "content": "The memory nudge feature in src/memory/nudge.ts analyzes task artifacts after successful completion and writes patterns to graph memory when KODY_MEMORY_NUDGE=true env var is set.",
+    "episodeId": "ep_nudge_002",
+    "validFrom": "2026-04-09T08:26:14.486Z",
+    "validTo": null
+  },
+  "conventions_taskartifacts_3954096342589583": {
+    "id": "conventions_taskartifacts_3954096342589583",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "task-artifacts",
+    "content": "Tasks generate structured artifacts (task.md, task.json, verify.md, ship.md) that can be analyzed by downstream features like memory nudge.",
+    "episodeId": "ep_nudge_002",
+    "validFrom": "2026-04-09T08:26:14.486Z",
+    "validTo": null
+  },
+  "thoughts_verifystageerrors_3954096342866666": {
+    "id": "thoughts_verifystageerrors_3954096342866666",
+    "type": "thoughts",
+    "hall": "thoughts",
+    "room": "verify-stage-errors",
+    "content": "TypeScript type errors in .next/dev/types/ may occur from modal/Error page imports but don't block shipping when verification runs against modified files only.",
+    "episodeId": "ep_nudge_002",
+    "validFrom": "2026-04-09T08:26:14.486Z",
+    "validTo": null
   }
 }

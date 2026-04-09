@@ -27,9 +27,14 @@
     "url": "http://localhost:3000"
   },
   "mcp": {
-    "enabled": false,
-    "servers": {},
-    "stages": []
+    "enabled": true,
+    "servers": {
+      "test-server": {
+        "command": "echo",
+        "args": ["MCP test server"]
+      }
+    },
+    "stages": ["build", "verify", "review"]
   },
   "watch": {
     "enabled": true,
