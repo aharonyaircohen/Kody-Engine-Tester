@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of broken-import utility",
+  "description": "The file `src/utils/broken-import.ts` already exists with the intended broken import from `@/nonexistent/module`. Verified that the file exports `getBrokenImport()` which imports a non-existent module, which will cause a typecheck failure at verify stage.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/*.ts pattern - utility modules in src/utils/"],
+  "questions": []
+}
