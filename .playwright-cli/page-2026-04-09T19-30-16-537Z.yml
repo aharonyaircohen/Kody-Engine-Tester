@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - img "Payload Logo" [ref=e6]
+        - heading "Welcome to your new project." [level=1] [ref=e7]
+        - generic [ref=e8]:
+          - link "Go to admin panel" [ref=e9] [cursor=pointer]:
+            - /url: /admin
+          - link "Documentation" [ref=e10] [cursor=pointer]:
+            - /url: https://payloadcms.com/docs
+      - generic [ref=e11]:
+        - paragraph [ref=e12]: Update this page by editing
+        - link "app/(frontend)/page.tsx" [ref=e13] [cursor=pointer]:
+          - /url: vscode://file//home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/src/app/(frontend)/page.tsx
+          - code [ref=e14]: app/(frontend)/page.tsx
+  - contentinfo [ref=e15]:
+    - generic [ref=e17]: © 2026
+  - button "Open Next.js Dev Tools" [ref=e23] [cursor=pointer]:
+    - img [ref=e24]
