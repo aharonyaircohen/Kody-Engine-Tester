@@ -1,0 +1,23 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing auth middleware implementation",
+  "description": "Auth middleware already exists at src/middleware/auth-middleware.ts with comprehensive implementation and tests. The middleware extracts JWT from Authorization: Bearer header, returns 401 for missing/invalid/expired tokens, decodes user id and email from token payload, injects user context, and includes 8 passing tests covering all acceptance criteria including valid token, missing token, malformed token, expired token, invalid signature, revoked session, and generation mismatch scenarios.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/jwt-service.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts: Express-style factory function createAuthMiddleware(userStore, sessionStore, jwtService) returning async middleware",
+    "src/middleware/auth-middleware.ts: AuthContext interface with user, session, error, status fields",
+    "src/middleware/auth-middleware.ts: Rate limiting via in-memory Map with configurable MAX and WINDOW",
+    "src/middleware/auth-middleware.ts: Bearer token extraction via authHeader.startsWith('Bearer ') and authHeader.slice(7)",
+    "src/auth/jwt-service.ts: HS256 HMAC signing with base64url encoding, TokenPayload interface, signAccessToken (15min) and signRefreshToken (7 days)",
+    "src/middleware/auth-middleware.test.ts: Vitest describe/it/expect with beforeEach setup, makeAuthenticatedContext helper"
+  ],
+  "questions": []
+}
+```
