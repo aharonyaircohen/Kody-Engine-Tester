@@ -1,9 +1,13 @@
-import type { Session } from '../../auth/session-store'
+export interface TokenInfo {
+  token: string
+  createdAt: Date
+  generation: number
+}
 
 interface Props {
-  session: Session
+  session: TokenInfo
   isCurrentSession?: boolean
-  onRevoke: (sessionId: string) => void
+  onRevoke: (token: string) => void
 }
 
 export function SessionCard({ session, isCurrentSession, onRevoke }: Props) {
@@ -14,12 +18,12 @@ export function SessionCard({ session, isCurrentSession, onRevoke }: Props) {
       padding: 16,
       marginBottom: 8,
     }}>
-      <div><strong>IP:</strong> {session.ipAddress}</div>
-      <div><strong>Device:</strong> {session.userAgent}</div>
+      <div><strong>Token:</strong> {session.token.substring(0, 20)}...</div>
       <div><strong>Created:</strong> {session.createdAt.toLocaleString()}</div>
+      <div><strong>Generation:</strong> {session.generation}</div>
       {isCurrentSession && <span style={{ color: '#3b82f6', fontSize: 12 }}>(Current session)</span>}
       <button
-        onClick={() => onRevoke(session.id)}
+        onClick={() => onRevoke(session.token)}
         disabled={isCurrentSession}
         style={{ marginTop: 8, padding: '4px 12px', color: '#ef4444' }}
       >

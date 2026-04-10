@@ -106,8 +106,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'editor' && user.role !== 'admin') {
+      throw new Error('Forbidden: editor or admin required')
     }
     this.store.pin(postId)
   }
@@ -117,8 +117,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'editor' && user.role !== 'admin') {
+      throw new Error('Forbidden: editor or admin required')
     }
     this.store.unpin(postId)
   }
@@ -128,8 +128,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'editor' && user.role !== 'admin') {
+      throw new Error('Forbidden: editor or admin required')
     }
     this.store.resolve(postId)
   }
@@ -139,8 +139,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'editor' && user.role !== 'admin') {
+      throw new Error('Forbidden: editor or admin required')
     }
     this.store.unresolve(postId)
   }

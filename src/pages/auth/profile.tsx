@@ -3,8 +3,7 @@ import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../contexts/auth-context'
 import { ProtectedRoute } from '../../components/auth/ProtectedRoute'
 import { PasswordStrengthBar } from '../../components/auth/PasswordStrengthBar'
-import { SessionCard } from '../../components/auth/SessionCard'
-import type { Session } from '../../auth/session-store'
+import { SessionCard, type TokenInfo } from '../../components/auth/SessionCard'
 
 export default function ProfilePage() {
   return (
@@ -16,7 +15,7 @@ export default function ProfilePage() {
 
 function ProfileContent() {
   const { user, logout } = useContext(AuthContext)
-  const [sessions, setSessions] = useState<Session[]>([])
+  const [sessions, setSessions] = useState<TokenInfo[]>([])
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
@@ -59,22 +58,22 @@ function ProfileContent() {
     }
   }
 
-  async function revokeSession(sessionId: string) {
+  async function revokeSession(token: string) {
     const accessToken = localStorage.getItem('auth_access_token')
-    await fetch(`/api/auth/sessions/${sessionId}`, {
+    await fetch(`/api/auth/sessions/${token}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${accessToken}` },
     })
-    setSessions(s => s.filter(x => x.id !== sessionId))
+    setSessions(s => s.filter(x => x.token !== token))
   }
 
   const currentAccessToken = localStorage.getItem('auth_access_token') ?? ''
-  let currentSessionId = ''
+  let currentToken = ''
   try {
     const parts = currentAccessToken.split('.')
     if (parts.length === 3) {
       const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString())
-      currentSessionId = payload.sessionId
+      currentToken = payload.sessionId
     }
   } catch {}
 
@@ -113,9 +112,9 @@ function ProfileContent() {
         <h2>Active Sessions</h2>
         {sessions.map(session => (
           <SessionCard
-            key={session.id}
+            key={session.token}
             session={session}
-            isCurrentSession={session.id === currentSessionId}
+            isCurrentSession={session.token === currentToken}
             onRevoke={revokeSession}
           />
         ))}

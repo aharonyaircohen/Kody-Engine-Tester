@@ -85,6 +85,14 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'roles',
+      type: 'select',
+      hasMany: true,
+      options: ['admin', 'editor', 'viewer'],
+      defaultValue: ['viewer'],
+      required: true,
+    },
+    {
       name: 'organization',
       type: 'text',
       required: false,

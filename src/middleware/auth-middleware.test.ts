@@ -1,21 +1,21 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { createAuthMiddleware } from './auth-middleware'
 import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
+import { JwtAuthStore } from '../auth/jwt-auth-store'
 import { JwtService } from '../auth/jwt-service'
 
 describe('AuthMiddleware', () => {
   let userStore: UserStore
-  let sessionStore: SessionStore
+  let jwtAuthStore: JwtAuthStore
   let jwtService: JwtService
   let middleware: ReturnType<typeof createAuthMiddleware>
 
   beforeEach(async () => {
     userStore = new UserStore()
     await userStore.ready
-    sessionStore = new SessionStore()
+    jwtAuthStore = new JwtAuthStore()
     jwtService = new JwtService('test-secret')
-    middleware = createAuthMiddleware(userStore, sessionStore, jwtService)
+    middleware = createAuthMiddleware(userStore, jwtAuthStore, jwtService)
   })
 
   async function makeAuthenticatedContext() {
@@ -34,15 +34,14 @@ describe('AuthMiddleware', () => {
       sessionId: 'session-1',
       generation: 0,
     })
-    const session = sessionStore.create(user!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
-    return { user: user!, accessToken, session }
+    const storedToken = jwtAuthStore.create(user!.id, accessToken, refreshToken)
+    return { user: user!, accessToken, storedToken }
   }
 
-  it('should attach user and session to context on valid token', async () => {
-    const { user, accessToken, session } = await makeAuthenticatedContext()
+  it('should attach user to context on valid token', async () => {
+    const { user, accessToken } = await makeAuthenticatedContext()
     const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '127.0.0.1' })
     expect(result.user?.id).toBe(user.id)
-    expect(result.session?.id).toBe(session.id)
     expect(result.error).toBeUndefined()
   })
 
@@ -68,9 +67,9 @@ describe('AuthMiddleware', () => {
     expect(result.status).toBe(401)
   })
 
-  it('should return 401 for revoked session', async () => {
-    const { accessToken, session } = await makeAuthenticatedContext()
-    sessionStore.revoke(session.id)
+  it('should return 401 for revoked token', async () => {
+    const { accessToken, storedToken } = await makeAuthenticatedContext()
+    jwtAuthStore.revoke(storedToken.token)
     const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '127.0.0.1' })
     expect(result.status).toBe(401)
   })
@@ -91,9 +90,9 @@ describe('AuthMiddleware', () => {
       sessionId: 'session-1',
       generation: 0,
     })
-    const session = sessionStore.create(user!.id, oldAccessToken, refreshToken, '127.0.0.1', 'TestAgent')
-    // Manually bump the session generation to simulate a refresh
-    sessionStore['sessions'].set(session.id, { ...session, generation: 1 })
+    const storedToken = jwtAuthStore.create(user!.id, oldAccessToken, refreshToken)
+    // Manually bump the generation to simulate a refresh
+    jwtAuthStore['tokens'].set(storedToken.token, { ...storedToken, generation: 1 })
     const result = await middleware({ authorization: `Bearer ${oldAccessToken}`, ip: '127.0.0.1' })
     expect(result.status).toBe(401)
     expect(result.error).toBe('Token has been superseded by a newer session')
