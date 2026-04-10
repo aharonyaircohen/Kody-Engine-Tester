@@ -1,0 +1,13 @@
+{
+"task_type": "feature",
+"title": "Add formatPhoneNumber utility function",
+"description": "Create a formatPhoneNumber utility in src/utils/formatPhoneNumber.ts that formats US phone numbers as (XXX) XXX-XXXX and international numbers with country code as +1 (XXX) XXX-XXXX. The function should handle inputs with or without existing formatting (e.g., \"1234567890\" or \"123-456-7890\"). Include comprehensive unit tests in src/utils/formatPhoneNumber.test.ts following the existing vitest pattern.",
+"scope": ["src/utils/formatPhoneNumber.ts", "src/utils/formatPhoneNumber.test.ts"],
+"risk_level": "low",
+"existing_patterns": [
+  {"path": "src/utils/format-date.ts", "description": "Single-function utility with typed options interface and JSDoc examples"},
+  {"path": "src/utils/truncate.ts", "description": "Simple single-function string utility with no external dependencies"},
+  {"path": "src/utils/format-date.test.ts", "description": "Co-located vitest tests with describe/it/expect pattern, fake timers for relative date tests"}
+],
+"questions": []
+}
