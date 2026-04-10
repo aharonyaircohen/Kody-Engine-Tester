@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of bad-types.ts",
+  "description": "File src/utils/bad-types.ts already exists with the intentional type error: getCount() declares return type string but returns number 42. Verified implementation matches task requirements.",
+  "scope": ["src/utils/bad-types.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
