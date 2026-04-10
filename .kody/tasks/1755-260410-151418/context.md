@@ -28,3 +28,14 @@ The implementation is complete. Let me provide a summary:
    - Other items with href rendered as `<a className="breadcrumb-link">`
    - Chevron
 ...(truncated)
+
+### autofix (2026-04-10T15:25:50)
+## Root Cause Analysis
+
+The integration test failure in `tests/int/api.int.spec.ts` is a **pre-existing issue in Payload CMS/drizzle-kit infrastructure**, not a bug in the breadcrumb implementation.
+
+**Trace of the failure:**
+1. Test calls `payload.find({ collection: 'users' })` 
+2. Payload CMS internally uses drizzle-kit for schema introspection
+3. drizzle-kit executes: `SELECT conname AS primary_key FROM pg_constraint WHERE contype = 'p' AND connamespace = $1::regnamespace AND pg_class.relname
+...(truncated)
