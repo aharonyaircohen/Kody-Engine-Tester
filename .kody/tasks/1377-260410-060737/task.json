@@ -1,0 +1,11 @@
+{
+"task_type": "feature",
+"title": "Add retry utility to async-helpers.ts",
+"description": "Create retry<T>(fn: () => Promise<T>, maxAttempts: number, delayMs: number): Promise<T> in src/utils/async-helpers.ts with exponential backoff. Add co-located tests.",
+"scope": ["src/utils/async-helpers.ts", "src/utils/async-helpers.test.ts"],
+"risk_level": "low",
+"existing_patterns": [
+{"path": "src/utils/retry.ts", "description": "Existing retry utility with exponential backoff using options object pattern - should consider reusing patterns but task requires different signature"}
+],
+"questions": []
+}
