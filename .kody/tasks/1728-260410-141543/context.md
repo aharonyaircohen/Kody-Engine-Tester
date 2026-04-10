@@ -26,3 +26,11 @@ TypeScript errors are all pre-existing in other files — none from the new file
    - `hashPassword(plaintext)` — generates random 128-bit salt, applies PBKDF2 (25000 iterations, sha256, 512-bit key), returns `salt:hash` hex string
    - `verifyPassw
 ...(truncated)
+
+### review (2026-04-10T14:23:48)
+## Verdict: PASS
+
+## Summary
+
+Created a `User` domain model interface (`src/models/user.ts`) with `id`, `email`, `passwordHash`, and `createdAt` fields, and a password utility (`src/utils/password.ts`) providing `hashPassword` and `verifyPassword` functions using PBKDF2 (25000 iterations, SHA-256, 512-bit key) with embedded random salt in `salt:hash` format. Unit tests in `src/utils/password.test.ts` cover all acceptance criteria: hash uniqueness, correct verification, wrong password rejection, 
+...(truncated)
