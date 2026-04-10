@@ -8,7 +8,7 @@
  * @returns The base64 encoded string
  * @throws TypeError - If input is not a string
  */
-export function encode(input: string): string {
+export default function encode(input: string): string {
   if (!input || input.length === 0) {
     return ''
   }
