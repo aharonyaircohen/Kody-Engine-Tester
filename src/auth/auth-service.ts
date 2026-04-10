@@ -1,9 +1,10 @@
 import type { Payload } from 'payload'
 import type { CollectionSlug } from 'payload'
 import crypto from 'crypto'
-import { JwtService } from './jwt-service'
+import { JwtService, type RbacRole } from './jwt-service'
 
-export type RbacRole = 'admin' | 'editor' | 'viewer'
+// Re-export RbacRole for backward compatibility with files that import from auth-service
+export type { RbacRole }
 
 export interface AuthenticatedUser {
   id: number | string
@@ -311,6 +312,11 @@ export class AuthService {
       })
     })
 
+    // If the new password hash matches current hash, no actual change needed
+    if (newHash === hash) {
+      return
+    }
+
     // Update password history - add current, keep last 5
     const updatedHistory = [
       { hash, salt, changedAt: new Date() },
@@ -327,5 +333,19 @@ export class AuthService {
         passwordHistory: updatedHistory,
       } as any,
     })
+
+    // Verify the update was applied correctly - if the stored hash doesn't match
+    // what we set, a concurrent request must have changed the password
+    const verifyUsers = await this.payload.find({
+      collection: 'users' as CollectionSlug,
+      where: { id: { equals: userId } },
+      limit: 1,
+    })
+    const verifyUser = verifyUsers.docs[0]
+    const verifyHash = (verifyUser as any).hash as string | null
+
+    if (verifyHash !== newHash) {
+      throw createError('Password was changed by another request. Please try again.', 409)
+    }
   }
 }

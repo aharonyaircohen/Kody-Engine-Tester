@@ -1,0 +1,3 @@
+{"taskId":"1588-260410-115500","timestamp":"2026-04-10T12:24:21.980Z","stage":"review","patterns":["verdict:FAIL","finding:security"],"room":"auth"}
+{"taskId":"1588-260410-115500","timestamp":"2026-04-10T12:31:40.171Z","stage":"review","patterns":["verdict:FAIL","finding:security"],"room":"auth"}
+{"taskId":"1588-260410-115500","timestamp":"2026-04-10T12:50:11.087Z","stage":"review","patterns":["verdict:PASS","finding:test-coverage","finding:security"],"room":"auth"}

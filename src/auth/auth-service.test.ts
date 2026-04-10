@@ -16,21 +16,29 @@ vi.mock('@/getPayload', () => ({
 
 const TEST_JWT_SECRET = 'test-secret-key-for-auth-service'
 
+// Default implementations
+const defaultHash = Buffer.from('aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899', 'hex')
+const defaultSalt = Buffer.from('testsalt123')
+
+// Use vi.hoisted to create mock functions that are properly hoisted with vi.mock
+const { mockPbkdf2, mockRandomBytes, mockTimingSafeEqual } = vi.hoisted(() => ({
+  mockPbkdf2: vi.fn((password: unknown, salt: unknown, iterations: unknown, keylen: unknown, digest: unknown, callback: (err: Error | null, derivedKey?: Buffer) => void) => {
+    callback(null, defaultHash)
+  }),
+  mockRandomBytes: vi.fn((bytes: number) => {
+    return defaultSalt
+  }),
+  mockTimingSafeEqual: vi.fn((a: Buffer, b: Buffer) => {
+    return a.length === b.length
+  }),
+}))
+
 // Mock crypto module for password verification tests
 vi.mock('crypto', () => ({
   default: {
-    pbkdf2: vi.fn((password, salt, iterations, keylen, digest, callback) => {
-      // Simulate PBKDF2 - return a fixed hash that matches the stored hash when compared
-      const testHash = Buffer.from('aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899', 'hex')
-      callback(null, testHash)
-    }),
-    randomBytes: vi.fn((bytes, callback) => {
-      callback(null, Buffer.from('testsalt123'))
-    }),
-    timingSafeEqual: vi.fn((a, b) => {
-      // In tests, always return true if lengths match (password verification succeeds)
-      return a.length === b.length
-    }),
+    pbkdf2: mockPbkdf2,
+    randomBytes: mockRandomBytes,
+    timingSafeEqual: mockTimingSafeEqual,
   },
 }))
 
@@ -40,6 +48,24 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+    jwtService = new JwtService(TEST_JWT_SECRET)
+    authService = new AuthService(mockPayload as any, jwtService)
+    // Reset crypto mocks to default implementations
+    mockPbkdf2.mockImplementation((password: unknown, salt: unknown, iterations: unknown, keylen: unknown, digest: unknown, callback: (err: Error | null, derivedKey?: Buffer) => void) => {
+      callback(null, defaultHash)
+    })
+    mockRandomBytes.mockImplementation((bytes: number) => {
+      return defaultSalt
+    })
+  })
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    // Reset all mock implementations and return values
+    mockPayload.find.mockReset()
+    mockPayload.update.mockReset()
+    mockPayload.findByID.mockReset()
+    mockPayload.create.mockReset()
     jwtService = new JwtService(TEST_JWT_SECRET)
     authService = new AuthService(mockPayload as any, jwtService)
   })
@@ -293,6 +319,138 @@ describe('AuthService', () => {
       const result = await authService.login('editor@example.com', 'password123', '127.0.0.1', 'TestAgent')
 
       expect(result.user.role).toBe('editor')
+    })
+  })
+
+  describe('changePassword', () => {
+    const baseMockUser = {
+      id: 1,
+      email: 'user@example.com',
+      hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
+      salt: 'testsalt123',
+      role: 'viewer',
+      isActive: true,
+      passwordHistory: [],
+    }
+
+    const differentSalt = Buffer.from('differentSalt123')
+    const differentHash = Buffer.from('99887766554433221100ffeeddccbbaa99887766554433221100ffeeddccbbaa', 'hex')
+
+    beforeEach(() => {
+      // Reset crypto mocks to default implementations
+      mockPbkdf2.mockImplementation((password, salt, iterations, keylen, digest, callback) => {
+        callback(null, defaultHash)
+      })
+      mockRandomBytes.mockImplementation((bytes) => {
+        return defaultSalt
+      })
+    })
+
+    it('should successfully change password', async () => {
+      // First PBKDF2: verifyPassword (returns stored hash for verification)
+      // Second PBKDF2: new password hash (returns different hash)
+      mockPbkdf2
+        .mockImplementationOnce((password, salt, iterations, keylen, digest, callback) => {
+          callback(null, defaultHash) // Returns stored hash for verification
+        })
+        .mockImplementationOnce((password, salt, iterations, keylen, digest, callback) => {
+          callback(null, differentHash) // Returns new hash
+        })
+      mockRandomBytes.mockReturnValue(differentSalt)
+
+      // First find: get user for changePassword
+      // Second find: verification after update (must return the new hash)
+      mockPayload.find
+        .mockResolvedValueOnce({ docs: [baseMockUser] })
+        .mockResolvedValueOnce({ docs: [{ ...baseMockUser, hash: differentHash.toString('hex') }] })
+      mockPayload.update.mockResolvedValue({ ...baseMockUser, hash: differentHash.toString('hex') })
+
+      await authService.changePassword('1', 'currentPassword', 'newPassword123')
+
+      expect(mockPayload.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          collection: 'users',
+          id: '1',
+          data: expect.objectContaining({
+            hash: expect.any(String),
+            salt: expect.any(String),
+            passwordHistory: expect.any(Array),
+          }),
+        })
+      )
+    })
+
+    it('should throw on wrong current password', async () => {
+      const userWithWrongPassword = {
+        ...baseMockUser,
+        hash: 'different_hash',
+        salt: 'different_salt',
+      }
+      mockPayload.find.mockResolvedValue({ docs: [userWithWrongPassword] })
+
+      await expect(
+        authService.changePassword('1', 'wrongPassword', 'newPassword123')
+      ).rejects.toMatchObject({ message: 'Current password is incorrect', status: 401 })
+    })
+
+    it('should throw when reusing a recent password from history', async () => {
+      // The mock PBKDF2 returns defaultHash for any password
+      // So if history contains this hash, it will match
+      const userWithHistory = {
+        ...baseMockUser,
+        passwordHistory: [
+          { hash: defaultHash.toString('hex'), salt: 'testsalt123', changedAt: new Date() },
+        ],
+      }
+      mockPayload.find.mockResolvedValue({ docs: [userWithHistory] })
+
+      await expect(
+        authService.changePassword('1', 'anyPassword', 'newPassword')
+      ).rejects.toMatchObject({ message: 'Cannot reuse any of your last 5 passwords', status: 400 })
+    })
+
+    it('should return early when new password equals current hash', async () => {
+      // Default mock returns same hash as stored, so early return happens
+      mockPayload.find.mockResolvedValue({ docs: [baseMockUser] })
+
+      await authService.changePassword('1', 'currentPassword', 'newPassword123')
+
+      // The update should not have been called because newHash equals current hash
+      expect(mockPayload.update).not.toHaveBeenCalled()
+    })
+
+    it('should throw 409 on concurrent modification', async () => {
+      // First PBKDF2: verifyPassword (returns stored hash for verification)
+      // Second PBKDF2: new password hash (returns different hash)
+      mockPbkdf2
+        .mockImplementationOnce((password, salt, iterations, keylen, digest, callback) => {
+          callback(null, defaultHash)
+        })
+        .mockImplementationOnce((password, salt, iterations, keylen, digest, callback) => {
+          callback(null, differentHash)
+        })
+
+      mockPayload.find
+        .mockResolvedValueOnce({ docs: [baseMockUser] }) // First call for changePassword
+        .mockResolvedValueOnce({ docs: [{ ...baseMockUser, hash: 'different_hash' }] }) // Verification call - hash changed
+
+      await expect(
+        authService.changePassword('1', 'currentPassword', 'newPassword123')
+      ).rejects.toMatchObject({ message: 'Password was changed by another request. Please try again.', status: 409 })
+    })
+
+    it('should throw when user not found', async () => {
+      mockPayload.find.mockResolvedValue({ docs: [] })
+
+      await expect(
+        authService.changePassword('999', 'currentPassword', 'newPassword123')
+      ).rejects.toMatchObject({ message: 'User not found', status: 404 })
+    })
+
+    it('should throw when new password is empty', async () => {
+      await expect(
+        authService.changePassword('1', 'currentPassword', '')
+      ).rejects.toMatchObject({ message: 'New password is required', status: 400 })
     })
   })
 })
