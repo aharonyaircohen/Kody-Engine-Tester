@@ -31,6 +31,8 @@ export interface TokenFields {
 }
 
 const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
+const LOCKOUT_ATTEMPTS = 5
+const LOCKOUT_DURATION_MS = 30 * 60 * 1000 // 30 minutes
 
 function createError(message: string, status: number): Error & { status: number } {
   const err = new Error(message) as Error & { status: number }
@@ -95,9 +97,16 @@ export class AuthService {
     const isActive = (user as any).isActive ?? true
     const hash = (user as any).hash as string | null | undefined
     const salt = (user as any).salt as string | null | undefined
+    const failedLoginAttempts = (user as any).failedLoginAttempts as number ?? 0
+    const lockedUntil = (user as any).lockedUntil as string | null | undefined
 
     if (!isActive) {
       throw createError('Account is inactive', 403)
+    }
+
+    // Check if account is locked
+    if (lockedUntil && new Date(lockedUntil) > new Date()) {
+      throw createError('Account is locked. Please try again later.', 423)
     }
 
     // Verify password against stored hash
@@ -107,7 +116,34 @@ export class AuthService {
 
     const passwordValid = await verifyPassword(password, hash, salt)
     if (!passwordValid) {
+      // Record failed login attempt
+      const newFailedAttempts = failedLoginAttempts + 1
+      const updates: Record<string, unknown> = { failedLoginAttempts: newFailedAttempts }
+
+      // Lock account if threshold reached
+      if (newFailedAttempts >= LOCKOUT_ATTEMPTS) {
+        updates.lockedUntil = new Date(Date.now() + LOCKOUT_DURATION_MS).toISOString()
+      }
+
+      await this.payload.update({
+        collection: 'users' as CollectionSlug,
+        id: userId,
+        data: updates,
+      } as any)
+
       throw createError('Invalid credentials', 401)
+    }
+
+    // Reset failed attempts on successful login
+    if (failedLoginAttempts > 0) {
+      await this.payload.update({
+        collection: 'users' as CollectionSlug,
+        id: userId,
+        data: {
+          failedLoginAttempts: 0,
+          lockedUntil: null,
+        },
+      } as any)
     }
 
     // Generate tokens

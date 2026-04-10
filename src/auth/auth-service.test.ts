@@ -125,6 +125,31 @@ describe('AuthService', () => {
         })
       )
     })
+
+    it('should throw 423 when user is locked', async () => {
+      const lockedUser = {
+        ...mockUser,
+        lockedUntil: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 min from now
+        failedLoginAttempts: 5,
+      }
+      mockPayload.find.mockResolvedValue({ docs: [lockedUser] })
+
+      await expect(
+        authService.login('admin@example.com', 'password123', '127.0.0.1', 'TestAgent')
+      ).rejects.toMatchObject({ status: 423, message: 'Account is locked. Please try again later.' })
+    })
+
+    it('should allow login after lockout expires', async () => {
+      const expiredLockUser = {
+        ...mockUser,
+        lockedUntil: new Date(Date.now() - 1000).toISOString(), // 1 second ago
+        failedLoginAttempts: 5,
+      }
+      mockPayload.find.mockResolvedValue({ docs: [expiredLockUser] })
+
+      const result = await authService.login('admin@example.com', 'password123', '127.0.0.1', 'TestAgent')
+      expect(result).toHaveProperty('accessToken')
+    })
   })
 
   describe('refresh', () => {
