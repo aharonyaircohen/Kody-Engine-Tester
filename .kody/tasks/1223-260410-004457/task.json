@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of role hierarchy checker",
+  "description": "The role hierarchy checker has already been implemented in `src/auth/role-hierarchy.ts` with the `hasPermission(userRole: string, requiredRole: string): boolean` function following hierarchy admin > editor > viewer > guest. Comprehensive tests in `src/auth/role-hierarchy.test.ts` cover all 16 permission combinations plus invalid role handling and hierarchy ordering. All 23 tests pass.",
+  "scope": ["src/auth/role-hierarchy.ts", "src/auth/role-hierarchy.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/result.ts - utility module pattern with Result<T, E> discriminated union",
+    "src/auth/_auth.ts - auth-specific type exports",
+    "src/auth/user-store.ts - Role type definitions and role-based patterns"
+  ],
+  "questions": []
+}
