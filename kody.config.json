@@ -42,8 +42,5 @@
     "activityLog": 369,
     "model": "MiniMax-M2.7-highspeed",
     "provider": "minimax"
-  },
-  "decompose": {
-    "enabled": false
   }
 }
