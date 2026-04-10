@@ -391,4 +391,75 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
 - [ ] New enum values traced through all consumers with `grep -r "StatusValues|UserRole|RbacRole"`
 - [ ] Unsafe type casts (`as unknown as`) replaced with proper type guards
 
+---
+
+## Repo Patterns (LearnHub-specific)
+
+**Payload Collection Config Pattern** (`src/collections/*.ts`): Collections export named config objects with `slug`, `fields`, `access`, and `hooks`. Example from `src/collections/Notes.ts`:
+
+```typescript
+export const Notes: CollectionConfig = {
+  slug: 'notes',
+  fields: [
+    { name: 'title', type: 'text', required: true },
+    { name: 'content', type: 'textarea' },
+    { name: 'user', type: 'relationship', relationTo: 'users' },
+  ],
+  access: {
+    read: ({ req: { user } }) => {
+      /* ... */
+    },
+    create: ({ req: { user } }) => Boolean(user),
+  },
+}
+```
+
+**API Route Handler Pattern** (`src/app/api/*/route.ts`): Next.js route handlers use `withAuth` HOC and return structured responses:
+
+```typescript
+export async function POST(req: Request) {
+  const authResult = await withAuth(req, { roles: ['admin', 'editor'] })
+  if (authResult instanceof Response) return authResult
+  const body = await req.json()
+  const result = await noteService.create(body)
+  return Response.json(result)
+}
+```
+
+**Quiz Grading Pattern** (`src/services/quiz-grader.ts`): `gradeQuiz(quiz, answers)` function iterates questions and scores via rubric strategy:
+
+```typescript
+export function gradeQuiz(quiz: Quiz, answers: QuizAnswer[]): QuizResult {
+  const score = quiz.questions.reduce((total, q, i) => {
+    const correct = q.correctAnswer === answers[i]?.value
+    return total + (correct ? q.points : 0)
+  }, 0)
+  return { score, total: quiz.totalPoints, passed: score >= quiz.passingScore }
+}
+```
+
+## Improvement Areas (updated)
+
+- **Type cast abuse in dashboard**: `src/app/(frontend)/dashboard/page.tsx:45` uses `as unknown as UserRole[]` — proper type narrowing via type guards should replace this cast.
+- **Role enum mismatch**: `UserStore.UserRole` (6 values) vs `RbacRole` (3 values) — no runtime alignment. New code adding roles must reconcile both enums.
+- **In-memory persistence loss**: `SessionStore` and `contactsStore` are in-memory only — server restart wipes data. No DB persistence layer.
+- **Sanitizer regex gaps**: `src/security/sanitizers/sanitizeSql.ts` uses basic string replacement — parameterized queries should be preferred over any SQL string building.
+- **Missing E2E test helpers**: `tests/helpers/` has `login.ts` but no `seedCourse.ts` or `seedEnrollment.ts` helpers for quiz/enrollment E2E tests.
+
+## Acceptance Criteria (updated)
+
+- [ ] New Payload collections added to `src/collections/` with proper `CollectionConfig` shape
+- [ ] API routes in `src/app/api/` wrapped with `withAuth` HOC for protected endpoints
+- [ ] Service classes use constructor DI with typed interfaces (e.g., `GradebookServiceDeps`)
+- [ ] Quiz/grading logic uses `gradeQuiz()` pattern from `src/services/quiz-grader.ts`
+- [ ] Sanitization uses `sanitizeHtml` / `sanitizeSql` / `sanitizeUrl` from `src/security/sanitizers/`
+- [ ] Input validation at API boundaries uses Zod schemas from `src/validation/`
+- [ ] `pnpm test:int` passes with `vi.fn()` mocks for Payload SDK
+- [ ] `pnpm test:e2e` passes with Playwright page-object helpers
+- [ ] `pnpm build` produces no TypeScript errors
+- [ ] No `console.log` left in production code — use logger service
+- [ ] No raw SQL strings with interpolation — use Payload's query API or parameterized patterns
+- [ ] Enum changes traced via `grep -r "UserRole|RbacRole|StatusValues"` across all consumers
+- [ ] Type casts replaced with proper type guards or discriminated unions
+
 {{TASK_CONTEXT}}

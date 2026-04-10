@@ -18,20 +18,34 @@ import { LessonEditor } from './LessonEditor'
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
+**CSS Modules**: Use `import styles from './Component.module.css'` pattern for component-scoped styling
+
+**Auth Pattern**: Store tokens in `localStorage` as `auth_access_token`; send as Bearer token in `Authorization` header
+
+**Security Utilities**: Sanitizers export pure functions (`sanitizeHtml`, `sanitizeSql`, `sanitizeUrl`) using regex replacement; HTML entity decoding via constant map
+
+**Service Layer**: Business logic in classes with dependency injection (store + getUser + enrollmentChecker constructor pattern)
+
+**JSDoc**: Document utility functions with `@example` blocks and parameter descriptions
+
 ## Learned 2026-04-04 (task: 403-260404-211531)
+
 - Uses vitest for testing
 - Uses eslint for linting
 
 ## Learned 2026-04-05 (task: 420-260405-054611)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/app/api/health
 
 ## Learned 2026-04-05 (task: 444-260405-212643)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/utils
 
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
+
 - Uses vitest for testing
 - Uses eslint for linting
