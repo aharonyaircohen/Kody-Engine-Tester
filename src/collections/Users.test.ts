@@ -224,6 +224,43 @@ describe('Users fields - organization', () => {
   })
 })
 
+describe('Users fields - passwordHash', () => {
+  it('should have a passwordHash text field', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field).toBeDefined()
+    expect(field.type).toBe('text')
+  })
+
+  it('should have passwordHash field as hidden', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.hidden).toBe(true)
+  })
+
+  it('should have passwordHash field as optional', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.required).toBeFalsy()
+  })
+
+  it('should have restricted read access on passwordHash field', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.read({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should have restricted update access on passwordHash field', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.update({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+})
+
 // --- Collection-level Access Control ---
 
 describe('Users access control - read', () => {

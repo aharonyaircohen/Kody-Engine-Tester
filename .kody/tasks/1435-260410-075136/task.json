@@ -1,0 +1,19 @@
+{
+  "task_type": "feature",
+  "title": "Add passwordHash field to User model with bcrypt hashing",
+  "description": "Add a `passwordHash` field to the existing Users collection and create a password hashing utility using bcrypt (or argon2). This involves: (1) adding the `passwordHash` field to `src/collections/Users.ts`, (2) creating a password hashing utility in `src/utils/` with hash and verify functions, (3) adding a database migration to create the column, and (4) writing unit tests for the hashing utility and model validation. The existing Users collection uses Payload auth with `hash`/`salt` fields; this adds a dedicated `passwordHash` field as the foundation for future JWT auth tasks.",
+  "scope": [
+    "src/collections/Users.ts",
+    "src/utils/password-hash.ts",
+    "src/utils/password-hash.test.ts",
+    "src/migrations/"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/collections/Users.ts - Payload collection config with auth enabled, fields array, access controls",
+    "src/auth/user-store.ts - password hashing pattern with salt generation using crypto.randomBytes",
+    "src/migrations/20260405_000000_add_users_permissions_lastLogin.ts - migration using sql ALTER TABLE ADD COLUMN",
+    "src/utils/*.ts - single-function utility files with co-located .test.ts files"
+  ],
+  "questions": []
+}
