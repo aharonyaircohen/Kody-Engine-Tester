@@ -10,7 +10,7 @@ describe('pluralize', () => {
     expect(pluralize('item', 5)).toBe('items')
   })
 
-  it('returns singular form for count of 0', () => {
+  it('returns plural form for count of 0', () => {
     expect(pluralize('item', 0)).toBe('items')
   })
 
