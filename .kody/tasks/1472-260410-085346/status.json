@@ -14,30 +14,34 @@
       "retries": 0
     },
     "build": {
-      "state": "running",
-      "startedAt": "2026-04-10T08:58:42.560Z",
-      "retries": 0
+      "state": "completed",
+      "completedAt": "2026-04-10T08:59:00.404Z",
+      "retries": 0,
+      "promptTokens": 3933
     },
     "verify": {
-      "state": "pending",
+      "state": "completed",
+      "completedAt": "2026-04-10T09:00:49.493Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-10T09:00:49.496Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-10T08:57:28.290Z",
-  "updatedAt": "2026-04-10T08:58:42.560Z",
+  "updatedAt": "2026-04-10T09:00:49.496Z",
   "sessions": {
-    "explore": "96aa2b30-1fad-4338-91de-0df486b1b0a3"
+    "explore": "96aa2b30-1fad-4338-91de-0df486b1b0a3",
+    "build": "e4db5bae-b010-4c4c-bd2a-2f58ae2034a2"
   }
 }
