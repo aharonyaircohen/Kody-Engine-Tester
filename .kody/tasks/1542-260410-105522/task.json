@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add cache-control middleware with tests",
+  "description": "Create `src/middleware/cache-control.ts` with a `createCacheControlMiddleware` factory function that sets Cache-Control headers (public/private/no-store), supports ETag generation for conditional requests, and handles Vary: Accept-Encoding for compressible responses. Include co-located tests in `cache-control.test.ts`.",
+  "scope": [
+    "src/middleware/cache-control.ts",
+    "src/middleware/cache-control.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts:124 — createRateLimiterMiddleware factory pattern with NextRequest/NextResponse return type",
+    "src/middleware/request-logger.ts:89 — createRequestLogger factory with config object pattern",
+    "src/middleware/rate-limiter.test.ts:103-108 — NextRequest construction with headers for test middleware"
+  ],
+  "questions": []
+}
