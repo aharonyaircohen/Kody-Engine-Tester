@@ -12,7 +12,7 @@ on:
 
 concurrency:
   group: kody-watch
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   watch:
@@ -73,17 +73,3 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
         run: kody-engine watch ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}
 
-      - name: Commit watch state
-        run: |
-          if [ -f .kody/watch-state.json ]; then
-            if git diff --quiet .kody/watch-state.json; then
-              echo "No state changes to commit"
-            else
-              git add .kody/watch-state.json
-              git commit --no-gpg-sign -m "chore: update watch state [skip ci]"
-              git push
-              echo "Watch state committed"
-            fi
-          else
-            echo "No watch-state.json found"
-          fi
