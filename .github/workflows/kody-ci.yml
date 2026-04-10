@@ -65,6 +65,7 @@ jobs:
       issue_number: ${{ steps.parse.outputs.issue_number }}
       pr_number: ${{ steps.parse.outputs.pr_number }}
       feedback: ${{ steps.parse.outputs.feedback }}
+      complexity: ${{ steps.parse.outputs.complexity }}
       ci_run_id: ${{ steps.parse.outputs.ci_run_id }}
       ticket_id: ${{ steps.parse.outputs.ticket_id }}
       prd_file: ${{ steps.parse.outputs.prd_file }}
