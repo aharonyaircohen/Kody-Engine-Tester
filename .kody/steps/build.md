@@ -1,8 +1,12 @@
+Now I have all the context I need. Let me output the complete prompt template with the three appended sections.
+
 ---
+
 name: build
 description: Implement code changes following Superpowers Executing Plans methodology
 mode: primary
 tools: [read, write, edit, bash, glob, grep]
+
 ---
 
 You are a code implementation agent following the Superpowers Executing Plans methodology.
@@ -25,67 +29,90 @@ Implementation discipline:
 - Run `pnpm tsc --noEmit` periodically to catch type errors early
 - If a test fails after your change, fix it immediately — don't continue
 
+Persistence & recovery (when a command or test fails):
+
+- Diagnose the root cause BEFORE retrying — read the error carefully, don't repeat the same failing approach
+- Try at least 2 different strategies before declaring something blocked
+- 3-failure circuit breaker: if the same sub-task fails 3 times with different approaches, document the blocker clearly and move on to the next task item
+- After applying a fix, ALWAYS re-run the failing command to verify it actually worked
+
+Parallel execution (for multi-file tasks):
+
+- Make independent file changes in parallel — don't wait for one file edit to finish before starting another
+- Batch file reads: when investigating related code, issue multiple Read/Grep/Glob calls in a single response
+- Run tests ONCE after all related changes are complete, not after each individual file edit
+- Use multiple tool calls per response whenever the operations are independent
+
+Sub-agent delegation (for complex tasks):
+
+- You have access to specialized sub-agents: researcher (explore codebase), test-writer (write tests), security-checker (review security), fixer (fix bugs)
+- Delegate to them when the task benefits from specialization
+- Low complexity tasks: handle everything yourself
+- Mid/high complexity: consider delegating to sub-agents for focused work
+
 ## Project Memory (architecture, conventions, patterns, domain, testing)
 
 # Project Memory
 
 ## architecture
 
-# LearnHub LMS Architecture
+# Architecture (auto-detected 2026-04-10)
 
-## Stack
+## Overview
 
-- **Framework**: Next.js 16 App Router + Payload CMS 3.80 (headless)
-- **Language**: TypeScript 5.7 (ES2022 target)
-- **Database**: PostgreSQL via `@payloadcms/db-postgres`
-- **Testing**: Vitest 4.0 (integration) + Playwright 1.58 (E2E)
-- **Runtime**: Node 18+ / pnpm 9+
+- Framework: Next.js 16.2.1
+- Language: TypeScript 5.7.3
+- Testing: vitest 4.0.18
+- Linting: eslint ^9.16.0
+- Formatting: prettier ^3.4.2
+- CMS: Payload CMS
+- Database: PostgreSQL via `@payloadcms/db-postgres`
+- Package manager: pnpm
+- Module system: ESM
+- Top-level directories: docs, scripts, skills, src, tests
+- src/ structure: api, app, auth, collections, components, contexts, hooks, middleware, migrations, models, pages, routes, security, services, utils, validation
 
-## Directory Structure
+## Module/Layer Structure
 
 ```
 src/
-├── app/                    # Next.js App Router pages + API routes
-│   ├── (frontend)/        # Public/authenticated frontend routes
-│   └── (payload)/         # Payload admin routes (/admin)
-├── collections/           # Payload collection configs (Course, Lesson, Enrollment, etc.)
-├── components/            # Custom React components
-├── hooks/                 # Custom React hooks
-├── middleware/            # Express-style middleware (rate-limiter)
-├── auth/                  # Auth utilities (JWT service, session store, withAuth HOC)
-├── utils/                 # Pure utility functions (debounce, retry, flatten, result)
-├── services/              # Business logic services
-├── api/                   # API route handlers (login, profile, etc.)
-├── contexts/              # React contexts
-├── validation/            # Zod schemas for input validation
-├── security/              # Security utilities (password hashing, RBAC)
-├── migrations/            # Payload database migrations
-└── payload.config.ts      # Payload CMS configuration
+├── app/                    # Next.js App Router (frontend + Payload admin)
+├── collections/            # Payload collection configs
+├── components/             # React components
+├── hooks/                  # Custom React hooks
+├── middleware/             # Express/rate-limiting middleware
+├── models/                 # Data models
+├── routes/                 # API route handlers
+├── services/               # Business logic services
+├── auth/                   # Authentication logic
+├── security/               # Security utilities
+├── utils/                  # Shared utilities
+├── validation/             # Input validation
+├── payload.config.ts       # Payload CMS configuration
+└── payload-types.ts        # Generated Payload types
 ```
-
-## Layer Architecture
-
-**Route Handler** → `src/api/*` → `src/auth/*` (withAuth HOC) → `src/services/*` → `src/collections/*` (Payload)
-
-## Infrastructure
-
-- **Docker**: `docker-compose.yml` (Payload app + PostgreSQL)
-- **CI**: `pnpm ci` runs `payload migrate` then `pnpm build`
-- **Admin**: Payload admin panel at `/admin`
-- **Media**: Sharp for image processing, Payload Media collection
 
 ## Data Flow
 
-1. Client → Next.js Route Handler (`src/app/(frontend)/api/`)
-2. Auth middleware validates JWT via `src/auth/jwt-service.ts`
-3. Service layer (`src/services/`) handles business logic
-4. Payload collections (`src/collections/`) manage PostgreSQL via `@payloadcms/db-postgres`
+```
+Client → Next.js App Router → Payload Collections → PostgreSQL
+                     ↓
+              Payload Admin UI (/admin)
+```
 
-## Key Configs
+## Infrastructure
 
-- `payload.config.ts` — Payload DB, auth, collections, editor (Lexical)
-- `vitest.config.mts` — Integration test runner
-- `playwright.config.ts` — E2E browser testing
+- **Containerization**: Docker + docker-compose.yml (Payload + PostgreSQL services)
+- **CI**: Runs `payload migrate && pnpm build` on CI
+- **Deployment**: Dockerfile for Node.js 22.17.0-alpine with standalone Next.js output
+
+## Key Patterns
+
+- Payload collections define schema with `slug`, `fields`, `timestamps`, and access control
+- Auth uses JWT with role guard middleware (`student`, `instructor`, `admin`)
+- REST endpoints auto-generated by Payload at `/api/<collection>`
+- Local API operations must pass `req` for transaction safety
+- Type generation via `pnpm generate:types` after schema changes
 
 ## conventions
 
@@ -109,27 +136,70 @@ import { LessonEditor } from './LessonEditor'
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
+## Learned 2026-04-04 (task: 403-260404-211531)
+
+- Uses vitest for testing
+- Uses eslint for linting
+
+## Learned 2026-04-05 (task: 420-260405-054611)
+
+- Uses vitest for testing
+- Uses eslint for linting
+- Active directories: src/app/api/health
+
+## Learned 2026-04-05 (task: 444-260405-212643)
+
+- Uses vitest for testing
+- Uses eslint for linting
+- Active directories: src/utils
+
+## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
+
+- Uses vitest for testing
+- Uses eslint for linting
+
+## Learned 2026-04-10
+
+**CSS Modules**: Use `styles from './Component.module.css'` pattern for component-scoped styling
+
+**Service Pattern**: Business logic uses class with constructor injection (e.g., `DiscussionService`, `CertificatesStore`)
+
+**Security Utilities**: Place sanitization functions in `src/security/sanitizers.ts` (`sanitizeHtml`, `sanitizeSql`, `sanitizeUrl`)
+
+**Interface Colocation**: Define related interfaces alongside their collection config in `src/collections/<Name>.ts`
+
+**JSDoc**: Use JSDoc comments for exported utility functions with `@example` blocks
+
+**Node Built-ins**: Import core modules directly (`import crypto from 'crypto'`)
+
 ## domain
 
 ## LearnHub LMS Domain Model
 
-**Core Entities:** `User` (roles: admin/editor/viewer/guest/student/instructor), `Media`, `Course`, `Lesson`, `Enrollment`, `Note`, `Quiz`, `QuizAttempt`
+**Core Entities:** `User` (roles: admin/editor/viewer/guest/student/instructor), `Media`, `Course`, `Lesson`, `Enrollment`, `Note`, `Quiz`, `QuizAttempt`, `Notification` (severity: info/warning/error)
 
 **Data Flow:** Client → Next.js Route Handler (`src/app/api/*`) → `withAuth` HOC → Service Layer (`src/services/*`) → Payload Collections → PostgreSQL via `@payloadcms/db-postgres`
 
 **API Surface:**
 
 - `GET/POST /api/notes` — Note CRUD with search
+- `GET/POST /api/notes/[id]` — Single note operations
 - `GET /api/quizzes/[id]` — Quiz retrieval
 - `POST /api/quizzes/[id]/submit` — Quiz grading via `QuizGrader`
 - `GET /api/quizzes/[id]/attempts` — User's quiz attempts
-- `GET /api/courses/search` — Course search with `CourseSearchService`
+- `GET /api/courses/search` — Course search with `CourseSearchService` (sort: relevance/newest/popularity/rating; difficulty: beginner/intermediate/advanced)
 - `POST /api/enroll` — Enrollment (viewer role required)
 - `GET /api/gradebook/course/[id]` — Grades per course (editor/admin)
 
 **Auth Architecture:** JWT via `JwtService` (Web Crypto API), sessions in `SessionStore` (in-memory), `withAuth` HOC wraps routes, RBAC via `checkRole` utility
 
-**Key Types:** `Config`, `User`, `Media`, `Note`, `Quiz`, `QuizAnswer`, `PayloadGradebookService`, `CourseSearchService`
+**Schema Validation:** Custom mini-Zod at `src/utils/schema.ts` (`Schema`, `StringSchema`, `NumberSchema`, `BooleanSchema`, `SchemaError`)
+
+**Security:** HTML sanitization via `sanitizeHtml` from `@/security/sanitizers`
+
+**Database Migrations:** `20260322_233123_initial` (users_sessions, users, media, payload_kv, payload_locked_documents), `20260405_add_users_permissions_lastLogin` (adds `lastLogin` timestamp and `permissions` text[] to users)
+
+**Key Types:** `Config`, `User`, `Media`, `Note`, `Quiz`, `QuizAnswer`, `QuizAttempt`, `Notification`, `NotificationFilter`, `PayloadGradebookService`, `CourseSearchService`, `SortOption`
 
 ## patterns
 
@@ -145,6 +215,7 @@ import { LessonEditor } from './LessonEditor'
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Middleware Factory**: `src/middleware/validation.ts` exports `createValidationMiddleware(schema)` — a factory that produces route-level validation middleware with body/query/params validation, type coercion, and `ValidatedData` attachment to request.
 
 ### Behavioral Patterns
 
@@ -155,11 +226,13 @@ import { LessonEditor } from './LessonEditor'
 ### Architectural Layers
 
 ```
-Route Handlers (src/api/*, src/app/*)
+Route Handlers (src/app/*, src/routes/*)
+    ↓
+Validation Middleware (src/middleware/validation.ts)
     ↓
 Auth HOC (src/auth/withAuth.ts) → JWT Service → AuthService
     ↓
-Service Layer (src/services/*.ts: GradebookService, GradingService)
+Service Layer (src/services/*.ts: GradebookService, GradingService, ProgressService, NotificationsService)
     ↓
 Repository Layer (Payload Collections, contactsStore)
     ↓
@@ -170,14 +243,17 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 - **Entry points**: API routes, Next.js pages
 - **Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole`
-- **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`) decouple services from Payload
+- **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`, `GradebookServiceDeps<...>`) decouple services from Payload
+- **Validation boundary**: `createValidationMiddleware` validates `body|query|params` before route handlers execute
 
 ### Reusable Abstractions
 
 - `Container.register<T>(token, factory)` — generic DI
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
+- `createValidationMiddleware(schema)` — schema-driven request validation middleware factory
 - Zod schemas in `src/validation/` for input validation at API boundaries
+- `parseUrl(url, opts)` / `buildUrl(parsed)` / `isValidUrl(url)` in `src/utils/url-parser.ts` — URL manipulation toolkit
 
 ### Anti-Patterns / Inconsistencies
 
@@ -192,9 +268,11 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 ## Stack
 
-- **Integration**: Vitest 4.0 (`vitest.config.mts`) — `pnpm test:int`
+- **Integration**: Vitest 4.0.18 (`vitest.config.mts`) — `pnpm test:int`
 - **E2E**: Playwright 1.58 (`playwright.config.ts`) — `pnpm test:e2e`
 - **Runner**: `pnpm test` executes both suites sequentially
+- **Package Manager**: pnpm (ESM modules)
+- **Test Setup**: `vitest.setup.ts` loaded before each test file
 
 ## Organization
 
@@ -210,33 +288,38 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Data Seeding**: E2E tests seed/cleanup test users via helper functions
 
 ## CI Quality Gates
 
 - `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
 - Playwright `forbidOnly: true` prevents committed `.only()` tests
 - Retries enabled on CI (2x) to reduce flaky failure noise
+- Playwright runs with 1 worker on CI, parallel otherwise
+- Chromium browser with trace recording on first retry
 
 ## Coverage
 
 - No explicit threshold configured; vitest run passes `--coverage` implicitly
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
+- URL parser (`src/utils/url-parser.test.ts`) and RetryQueue (`src/utils/retry-queue.test.ts`) are examples of utility unit tests
 
-## Repo Patterns
+## Repo Patterns — Real Code Examples from This Repo
 
-### DI Container Pattern (`src/utils/di-container.ts`)
+### Service Layer with Constructor Injection (`src/services/gradebook.service.ts`)
 
 ```typescript
-export const container = new Container()
-container.register<string>(DI_TOKENS.JWT_SECRET, { useValue: process.env.JWT_SECRET })
-container.register<JwtService>(DI_TOKENS.JWT_SERVICE, {
-  useFactory: (di) => new JwtService(di.resolve(DI_TOKENS.JWT_SECRET)),
-})
+export class GradebookService<T extends Config> {
+  constructor(private deps: GradebookServiceDeps<T>) {}
+  async calculateGrades(userId: string): Promise<number> {
+    /* ... */
+  }
+}
 ```
 
-Use token-based registration with factory functions. Services receive deps via constructor injection.
+Follow this class-with-deps pattern for all new services.
 
-### Result Type for Error Handling (`src/utils/result.ts`)
+### Result Type for Explicit Error Handling (`src/utils/result.ts`)
 
 ```typescript
 export type Result<T, E = string> = { ok: true; value: T } | { ok: false; error: E }
@@ -244,9 +327,17 @@ export const ok = <T>(value: T): Result<T> => ({ ok: true, value })
 export const err = <E>(error: E): Result<never, E> => ({ ok: false, error })
 ```
 
-Use `Result<T, E>` instead of throwing; pattern: `result.ok ? result.value : handleError(result.error)`.
+Return `Result<T, E>` from service methods instead of throwing; handle via `result.ok ? result.value : handleError(result.error)`.
 
-### withAuth HOC (`src/auth/withAuth.ts`)
+### Validation Middleware Factory (`src/middleware/validation.ts`)
+
+```typescript
+export const createValidationMiddleware(schema) // returns NextHandler that validates body/query/params
+```
+
+Use for all new API routes to validate inputs before route handlers execute.
+
+### withAuth HOC Pattern (`src/auth/withAuth.ts`)
 
 ```typescript
 export function withAuth(handler: NextHandler, options?: AuthOptions): NextHandler {
@@ -261,57 +352,51 @@ export function withAuth(handler: NextHandler, options?: AuthOptions): NextHandl
 }
 ```
 
-Wrap API routes with `withAuth(handler, { roles: ['admin'] })`.
+Wrap all protected API routes with `withAuth(handler, { roles: ['admin'] })`.
 
-### Service Layer Pattern (`src/services/`)
-
-```typescript
-export class GradebookService<T extends Config> {
-  constructor(private deps: GradebookServiceDeps<T>) {}
-  async calculateGrades(userId: string): Promise<number> {
-    /* ... */
-  }
-}
-```
-
-Services are classes with `deps` injected via constructor; business logic lives here.
-
-### Utility Function Pattern (`src/utils/debounce.ts`)
+### DI Container Registration (`src/utils/di-container.ts`)
 
 ```typescript
-export function debounce<T extends (...args: unknown[]) => unknown>(
-  fn: T,
-  delay: number,
-): (...args: Parameters<T>) => void {
-  let timeout: ReturnType<typeof setTimeout>
-  return (...args) => {
-    clearTimeout(timeout)
-    timeout = setTimeout(() => fn(...args), delay)
-  }
-}
+export const container = new Container()
+container.register<string>(DI_TOKENS.JWT_SECRET, { useValue: process.env.JWT_SECRET })
+container.register<JwtService>(DI_TOKENS.JWT_SERVICE, {
+  useFactory: (di) => new JwtService(di.resolve(DI_TOKENS.JWT_SECRET)),
+})
 ```
 
-Single-responsibility modules; one function per file; co-located `.test.ts`.
+### CSS Modules Pattern
 
-## Improvement Areas
+```typescript
+import styles from './Component.module.css'
+```
 
-- **Dual Auth Systems**: `src/auth/user-store.ts` (SHA-256) vs `src/auth/auth-service.ts` (PBKDF2+JWT) — inconsistent hashing. Prefer `AuthService` pattern.
-- **Role Mismatch**: `UserStore.UserRole` vs `RbacRole` enum in `src/auth/_auth.ts` — no alignment between systems. Use `RbacRole` consistently.
-- **Unsafe Type Casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` rather than proper type guards. Use `Result` type or explicit type narrowing.
-- **In-Memory Stores**: `SessionStore` and `UserStore` in `src/auth/` are in-memory only — lost on restart. Consider Persistence for production.
-- **Missing Error Boundaries**: React components lack error boundaries; unhandled promise rejections may crash the app.
+Component-scoped styling; do NOT use global class names for component internals.
 
-## Acceptance Criteria
+## Improvement Areas — Gaps and Anti-Patterns
 
-- [ ] Code follows Layer Architecture: Route → withAuth HOC → Service → Repository
-- [ ] New utilities go in `src/utils/*.ts` with co-located `.test.ts`
-- [ ] New services follow `ServiceDeps<T>` interface pattern with constructor injection
-- [ ] API routes use `withAuth` HOC and return `Result<T, E>` for error handling
-- [ ] All async operations use try-catch with meaningful error messages
+- **Dual Auth Systems**: `src/auth/user-store.ts` (SHA-256, in-memory) vs `src/auth/auth-service.ts` (PBKDF2+JWT) — inconsistent password hashing and user representation. Avoid adding new code to `UserStore`.
+- **Role Divergence**: `UserStore.UserRole` (`'admin'|'user'|'guest'|'student'|'instructor'`) vs `RbacRole` (`'admin'|'editor'|'viewer'`) — no alignment. Use `RbacRole` consistently for new auth checks.
+- **Unsafe Type Casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` rather than proper type guards. Prefer `Result` type or explicit narrowing.
+- **In-Memory Session Store**: `src/auth/session-store.ts` is in-memory only — lost on restart. Not a blocker for dev but document the limitation.
+- **N+1 Query Risk**: `dashboard/page.tsx` batch-fetches lessons; verify new list-fetching pages do the same.
+- **Missing Schema Validation on New Routes**: Some older routes skip `createValidationMiddleware`. Always apply it to new routes.
+
+## Acceptance Criteria — Done Checklist
+
+- [ ] New services follow `ServiceDeps<T>` interface pattern with constructor injection (see `src/services/gradebook.service.ts`)
+- [ ] API routes wrapped with `withAuth` HOC and return `Result<T, E>` for error handling
+- [ ] New utilities placed in `src/utils/` with co-located `.test.ts`
+- [ ] Payload collection schemas follow `slug` + `fields` + `timestamps` pattern in `src/collections/`
+- [ ] Security-sensitive operations use `sanitizeHtml` / `sanitizeSql` / `sanitizeUrl` from `src/security/sanitizers.ts`
+- [ ] Input validation via `createValidationMiddleware` on all new API routes
+- [ ] CSS Modules used for component styling (`styles from './Component.module.css'`)
+- [ ] JSDoc with `@example` blocks on exported utility functions
 - [ ] Run `pnpm tsc --noEmit` — zero type errors before PR
 - [ ] Run `pnpm test:int` — all Vitest tests pass
-- [ ] No `console.log` in production code; use logging library
-- [ ] No hardcoded secrets; use `process.env` with validation
-- [ ] New components include `'use client'` directive where needed
+- [ ] Run `pnpm test:e2e` — all Playwright tests pass
+- [ ] No `console.log` in production code
+- [ ] No hardcoded secrets — use `process.env` with validation
+- [ ] Client components include `'use client'` directive
+- [ ] `import type` used for type-only imports
 
 {{TASK_CONTEXT}}

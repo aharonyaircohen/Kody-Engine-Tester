@@ -10,6 +10,7 @@
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Middleware Factory**: `src/middleware/validation.ts` exports `createValidationMiddleware(schema)` — a factory that produces route-level validation middleware with body/query/params validation, type coercion, and `ValidatedData` attachment to request.
 
 ### Behavioral Patterns
 
@@ -20,11 +21,13 @@
 ### Architectural Layers
 
 ```
-Route Handlers (src/api/*, src/app/*)
+Route Handlers (src/app/*, src/routes/*)
+    ↓
+Validation Middleware (src/middleware/validation.ts)
     ↓
 Auth HOC (src/auth/withAuth.ts) → JWT Service → AuthService
     ↓
-Service Layer (src/services/*.ts: GradebookService, GradingService)
+Service Layer (src/services/*.ts: GradebookService, GradingService, ProgressService, NotificationsService)
     ↓
 Repository Layer (Payload Collections, contactsStore)
     ↓
@@ -35,14 +38,17 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 - **Entry points**: API routes, Next.js pages
 - **Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole`
-- **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`) decouple services from Payload
+- **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`, `GradebookServiceDeps<...>`) decouple services from Payload
+- **Validation boundary**: `createValidationMiddleware` validates `body|query|params` before route handlers execute
 
 ### Reusable Abstractions
 
 - `Container.register<T>(token, factory)` — generic DI
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
+- `createValidationMiddleware(schema)` — schema-driven request validation middleware factory
 - Zod schemas in `src/validation/` for input validation at API boundaries
+- `parseUrl(url, opts)` / `buildUrl(parsed)` / `isValidUrl(url)` in `src/utils/url-parser.ts` — URL manipulation toolkit
 
 ### Anti-Patterns / Inconsistencies
 

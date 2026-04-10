@@ -19,19 +19,37 @@ import { LessonEditor } from './LessonEditor'
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
 ## Learned 2026-04-04 (task: 403-260404-211531)
+
 - Uses vitest for testing
 - Uses eslint for linting
 
 ## Learned 2026-04-05 (task: 420-260405-054611)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/app/api/health
 
 ## Learned 2026-04-05 (task: 444-260405-212643)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/utils
 
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
+
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-10
+
+**CSS Modules**: Use `styles from './Component.module.css'` pattern for component-scoped styling
+
+**Service Pattern**: Business logic uses class with constructor injection (e.g., `DiscussionService`, `CertificatesStore`)
+
+**Security Utilities**: Place sanitization functions in `src/security/sanitizers.ts` (`sanitizeHtml`, `sanitizeSql`, `sanitizeUrl`)
+
+**Interface Colocation**: Define related interfaces alongside their collection config in `src/collections/<Name>.ts`
+
+**JSDoc**: Use JSDoc comments for exported utility functions with `@example` blocks
+
+**Node Built-ins**: Import core modules directly (`import crypto from 'crypto'`)
