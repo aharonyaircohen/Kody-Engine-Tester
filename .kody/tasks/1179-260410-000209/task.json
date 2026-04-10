@@ -1,0 +1,18 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing auth middleware implementation",
+  "description": "Auth middleware already exists at src/middleware/auth-middleware.ts with full implementation and tests. All acceptance criteria are met: JWT extraction/validation from Bearer scheme, 401 for missing/invalid/expired tokens, userId attached to request context, compatible with existing route structure. All 8 unit tests pass.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/jwt-service.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts: Factory function createAuthMiddleware with JWT verification, rate limiting, session validation, user lookup",
+    "src/middleware/auth-middleware.test.ts: 8 unit tests covering valid token, missing token, malformed token, expired token, revoked session, generation mismatch, rate limiting"
+  ],
+  "questions": []
+}
+```

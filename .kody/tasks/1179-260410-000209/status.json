@@ -1,0 +1,43 @@
+{
+  "taskId": "1179-260410-000209",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-10T00:08:21.122Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1806
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "running",
+      "startedAt": "2026-04-10T00:08:24.727Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-10T00:03:49.947Z",
+  "updatedAt": "2026-04-10T00:08:24.727Z",
+  "sessions": {
+    "explore": "fd0abb04-ad0c-43f2-8cb0-01b72753ba4f"
+  }
+}
