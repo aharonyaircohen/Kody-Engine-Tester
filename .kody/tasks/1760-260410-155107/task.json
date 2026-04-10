@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of partition utility",
+  "description": "The partition utility function in src/utils/partition.ts and its tests in partition.test.ts already exist and all 9 tests pass. The implementation correctly splits an array into two groups based on a predicate function.",
+  "scope": ["src/utils/partition.ts", "src/utils/partition.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/chunk.ts - Simple generic utility function with JSDoc comments, single-file export pattern",
+    "src/utils/*.test.ts - Co-located test files using Vitest with describe/it/expect"
+  ],
+  "questions": []
+}
