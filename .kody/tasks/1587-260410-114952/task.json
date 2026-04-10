@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add cacheControl middleware with tests",
+  "description": "Create a cacheControl middleware in src/middleware/ that sets Cache-Control headers (no-store, no-cache, max-age, private), adds Last-Modified and ETag headers based on content hash, handles conditional requests (If-None-Match, If-Modified-Since), and returns 304 Not Modified when appropriate. Include comprehensive unit tests in src/middleware/cacheControl.test.ts.",
+  "scope": [
+    "src/middleware/cacheControl.ts",
+    "src/middleware/cacheControl.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts - factory pattern with config interface and class-based implementation",
+    "src/middleware/request-logger.ts - exports types, interfaces, and factory function with NextRequest/NextResponse handling",
+    "src/middleware/rate-limiter.test.ts - vitest testing pattern with NextRequest mocking and afterEach cleanup"
+  ],
+  "questions": []
+}
