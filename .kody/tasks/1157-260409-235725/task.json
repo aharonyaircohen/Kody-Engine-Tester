@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add retry middleware with tests",
+  "description": "Create a retry middleware in src/middleware/retry-middleware.ts that retries failed HTTP requests with exponential backoff. The middleware should configure max retries, base delay, and max delay via options, support configurable retry conditions (which errors to retry), and include comprehensive tests in src/middleware/retry-middleware.test.ts. Should follow the factory pattern used by rate-limiter.ts.",
+  "scope": [
+    "src/middleware/retry-middleware.ts",
+    "src/middleware/retry-middleware.test.ts",
+    "src/utils/retry.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts - factory pattern (createXxxMiddleware) returning middleware function with class-based internal state",
+    "src/utils/retry.ts - exponential backoff calculation (delay = min(initialDelay * Math.pow(backoffFactor, attempt), maxDelay)), RetryOptions interface with maxRetries, initialDelay, maxDelay, backoffFactor, shouldRetry",
+    "src/middleware/request-logger.ts - NextRequest/NextResponse middleware structure and config interface pattern"
+  ],
+  "questions": []
+}
