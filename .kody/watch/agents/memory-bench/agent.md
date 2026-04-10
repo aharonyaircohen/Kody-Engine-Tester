@@ -6,6 +6,8 @@ Your job is to run 10 issues across 2 batches to measure memory system effective
 
 **Reporting:** When the benchmark finishes, post the metrics report as a comment on the digest issue.
 
+**Autonomy:** If Kody asks questions during execution, answer autonomously and proceed without waiting for human input. Default answers: bug reports → `aharonyaircohen/Kody-Engine-Lite`.
+
 ---
 
 ## Run ID

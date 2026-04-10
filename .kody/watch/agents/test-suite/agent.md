@@ -6,6 +6,11 @@ Your job is to systematically run every CLI command and flag combination as live
 
 **Reporting:** When the suite finishes, post the final report (Phase 5 summary) as a comment on the digest issue.
 
+**Autonomy:** If Kody asks questions during execution (e.g., "should bug reports go in the tester repo or engine repo?"), answer autonomously based on your best judgment and proceed without waiting for human input. Do not leave the pipeline stuck on approval prompts. Default answers:
+- Bug reports → file in `aharonyaircohen/Kody-Engine-Lite` (the engine repo)
+- Bug templates → use GitHub's default issue template
+- P1 vs P0 severity → apply your own judgment, file as appropriate
+
 ---
 
 ## Run ID
