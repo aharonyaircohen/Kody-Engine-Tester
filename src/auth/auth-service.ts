@@ -259,4 +259,73 @@ export class AuthService {
       } as any,
     })
   }
+
+  async changePassword(
+    userId: string,
+    currentPassword: string,
+    newPassword: string
+  ): Promise<void> {
+    if (!newPassword) {
+      throw createError('New password is required', 400)
+    }
+
+    const users = await this.payload.find({
+      collection: 'users' as CollectionSlug,
+      where: { id: { equals: userId } },
+      limit: 1,
+    })
+    const user = users.docs[0]
+    if (!user) {
+      throw createError('User not found', 404)
+    }
+
+    const hash = (user as any).hash as string | null
+    const salt = (user as any).salt as string | null
+    const passwordHistory = (user as any).passwordHistory as Array<{ hash: string; salt: string }> | null
+
+    // Verify current password
+    if (!hash || !salt) {
+      throw createError('Invalid credentials', 401)
+    }
+    const currentValid = await verifyPassword(currentPassword, hash, salt)
+    if (!currentValid) {
+      throw createError('Current password is incorrect', 401)
+    }
+
+    // Check against password history (last 5)
+    if (passwordHistory && passwordHistory.length > 0) {
+      for (const entry of passwordHistory.slice(0, 5)) {
+        const matches = await verifyPassword(newPassword, entry.hash, entry.salt)
+        if (matches) {
+          throw createError('Cannot reuse any of your last 5 passwords', 400)
+        }
+      }
+    }
+
+    // Generate new salt and hash for new password
+    const newSalt = crypto.randomBytes(16).toString('hex')
+    const newHash = await new Promise<string>((resolve, reject) => {
+      crypto.pbkdf2(newPassword, newSalt, 25000, 512, 'sha256', (err, derivedKey) => {
+        if (err) reject(err)
+        else resolve(Buffer.from(derivedKey).toString('hex'))
+      })
+    })
+
+    // Update password history - add current, keep last 5
+    const updatedHistory = [
+      { hash, salt, changedAt: new Date() },
+      ...(passwordHistory || []),
+    ].slice(0, 5)
+
+    // Update user with new password and history
+    await this.payload.update({
+      collection: 'users' as CollectionSlug,
+      id: userId,
+      data: {
+        hash: newHash,
+        salt: newSalt,
+        passwordHistory: updatedHistory,
+      } as any,
+    })
+  }
 }

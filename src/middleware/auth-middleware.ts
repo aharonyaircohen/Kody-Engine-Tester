@@ -1,12 +1,10 @@
-import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
+import type { AuthenticatedUser } from '../auth/auth-service'
 import { JwtService } from '../auth/jwt-service'
-import type { User } from '../auth/user-store'
-import type { Session } from '../auth/session-store'
+import { AuthService } from '../auth/auth-service'
+import { getPayloadInstance } from '@/services/progress'
 
 export interface AuthContext {
-  user?: User
-  session?: Session
+  user?: AuthenticatedUser
   error?: string
   status?: number
 }
@@ -16,26 +14,16 @@ interface RequestContext {
   ip?: string
 }
 
-const RATE_LIMIT_MAX = 100
-const RATE_LIMIT_WINDOW_MS = 60 * 1000
-
-interface RateLimitEntry {
-  count: number
-  resetAt: number
-}
-
-export function createAuthMiddleware(
-  userStore: UserStore,
-  sessionStore: SessionStore,
-  jwtService: JwtService
-) {
-  const rateLimitMap = new Map<string, RateLimitEntry>()
+export function createAuthMiddleware(jwtService: JwtService) {
+  const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+  const RATE_LIMIT_MAX = 100
+  const RATE_LIMIT_WINDOW_MS = 60 * 1000
 
   return async function authMiddleware(req: RequestContext): Promise<AuthContext> {
     const ip = req.ip ?? 'unknown'
+    const now = Date.now()
 
     // Rate limiting
-    const now = Date.now()
     let entry = rateLimitMap.get(ip)
     if (!entry || entry.resetAt <= now) {
       entry = { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS }
@@ -53,28 +41,17 @@ export function createAuthMiddleware(
 
     const token = authHeader.slice(7)
 
-    let payload
     try {
-      payload = await jwtService.verify(token)
+      const payload = getPayloadInstance()
+      const authService = new AuthService(payload as any, jwtService)
+      const result = await authService.verifyAccessToken(token)
+      if (result.user) {
+        return { user: result.user }
+      }
+      return { error: 'User not found', status: 404 }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid token'
       return { error: message, status: 401 }
     }
-
-    const session = sessionStore.findByToken(token)
-    if (!session) {
-      return { error: 'Session not found or expired', status: 401 }
-    }
-
-    if (payload.generation < session.generation) {
-      return { error: 'Token has been superseded by a newer session', status: 401 }
-    }
-
-    const user = await userStore.findById(payload.userId)
-    if (!user || !user.isActive) {
-      return { error: 'User not found or inactive', status: 401 }
-    }
-
-    return { user, session }
   }
 }

@@ -156,6 +156,14 @@ export interface User {
   tokenExpiresAt?: string | null;
   lastTokenUsedAt?: string | null;
   lastLogin?: string | null;
+  passwordHistory?:
+    | {
+        hash: string;
+        salt: string;
+        changedAt: string;
+        id?: string | null;
+      }[]
+    | null;
   permissions?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -711,6 +719,14 @@ export interface UsersSelect<T extends boolean = true> {
   tokenExpiresAt?: T;
   lastTokenUsedAt?: T;
   lastLogin?: T;
+  passwordHistory?:
+    | T
+    | {
+        hash?: T;
+        salt?: T;
+        changedAt?: T;
+        id?: T;
+      };
   permissions?: T;
   updatedAt?: T;
   createdAt?: T;

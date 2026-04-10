@@ -133,6 +133,25 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'passwordHistory',
+      type: 'array',
+      required: false,
+      hidden: true,
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: () => false,
+        update: () => false,
+      },
+      fields: [
+        { name: 'hash', type: 'text', required: true },
+        { name: 'salt', type: 'text', required: true },
+        { name: 'changedAt', type: 'date', required: true },
+      ],
+      maxRows: 5,
+    },
+    {
       name: 'permissions',
       type: 'text',
       required: false,
