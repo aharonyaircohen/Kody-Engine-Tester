@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add debounce-advanced utility with tests",
+  "description": "Create a new debounce utility function in src/utils/debounce-advanced.ts with tests in debounce-advanced.test.ts. This is a simple single-file task that should NOT be decomposable. It tests that simple tasks fall back to normal pipeline instead of attempting decompose when triggered by @kody decompose. Expected: complexity_score < 4, falls back to normal pipeline, PR created via runPipeline().",
+  "scope": [
+    "src/utils/debounce-advanced.ts",
+    "src/utils/debounce-advanced.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts and debounce.test.ts — single utility file with co-located tests, uses vitest with fake timers for timing tests",
+    "src/utils/throttle.ts — simple single-function utility following the same pattern"
+  ],
+  "questions": []
+}
