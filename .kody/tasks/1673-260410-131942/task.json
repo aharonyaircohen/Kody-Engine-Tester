@@ -1,0 +1,22 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add User model with password hash field",
+  "description": "Add a passwordHash field to the Users Payload collection with bcrypt/argon2 hashing, email uniqueness validation, and ensuring passwords are never returned in API responses. This includes creating a password hashing utility and unit tests for hash/verify operations.",
+  "scope": [
+    "src/collections/Users.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/auth/auth-service.ts: Uses Payload-stored hash/salt with PBKDF2 verification via crypto.pbkdf2",
+    "src/collections/Users.ts: Payload collection config with auth:true, already has hash/salt from Payload auth",
+    "src/utils/result.ts: Discriminated union Result type for explicit error handling",
+    "src/auth/user-store.ts: passwordHash field already exists in in-memory User interface"
+  ],
+  "questions": [
+    "Should we use bcrypt or argon2 for password hashing, given neither is currently installed?",
+    "Should we deprecate the existing SHA-256 based UserStore and migrate to the Payload-native auth, or keep both systems?",
+    "Is the goal to add a custom passwordHash field to the Users collection (alongside Payload's built-in hash), or to use Payload's built-in hash field?"
+  ]
+}
+```
