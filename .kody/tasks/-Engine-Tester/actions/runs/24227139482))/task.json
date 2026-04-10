@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of unique utility",
+  "description": "The task description asks to add a unique utility in src/utils/unique.ts that returns unique elements from an array preserving order. This implementation already exists at src/utils/unique.ts with comprehensive tests in src/utils/unique.test.ts. The function uses Set to deduplicate while preserving order and handles both string and number types.",
+  "scope": ["src/utils/unique.ts", "src/utils/unique.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts - single-function utility with JSDoc comments", "src/utils/retry.ts - single-function utility exported cleanly", "src/utils/flatten.ts - array utility with co-located .test.ts"],
+  "questions": []
+}
