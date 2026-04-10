@@ -1,0 +1,37 @@
+{
+  "taskId": "hotfix-1592-260410-120757",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "retries": 0
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "running",
+      "startedAt": "2026-04-10T12:10:13.590Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-10T12:09:41.820Z",
+  "updatedAt": "2026-04-10T12:10:13.590Z"
+}
