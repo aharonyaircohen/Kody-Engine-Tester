@@ -1,0 +1,10 @@
+
+{
+  "task_type": "chore",
+  "title": "Create broken-import.ts utility",
+  "description": "Create src/utils/broken-import.ts that imports from @/nonexistent/module. This will intentionally fail at typecheck/verify step, then rerun with @kody rerun to trigger contradiction detection.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/*.ts - single-function utility files following simple naming conventions"],
+  "questions": []
+}
