@@ -1,0 +1,18 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add audit logger service with JSONL file append",
+  "description": "Create `src/services/audit-logger.ts` with `logAuditEvent(event: { action: string; userId: string; resource: string; details?: string }): void` that appends audit events as JSON Lines to a file. Include co-located `audit-logger.test.ts` with vitest tests covering basic append, optional details field, and file content verification.",
+  "scope": [
+    "src/services/audit-logger.ts",
+    "src/services/audit-logger.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/logger/index.ts:58-64 — createFileTransport uses fs.appendFileSync for line-based file append",
+    "src/services/grading.ts — exports a class/service from src/services/",
+    "src/services/grading.test.ts — vitest test structure with mock dependencies and in-memory maps"
+  ],
+  "questions": []
+}
+```
