@@ -31,3 +31,38 @@ Created two new route handlers:
 **`src/app/api/auth/login/route.ts`** (POST `/login`)
 - Ac
 ...(truncated)
+
+### autofix (2026-04-10T00:21:01)
+**Root Cause Investigation Complete**
+
+Both failures are **pre-existing** — they occur on `main` branch without my changes:
+
+| Failure | Evidence |
+|---------|----------|
+| Integration test (`tests/int/api.int.spec.ts`) | `git checkout main && pnpm test:int` → same error |
+| Build type error (`src/pages/board/modal`) | `git checkout main && pnpm build` → same error |
+
+**My implementation** (`src/app/api/auth/login/route.ts`, `src/app/api/auth/register/route.ts`) adds only these two new files and
+...(truncated)
+
+### review (2026-04-10T00:23:37)
+## Verdict: PASS
+
+## Summary
+
+Two new route handlers were added: `POST /api/auth/register` and `POST /api/auth/login`. Both follow the existing App Router handler pattern, delegate to the existing business logic in `src/api/auth/register.ts` and `src/api/auth/login.ts`, and return appropriate HTTP status codes (201/200/400/401/409/500).
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+- `src/app/api/auth/register/route.ts:30` — `new JwtService(process.env.JWT_SECRET ?? 'dev-secret
+...(truncated)
