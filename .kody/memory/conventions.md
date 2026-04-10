@@ -18,24 +18,37 @@ import { LessonEditor } from './LessonEditor'
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
+**Service Layer**: Business logic in `src/services/` via class constructors with dependency injection (see `src/services/discussions.ts:42`)
+
+**Store Pattern**: In-memory stores (CertificatesStore, DiscussionsStore) live in `src/collections/` alongside Payload configs; interfaces defined in same file (see `src/collections/certificates.ts:44`)
+
+**Security Utilities**: Sanitizers for HTML, SQL, URL live in `src/security/sanitizers.ts`; always validate/sanitize untrusted input before rendering or querying
+
+**JSDoc**: Public utility functions use JSDoc with @param, @returns, and @example tags (see `src/utils/url-shortener.ts:28`)
+
 ## Learned 2026-04-04 (task: 403-260404-211531)
+
 - Uses vitest for testing
 - Uses eslint for linting
 
 ## Learned 2026-04-05 (task: 420-260405-054611)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/app/api/health
 
 ## Learned 2026-04-05 (task: 444-260405-212643)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/utils
 
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
+
 - Uses vitest for testing
 - Uses eslint for linting
 
 ## Learned 2026-04-10 (task: 1529-260410-102822)
+
 - Uses Drizzle ORM
 - Uses Payload CMS collections
