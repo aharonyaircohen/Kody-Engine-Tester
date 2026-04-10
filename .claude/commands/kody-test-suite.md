@@ -408,6 +408,52 @@ gh run view <id> --log --repo aharonyaircohen/Kody-Engine-Tester | grep "{{"
 
 ---
 
+### T22 — taskify --ticket
+
+**1 GitHub issue. Standalone test for `--ticket` flag.**
+
+Create issue:
+```bash
+gh issue create --repo aharonyaircohen/Kody-Engine-Tester \
+  --title "[test-suite] T22: Taskify with --ticket flag" \
+  --body "Testing @kody taskify --ticket JIRA-123"
+```
+
+#### Step 22.1 — `@kody taskify --ticket JIRA-123`
+
+Comment (T22 issue): `@kody taskify --ticket JIRA-123`
+
+**Verification:**
+```bash
+gh run view <id> --log --repo aharonyaircohen/Kody-Engine-Tester | grep -i "ticket|TICKET_ID"
+```
+- Pipeline recognizes `TICKET_ID` mode. Ticket ID (JIRA-123) passed to taskify stage.
+
+```bash
+gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/tasks \
+  --jq '.[] | select(.name | contains("T22")) | .name'
+```
+- Task directory created for T22.
+
+```bash
+# Find the task directory and check for ticket reference
+TASK_DIR=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/tasks \
+  --jq '.[] | select(.name | contains("T22")) | .name')
+gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/tasks/$TASK_DIR/task.md --jq '.content' | base64 -d | grep -i "JIRA-123|ticket"
+gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/tasks/$TASK_DIR/task.json --jq '.content' | base64 -d | grep -i "JIRA-123|ticket"
+```
+- `task.md` or `task.json` contains the ticket reference (JIRA-123).
+
+#### Step 22.2 — Cleanup
+
+Close the T22 issue:
+```bash
+gh issue close <n> --repo aharonyaircohen/Kody-Engine-Tester
+```
+
+**Labels:** test-suite-temp, test-phase-1, complexity: low
+
+---
 ### T05 — Bootstrap + Watch
 
 **Bootstrap: 1 GitHub issue. Watch: run locally (parallel with everything).**
@@ -795,3 +841,4 @@ Clean up any previous test-suite issues first. Then start:
 | T05 | 1 + local | `@kody bootstrap` + `@kody watch --dry-run` (local) | T31, T32 | — |
 | T06 | 3 (parallel) | T06a: hotfix; T06b: release (dry-run → release); T06c: revert (explicit → auto-resolve) | T37, T38, T39, T40, T41 | T01 PR merged |
 | T07 | local | `bootstrap --provider=minimax --model=MiniMax-M1 --force` | T33 | — |
+| T22 | 1 | `@kody taskify --ticket JIRA-123` | — | — |
