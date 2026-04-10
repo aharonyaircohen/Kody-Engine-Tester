@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add notification formatter service with enrollment, grade, and reminder templates",
+  "description": "Create `src/services/notification-formatter.ts` with a `formatNotification(type: string, data: Record<string, string>): { subject: string; body: string }` function. The function should use template strings to generate localized subject and body text for 'enrollment', 'grade', and 'reminder' notification types. Include co-located tests in `notification-formatter.test.ts` following the existing vitest pattern used in `src/services/notifications.test.ts`.",
+  "scope": [
+    "src/services/notification-formatter.ts",
+    "src/services/notification-formatter.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/services/notifications.ts - NotificationService class pattern with constructor injection",
+    "src/utils/notificationHelpers.ts - existing notification formatting utilities in utils",
+    "src/collections/Notifications.ts - NotificationType defines 'enrollment' and 'grade' types; 'reminder' is not in the collection but is explicitly required by the task",
+    "src/services/notifications.test.ts - vitest test pattern with beforeEach, mockPayload, and describe/it blocks"
+  ],
+  "questions": []
+}
