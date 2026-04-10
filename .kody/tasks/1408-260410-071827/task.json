@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add CSV export utility",
+  "description": "Create `toCsv(rows: Record<string, string | number>[], columns?: string[]): string` in `src/utils/csv-export.ts`. Handle quoting for values containing commas. With tests. The function should accept an array of row objects and an optional array of column keys, and return a CSV-formatted string with proper comma and quote handling.",
+  "scope": ["src/utils/csv-export.ts", "src/utils/csv-export.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/truncate.ts — single-function utility module with JSDoc, co-located test file, vitest testing framework",
+    "src/utils/format-date.ts — utility that handles string transformations with edge cases"
+  ],
+  "questions": []
+}
