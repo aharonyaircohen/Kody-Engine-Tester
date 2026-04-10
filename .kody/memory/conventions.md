@@ -35,3 +35,7 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-10 (task: decompose-1429-260410-074723)
+- Uses Payload CMS collections
+- Active directories: src/models, src/collections, src/services, src/routes, src/utils, src/app/api/notifications, src/app/api/notifications/[id]/read, src/app/api/notifications/read-all
