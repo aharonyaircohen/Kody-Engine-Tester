@@ -1,0 +1,15 @@
+{
+  "task_type": "chore",
+  "title": "Verify T11: Flag feedback injection",
+  "description": "Run and verify the --feedback flag test case T11. Execute `@kody --feedback \"Use functional style\"` and confirm that: (1) feedback text appears in build stage logs as `feedback: Use functional style`, (2) FEEDBACK env var is properly propagated through the orchestrate job, and (3) the pipeline completes successfully.",
+  "scope": [
+    ".github/workflows/kody.yml",
+    ".kody/watch/agents/test-suite/agent.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".github/workflows/kody.yml lines 65, 207, 263 - FEEDBACK env var parsing and propagation through pipeline",
+    ".kody/watch/agents/test-suite/agent.md lines 880-918 - T11 verification protocol"
+  ],
+  "questions": []
+}
