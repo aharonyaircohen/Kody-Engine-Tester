@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Create broken-import utility for contradiction detection testing",
+  "description": "Created src/utils/broken-import.ts that imports from @/nonexistent/module. This file intentionally contains a broken import to test the contradiction detection system when the pipeline is rerun after verify failure.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts - simple utility file pattern with single function export"],
+  "questions": []
+}
