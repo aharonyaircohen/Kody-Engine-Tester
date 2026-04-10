@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify existing implementation of input sanitizer",
+"description": "The `sanitizeInput(input: string): string` function in `src/middleware/sanitize.ts` already exists and strips HTML tags, trims whitespace, and normalizes unicode via NFC normalization. All 11 tests in `src/middleware/sanitize.test.ts` pass.",
+"scope": ["src/middleware/sanitize.ts", "src/middleware/sanitize.test.ts"],
+"risk_level": "low",
+"existing_patterns": ["src/middleware/sanitize.ts implements stripHtmlTags, normalizeUnicode, and sanitizeInput functions following the middleware utility pattern", "src/middleware/sanitize.test.ts follows the same vitest test structure as other middleware tests in src/middleware/"],
+"questions": []
+}
