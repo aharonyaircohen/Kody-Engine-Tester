@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of role hierarchy checker",
+  "description": "The hasPermission(userRole, requiredRole) function already exists in src/auth/role-hierarchy.ts with hierarchy admin > editor > viewer > guest. All 18 tests pass in src/auth/role-hierarchy.test.ts, covering: role hierarchy (higher roles access lower roles), same-role access, and unknown role handling.",
+  "scope": ["src/auth/role-hierarchy.ts", "src/auth/role-hierarchy.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/role-hierarchy.ts:ROLE_HIERARCHY map + level comparison pattern",
+    "src/auth/role-hierarchy.test.ts:vitest describe/it/expect test structure",
+    "src/auth/role-hierarchy.ts:undefined check for unknown roles returns false"
+  ],
+  "questions": []
+}
