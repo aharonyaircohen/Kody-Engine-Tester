@@ -188,11 +188,11 @@ Then pick tasks that create NEW files. If a task creates files that already exis
 | T20 | [${RUN_ID}] T20: Status check | `@kody status` | Prints pipeline state from status.json, no pipeline execution |
 | T21 | [${RUN_ID}] T21: Taskify file mode | `@kody taskify --file docs/test-prd.md` | Sub-issues filed with priority labels, Test Strategy sections, topo order. See T21 details below |
 | T22 | [${RUN_ID}] T22: Taskify context injection | `@kody taskify --file docs/test-prd.md` (with `.kody/memory.md` present) | Project memory and file tree appear in taskify stage logs. See T22 details below |
-| T24 | [${RUN_ID}] T24: Decompose: simple task falls back | `@kody decompose` | complexity_score < 6, falls back to normal pipeline, PR created via runPipeline(). See T24 details below |
+| T24 | [${RUN_ID}] T24: Decompose: simple task falls back | `@kody decompose` | complexity_score < 4, falls back to normal pipeline, PR created via runPipeline(). See T24 details below |
 | T31 | [${RUN_ID}] T31: Bootstrap: extend mode | `@kody bootstrap` | Generates/extends memory, step files, tools.yml, labels. See T31 details below |
 | T33 | [${RUN_ID}] T33: Bootstrap: model override | `kody-engine-lite bootstrap --provider=minimax --model=MiniMax-M1 --force` | CLI flags override config model. See T33 details below |
 | T32 | [${RUN_ID}] T32: Watch: health monitoring | `@kody watch --dry-run` (local) | Runs watch plugins, posts findings to digest issue. See T32 details below |
-| T25 | [${RUN_ID}] T25: Decompose: complex multi-area task | `@kody decompose` | Scores 6+, splits into 2+ sub-tasks, parallel build, merge, verify, review, ship. PR body has "Decomposed Implementation" section. See T25 details below |
+| T25 | [${RUN_ID}] T25: Decompose: complex multi-area task | `@kody decompose` | Scores 4+, splits into 2+ sub-tasks, parallel build, merge, verify, review, ship. PR body has "Decomposed Implementation" section. See T25 details below |
 | T26 | [${RUN_ID}] T26: Decompose: --no-compose flag | `@kody decompose --no-compose` | Stops after parallel build. decompose-state.json saved. No PR created. See T26 details below |
 | T37 | [${RUN_ID}] T37: Hotfix: fast-track pipeline | `@kody hotfix` | Skips taskify/plan/review, runs build → verify (no tests) → ship. PR created with hotfix label. See T37 details below |
 | T40 | [${RUN_ID}] T40: Release: dry-run | `@kody release --dry-run` | Parses conventional commits, determines bump, generates changelog — no PR created. See T40 details below |
@@ -223,17 +223,75 @@ T03 must pause at the risk gate for T05 (approve) to work. If T03 doesn't pause 
 
 ### T19 — fix-ci auto-trigger
 
-This tests the `fix-ci-trigger` workflow job and its loop guard:
+The `fix-ci-trigger` workflow job fires when a **separate CI workflow** (not kody.yml) fails on a PR. Since the tester repo has no standalone CI by default, this test must create one.
 
-1. Use a PR created by T01 or T02
-2. Push a commit that breaks CI (e.g., introduce a type error in a test file)
-3. Wait for CI to fail — the workflow should auto-post `@kody fix-ci` on the PR
-4. Verify:
-   - `@kody fix-ci` comment appears on the PR (auto-posted by `fix-ci-trigger` job)
-   - Pipeline runs with `fix-ci` mode, fetches CI failure logs, rebuilds from build
-   - Fix is pushed to the same PR
-5. Loop guard check: If the fix-ci run itself fails, verify that a **second** `@kody fix-ci` is NOT auto-posted (loop guard: "already commented in last 24h")
-6. Also verify bot commit guard: last commit author check prevents infinite loops
+**Protocol:**
+
+**Step 1 — Add a breakable CI workflow** (if `test-ci.yml` does not yet exist on the main branch):
+```bash
+# Create the CI workflow on main (it will be used by all future T19 runs)
+gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.github/workflows/test-ci.yml \
+  --method PUT \
+  --field message="ci: add test-ci for T19 simulation [skip ci]" \
+  --field content="$(echo 'name: Test CI
+on: [pull_request]
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "CI health check"' | base64)"
+```
+
+**Step 2 — Break it deliberately** (after Kody creates the PR from T01 or T02):
+
+1. Get the PR branch: `gh pr view <n> --json headRefName -q '.headRefName'`
+2. Fetch and checkout the PR branch locally
+3. Add a failing step to the CI workflow:
+```bash
+cat >> .github/workflows/test-ci.yml << 'YAML'
+      - run: exit 1  # intentionally break CI for T19 test
+YAML
+git add .github/workflows/test-ci.yml
+git commit -m "chore: break CI for T19 test [skip ci]"
+git push origin <pr-branch>
+```
+
+**Step 3 — Verify fix-ci-trigger fires:**
+
+1. The `workflow_run` event fires when `test-ci.yml` completes with `failure`
+2. `fix-ci-trigger` job checks loop guard (no prior fix-ci comment in 24h) — passes
+3. `@kody fix-ci` comment is auto-posted on the PR
+4. Pipeline runs with `mode=fix-ci`, fetches CI failure logs, rebuilds from build stage
+5. Fix is pushed to the same PR
+
+**Step 4 — Loop guard check:**
+
+If the fix-ci run itself fails, verify that a **second** `@kody fix-ci` is NOT auto-posted within 24h (loop guard confirmed). Also verify bot commit guard: last commit author check prevents infinite loops.
+
+**Step 5 — Cleanup:**
+```bash
+# Restore the healthy CI workflow on the PR branch
+git checkout <pr-branch>
+git revert HEAD --no-edit   # revert the "break CI" commit
+git push origin <pr-branch>
+```
+
+**Verification commands:**
+```bash
+# Check fix-ci comment posted
+gh issue comment --list | grep "@kody fix-ci"
+
+# Check pipeline ran in fix-ci mode
+gh run view <id> --log | grep "mode=fix-ci"
+
+# Check fix pushed
+gh pr diff <n> | grep "fix.*T19\|kody-fix-ci"
+
+# Check loop guard blocked second trigger
+gh run list --workflow=kody.yml --json number,conclusion | jq '.[] | select(.conclusion=="skipped")'
+```
+
+**Concurrency note:** Each workflow run uses `github.run_id` as its concurrency key, so T19 runs cannot cancel each other. However, if another `@kody` command is triggered on the same PR during the T19 simulation, it will share the concurrency group — wait for any in-progress runs to finish before breaking CI.
 
 ### T20 — status command
 
@@ -326,7 +384,7 @@ This tests the fail-open fallback when a task isn't complex enough to decompose.
      ```bash
      gh run view <id> --log | grep -i "complexity_score\|not decomposable\|falling back\|Delegating to normal pipeline"
      ```
-   - Expected: `complexity_score` is < 6 OR `not decomposable`, followed by "Delegating to normal pipeline"
+   - Expected: `complexity_score` is < 4 OR `not decomposable`, followed by "Delegating to normal pipeline"
    - Pipeline completes via normal `runPipeline()` path — PR created normally
    - `decompose.json` artifact may exist with `decomposable: false`
    - FAIL if: decompose attempts parallel build on a simple task
@@ -355,7 +413,7 @@ Add a complete notification system:
    ```bash
    gh run view <id> --log | grep -i "decompose\|sub-task\|complexity_score\|parallel"
    ```
-   - Expected: `complexity_score` >= 6, `decomposable: true`, 2+ sub-tasks listed
+   - Expected: `complexity_score` >= 4, `decomposable: true`, 2+ sub-tasks listed
 
 2. Check parallel build:
    ```bash
