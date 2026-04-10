@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp utility already exists at src/utils/clamp.ts with comprehensive tests in src/utils/clamp.test.ts. All 8 tests pass. The implementation includes: value within range returns as-is, below min returns min, above max returns max, edge cases for equals, negative numbers, floating point numbers, and throws when min > max. No additional work needed.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/clamp.ts follows the utility module pattern of single-function files in src/utils/", "src/utils/clamp.test.ts follows the co-located .test.ts pattern with vitest imports (describe, expect, it)"],
+  "questions": []
+}
