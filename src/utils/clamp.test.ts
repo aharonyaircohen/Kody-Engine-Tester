@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { clamp } from './clamp'
+import { clamp } from './math-helpers'
 
 describe('clamp', () => {
   it('returns value when within range', () => {
