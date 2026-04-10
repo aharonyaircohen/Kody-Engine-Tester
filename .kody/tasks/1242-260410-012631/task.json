@@ -1,0 +1,14 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add request timing middleware",
+  "description": "Create middleware in `src/middleware/request-timing.ts` that measures request duration and adds `X-Response-Time` header to responses. Include co-located integration test following existing middleware patterns.",
+  "scope": ["src/middleware/request-timing.ts", "src/middleware/request-timing.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts: Factory pattern `createRequestLogger` returning `{ middleware, ...methods }` - should follow same structure",
+    "src/middleware/request-logger.test.ts: Test pattern using `vi.useFakeTimers`, `makeRequest` helper, and `createRequestLogger` factory with custom logger spy"
+  ],
+  "questions": []
+}
+```
