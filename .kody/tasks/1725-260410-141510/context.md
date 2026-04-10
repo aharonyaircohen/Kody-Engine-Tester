@@ -31,3 +31,29 @@ I've successfully implemented the User model with password hash field. Here's wh
    - `hashPassword(password)` - hashes password using bcrypt with cost factor 12
    - `verifyPassword(password, hash)` - verifies password against bc
 ...(truncated)
+
+### review (2026-04-10T14:26:37)
+## Verdict: PASS
+
+## Summary
+
+Added a `passwordHash` field to the Users Payload CMS collection using bcrypt with cost factor 12, plus a write-only `password` input field. Created a new `src/utils/password.ts` utility with `hashPassword` and `verifyPassword` functions. The password hash is write-only via access controls (`read: () => false`) and hashed via a `beforeChange` hook. All 43 tests pass.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+None.
+
+## Two-Pass Review
+
+**Pass 1 
+...(truncated)
