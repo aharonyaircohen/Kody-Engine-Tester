@@ -1,0 +1,17 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of isTokenExpired",
+  "description": "The isTokenExpired(token: string): boolean function already exists in src/auth/token-utils.ts with 3 passing tests covering: valid non-expired tokens, expired tokens, and malformed tokens. No additional work needed.",
+  "scope": [
+    "src/auth/token-utils.ts",
+    "src/auth/token-utils.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/token-utils.ts - Manual JWT decoding using base64url decode and JSON.parse, checking payload.exp against current timestamp",
+    "src/auth/jwt-service.ts - JwtService.signAccessToken and sign methods for generating test tokens"
+  ],
+  "questions": []
+}
+```
