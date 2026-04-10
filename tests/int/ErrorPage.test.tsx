@@ -8,7 +8,7 @@ vi.mock('next/link', () => ({
   ),
 }))
 
-import { ErrorPage } from './ErrorPage'
+import { ErrorPage } from '@/components/error/ErrorPage'
 
 describe('ErrorPage', () => {
   const defaultProps = {

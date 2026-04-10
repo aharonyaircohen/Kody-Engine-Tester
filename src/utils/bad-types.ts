@@ -1,3 +1,3 @@
-export function getCount(): string {
+export function getCount(): number {
   return 42;
 }
