@@ -39,3 +39,66 @@ Implementation complete. Here's a summary:
    - Validates email, password, confirmPassword required fields (400)
    - Extracts IP
 ...(truncated)
+
+### review (2026-04-10T08:08:54)
+## Verdict: FAIL
+
+## Summary
+
+Added two new Next.js route handlers for `POST /api/auth/login` and `POST /api/auth/register`. The login handler correctly uses the module-level auth singletons, while the register handler creates new instances inconsistently. The register endpoint also has a hardcoded JWT secret fallback that poses a security risk in production.
+
+## Findings
+
+### Critical
+
+`src/app/api/auth/register/route.ts:26` — Creates a new `JwtService` with `process.env.JWT_SECRET ?? 'dev-secr
+...(truncated)
+
+### review-fix (2026-04-10T08:11:38)
+Fix complete.
+
+**Summary of changes:**
+
+**Fixed: `src/app/api/auth/register/route.ts`**
+
+- Removed hardcoded JWT secret fallback (`process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production'`)
+- Changed from `import { JwtService } from '@/auth/jwt-service'` to `import { jwtService } from '@/auth'` (line 4)
+- Now uses the module-level singleton `jwtService` exported from `@/auth/index.ts`
+
+**Pattern consistency achieved:**
+- Both `login/route.ts` and `register/route.ts` now use the singleton 
+...(truncated)
+
+### review (2026-04-10T08:14:23)
+## Verdict: FAIL
+
+## Summary
+
+Added two new Next.js route handlers for `POST /api/auth/login` and `POST /api/auth/register`. The login handler uses module-level auth singletons (`UserStore`, `SessionStore`) while the register handler uses `AuthService` backed by Payload — these are two completely separate user stores, meaning users created via `/register` cannot authenticate via `/login`. Additionally, the register route creates a redundant `JwtService` instance instead of reusing the singleton,
+...(truncated)
+
+### review-fix (2026-04-10T08:16:30)
+Same pre-existing database issue (127 passed, 1 failed due to PostgreSQL connection).
+
+**Fix complete. Summary of changes:**
+
+Both routes now consistently use the same auth system:
+
+| Route | Before | After |
+|-------|--------|-------|
+| `login/route.ts` | `UserStore` + `SessionStore` (in-memory, SHA-256) | `AuthService` + `Payload` (PostgreSQL, PBKDF2) |
+| `register/route.ts` | `AuthService` + `Payload` | Same (unchanged) |
+
+Both now:
+- Use singleton `jwtService` from `@/auth` (no more hardcode
+...(truncated)
+
+### review (2026-04-10T08:17:24)
+The diff is unchanged from my previous review. The same critical and major findings remain.
+
+## Verdict: FAIL
+
+## Summary
+
+Added two new Next.js route handlers for `POST /api/auth/login` and `POST /api/auth/register`. The login handler uses `UserStore` (in-memory, SHA-256) while the register handler uses `AuthService` backed by Payload CMS (PostgreSQL, PBKDF2) — these are completely incompatible user stores, so users created via `/register` cannot authenticate via `/login`. Additionally, the reg
+...(truncated)
