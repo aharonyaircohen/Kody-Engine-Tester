@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Test workflow trigger infrastructure",
+  "description": "Test issue to verify workflow trigger functionality. Discussion indicates a workflow infrastructure issue prevents execution - this is an infrastructure diagnostic task, not a code implementation.",
+  "scope": [],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
