@@ -28,18 +28,20 @@
     },
     "review-fix": {
       "state": "completed",
-      "completedAt": "2026-04-10T13:34:30.000Z",
+      "completedAt": "2026-04-10T13:34:33.802Z",
       "retries": 0,
-      "notes": "No Critical or Major findings to fix. Review passed with no issues."
+      "promptTokens": 6058
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-10T13:34:33.842Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-10T13:27:41.155Z",
-  "updatedAt": "2026-04-10T13:32:21.530Z",
+  "updatedAt": "2026-04-10T13:34:33.842Z",
   "sessions": {
-    "review": "9f63d045-82fc-4882-97d2-85d7a809b8f1"
+    "review": "9f63d045-82fc-4882-97d2-85d7a809b8f1",
+    "build": "59fd884f-2f2c-4084-841d-4c95bb86bd4e"
   }
 }
