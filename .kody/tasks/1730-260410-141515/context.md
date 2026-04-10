@@ -37,3 +37,37 @@ Implementation complete. Here's a summary:
 
 **Step 3: Verified
 ...(truncated)
+
+### review (2026-04-10T14:28:45)
+## Verdict: PASS
+
+## Summary
+
+Added a protected route example (`src/app/my-route/route.ts`) using the existing `withAuth` HOC and an integration test suite covering 4 auth scenarios (missing header, malformed token, expired token, valid token). All 4 tests pass.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+None.
+
+---
+
+## Two-Pass Review
+
+**Pass 1 — CRITICAL:**
+
+### SQL & Data Safety
+Not applicable — no database writes in this change.
+
+### Race Conditions & Concurrency
+Not appl
+...(truncated)
