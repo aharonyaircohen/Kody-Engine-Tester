@@ -1,0 +1,20 @@
+{
+  "task_type": "feature",
+  "title": "Add auth middleware to protect routes",
+  "description": "Implement auth middleware that extracts Bearer token from Authorization header, returns 401 for missing/invalid/expired tokens, attaches req.user={userId, email} on success, and works as framework-agnostic middleware with a protected route example demonstrating usage. Unit tests cover missing header, malformed token, expired token, and valid token scenarios.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/_auth.ts",
+    "src/auth/withAuth.ts",
+    "src/app/my-route/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/auth/_auth.ts: extractBearerToken utility parses Authorization header",
+    "src/auth/withAuth.ts: Next.js route handler wrapper with JWT verification and role checking",
+    "src/middleware/request-logger.ts: Next.js middleware factory pattern using NextRequest/NextResponse",
+    "src/middleware/auth-middleware.ts: createAuthMiddleware factory with rate limiting and session validation"
+  ],
+  "questions": []
+}

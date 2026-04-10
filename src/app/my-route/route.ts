@@ -1,12 +1,9 @@
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+import type { NextRequest } from 'next/server'
+import { withAuth } from '@/auth/withAuth'
 
-export const GET = async (_request: Request) => {
-  const _payload = await getPayload({
-    config: configPromise,
-  })
-
+export const GET = withAuth(async (_request: NextRequest, { user }) => {
   return Response.json({
-    message: 'This is an example of a custom route.',
+    message: 'This is an example of a protected route.',
+    user: { userId: user?.id, email: user?.email },
   })
-}
+})
