@@ -1,0 +1,39 @@
+Based on my exploration, the auth middleware already exists and is fully implemented:
+
+**Existing Implementation:**
+- `src/middleware/auth-middleware.ts` - Factory function `createAuthMiddleware` that extracts JWT from Bearer token, verifies it, checks sessions, and returns 401 for invalid/missing tokens
+- `src/middleware/auth-middleware.test.ts` - Comprehensive tests covering valid tokens, missing tokens, invalid tokens, expired tokens, revoked sessions, and rate limiting
+- `src/auth/withAuth.ts` - HOC that wraps route handlers with authentication, used across all protected routes
+
+**Routes using auth:**
+- `notes/route.ts`, `notes/[id]/route.ts` - withAuth
+- `notifications/route.ts`, `notifications/read-all/route.ts`, `notifications/[id]/read/route.ts` - withAuth  
+- `gradebook/route.ts`, `gradebook/course/[id]/route.ts` - withAuth
+- `quizzes/[id]/route.ts`, `quizzes/[id]/submit/route.ts`, `quizzes/[id]/attempts/route.ts` - withAuth
+- `enroll/route.ts`, `dashboard/admin-stats/route.ts`, `courses/search/route.ts` - withAuth
+
+**Public routes (correctly unprotected):**
+- `health/route.ts` - health check
+- `csrf-token/route.ts` - CSRF token endpoint (uses session header, not JWT)
+
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of auth middleware",
+  "description": "Auth middleware already exists and is applied to all protected routes. The middleware in src/middleware/auth-middleware.ts extracts JWT from Bearer tokens, returns 401 for invalid/missing tokens, and attaches user context. All API routes requiring auth use withAuth HOC. Public routes (health, csrf-token) are correctly unprotected. Tests exist in auth-middleware.test.ts.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/withAuth.ts",
+    "src/app/api/health/route.ts",
+    "src/app/api/csrf-token/route.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts:createAuthMiddleware factory extracts Bearer JWT, verifies with JwtService, checks session validity, rate limiting",
+    "src/auth/withAuth.ts:HOC wrapping route handlers with JWT authentication and RBAC role checking",
+    "src/auth/_auth.ts:extractBearerToken and checkRole utilities for auth context"
+  ],
+  "questions": []
+}
+```
