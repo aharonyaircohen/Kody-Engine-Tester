@@ -1,0 +1,14 @@
+
+{
+"task_type": "bugfix",
+"title": "Clarify ambiguous task description",
+"description": "The task title mentions 'verify amber banner with paused state' but the task description asks to 'implement a simple utility that adds two numbers'. These are contradictory. The task description also instructs to be intentionally ambiguous to prompt questions, which conflicts with needing clear acceptance criteria. Need clarification on what actual work needs to be done.",
+"scope": [],
+"risk_level": "medium",
+"existing_patterns": [],
+"questions": [
+"Should this task implement a UI test for an amber banner with paused state, or implement a simple add-two-numbers utility?",
+"What is the 'amber banner with paused state' that needs to be verified? Is there an existing component or UI pattern to test?",
+"The task description asks to be intentionally ambiguous - should this be reframed to have clear acceptance criteria instead?"
+]
+}
