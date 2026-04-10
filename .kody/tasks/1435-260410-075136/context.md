@@ -29,3 +29,21 @@ All 48 tests pass. Here's a summary of the implementation:
 - `hashPassword(password: string): Promise<HashResult>` - hashes password with bcrypt (10 salt rounds)
 - `verifyPassword(password: string, hash: string): Promise<boolean>` - verifies password against
 ...(truncated)
+
+### review (2026-04-10T08:08:40)
+## Verdict: PASS
+
+## Summary
+
+Added a `passwordHash` field to the Payload Users collection and created a password hashing utility using bcryptjs. The changes include: bcryptjs dependency, `src/utils/password-hash.ts` utility, `src/collections/Users.ts` field addition, database migration, and corresponding tests.
+
+## Findings
+
+### Critical: None
+
+### Major: None
+
+### Minor
+
+- `src/migrations/20260410_000000_add_users_password_hash.ts:5` — `ADD COLUMN` lacks `IF NOT EXISTS` guard. If the migration
+...(truncated)
