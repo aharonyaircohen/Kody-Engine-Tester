@@ -1,11 +1,22 @@
-export function groupBy<T>(items: readonly T[], keyFn: (item: T) => string): Record<string, T[]> {
+type KeyFn<T> = (item: T) => string | number
+type KeySelector<T> = keyof T | KeyFn<T>
+
+function resolveKey<T>(item: T, key: KeySelector<T>): string | number {
+  if (typeof key === 'function') {
+    return (key as KeyFn<T>)(item)
+  }
+  return String(item[key])
+}
+
+export function groupBy<T>(array: T[], key: KeySelector<T>): Record<string, T[]> {
   const result: Record<string, T[]> = {}
-  for (const item of items) {
-    const key = keyFn(item)
-    if (!result[key]) {
-      result[key] = []
+  for (const item of array) {
+    const resolved = resolveKey(item, key)
+    const k = String(resolved)
+    if (!result[k]) {
+      result[k] = []
     }
-    result[key].push(item)
+    result[k].push(item)
   }
   return result
 }

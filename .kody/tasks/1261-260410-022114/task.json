@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of groupBy utility",
+  "description": "The groupBy utility in src/utils/group-by.ts and tests in src/utils/group-by.test.ts already exist and all 10 tests pass. Verified implementation matches requirements: works with both property keys and callback functions, returns Record<string, T[]>.",
+  "scope": ["src/utils/group-by.ts", "src/utils/group-by.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/group-by.ts: Pure functional utility with generic type signature following src/utils pattern",
+    "src/utils/group-by.test.ts: Vitest co-located test file with describe/it/expect structure"
+  ],
+  "questions": []
+}

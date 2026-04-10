@@ -50,6 +50,32 @@ describe('groupBy', () => {
     expect(result['20']).toEqual([20])
   })
 
+  it('groups by a property key', () => {
+    const items = [
+      { name: 'Alice', dept: 'eng' },
+      { name: 'Bob', dept: 'sales' },
+      { name: 'Carol', dept: 'eng' },
+    ]
+    const result = groupBy(items, 'dept')
+    expect(result).toEqual({
+      eng: [{ name: 'Alice', dept: 'eng' }, { name: 'Carol', dept: 'eng' }],
+      sales: [{ name: 'Bob', dept: 'sales' }],
+    })
+  })
+
+  it('works with numeric property keys', () => {
+    const items = [
+      { id: 1, label: 'a' },
+      { id: 2, label: 'b' },
+      { id: 1, label: 'c' },
+    ]
+    const result = groupBy(items, 'id')
+    expect(result).toEqual({
+      '1': [{ id: 1, label: 'a' }, { id: 1, label: 'c' }],
+      '2': [{ id: 2, label: 'b' }],
+    })
+  })
+
   it('preserves insertion order within groups', () => {
     const result = groupBy(['b', 'a', 'b', 'c', 'a'], (s) => s)
     expect(result['b']).toEqual(['b', 'b'])
