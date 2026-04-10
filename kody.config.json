@@ -39,7 +39,7 @@
   },
   "watch": {
     "enabled": true,
-    "activityLog": 369,
+    "activityLog": 1015,
     "model": "MiniMax-M2.7-highspeed",
     "provider": "minimax"
   }
