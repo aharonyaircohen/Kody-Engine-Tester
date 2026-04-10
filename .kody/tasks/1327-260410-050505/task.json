@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of chunk utility",
+  "description": "The chunk utility function already exists at src/utils/chunk.ts with comprehensive tests in src/utils/chunk.test.ts. The task description incorrectly states 'Add a chunk utility function' when it should verify the existing implementation. The actual task (from the Task field) is testing @kody rerun --from build functionality.",
+  "scope": ["src/utils/chunk.ts", "src/utils/chunk.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/chunk.ts follows the utility module pattern (single-function file with co-located .test.ts)", "src/utils/chunk.test.ts uses vitest with describe/it/expect syntax matching project conventions"],
+  "questions": []
+}
