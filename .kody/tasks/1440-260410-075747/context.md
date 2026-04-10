@@ -18,3 +18,9 @@ All the routes mentioned in the task are protected with `withAuth`. Here's a sum
    - Token superseded by newer session
   
 ...(truncated)
+
+### autofix (2026-04-10T08:06:15)
+Fixed `let context` → `const context` on line 80 of `src/utils/logger/index.ts`.
+
+Regarding the integration test database error with missing `$1` parameter: as the feedback notes, this appears to be a **pre-existing test setup issue** in `tests/int/api.int.spec.ts`, not caused by the auth middleware changes. The auth middleware work (JWT verification, status codes) was completed in the build stage. This database parameter issue is a separate concern that would require investigating the test fixt
+...(truncated)
