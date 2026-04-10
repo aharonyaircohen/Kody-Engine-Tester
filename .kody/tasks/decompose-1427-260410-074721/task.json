@@ -1,0 +1,15 @@
+
+{
+  "task_type": "feature",
+  "title": "Test taskify context injection with memory and file tree",
+  "description": "Verify that the taskify stage correctly receives project context (memory.md content and git ls-files output) and that no raw {{ }} template tokens appear in logs. Uses .kody/memory.md and docs/test-prd.md as inputs.",
+  "scope": [
+    ".kody/memory.md",
+    "docs/test-prd.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/memory.md — project conventions file with sections for code style, naming, testing, and git conventions; taskify should inject this content into the agent context"
+  ],
+  "questions": []
+}
