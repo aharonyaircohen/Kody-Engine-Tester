@@ -1,0 +1,47 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.text {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.active {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.chevron {
+  color: #9ca3af;
+  flex-shrink: 0;
+}
