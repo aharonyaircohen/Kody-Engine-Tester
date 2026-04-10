@@ -1,0 +1,7 @@
+name: Test CI
+on: [pull_request]
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "CI health check"
