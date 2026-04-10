@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add breadcrumb component",
+  "description": "Create a Breadcrumb React component in src/components/ui/breadcrumb.tsx that renders a trail of links. Props: items: { label: string; href?: string }[]. Active item (last) is plain text, others are links. Include unit test following existing component patterns.",
+  "scope": [
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/breadcrumb.module.css",
+    "src/components/ui/breadcrumb.test.tsx"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/components/board/PriorityBadge.tsx - Simple UI component with props interface, using CSS modules",
+    "src/components/board/PriorityBadge.test.tsx - Component test using @testing-library/react with describe/it/expect",
+    "src/components/board/PriorityBadge.module.css - CSS module with component-scoped styles"
+  ],
+  "questions": []
+}

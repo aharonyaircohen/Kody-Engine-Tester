@@ -1,0 +1,45 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  color: #0070f3;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.text {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.active {
+  color: #333;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.separator {
+  color: #999;
+  font-size: 0.875rem;
+}
