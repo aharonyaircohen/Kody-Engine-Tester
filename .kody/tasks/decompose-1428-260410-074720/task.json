@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of capitalize utility",
+  "description": "The capitalize utility function already exists in src/utils/cap.ts with comprehensive tests in src/utils/cap.test.ts. The function capitalizes the first letter of a string, handles empty strings, single characters, and strings with spaces. Tests cover: simple strings, already-capitalized strings, empty input, single characters, and strings with spaces.",
+  "scope": ["src/utils/cap.ts", "src/utils/cap.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/cap.ts and src/utils/cap.test.ts follow the established utility module pattern: single-function file with co-located .test.ts file, matching other utilities like src/utils/capitalize-words.ts, src/utils/clamp.ts, src/utils/debounce.ts"],
+  "questions": []
+}
