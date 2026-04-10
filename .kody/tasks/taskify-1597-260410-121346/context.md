@@ -29,3 +29,17 @@ kody-engine taskify --ticket JIRA-123 --issue-number 1627
 2. **BUG**: The engine does NOT actually fetch the external JIRA ticket
 3. In
 ...(truncated)
+
+### autofix (2026-04-10T12:47:34)
+Based on my investigation, I've identified the root causes:
+
+## Root Cause Analysis
+
+### 1. `bad-types.ts` Type Error (Fixed)
+The file was reverted to original state. It has a pre-existing type error (returns `number` but declares `string`), introduced intentionally in commit `299967b`.
+
+### 2. Payload SQL Params Error (Pre-existing)
+The `tests/int/api.int.spec.ts` test fails because Payload CMS's internal drizzle-kit code executes a schema introspection query:
+```sql
+SELECT conname AS primary_k
+...(truncated)
