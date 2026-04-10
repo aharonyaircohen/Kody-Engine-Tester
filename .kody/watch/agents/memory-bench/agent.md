@@ -96,17 +96,36 @@ done
 ```
 
 ### 3. Trigger all 5 in parallel
+Skip any issue already complete to avoid re-triggering:
 ```bash
 for n in <issue_numbers>; do
+  labels=$(gh issue view $n --json labels -q '.labels[].name')
+  if echo "$labels" | grep -qE 'kody:done|kody:failed'; then
+    echo "Issue #$n already complete, skipping."
+    continue
+  fi
   gh issue comment $n --body "@kody"
 done
 ```
 
 ### 4. Wait for all 5 to complete
-Poll workflow runs until all 5 complete or timeout (20 min per issue):
+Poll until all issues have `kody:done` or `kody:failed`, timeout after 20 min per issue:
 ```bash
 for n in <issue_numbers>; do
-  gh issue view $n --json labels -q '.labels[].name' | grep -E 'kody:done|kody:failed'
+  echo "Waiting for issue #$n..."
+  elapsed=0
+  while [ $elapsed -lt 1200 ]; do
+    labels=$(gh issue view $n --json labels -q '.labels[].name')
+    if echo "$labels" | grep -qE 'kody:done|kody:failed'; then
+      echo "Issue #$n done."
+      break
+    fi
+    sleep 30
+    elapsed=$((elapsed + 30))
+  done
+  if [ $elapsed -ge 1200 ]; then
+    echo "Issue #$n timed out after 20 min"
+  fi
 done
 ```
 
