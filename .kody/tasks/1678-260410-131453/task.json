@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add Next.js auth middleware for route protection",
+  "description": "Create a Next.js middleware file that protects routes by validating JWT tokens from the Authorization Bearer header. Must support route exclusion patterns (e.g., /login, /register) and return 401 with error message for missing/invalid tokens. Should attach decoded user payload to request context on success and pass valid requests through unchanged. Should reuse the existing JwtService from src/auth/jwt-service.ts and follow the pattern established in src/middleware/request-logger.ts and src/middleware/rate-limiter.ts which export proper Next.js middleware functions taking NextRequest and returning NextResponse.",
+  "scope": [
+    "src/middleware/auth-middleware.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts: Next.js middleware pattern with NextRequest/NextResponse, excludePaths support, and middleware factory function",
+    "src/middleware/rate-limiter.ts: Next.js middleware pattern with config-based route exclusion and keyResolver for flexible identification",
+    "src/auth/jwt-service.ts: JWT signing and verification with TokenPayload containing userId, email, role, sessionId, generation",
+    "src/auth/_auth.ts: extractBearerToken helper for parsing Authorization header"
+  ],
+  "questions": []
+}
