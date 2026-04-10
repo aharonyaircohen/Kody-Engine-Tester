@@ -1,0 +1,11 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of rate limit check",
+  "description": "The rate limit check function `checkRateLimit(key, maxRequests, windowMs)` already exists in `src/auth/rate-limiter-utils.ts` with 6 passing tests covering: first request allowance, requests within limit, blocking excess requests, window expiration reset, independent key tracking, and accurate retryAfter values. Implementation uses in-memory Map with count/windowStart tracking.",
+  "scope": ["src/auth/rate-limiter-utils.ts", "src/auth/rate-limiter-utils.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/*.ts - single-function utility files with co-located tests"
+  ],
+  "questions": []
+}
