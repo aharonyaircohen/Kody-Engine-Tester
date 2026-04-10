@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add caching system with Redis and memory adapters",
+  "description": "Add a caching system with Redis cache adapter in src/cache/redisAdapter.ts with get/set/delete methods, in-memory cache adapter in src/cache/memoryAdapter.ts with TTL support, and cache manager in src/cache/cacheManager.ts that selects adapter based on configuration. The memory adapter should reuse the existing Cache class from src/utils/cache.ts which already provides TTL and LRU eviction. The adapters should use the Result type from src/utils/result.ts for explicit error handling. The cache manager should follow the DI container pattern from src/utils/di-container.ts for adapter selection.",
+  "scope": [
+    "src/cache/redisAdapter.ts",
+    "src/cache/memoryAdapter.ts",
+    "src/cache/cacheManager.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/cache.ts - existing Cache class with TTL and LRU eviction that memoryAdapter should reuse instead of duplicating",
+    "src/utils/result.ts - Result<T, E> discriminated union for explicit error handling; adapters should return Result types",
+    "src/utils/di-container.ts - token-based DI pattern with singleton/transient lifecycles; cacheManager could use tokens for adapter selection"
+  ],
+  "questions": []
+}
