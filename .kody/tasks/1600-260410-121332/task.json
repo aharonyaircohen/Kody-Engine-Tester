@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Run T26: Decompose with --no-compose flag",
+  "description": "Verify that decompose command respects the --no-compose flag to avoid auto-composing subtasks. Test method: 1) Create temp issue with moderately complex task, 2) Trigger @kody full, 3) Use @kody decompose --no-compose, 4) Verify subtasks are not auto-composed, 5) Cleanup. Success criteria: Decompose respects --no-compose flag.",
+  "scope": [
+    ".kody/tasks/1600-260410-121332/task.md",
+    ".claude/commands/kody-test-suite.md",
+    ".kody/watch/agents/test-suite/agent.md"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    ".claude/commands/kody-test-suite.md — Test suite runner with phased execution (T01-T07), verification checklists, and gh CLI commands for validation",
+    ".kody/tasks/1600-260410-121332/task.md — Task definition with discussion/comments tracking approval decisions",
+    "kody-test-suite.md lines 231-243 (Step 3.3) — --no-compose test verification using gh run view and decompose-state.json checks",
+    "kody-test-suite.md lines 456-471 — T26 specific test case with pass/fail criteria"
+  ],
+  "questions": []
+}
