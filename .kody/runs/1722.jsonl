@@ -1,0 +1,1 @@
+{"runId":"hotfix-1722-260410-141250","issueNumber":1722,"command":"run","startedAt":"2026-04-10T14:14:32.986Z","completedAt":"2026-04-10T14:18:09.600Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
