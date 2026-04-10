@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add pluralize utility function",
+  "description": "Create a pluralize utility function in src/utils/pluralize.ts that takes a count and singular/plural forms, returning the count combined with the appropriate form (singular when count is 1, plural otherwise). Include co-located tests in src/utils/pluralize.test.ts.",
+  "scope": ["src/utils/pluralize.ts", "src/utils/pluralize.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts — single-function utility module with co-located .test.ts file"],
+  "questions": []
+}
