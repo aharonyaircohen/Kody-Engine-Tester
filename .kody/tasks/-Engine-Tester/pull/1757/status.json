@@ -1,0 +1,43 @@
+{
+  "taskId": "-Engine-Tester/pull/1757",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-10T15:32:26.793Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 2505
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "running",
+      "startedAt": "2026-04-10T15:32:30.963Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-10T15:31:39.546Z",
+  "updatedAt": "2026-04-10T15:32:30.963Z",
+  "sessions": {
+    "explore": "4f1b326a-3cfe-48dc-87d9-df6770099f9f"
+  }
+}
