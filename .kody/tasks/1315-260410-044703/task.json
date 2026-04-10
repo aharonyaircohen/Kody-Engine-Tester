@@ -1,0 +1,21 @@
+{
+  "task_type": "feature",
+  "title": "Implement cache adapter system with Redis and memory backends",
+  "description": "Add Redis cache adapter in src/cache/redisAdapter.ts, in-memory cache adapter with TTL support in src/cache/memoryAdapter.ts, and cache manager in src/cache/cacheManager.ts that selects adapter based on configuration. The cache manager should support both Redis and in-memory backends with configurable adapter selection.",
+  "scope": [
+    "src/cache/redisAdapter.ts",
+    "src/cache/memoryAdapter.ts",
+    "src/cache/cacheManager.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/cache.ts - existing in-memory LRU cache with TTL support and stats tracking",
+    "src/utils/di-container.ts - token-based dependency injection with singleton/transient lifecycles",
+    "src/utils/result.ts - Result<T, E> discriminated union for explicit error handling"
+  ],
+  "questions": [
+    "Which adapter should be the default when no environment is specified - memory or Redis?",
+    "Should the cache manager automatically use Redis when REDIS_URL is present in environment, or require explicit configuration?",
+    "Is there an existing Redis client library in the project that the adapter should use, or should one be added as a dependency?"
+  ]
+}
