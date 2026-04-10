@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Created `src/utils/bad-types.ts` with `getCount(): string { return 42 }`",
+  "description": "Created `src/utils/bad-types.ts` with `getCount(): string { return 42 }` — this intentionally violates TypeScript's return type annotation (returns `number` but declares `string`), causing a typecheck failure as intended.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
