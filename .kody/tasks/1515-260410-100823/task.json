@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify T10: Flag complexity override via --complexity low",
+  "description": "Test task T10 from the Kody Engine Lite test suite. Verifies that the --complexity low flag correctly overrides the default complexity setting. This task is already running (taskify stage active) as part of the automated test suite run 1515-260410-100823.",
+  "scope": [
+    ".kody/tasks/1515-260410-100823/task.md",
+    ".kody/tasks/1515-260410-100823/status.json",
+    ".kody/tasks/1515-260410-100823/.lock"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/tasks/419-260405-054539/task.md - Similar test task for --complexity high flag (T01 Step 1.4 risk gate)",
+    ".claude/commands/kody-test-suite.md - Test suite documentation with T01-T07 test cases including --complexity flag tests"
+  ],
+  "questions": []
+}
