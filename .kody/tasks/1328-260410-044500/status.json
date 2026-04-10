@@ -34,12 +34,12 @@
     },
     "ship": {
       "state": "running",
-      "startedAt": "2026-04-10T04:52:32.425Z",
+      "startedAt": "2026-04-10T05:04:12.695Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-10T04:47:50.899Z",
-  "updatedAt": "2026-04-10T04:52:32.425Z",
+  "updatedAt": "2026-04-10T05:04:12.695Z",
   "sessions": {
     "explore": "f2f083b2-ae71-4e19-9d35-9bfcd96655d3",
     "build": "4ab7181c-2eb8-4d75-a30b-0b77af8855bc"
