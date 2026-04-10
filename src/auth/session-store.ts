@@ -124,4 +124,8 @@ export class SessionStore {
       }
     }
   }
+
+  getAll(): Session[] {
+    return Array.from(this.sessions.values())
+  }
 }
