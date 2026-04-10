@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add URL-safe base64 encoding utility",
+  "description": "Create `src/utils/base64url.ts` providing `encode` and `decode` functions for URL-safe base64 encoding (replacing '+' with '-', '/' with '_', removing '=' padding). Use TextEncoder for Unicode support. Add co-located unit tests in `src/utils/base64url.test.ts`.",
+  "scope": [
+    "src/utils/base64url.ts",
+    "src/utils/base64url.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/base64.ts - existing base64 encoding/decoding utility using Buffer with similar encode/decode interface",
+    "src/utils/*.test.ts - co-located test files using vitest with describe/it/expect pattern"
+  ],
+  "questions": []
+}
