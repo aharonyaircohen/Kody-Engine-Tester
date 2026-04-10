@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of password strength validator",
+  "description": "The password strength validator already exists in `src/auth/password-validator.ts` with the required implementation (8+ chars, uppercase, lowercase, number validation) and comprehensive tests in `src/auth/password-validator.test.ts`. All 12 tests pass.",
+  "scope": ["src/auth/password-validator.ts", "src/auth/password-validator.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/result.ts - Result type pattern for returning { valid, issues } discriminated union", "src/auth/auth-service.ts - Password validation via pbkdf2 algorithm", "vitest unit testing pattern with `describe`/`it` blocks"],
+  "questions": []
+}
