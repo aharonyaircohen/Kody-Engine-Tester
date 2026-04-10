@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add Breadcrumb component",
+  "description": "Created a Breadcrumb React component at src/components/ui/breadcrumb.tsx with props: items: { label: string; href?: string }[]. Active item (last) is rendered as plain text with aria-current='page', others are links. Added unit tests covering navigation rendering, link/text behavior, aria attributes, and href attributes.",
+  "scope": ["src/components/ui/breadcrumb.tsx", "src/components/ui/breadcrumb.test.tsx"],
+  "risk_level": "low",
+  "existing_patterns": ["src/components/dark-mode-toggle.tsx - simple client component with TypeScript interface for props", "src/components/contacts/ContactAvatar.test.tsx - uses vitest with @testing-library/react, simple toBeDefined() assertions"],
+  "questions": []
+}
