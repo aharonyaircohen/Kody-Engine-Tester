@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add Breadcrumb component",
+  "description": "Create a Breadcrumb navigation component at src/components/Breadcrumb.tsx following the project patterns. Based on the dark-mode-toggle pattern, the component should have a co-located test file at src/components/Breadcrumb.test.tsx with comprehensive test coverage including localStorage/matching mocking if applicable.",
+  "scope": [
+    "src/components/Breadcrumb.tsx",
+    "src/components/Breadcrumb.test.tsx"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/components/dark-mode-toggle.tsx - single-file component with typed props interface and SVG icons",
+    "src/components/dark-mode-toggle.test.tsx - Vitest test suite with @testing-library/react, localStorage/matchMedia mocking, describe/it structure with beforeEach reset"
+  ],
+  "questions": []
+}
