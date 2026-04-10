@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of range utility",
+  "description": "The range utility function in src/utils/range.ts already exists with full implementation and 9 passing tests covering: single-argument form range(n), two-argument form range(start, end), step support (positive and negative), empty ranges, and error handling for invalid step values. Task is complete.",
+  "scope": ["src/utils/range.ts", "src/utils/range.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/range.ts follows the utility module pattern of single-function files in src/utils/ with co-located .test.ts files"],
+  "questions": []
+}
