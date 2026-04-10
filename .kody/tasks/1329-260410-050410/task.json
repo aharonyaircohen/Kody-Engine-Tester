@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add SearchBar component for header navigation",
+  "description": "Create a new search bar component at src/components/SearchBar.tsx for header navigation with proper styling. This is a UI-focused task to test that hasUI: true triggers Playwright MCP auto-injection in the Kody pipeline.",
+  "scope": ["src/components/SearchBar.tsx", "src/components/SearchBar.module.css"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/components/contacts/SearchBar.tsx - SearchBar with debounce using useMemo and debounce utility",
+    "src/components/contacts/SearchBar.module.css - Dark theme input styling with focus states using CSS variables and purple accent color (#6c63ff)",
+    "src/components/notes/SearchBar.tsx - Simpler SearchBar without debounce"
+  ],
+  "questions": []
+}
