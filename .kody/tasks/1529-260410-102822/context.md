@@ -24,3 +24,19 @@ The clamp utility is already implemented and all 8 tests pass.
 
 The implementation correctly uses the project's single-function file pattern (rather than `math-he
 ...(truncated)
+
+### autofix (2026-04-10T10:47:14)
+**Summary**
+
+**Root Cause**: Pre-existing failure in Payload CMS/drizzle-kit infrastructure. When the integration test calls `payload.find({ collection: 'users' })`, Payload's internal schema introspection query:
+
+```sql
+SELECT conname AS primary_key
+FROM   pg_constraint join pg_class on (pg_class.oid = conrelid)
+WHERE  contype = 'p' 
+AND    connamespace = $1::regnamespace  
+AND    pg_class.relname = $2;
+```
+
+...is executed with empty `params: []` instead of the expected 2 parameters (schema nam
+...(truncated)
