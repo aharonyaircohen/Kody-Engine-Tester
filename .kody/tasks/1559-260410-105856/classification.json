@@ -1,0 +1,32 @@
+{
+  "task_type": "chore",
+  "title": "Verify auth middleware implementation for route protection",
+  "description": "Verified: auth middleware and withAuth HOC already exist and are applied to all protected routes. withAuth (src/auth/withAuth.ts:55) extracts Bearer tokens, validates JWTs via AuthService.verifyAccessToken, checks RBAC roles, returns 401 for missing/invalid/expired tokens. All 14 protected API routes already use withAuth with proper role-based access. auth-middleware.test.ts (8 tests) and auth-service.test.ts (16 tests) all pass. Only /api/health (intentionally public) and /api/csrf-token (login flow) lack JWT auth. No code changes needed.",
+  "scope": [
+    "src/auth/withAuth.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/auth-service.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/app/api/notes/route.ts",
+    "src/app/api/notes/[id]/route.ts",
+    "src/app/api/courses/search/route.ts",
+    "src/app/api/enroll/route.ts",
+    "src/app/api/dashboard/admin-stats/route.ts",
+    "src/app/api/gradebook/route.ts",
+    "src/app/api/gradebook/course/[id]/route.ts",
+    "src/app/api/notifications/route.ts",
+    "src/app/api/notifications/[id]/read/route.ts",
+    "src/app/api/notifications/read-all/route.ts",
+    "src/app/api/quizzes/[id]/route.ts",
+    "src/app/api/quizzes/[id]/attempts/route.ts",
+    "src/app/api/quizzes/[id]/submit/route.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/withAuth.ts - HOC wrapper pattern: withAuth(handler, options) wraps async route handlers, extracts Bearer token via extractBearerToken, validates JWT via AuthService.verifyAccessToken, returns 401 for missing/invalid tokens, attaches user to context for downstream handlers",
+    "src/middleware/auth-middleware.ts - Factory pattern: createAuthMiddleware(userStore, sessionStore, jwtService) returns async function that does rate limiting + token validation + session lookup + user lookup",
+    "src/auth/jwt-service.ts - JWT TokenPayload type with userId, email, role, sessionId, generation, iat, exp; signAccessToken(15min), signRefreshToken(7days), verify() throws on invalid/expired tokens",
+    "src/auth/_auth.ts - extractBearerToken helper and checkRole RBAC helper used by withAuth"
+  ],
+  "questions": []
+}
