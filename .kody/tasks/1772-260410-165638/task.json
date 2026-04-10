@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp(value: number, min: number, max: number) utility was already implemented in src/utils/clamp.ts with comprehensive tests in src/utils/clamp.test.ts. All 8 tests pass. The implementation handles: values within range, boundary conditions (min/max equals value), negative numbers, floating point numbers, and throws an error when min > max.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/clamp.ts — Single-function utility module following the project's utility module pattern",
+    "src/utils/clamp.test.ts — Co-located test file with vitest, following the project's test co-location convention"
+  ],
+  "questions": []
+}
