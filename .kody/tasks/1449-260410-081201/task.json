@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp utility already exists at src/utils/clamp.ts with 8 passing tests covering: value within range, below min, above max, edge cases (equals min/max), negative numbers, floating point numbers, and throws when min > max. The task requested src/utils/math-helpers.ts but the implementation is in src/utils/clamp.ts instead. All tests pass.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/clamp.ts — single-function utility with validation (throws if min > max), returns constrained value",
+    "src/utils/clamp.test.ts — vitest describe/it pattern with comprehensive edge case coverage"
+  ],
+  "questions": []
+}
