@@ -1,0 +1,25 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing notification system implementation",
+  "description": "All components specified in the task already exist and should be verified: src/models/notification.ts (types: info/warning/error, read/unread status), src/services/notifications.ts (NotificationService with CRUD + mark-as-read), src/routes/notifications.ts (GET/POST), src/app/api/notifications/[id]/read/route.ts (PATCH), src/utils/notificationHelpers.ts (formatting/filtering), and unit tests in notifications.test.ts and notificationHelpers.test.ts. Task is to verify the implementation is complete and working.",
+  "scope": [
+    "src/models/notification.ts",
+    "src/services/notifications.ts",
+    "src/services/notifications.test.ts",
+    "src/routes/notifications.ts",
+    "src/app/api/notifications/route.ts",
+    "src/app/api/notifications/[id]/read/route.ts",
+    "src/utils/notificationHelpers.ts",
+    "src/utils/notificationHelpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/models/notification.ts: NotificationSeverity type, Notification and NotificationFilter interfaces",
+    "src/services/notifications.ts: NotificationService class with Payload injection, CRUD operations (notify, getUnread, markRead, markAllRead)",
+    "src/routes/notifications.ts: Express-style route handlers with withAuth wrapper",
+    "src/app/api/notifications/[id]/read/route.ts: PATCH handler for individual notification mark-read",
+    "src/utils/notificationHelpers.ts: Utility functions (formatNotification, filterNotifications, getUnreadCount, sortBySeverity)",
+    "src/collections/Notifications.ts: Payload collection config with NotificationType"
+  ],
+  "questions": []
+}
