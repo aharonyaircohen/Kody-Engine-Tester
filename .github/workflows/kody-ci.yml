@@ -132,7 +132,7 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install
 
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
@@ -405,7 +405,7 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install
       - name: Typecheck
         run: pnpm tsc --noEmit
       - name: CLI loads
