@@ -1,0 +1,21 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add role hierarchy checker",
+  "description": "Create `hasPermission(userRole: string, requiredRole: string): boolean` in `src/auth/role-hierarchy.ts` with hierarchy admin > editor > viewer > guest (where admin has all permissions, guest has the least). Include co-located tests following the existing vitest pattern used in src/utils/*.test.ts. The function should accept string arguments for flexibility but define the valid roles as a union type.",
+  "scope": [
+    "src/auth/role-hierarchy.ts",
+    "src/auth/role-hierarchy.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/_auth.ts:18-21 — ROLE_HIERARCHY record pattern with numeric levels for role comparison",
+    "src/utils/debounce.test.ts — vitest test file pattern with describe/it/expect and fake timers",
+    "src/utils/debounce.ts — single-function utility file co-located with its test"
+  ],
+  "questions": [
+    "The requested hierarchy (admin > editor > viewer > guest) includes 'guest' but not 'user', 'student', or 'instructor' from the existing UserRole. Should the new function only handle the 4 roles specified, or should it also handle 'user' | 'student' | 'instructor'?",
+    "Should the new 'guest' role be added to the existing ROLE_HIERARCHY in _auth.ts (which currently only has admin/editor/viewer), or should it remain isolated to the new file?"
+  ]
+}
+```
