@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -101,5 +121,33 @@ Guidelines:
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+
+## Repo Patterns
+
+- **Payload collections**: `src/collections/*.ts` define data models (e.g., `Users`, `Notes`, `Certificates`) with co-located TypeScript interfaces and store classes using `Map<string, T>`
+- **Auth HOC**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation via `JwtService` and RBAC via `checkRole`
+- **Result type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling
+- **Service DI**: `src/services/` (e.g., `GradebookService`, `GradingService`, `CourseSearchService`) use constructor dependency injection with typed dep interfaces like `GradebookServiceDeps`
+- **Middleware chain**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js
+- **Repository/Store hybrid**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` methods
+- **Schema validation**: `src/utils/schema.ts` provides `Schema` base class with `StringSchema`, `NumberSchema`, `BooleanSchema`
+
+## Improvement Areas
+
+- **Dual auth systems**: `src/auth/user-store.ts` (SHA-256) coexists with `src/auth/auth-service.ts` (PBKDF2) — inconsistent password hashing; prefer AuthService
+- **Role mismatch**: `UserStore.UserRole` uses `'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole` uses `'admin'|'editor'|'viewer'` — no alignment
+- **Type safety**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts instead of proper type guards
+- **N+1 risk**: Dashboard page batch-fetches lessons but other pages may not follow the same pattern
+
+## Acceptance Criteria
+
+- [ ] Scope contains exact file paths discovered via Glob/Grep
+- [ ] Title is actionable (starts with verb: Add, Fix, Refactor, Update)
+- [ ] Description captures intent and acceptance criteria from task
+- [ ] Risk level matches scope size and impact (low/medium/high)
+- [ ] existing_patterns cites specific file paths and patterns to reuse
+- [ ] Questions (if any) are product/requirements only, max 3
+- [ ] JSON is valid with no markdown fences or extra text
+- [ ] task_type is one of: feature, bugfix, refactor, docs, chore
 
 {{TASK_CONTEXT}}
