@@ -1,0 +1,14 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of deep-merge utility",
+  "description": "The deep-merge utility function in src/utils/deep-merge.ts and tests in src/utils/deep-merge.test.ts already exist. The implementation includes: recursive deep merge, array replacement (not concatenation), null/undefined handling, and comprehensive test coverage. This task is to verify the existing implementation meets requirements.",
+  "scope": ["src/utils/deep-merge.ts", "src/utils/deep-merge.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts - similar recursive object utility pattern",
+    "src/utils/flatten.ts - object utility in src/utils/",
+    "vitest test co-located with source file as *.test.ts"
+  ],
+  "questions": []
+}
