@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add pluralize utility function",
+  "description": "Create a pluralize utility function in `src/utils/pluralize.ts` that returns singular or plural form based on count, with support for irregular plurals via an options object. Function signature: `pluralize(word: string, count: number, options?: { irregular?: Record<string, string> }): string`. Add comprehensive tests in `src/utils/pluralize.test.ts` covering basic singular/plural, irregular plurals, and edge cases.",
+  "scope": ["src/utils/pluralize.ts", "src/utils/pluralize.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/cap.ts and src/utils/cap.test.ts — pattern for single-function utility modules with co-located tests"],
+  "questions": []
+}
