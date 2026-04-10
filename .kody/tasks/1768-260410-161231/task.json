@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of pagination helper",
+  "description": "The pagination helper function already exists at src/services/pagination.ts with the exact signature specified: paginate<T>(items: T[], page: number, pageSize: number): { data: T[]; total: number; pages: number; hasNext: boolean }. Tests are in src/services/pagination.test.ts and all 11 tests pass.",
+  "scope": ["src/services/pagination.ts", "src/services/pagination.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
