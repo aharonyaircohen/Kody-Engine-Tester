@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify T11 feedback injection test execution",
+  "description": "Verify that @kody --feedback \"Use functional style\" correctly injects feedback into the build stage. The pipeline was already triggered per the discussion. Verification steps: (1) check logs show 'feedback: Use functional style' during build stage, (2) verify FEEDBACK env var was set in orchestrate job (line 207 in kody.yml), (3) confirm feedback influences code style. Note: src/utils/flatten.ts already exists; the array-flatten.ts context appears to be a reference to an existing utility rather than new work.",
+  "scope": [".kody/tasks/1183-260410-001011/"],
+  "risk_level": "low",
+  "existing_patterns": [".github/workflows/kody.yml:207 passes FEEDBACK env var from workflow_dispatch input or parse outputs", ".github/workflows/kody.yml:262-263 appends --feedback flag to kody-engine args", "src/utils/flatten.ts and src/utils/flatten.test.ts follow utility module pattern"],
+  "questions": []
+}
