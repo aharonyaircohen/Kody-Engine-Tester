@@ -58,14 +58,15 @@ describe('AuthMiddleware', () => {
     expect(result.error).toBeDefined()
   })
 
-  it('should return 401 for expired token', async () => {
+  it('should return 403 for expired token', async () => {
     const user = await userStore.findByEmail('user@example.com')
     const expiredToken = await jwtService.sign(
       { userId: user!.id, email: user!.email, role: user!.role as 'admin' | 'editor' | 'viewer', sessionId: 'session-1', generation: 0 },
       -1000
     )
     const result = await middleware({ authorization: `Bearer ${expiredToken}`, ip: '127.0.0.1' })
-    expect(result.status).toBe(401)
+    expect(result.status).toBe(403)
+    expect(result.error).toBe('Token expired')
   })
 
   it('should return 401 for revoked session', async () => {

@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Based on my exploration, I can see that `src/middleware/auth-middleware.",
+  "description": "Based on my exploration, I can see that `src/middleware/auth-middleware.ts` already exists with most of the functionality, but there are gaps between the current implementation and the acceptance criteria.\n\n```json\n{\n  \"task_type\": \"bugfix\",\n  \"title\": \"Fix auth middleware to match acceptance criteria\",\n  \"description\": \"The existing auth middleware in src/middleware/auth-middleware.ts needs corrections: (1) currently returns 401 for expired tokens but acceptance criteria requires 403, (2) lacks",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

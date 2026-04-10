@@ -58,6 +58,9 @@ export function createAuthMiddleware(
       payload = await jwtService.verify(token)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid token'
+      if (message === 'Token expired') {
+        return { error: message, status: 403 }
+      }
       return { error: message, status: 401 }
     }
 
