@@ -1,0 +1,18 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of auth middleware",
+  "description": "The auth middleware with JWT validation is already fully implemented. The implementation includes: createAuthMiddleware factory in src/middleware/auth-middleware.ts that extracts Bearer tokens, validates JWTs, attaches user payload to context, and returns 401 for invalid/missing tokens. Comprehensive unit tests exist in src/middleware/auth-middleware.test.ts covering all required cases (valid token, missing header, malformed token, expired token). The withAuth HOC in src/auth/withAuth.ts provides composability with route handlers.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/withAuth.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts: Factory pattern (createAuthMiddleware) for dependency injection",
+    "src/auth/withAuth.ts: HOC wrapper pattern for composing auth with route handlers",
+    "src/auth/jwt-service.ts: JWT sign/verify with TokenPayload type"
+  ],
+  "questions": []
+}
