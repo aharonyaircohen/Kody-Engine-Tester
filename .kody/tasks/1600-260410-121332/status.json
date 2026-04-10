@@ -17,30 +17,38 @@
       "promptTokens": 4580
     },
     "build": {
-      "state": "running",
-      "startedAt": "2026-04-10T12:42:28.656Z",
-      "retries": 0
+      "state": "completed",
+      "completedAt": "2026-04-10T12:52:01.387Z",
+      "retries": 0,
+      "promptTokens": 4519
     },
     "verify": {
-      "state": "pending",
+      "state": "completed",
+      "completedAt": "2026-04-10T12:53:36.292Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
-      "retries": 0
+      "state": "completed",
+      "completedAt": "2026-04-10T12:54:03.261Z",
+      "retries": 0,
+      "outputFile": "review.md",
+      "promptTokens": 5358
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-10T12:54:04.025Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-10T12:26:30.276Z",
-  "updatedAt": "2026-04-10T12:42:28.656Z",
+  "updatedAt": "2026-04-10T12:54:04.025Z",
   "sessions": {
-    "explore": "8e36c1d2-63ea-4973-8b41-a62184bf9cd8"
+    "explore": "8e36c1d2-63ea-4973-8b41-a62184bf9cd8",
+    "build": "3999cb7f-de16-40b3-8ca1-0321c2375de2",
+    "review": "12ac4b64-67a1-4919-b625-29e5ee464c6f"
   }
 }
