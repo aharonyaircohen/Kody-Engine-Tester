@@ -24,3 +24,16 @@ The TypeScript errors are pre-existing in the codebase and unrelated to my chang
 2. `src/auth/password-validator.test.ts` - 8 test cases covering:
    - Valid p
 ...(truncated)
+
+### autofix (2026-04-10T13:55:01)
+## Root Cause Analysis
+
+**Pre-existing failures** (verified to exist on `main` branch, not caused by my changes):
+
+1. **Test failure in `tests/int/api.int.spec.ts`**: The drizzle-kit query to fetch primary keys is executed with empty `params: []`:
+   ```sql
+   SELECT conname AS primary_key FROM pg_constraint join pg_class ...
+   WHERE connamespace = $1::regnamespace AND pg_class.relname = $2
+   ```
+   This is a Payload CMS/drizzle-kit infrastructure issue that occurs when `payload.find({ collect
+...(truncated)
