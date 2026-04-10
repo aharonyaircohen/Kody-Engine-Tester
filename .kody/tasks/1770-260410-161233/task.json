@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of bad-types.ts",
+  "description": "File `src/utils/bad-types.ts` already exists with the intended content: a `getCount()` function declared to return `string` but returning `42` (number). This will fail TypeScript type checking as intended.",
+  "scope": ["src/utils/bad-types.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
