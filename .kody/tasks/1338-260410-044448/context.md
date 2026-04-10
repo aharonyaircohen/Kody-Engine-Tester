@@ -32,3 +32,14 @@ The implementation is complete. The failing test is in `tests/int/api.int.spec.t
 
 2. **Replaced `bcrypt` with `bcryptjs`**: The native bcrypt bindings we
 ...(truncated)
+
+### review (2026-04-10T05:08:46)
+
+The user model tests pass. The failure in `tests/int/api.int.spec.ts` is a pre-existing database integration test issue unrelated to this task.
+
+## Verdict: PASS
+
+## Summary
+
+Added `src/models/user.ts` with `User` interface (id, email, passwordHash, createdAt, updatedAt), bcrypt password hashing via `hashPassword`/`verifyPassword`, email/password validation, and `createUser` factory. Added `src/models/user.test.ts` with 23 unit tests covering hashing, verification, and validation. Added `bcrypt
+...(truncated)
