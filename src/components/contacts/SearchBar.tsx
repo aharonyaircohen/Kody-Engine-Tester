@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo } from 'react'
-import { debounce } from '../../utils/debounce'
+import { debounce } from '../../utils/timing-helpers'
 import styles from './SearchBar.module.css'
 
 interface SearchBarProps {
