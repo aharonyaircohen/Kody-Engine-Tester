@@ -35,3 +35,25 @@ I've successfully implemented the User model with password hash field. Here's wh
    - `hashPassword(password: string): Promise<string>` - uses bcrypt with 12 salt rounds
    - `verifyPassword(password: string, hash: string): Promise
 ...(truncated)
+
+### review (2026-04-10T00:20:52)
+## Verdict: PASS
+
+## Summary
+
+Added a `passwordHash` field to the Users collection with field-level access controls that prevent exposure in API responses, along with a bcrypt-based password hashing utility (`src/utils/password-hash.ts`) and comprehensive unit tests.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+1. `src/utils/password-hash.test.ts:63` — Test description says "should return false" but assertion at line 66 is `expect(isValid).toBe(true)`. The test name contradict
+...(truncated)
