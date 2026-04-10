@@ -1,0 +1,3 @@
+{"taskId":"decompose-1718-260410-141253","timestamp":"2026-04-10T14:43:50.521Z","stage":"review","patterns":["verdict:FAIL","finding:security"],"room":"cache"}
+{"taskId":"decompose-1718-260410-141253","timestamp":"2026-04-10T14:47:28.122Z","stage":"review","patterns":["verdict:FAIL","finding:security"],"room":"cache"}
+{"taskId":"decompose-1718-260410-141253","timestamp":"2026-04-10T14:48:29.173Z","stage":"review","patterns":["verdict:PASS","finding:security"],"room":"cache"}
