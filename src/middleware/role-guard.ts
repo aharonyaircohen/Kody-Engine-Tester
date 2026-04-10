@@ -21,7 +21,7 @@ export function requireRole(...roles: RbacRole[]) {
       return { error: 'User role not configured', status: 401 }
     }
 
-    const userRoleLevel = ROLE_HIERARCHY[context.user.role as RbacRole]
+    const userRoleLevel = ROLE_HIERARCHY[context.user.role]
     const hasSufficientRole = roles.some((requiredRole) => userRoleLevel >= ROLE_HIERARCHY[requiredRole])
 
     if (!hasSufficientRole) {
