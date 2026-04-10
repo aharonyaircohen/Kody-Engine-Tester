@@ -44,7 +44,11 @@ gh issue create --title "[${RUN_ID}] Txx: <description>" \
 ```
 
 ### 2. TRIGGER
-Post the `@kody` command as a comment on the temp issue.
+Post the `@kody` command with `--auto-mode` as a comment on the temp issue:
+```bash
+gh issue comment <n> --body "@kody --auto-mode"
+```
+This tells the pipeline to auto-approve all prompts and skip approval gates.
 
 ### 3. APPROVAL MONITOR LOOP
 After triggering, monitor the issue for approval questions. This runs in parallel with the pipeline — poll every 30s until all approval questions are answered AND the pipeline completes.
