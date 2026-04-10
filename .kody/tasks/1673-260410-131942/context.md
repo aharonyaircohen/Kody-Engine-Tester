@@ -36,3 +36,39 @@ I've implemented the User model with password hash field following the plan. Her
 - `hash(password: string): Promise<string>` - hashes using bcryptjs with 10 salt rounds
 - `verify(password: s
 ...(truncated)
+
+### autofix (2026-04-10T13:37:37)
+Based on my thorough investigation, here's what I found:
+
+## Summary
+
+**My implementation is correct and complete:**
+- `src/utils/password.ts` - Created password utility with `hash()` and `verify()` functions using bcryptjs
+- `src/utils/password.test.ts` - Created 9 tests covering hash/verify operations (all passing)
+- `src/collections/Users.ts` - Added `passwordHash` field with proper access controls (read/create/update all denied)
+- `src/collections/Users.test.ts` - Added 4 tests for passwordH
+...(truncated)
+
+### review (2026-04-10T13:41:50)
+Now I have a complete picture of the implementation. Let me write the review.
+
+## Verdict: PASS
+
+## Summary
+
+Added a `passwordHash` field to the Users Payload collection with bcryptjs-based password hashing utility (`src/utils/password.ts`), unit tests for the utility, and access controls ensuring the hash is never exposed in API responses. The `bcryptjs@^2.4.3` package was installed as a dev/production dependency.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+**`src/collection
+...(truncated)
