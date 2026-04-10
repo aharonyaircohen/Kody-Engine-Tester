@@ -92,48 +92,23 @@ jobs:
       - name: Install Kody Engine
         run: npm install -g @kody-ade/engine
 
-      - name: Validate author
-        id: safety
-        run: |
-          ALLOWED="COLLABORATOR MEMBER OWNER"
-          ASSOC="${{ github.event.comment.author_association }}"
-          if echo "$ALLOWED" | grep -qw "$ASSOC"; then
-            echo "valid=true" >> $GITHUB_OUTPUT
-          else
-            echo "valid=false" >> $GITHUB_OUTPUT
-            echo "reason=Author association '$ASSOC' not allowed" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Add reaction
-        if: steps.safety.outputs.valid == 'true'
-        uses: actions/github-script@v7
-        continue-on-error: true
-        with:
-          script: |
-            await github.rest.reactions.createForIssueComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: context.payload.comment.id,
-              content: 'eyes'
-            })
-
       - name: Parse inputs
-        if: steps.safety.outputs.valid == 'true'
         id: parse
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_IS_PR: ${{ github.event.issue.pull_request && 'true' || '' }}
+          ISSUE_IS_PR: ${{ github.event.pull_request && 'true' || '' }}
           TRIGGER_TYPE: comment
+          COMMENT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
         run: kody-engine ci-parse
 
   # ─── Orchestrate ─────────────────────────────────────────────────────────────
   orchestrate:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (needs.parse.result == 'success' && needs.parse.outputs.valid == 'true') ||
+      (needs.parse.result == 'success' && (needs.parse.outputs.valid == 'true' || needs.parse.outputs.valid == '')) ||
       (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested')
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -420,7 +395,7 @@ jobs:
   notify-parse-error:
     if: >-
       github.event_name == 'issue_comment' &&
-      needs.parse.outputs.valid != 'true' &&
+      (needs.parse.outputs.valid != 'true' && needs.parse.outputs.valid != '') &&
       (contains(github.event.comment.body, '@kody') || contains(github.event.comment.body, '/kody'))
     needs: [parse]
     runs-on: ubuntu-latest
