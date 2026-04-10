@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { DiscussionService } from './discussions'
 import { DiscussionsStore } from '../collections/Discussions'
 import { EnrollmentStore } from '../collections/EnrollmentStore'
-import type { User } from '../auth/user-store'
+import type { AuthenticatedUser } from '../auth/auth-service'
+import type { RbacRole } from '../auth/auth-service'
 
 const makeRichText = (text: string) => ({
   root: {
@@ -10,8 +11,8 @@ const makeRichText = (text: string) => ({
   },
 })
 
-const makeUser = (id: string, role: User['role']): User =>
-  ({ id, email: `${id}@example.com`, role } as User)
+const makeUser = (id: string, role: RbacRole): AuthenticatedUser =>
+  ({ id, email: `${id}@example.com`, role, isActive: true } as AuthenticatedUser)
 
 describe('DiscussionService', () => {
   let store: DiscussionsStore
@@ -19,7 +20,7 @@ describe('DiscussionService', () => {
   let service: DiscussionService
 
   // In-memory user registry for tests
-  const userRegistry = new Map<string, User>()
+  const userRegistry = new Map<string, AuthenticatedUser>()
 
   beforeEach(() => {
     store = new DiscussionsStore()
@@ -38,7 +39,7 @@ describe('DiscussionService', () => {
 
   describe('getThreads', () => {
     it('should return top-level posts sorted with pinned first', async () => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
+      userRegistry.set('u1', makeUser('u1', 'viewer'))
 
       const p1 = store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Regular') })
       const p2 = store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Pinned'), parentPost: null })
@@ -56,7 +57,7 @@ describe('DiscussionService', () => {
     })
 
     it('should not return replies as top-level threads', async () => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
+      userRegistry.set('u1', makeUser('u1', 'viewer'))
 
       const parent = store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Parent') })
       store.create({ lesson: 'lesson-1', author: 'u1', content: makeRichText('Reply'), parentPost: parent.id })
@@ -73,7 +74,7 @@ describe('DiscussionService', () => {
 
   describe('Thread nesting', () => {
     beforeEach(() => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
+      userRegistry.set('u1', makeUser('u1', 'viewer'))
       enrollmentStore.enroll('u1', 'course-1')
     })
 
@@ -108,9 +109,9 @@ describe('DiscussionService', () => {
 
   describe('Enrollment checks', () => {
     beforeEach(() => {
-      userRegistry.set('u1', makeUser('u1', 'student'))
-      userRegistry.set('u2', makeUser('u2', 'student'))
-      userRegistry.set('u3', makeUser('u3', 'instructor'))
+      userRegistry.set('u1', makeUser('u1', 'viewer'))
+      userRegistry.set('u2', makeUser('u2', 'viewer'))
+      userRegistry.set('u3', makeUser('u3', 'editor'))
       enrollmentStore.enroll('u1', 'course-1')
       enrollmentStore.enroll('u3', 'course-1')
     })
@@ -152,16 +153,16 @@ describe('DiscussionService', () => {
 
   describe('pinPost / unpinPost', () => {
     beforeEach(() => {
-      userRegistry.set('student', makeUser('student', 'student'))
-      userRegistry.set('instructor', makeUser('instructor', 'instructor'))
+      userRegistry.set('student', makeUser('student', 'viewer'))
+      userRegistry.set('instructor', makeUser('instructor', 'editor'))
       userRegistry.set('admin', makeUser('admin', 'admin'))
-      userRegistry.set('guest', makeUser('guest', 'guest'))
+      userRegistry.set('guest', makeUser('guest', 'viewer'))
       enrollmentStore.enroll('student', 'course-1')
       enrollmentStore.enroll('instructor', 'course-1')
       enrollmentStore.enroll('admin', 'course-1')
     })
 
-    it('should allow an instructor to pin a post', async () => {
+    it('should allow an editor to pin a post', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await service.pinPost(id, 'instructor')
       expect(store.getById(id)?.isPinned).toBe(true)
@@ -173,21 +174,21 @@ describe('DiscussionService', () => {
       expect(store.getById(id)?.isPinned).toBe(true)
     })
 
-    it('should reject pin from a student', async () => {
+    it('should reject pin from a viewer', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.pinPost(id, 'student')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: admin or editor required',
       )
     })
 
-    it('should reject pin from a guest', async () => {
+    it('should reject pin from a viewer', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.pinPost(id, 'guest')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: admin or editor required',
       )
     })
 
-    it('should allow an instructor to unpin a pinned post', async () => {
+    it('should allow an editor to unpin a pinned post', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await service.pinPost(id, 'instructor')
       await service.unpinPost(id, 'instructor')
@@ -199,16 +200,16 @@ describe('DiscussionService', () => {
 
   describe('resolvePost / unresolvePost', () => {
     beforeEach(() => {
-      userRegistry.set('student', makeUser('student', 'student'))
-      userRegistry.set('instructor', makeUser('instructor', 'instructor'))
+      userRegistry.set('student', makeUser('student', 'viewer'))
+      userRegistry.set('instructor', makeUser('instructor', 'editor'))
       userRegistry.set('admin', makeUser('admin', 'admin'))
-      userRegistry.set('guest', makeUser('guest', 'guest'))
+      userRegistry.set('guest', makeUser('guest', 'viewer'))
       enrollmentStore.enroll('student', 'course-1')
       enrollmentStore.enroll('instructor', 'course-1')
       enrollmentStore.enroll('admin', 'course-1')
     })
 
-    it('should allow an instructor to resolve a post', async () => {
+    it('should allow an editor to resolve a post', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await service.resolvePost(id, 'instructor')
       expect(store.getById(id)?.isResolved).toBe(true)
@@ -220,21 +221,21 @@ describe('DiscussionService', () => {
       expect(store.getById(id)?.isResolved).toBe(true)
     })
 
-    it('should reject resolve from a student', async () => {
+    it('should reject resolve from a viewer', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.resolvePost(id, 'student')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: admin or editor required',
       )
     })
 
-    it('should reject resolve from a guest', async () => {
+    it('should reject resolve from a viewer', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await expect(service.resolvePost(id, 'guest')).rejects.toThrow(
-        'Forbidden: instructor or admin required',
+        'Forbidden: admin or editor required',
       )
     })
 
-    it('should allow an instructor to unresolve a resolved post', async () => {
+    it('should allow an editor to unresolve a resolved post', async () => {
       const { id } = await service.createPost('lesson-1', 'student', makeRichText('Post'), 'course-1')
       await service.resolvePost(id, 'instructor')
       await service.unresolvePost(id, 'instructor')

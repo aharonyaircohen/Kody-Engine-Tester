@@ -1,9 +1,9 @@
-import type { User } from '../auth/user-store'
+import type { AuthenticatedUser } from '../auth/auth-service'
 import { ROLE_HIERARCHY } from '../auth/_auth'
 import type { RbacRole } from '../auth/auth-service'
 
 interface RoleContext {
-  user?: User
+  user?: AuthenticatedUser
 }
 
 interface RoleError {

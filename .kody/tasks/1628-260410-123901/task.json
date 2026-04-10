@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add production-ready user authentication",
+  "description": "Implement secure user authentication by consolidating auth systems. AuthService (PBKDF2) is the primary system using Payload collections. UserStore (SHA-256) needs evaluation for removal or fallback use. UserRole ('admin'|'user'|'guest'|'student'|'instructor') must be aligned with RbacRole ('admin'|'editor'|'viewer'). The goal is to eliminate dual-auth confusion and ensure production-ready security with consistent role-based access control.",
+  "scope": ["src/auth/user-store.ts", "src/auth/auth-service.ts", "src/auth/_auth.ts", "src/auth/withAuth.ts", "src/collections/Users.ts"],
+  "risk_level": "high",
+  "existing_patterns": ["AuthService with PBKDF2 password verification at src/auth/auth-service.ts:45-60", "withAuth HOC middleware at src/auth/withAuth.ts:55-108", "RbacRole hierarchy check at src/auth/_auth.ts:37-61", "Payload Users collection with role field at src/collections/Users.ts:76-86"],
+  "questions": ["Should UserStore be removed entirely or kept as a fallback for non-Payload operations?", "Are there any features still depending on UserStore that would break if removed?", "Should UserRole ('admin'|'user'|'guest'|'student'|'instructor') be aligned to RbacRole ('admin'|'editor'|'viewer') or vice versa?"]
+}

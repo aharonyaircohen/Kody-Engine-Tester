@@ -1,4 +1,4 @@
-import type { User } from '../auth/user-store'
+import type { AuthenticatedUser } from '../auth/auth-service'
 import type { RichTextContent } from '../collections/Discussions'
 import { DiscussionsStore } from '../collections/Discussions'
 import type { EnrollmentStore } from '../collections/EnrollmentStore'
@@ -31,7 +31,7 @@ export class DiscussionService {
   constructor(
     private store: DiscussionsStore,
     private enrollmentStore: EnrollmentStore,
-    private getUser: (id: string) => Promise<User | undefined>,
+    private getUser: (id: string) => Promise<AuthenticatedUser | undefined>,
     private enrollmentChecker: EnrollmentChecker,
   ) {}
 
@@ -80,7 +80,7 @@ export class DiscussionService {
       throw new Error('User not found')
     }
 
-    if (!this.enrollmentChecker(user.id, courseId)) {
+    if (!this.enrollmentChecker(String(user.id), courseId)) {
       throw new Error('Not enrolled in this course')
     }
 
@@ -106,8 +106,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'admin' && user.role !== 'editor') {
+      throw new Error('Forbidden: admin or editor required')
     }
     this.store.pin(postId)
   }
@@ -117,8 +117,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'admin' && user.role !== 'editor') {
+      throw new Error('Forbidden: admin or editor required')
     }
     this.store.unpin(postId)
   }
@@ -128,8 +128,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'admin' && user.role !== 'editor') {
+      throw new Error('Forbidden: admin or editor required')
     }
     this.store.resolve(postId)
   }
@@ -139,8 +139,8 @@ export class DiscussionService {
     if (!user) {
       throw new Error('User not found')
     }
-    if (user.role !== 'instructor' && user.role !== 'admin') {
-      throw new Error('Forbidden: instructor or admin required')
+    if (user.role !== 'admin' && user.role !== 'editor') {
+      throw new Error('Forbidden: admin or editor required')
     }
     this.store.unresolve(postId)
   }
