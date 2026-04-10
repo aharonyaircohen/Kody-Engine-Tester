@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Create bad-types.ts with wrong return type",
+"description": "Create src/utils/bad-types.ts containing function getCount(): string { return 42 }. This intentionally fails TypeScript type checking. Task has repeatedly failed at ship stage due to git push rejection - branch may already exist or be force-pushed.",
+"scope": ["src/utils/bad-types.ts"],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}
