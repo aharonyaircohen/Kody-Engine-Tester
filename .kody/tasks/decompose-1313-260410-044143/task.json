@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add capitalize utility function",
+  "description": "Create src/utils/capitalize.ts with a string capitalize utility function that capitalizes the first letter of a string, and add co-located tests in src/utils/capitalize.test.ts following the existing pattern from cap.ts/cap.test.ts",
+  "scope": [
+    "src/utils/capitalize.ts",
+    "src/utils/capitalize.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cap.ts - single-function utility file with capitalize function implementation",
+    "src/utils/cap.test.ts - co-located test file with describe/it/expect vitest pattern",
+    "src/utils/capitalize-words.ts - similar naming pattern for string utility"
+  ],
+  "questions": []
+}
