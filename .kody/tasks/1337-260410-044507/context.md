@@ -33,3 +33,29 @@ The auth middleware is **fully implemented and verified**:
 
 **Prot
 ...(truncated)
+
+### review (2026-04-10T05:09:11)
+## Verdict: PASS
+
+## Summary
+
+The auth middleware implementation is complete and correctly protects routes. The `withAuth` HOC (`src/auth/withAuth.ts`) extracts JWT from Bearer tokens, returns 401 for missing/invalid tokens, attaches decoded user context, and enforces RBAC via role hierarchy. 14 protected API routes use `withAuth`; 2 public routes (`/api/health`, `/api/csrf-token`) correctly bypass auth. All 67 auth-related unit tests pass. The one integration test failure is a PostgreSQL drizzl
+...(truncated)
+
+### review-fix (2026-04-10T05:11:06)
+All **67 auth-related tests pass**. The only test failure is `tests/int/api.int.spec.ts` — a PostgreSQL drizzle-kit connectivity issue with parameter binding, completely unrelated to auth middleware.
+
+## Summary
+
+The review found **No Critical or Major issues** to fix:
+
+| Severity | Count |
+|----------|-------|
+| Critical | 0 |
+| Major | 0 |
+| Minor | 0 |
+
+The auth middleware implementation is complete and verified:
+
+- **Auth middleware** (`src/middleware/auth-middleware.ts`): Bearer JWT extract
+...(truncated)
