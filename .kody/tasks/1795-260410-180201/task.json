@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of breadcrumb component",
+  "description": "The Breadcrumb component already exists at src/components/ui/breadcrumb.tsx with proper implementation (items prop with { label, href }[], active last item as plain text, others as links) and unit tests at src/components/ui/breadcrumb.test.tsx. Verified implementation matches requirements.",
+  "scope": ["src/components/ui/breadcrumb.tsx", "src/components/ui/breadcrumb.test.tsx", "src/components/ui/Breadcrumb.module.css"],
+  "risk_level": "low",
+  "existing_patterns": ["src/components/ui/breadcrumb.tsx implements BreadcrumbProps interface with items array of { label: string; href?: string }, uses Link from next/link for navigable items, renders last item as plain text span with active class", "src/components/ui/breadcrumb.test.tsx uses vitest describe/it pattern with @testing-library/react render and screen queries"],
+  "questions": []
+}
