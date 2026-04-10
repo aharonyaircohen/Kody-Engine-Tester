@@ -28,11 +28,11 @@ describe('JwtService', () => {
       expect(payload.exp).toBeDefined()
     })
 
-    it('should set access token expiry to ~15 minutes', async () => {
+    it('should set access token expiry to ~7 days', async () => {
       const before = Math.floor(Date.now() / 1000)
       const token = await service.signAccessToken(basePayload)
       const payload = await service.verify(token)
-      const expectedExp = before + 15 * 60
+      const expectedExp = before + 7 * 24 * 60 * 60
       expect(payload.exp).toBeGreaterThanOrEqual(expectedExp - 2)
       expect(payload.exp).toBeLessThanOrEqual(expectedExp + 2)
     })
@@ -58,11 +58,11 @@ describe('JwtService', () => {
   })
 
   describe('signRefreshToken', () => {
-    it('should set refresh token expiry to ~7 days', async () => {
+    it('should set refresh token expiry to ~30 days', async () => {
       const before = Math.floor(Date.now() / 1000)
       const token = await service.signRefreshToken(basePayload)
       const payload = await service.verify(token)
-      const expectedExp = before + 7 * 24 * 60 * 60
+      const expectedExp = before + 30 * 24 * 60 * 60
       expect(payload.exp).toBeGreaterThanOrEqual(expectedExp - 2)
       expect(payload.exp).toBeLessThanOrEqual(expectedExp + 2)
     })

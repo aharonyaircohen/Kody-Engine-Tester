@@ -30,7 +30,7 @@ export interface TokenFields {
   lastTokenUsedAt: Date | null
 }
 
-const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
+const REFRESH_TOKEN_EXPIRY_MS = 30 * 24 * 60 * 60 * 1000 // 30 days
 
 function createError(message: string, status: number): Error & { status: number } {
   const err = new Error(message) as Error & { status: number }

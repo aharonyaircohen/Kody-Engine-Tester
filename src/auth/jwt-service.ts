@@ -92,11 +92,11 @@ export class JwtService {
   }
 
   async signAccessToken(payload: TokenInput): Promise<string> {
-    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 15 * 60 * 1000) // 15 minutes
+    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 7 * 24 * 60 * 60 * 1000) // 7 days
   }
 
   async signRefreshToken(payload: TokenInput): Promise<string> {
-    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 7 * 24 * 60 * 60 * 1000) // 7 days
+    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 30 * 24 * 60 * 60 * 1000) // 30 days
   }
 
   blacklist(token: string): void {

@@ -1,0 +1,22 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of login and register endpoints",
+  "description": "The /login and /register API endpoints already exist at src/app/api/auth/login/route.ts and src/app/api/auth/register/route.ts. AuthService.login() is implemented in src/auth/auth-service.ts with JWT tokens signed using HS256. JWT access token expires in 7 days, refresh token in 30 days. Tests in auth-service.test.ts cover login functionality. Verification needed to confirm all acceptance criteria are met.",
+  "scope": [
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/auth-service.test.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/jwt-service.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/app/api/auth/login/route.ts - Next.js Route Handler pattern with POST method, extracts ipAddress/userAgent headers, uses getPayloadInstance() for Payload SDK",
+    "src/auth/auth-service.ts - Service layer with login method that throws typed errors with status codes, uses Payload collections API",
+    "src/auth/jwt-service.ts - JWT signing with HS256 using Web Crypto API (crypto.subtle), 7-day access token, 30-day refresh token",
+    "src/auth/auth-service.test.ts - Vitest unit tests with mock Payload, tests login success and error cases"
+  ],
+  "questions": []
+}
