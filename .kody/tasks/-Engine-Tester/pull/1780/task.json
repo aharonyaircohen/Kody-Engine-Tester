@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of pagination helper",
+  "description": "The pagination helper function already exists at src/services/pagination.ts with the exact required signature paginate<T>(items: T[], page: number, pageSize: number): { data: T[]; total: number; pages: number; hasNext: boolean }. Comprehensive tests exist in pagination.test.ts covering first/middle/last page, empty array, page size larger than array, error handling for invalid page/pageSize, mixed types, hasNext behavior, and page larger than total pages.",
+  "scope": ["src/services/pagination.ts", "src/services/pagination.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/services/pagination.ts uses generic function pattern consistent with utility modules in src/utils/", "Co-located .test.ts files following the project's test pattern"],
+  "questions": []
+}
