@@ -39,3 +39,6 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-10 (task: 1529-260410-102822)
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-10 (task: watch)
+- Active directories: .kody/tasks/watch, .kody/watch/agents/test-suite, .kody/watch/agents/branch-cleanup, .kody/watch/agents/dependency-checker, .kody/watch/agents/memory-bench, .kody/watch/agents/readme-health, .kody/watch/agents/stale-pr-reviewer, .kody/watch/agents/test-suite-quality-analyzer, .kody/watch/agents/todo-scanner, .github/workflows
