@@ -1,0 +1,25 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add login and register JWT route handlers",
+  "description": "Create Next.js API route handlers for POST /login and POST /register endpoints. The logic functions already exist in src/api/auth/. Need to create route handlers that: parse request body (email/password), call the existing auth logic, handle errors with proper HTTP status codes (400 validation, 409 duplicate email, 401 invalid credentials), and return JWT tokens. JWTs must contain userId and email claims with 15-minute access token expiry and 7-day refresh token expiry. Passwords must never be returned in responses.",
+  "scope": [
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.ts",
+    "src/api/auth/register.ts",
+    "src/api/auth/login.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/auth-service.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/app/api/health/route.ts - basic Next.js route handler pattern",
+    "src/app/api/enroll/route.ts - POST route handler with auth and body parsing",
+    "src/api/auth/login.ts - login logic function",
+    "src/api/auth/register.ts - register logic function",
+    "src/auth/jwt-service.ts - JWT signing with configurable expiration",
+    "src/auth/auth-service.ts - AuthService with login/refresh/logout methods"
+  ],
+  "questions": []
+}
+```
