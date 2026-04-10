@@ -1,5 +1,10 @@
 import crypto from 'crypto'
 
+/**
+ * @deprecated JWT tokens are validated directly via JwtService/AuthService; sessions
+ * are no longer needed since token validation is stateless. This store is only used
+ * for in-memory session management in development/testing.
+ */
 export interface Session {
   id: string
   userId: string

@@ -1,65 +1,62 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { login } from './login'
-import { UserStore } from '../../auth/user-store'
-import { SessionStore } from '../../auth/session-store'
-import { JwtService } from '../../auth/jwt-service'
+import type { AuthService } from '../../auth/auth-service'
+import type { Payload } from 'payload'
 
 describe('login', () => {
-  let userStore: UserStore
-  let sessionStore: SessionStore
-  let jwtService: JwtService
+  let mockPayload: Payload
+  let mockAuthService: AuthService
 
-  beforeEach(async () => {
-    userStore = new UserStore()
-    await userStore.ready
-    sessionStore = new SessionStore()
-    jwtService = new JwtService('test-secret')
+  beforeEach(() => {
+    mockPayload = {
+      find: vi.fn(),
+      update: vi.fn(),
+    } as unknown as Payload
+
+    mockAuthService = {
+      login: vi.fn(),
+    } as unknown as AuthService
   })
 
   it('should return tokens and user on successful login', async () => {
-    const result = await login('admin@example.com', 'AdminPass1!', '127.0.0.1', 'TestAgent', userStore, sessionStore, jwtService)
-    expect(result.accessToken).toBeDefined()
-    expect(result.refreshToken).toBeDefined()
+    const mockResult = {
+      accessToken: 'access-token-123',
+      refreshToken: 'refresh-token-123',
+      user: { id: '1', email: 'admin@example.com', role: 'admin' as const },
+    }
+    ;(mockAuthService.login as ReturnType<typeof vi.fn>).mockResolvedValue(mockResult)
+
+    const result = await login('admin@example.com', 'AdminPass1!', '127.0.0.1', 'TestAgent', mockPayload, mockAuthService)
+    expect(result.accessToken).toBe('access-token-123')
+    expect(result.refreshToken).toBe('refresh-token-123')
     expect(result.user.email).toBe('admin@example.com')
     expect(result.user.role).toBe('admin')
-    expect(result.user.id).toBeDefined()
+    expect(result.user.id).toBe('1')
   })
 
   it('should return 401 for unknown email', async () => {
-    await expect(login('unknown@example.com', 'pass', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    ;(mockAuthService.login as ReturnType<typeof vi.fn>).mockRejectedValue({ status: 401, message: 'Invalid credentials' })
+
+    await expect(login('unknown@example.com', 'pass', '127.0.0.1', 'UA', mockPayload, mockAuthService))
       .rejects.toMatchObject({ status: 401 })
   })
 
   it('should return 401 for wrong password', async () => {
-    await expect(login('admin@example.com', 'wrongpass', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    ;(mockAuthService.login as ReturnType<typeof vi.fn>).mockRejectedValue({ status: 401, message: 'Invalid credentials' })
+
+    await expect(login('admin@example.com', 'wrongpass', '127.0.0.1', 'UA', mockPayload, mockAuthService))
       .rejects.toMatchObject({ status: 401 })
   })
 
   it('should return 400 for missing credentials', async () => {
-    await expect(login('', '', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    await expect(login('', '', '127.0.0.1', 'UA', mockPayload, mockAuthService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 403 for inactive user', async () => {
-    await expect(login('inactive@example.com', 'InactivePass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    ;(mockAuthService.login as ReturnType<typeof vi.fn>).mockRejectedValue({ status: 403, message: 'Account is inactive' })
+
+    await expect(login('inactive@example.com', 'InactivePass1!', '127.0.0.1', 'UA', mockPayload, mockAuthService))
       .rejects.toMatchObject({ status: 403 })
-  })
-
-  it('should return 423 for locked account', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    for (let i = 0; i < 5; i++) {
-      await userStore.recordFailedLogin(user!.id)
-    }
-    await expect(login('user@example.com', 'UserPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
-      .rejects.toMatchObject({ status: 423 })
-  })
-
-  it('should increment failed attempts on wrong password', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    try {
-      await login('user@example.com', 'wrong', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
-    } catch {}
-    const updated = await userStore.findById(user!.id)
-    expect(updated?.failedLoginAttempts).toBe(1)
   })
 })

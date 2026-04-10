@@ -1,0 +1,29 @@
+
+{
+  "task_type": "refactor",
+  "title": "Refactor auth system to replace session-based auth with JWT and RBAC",
+  "description": "Replace session-based authentication (session-store.ts) with JWT token validation, update user-store.ts schema to support roles array, ensure RBAC with admin/editor/viewer hierarchy, and update all route handlers. The existing jwt-service.ts, auth-service.ts, withAuth.ts, and _auth.ts already contain most of the required JWT and RBAC implementation. Task also requires a database migration script for user schema changes and updated tests.",
+  "scope": [
+    "src/auth/session-store.ts",
+    "src/auth/user-store.ts",
+    "src/auth/rbac.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/_auth.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/index.ts"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/_auth.ts:12-21 - ROLE_HIERARCHY constant with admin(3) > editor(2) > viewer(1) hierarchy",
+    "src/auth/_auth.ts:37-61 - checkRole function with hierarchical role inheritance",
+    "src/auth/jwt-service.ts:23-122 - JwtService class with sign, verify, blacklist, signAccessToken, signRefreshToken methods",
+    "src/auth/auth-service.ts:62-262 - AuthService with login, refresh, verifyAccessToken, logout using Payload CMS",
+    "src/auth/withAuth.ts:55-108 - withAuth HOC wrapper for route handlers with JWT validation and role checking"
+  ],
+  "questions": [
+    "Should the roles array on User be additive (user has multiple roles) or a single role upgrade from the current UserRole enum?",
+    "Should the migration script handle rollback if issues occur with existing user data transformation?",
+    "Should existing sessions in session-store be force-expired on migration or allowed to naturally expire?"
+  ]
+}

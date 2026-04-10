@@ -1,107 +1,67 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { createAuthMiddleware } from './auth-middleware'
-import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
-import { JwtService } from '../auth/jwt-service'
+import type { AuthService } from '../auth/auth-service'
+import type { AuthenticatedUser } from '../auth/auth-service'
 
 describe('AuthMiddleware', () => {
-  let userStore: UserStore
-  let sessionStore: SessionStore
-  let jwtService: JwtService
+  let mockAuthService: AuthService
   let middleware: ReturnType<typeof createAuthMiddleware>
 
-  beforeEach(async () => {
-    userStore = new UserStore()
-    await userStore.ready
-    sessionStore = new SessionStore()
-    jwtService = new JwtService('test-secret')
-    middleware = createAuthMiddleware(userStore, sessionStore, jwtService)
+  beforeEach(() => {
+    mockAuthService = {
+      verifyAccessToken: vi.fn(),
+    } as unknown as AuthService
+
+    middleware = createAuthMiddleware(mockAuthService)
   })
 
-  async function makeAuthenticatedContext() {
-    const user = await userStore.findByEmail('admin@example.com')
-    const accessToken = await jwtService.signAccessToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
-      generation: 0,
-    })
-    const refreshToken = await jwtService.signRefreshToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
-      generation: 0,
-    })
-    const session = sessionStore.create(user!.id, accessToken, refreshToken, '127.0.0.1', 'TestAgent')
-    return { user: user!, accessToken, session }
-  }
+  it('should attach user to context on valid token', async () => {
+    const mockUser: AuthenticatedUser = {
+      id: '1',
+      email: 'admin@example.com',
+      role: 'admin',
+      isActive: true,
+    }
+    ;(mockAuthService.verifyAccessToken as ReturnType<typeof vi.fn>).mockResolvedValue({ user: mockUser })
 
-  it('should attach user and session to context on valid token', async () => {
-    const { user, accessToken, session } = await makeAuthenticatedContext()
-    const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '127.0.0.1' })
-    expect(result.user?.id).toBe(user.id)
-    expect(result.session?.id).toBe(session.id)
+    const result = await middleware({ authorization: 'Bearer valid-token', ip: '127.0.0.1' })
+    expect(result.user?.id).toBe('1')
+    expect(result.user?.email).toBe('admin@example.com')
     expect(result.error).toBeUndefined()
   })
 
   it('should return 401 when no token provided', async () => {
     const result = await middleware({ authorization: undefined, ip: '127.0.0.1' })
     expect(result.status).toBe(401)
-    expect(result.error).toBeDefined()
+    expect(result.error).toBe('Missing or invalid Authorization header')
   })
 
   it('should return 401 for invalid token', async () => {
+    ;(mockAuthService.verifyAccessToken as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Invalid token'))
+
     const result = await middleware({ authorization: 'Bearer invalid-token', ip: '127.0.0.1' })
     expect(result.status).toBe(401)
-    expect(result.error).toBeDefined()
+    expect(result.error).toBe('Invalid token')
   })
 
   it('should return 401 for expired token', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    const expiredToken = await jwtService.sign(
-      { userId: user!.id, email: user!.email, role: user!.role as 'admin' | 'editor' | 'viewer', sessionId: 'session-1', generation: 0 },
-      -1000
-    )
-    const result = await middleware({ authorization: `Bearer ${expiredToken}`, ip: '127.0.0.1' })
-    expect(result.status).toBe(401)
-  })
+    ;(mockAuthService.verifyAccessToken as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Token expired'))
 
-  it('should return 401 for revoked session', async () => {
-    const { accessToken, session } = await makeAuthenticatedContext()
-    sessionStore.revoke(session.id)
-    const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '127.0.0.1' })
+    const result = await middleware({ authorization: 'Bearer expired-token', ip: '127.0.0.1' })
     expect(result.status).toBe(401)
-  })
-
-  it('should return 401 for token with older generation after refresh', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    const oldAccessToken = await jwtService.signAccessToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
-      generation: 0,
-    })
-    const refreshToken = await jwtService.signRefreshToken({
-      userId: user!.id,
-      email: user!.email,
-      role: user!.role as 'admin' | 'editor' | 'viewer',
-      sessionId: 'session-1',
-      generation: 0,
-    })
-    const session = sessionStore.create(user!.id, oldAccessToken, refreshToken, '127.0.0.1', 'TestAgent')
-    // Manually bump the session generation to simulate a refresh
-    sessionStore['sessions'].set(session.id, { ...session, generation: 1 })
-    const result = await middleware({ authorization: `Bearer ${oldAccessToken}`, ip: '127.0.0.1' })
-    expect(result.status).toBe(401)
-    expect(result.error).toBe('Token has been superseded by a newer session')
+    expect(result.error).toBe('Token expired')
   })
 
   it('should allow requests under rate limit', async () => {
-    const { accessToken } = await makeAuthenticatedContext()
-    const result = await middleware({ authorization: `Bearer ${accessToken}`, ip: '10.0.0.1' })
+    const mockUser: AuthenticatedUser = {
+      id: '1',
+      email: 'admin@example.com',
+      role: 'admin',
+      isActive: true,
+    }
+    ;(mockAuthService.verifyAccessToken as ReturnType<typeof vi.fn>).mockResolvedValue({ user: mockUser })
+
+    const result = await middleware({ authorization: 'Bearer valid-token', ip: '10.0.0.1' })
     expect(result.status).toBeUndefined()
     expect(result.user).toBeDefined()
   })

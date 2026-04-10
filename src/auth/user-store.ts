@@ -1,5 +1,10 @@
 import crypto from 'crypto'
 
+/**
+ * @deprecated Use AuthService with Payload CMS instead. This store is only used for
+ * in-memory user management in development/testing. Production uses AuthService which
+ * manages users via Payload CMS collections.
+ */
 export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
 
 export interface User {
