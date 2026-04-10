@@ -1,0 +1,10 @@
+{
+  "id": "ep_ci_failure_001",
+  "runId": "-Engine-Tester/actions/runs/24250536747))",
+  "source": "ci_failure",
+  "taskId": "-Engine-Tester/actions/runs/24250536747))",
+  "createdAt": "2026-04-10T16:17:53.227Z",
+  "rawContent": "Task: -Engine-Tester/actions/runs/24250536747)) | Outcome: failed | Observation: The pipeline completed all stages except ship, which failed on git push due to stale remote state — another process updated main while this pipeline was running. The verify stage completed after 1 retry but produced typecheck errors in the report, suggesting the retry may have passed without properly resolving the underlying TypeScript type mismatches in PagesPageConfig validation. | Failed at: ship | Suggestion: Add a `git fetch origin main` step before the ship stage's force-push to ensure the local ref is up-to-date with remote, and investigate whether the verify stage's retry logic is properly re-running type checks rather than passing cached results. | Flaw: ship — Git push rejected due to stale remote ref — no fetch/update before push | Stages: taskify:completed, plan:completed, build:completed, verify:completed, review:completed, review-fix:completed, ship:failed",
+  "extractedNodeIds": [],
+  "linkedFiles": []
+}
