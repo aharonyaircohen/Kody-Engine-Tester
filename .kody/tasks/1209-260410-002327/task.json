@@ -1,0 +1,18 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add retry utility to async-helpers",
+  "description": "Create retry<T>(fn: () => Promise<T>, maxAttempts: number, delayMs: number): Promise<T> in src/utils/async-helpers.ts with exponential backoff and co-located tests",
+  "scope": [
+    "src/utils/async-helpers.ts",
+    "src/utils/async-helpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/retry.ts - existing retry implementation with exponential backoff for reference",
+    "src/utils/sleep.ts - utility function file structure with Promise-based async helpers",
+    "src/utils/retry.test.ts - existing retry tests using vitest with fake timers"
+  ],
+  "questions": []
+}
+```
