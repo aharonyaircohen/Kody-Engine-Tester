@@ -28,3 +28,20 @@ Implementation complete. Summary:
   - Whitespace trimming
   - Unicode normalizati
 ...(truncated)
+
+### autofix (2026-04-10T07:33:05)
+**Root Cause Analysis Complete:**
+
+The integration test failure in `tests/int/api.int.spec.ts` is a **pre-existing issue** with Payload CMS/drizzle-kit's schema introspection query:
+
+```
+SELECT conname AS primary_key
+FROM   pg_constraint join pg_class on (pg_class.oid = conrelid)
+WHERE  contype = 'p' 
+AND    connamespace = $1::regnamespace  
+AND    pg_class.relname = $2;
+params: []
+```
+
+The query expects `$1` (connamespace) and `$2` (relname) parameters but receives an empty array. This happens 
+...(truncated)
