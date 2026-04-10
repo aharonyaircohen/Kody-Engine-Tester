@@ -25,3 +25,23 @@ I've successfully implemented the auth system redesign with JWT RS256 and RBAC. 
 2. **`src/auth/user-store.ts`** - Aligned with RbacRole
    - Changed `UserRole` from `'admin' | 'user' | 'guest' | 'student' | 
 ...(truncated)
+
+### review (2026-04-10T02:25:51)
+## Verdict: PASS
+
+## Summary
+
+The auth system has been successfully redesigned with RS256 JWT signing and tokenVersion-based revocation. Key changes: `jwt-service.ts` upgraded from HS256 to RS256, `user-store.ts` roles aligned with `RbacRole`, `auth-service.ts` now uses tokenVersion-based revocation instead of blacklist, and new `refresh-token.ts`/`revoke-token.ts` modules extracted. The SessionStore-based session tracking is no longer used by actual route handlers (superseded by `withAuth.ts`).
+...(truncated)
+
+### review-fix (2026-04-10T02:29:44)
+The remaining type errors are all pre-existing issues in Next.js page components (unrelated to the auth redesign).
+
+**Summary of fixes applied:**
+
+1. **`discussions.ts`** - Changed role checks from `'instructor'` to `'editor'` (since `RbacRole` is now `'admin' | 'editor' | 'viewer'`):
+   - `pinPost`, `unpinPost`, `resolvePost`, `unresolvePost` now check for `'editor'` instead of `'instructor'`
+   - Error messages updated accordingly
+
+2. **`discussions.test.ts`** - Updated role values to match ne
+...(truncated)
