@@ -6,7 +6,7 @@
  * - Dollar signs ($) are preserved as-is
  * - null and undefined values are skipped
  */
-export function queryBuilder(params: Record<string, unknown>): string {
+function queryBuilder(params: Record<string, unknown>): string {
   if (!params || typeof params !== 'object' || Object.keys(params).length === 0) {
     return ''
   }
@@ -40,3 +40,5 @@ export function queryBuilder(params: Record<string, unknown>): string {
 
   return parts.join('&')
 }
+
+export { queryBuilder as queryBuilder, queryBuilder as default }
