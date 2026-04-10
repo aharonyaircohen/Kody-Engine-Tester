@@ -1,1 +1,2 @@
 {"runId":"1240-260410-012615","issueNumber":1240,"command":"run","startedAt":"2026-04-10T01:28:01.582Z","completedAt":"2026-04-10T01:31:58.192Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
+{"runId":"1240-260410-012615","issueNumber":1240,"command":"rerun","startedAt":"2026-04-10T01:34:06.170Z","completedAt":"2026-04-10T01:39:33.217Z","outcome":"completed","stagesCompleted":["plan","build","verify","review","review-fix","ship"],"feedback":"","parentRunId":"1240-260410-012615"}
