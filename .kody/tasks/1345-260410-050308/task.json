@@ -1,0 +1,18 @@
+{
+  "task_type": "chore",
+  "title": "Verify auto-learn memory committed before ship stage",
+  "description": "Test that auto-learn runs before ship stage, committing .kody/memory/ files to the PR branch. Verify via: (1) PR diff contains memory files (`gh pr diff <n> | grep \"^diff --git.*\\.kody/memory\"`), (2) run logs show auto-learn executes before ship stage. This is T35 validation per test-suite/agent.md.",
+  "scope": [
+    ".kody/watch/agents/test-suite/agent.md",
+    ".kody/memory/",
+    "node_modules/@kody-ade/engine/dist/learning/auto-learn.js",
+    "node_modules/@kody-ade/engine/dist/stages/ship.js"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md:1079-1096 — T35 test case definition with exact verification steps",
+    "node_modules/@kody-ade/engine/dist/learning/auto-learn.js — auto-learn stage implementation",
+    "node_modules/@kody-ade/engine/dist/stages/ship.js — ship stage that commits artifacts"
+  ],
+  "questions": []
+}
