@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing clamp utility implementation",
+  "description": "The clamp utility already exists at src/utils/clamp.ts with comprehensive tests in src/utils/clamp.test.ts. The task requested creation in math-helpers.ts but the functionality is already implemented and tested at the standard utils location.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/clamp.ts - single-function utility module with validation, following standard utils pattern", "src/utils/clamp.test.ts - co-located test file using vitest with describe/it structure"],
+  "questions": []
+}
