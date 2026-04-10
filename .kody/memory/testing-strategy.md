@@ -31,3 +31,10 @@
 
 - No explicit threshold configured; vitest run passes `--coverage` implicitly
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
+
+## Test Examples
+
+- **Unit**: `src/utils/retry-queue.test.ts` — fake timers, dead-letter queue validation
+- **Unit**: `src/utils/url-parser.test.ts` — parse/build/validate URL utilities
+- **E2E**: `tests/e2e/admin.e2e.spec.ts` — authenticated navigation, collection CRUD views
+- **E2E**: `tests/e2e/frontend.e2e.spec.ts` — homepage load, title/heading assertions

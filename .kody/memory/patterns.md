@@ -16,6 +16,7 @@
 - **Strategy**: `request-logger.ts` switches between `json`/`text` output formats; log level Strategy maps HTTP status codes to `debug|info|warn|error`.
 - **Repository/Store**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` — hybrid repository-pattern store.
 - **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling.
+- **Schema-Based Validation**: `src/middleware/validation.ts` validates `body|query|params` against `ValidationSchema` with type coercion (`string→number`, `string→boolean`). Validation errors are collected as a list rather than failing fast.
 
 ### Architectural Layers
 

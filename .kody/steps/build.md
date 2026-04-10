@@ -315,3 +315,60 @@ Single-responsibility modules; one function per file; co-located `.test.ts`.
 - [ ] New components include `'use client'` directive where needed
 
 {{TASK_CONTEXT}}
+
+---
+
+## Repo Patterns — Real code examples from this repo
+
+**DI Container** (`src/utils/di-container.ts`):
+
+```typescript
+export const container = new Container()
+container.register<string>(DI_TOKENS.JWT_SECRET, { useValue: process.env.JWT_SECRET })
+container.register<JwtService>(DI_TOKENS.JWT_SERVICE, {
+  useFactory: (di) => new JwtService(di.resolve(DI_TOKENS.JWT_SECRET)),
+})
+```
+
+**Result Type** (`src/utils/result.ts`):
+
+```typescript
+export type Result<T, E = string> = { ok: true; value: T } | { ok: false; error: E }
+export const ok = <T>(value: T): Result<T> => ({ ok: true, value })
+export const err = <E>(error: E): Result<never, E> => ({ ok: false, error })
+```
+
+**withAuth HOC** (`src/auth/withAuth.ts`): Wraps handlers with JWT validation + RBAC; use `withAuth(handler, { roles: ['admin'] })`.
+
+**Service Layer** (`src/services/GradebookService.ts`): Classes with `private deps: ServiceDeps<T>` constructor injection.
+
+**Store Pattern** (`src/collections/contacts.ts`): `contactsStore` with `getById|create|update|delete|query` methods.
+
+---
+
+## Improvement Areas
+
+- **Dual auth** (`src/auth/user-store.ts` SHA-256 vs `src/auth/auth-service.ts` PBKDF2+JWT) — pick one pattern.
+- **Role mismatch**: `UserStore.UserRole` ('admin'|'user'|'guest'|'student'|'instructor') vs `RbacRole` ('admin'|'editor'|'viewer') — align on `RbacRole`.
+- **Unsafe casts** in `src/app/(frontend)/dashboard/page.tsx` — use `Result<T, E>` or proper type guards.
+- **In-memory stores** (`SessionStore`, `UserStore`) lost on restart — no persistence layer.
+- **No error boundaries** in React components — unhandled rejections can crash the app.
+
+---
+
+## Acceptance Criteria
+
+- [ ] Follows Layer Architecture: Route → withAuth → Service → Repository
+- [ ] New utilities in `src/utils/*.ts` with co-located `.test.ts`
+- [ ] Services use `ServiceDeps<T>` constructor injection pattern
+- [ ] API routes return `Result<T, E>` for explicit error handling
+- [ ] All async ops wrapped in try-catch with meaningful errors
+- [ ] `pnpm tsc --noEmit` passes with zero type errors
+- [ ] `pnpm test:int` passes all Vitest tests
+- [ ] No `console.log` in production code
+- [ ] No hardcoded secrets; use validated `process.env`
+- [ ] Client components have `'use client'` directive
+- [ ] CSS uses `.module.css` files co-located with components
+- [ ] Named exports for utilities/types; default export only for page components
+
+{{TASK_CONTEXT}}
