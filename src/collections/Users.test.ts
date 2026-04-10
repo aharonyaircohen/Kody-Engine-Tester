@@ -305,3 +305,41 @@ describe('Users access control - delete', () => {
     expect(result).toBe(true)
   })
 })
+
+describe('Users fields - passwordHash', () => {
+  it('should have a passwordHash text field that is optional', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field).toBeDefined()
+    expect(field.type).toBe('text')
+    expect(field.required).toBeFalsy()
+  })
+
+  it('should have passwordHash marked as hidden', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.hidden).toBe(true)
+  })
+
+  it('should deny read access to passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.access?.read).toBeDefined()
+    expect(field.access.read()).toBe(false)
+  })
+
+  it('should deny create access to passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.access?.create).toBeDefined()
+    expect(field.access.create()).toBe(false)
+  })
+
+  it('should deny update access to passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.access?.update).toBeDefined()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(field.access.update({ req: makeMockReq() } as any)).toBe(false)
+  })
+})
