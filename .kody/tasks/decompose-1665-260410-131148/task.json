@@ -1,0 +1,23 @@
+{
+  "task_type": "chore",
+  "title": "Verify decompose pipeline for multi-area task",
+  "description": "Verify that @kody decompose correctly splits a complex multi-area task (5 components: model, service, routes, helpers, tests) into sub-tasks, creates worktrees for each, runs parallel builds, merges branches, and creates a PR with 'Decomposed Implementation' section. The notification system files already exist - this task validates the decompose pipeline end-to-end.",
+  "scope": [
+    "src/models/notification.ts",
+    "src/services/notifications.ts",
+    "src/routes/notifications.ts",
+    "src/utils/notificationHelpers.ts",
+    "src/utils/notificationHelpers.test.ts",
+    "src/services/notifications.test.ts",
+    "src/collections/Notifications.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/models/notification.ts - Domain model with NotificationSeverity union type and Notification interface",
+    "src/services/notifications.ts - Payload-based service class with notify, getUnread, markRead, markAllRead methods",
+    "src/routes/notifications.ts - Next.js route handlers with withAuth wrapper",
+    "src/utils/notificationHelpers.ts - Pure utility functions with filterNotifications, formatNotification, sortBySeverity",
+    "src/collections/Notifications.ts - Payload CMS collection config with access control"
+  ],
+  "questions": []
+}
