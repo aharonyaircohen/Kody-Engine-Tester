@@ -27,3 +27,7 @@ The clamp utility is already implemented and verified:
 
 The implementation matches the task
 ...(truncated)
+
+### autofix (2026-04-10T14:43:15)
+Changed `let context` to `const context` on line 80. The variable is only assigned once and never reassigned, so `const` is appropriate.
+
