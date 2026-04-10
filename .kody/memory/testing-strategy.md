@@ -20,14 +20,15 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Vitest Setup**: `vitest.setup.ts` loaded as setup file for jsdom environment
 
 ## CI Quality Gates
 
-- `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
+- `pnpm ci` runs `payload migrate && pnpm build`
 - Playwright `forbidOnly: true` prevents committed `.only()` tests
 - Retries enabled on CI (2x) to reduce flaky failure noise
 
 ## Coverage
 
-- No explicit threshold configured; vitest run passes `--coverage` implicitly
+- No explicit threshold configured
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
