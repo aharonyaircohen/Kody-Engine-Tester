@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { AuthService, type AuthResult } from './auth-service'
 import { JwtService } from './jwt-service'
+import { generateTestKeyPair } from './test-helpers'
 
 // Mock Payload
 const mockPayload = {
@@ -14,50 +15,35 @@ vi.mock('@/getPayload', () => ({
   getPayloadInstance: vi.fn(() => mockPayload),
 }))
 
-const TEST_JWT_SECRET = 'test-secret-key-for-auth-service'
-
-// Mock crypto module for password verification tests
-vi.mock('crypto', () => ({
-  default: {
-    pbkdf2: vi.fn((password, salt, iterations, keylen, digest, callback) => {
-      // Simulate PBKDF2 - return a fixed hash that matches the stored hash when compared
-      const testHash = Buffer.from('aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899', 'hex')
-      callback(null, testHash)
-    }),
-    randomBytes: vi.fn((bytes, callback) => {
-      callback(null, Buffer.from('testsalt123'))
-    }),
-    timingSafeEqual: vi.fn((a, b) => {
-      // In tests, always return true if lengths match (password verification succeeds)
-      return a.length === b.length
-    }),
-  },
-}))
-
 describe('AuthService', () => {
   let authService: AuthService
   let jwtService: JwtService
+  let testKeys: { privateKey: string; publicKey: string }
 
   beforeEach(() => {
     vi.clearAllMocks()
-    jwtService = new JwtService(TEST_JWT_SECRET)
+    // Generate RSA key pair for each test
+    testKeys = generateTestKeyPair()
+    jwtService = new JwtService(testKeys.privateKey, testKeys.publicKey)
     authService = new AuthService(mockPayload as any, jwtService)
   })
 
   describe('login', () => {
-    // Hash must match what the mock pbkdf2 returns (hex decoded)
-    const mockUser = {
-      id: 1,
-      email: 'admin@example.com',
-      hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
-      salt: 'testsalt123',
-      role: 'admin',
-      firstName: 'Admin',
-      lastName: 'User',
-      isActive: true,
-    }
-
     it('should return auth result with tokens on successful login', async () => {
+      // Pre-computed hash for 'password123' with salt 'testsalt123' using PBKDF2
+      // This is the actual PBKDF2 hash that the auth service will compute
+      const testHash = await computeTestHash('password123', 'testsalt123')
+      const mockUser = {
+        id: 1,
+        email: 'admin@example.com',
+        hash: testHash,
+        salt: 'testsalt123',
+        role: 'admin',
+        firstName: 'Admin',
+        lastName: 'User',
+        isActive: true,
+        tokenVersion: 0,
+      }
       mockPayload.find.mockResolvedValue({ docs: [mockUser] })
 
       const result = await authService.login('admin@example.com', 'password123', '127.0.0.1', 'TestAgent')
@@ -72,6 +58,18 @@ describe('AuthService', () => {
     })
 
     it('should store refreshToken and tokenExpiresAt on user', async () => {
+      const testHash = await computeTestHash('password123', 'testsalt123')
+      const mockUser = {
+        id: 1,
+        email: 'admin@example.com',
+        hash: testHash,
+        salt: 'testsalt123',
+        role: 'admin',
+        firstName: 'Admin',
+        lastName: 'User',
+        isActive: true,
+        tokenVersion: 0,
+      }
       mockPayload.find.mockResolvedValue({ docs: [mockUser] })
 
       await authService.login('admin@example.com', 'password123', '127.0.0.1', 'TestAgent')
@@ -103,7 +101,19 @@ describe('AuthService', () => {
     })
 
     it('should throw when user is inactive', async () => {
-      mockPayload.find.mockResolvedValue({ docs: [{ ...mockUser, isActive: false }] })
+      const testHash = await computeTestHash('password123', 'testsalt123')
+      const mockUser = {
+        id: 1,
+        email: 'admin@example.com',
+        hash: testHash,
+        salt: 'testsalt123',
+        role: 'admin',
+        firstName: 'Admin',
+        lastName: 'User',
+        isActive: false,
+        tokenVersion: 0,
+      }
+      mockPayload.find.mockResolvedValue({ docs: [mockUser] })
 
       await expect(
         authService.login('admin@example.com', 'password123', '127.0.0.1', 'TestAgent')
@@ -111,6 +121,18 @@ describe('AuthService', () => {
     })
 
     it('should update lastTokenUsedAt on login', async () => {
+      const testHash = await computeTestHash('password123', 'testsalt123')
+      const mockUser = {
+        id: 1,
+        email: 'admin@example.com',
+        hash: testHash,
+        salt: 'testsalt123',
+        role: 'admin',
+        firstName: 'Admin',
+        lastName: 'User',
+        isActive: true,
+        tokenVersion: 0,
+      }
       mockPayload.find.mockResolvedValue({ docs: [mockUser] })
 
       await authService.login('admin@example.com', 'password123', '127.0.0.1', 'TestAgent')
@@ -140,6 +162,7 @@ describe('AuthService', () => {
       refreshToken: 'valid_refresh_token',
       tokenExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       isActive: true,
+      tokenVersion: 0,
     }
 
     beforeEach(async () => {
@@ -208,6 +231,18 @@ describe('AuthService', () => {
 
       await expect(authService.refresh(mismatchedRefreshToken)).rejects.toThrow('Invalid refresh token')
     })
+
+    it('should throw when token has been revoked via tokenVersion', async () => {
+      // Token was issued with generation 0, but user's tokenVersion is now 1 (incremented on logout)
+      const userWithRevokedToken = {
+        ...mockUser,
+        refreshToken: validRefreshToken,
+        tokenVersion: 1, // User has logged out, tokenVersion incremented
+      }
+      mockPayload.find.mockResolvedValue({ docs: [userWithRevokedToken] })
+
+      await expect(authService.refresh(validRefreshToken)).rejects.toThrow('Token has been revoked')
+    })
   })
 
   describe('verifyAccessToken', () => {
@@ -216,6 +251,7 @@ describe('AuthService', () => {
       email: 'admin@example.com',
       role: 'admin',
       isActive: true,
+      tokenVersion: 0,
     }
 
     it('should return user context for valid access token', async () => {
@@ -233,6 +269,7 @@ describe('AuthService', () => {
         email: 'admin@example.com',
         role: 'admin',
         isActive: true,
+        tokenVersion: 0,
       }] })
 
       const result = await authService.verifyAccessToken(accessToken)
@@ -254,17 +291,41 @@ describe('AuthService', () => {
 
       await expect(authService.verifyAccessToken(expiredToken)).rejects.toThrow('Token expired')
     })
-  })
 
-  describe('logout', () => {
-    it('should clear refresh token on logout', async () => {
-      mockPayload.findByID.mockResolvedValue({
+    it('should throw on revoked token', async () => {
+      const accessToken = await jwtService.signAccessToken({
+        userId: '1',
+        email: 'admin@example.com',
+        role: 'admin',
+        sessionId: 'session-1',
+        generation: 0, // Token was issued with generation 0
+      })
+
+      // But user's tokenVersion is now 1 (token was revoked)
+      mockPayload.find.mockResolvedValue({ docs: [{
         id: 1,
         email: 'admin@example.com',
         role: 'admin',
-        refreshToken: 'some_token',
+        isActive: true,
+        tokenVersion: 1,
+      }] })
+
+      await expect(authService.verifyAccessToken(accessToken)).rejects.toThrow('Token has been revoked')
+    })
+  })
+
+  describe('logout', () => {
+    it('should increment tokenVersion on logout', async () => {
+      mockPayload.find.mockResolvedValue({
+        docs: [{
+          id: 1,
+          email: 'admin@example.com',
+          role: 'admin',
+          refreshToken: 'some_token',
+          tokenVersion: 0,
+        }],
       })
-      mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null })
+      mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null, tokenVersion: 1 })
 
       await authService.logout(1)
 
@@ -272,7 +333,10 @@ describe('AuthService', () => {
         expect.objectContaining({
           collection: 'users',
           id: 1,
-          data: { refreshToken: null },
+          data: expect.objectContaining({
+            refreshToken: null,
+            tokenVersion: 1,
+          }),
         })
       )
     })
@@ -280,13 +344,15 @@ describe('AuthService', () => {
 
   describe('RBAC role checks', () => {
     it('should include role in auth result', async () => {
+      const testHash = await computeTestHash('password123', 'testsalt123')
       const mockUser = {
         id: 1,
         email: 'editor@example.com',
-        hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
+        hash: testHash,
         salt: 'testsalt123',
         role: 'editor',
         isActive: true,
+        tokenVersion: 0,
       }
       mockPayload.find.mockResolvedValue({ docs: [mockUser] })
 
@@ -296,3 +362,17 @@ describe('AuthService', () => {
     })
   })
 })
+
+// Helper function to compute PBKDF2 hash
+async function computeTestHash(password: string, salt: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const crypto = require('crypto')
+    crypto.pbkdf2(password, salt, 25000, 512, 'sha256', (err: Error | null, derivedKey?: Buffer) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      resolve(derivedKey!.toString('hex'))
+    })
+  })
+}

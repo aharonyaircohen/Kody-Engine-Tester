@@ -3,18 +3,21 @@ import { createAuthMiddleware } from './auth-middleware'
 import { UserStore } from '../auth/user-store'
 import { SessionStore } from '../auth/session-store'
 import { JwtService } from '../auth/jwt-service'
+import { generateTestKeyPair } from '../auth/test-helpers'
 
 describe('AuthMiddleware', () => {
   let userStore: UserStore
   let sessionStore: SessionStore
   let jwtService: JwtService
   let middleware: ReturnType<typeof createAuthMiddleware>
+  let testKeys: { privateKey: string; publicKey: string }
 
   beforeEach(async () => {
     userStore = new UserStore()
     await userStore.ready
     sessionStore = new SessionStore()
-    jwtService = new JwtService('test-secret')
+    testKeys = generateTestKeyPair()
+    jwtService = new JwtService(testKeys.privateKey, testKeys.publicKey)
     middleware = createAuthMiddleware(userStore, sessionStore, jwtService)
   })
 
@@ -59,7 +62,7 @@ describe('AuthMiddleware', () => {
   })
 
   it('should return 401 for expired token', async () => {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('editor@example.com')
     const expiredToken = await jwtService.sign(
       { userId: user!.id, email: user!.email, role: user!.role as 'admin' | 'editor' | 'viewer', sessionId: 'session-1', generation: 0 },
       -1000
@@ -76,7 +79,7 @@ describe('AuthMiddleware', () => {
   })
 
   it('should return 401 for token with older generation after refresh', async () => {
-    const user = await userStore.findByEmail('user@example.com')
+    const user = await userStore.findByEmail('viewer@example.com')
     const oldAccessToken = await jwtService.signAccessToken({
       userId: user!.id,
       email: user!.email,

@@ -13,7 +13,12 @@ let authServiceInstance: AuthService | null = null
 
 function getJwtService(): JwtService {
   if (!jwtServiceInstance) {
-    jwtServiceInstance = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
+    const privateKey = process.env.JWT_PRIVATE_KEY
+    const publicKey = process.env.JWT_PUBLIC_KEY
+    if (!privateKey || !publicKey) {
+      throw new Error('JWT_PRIVATE_KEY and JWT_PUBLIC_KEY environment variables are required')
+    }
+    jwtServiceInstance = new JwtService(privateKey, publicKey)
   }
   return jwtServiceInstance
 }

@@ -24,12 +24,6 @@ export interface AuthResult {
   }
 }
 
-export interface TokenFields {
-  refreshToken: string | null
-  tokenExpiresAt: Date | null
-  lastTokenUsedAt: Date | null
-}
-
 const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
 
 function createError(message: string, status: number): Error & { status: number } {
@@ -95,6 +89,7 @@ export class AuthService {
     const isActive = (user as any).isActive ?? true
     const hash = (user as any).hash as string | null | undefined
     const salt = (user as any).salt as string | null | undefined
+    const tokenVersion = (user as any).tokenVersion ?? 0
 
     if (!isActive) {
       throw createError('Account is inactive', 403)
@@ -110,13 +105,14 @@ export class AuthService {
       throw createError('Invalid credentials', 401)
     }
 
-    // Generate tokens
+    // Generate tokens using tokenVersion as generation base
+    // This ensures tokens start with a generation >= tokenVersion
     const tokenPayload = {
       userId: String(userId),
       email,
       role,
       sessionId: `session-${userId}-${Date.now()}`,
-      generation: 0,
+      generation: tokenVersion,
     }
 
     const accessToken = await this.jwtService.signAccessToken(tokenPayload)
@@ -174,6 +170,7 @@ export class AuthService {
 
     const storedRefreshToken = (user as any).refreshToken as string | null
     const tokenExpiresAt = (user as any).tokenExpiresAt as string | null
+    const currentTokenVersion = (user as any).tokenVersion ?? 0
 
     // Verify refresh token matches and is not expired
     if (storedRefreshToken !== refreshToken) {
@@ -182,6 +179,11 @@ export class AuthService {
 
     if (tokenExpiresAt && new Date(tokenExpiresAt) < new Date()) {
       throw createError('Refresh token expired', 401)
+    }
+
+    // Check if token has been revoked (generation < tokenVersion means token was issued before last revocation)
+    if (payload.generation < currentTokenVersion) {
+      throw createError('Token has been revoked', 401)
     }
 
     // Generate new tokens with incremented generation
@@ -238,6 +240,12 @@ export class AuthService {
       throw createError('Account is inactive', 403)
     }
 
+    // Check if token has been revoked via tokenVersion
+    const currentTokenVersion = (user as any).tokenVersion ?? 0
+    if (payload.generation < currentTokenVersion) {
+      throw createError('Token has been revoked', 401)
+    }
+
     return {
       user: {
         id: (user as any).id,
@@ -251,12 +259,25 @@ export class AuthService {
   }
 
   async logout(userId: number | string): Promise<void> {
+    // Increment tokenVersion to revoke all existing tokens
     await this.payload.update({
       collection: 'users' as CollectionSlug,
       id: userId,
       data: {
         refreshToken: null,
+        tokenVersion: ((await this.getUserTokenVersion(userId)) ?? 0) + 1,
       } as any,
     })
+  }
+
+  private async getUserTokenVersion(userId: number | string): Promise<number | null> {
+    const users = await this.payload.find({
+      collection: 'users' as CollectionSlug,
+      where: { id: { equals: userId } },
+      limit: 1,
+    })
+    const user = users.docs[0]
+    if (!user) return null
+    return (user as any).tokenVersion ?? 0
   }
 }

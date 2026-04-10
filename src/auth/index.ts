@@ -1,11 +1,21 @@
 import { UserStore } from './user-store'
-import { SessionStore } from './session-store'
 import { JwtService } from './jwt-service'
 
 export const userStore = new UserStore()
-export const sessionStore = new SessionStore()
-export const jwtService = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-do-not-use-in-production')
+
+// Initialize JWT service with RS256 keys from environment
+function createJwtService(): JwtService {
+  const privateKey = process.env.JWT_PRIVATE_KEY
+  const publicKey = process.env.JWT_PUBLIC_KEY
+  if (privateKey && publicKey) {
+    return new JwtService(privateKey, publicKey)
+  }
+  // Fallback for development without keys - will throw at runtime if used
+  return new JwtService()
+}
+
+export const jwtService = createJwtService()
 
 export type { User, UserRole, CreateUserInput } from './user-store'
-export type { Session } from './session-store'
-export type { TokenPayload } from './jwt-service'
+export type { TokenPayload, RbacRole } from './jwt-service'
+export type { AuthenticatedUser, AuthResult } from './auth-service'

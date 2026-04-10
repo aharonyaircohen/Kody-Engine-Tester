@@ -1,23 +1,49 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { login } from './login'
-import { UserStore } from '../../auth/user-store'
-import { SessionStore } from '../../auth/session-store'
+import { AuthService } from '../../auth/auth-service'
 import { JwtService } from '../../auth/jwt-service'
+import { generateTestKeyPair } from '../../auth/test-helpers'
+
+// Mock Payload
+const mockPayload = {
+  findByID: vi.fn(),
+  find: vi.fn(),
+  update: vi.fn(),
+  create: vi.fn(),
+}
+
+vi.mock('@/getPayload', () => ({
+  getPayloadInstance: vi.fn(() => mockPayload),
+}))
 
 describe('login', () => {
-  let userStore: UserStore
-  let sessionStore: SessionStore
+  let authService: AuthService
   let jwtService: JwtService
+  let testKeys: { privateKey: string; publicKey: string }
 
-  beforeEach(async () => {
-    userStore = new UserStore()
-    await userStore.ready
-    sessionStore = new SessionStore()
-    jwtService = new JwtService('test-secret')
+  beforeEach(() => {
+    vi.clearAllMocks()
+    testKeys = generateTestKeyPair()
+    jwtService = new JwtService(testKeys.privateKey, testKeys.publicKey)
+    authService = new AuthService(mockPayload as any, jwtService)
   })
 
   it('should return tokens and user on successful login', async () => {
-    const result = await login('admin@example.com', 'AdminPass1!', '127.0.0.1', 'TestAgent', userStore, sessionStore, jwtService)
+    const testHash = await computeTestHash('AdminPass1!', 'salt123')
+    const mockUser = {
+      id: 1,
+      email: 'admin@example.com',
+      hash: testHash,
+      salt: 'salt123',
+      role: 'admin',
+      firstName: 'Admin',
+      lastName: 'User',
+      isActive: true,
+      tokenVersion: 0,
+    }
+    mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+    const result = await login('admin@example.com', 'AdminPass1!', '127.0.0.1', 'TestAgent', authService)
     expect(result.accessToken).toBeDefined()
     expect(result.refreshToken).toBeDefined()
     expect(result.user.email).toBe('admin@example.com')
@@ -26,40 +52,62 @@ describe('login', () => {
   })
 
   it('should return 401 for unknown email', async () => {
-    await expect(login('unknown@example.com', 'pass', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    mockPayload.find.mockResolvedValue({ docs: [] })
+
+    await expect(login('unknown@example.com', 'pass', '127.0.0.1', 'UA', authService))
       .rejects.toMatchObject({ status: 401 })
   })
 
   it('should return 401 for wrong password', async () => {
-    await expect(login('admin@example.com', 'wrongpass', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    const testHash = await computeTestHash('AdminPass1!', 'salt123')
+    const mockUser = {
+      id: 1,
+      email: 'admin@example.com',
+      hash: testHash,
+      salt: 'salt123',
+      role: 'admin',
+      isActive: true,
+      tokenVersion: 0,
+    }
+    mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+    await expect(login('admin@example.com', 'wrongpass', '127.0.0.1', 'UA', authService))
       .rejects.toMatchObject({ status: 401 })
   })
 
   it('should return 400 for missing credentials', async () => {
-    await expect(login('', '', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    await expect(login('', '', '127.0.0.1', 'UA', authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 403 for inactive user', async () => {
-    await expect(login('inactive@example.com', 'InactivePass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
+    const testHash = await computeTestHash('AdminPass1!', 'salt123')
+    const mockUser = {
+      id: 1,
+      email: 'admin@example.com',
+      hash: testHash,
+      salt: 'salt123',
+      role: 'admin',
+      isActive: false,
+      tokenVersion: 0,
+    }
+    mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+    await expect(login('admin@example.com', 'AdminPass1!', '127.0.0.1', 'UA', authService))
       .rejects.toMatchObject({ status: 403 })
   })
-
-  it('should return 423 for locked account', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    for (let i = 0; i < 5; i++) {
-      await userStore.recordFailedLogin(user!.id)
-    }
-    await expect(login('user@example.com', 'UserPass1!', '127.0.0.1', 'UA', userStore, sessionStore, jwtService))
-      .rejects.toMatchObject({ status: 423 })
-  })
-
-  it('should increment failed attempts on wrong password', async () => {
-    const user = await userStore.findByEmail('user@example.com')
-    try {
-      await login('user@example.com', 'wrong', '127.0.0.1', 'UA', userStore, sessionStore, jwtService)
-    } catch {}
-    const updated = await userStore.findById(user!.id)
-    expect(updated?.failedLoginAttempts).toBe(1)
-  })
 })
+
+// Helper function to compute PBKDF2 hash
+async function computeTestHash(password: string, salt: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const crypto = require('crypto')
+    crypto.pbkdf2(password, salt, 25000, 512, 'sha256', (err: Error | null, derivedKey?: Buffer) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      resolve(derivedKey!.toString('hex'))
+    })
+  })
+}

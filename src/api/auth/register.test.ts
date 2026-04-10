@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { register } from './register'
 import { AuthService } from '../../auth/auth-service'
 import { JwtService } from '../../auth/jwt-service'
+import { generateTestKeyPair } from '../../auth/test-helpers'
 
 // Mock Payload
 const mockPayload = {
@@ -15,36 +16,31 @@ vi.mock('@/getPayload', () => ({
   getPayloadInstance: vi.fn(() => mockPayload),
 }))
 
-// Mock crypto for password hashing
-vi.mock('crypto', () => ({
-  default: {
-    pbkdf2: vi.fn((password, salt, iterations, keylen, digest, callback) => {
-      const testHash = Buffer.from('aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899', 'hex')
-      callback(null, testHash)
-    }),
-    randomBytes: vi.fn(() => Buffer.from('testsalt123')),
-    timingSafeEqual: vi.fn(() => true),
-  },
-}))
-
 describe('register', () => {
   let authService: AuthService
   let jwtService: JwtService
+  let testKeys: { privateKey: string; publicKey: string }
+  // Pre-computed PBKDF2 hash for 'NewPass1!' with salt 'testsalt123'
+  let computedHash: string
 
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks()
-    jwtService = new JwtService('test-secret')
+    testKeys = generateTestKeyPair()
+    jwtService = new JwtService(testKeys.privateKey, testKeys.publicKey)
     authService = new AuthService(mockPayload as any, jwtService)
+    // Pre-compute the actual PBKDF2 hash for 'NewPass1!' with 'testsalt123'
+    computedHash = await computeTestHash('NewPass1!', 'testsalt123')
   })
 
   it('should register and return tokens + user', async () => {
     const mockUser = {
       id: 1,
       email: 'new@example.com',
-      hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
+      hash: computedHash,
       salt: 'testsalt123',
       role: 'viewer',
       isActive: true,
+      tokenVersion: 0,
     }
 
     // First call: check for existing user (empty), Second call: login
@@ -109,10 +105,11 @@ describe('register', () => {
     const mockUser = {
       id: 1,
       email: 'new@example.com',
-      hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
+      hash: computedHash,
       salt: 'testsalt123',
       role: 'viewer',
       isActive: true,
+      tokenVersion: 0,
     }
 
     mockPayload.find
@@ -127,3 +124,17 @@ describe('register', () => {
     expect(result.user.role).toBe('viewer')
   })
 })
+
+// Helper function to compute PBKDF2 hash
+async function computeTestHash(password: string, salt: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const crypto = require('crypto')
+    crypto.pbkdf2(password, salt, 25000, 512, 'sha256', (err: Error | null, derivedKey?: Buffer) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      resolve(derivedKey!.toString('hex'))
+    })
+  })
+}

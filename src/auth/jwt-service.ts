@@ -21,22 +21,56 @@ function base64urlDecode(data: string): string {
 }
 
 export class JwtService {
-  private secret: string
-  private blacklistedTokens = new Map<string, number>() // token -> exp timestamp
+  private privateKey: CryptoKey | null = null
+  private publicKey: CryptoKey | null = null
 
-  constructor(secret: string = 'dev-secret-do-not-use-in-production') {
-    this.secret = secret
+  constructor(
+    private privateKeyPem?: string,
+    private publicKeyPem?: string
+  ) {}
+
+  private async getPrivateKey(): Promise<CryptoKey> {
+    if (this.privateKey) return this.privateKey
+
+    const pem = this.privateKeyPem ?? process.env.JWT_PRIVATE_KEY
+    if (!pem) {
+      throw new Error('JWT_PRIVATE_KEY environment variable is not set')
+    }
+
+    this.privateKey = await crypto.subtle.importKey(
+      'pkcs8',
+      this.pemToDer(pem),
+      { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
+      false,
+      ['sign']
+    )
+    return this.privateKey
   }
 
-  private async getKey(): Promise<CryptoKey> {
-    const encoder = new TextEncoder()
-    return crypto.subtle.importKey(
-      'raw',
-      encoder.encode(this.secret),
-      { name: 'HMAC', hash: 'SHA-256' },
+  private async getPublicKey(): Promise<CryptoKey> {
+    if (this.publicKey) return this.publicKey
+
+    const pem = this.publicKeyPem ?? process.env.JWT_PUBLIC_KEY
+    if (!pem) {
+      throw new Error('JWT_PUBLIC_KEY environment variable is not set')
+    }
+
+    this.publicKey = await crypto.subtle.importKey(
+      'spki',
+      this.pemToDer(pem),
+      { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
       false,
-      ['sign', 'verify']
+      ['verify']
     )
+    return this.publicKey
+  }
+
+  // Convert PEM to DER (strip header/footer and decode base64)
+  private pemToDer(pem: string): ArrayBuffer {
+    const lines = pem.split('\n')
+    const base64 = lines.filter(l => !l.startsWith('-----')).join('')
+    const binary = Buffer.from(base64, 'base64')
+    return binary.buffer.slice(binary.byteOffset, binary.byteOffset + binary.byteLength)
   }
 
   async sign(payload: TokenInput, expiresInMs: number): Promise<string> {
@@ -47,23 +81,23 @@ export class JwtService {
       exp: now + Math.floor(expiresInMs / 1000),
     }
 
-    const header = base64urlEncode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+    const header = base64urlEncode(JSON.stringify({ alg: 'RS256', typ: 'JWT' }))
     const body = base64urlEncode(JSON.stringify(fullPayload))
     const signingInput = `${header}.${body}`
 
-    const key = await this.getKey()
+    const key = await this.getPrivateKey()
     const encoder = new TextEncoder()
-    const sigBuffer = await crypto.subtle.sign('HMAC', key, encoder.encode(signingInput))
+    const sigBuffer = await crypto.subtle.sign(
+      'RSASSA-PKCS1-v1_5',
+      key,
+      encoder.encode(signingInput)
+    )
     const sig = Buffer.from(sigBuffer).toString('base64url')
 
     return `${signingInput}.${sig}`
   }
 
   async verify(token: string): Promise<TokenPayload> {
-    if (this.blacklistedTokens.has(token)) {
-      throw new Error('Token revoked')
-    }
-
     const parts = token.split('.')
     if (parts.length !== 3) {
       throw new Error('Invalid token format')
@@ -72,10 +106,16 @@ export class JwtService {
     const [header, body, sig] = parts
     const signingInput = `${header}.${body}`
 
-    const key = await this.getKey()
+    const key = await this.getPublicKey()
     const encoder = new TextEncoder()
     const sigBuffer = Buffer.from(sig, 'base64url')
-    const valid = await crypto.subtle.verify('HMAC', key, sigBuffer, encoder.encode(signingInput))
+
+    const valid = await crypto.subtle.verify(
+      'RSASSA-PKCS1-v1_5',
+      key,
+      sigBuffer,
+      encoder.encode(signingInput)
+    )
 
     if (!valid) {
       throw new Error('Invalid token signature')
@@ -92,31 +132,10 @@ export class JwtService {
   }
 
   async signAccessToken(payload: TokenInput): Promise<string> {
-    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 15 * 60 * 1000) // 15 minutes
+    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 15 * 60 * 1000)
   }
 
   async signRefreshToken(payload: TokenInput): Promise<string> {
-    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 7 * 24 * 60 * 60 * 1000) // 7 days
-  }
-
-  blacklist(token: string): void {
-    try {
-      const parts = token.split('.')
-      if (parts.length === 3) {
-        const payload: TokenPayload = JSON.parse(base64urlDecode(parts[1]))
-        this.blacklistedTokens.set(token, payload.exp)
-      }
-    } catch {
-      this.blacklistedTokens.set(token, 0)
-    }
-  }
-
-  cleanupBlacklist(): void {
-    const now = Math.floor(Date.now() / 1000)
-    for (const [token, exp] of this.blacklistedTokens.entries()) {
-      if (exp < now) {
-        this.blacklistedTokens.delete(token)
-      }
-    }
+    return this.sign({ ...payload, generation: payload.generation ?? 0 }, 7 * 24 * 60 * 60 * 1000)
   }
 }

@@ -1,11 +1,32 @@
 import { describe, it, expect, beforeEach } from 'vitest'
+import crypto from 'crypto'
 import { JwtService } from './jwt-service'
+
+// Generate test key pair once
+const TEST_KEYS = (() => {
+  const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
+  })
+  return { privateKey, publicKey }
+})()
+
+// Helper to generate a different key pair
+function generateKeyPair() {
+  const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
+  })
+  return { privateKey, publicKey }
+}
 
 describe('JwtService', () => {
   let service: JwtService
 
   beforeEach(() => {
-    service = new JwtService('test-secret-key')
+    service = new JwtService(TEST_KEYS.privateKey, TEST_KEYS.publicKey)
   })
 
   const basePayload = {
@@ -55,6 +76,13 @@ describe('JwtService', () => {
       const payload = await service.verify(token)
       expect(payload.generation).toBe(3)
     })
+
+    it('should reject a token signed with different key', async () => {
+      const otherKeys = generateKeyPair()
+      const otherService = new JwtService(otherKeys.privateKey, otherKeys.publicKey)
+      const token = await otherService.signAccessToken(basePayload)
+      await expect(service.verify(token)).rejects.toThrow('Invalid token signature')
+    })
   })
 
   describe('signRefreshToken', () => {
@@ -68,27 +96,23 @@ describe('JwtService', () => {
     })
   })
 
-  describe('blacklist', () => {
-    it('should reject a blacklisted token', async () => {
+  describe('RS256 specifics', () => {
+    it('should use RS256 algorithm in header', async () => {
       const token = await service.signAccessToken(basePayload)
-      service.blacklist(token)
-      await expect(service.verify(token)).rejects.toThrow('Token revoked')
+      const [header] = token.split('.')
+      const decoded = JSON.parse(Buffer.from(header, 'base64url').toString())
+      expect(decoded.alg).toBe('RS256')
+      expect(decoded.typ).toBe('JWT')
     })
 
-    it('should allow non-blacklisted token', async () => {
-      const token = await service.signAccessToken(basePayload)
-      const other = await service.signAccessToken({ ...basePayload, userId: 'other' })
-      service.blacklist(other)
-      const payload = await service.verify(token)
-      expect(payload.userId).toBe('user-1')
+    it('should throw when JWT_PUBLIC_KEY is not set', async () => {
+      const serviceWithoutKeys = new JwtService()
+      await expect(serviceWithoutKeys.verify('any.token.here')).rejects.toThrow('JWT_PUBLIC_KEY environment variable is not set')
     })
 
-    it('cleanupBlacklist should remove expired tokens', async () => {
-      const token = await service.sign(basePayload, -1000) // already expired
-      service.blacklist(token)
-      service.cleanupBlacklist()
-      // After cleanup, count should drop (we can't directly inspect, but no error)
-      // Just verify it doesn't throw
+    it('should throw when JWT_PRIVATE_KEY is not set during sign', async () => {
+      const serviceWithoutKeys = new JwtService()
+      await expect(serviceWithoutKeys.signAccessToken(basePayload)).rejects.toThrow('JWT_PRIVATE_KEY environment variable is not set')
     })
   })
 })

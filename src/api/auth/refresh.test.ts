@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { refresh } from './refresh'
 import { AuthService } from '../../auth/auth-service'
 import { JwtService } from '../../auth/jwt-service'
+import { generateTestKeyPair } from '../../auth/test-helpers'
 
 // Mock Payload
 const mockPayload = {
@@ -18,17 +19,19 @@ vi.mock('@/getPayload', () => ({
 describe('refresh', () => {
   let authService: AuthService
   let jwtService: JwtService
+  let testKeys: { privateKey: string; publicKey: string }
 
   beforeEach(() => {
     vi.clearAllMocks()
-    jwtService = new JwtService('test-secret')
+    testKeys = generateTestKeyPair()
+    jwtService = new JwtService(testKeys.privateKey, testKeys.publicKey)
     authService = new AuthService(mockPayload as any, jwtService)
   })
 
   it('should return new token pair on valid refresh token', async () => {
     const mockRefreshToken = await jwtService.signRefreshToken({
       userId: '1',
-      email: 'user@example.com',
+      email: 'viewer@example.com',
       role: 'viewer',
       sessionId: 'session-1',
       generation: 0,
@@ -36,11 +39,12 @@ describe('refresh', () => {
 
     const userWithValidToken = {
       id: 1,
-      email: 'user@example.com',
+      email: 'viewer@example.com',
       role: 'viewer' as const,
       refreshToken: mockRefreshToken,
       tokenExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       isActive: true,
+      tokenVersion: 0,
     }
 
     mockPayload.find.mockResolvedValue({ docs: [userWithValidToken] })
@@ -61,7 +65,7 @@ describe('refresh', () => {
   it('should rotate refresh token', async () => {
     const mockRefreshToken = await jwtService.signRefreshToken({
       userId: '1',
-      email: 'user@example.com',
+      email: 'viewer@example.com',
       role: 'viewer',
       sessionId: 'session-1',
       generation: 0,
@@ -69,11 +73,12 @@ describe('refresh', () => {
 
     const userWithValidToken = {
       id: 1,
-      email: 'user@example.com',
+      email: 'viewer@example.com',
       role: 'viewer' as const,
       refreshToken: mockRefreshToken,
       tokenExpiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       isActive: true,
+      tokenVersion: 0,
     }
 
     mockPayload.find.mockResolvedValue({ docs: [userWithValidToken] })
