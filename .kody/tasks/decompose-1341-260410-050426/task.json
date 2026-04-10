@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify T27 decompose config disabled test",
+"description": "Test T27 verifies that decompose.enabled: false in kody.config.json causes immediate fallback to normal pipeline. The test was already executed and cleaned up (commits e0b8341/69b1c6f). Implementation found in node_modules/.pnpm/@kody-ade+engine@0.1.0/node_modules/@kody-ade/engine/dist/bin/cli.js:8589-8592 which logs 'decompose disabled in config — falling back to normal pipeline' and calls fallbackToPipeline() when config.decompose?.enabled === false.",
+"scope": ["kody.config.json", ".kody/tasks/decompose-1341-260410-050426/task.md", ".kody/tasks/decompose-1341-260410-050426/task.json", ".kody/watch/agents/test-suite/agent.md"],
+"risk_level": "low",
+"existing_patterns": [{"file": "node_modules/.pnpm/@kody-ade+engine@0.1.0/node_modules/@kody-ade/engine/dist/bin/cli.js:8589", "pattern": "config.decompose?.enabled === false check with immediate fallbackToPipeline()"}, {"file": ".kody/watch/agents/test-suite/agent.md:975-1004", "pattern": "T27 test specification with setup/verification/cleanup steps"}],
+"questions": []
+}

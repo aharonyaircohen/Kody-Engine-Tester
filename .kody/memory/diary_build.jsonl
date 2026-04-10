@@ -1,1 +1,2 @@
 {"taskId":"fix\\nPlease","timestamp":"2026-04-09T19:24:11.360Z","stage":"build","patterns":["files.created:src/utils/queryBuilder.ts"],"room":"utils"}
+{"taskId":"decompose-1341-260410-050426","timestamp":"2026-04-10T05:11:13.247Z","stage":"build","patterns":["files.created:`decompose.enabled"],"room":"tasks"}
