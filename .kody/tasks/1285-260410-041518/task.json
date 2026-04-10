@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of broken import utility",
+  "description": "The file src/utils/broken-import.ts already exists with the broken import from '@/nonexistent/module' as specified in the task. This import will fail at typecheck time as expected.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
