@@ -40,3 +40,29 @@ Implementation complete. Here's a summary:
   - Different keys (independent caches)
 
 ...(truncated)
+
+### autofix (2026-04-09T23:56:25)
+Done. Changed `let context` to `const context` on line 80 of `src/utils/logger/index.ts` since the variable is never reassigned.
+
+
+### review (2026-04-10T00:01:14)
+## Verdict: PASS
+
+## Summary
+
+Implementation of `withCache<T>(key, ttlMs, fn)` in `src/services/cache-wrapper.ts` with 12 passing tests in `src/services/cache-wrapper.test.ts`. The implementation correctly provides in-memory Map-based caching with TTL expiry and request coalescing for concurrent calls.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+1. `src/services/cache-wrapper.ts:6` — Uses `instanceof Promise` to detect pending promises, which is unreliable across realm bounda
+...(truncated)
