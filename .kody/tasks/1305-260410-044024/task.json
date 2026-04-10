@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of sum utility function",
+  "description": "The sum utility function and its test file already exist and fully satisfy all acceptance criteria. `src/utils/sum.ts` exports a default `sum` function with signature `(numbers: number[]) => number` that handles empty arrays (returns 0). `src/utils/sum.test.ts` contains comprehensive unit tests covering empty arrays, single elements, multiple numbers, negative numbers, and floating point precision.",
+  "scope": ["src/utils/sum.ts", "src/utils/sum.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["Utility modules in `src/utils/` follow single-function file pattern with co-located `.test.ts` files"],
+  "questions": []
+}
