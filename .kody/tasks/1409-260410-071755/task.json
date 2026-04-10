@@ -1,0 +1,15 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add sanitizeInput function to src/middleware/sanitize.ts",
+  "description": "Create `sanitizeInput(input: string): string` in `src/middleware/sanitize.ts` that strips HTML tags, trims whitespace, and normalizes unicode. Include co-located tests in `sanitize.test.ts`.",
+  "scope": ["src/middleware/sanitize.ts", "src/middleware/sanitize.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/security/sanitizers.ts:14-33 — sanitizeHtml function that strips HTML tags and decodes entities using regex replacement",
+    "src/utils/debounce.ts:6-48 — single-function utility module with typed inputs/outputs and options object pattern",
+    "src/utils/debounce.test.ts — co-located test file using vitest with beforeEach/afterEach for timer management"
+  ],
+  "questions": []
+}
+```
