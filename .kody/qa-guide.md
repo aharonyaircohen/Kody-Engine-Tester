@@ -1,15 +1,19 @@
 # QA Guide
 
+## Quick Reference
+
+- **Dev server:** `pnpm dev` at `http://localhost:3000`
+- **Login page:** `http://localhost:3000/login`
+- **Admin panel:** `http://localhost:3000/admin`
+
 ## Authentication
 
 ### Test Accounts
 
-<!-- Fill in your test/preview environment credentials below -->
-
-| Role  | Email             | Password  |
-| ----- | ----------------- | --------- |
-| Admin | admin@example.com | CHANGE_ME |
-| User  | user@example.com  | CHANGE_ME |
+| Role  | Email             | Password             |
+| ----- | ----------------- | -------------------- |
+| Admin | ${QA_ADMIN_EMAIL} | ${QA_ADMIN_PASSWORD} |
+| User  | ${QA_USER_EMAIL}  | ${QA_USER_PASSWORD}  |
 
 ### Login Steps
 
@@ -20,7 +24,9 @@
 
 ### Auth Files
 
-- `src/auth`
+- `src/auth/withAuth.ts` — JWT validation HOC
+- `src/auth/jwt.service.ts` — Web Crypto JWT handling
+- `src/auth/session-store.ts` — In-memory session storage
 
 ## Roles
 
@@ -30,90 +36,125 @@
 - `CTO`
 - `Researcher`
 
-## Key Pages
+## Navigation Map
 
-### Frontend
+### Frontend Pages
 
-- `/`
-- `/dashboard`
-- `/instructor/courses/:id/edit`
-- `/notes`
-- `/notes/:id`
-- `/notes/create`
-- `/notes/edit/:id`
+| Path                           | Expected Content                     | Key Interactions                               |
+| ------------------------------ | ------------------------------------ | ---------------------------------------------- |
+| `/`                            | Home/landing page                    | Verify hero, navigation, course listings       |
+| `/dashboard`                   | User dashboard with enrolled courses | Verify course cards, progress indicators       |
+| `/instructor/courses/:id/edit` | Course editor                        | Edit course title, description, manage modules |
+| `/notes`                       | Notes listing                        | Create, search, filter notes                   |
+| `/notes/create`                | Note creation form                   | Fill title, content, tags                      |
+| `/notes/:id`                   | Note detail view                     | View note content, edit/delete buttons         |
+| `/notes/edit/:id`              | Note editing form                    | Pre-filled form, save/cancel                   |
 
-### Admin
+### Admin Panel
 
-- `/admin/:...segments?`
+| Path                               | Purpose                 | Key Elements                                 |
+| ---------------------------------- | ----------------------- | -------------------------------------------- |
+| `/admin`                           | Payload admin dashboard | Collection links, settings                   |
+| `/admin/collections/assignments`   | Assignments list        | Table with title, module, dueDate columns    |
+| `/admin/collections/courses`       | Courses list            | Table with title, instructor, status columns |
+| `/admin/collections/enrollments`   | Enrollments list        | Student, course, status columns              |
+| `/admin/collections/lessons`       | Lessons list            | Title, course, module, type columns          |
+| `/admin/collections/media`         | Media library           | Uploaded files with alt text                 |
+| `/admin/collections/modules`       | Modules list            | Title, course, order columns                 |
+| `/admin/collections/notifications` | Notifications list      | Recipient, type, isRead columns              |
+| `/admin/collections/quiz-attempts` | Quiz attempts           | User, quiz, score, passed columns            |
+| `/admin/collections/quizzes`       | Quizzes list            | Title, module, passingScore columns          |
+| `/admin/collections/submissions`   | Assignment submissions  | Assignment, student, status, grade columns   |
+| `/admin/collections/users`         | Users list              | Name, role, organization columns             |
+| `/admin/collections/certificates`  | Certificates list       | Student, course, certificateNumber columns   |
+| `/admin/collections/notes`         | Notes list (admin)      | Title, content preview, tags                 |
 
-## Admin Collections
+### API Endpoints
 
-### `/admin/collections/assignments`
+| Path                        | Methods   | Purpose                    |
+| --------------------------- | --------- | -------------------------- |
+| `/api/notes`                | GET, POST | Note CRUD with search      |
+| `/api/notes/:id`            | GET       | Single note retrieval      |
+| `/api/quizzes/:id`          | GET       | Quiz retrieval             |
+| `/api/quizzes/:id/submit`   | POST      | Quiz grading               |
+| `/api/quizzes/:id/attempts` | GET       | User's quiz attempts       |
+| `/api/courses/search`       | GET       | Course search with filters |
+| `/api/enroll`               | POST      | Course enrollment          |
+| `/api/gradebook/course/:id` | GET       | Grades per course          |
 
-- **Name:** Assignments
-- **Fields:** title, module, instructions, dueDate, maxScore, rubric, criterion, maxPoints, description
+## Component Verification Patterns
 
-### `/admin/collections/courses`
+### Admin Components (Payload CMS)
 
-- **Name:** Courses
-- **Fields:** title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label, maxEnrollments, quizWeight, assignmentWeight
+- **Collection tables:** Verify sortable columns, row selection, bulk actions
+- **Edit forms:** Verify field validation, relationship pickers, conditional fields
+- **Media picker:** Verify alt text input, preview thumbnails
+- **Slug field:** Verify auto-generation from title, manual override
 
-### `/admin/collections/enrollments`
+### Frontend Components
 
-- **Name:** Enrollments
-- **Fields:** student, course, enrolledAt, status, completedAt, completedLessons
+- **CourseCard:** Verify thumbnail, title, instructor, progress bar, enrollment status
+- **LessonPlayer:** Verify video/text content rendering, navigation between lessons
+- **QuizForm:** Verify question rendering, answer selection, timer display
+- **NoteEditor:** Verify rich text input, tag autocomplete, auto-save indicator
 
-### `/admin/collections/lessons`
+## Common Test Scenarios
 
-- **Name:** Lessons
-- **Fields:** title, course, module, order, type, content, videoUrl, estimatedMinutes
+### Auth Flow
 
-### `/admin/collections/media`
+1. Navigate to `/login`
+2. Submit invalid credentials → verify error message
+3. Submit valid admin credentials → verify redirect to `/dashboard` or `/admin`
+4. Logout and verify protected routes redirect to login
 
-- **Name:** Media
-- **Fields:** alt
+### Course CRUD (Admin)
 
-### `/admin/collections/notifications`
+1. Go to `/admin/collections/courses`
+2. Click "Create" → fill title, slug, description, instructor
+3. Save → verify course appears in list
+4. Edit course → modify fields → save
+5. Delete course → verify removal from list
 
-- **Name:** Notifications
-- **Fields:** recipient, type, title, message, link, isRead
+### Enrollment Flow
 
-### `/admin/collections/quiz-attempts`
+1. As student, browse courses at `/dashboard`
+2. Click enroll on a course → verify enrollment confirmation
+3. Go to `/admin/collections/enrollments` → verify new enrollment record
 
-- **Name:** QuizAttempts
-- **Fields:** user, quiz, score, passed, answers, questionIndex, answer, startedAt, completedAt
+### Note Creation (Frontend)
 
-### `/admin/collections/quizzes`
+1. Navigate to `/notes/create`
+2. Fill title, content, tags
+3. Save → verify redirect to `/notes/:id`
+4. Edit note at `/notes/edit/:id` → save changes
 
-- **Name:** Quizzes
-- **Fields:** title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options, isCorrect, correctAnswer, points
+### Quiz Submission
 
-### `/admin/collections/submissions`
+1. Start quiz at lesson/course page
+2. Answer questions → submit
+3. Verify score display, pass/fail status
+4. Check `/admin/collections/quiz-attempts` for record
 
-- **Name:** Submissions
-- **Fields:** assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores, criterion, score, comment
+## Environment Setup
 
-### `/admin/collections/users`
+Required env vars:
 
-- **Name:** Users
-- **Fields:** firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
+- `DATABASE_URL` — PostgreSQL connection string
+- `PAYLOAD_SECRET` — JWT signing secret
 
-### `/admin/collections/certificates`
+Optional for dev:
 
-- **Name:** certificates
-- **Fields:** student, course, issuedAt, certificateNumber, finalGrade
-
-### `/admin/collections/notes`
-
-- **Name:** notes
-- **Fields:** title, content, tags
-
-## Required Environment Variables
-
-- `DATABASE_URL`
-- `PAYLOAD_SECRET`
+- `PORT=3000` (defaults to 3000)
 
 ## Dev Server
 
-- Command: `pnpm dev`
-- URL: `http://localhost:3000`
+- **Command:** `pnpm dev`
+- **URL:** `http://localhost:3000`
+
+## Rules
+
+- Use Playwright `page.goto()` with URL relative to base `http://localhost:3000`
+- Wait for navigation with `page.waitForURL()` after form submissions
+- Verify elements with `page.locator().first()` for dynamic lists
+- Use `page.waitForResponse()` for API call verification
+- Admin routes require authentication — login before navigating to `/admin/*`

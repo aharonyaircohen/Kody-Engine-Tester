@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -101,5 +121,33 @@ Guidelines:
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+
+## Repo Patterns
+
+- **Service layer interfaces**: `src/services/GradebookService.ts` defines `GradebookServiceDeps<T>` for typed dependency injection
+- **Payload collection configs**: `src/collections/Users.ts`, `src/collections/Media.ts`, `src/collections/Notes.ts` — use Payload's config-based schema with relationship fields
+- **JWT auth middleware**: `src/middleware/request-logger.ts` exports `createRequestLogger(config)` factory; `src/auth/withAuth.ts` uses `extractBearerToken` + `checkRole`
+- **Result type for error handling**: `src/utils/result.ts` — `Result<T, E>` discriminated union; services return `Result.ok()` / `Result.err()`
+- **Mini-Zod schema builder**: `src/utils/schema.ts` — `StringSchema`, `NumberSchema`, `BooleanSchema` with `.optional()` and `.default()` modifiers
+- **In-memory stores**: `CertificatesStore`, `DiscussionsStore` in `src/auth/` use `Map` with class encapsulation
+- **Course search**: `CourseSearchService` supports `difficulty`, `tags`, `sort` (relevance/newest/popularity/rating), pagination at `GET /api/courses/search`
+
+## Improvement Areas
+
+- **Dual auth coexists**: `src/auth/user-store.ts` (SHA-256) alongside `src/auth/auth-service.ts` (PBKDF2) — no single source of truth; `AuthService` should be preferred
+- **Role divergence**: `UserStore.UserRole = 'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole = 'admin'|'editor'|'viewer'` — no alignment between store and RBAC
+- **Unsafe casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` type casts rather than proper type narrowing
+- **N+1 queries**: Dashboard batches lesson fetches but `src/services/` methods may not consistently apply batch optimization
+- **Inconsistent error handling**: Some services use `Result<T, E>` while others throw raw errors or use `.catch(() => {})` silently
+
+## Acceptance Criteria
+
+- [ ] Scope contains exact file paths discovered via Glob/Grep (e.g., `src/services/*.ts`, `src/collections/*.ts`)
+- [ ] Title is actionable and starts with a verb (Add, Fix, Refactor, Update, Verify)
+- [ ] Description captures the user's intent and acceptance criteria from the task description
+- [ ] Risk level matches scope size: low (1 file, no side effects), medium (2-3 files), high (4+ files or core logic)
+- [ ] existing_patterns lists specific file paths and describes the pattern to reuse (e.g., "use `GradebookServiceDeps<T>` pattern from `src/services/GradebookService.ts`")
+- [ ] Questions (if any) are product/requirements questions only — max 3; omit if task is clear
+- [ ] Output is valid JSON with no markdown fences, no explanatory text before or after
 
 {{TASK_CONTEXT}}
