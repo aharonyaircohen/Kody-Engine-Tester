@@ -1,0 +1,18 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of cache wrapper",
+  "description": "The cache wrapper implementation already exists in src/services/cache-wrapper.ts using the Cache utility from src/utils/cache.ts, with comprehensive tests in src/services/cache-wrapper.test.ts covering cache hits, misses, TTL expiry, key isolation, and different TTL values per call.",
+  "scope": [
+    "src/services/cache-wrapper.ts",
+    "src/services/cache-wrapper.test.ts",
+    "src/utils/cache.ts",
+    "src/utils/cache.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cache.ts — Cache class with TTL expiry using in-memory Map with LRU eviction and expiresAt tracking",
+    "src/services/*.ts — Service layer modules with typed dependency interfaces",
+    "src/utils/*.test.ts — Co-located test files using vitest with fake timers for TTL testing"
+  ],
+  "questions": []
+}
