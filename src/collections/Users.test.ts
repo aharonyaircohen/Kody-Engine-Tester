@@ -283,6 +283,64 @@ describe('Users access control - update', () => {
   })
 })
 
+describe('Users fields - passwordHash', () => {
+  it('should have a passwordHash text field', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field).toBeDefined()
+    expect(field.type).toBe('text')
+  })
+
+  it('should have passwordHash that is optional', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.required).toBeFalsy()
+  })
+
+  it('should have passwordHash hidden from API responses', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.hidden).toBe(true)
+  })
+
+  it('should deny read access to passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.read({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should allow create access to passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: null })
+    const result = field.access.create({ req } as AccessArgs)
+    expect(result).toBe(true)
+  })
+
+  it('should deny update access to passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.update({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+})
+
+describe('Users fields - email (auth provided)', () => {
+  it('should have email field provided by auth: true', () => {
+    // Email is added by Payload automatically when auth: true is set
+    // The field is not in our custom fields array, but auth: true confirms its existence
+    expect(Users.auth).toBe(true)
+  })
+
+  it('should have email as useAsTitle in admin', () => {
+    // The email field is used as title in admin UI
+    expect(Users.admin?.useAsTitle).toBe('email')
+  })
+})
+
 describe('Users access control - delete', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const canDelete = (Users.access as any)?.delete

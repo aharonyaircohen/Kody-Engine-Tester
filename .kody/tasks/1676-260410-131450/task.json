@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add passwordHash field to User model with validation",
+  "description": "Add a passwordHash field to the Payload Users collection that stores bcrypt/argon2 hashes, with email format validation and access control to exclude the hash from API responses. The Users collection already has auth:true which provides email field, but needs an explicit passwordHash field with proper validation and hidden access.",
+  "scope": [
+    "src/collections/Users.ts",
+    "src/collections/Users.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/collections/Users.ts: Payload collection with auth:true, existing field definitions with validate hooks and field-level access control",
+    "src/collections/Users.test.ts: Field-level unit tests using findField helper and mock req patterns",
+    "src/auth/auth-service.ts: Password verification logic using hash/salt fields"
+  ],
+  "questions": []
+}

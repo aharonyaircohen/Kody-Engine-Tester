@@ -145,5 +145,16 @@ export const Users: CollectionConfig = {
         update: () => false,
       },
     },
+    {
+      name: 'passwordHash',
+      type: 'text',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        create: () => true,
+        update: () => false,
+      },
+    },
   ],
 }
