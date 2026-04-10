@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add deepFreeze utility function",
+  "description": "Add a `deepFreeze` utility function in `src/utils/deep-freeze.ts` that recursively freezes an object and all nested objects to prevent mutation. Include comprehensive tests in `src/utils/deep-freeze.test.ts`. The function should: (1) freeze all own properties, (2) recursively freeze nested objects and arrays, (3) handle circular references without infinite loops, (4) return the frozen object.",
+  "scope": ["src/utils/deep-freeze.ts", "src/utils/deep-freeze.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts - uses WeakSet for circular reference tracking with `seen.add(value as object)` and `seen.has(value as object)` pattern",
+    "src/utils/deep-clone.test.ts - comprehensive test structure with describe/it/expect, tests for primitives, objects, arrays, nested structures, and circular references",
+    "src/utils/clamp.ts - simple single-function utility with minimal JSDoc"
+  ],
+  "questions": []
+}
