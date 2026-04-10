@@ -39,3 +39,8 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-10 (task: 1529-260410-102822)
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-10 (task: 1825-260410-203457)
+- Uses vitest for testing
+- Uses eslint for linting
+- Active directories: src/auth, src/middleware
