@@ -1,6 +1,6 @@
 {
   "taskId": ":failed",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -15,38 +15,33 @@
     },
     "build": {
       "state": "completed",
-      "completedAt": "2026-04-10T05:30:00.000Z",
+      "completedAt": "2026-04-10T04:42:22.020Z",
       "retries": 0,
-      "note": "CI-only execution - benchmark completed in CI (runs/24226628459)"
+      "promptTokens": 4199
     },
     "verify": {
       "state": "completed",
-      "completedAt": "2026-04-10T05:30:00.000Z",
-      "retries": 0,
-      "note": "Benchmark report confirms all 22 issues reached terminal states"
+      "completedAt": "2026-04-10T04:49:55.065Z",
+      "retries": 1
     },
     "review": {
       "state": "completed",
-      "completedAt": "2026-04-10T05:30:00.000Z",
-      "retries": 0,
-      "note": "Memory benchmark digest verified"
+      "retries": 0
     },
     "review-fix": {
-      "state": "skipped",
-      "retries": 0,
-      "note": "No review fixes needed for digest task"
+      "state": "completed",
+      "retries": 0
     },
     "ship": {
-      "state": "skipped",
-      "retries": 0,
-      "note": "Chore task - no shipping stage"
+      "state": "running",
+      "startedAt": "2026-04-10T04:49:55.068Z",
+      "retries": 0
     }
   },
   "createdAt": "2026-04-10T04:38:52.922Z",
-  "updatedAt": "2026-04-10T05:30:00.000Z",
+  "updatedAt": "2026-04-10T04:49:55.068Z",
   "sessions": {
-    "explore": "c6112b9a-397b-4098-9910-70bd7f6067b0"
-  },
-  "completedBy": "chore_sync",
-  "note": "Local state synced with CI benchmark completion - mem-20260410-0349"
+    "explore": "c6112b9a-397b-4098-9910-70bd7f6067b0",
+    "build": "efc22b10-33b5-4ab8-8abf-5b3af896cac6"
+  }
 }
