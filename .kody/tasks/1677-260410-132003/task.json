@@ -1,0 +1,23 @@
+{
+  "task_type": "feature",
+  "title": "Add login and register API endpoints",
+  "description": "Add POST /login and POST /register endpoints to src/app/api/auth/ directory. POST /register accepts {email, password}, creates user with hashed password via Payload's internal mechanism, returns 201 with user data (no passwordHash). POST /login accepts {email, password}, returns 200 with JWT on valid credentials. Existing auth-service.ts and register service in src/api/auth/register.ts provide the underlying implementation to reuse.",
+  "scope": [
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.ts",
+    "src/app/api/auth/login/route.test.ts",
+    "src/app/api/auth/register/route.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/app/api/enroll/route.ts - POST route handler pattern with withAuth wrapper",
+    "src/auth/auth-service.ts:68-149 - login method that validates credentials and returns AuthResult with accessToken, refreshToken, user",
+    "src/api/auth/register.ts:21-70 - register service function with email validation, password strength check, duplicate email check (409), Payload user creation",
+    "src/app/api/health/route.ts - Simple Next.js route handler pattern for API routes"
+  ],
+  "questions": [
+    "The existing register service requires confirmPassword but the task spec only mentions {email, password}. Should confirmPassword be removed from the API request body, or should it remain as a required field for security (double-entry password validation)?",
+    "Should POST /register return just user data (id, email, role) as stated in spec, or should it also return JWT tokens like the existing authService.login does for immediate authenticated session?",
+    "The Users collection has firstName and lastName as required fields, but the task spec only mentions {email, password}. Should the register endpoint accept optional firstName/lastName, or auto-generate them?"
+  ]
+}
