@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add audit logger with JSONL persistence",
+  "description": "Create `logAuditEvent(event: { action: string; userId: string; resource: string; details?: string }): void` in `src/services/audit-logger.ts` that appends audit events to a JSONL file. The function should be synchronous and append one JSON line per call. Include co-located tests at `src/services/audit-logger.test.ts`.",
+  "scope": [
+    "src/services/audit-logger.ts",
+    "src/services/audit-logger.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/logger/index.ts:fileTransport uses fs.appendFileSync for JSONL-style line appends — reuse the same synchronous file-writes pattern for audit log entries"
+  ],
+  "questions": [
+    "What should be the path/location of the JSONL log file? (The discussion raised this question but the answer was not recorded. Common convention would be `logs/audit.jsonl` — should I use that or is there a preferred location?)"
+  ]
+}
