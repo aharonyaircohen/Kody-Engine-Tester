@@ -29,3 +29,49 @@ Done. Created the auth middleware following the established patterns.
    - Returns `NextResponse.next()` for excluded paths
    - Returns 401 with error message for missing/invalid/expired
 ...(truncated)
+
+### review (2026-04-10T13:25:47)
+Now I have a complete picture. Let me do the structured review.
+
+## Verdict: FAIL
+
+## Summary
+
+The task created `src/middleware.ts` with a `createAuthMiddleware` factory function, following the `rate-limiter.ts` pattern. However, the file does not export a Next.js-compatible `middleware` function — it only exports the factory. Additionally, the tests use a minimal mock `NextRequest` that omits several properties the real implementation would rely on.
+
+## Findings
+
+### Critical
+
+**`src/middleware
+...(truncated)
+
+### review-fix (2026-04-10T13:27:26)
+All issues fixed. Here's what was changed:
+
+**`src/middleware.ts`** fixes:
+1. **Critical**: Added default export at bottom of file — `export default createAuthMiddleware({ jwtService })` so Next.js can register the middleware
+2. **Minor**: Added `normalizePath()` to strip trailing slashes before path matching
+3. **Minor**: Changed `NextResponse.next()` to `NextResponse.next({ request: { headers: ... } })` to attach user headers to the downstream request instead of the response
+
+**`src/middleware
+...(truncated)
+
+### review (2026-04-10T13:28:00)
+
+## Verdict: PASS
+
+## Summary
+
+The implementation correctly addresses all issues from the previous review: `src/middleware.ts` now exports a default Next.js-compatible middleware function, uses `NextResponse.next({ request: { headers } })` to pass user context downstream, normalizes trailing slashes, and the test mock includes `cookies` and `ip` properties.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+**`src/middleware/auth-middleware.next.test.ts:142-157` — Valid JWT test does not assert user 
+...(truncated)
