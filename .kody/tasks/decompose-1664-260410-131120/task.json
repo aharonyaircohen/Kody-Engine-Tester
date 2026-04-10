@@ -1,0 +1,17 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify decompose simple task fallback",
+  "description": "Verifies that @kody decompose on a simple task (adding capitalize-first.ts utility) falls back to normal pipeline. Checks: complexity_score < 4 OR not decomposable, fallback via runPipeline(), PR created normally, and logs show 'Delegating to normal pipeline' or similar message. This is T24 of the Kody test suite.",
+  "scope": [
+    ".kody/tasks/decompose-1664-260410-131120/status.json",
+    ".kody/tasks/decompose-1664-260410-131120/task.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".claude/commands/kody-test-suite.md: T24 verification checks decompose fallback behavior for simple tasks (complexity_score < 6, runPipeline() delegation, PR creation)",
+    "src/utils/capitalize-words.ts: existing capitalize utility as reference for the simple task being decomposed"
+  ],
+  "questions": []
+}
+```
