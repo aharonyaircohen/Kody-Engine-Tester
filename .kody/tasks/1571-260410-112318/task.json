@@ -1,0 +1,10 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of broken import utility",
+  "description": "File src/utils/broken-import.ts already exists with the intended broken import from '@/nonexistent/module'. The pipeline has completed successfully. This task verifies the existing implementation.",
+  "scope": ["src/utils/broken-import.ts"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
