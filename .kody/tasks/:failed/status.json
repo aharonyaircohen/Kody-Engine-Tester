@@ -1,0 +1,52 @@
+{
+  "taskId": ":failed",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-10T04:41:23.340Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 2307
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-10T05:30:00.000Z",
+      "retries": 0,
+      "note": "CI-only execution - benchmark completed in CI (runs/24226628459)"
+    },
+    "verify": {
+      "state": "completed",
+      "completedAt": "2026-04-10T05:30:00.000Z",
+      "retries": 0,
+      "note": "Benchmark report confirms all 22 issues reached terminal states"
+    },
+    "review": {
+      "state": "completed",
+      "completedAt": "2026-04-10T05:30:00.000Z",
+      "retries": 0,
+      "note": "Memory benchmark digest verified"
+    },
+    "review-fix": {
+      "state": "skipped",
+      "retries": 0,
+      "note": "No review fixes needed for digest task"
+    },
+    "ship": {
+      "state": "skipped",
+      "retries": 0,
+      "note": "Chore task - no shipping stage"
+    }
+  },
+  "createdAt": "2026-04-10T04:38:52.922Z",
+  "updatedAt": "2026-04-10T05:30:00.000Z",
+  "sessions": {
+    "explore": "c6112b9a-397b-4098-9910-70bd7f6067b0"
+  },
+  "completedBy": "chore_sync",
+  "note": "Local state synced with CI benchmark completion - mem-20260410-0349"
+}

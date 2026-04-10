@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify memory benchmark re-run completion",
+  "description": "The task `:failed` contains a memory benchmark digest report (mem-20260410-0349). A new pipeline was triggered for this task (runs/24226628459). This task is tracking the re-run of the benchmark. The status.json shows 'running' at taskify stage but may be stale given the CI-only execution noted in the report.",
+  "scope": [
+    ".kody/tasks/:failed/status.json",
+    ".kody/tasks/:failed/task.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
