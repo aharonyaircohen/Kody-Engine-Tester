@@ -153,6 +153,8 @@ export interface User {
   role: 'admin' | 'editor' | 'viewer';
   organization?: string | null;
   refreshToken?: string | null;
+  passwordHash?: string | null;
+  password?: string | null;
   tokenExpiresAt?: string | null;
   lastTokenUsedAt?: string | null;
   lastLogin?: string | null;
@@ -173,7 +175,6 @@ export interface User {
         expiresAt: string;
       }[]
     | null;
-  password?: string | null;
   collection: 'users';
 }
 /**
@@ -708,6 +709,8 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   organization?: T;
   refreshToken?: T;
+  passwordHash?: T;
+  password?: T;
   tokenExpiresAt?: T;
   lastTokenUsedAt?: T;
   lastLogin?: T;

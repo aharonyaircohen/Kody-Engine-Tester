@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import type { AccessArgs, Field } from 'payload'
 
 import { Users } from './Users'
+import { hashPassword, verifyPassword } from '@/utils/password'
 
 // Helper to find a named field from the collection
 function findField(name: string): Field | undefined {
@@ -221,6 +222,47 @@ describe('Users fields - organization', () => {
     expect(field).toBeDefined()
     expect(field.type).toBe('text')
     expect(field.required).toBeFalsy()
+  })
+})
+
+describe('Users fields - passwordHash', () => {
+  it('should have a passwordHash field that is hidden and read-disabled', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field).toBeDefined()
+    expect(field.hidden).toBe(true)
+    expect(field.access?.read()).toBe(false)
+    expect(field.access?.create()).toBe(false)
+    expect(field.access?.update()).toBe(false)
+  })
+
+  it('should have a password field for cleartext input that is write-only', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('password') as any
+    expect(field).toBeDefined()
+    expect(field.hidden).toBe(true)
+    expect(field.access?.read()).toBe(false)
+    expect(field.access?.create()).toBe(true)
+    expect(field.access?.update()).toBe(false)
+  })
+
+  it('should have a beforeChange hook on passwordHash that hashes the password', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const hook = field.hooks.beforeChange[0]
+    const hash = await hook({ data: { password: 'MySecret123!' } })
+    expect(hash).not.toBe('MySecret123!')
+    const valid = await verifyPassword('MySecret123!', hash)
+    expect(valid).toBe(true)
+  })
+
+  it('should preserve passwordHash when password is not provided', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const hook = field.hooks.beforeChange[0]
+    const existing = await hashPassword('PreservedPassword123!')
+    const result = await hook({ data: { passwordHash: existing } })
+    expect(result).toBe(existing)
   })
 })
 

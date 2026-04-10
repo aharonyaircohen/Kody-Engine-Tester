@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add bcrypt passwordHash field to Users collection",
+  "description": "Add a passwordHash field to the Payload CMS Users collection using bcrypt with cost factor 12. Email must be unique and indexed. The password field must be write-only (never returned in API responses). Tests verify: password hashing produces valid bcrypt hash, password comparison works, hash is not returned in serialized user, and creating a user persists correct hash to database.",
+  "scope": [
+    "src/collections/Users.ts",
+    "src/collections/Users.test.ts",
+    "package.json"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/collections/Users.ts: Existing Payload CMS collection with auth enabled, uses fields with access controls and hooks",
+    "src/auth/user-store.ts: passwordHash field pattern (uses SHA-256, bcrypt needed for this task)",
+    "src/collections/Modules.ts: Payload CMS CollectionConfig pattern with typed fields and access control",
+    "src/collections/Users.test.ts: Existing unit test structure for Users collection"
+  ],
+  "questions": []
+}
