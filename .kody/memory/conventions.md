@@ -35,3 +35,6 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
 - Uses vitest for testing
 - Uses eslint for linting
+
+## Learned 2026-04-10 (task: decompose-1499-260410-095230)
+- Active directories: src/models, src/services, src/routes, src/app/api/notifications, src/app/api/notifications/[id]/read, src/app/api/notifications/read-all, src/utils, src/collections
