@@ -70,7 +70,6 @@ jobs:
       ticket_id: ${{ steps.parse.outputs.ticket_id }}
       prd_file: ${{ steps.parse.outputs.prd_file }}
       dry_run: ${{ steps.parse.outputs.dry_run }}
-      auto_mode: ${{ steps.parse.outputs.auto_mode }}
       bump: ${{ steps.parse.outputs.bump }}
       finalize: ${{ steps.parse.outputs.finalize }}
       no_publish: ${{ steps.parse.outputs.no_publish }}
@@ -122,14 +121,6 @@ jobs:
           TRIGGER_TYPE: comment
         run: kody-engine ci-parse
 
-      - name: Detect auto-mode
-        id: auto-mode
-        run: |
-          if echo "$COMMENT_BODY" | grep -qi -- '--auto-mode\|--auto-approve\|-y\|--yes'; then
-            echo "auto_mode=true" >> $GITHUB_OUTPUT
-          else
-            echo "auto_mode=false" >> $GITHUB_OUTPUT
-          fi
 
   # ─── Orchestrate ─────────────────────────────────────────────────────────────
   orchestrate:
@@ -223,7 +214,7 @@ jobs:
           TICKET_ID: ${{ needs.parse.outputs.ticket_id }}
           PRD_FILE: ${{ needs.parse.outputs.prd_file }}
           DRY_RUN: ${{ github.event.inputs.dry_run || needs.parse.outputs.dry_run || 'false' }}
-          AUTO_MODE: ${{ github.event.inputs.auto_mode || needs.parse.outputs.auto_mode }}
+          AUTO_MODE: ${{ github.event.inputs.auto_mode }}
           BUMP: ${{ needs.parse.outputs.bump }}
           FINALIZE: ${{ needs.parse.outputs.finalize }}
           NO_PUBLISH: ${{ needs.parse.outputs.no_publish }}
