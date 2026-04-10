@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add pluralize utility for singular→plural conversion",
+  "description": "Create src/utils/pluralize.ts with singular→plural conversion for English words. Default rule adds 's', handles es-ending words (s, x, z, ch, sh), and y→ies conversion for consonant-ending words. Create co-located test file src/utils/pluralize.test.ts.",
+  "scope": ["src/utils/pluralize.ts", "src/utils/pluralize.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/repeat.ts - simple single-function utility with basic validation",
+    "src/utils/truncate.ts - utility with clear JSDoc, parameter validation, and edge case handling"
+  ],
+  "questions": []
+}
