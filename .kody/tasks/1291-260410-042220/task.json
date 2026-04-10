@@ -1,0 +1,14 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of search filter builder",
+  "description": "The `buildSearchFilter(query: string, fields: string[]): object` function already exists in `src/services/search-filter.ts` with 8 passing tests in `src/services/search-filter.test.ts`. Implementation uses Payload `like` operator with `or` conditions for multi-field text search, consistent with the pattern in `course-search.ts`.",
+  "scope": [
+    "src/services/search-filter.ts",
+    "src/services/search-filter.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/services/course-search.ts:47-53 — same `like` operator with `or` conditions pattern for multi-field text search"
+  ],
+  "questions": []
+}
