@@ -1,0 +1,11 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp utility already exists at src/utils/clamp.ts with 8 passing tests covering: value within range, below min, above max, edge cases at min/max boundaries, negative numbers, floating point numbers, and throws when min > max. The task requested src/utils/math-helpers.ts but the project convention uses single-function files. All tests pass.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/clamp.ts follows the utility module pattern of single-function files in src/utils/ with co-located test files"],
+  "questions": []
+}
+```
