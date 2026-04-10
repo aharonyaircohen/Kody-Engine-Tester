@@ -1,0 +1,17 @@
+
+{
+  "task_type": "feature",
+  "title": "Add sanitizeInput function to src/middleware/sanitize.ts",
+  "description": "Create a `sanitizeInput(input: string): string` function in `src/middleware/sanitize.ts` that strips HTML tags, trims whitespace, and normalizes unicode. Include co-located tests in `sanitize.test.ts`. Reuse unicode normalization pattern from `src/utils/slugify.ts` (NFD normalization + diacritic removal) and HTML stripping pattern from `src/security/sanitizers.ts`.",
+  "scope": [
+    "src/middleware/sanitize.ts",
+    "src/middleware/sanitize.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/slugify.ts: uses `.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')` for unicode normalization and diacritic removal",
+    "src/security/sanitizers.ts: uses `.replace(/<[^>]*>/g, '')` for HTML tag stripping",
+    "src/middleware/request-logger.test.ts: co-located `.test.ts` file with `describe`/`it`/expect vitest structure"
+  ],
+  "questions": []
+}
