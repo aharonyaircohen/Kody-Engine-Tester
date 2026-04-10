@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add search filter builder for Payload multi-field text search",
+  "description": "Create `buildSearchFilter(query: string, fields: string[]): object` in `src/services/search-filter.ts` that builds a Payload-compatible where clause for multi-field text search using the `like` operator with an `or` condition across specified fields. Include comprehensive tests in `src/services/search-filter.test.ts` following the project's vitest patterns.",
+  "scope": [
+    "src/services/search-filter.ts",
+    "src/services/search-filter.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/services/course-search.ts - Uses Payload `Where` clause with `like`, `equals`, `and`, `or` operators for search filtering (lines 47-52 show the multi-field `like` pattern with `or`)",
+    "src/services/course-search.test.ts - vitest test structure with `describe`/`it` blocks and `vi.fn()` mocking",
+    "src/utils/queryBuilder.ts - Single-function file pattern in services/utils directories with co-located tests"
+  ],
+  "questions": []
+}
