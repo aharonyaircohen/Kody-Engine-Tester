@@ -3,11 +3,13 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 export async function up({ db, payload: _payload, req: _req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
     ALTER TABLE "users" ADD COLUMN "roles" text[] DEFAULT ARRAY['viewer'];
+    ALTER TABLE "users" ADD COLUMN "permissions" text DEFAULT '{}';
   `)
 }
 
 export async function down({ db, payload: _payload, req: _req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
     ALTER TABLE "users" DROP COLUMN IF EXISTS "roles";
+    ALTER TABLE "users" DROP COLUMN IF EXISTS "permissions";
   `)
 }

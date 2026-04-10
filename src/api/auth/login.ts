@@ -53,15 +53,18 @@ export async function login(
   await userStore.update(user.id, { lastLoginAt: new Date() })
 
   const tokenPayload = { userId: user.id, email: user.email, role: user.role as 'admin' | 'editor' | 'viewer', sessionId: '', generation: 0 }
-  const accessToken = await jwtService.signAccessToken(tokenPayload)
-  const refreshToken = await jwtService.signRefreshToken(tokenPayload)
 
-  const storedToken = jwtAuthStore.create(user.id, accessToken, refreshToken)
+  // Create tokens with empty sessionId first to get the token ID
+  const tempAccessToken = await jwtService.signAccessToken(tokenPayload)
+  const tempRefreshToken = await jwtService.signRefreshToken(tokenPayload)
+  const storedToken = jwtAuthStore.create(user.id, tempAccessToken, tempRefreshToken)
 
-  // Update token payload with actual sessionId
-  const finalAccessToken = await jwtService.signAccessToken({ ...tokenPayload, sessionId: storedToken.token })
-  const finalRefreshToken = await jwtService.signRefreshToken({ ...tokenPayload, sessionId: storedToken.token })
-  jwtAuthStore.refresh(storedToken.token, finalAccessToken, finalRefreshToken)
+  // Re-sign tokens with the actual sessionId (the stored token's key)
+  const finalAccessToken = await jwtService.signAccessToken({ ...tokenPayload, sessionId: storedToken.token, generation: 0 })
+  const finalRefreshToken = await jwtService.signRefreshToken({ ...tokenPayload, sessionId: storedToken.token, generation: 0 })
+
+  // Update stored token with final tokens using public API (doesn't increment generation)
+  jwtAuthStore.updateTokens(storedToken.token, finalAccessToken, finalRefreshToken)
 
   return {
     accessToken: finalAccessToken,

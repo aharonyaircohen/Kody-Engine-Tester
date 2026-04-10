@@ -89,6 +89,33 @@ export class JwtAuthStore {
     return updated
   }
 
+  /**
+   * Update token values without incrementing generation.
+   * Used during initial login to replace temp tokens with actual tokens.
+   */
+  updateTokens(oldToken: string, newToken: string, newRefreshToken: string): StoredToken | undefined {
+    const stored = this.tokens.get(oldToken)
+    if (!stored) return undefined
+
+    this.tokenIndex.delete(stored.token)
+    this.refreshTokenIndex.delete(stored.refreshToken)
+
+    const updated: StoredToken = {
+      ...stored,
+      token: newToken,
+      refreshToken: newRefreshToken,
+      expiresAt: new Date(Date.now() + ACCESS_TOKEN_EXPIRY_MS),
+      refreshExpiresAt: new Date(Date.now() + REFRESH_TOKEN_EXPIRY_MS),
+      // Note: generation stays the same for initial token setup
+    }
+
+    this.tokens.delete(oldToken)
+    this.tokens.set(newToken, updated)
+    this.tokenIndex.set(newToken, newToken)
+    this.refreshTokenIndex.set(newRefreshToken, newToken)
+    return updated
+  }
+
   revoke(token: string): void {
     const stored = this.tokens.get(token)
     if (!stored) return

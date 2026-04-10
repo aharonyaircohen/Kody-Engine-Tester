@@ -151,7 +151,7 @@ export interface User {
   avatar?: (number | null) | Media;
   bio?: string | null;
   role: 'admin' | 'editor' | 'viewer';
-  roles: string[];
+  roles: ('admin' | 'editor' | 'viewer')[];
   organization?: string | null;
   refreshToken?: string | null;
   tokenExpiresAt?: string | null;
