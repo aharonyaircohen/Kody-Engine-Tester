@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add isTokenExpired token utility function",
+  "description": "Create `isTokenExpired(token: string): boolean` in `src/auth/token-utils.ts` that decodes a JWT (without signature verification), extracts the `exp` claim, and returns true if the token is expired. Include co-located tests in `token-utils.test.ts`.",
+  "scope": [
+    "src/auth/token-utils.ts",
+    "src/auth/token-utils.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts:85-89 - token expiry check using `payload.exp < now` comparison with `Math.floor(Date.now() / 1000)`",
+    "src/auth/jwt-service.ts:19-21 - base64urlDecode helper using `Buffer.from(data, 'base64url').toString('utf-8')`",
+    "src/auth/jwt-service.ts:67-70 - JWT split into 3 parts via `token.split('.')`",
+    "src/utils/sleep.ts - single-function file pattern with exported functions",
+    "src/utils/sleep.test.ts - vitest test pattern with `describe`, `it`, `expect`, `beforeEach`, `vi.useFakeTimers()`"
+  ],
+  "questions": []
+}
