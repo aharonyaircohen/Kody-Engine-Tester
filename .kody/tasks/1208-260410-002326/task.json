@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of slugify utility",
+  "description": "The task requested creating `slugify(text: string): string` in `src/utils/slug.ts` with tests. Both `src/utils/slugify.ts` and `src/utils/slugify.test.ts` already exist with a full implementation covering lowercase, hyphen replacement, unicode normalization, special char stripping, and comprehensive tests.",
+  "scope": ["src/utils/slugify.ts", "src/utils/slugify.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/slugify.ts — single-function utility module with normalize/NFD unicode handling, toLowerCase, regex replacements for special chars/spaces/hyphens, and leading/trailing hyphen stripping",
+    "src/utils/slugify.test.ts — co-located vitest test file with describe/it/expect structure, covering basic transformation, accented chars, unicode, special chars, edge cases (empty, null, numbers, underscores)"
+  ],
+  "questions": []
+}
