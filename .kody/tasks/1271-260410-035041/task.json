@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add debounce utility to timing-helpers.ts",
+  "description": "Create a debounce utility function with signature `debounce<T extends (...args: any[]) => void>(fn: T, delayMs: number): T` in `src/utils/timing-helpers.ts` with tests. This is a simplified version distinct from the existing feature-rich `debounce.ts`.",
+  "scope": [
+    "src/utils/timing-helpers.ts",
+    "src/utils/timing-helpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts - existing debounce with leading/trailing options; new simplified version should be simpler without options",
+    "src/utils/throttle.ts - similar timing utility pattern with same file-per-utility convention",
+    "src/utils/debounce.test.ts - comprehensive test patterns using vitest fake timers (beforeEach vi.useFakeTimers, vi.advanceTimersByTime)"
+  ],
+  "questions": []
+}
