@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add User model with password hash field",
+  "description": "Create a new User model in `src/models/user.ts` with `id`, `email`, `passwordHash` fields using bcrypt hashing, email validation (unique), and `createdAt`/`updatedAt` timestamps. Unit tests should cover model creation, password hashing, and validation.",
+  "scope": [
+    "src/models/user.ts",
+    "src/models/user.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/auth/user-store.ts - User interface with `id`, `email`, `passwordHash`, `salt` fields (SHA-256 hashing, not bcrypt)",
+    "src/models/notification.ts - existing model pattern in src/models/",
+    "src/collections/Users.test.ts - test patterns for Payload collections",
+    "src/utils/schema.test.ts - validation test patterns"
+  ],
+  "questions": []
+}
