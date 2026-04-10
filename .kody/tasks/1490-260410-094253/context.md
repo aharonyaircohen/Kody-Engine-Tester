@@ -23,3 +23,44 @@ I've successfully implemented the JWT v2 RS256 service with RBAC middleware. Her
    - `isRs256Token()` helper to detect RS256 tokens
    - Module-level singleton `getJwtServiceV2()`
 ...(truncated)
+
+### review (2026-04-10T10:32:25)
+## Verdict: PASS
+
+## Summary
+
+The JWT v2 RS256 service and RBAC middleware implementation adds asymmetric key-based JWT signing alongside the existing HS256 service, with a migration mode supporting both during transition. The implementation follows the existing patterns in the codebase and all auth tests pass. The pre-existing build failure (`src/pages/board/modal`) is unrelated to these changes.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+**`src/auth/jwt-v2.ts:170`** — `ver
+...(truncated)
+
+### review-fix (2026-04-10T10:32:51)
+
+The review report shows:
+
+**Verdict: PASS**
+
+## Summary
+
+- **Critical**: None
+- **Major**: None  
+- **Minor**: 2 findings (ignored per instructions to fix only Critical/Major)
+
+The Minor findings were:
+1. `jwt-v2.ts:170` — `verify()` reads `_blacklist` without ensuring initialization
+2. `_auth.ts:96` — `verifyToken` casts v1 verify result to `TokenPayload` without type check
+
+Since the review found **no Critical or Major issues**, there are no required fixes based on the review criteria. The im
+...(truncated)
