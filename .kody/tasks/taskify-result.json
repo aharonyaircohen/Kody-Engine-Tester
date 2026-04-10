@@ -1,0 +1,12 @@
+{
+  "status": "ready",
+  "tasks": [
+    {
+      "title": "Add T22 test case to kody-test-suite",
+      "body": "## Context\nTest case T22 verifies the `@kody taskify --ticket JIRA-123` command end-to-end. The `--ticket` flag is already implemented in kody-engine (taskify-ticket.md prompt with TICKET_ID mode). T22 is referenced as a post-check in T02 and T04 test sequences. This task adds T22 as a documented test case to the kody-test-suite.\n\n## Acceptance Criteria\n- T22 section added to kody-test-suite.md under Phase 2 or as a standalone test\n- Test steps: (1) Create temp issue, (2) Trigger `@kody taskify --ticket JIRA-123` on the issue, (3) Verify Kody creates a task linked to the ticket ID, (4) Cleanup\n- Success criteria: Task is created with ticket reference visible in task.json or task.md\n- Labels: test-suite-temp, test-phase-1, complexity: low\n- Verification uses gh CLI to check issue comments and task artifacts\n\n## Test Strategy\nManual verification via gh CLI:\n1. Create temp issue: `gh issue create --repo aharonyaircohen/Kody-Engine-Tester --title \"[test-suite] T22: Taskify with context\" --body \"Testing @kody taskify --ticket JIRA-123\"`\n2. Comment `@kody taskify --ticket JIRA-123` on the temp issue\n3. Wait for workflow completion\n4. Verify: Check that the created task in `.kody/tasks/` contains ticket reference (JIRA-123) in task.md or task.json\n5. Cleanup: Close/delete the temp issue",
+      "labels": ["test-suite", "documentation"],
+      "priority": "medium",
+      "dependsOn": []
+    }
+  ]
+}

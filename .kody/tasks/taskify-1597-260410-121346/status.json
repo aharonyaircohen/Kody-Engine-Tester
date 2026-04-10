@@ -1,0 +1,44 @@
+{
+  "taskId": "taskify-1597-260410-121346",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-10T12:25:48.999Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 2119
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-10T12:34:00.000Z",
+      "retries": 0,
+      "findings": "T22 test executed. Found bug: engine falls back to issue description when MCP fetch fails in ticket mode, instead of failing with error. See T22-findings.md for details."
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-10T12:23:25.461Z",
+  "updatedAt": "2026-04-10T12:25:52.847Z",
+  "sessions": {
+    "explore": "1dfd9f17-52af-4940-a45d-709ff944f929"
+  }
+}
