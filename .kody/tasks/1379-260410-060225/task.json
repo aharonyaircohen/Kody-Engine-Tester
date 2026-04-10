@@ -1,0 +1,14 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of debounce utility",
+  "description": "The debounce utility already exists at `src/utils/debounce.ts` with comprehensive tests at `src/utils/debounce.test.ts`. The implementation includes the debounce function with optional leading/trailing options, proper TypeScript generics, and all test cases covering: delay execution, single execution on multiple calls, last arguments usage, multiple arguments, leading option, trailing option, combined leading+trailing, re-execution after delay, this context preservation, async function support, and zero delay. Task requested creation in `timing-helpers.ts` but file already exists as `debounce.ts`.",
+  "scope": ["src/utils/debounce.ts", "src/utils/debounce.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts - debounce function with TypeScript generics and DebounceOptions interface",
+    "src/utils/debounce.test.ts - comprehensive test suite using vitest fake timers"
+  ],
+  "questions": []
+}
+```
