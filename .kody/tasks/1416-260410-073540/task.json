@@ -1,0 +1,11 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Create bad-types.ts with intentional type error",
+  "description": "Create src/utils/bad-types.ts with a function getCount() that declares return type string but returns 42 (number). This intentionally fails typecheck as part of pipeline testing for !REPEAT_FAIL scenario.",
+  "scope": ["src/utils/bad-types.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/sum.ts - simple single-function utility module pattern"],
+  "questions": []
+}
+```
