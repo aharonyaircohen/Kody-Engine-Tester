@@ -8,4 +8,4 @@ export const jwtService = new JwtService(process.env.JWT_SECRET ?? 'dev-secret-d
 
 export type { User, UserRole, CreateUserInput } from './user-store'
 export type { Session } from './session-store'
-export type { TokenPayload } from './jwt-service'
+export type { TokenPayload, RbacRole } from './jwt-service'

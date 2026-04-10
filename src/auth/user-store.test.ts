@@ -19,7 +19,7 @@ describe('UserStore', () => {
     it('should have regular user seeded', async () => {
       const user = await store.findByEmail('user@example.com')
       expect(user).toBeDefined()
-      expect(user?.role).toBe('user')
+      expect(user?.role).toBe('viewer')
     })
 
     it('should have inactive user seeded', async () => {
@@ -31,17 +31,17 @@ describe('UserStore', () => {
 
   describe('create', () => {
     it('should create a user with hashed password', async () => {
-      const user = await store.create({ email: 'new@example.com', password: 'Password1!', role: 'user' })
+      const user = await store.create({ email: 'new@example.com', password: 'Password1!', role: 'viewer' })
       expect(user.id).toBeDefined()
       expect(user.email).toBe('new@example.com')
-      expect(user.role).toBe('user')
+      expect(user.role).toBe('viewer')
       expect(user.passwordHash).not.toBe('Password1!')
       expect(user.isActive).toBe(true)
       expect(user.failedLoginAttempts).toBe(0)
     })
 
     it('should throw on duplicate email', async () => {
-      await expect(store.create({ email: 'admin@example.com', password: 'Password1!', role: 'user' }))
+      await expect(store.create({ email: 'admin@example.com', password: 'Password1!', role: 'viewer' }))
         .rejects.toThrow('Email already exists')
     })
   })

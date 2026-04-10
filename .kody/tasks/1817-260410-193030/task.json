@@ -1,0 +1,25 @@
+```json
+{
+  "task_type": "refactor",
+  "title": "Refactor auth system to JWT with RBAC migration",
+  "description": "Redesign authentication from session-based to JWT, migrate user schema to use RbacRole (admin/editor/viewer), update auth middleware, and create migration file. Per approval: keep UserStore as fallback, allow sessions to expire naturally, and make RbacRole the source of truth.",
+  "scope": [
+    "src/auth/session-store.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/user-store.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/_auth.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/role-guard.ts",
+    "src/migrations/index.ts"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts: JWT signing/verification with TokenPayload type",
+    "src/auth/_auth.ts: Role hierarchy with ROLE_HIERARCHY and checkRole function",
+    "src/auth/withAuth.ts: HOC wrapper pattern for route handlers with role checking",
+    "src/migrations/index.ts: Migration registry pattern with up/down functions"
+  ],
+  "questions": []
+}
+```
