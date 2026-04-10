@@ -58,21 +58,21 @@ export function createAuthMiddleware(
       payload = await jwtService.verify(token)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid token'
-      return { error: message, status: 401 }
+      return { error: message, status: 403 }
     }
 
     const session = sessionStore.findByToken(token)
     if (!session) {
-      return { error: 'Session not found or expired', status: 401 }
+      return { error: 'Session not found or expired', status: 403 }
     }
 
     if (payload.generation < session.generation) {
-      return { error: 'Token has been superseded by a newer session', status: 401 }
+      return { error: 'Token has been superseded by a newer session', status: 403 }
     }
 
     const user = await userStore.findById(payload.userId)
     if (!user || !user.isActive) {
-      return { error: 'User not found or inactive', status: 401 }
+      return { error: 'User not found or inactive', status: 403 }
     }
 
     return { user, session }
