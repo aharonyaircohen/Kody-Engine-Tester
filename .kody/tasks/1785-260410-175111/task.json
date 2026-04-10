@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add pagination helper function",
+  "description": "Create paginate<T>(items: T[], page: number, pageSize: number) utility function in src/services/pagination.ts that returns { data: T[]; total: number; pages: number; hasNext: boolean }. Includes comprehensive tests covering: basic pagination, empty arrays, single item, remainder pages, page bounds, invalid inputs, and generic type handling.",
+  "scope": [
+    "src/services/pagination.ts",
+    "src/services/pagination.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/chunk.ts — simple generic utility function with co-located tests",
+    "src/services/*.ts — service layer functions following export function pattern"
+  ],
+  "questions": []
+}
