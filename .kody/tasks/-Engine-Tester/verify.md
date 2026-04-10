@@ -18,10 +18,10 @@
 - [typecheck] src/pages/contacts/form/page.tsx(16,18): error TS18047: 'searchParams' is possibly 'null'.
 - [typecheck] src/utils/bad-types.ts(2,3): error TS2322: Type 'number' is not assignable to type 'string'.
 - [typecheck] tests/helpers/seedUser.ts(26,24): error TS2345: Argument of type '{ collection: "users"; data: { email: string; password: string; }; draft: false; }' is not assignable to parameter of type 'Options<"users", UsersSelect<false> | UsersSelect<true>>'.
-- [test]  [32m✓[39m src/utils/error-reporter.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 31[2mms[22m[39m
-- [test]  [32m✓[39m src/components/error-boundary.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 334[2mms[22m[39m
-- [test]  [32m✓[39m src/pages/error/ErrorPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 320[2mms[22m[39m
-- [test]  [32m✓[39m src/pages/error/NotFoundPage.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 304[2mms[22m[39m
+- [test]  [32m✓[39m src/utils/error-reporter.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+- [test]  [32m✓[39m src/components/error-boundary.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[32m 282[2mms[22m[39m
+- [test]  [32m✓[39m src/pages/error/ErrorPage.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 264[2mms[22m[39m
+- [test]  [32m✓[39m src/pages/error/NotFoundPage.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 258[2mms[22m[39m
 - [test] [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m127 passed[39m[22m[90m (128)[39m
 - [test] [2m     Errors [22m [1m[31m6 errors[39m[22m
 - [test]  ELIFECYCLE  Command failed with exit code 1.
@@ -73,9 +73,9 @@
 - [test]   [message]: [32m'Child render error'[39m
 - [test] The above error occurred in the <ThrowError> component.
 - [test] React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
-- [test] (node:8442) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+- [test] (node:25676) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
 - [test] (Use `node --trace-warnings ...` to show where the warning was created)
-- [test] (node:8442) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 14)
+- [test] (node:25676) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 13)
 - [test] [31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
 - [test] [41m[1m FAIL [22m[49m tests/int/api.int.spec.ts[2m > [22mAPI
 - [test] [31m[1mError[22m: Failed query: SELECT conname AS primary_key
