@@ -1,0 +1,20 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing auth middleware implementation",
+  "description": "The auth middleware implementation already exists and is being used by several API routes. The middleware at `src/middleware/auth-middleware.ts` extracts JWT from Authorization header, returns 401 for missing/invalid tokens, and attaches user context. The `withAuth` HOC at `src/auth/withAuth.ts` wraps route handlers without modifying handler logic. Tests exist at `src/middleware/auth-middleware.test.ts`. Routes using withAuth include: dashboard/admin-stats, gradebook, gradebook/course/[id], notes, notes/[id].",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/_auth.ts",
+    "src/auth/jwt-service.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts:createAuthMiddleware factory with rate limiting, JWT verification, session validation, and user lookup",
+    "src/auth/withAuth.ts:withAuth HOC wrapping Next.js route handlers with JWT validation and RBAC",
+    "src/auth/_auth.ts:extractBearerToken utility and checkRole RBAC function",
+    "src/auth/jwt-service.ts:JwtService with sign/verify/blacklist using Web Crypto API"
+  ],
+  "questions": []
+}
