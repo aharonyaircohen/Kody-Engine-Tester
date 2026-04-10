@@ -1,0 +1,16 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add token expiry checker",
+  "description": "Create `isTokenExpired(token: string): boolean` in `src/auth/token-utils.ts` that decodes a JWT and checks the `exp` claim. Should return `true` if expired, `false` otherwise. Include co-located tests in `src/auth/token-utils.test.ts`.",
+  "scope": ["src/auth/token-utils.ts", "src/auth/token-utils.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts:13-21 — base64urlEncode/base64urlDecode utilities used for JWT encoding/decoding",
+    "src/auth/jwt-service.ts:3-11 — TokenPayload interface with `exp: number` field already defined",
+    "src/utils/debounce.ts — single-function utility module pattern with co-located .test.ts file",
+    "src/auth/jwt-service.test.ts — JWT token test patterns using JwtService with vitest"
+  ],
+  "questions": []
+}
+```
