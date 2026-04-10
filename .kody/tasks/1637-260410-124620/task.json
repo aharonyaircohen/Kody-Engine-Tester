@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add pagination helper",
+  "description": "Create `paginate<T>(items: T[], page: number, pageSize: number): { data: T[]; total: number; pages: number; hasNext: boolean }` in `src/services/pagination.ts` with comprehensive tests. The function should slice the array for the requested page and calculate total pages and hasNext flag.",
+  "scope": ["src/services/pagination.ts", "src/services/pagination.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/chunk.ts — single-function utility file with co-located `.test.ts`, JSDoc comments, generic type support, and input validation via Error throwing",
+    "src/utils/chunk.test.ts — test structure using describe/it/expect from vitest with edge cases (empty input, remainder, single chunk, size of 1)"
+  ],
+  "questions": []
+}
