@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -75,6 +95,37 @@ Guidelines:
 
 ## Project Memory (architecture, conventions, patterns, domain, testing)
 
+## Architecture
+
+- Framework: Next.js 16.2.1, TypeScript 5.7.3, Payload CMS 3.80.0
+- Package manager: pnpm, Module system: ESM
+- src/ structure: api, app, auth, collections, components, contexts, hooks, middleware, migrations, models, pages, routes, security, services, utils, validation
+
+## Conventions
+
+- Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case
+- Named exports for utilities/types; default export for page components only
+- Use `import type` for types; path alias `@/*` for internal modules
+- `'use client'` directive on all client components
+
+## Patterns
+
+- **DI Container**: `src/utils/di-container.ts` — token-based registration, singleton/transient lifecycles
+- **Auth HOC**: `src/auth/withAuth.ts` — wraps route handlers with JWT validation and RBAC
+- **Result Type**: `src/utils/result.ts` — `Result<T, E>` discriminated union for error handling
+- **Service Layer**: `src/services/` — typed dependency interfaces like `GradebookServiceDeps`
+- **Middleware Chain**: `src/middleware/request-logger.ts`, `rate-limiter.ts` — Express-style chainable
+
+## Domain
+
+- Core Entities: User, Course, Module, Lesson, Enrollment, Certificate, Assignment, Submission, Discussion, Note, Quiz, QuizAttempt, Notification
+- Auth: JWT via `JwtService`, sessions via `SessionStore`, RBAC roles: admin/editor/viewer
+
+## Testing
+
+- Vitest 4.0 for unit/integration, Playwright 1.58 for E2E
+- Co-located test files: `src/**/*.test.ts`, `src/**/*.test.tsx`
+
 ## Repo Patterns
 
 - **Utility modules**: Single-function files in `src/utils/` (e.g., `debounce.ts`, `retry.ts`, `flatten.ts`) with co-located `.test.ts` files
@@ -101,5 +152,32 @@ Guidelines:
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+
+## Repo Patterns
+
+- **Payload collections as data layer**: `src/collections/Users.ts`, `src/collections/Courses.ts` — define `CollectionConfig` exports with typed interfaces; API routes use Payload SDK (`await payload.findById()`, `await payload.create()`), not raw SQL
+- **Service dependency interfaces**: `src/services/gradebook-payload.ts` defines `GradebookServiceDeps` with `{ payload: Payload, user: User }` — services accept deps via constructor, enabling DI via `src/utils/di-container.ts`
+- **Chainable middleware**: `src/middleware/request-logger.ts` exports `createRequestLogger(config)` returning a `NextMiddleware` function; composes with other middleware via `chain()` pattern
+- **Auth route handler pattern**: `src/app/api/auth/login/route.ts` uses `AuthService` + `JwtService` to issue tokens; wraps with `withAuth` for protected routes
+- **Result type for error handling**: `src/utils/result.ts` — `Result.ok()` / `Result.err()` factory functions; pattern used in `QuizGrader` and `CourseSearchService` to avoid throwing
+
+## Improvement Areas
+
+- **Duplicate auth stores**: `src/auth/user-store.ts` (SHA-256, in-memory `Map`) alongside `src/auth/auth-service.ts` (PBKDF2, JWT) — both handle user authentication differently; consolidate on `AuthService`
+- **Role enum mismatch**: `src/auth/_auth.ts` defines `RbacRole` as `'admin'|'editor'|'viewer'` but `src/collections/Users.ts` uses different role strings in the `roles` field — causes runtime authorization failures
+- **Unsafe type casts**: `src/app/(frontend)/dashboard/page.tsx:1` uses `as unknown as SomeType` instead of proper type narrowing via type guards or Zod parsing
+- **Missing index on enrollments**: `src/collections/Enrollments.ts` — no `index` on `user` or `course` fields causing full table scans on gradebook queries
+- **No transaction boundaries**: `src/services/course-progress.ts` updates multiple collections without wrapping in a Payload transaction — partial failures leave inconsistent state
+
+## Acceptance Criteria
+
+- [ ] task_type correctly classifies the change type (feature/bugfix/refactor/docs/chore)
+- [ ] scope lists exact file paths discovered via Glob/Grep, no glob patterns or directories
+- [ ] title starts with an imperative verb and is under 72 characters
+- [ ] description explains the "why" not just the "what"
+- [ ] risk_level aligns with the heuristics (low=1 file, medium=2-3 files, high=4+ files or core logic)
+- [ ] existing_patterns includes file paths with brief pattern descriptions, or empty array if none found
+- [ ] questions array is empty when requirements are clear, or max 3 product/requirements questions
+- [ ] JSON output has no markdown fences, no explanation text, no trailing commas
 
 {{TASK_CONTEXT}}

@@ -253,72 +253,31 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 ## Repo Patterns
 
-**Error Handling with Result Type** (`src/utils/result.ts`):
-
-```typescript
-export type Result<T, E = Error> = { ok: true; value: T } | { ok: false; error: E }
-```
-
-Use this pattern instead of throwing; services like `GradebookService` return `Result<T>` for explicit success/failure.
-
-**Type-Safe DI** (`src/utils/di-container.ts`):
-
-```typescript
-export const DI_TOKENS = {
-  GradebookService: Symbol('GradebookService'),
-  JwtService: Symbol('JwtService'),
-} as const
-```
-
-Register services with `container.register(token, factory, { lifecycle: 'singleton' })`.
-
-**Auth Wrappers** (`src/auth/withAuth.ts`):
-
-```typescript
-export function withAuth(handler: NextRouteHandler, options?: AuthOptions): NextRouteHandler
-```
-
-Always use `withAuth` to wrap route handlers; extractBearerToken + checkRole are internal utilities.
-
-**Validation at Boundaries** (`src/validation/`):
-Place Zod schemas here; validate API inputs at route handler entry, not in services.
-
-**Minimal Surgical Fixes**:
-
-- Use `Edit` for targeted replacements, never rewrite whole files
-- Type errors: fix mismatch at source, not with `as` casts (see `dashboard/page.tsx:47` anti-pattern)
-- Test failures: determine root cause (implementation vs test) before fixing
+- **Collection config pattern**: `src/collections/certificates.ts` exports both `export const Certificates: CollectionConfig` and `export interface Certificate` — always follow this dual-export pattern
+- **DI container usage**: `src/utils/di-container.ts` — use `Container.register(token, factory)` for new service dependencies; singleton by default
+- **Auth HOC wrapping**: `src/auth/withAuth.ts` — wrap new route handlers with `withAuth` before adding business logic
+- **Result type for errors**: `src/utils/result.ts` — use `Result<T, E>` instead of throwing; `Ok(value)` / `Err(error)` constructors
+- **Middleware factory pattern**: `createCsrfMiddleware(config)` from `src/middleware/csrf-middleware.ts` — create configurable middleware factories, don't hardcode options
+- **Guard for RBAC**: `src/middleware/role-guard.ts` exports `requireRole(...roles)` — use for declarative role checks instead of inline if statements
 
 ## Improvement Areas
 
-**Type Assertion Abuse** (`dashboard/page.tsx`):
-Uses `as unknown as` casts instead of proper type narrowing — investigate the actual type mismatch rather than casting over it.
-
-**Dual Auth Systems** (`src/auth/user-store.ts` vs `src/auth/auth-service.ts`):
-
-- `UserStore` uses SHA-256 + in-memory; `AuthService` uses PBKDF2 + JWT
-- Password verification flows are inconsistent; avoid adding new code to both systems
-
-**Role Enum Divergence**:
-
-- `UserStore.UserRole`: `'admin'|'user'|'guest'|'student'|'instructor'`
-- `RbacRole`: `'admin'|'editor'|'viewer'`
-- No automatic mapping; RBAC checks may fail if roles aren't normalized
-
-**N+1 Query Risk** (`src/app/(frontend)/dashboard/page.tsx`):
-Lesson fetches may not batch properly on all pages; verify `findAll` calls use Payload's `withCurrentChildren` hook.
+- **Dual auth inconsistency**: `UserStore` (SHA-256) in `src/auth/user-store.ts` vs `AuthService` (PBKDF2) in `src/auth/auth-service.ts` — different hashing algorithms and user schemas coexist; avoid adding new code to both
+- **Role enum divergence**: `RbacRole` in `src/auth/_auth.ts` = `admin|editor|viewer` vs `UserRole` in `src/auth/user-store.ts` = `admin|user|guest|student|instructor` — do not use these interchangeably; clarify which to use per feature
+- **Type casting anti-pattern**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` — prefer proper type guards or Zod schema narrowing instead
+- **N+1 fetch risk**: Dashboard at `src/app/(frontend)/dashboard/page.tsx` batch-fetches lessons; other pages may not — audit new data fetching for similar issues
 
 ## Acceptance Criteria
 
-- [ ] Type errors fixed at source — no `as unknown as` casts added to suppress errors
-- [ ] Test failures root-caused — fix implementation OR test (not both), document which was correct
-- [ ] Lint errors resolved via configured lintFix command or ESLint autofix
-- [ ] Single change per fix iteration — re-run verification after each fix
-- [ ] No introduced regressions — `pnpm test:int` and `pnpm test:e2e` both pass after fix
-- [ ] TypeScript compiles clean — `tsc --noEmit` passes
-- [ ] If pre-existing failure identified — document in fix output, do not attempt repair
-- [ ] Changes follow layered architecture — route → auth → service → repository
-- [ ] New error paths use `Result<T, E>` pattern from `src/utils/result.ts`
-- [ ] Auth changes respect `withAuth` HOC boundary, do not duplicate auth logic
+- [ ] New route handlers in `src/app/api/*` are wrapped with `withAuth` HOC
+- [ ] New services follow the `*Service` naming and export a class/interface pair
+- [ ] Payload collection changes export both `CollectionConfig` and TypeScript interface
+- [ ] Error handling uses `Result<T, E>` from `src/utils/result.ts` for service layer
+- [ ] RBAC checks use `requireRole()` guard from `src/middleware/role-guard.ts`
+- [ ] Input validation uses Zod schemas from `src/validation/` at API boundaries
+- [ ] Tests are co-located with source (`*.test.ts` next to `*.ts`) or in `tests/int/`
+- [ ] `pnpm test` passes before marking implementation complete
+- [ ] `pnpm lint` passes with no new errors
+- [ ] New middleware follows the factory pattern (`create*Middleware(config)`)
 
 {{TASK_CONTEXT}}

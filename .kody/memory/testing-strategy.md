@@ -20,6 +20,8 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Setup File**: `vitest.setup.ts` loads `.env` via `dotenv/config` and runs `cleanup()` from `@testing-library/react` after each test
+- **E2E Helpers**: `tests/helpers/login.ts` — fills `#field-email` / `#field-password` on `/admin/login`, waits for redirect to `/admin`
 
 ## CI Quality Gates
 
