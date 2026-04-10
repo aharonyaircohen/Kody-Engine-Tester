@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of Breadcrumb component",
+  "description": "The Breadcrumb component already exists at src/components/ui/breadcrumb.tsx with props: items: { label: string; href?: string }[]. The active item (last) renders as plain text with 'breadcrumb-active' class, others render as links. Includes a chevron separator icon. The test file at src/components/ui/breadcrumb.test.tsx has 8 tests covering rendering all items, links for non-active items, active item as plain text, single item, empty array, separators, aria-label, and items without href.",
+  "scope": ["src/components/ui/breadcrumb.tsx", "src/components/ui/breadcrumb.test.tsx"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
