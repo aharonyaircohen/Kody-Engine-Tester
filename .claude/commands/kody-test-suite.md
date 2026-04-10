@@ -408,6 +408,42 @@ gh run view <id> --log --repo aharonyaircohen/Kody-Engine-Tester | grep "{{"
 
 ---
 
+
+### T22 — taskify --ticket
+
+**1 GitHub issue. Tests the `--ticket` flag for ticket-linked task creation.**
+
+Create issue:
+```bash
+gh issue create --repo aharonyaircohen/Kody-Engine-Tester \
+  --title "[test-suite] T22: Taskify with --ticket flag" \
+  --body "Testing @kody taskify --ticket JIRA-123"
+```
+
+#### Step 22.1 — `@kody taskify --ticket JIRA-123`
+
+Comment (T22 issue): `@kody taskify --ticket JIRA-123`
+
+**Verification:**
+```bash
+gh run view <id> --log --repo aharonyaircohen/Kody-Engine-Tester | grep -i "ticket\|JIRA"
+gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/tasks --jq '.[].name' | while read task_id; do
+  gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/tasks/$task_id/task.json 2>/dev/null | jq -r '.ticketId // .ticket // empty'
+done
+```
+- `ticketId` or `ticket` field present in task.json with value `JIRA-123`.
+- Task artifacts (task.md) contain the ticket reference.
+
+**T22 post-check (referenced in T02 and T04):**
+```bash
+gh issue view <n> --repo aharonyaircohen/Kody-Engine-Tester --json body | jq -r '.body' | grep -i "JIRA-123\|ticket"
+```
+- Issue comment or task.md contains the ticket ID reference.
+
+**Cleanup:** Close the temp issue after verification.
+
+---
+
 ### T05 — Bootstrap + Watch
 
 **Bootstrap: 1 GitHub issue. Watch: run locally (parallel with everything).**
