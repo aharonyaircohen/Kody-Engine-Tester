@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add deepMerge utility function",
+  "description": "Create `deepMerge<T>(target: T, source: Partial<T>): T` in `src/utils/object-helpers.ts` — a recursive merge utility that combines source into target without mutating the original. Should handle nested objects recursively and return the merged result. Include comprehensive tests covering primitives, nested objects, arrays, and edge cases.",
+  "scope": ["src/utils/object-helpers.ts", "src/utils/object-helpers.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts — recursive object handling with WeakSet for circular reference detection, JSDoc comments",
+    "src/utils/diff.ts — isPlainObject helper function for checking nested objects",
+    "src/utils/deep-clone.test.ts — comprehensive test patterns with grouped describe blocks for different types"
+  ],
+  "questions": []
+}
