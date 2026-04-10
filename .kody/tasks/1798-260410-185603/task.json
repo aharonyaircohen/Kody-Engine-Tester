@@ -1,0 +1,11 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of clamp utility",
+  "description": "The clamp utility already exists in src/utils/clamp.ts with 8 passing tests in src/utils/clamp.test.ts. The task specified math-helpers.ts but the implementation is in clamp.ts. All tests pass. No additional work needed.",
+  "scope": ["src/utils/clamp.ts", "src/utils/clamp.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/clamp.ts - Single-function utility module pattern with basic validation (min > max throws)"
+  ],
+  "questions": []
+}
