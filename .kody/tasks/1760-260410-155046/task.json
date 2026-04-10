@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of partition utility",
+  "description": "The partition utility function already exists at src/utils/partition.ts with 9 passing tests covering: basic partitioning, empty arrays, all-matching predicates, no-matching predicates, string arrays, object types, mixed types, order preservation, and single element arrays. Implementation uses a simple for-loop with two arrays (truthy/falsy) and returns a tuple [T[], T[]].",
+  "scope": ["src/utils/partition.ts", "src/utils/partition.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/chunk.ts - similar array utility function pattern",
+    "src/utils/flatten.ts - similar array utility function pattern",
+    "Co-located .test.ts files following vitest conventions"
+  ],
+  "questions": []
+}
