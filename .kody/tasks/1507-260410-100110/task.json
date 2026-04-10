@@ -1,0 +1,20 @@
+{
+  "task_type": "feature",
+  "title": "Add User model with bcrypt password hashing",
+  "description": "Create a new User model file at `src/models/user.model.ts` with fields: `id` (uuid), `email` (unique/not null), `passwordHash` (not null), `createdAt`, `updatedAt`. Implement bcrypt hashing with cost factor 12. Include a class with methods for creating users, verifying passwords, and managing the user store. Add unit tests covering: user creation, password hash verification, edge cases (empty email, invalid email format, duplicate email).",
+  "scope": [
+    "src/models/user.model.ts",
+    "src/models/user.model.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/auth/user-store.ts - UserStore class pattern with Map-based storage, password hashing, and CRUD methods",
+    "src/models/notification.ts - model file location and JSDoc comment convention",
+    "src/auth/user-store.test.ts - describe/it vitest testing patterns with beforeEach setup"
+  ],
+  "questions": [
+    "Should bcryptjs be added as a direct dependency, or should Node.js crypto.scrypt be used as a bcrypt-compatible alternative (since no bcrypt library is currently in package.json)?",
+    "Since the existing UserStore uses SHA-256 and AuthService uses PBKDF2, should this new User model be independent or share validation logic with those systems?",
+    "What email validation format should be enforced - simple presence check or RFC-compliant email regex?"
+  ]
+}
