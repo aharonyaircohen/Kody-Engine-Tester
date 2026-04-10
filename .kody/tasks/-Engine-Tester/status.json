@@ -4,44 +4,40 @@
   "stages": {
     "taskify": {
       "state": "completed",
-      "completedAt": "2026-04-10T17:18:47.145Z",
+      "completedAt": "2026-04-10T17:28:43.215Z",
       "retries": 0,
       "outputFile": "task.json",
-      "promptTokens": 2904
+      "promptTokens": 2859
     },
     "plan": {
       "state": "completed",
       "retries": 0
     },
     "build": {
-      "state": "completed",
-      "completedAt": "2026-04-10T17:19:22.111Z",
-      "retries": 0,
-      "promptTokens": 4267
+      "state": "running",
+      "startedAt": "2026-04-10T17:28:46.839Z",
+      "retries": 0
     },
     "verify": {
-      "state": "completed",
-      "completedAt": "2026-04-10T17:20:58.929Z",
+      "state": "pending",
       "retries": 0
     },
     "review": {
-      "state": "completed",
+      "state": "pending",
       "retries": 0
     },
     "review-fix": {
-      "state": "completed",
+      "state": "pending",
       "retries": 0
     },
     "ship": {
-      "state": "running",
-      "startedAt": "2026-04-10T17:20:58.932Z",
+      "state": "pending",
       "retries": 0
     }
   },
-  "createdAt": "2026-04-10T17:17:12.806Z",
-  "updatedAt": "2026-04-10T17:20:58.932Z",
+  "createdAt": "2026-04-10T17:23:51.380Z",
+  "updatedAt": "2026-04-10T17:28:46.839Z",
   "sessions": {
-    "explore": "9fae5f25-99f2-42e7-984d-c43570fddf39",
-    "build": "e6c5f04d-8901-4a72-b773-2e803ffbad85"
+    "explore": "c17e2ffb-0d40-435c-bd30-c5234c530790"
   }
 }
