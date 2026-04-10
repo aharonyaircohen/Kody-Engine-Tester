@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of pick utility",
+  "description": "The pick utility already exists at src/utils/pick.ts with comprehensive tests at src/utils/pick.test.ts. This is a pipeline test task verifying that issues remain OPEN after PR creation and auto-close only on PR merge.",
+  "scope": ["src/utils/pick.ts", "src/utils/pick.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/pick.ts - Utility module pattern with generic TypeScript types, iterates over keys array and builds result object",
+    "src/utils/omit.ts - Similar utility (inverse operation) following same pattern"
+  ],
+  "questions": []
+}
