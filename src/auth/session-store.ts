@@ -1,3 +1,7 @@
+/**
+ * @deprecated use auth-service.ts JWT handling instead. This session-store.ts pattern is superseded by jwt-service.ts + auth-service.ts.
+ * SessionStore uses in-memory storage and will be removed in a future release.
+ */
 import crypto from 'crypto'
 
 export interface Session {

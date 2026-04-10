@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { requireRole } from './role-guard'
-import type { User } from '../auth/user-store'
+import type { AuthenticatedUser } from '../auth/auth-service'
 import type { RbacRole } from '../auth/auth-service'
 
-const makeContext = (role: string) => ({
-  user: { id: '1', email: 'test@example.com', role, isActive: true } as User,
+const makeContext = (role: RbacRole) => ({
+  user: { id: '1', email: 'test@example.com', role, isActive: true } as AuthenticatedUser,
 })
 
 describe('requireRole', () => {
@@ -54,7 +54,7 @@ describe('requireRole', () => {
 
   it('should return 401 when user exists but has no role', () => {
     const guard = requireRole('admin')
-    const result = guard({ user: { id: '1', email: 'test@test.com' } as User })
+    const result = guard({ user: { id: '1', email: 'test@test.com', isActive: true } as AuthenticatedUser })
     expect(result?.status).toBe(401)
     expect(result?.error).toBe('User role not configured')
   })

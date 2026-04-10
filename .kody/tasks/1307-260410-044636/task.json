@@ -1,0 +1,28 @@
+{
+  "task_type": "refactor",
+  "title": "Refactor auth system with JWT migration",
+  "description": "Replace session-based auth with JWT, clean up dual auth systems (UserRole vs RbacRole), and update routes. Key changes: (1) Replace session-store.ts with jwt-store.ts using existing JwtService, (2) Consolidate UserRole (5 values) and RbacRole (3 values) into single RBAC system using admin/editor/viewer, (3) Update role-guard.ts or create rbac.ts middleware to use consistent types, (4) Ensure all routes use withAuth, (5) Document migration in docs/auth-migration.md.",
+  "scope": [
+    "src/auth/session-store.ts",
+    "src/auth/jwt-service.ts",
+    "src/auth/user-store.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/withAuth.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/role-guard.ts",
+    "src/routes/notifications.ts",
+    "docs/auth-migration.md"
+  ],
+  "risk_level": "high",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts - JWT signing/verification with blacklist already implemented",
+    "src/auth/withAuth.ts - HOC wrapper for route handlers using AuthService and extractBearerToken",
+    "src/auth/_auth.ts - ROLE_HIERARCHY and checkRole function for RBAC",
+    "src/middleware/role-guard.ts - requireRole decorator pattern (but uses mismatched types)"
+  ],
+  "questions": [
+    "Should jwt-store.ts remain in-memory (like session-store.ts) or use Payload DB for token storage (like auth-service.ts)?",
+    "The UserRole type has 5 values (admin/user/guest/student/instructor) but RbacRole has 3 (admin/editor/viewer). What is the mapping strategy - should we keep all 5 roles or consolidate to 3?",
+    "Should session-store.ts be deleted or kept deprecated for backwards compatibility during migration?"
+  ]
+}
