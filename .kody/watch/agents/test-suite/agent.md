@@ -100,15 +100,9 @@ while true; do
     fi
   fi
   
-  # Check if pipeline completed successfully
-  STATUS=$(gh run list --workflow=kody.yml --repo aharonyaircohen/Kody-Engine-Tester --limit 10 --json status,conclusion --jq '.[] | select(.conclusion == "success") | .conclusion' | head -1)
-  if [ "$STATUS" = "success" ]; then
-    break
-  fi
-  
-  # Also check for failure
-  FAIL=$(gh run list --workflow=kody.yml --repo aharonyaircohen/Kody-Engine-Tester --limit 10 --json status,conclusion --jq '.[] | select(.conclusion == "failure") | .conclusion' | head -1)
-  if [ "$FAIL" = "failure" ]; then
+  # Check if THIS issue's pipeline completed
+  labels=$(gh issue view <issue_num> --json labels -q '.labels[].name')
+  if echo "$labels" | grep -qE 'kody:done|kody:failed'; then
     break
   fi
   
