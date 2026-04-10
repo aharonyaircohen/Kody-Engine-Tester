@@ -46,20 +46,85 @@ gh issue create --title "[${RUN_ID}] Txx: <description>" \
 ### 2. TRIGGER
 Post the `@kody` command as a comment on the temp issue.
 
-### 3. WAIT
+### 3. APPROVAL MONITOR LOOP
+After triggering, monitor the issue for approval questions. This runs in parallel with the pipeline — poll every 30s until all approval questions are answered AND the pipeline completes.
+
+```bash
+# Run this loop for every triggered issue
+while true; do
+  # Check for approval questions (second-to-last comment contains the question)
+  QUESTION=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/<issue_num>/comments --jq '.[-2].body // ""')
+  
+  if echo "$QUESTION" | grep -qi "questions before\|asking.*before\|approve"; then
+    # Answer based on what was asked
+    if echo "$QUESTION" | grep -qi "bug report.*repo\|file.*where"; then
+      gh issue comment <issue_num> --body "@kody approve
+
+1. File bug reports in aharonyaircohen/Kody-Engine-Lite (the engine repo)
+2. Use GitHub's default issue template
+3. File P1 items as bugs too — apply your own judgment"
+    
+    elif echo "$QUESTION" | grep -qi "UserStore\|migration\|auth.*migration\|role"; then
+      gh issue comment <issue_num> --body "@kody approve
+
+1. Keep UserStore as a fallback for non-Payload operations during migration
+2. Check dependencies before removing — keep as fallback if anything still uses it
+3. Align UserRole to RbacRole — make RbacRole the source of truth"
+    
+    elif echo "$QUESTION" | grep -qi "command.*exact\|exact command\|what.*trigger"; then
+      gh issue comment <issue_num> --body "@kody approve
+
+1. Use the exact command shown in the test task description
+2. If not specified, use @kody full
+3. If complexity is low, the pipeline will skip plan/review stages automatically"
+    
+    elif echo "$QUESTION" | grep -qi "decompose.*compose\|no-compose"; then
+      gh issue comment <issue_num> --body "@kody approve
+
+1. Use @kody full first on the temp issue, then @kody decompose --no-compose if offered
+2. The test is verifying that decompose respects --no-compose flag
+3. Continue as-is — let the pipeline finish"
+    
+    else
+      # Generic fallback — approve with defaults
+      gh issue comment <issue_num> --body "@kody approve
+
+1. Proceed with your best judgment
+2. Default to safer/simpler options when unsure
+3. Keep artifacts minimal — don't over-engineer the solution"
+    fi
+  fi
+  
+  # Check if pipeline completed successfully
+  STATUS=$(gh run list --workflow=kody.yml --repo aharonyaircohen/Kody-Engine-Tester --limit 10 --json status,conclusion --jq '.[] | select(.conclusion == "success") | .conclusion' | head -1)
+  if [ "$STATUS" = "success" ]; then
+    break
+  fi
+  
+  # Also check for failure
+  FAIL=$(gh run list --workflow=kody.yml --repo aharonyaircohen/Kody-Engine-Tester --limit 10 --json status,conclusion --jq '.[] | select(.conclusion == "failure") | .conclusion' | head -1)
+  if [ "$FAIL" = "failure" ]; then
+    break
+  fi
+  
+  sleep 30
+done
+```
+
+### 4. WAIT
 Poll for workflow completion:
 ```bash
 gh run list --workflow=kody.yml --limit 5
 gh run view <id>
 ```
 
-### 4. VERIFY
+### 5. VERIFY
 Run the test-specific verification steps (unchanged per test definition below).
 
-### 5. RECORD
+### 6. RECORD
 Record PASS or FAIL in the run state tracker.
 
-### 6. CLEANUP
+### 7. CLEANUP
 - **PASS:** Close the temp issue, close/delete any PR and branch created by the test.
   ```bash
   gh issue close <n>
