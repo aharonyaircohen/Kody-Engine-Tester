@@ -21,3 +21,9 @@ Based on my analysis:
 3. **Current Status**: 
    - `queryBuilder.ts` is implemente
 ...(truncated)
+
+### autofix (2026-04-10T00:12:40)
+Fixed. Changed `let context` to `const context` at line 80 since the variable is never reassigned — only spread into new objects in `dispatch()` and `child()`.
+
+The drizzle-kit error about missing query parameters is pre-existing and unrelated to this lint fix.
+
