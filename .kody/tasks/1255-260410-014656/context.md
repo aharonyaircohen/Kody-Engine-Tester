@@ -36,3 +36,25 @@ All 10 timeout middleware tests pass. The TypeScript errors shown are pre-existi
 | Returns 504 Gateway Timeout when exceeded | ✓ |
 | Emits 'timeout' e
 ...(truncated)
+
+### review (2026-04-10T01:58:37)
+## Verdict: PASS
+
+## Summary
+
+Added `src/middleware/timeout-middleware.ts` (128 lines) and `src/middleware/timeout-middleware.test.ts` (201 lines) implementing a configurable request timeout middleware with proper cleanup, event emission, and race condition guards.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+- `src/middleware/timeout-middleware.ts:11-12` — `TimeoutRequest` interface declares `onTimeout` and `offTimeout` methods that are never actually attached to the request.
+...(truncated)
