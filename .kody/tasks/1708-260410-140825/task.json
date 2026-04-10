@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add deepFreeze utility function",
+  "description": "Add a `deepFreeze` utility function in `src/utils/deep-freeze.ts` that recursively freezes an object and all nested objects and arrays. The function should accept any object and return a deeply frozen version, freeze nested objects and arrays recursively, and return primitives as-is. Include TypeScript types and unit tests in `src/utils/deep-freeze.test.ts` covering objects, arrays, and nested structures.",
+  "scope": [
+    "src/utils/deep-freeze.ts",
+    "src/utils/deep-freeze.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/deep-clone.ts — single-function utility with JSDoc, handles primitives/objects/arrays recursively",
+    "src/utils/deep-clone.test.ts — vitest with describe/it/expect, imports from co-located module"
+  ],
+  "questions": []
+}
