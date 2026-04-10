@@ -1,0 +1,1 @@
+{"runId":"hotfix-1431-260410-074754","issueNumber":1431,"command":"run","startedAt":"2026-04-10T07:50:09.043Z","completedAt":"2026-04-10T08:15:59.091Z","outcome":"failed","failedStage":"verify","failedError":"Verification failed after autofix attempts","stagesCompleted":["taskify","plan","build"],"feedback":""}
