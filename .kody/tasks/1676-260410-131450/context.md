@@ -46,3 +46,29 @@ The implementation is complete. Let me provide a summary of what was done:
 - `access.read: () => false` - never exposed in API responses
 - `ac
 ...(truncated)
+
+### autofix (2026-04-10T13:24:51)
+That's just a warning, not an error. The `let context` → `const context` fix is complete. The remaining lint errors are pre-existing issues in unrelated files (edit page, auth files) and not caused by this task.
+
+
+### review (2026-04-10T13:30:49)
+## Verdict: PASS
+
+## Summary
+
+Added a `passwordHash` text field to the Payload Users collection with `hidden: true` and `access: { read: () => false, create: () => true, update: () => false }` to ensure the password hash is never exposed in API responses. Unit tests (43 total) verify the field properties and access control. All tests pass.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+`src/utils/logger/index.ts:80` — Unrelated `let` → `const` change for `context`. While valid (
+...(truncated)
