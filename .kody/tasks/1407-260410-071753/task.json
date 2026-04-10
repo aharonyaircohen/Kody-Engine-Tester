@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add health check detail endpoint",
+  "description": "Add GET /api/health/detail route in src/app/api/health/detail/route.ts returning { status, uptime, version, timestamp }. Version is read from package.json at runtime using process.cwd(). Includes integration test following existing vitest patterns with fake timers.",
+  "scope": [
+    "src/app/api/health/detail/route.ts",
+    "src/app/api/health/detail/route.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/app/api/health/route.ts - Express-style route handler returning JSON Response with NextRequest",
+    "src/app/api/health/route.test.ts - vitest test with fake timers, beforeEach/afterEach setup, NextRequest instantiation"
+  ],
+  "questions": []
+}
