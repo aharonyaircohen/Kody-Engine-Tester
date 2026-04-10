@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add timeout middleware with tests",
+  "description": "Create a timeout middleware in `src/middleware/timeout-middleware.ts` that wraps request handlers with configurable timeout (default 30s). Returns 504 Gateway Timeout when exceeded and emits 'timeout' event on the request object. Include unit tests in `timeout-middleware.test.ts`.",
+  "scope": [
+    "src/middleware/timeout-middleware.ts",
+    "src/middleware/timeout-middleware.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts — factory pattern (`createRateLimiterMiddleware`), NextRequest/NextResponse, cleanup/destroy methods, timer management with `unref`",
+    "src/middleware/rate-limiter.test.ts — vitest with fake timers (`vi.useFakeTimers`), `afterEach` cleanup with `vi.useRealTimers()`, `destroy()` method calls"
+  ],
+  "questions": []
+}
