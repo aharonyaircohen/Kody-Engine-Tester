@@ -1,6 +1,6 @@
 You are the Kody Memory System Benchmark runner, executing as a **weekly watch agent**.
 
-Your job is to run 20+ varied issues across different codebase areas to measure memory system effectiveness, then produce a metrics report on the digest issue.
+Your job is to run 10 issues across 2 batches to measure memory system effectiveness, then produce a metrics report on the digest issue.
 
 **Watch agent context:** You are running inside the Kody-Engine-Tester repository. All `gh` commands target this repo by default.
 
@@ -42,47 +42,34 @@ Compare retry counts across runs. Do later runs (with diary) use fewer retries t
 
 ## Issue Batches
 
-Run issues in 4 batches across different codebase areas. Each batch creates 5 issues, waits for completion, records metrics, then proceeds.
+Run issues in 2 batches. Each batch creates issues, waits for completion, records metrics, then proceeds.
 
-### Batch 1: Utils (room: utils)
+### Batch 1: Mixed + Failures (5 issues)
 
-| ID | Title | Body |
-|----|-------|------|
-| M01 | Add clamp utility | Create `clamp(value: number, min: number, max: number): number` in `src/utils/math-helpers.ts` with tests |
-| M02 | Add slugify utility | Create `slugify(text: string): string` in `src/utils/slug.ts` — lowercase, replace spaces with hyphens, strip special chars. With tests |
-| M03 | Add retry utility | Create `retry<T>(fn: () => Promise<T>, maxAttempts: number, delayMs: number): Promise<T>` in `src/utils/async-helpers.ts` with exponential backoff. With tests |
-| M04 | Add deep merge utility | Create `deepMerge<T>(target: T, source: Partial<T>): T` in `src/utils/object-helpers.ts` — recursive merge without mutation. With tests |
-| M05 | Add debounce utility | Create `debounce<T extends (...args: any[]) => void>(fn: T, delayMs: number): T` in `src/utils/timing-helpers.ts`. With tests |
+| ID | Room | Title | Body |
+|----|------|-------|------|
+| M01 | `utils` | Add clamp utility | Create `clamp(value: number, min: number, max: number): number` in `src/utils/math-helpers.ts` with tests |
+| M02 | `auth` | Add token expiry checker | Create `isTokenExpired(token: string): boolean` in `src/auth/token-utils.ts` that decodes JWT and checks exp claim. With tests |
+| M03 | `services` | Add pagination helper | Create `paginate<T>(items: T[], page: number, pageSize: number): { data: T[]; total: number; pages: number; hasNext: boolean }` in `src/services/pagination.ts`. With tests |
+| MF1 | `utils` | Add broken import utility | Create `src/utils/broken-import.ts` that imports from `@/nonexistent/module`. This will fail at verify (typecheck). After first failure, rerun with `@kody rerun` to trigger contradiction detection |
+| MF2 | `utils` | Add function with wrong return type | Create `src/utils/bad-types.ts` with `function getCount(): string { return 42 }`. Will fail typecheck. Rerun to trigger `!REPEAT_FAIL` |
 
-### Batch 2: Auth (room: auth)
+### Batch 2: New Rooms (3 issues)
 
-| ID | Title | Body |
-|----|-------|------|
-| M06 | Add token expiry checker | Create `isTokenExpired(token: string): boolean` in `src/auth/token-utils.ts` that decodes JWT and checks exp claim. With tests |
-| M07 | Add password strength validator | Create `validatePasswordStrength(password: string): { valid: boolean; issues: string[] }` in `src/auth/password-validator.ts`. Require 8+ chars, uppercase, lowercase, number. With tests |
-| M08 | Add session cleanup utility | Create `cleanExpiredSessions(store: SessionStore, maxAgeMs: number): number` in `src/auth/session-cleanup.ts` that removes expired sessions and returns count removed. With tests |
-| M09 | Add rate limit check | Create `checkRateLimit(key: string, maxRequests: number, windowMs: number): { allowed: boolean; retryAfter?: number }` in `src/auth/rate-limiter-utils.ts` using in-memory Map. With tests |
-| M10 | Add role hierarchy checker | Create `hasPermission(userRole: string, requiredRole: string): boolean` in `src/auth/role-hierarchy.ts` with hierarchy admin > editor > viewer > guest. With tests |
+| ID | Room | Title | Body |
+|----|------|-------|------|
+| M04 | `utils` | Add slugify utility | Create `slugify(text: string): string` in `src/utils/slug.ts` — lowercase, replace spaces with hyphens, strip special chars. With tests |
+| M05 | `auth` | Add password strength validator | Create `validatePasswordStrength(password: string): { valid: boolean; issues: string[] }` in `src/auth/password-validator.ts`. Require 8+ chars, uppercase, lowercase, number. With tests |
+| M06 | `components` | Add breadcrumb component | Create a `Breadcrumb` React component in `src/components/ui/breadcrumb.tsx` that renders a trail of links. Props: `items: { label: string; href?: string }[]`. Active item (last) is plain text, others are links. Include unit test |
 
-### Batch 3: Services (room: services)
+### Intentional Failures (MF1, MF2) — part of Batch 1
 
-| ID | Title | Body |
-|----|-------|------|
-| M11 | Add pagination helper | Create `paginate<T>(items: T[], page: number, pageSize: number): { data: T[]; total: number; pages: number; hasNext: boolean }` in `src/services/pagination.ts`. With tests |
-| M12 | Add search filter builder | Create `buildSearchFilter(query: string, fields: string[]): object` in `src/services/search-filter.ts` that creates a Payload-compatible where clause for multi-field text search. With tests |
-| M13 | Add notification formatter | Create `formatNotification(type: string, data: Record<string, string>): { subject: string; body: string }` in `src/services/notification-formatter.ts` with templates for 'enrollment', 'grade', 'reminder'. With tests |
-| M14 | Add cache wrapper | Create `withCache<T>(key: string, ttlMs: number, fn: () => Promise<T>): Promise<T>` in `src/services/cache-wrapper.ts` using in-memory Map with TTL expiry. With tests |
-| M15 | Add audit logger | Create `logAuditEvent(event: { action: string; userId: string; resource: string; details?: string }): void` in `src/services/audit-logger.ts` that appends to a JSONL file. With tests |
+After MF1 and MF2 fail, rerun each once (do NOT fix the issue):
 
-### Batch 4: Mixed (rooms: components, middleware, api) — medium complexity
-
-| ID | Title | Body |
-|----|-------|------|
-| M16 | Add breadcrumb component | Create a `Breadcrumb` React component in `src/components/ui/breadcrumb.tsx` that renders a trail of links. Props: `items: { label: string; href?: string }[]`. Active item (last) is plain text, others are links. Include unit test |
-| M17 | Add request timing middleware | Create middleware in `src/middleware/request-timing.ts` that measures request duration and adds `X-Response-Time` header. Include integration test |
-| M18 | Add health check detail endpoint | Add `GET /api/health/detail` route in `src/app/api/health/detail/route.ts` returning `{ status, uptime, version, timestamp }`. Read version from package.json. Include integration test |
-| M19 | Add CSV export utility | Create `toCsv(rows: Record<string, string | number>[], columns?: string[]): string` in `src/utils/csv-export.ts`. Handle quoting for values containing commas. With tests |
-| M20 | Add input sanitizer | Create `sanitizeInput(input: string): string` in `src/middleware/sanitize.ts` that strips HTML tags, trims whitespace, and normalizes unicode. With tests |
+1. Comment `@kody rerun` on MF1 — wait for failure
+2. Comment `@kody rerun` on MF2 — wait for failure
+3. Check `.kody/runs/{issue}.jsonl` for 2+ entries per issue
+4. Record whether contradiction warnings fire
 
 ---
 
@@ -162,21 +149,14 @@ done
 
 ---
 
-## Intentional Failures (After Batch 2)
+## Intentional Failures (MF1, MF2) — handled after Batch 1
 
-After Batch 2, create 2 issues designed to fail and be rerun, to test contradiction detection:
+After Batch 1 standard issues complete, handle failures:
 
-| ID | Title | Body |
-|----|-------|------|
-| MF1 | Add broken import utility | Create `src/utils/broken-import.ts` that imports from `@/nonexistent/module`. This will fail at verify (typecheck). After first failure, rerun with `@kody rerun` to trigger contradiction detection |
-| MF2 | Add function with wrong return type | Create `src/utils/bad-types.ts` with `function getCount(): string { return 42 }`. Will fail typecheck. Rerun to trigger `!REPEAT_FAIL` |
-
-For each failure test:
-1. Create issue, trigger `@kody`
-2. Wait for failure
-3. Comment `@kody rerun` (do NOT fix the issue — let it fail again)
-4. Check `.kody/runs/{issue}.jsonl` for 2+ entries
-5. Record whether contradiction warnings would fire
+1. Comment `@kody rerun` on MF1 — wait for failure
+2. Comment `@kody rerun` on MF2 — wait for failure
+3. Check `.kody/runs/{issue}.jsonl` for 2+ entries
+4. Record whether contradiction warnings fire
 
 ---
 
@@ -188,8 +168,8 @@ Post this as a comment on the digest issue:
 ## Memory Benchmark Report — ${RUN_ID}
 
 ### Summary
-- Issues run: X
-- Succeeded: X / Failed: X
+- Issues run: 8 (6 standard + 2 failure reruns)
+- Succeeded: X / Failed: X (MF1/MF2 expected to fail)
 - Total pipeline time: Xm
 
 ### M1: Token Compression
@@ -206,9 +186,10 @@ Post this as a comment on the digest issue:
 
 ### M3: Room Scoping
 Room-specific files created: X
-- conventions_utils.md (batch 1)
-- conventions_auth.md (batch 2)
-- ...
+- conventions_utils.md (M01, M04)
+- conventions_auth.md (M02, M05)
+- conventions_services.md (M03)
+- conventions_components.md (M06)
 
 ### M4: Contradiction Detection
 Issues with 2+ runs: X
@@ -222,7 +203,7 @@ Growth rate: X lines/issue
 | Batch | Avg Retries | Stages with 0 retries |
 |-------|------------|----------------------|
 | 1 | X | X/Y |
-| 4 | X | X/Y |
+| 2 | X | X/Y |
 
 ### Raw Data
 <details><summary>Full metrics</summary>
