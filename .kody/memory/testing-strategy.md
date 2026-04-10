@@ -31,3 +31,10 @@
 
 - No explicit threshold configured; vitest run passes `--coverage` implicitly
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
+
+## Configuration Details
+
+- Vitest uses `jsdom` environment with setup file `vitest.setup.ts`
+- Playwright runs chromium only with `trace: 'on-first-retry'` for failure debugging
+- CI uses 1 worker and 2 retries; local uses parallel workers and no retries
+- E2E webServer starts via `pnpm dev` at `http://localhost:3000`
