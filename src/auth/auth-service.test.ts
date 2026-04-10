@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { AuthService, type AuthResult } from './auth-service'
 import { JwtService } from './jwt-service'
+import { EventEmitter } from '@/utils/event-emitter'
 
 // Mock Payload
 const mockPayload = {
@@ -127,6 +128,45 @@ describe('AuthService', () => {
     })
   })
 
+  describe('event emission', () => {
+    const mockUser = {
+      id: 1,
+      email: 'admin@example.com',
+      hash: 'aabbccddeeff0011223344556677889900aabbccddeeff00112233445566778899',
+      salt: 'testsalt123',
+      role: 'admin',
+      firstName: 'Admin',
+      lastName: 'User',
+      isActive: true,
+    }
+
+    it('should emit login event on successful login', async () => {
+      const eventEmitter = new EventEmitter()
+      const emitSpy = vi.spyOn(eventEmitter, 'emit')
+      const service = new AuthService(mockPayload as any, jwtService, eventEmitter as any)
+      mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+      await service.login('admin@example.com', 'password123', '192.168.1.1', 'Chrome')
+
+      expect(emitSpy).toHaveBeenCalledWith('login', expect.objectContaining({
+        userId: '1',
+        email: 'admin@example.com',
+        role: 'admin',
+        ipAddress: '192.168.1.1',
+        userAgent: 'Chrome',
+        timestamp: expect.any(Date),
+      }))
+    })
+
+    it('should not throw when eventEmitter is not provided', async () => {
+      const service = new AuthService(mockPayload as any, jwtService)
+      mockPayload.find.mockResolvedValue({ docs: [mockUser] })
+
+      await expect(service.login('admin@example.com', 'password123', '127.0.0.1', 'TestAgent'))
+        .resolves.toHaveProperty('accessToken')
+    })
+  })
+
   describe('refresh', () => {
     // Real JWT tokens for testing
     let validRefreshToken: string
@@ -208,6 +248,24 @@ describe('AuthService', () => {
 
       await expect(authService.refresh(mismatchedRefreshToken)).rejects.toThrow('Invalid refresh token')
     })
+
+    it('should emit tokenRefresh event on successful refresh', async () => {
+      const eventEmitter = new EventEmitter()
+      const emitSpy = vi.spyOn(eventEmitter, 'emit')
+      const service = new AuthService(mockPayload as any, jwtService, eventEmitter as any)
+      const userWithRealToken = { ...mockUser, refreshToken: validRefreshToken }
+      mockPayload.find.mockResolvedValue({ docs: [userWithRealToken] })
+      mockPayload.update.mockResolvedValue({ ...userWithRealToken, refreshToken: 'new_refresh_token' })
+
+      await service.refresh(validRefreshToken)
+
+      expect(emitSpy).toHaveBeenCalledWith('tokenRefresh', expect.objectContaining({
+        userId: '1',
+        email: 'admin@example.com',
+        role: 'admin',
+        timestamp: expect.any(Date),
+      }))
+    })
   })
 
   describe('verifyAccessToken', () => {
@@ -275,6 +333,27 @@ describe('AuthService', () => {
           data: { refreshToken: null },
         })
       )
+    })
+
+    it('should emit logout event on logout', async () => {
+      const eventEmitter = new EventEmitter()
+      const emitSpy = vi.spyOn(eventEmitter, 'emit')
+      const service = new AuthService(mockPayload as any, jwtService, eventEmitter as any)
+      mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null })
+
+      await service.logout(1)
+
+      expect(emitSpy).toHaveBeenCalledWith('logout', expect.objectContaining({
+        userId: '1',
+        timestamp: expect.any(Date),
+      }))
+    })
+
+    it('should not throw when eventEmitter is not provided on logout', async () => {
+      const service = new AuthService(mockPayload as any, jwtService)
+      mockPayload.update.mockResolvedValue({ id: 1, refreshToken: null })
+
+      await expect(service.logout(1)).resolves.toBeUndefined()
     })
   })
 

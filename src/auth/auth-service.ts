@@ -2,6 +2,8 @@ import type { Payload } from 'payload'
 import type { CollectionSlug } from 'payload'
 import crypto from 'crypto'
 import { JwtService } from './jwt-service'
+import type { EventEmitter } from '@/utils/event-emitter'
+import type { AuthEvents } from './auth-events'
 
 export type RbacRole = 'admin' | 'editor' | 'viewer'
 
@@ -63,6 +65,7 @@ export class AuthService {
   constructor(
     private payload: Payload,
     private jwtService: JwtService,
+    private eventEmitter?: EventEmitter<AuthEvents>,
   ) {}
 
   async login(
@@ -137,6 +140,15 @@ export class AuthService {
       } as any,
     })
 
+    this.eventEmitter?.emit('login', {
+      userId: String(userId),
+      email,
+      role,
+      ipAddress: _ipAddress,
+      userAgent: _userAgent,
+      timestamp: new Date(),
+    })
+
     return {
       accessToken,
       refreshToken,
@@ -206,6 +218,13 @@ export class AuthService {
       } as any,
     })
 
+    this.eventEmitter?.emit('tokenRefresh', {
+      userId: payload.userId,
+      email: payload.email,
+      role: payload.role,
+      timestamp: new Date(),
+    })
+
     return { accessToken: newAccessToken, refreshToken: newRefreshToken }
   }
 
@@ -251,6 +270,11 @@ export class AuthService {
   }
 
   async logout(userId: number | string): Promise<void> {
+    this.eventEmitter?.emit('logout', {
+      userId: String(userId),
+      timestamp: new Date(),
+    })
+
     await this.payload.update({
       collection: 'users' as CollectionSlug,
       id: userId,
