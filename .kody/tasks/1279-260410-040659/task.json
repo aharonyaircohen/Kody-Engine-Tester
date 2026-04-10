@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add session cleanup utility",
+  "description": "Create `cleanExpiredSessions(store: SessionStore, maxAgeMs: number): number` in `src/auth/session-cleanup.ts` that removes sessions where `Date.now() - createdAt.getTime() > maxAgeMs` and returns the count of removed sessions. Include co-located tests.",
+  "scope": ["src/auth/session-cleanup.ts", "src/auth/session-cleanup.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/session-store.ts:63 - uses `session.expiresAt <= new Date()` pattern for expiry checks",
+    "src/auth/session-store.ts:119-126 - existing `cleanup()` method iterates sessions and revokes by expiry",
+    "src/utils/*.ts - utility modules follow single-function file pattern with co-located .test.ts"
+  ],
+  "questions": [
+    "The task specifies `maxAgeMs` which implies `createdAt`-based age filtering. Should the utility also consider `expiresAt` or `refreshExpiresAt` as secondary conditions, or purely `createdAt` age only?",
+    "The existing `cleanup()` removes sessions where BOTH `expiresAt` AND `refreshExpiresAt` are expired. Should this utility use the same dual-expiry logic, or only `createdAt` age?",
+    "Should the utility handle sessions with missing/invalid `createdAt` dates gracefully, or is that an impossible state given the SessionStore.create() always sets it?"
+  ]
+}
