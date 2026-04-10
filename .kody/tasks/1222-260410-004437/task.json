@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of rate limit check",
+  "description": "The checkRateLimit function and tests already exist in src/auth/rate-limiter-utils.ts and src/auth/rate-limiter-utils.test.ts. All 8 tests pass. The implementation uses a sliding window algorithm with in-memory Map, tracking request timestamps per key and returning { allowed: boolean; retryAfter?: number }.",
+  "scope": ["src/auth/rate-limiter-utils.ts", "src/auth/rate-limiter-utils.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/*.ts — single-function utility files with co-located .test.ts files",
+    "Sliding window rate limiting with in-memory Map in src/auth/rate-limiter-utils.ts"
+  ],
+  "questions": []
+}
