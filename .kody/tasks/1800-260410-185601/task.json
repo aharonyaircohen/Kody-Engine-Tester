@@ -1,0 +1,12 @@
+{
+  "task_type": "feature",
+  "title": "Add pagination helper function",
+  "description": "Create paginate<T>(items: T[], page: number, pageSize: number): { data: T[]; total: number; pages: number; hasNext: boolean } in src/services/pagination.ts with co-located tests following the existing utility function patterns.",
+  "scope": ["src/services/pagination.ts", "src/services/pagination.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/chunk.ts - Single-function utility module with JSDoc, generic types, and input validation",
+    "src/utils/chunk.test.ts - Co-located vitest test file with describe/it/expect patterns"
+  ],
+  "questions": []
+}
