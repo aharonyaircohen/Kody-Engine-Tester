@@ -1,0 +1,29 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of JWT/RBAC authentication",
+  "description": "The JWT authentication system with RBAC is already fully implemented and all 25 tests pass. Implementation includes: JwtService with access/refresh tokens, AuthService with login/logout/refresh, withAuth HOC for route protection, role hierarchy (admin > editor > viewer), and Users collection with role field. API routes (notes, gradebook) already use withAuth with role checks.",
+  "scope": [
+    "src/auth/jwt-service.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/_auth.ts",
+    "src/middleware/role-guard.ts",
+    "src/collections/Users.ts",
+    "src/app/api/notes/route.ts",
+    "src/app/api/gradebook/route.ts",
+    "src/auth/jwt-service.test.ts",
+    "src/auth/auth-service.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts: JwtService class with sign/verify/blacklist and access/refresh token methods",
+    "src/auth/auth-service.ts: AuthService with login/refresh/verifyAccessToken/logout using Payload SDK",
+    "src/auth/withAuth.ts: withAuth HOC wrapping route handlers with JWT validation and role checking",
+    "src/auth/_auth.ts: ROLE_HIERARCHY constant and checkRole function for hierarchical RBAC",
+    "src/collections/Users.ts: Users collection with role select field and token storage fields",
+    "src/app/api/notes/route.ts: Example API route using withAuth with optional and roles options"
+  ],
+  "questions": []
+}
+```
