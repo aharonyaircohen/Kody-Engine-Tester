@@ -114,7 +114,7 @@ jobs:
   orchestrate:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (needs.parse.result == 'success' && (needs.parse.outputs.valid == 'true' || needs.parse.outputs.valid == 'false' || needs.parse.outputs.valid == '')) ||
+      (needs.parse.result == 'success' && (needs.parse.outputs.valid == true || needs.parse.outputs.valid == false || needs.parse.outputs.valid == '')) ||
       (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested')
     runs-on: ubuntu-latest
     timeout-minutes: 120
