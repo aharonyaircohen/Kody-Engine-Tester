@@ -2,7 +2,7 @@
   "name": "test-suite",
   "description": "Nightly E2E test suite for Kody Engine — runs every CLI command and flag combination as live tests, fixes failures, and produces a comprehensive report",
   "schedule": {
-    "runAt": "09:45",
+    "runAt": "10:20",
     "days": 1
   },
   "reportOnFailure": true,
