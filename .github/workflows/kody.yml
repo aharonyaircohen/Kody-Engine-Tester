@@ -49,9 +49,10 @@ on:
     paths: ["src/**", "kody.config.json", "package.json"]
 
 concurrency:
-  # Per-issue concurrency using run_id as unique key — avoids cancellation cascades
-  # when multiple pipelines are triggered on different issues simultaneously.
-  group: kody-${{ github.event.inputs.task_id || github.run_id }}
+  # Per-issue concurrency — cancels any existing pipeline when a new one starts on the same issue.
+  # For workflow_dispatch (manual), uses task_id. For issue_comment, uses issue number.
+  group: kody-${{ github.event.inputs.task_id || github.event.issue.number }}
+  cancel-in-progress: true
 
 permissions:
   issues: write

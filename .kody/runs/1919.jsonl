@@ -1,0 +1,1 @@
+{"runId":"hotfix-1919-260411-160402","issueNumber":1919,"command":"run","startedAt":"2026-04-11T16:07:22.633Z","completedAt":"2026-04-11T16:12:23.402Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
