@@ -34,3 +34,77 @@ All tasks completed. Here's a summary of the changes:
 2. **`src/app/api/auth/register/route.ts`** - POST /register route handler that:
    - Accepts email, password, confirmPassword, firstName, lastName 
 ...(truncated)
+
+### autofix (2026-04-11T17:00:20)
+**All 129 test files pass (1799 tests)** when excluding the problematic integration test.
+
+## Summary
+
+**Pre-existing Failure Identified**: `tests/int/api.int.spec.ts`
+
+This is an integration test that uses Payload with a real PostgreSQL database connection. The failure is in Payload/drizzle-kit's internal schema introspection:
+
+```
+SELECT conname AS primary_key
+FROM   pg_constraint join pg_class ON (pg_class.oid = conrelid)
+WHERE  contype = 'p' 
+AND    connamespace = $1::regnamespace  
+AND    p
+...(truncated)
+
+### review (2026-04-11T17:03:10)
+## Verdict: FAIL
+
+## Summary
+
+Added `POST /login` and `POST /register` route handlers and updated the `register()` business logic to accept `firstName`/`lastName`. Two major issues prevent merge: the JWT access token expires in 15 minutes instead of the required 24 hours, and a second JwtService singleton was introduced that can conflict with the existing one.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+1. **`src/auth/jwt-service.ts:95`** — JWT access token expires in 15 minutes, not the 24 ho
+...(truncated)
+
+### review-fix (2026-04-11T17:06:32)
+Both Major issues have been fixed:
+
+## Summary of Fixes
+
+### 1. JWT access token expiry changed to 24h (Major)
+**File:** `src/auth/jwt-service.ts`
+- Added new method `signAccessTokenLongLived()` that uses 24h expiry
+- Updated `AuthService.login()` to use `signAccessTokenLongLived()` instead of `signAccessToken()`
+
+### 2. Removed duplicate JwtService singleton (Major)
+**Files:** `src/auth/index.ts`, `src/app/api/auth/login/route.ts`, `src/app/api/auth/register/route.ts`
+- Removed the `getJwtServi
+...(truncated)
+
+### review (2026-04-11T17:08:08)
+Now I have the full uncommitted diff. Let me review the current state of the working tree.
+
+## Verdict: PASS
+
+## Summary
+
+The working tree contains fixes for both Major issues identified in the previous review: `signAccessTokenLongLived()` now issues 24h JWTs, and `getJwtService()` has been removed in favor of the direct `jwtService` export. Route handlers correctly use the shared `jwtService` singleton with `AuthService`.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+1. **`src
+...(truncated)
