@@ -20,14 +20,25 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Test Helpers**: `tests/helpers/login.ts` for auth, `tests/helpers/seedUser.ts` for test data lifecycle
+- **Vitest Setup**: Global setup file at `vitest.setup.ts` loaded before test environment
 
 ## CI Quality Gates
 
 - `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
 - Playwright `forbidOnly: true` prevents committed `.only()` tests
 - Retries enabled on CI (2x) to reduce flaky failure noise
+- Playwright reporter outputs HTML traces on first retry
 
 ## Coverage
 
 - No explicit threshold configured; vitest run passes `--coverage` implicitly
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
+
+## Test Execution
+
+```
+pnpm test         → test:int && test:e2e
+pnpm test:int    → vitest run --config ./vitest.config.mts
+pnpm test:e2e    → playwright test --config=playwright.config.ts
+```
