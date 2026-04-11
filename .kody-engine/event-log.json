@@ -25,5 +25,59 @@
     ],
     "hookErrors": {},
     "emittedAt": "2026-04-11T16:28:14.012Z"
+  },
+  {
+    "id": "1775950841919-9xfe4m5",
+    "runId": "task-2011-rerun",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "task-2011-rerun",
+      "issueNumber": 2011
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:40:41.919Z"
+  },
+  {
+    "id": "1775950841920-09jnwsl",
+    "runId": "task-2011-rerun",
+    "event": "step.started",
+    "payload": {
+      "runId": "task-2011-rerun",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:40:41.920Z"
+  },
+  {
+    "id": "1775950939916-vs3oaod",
+    "runId": "task-2011-rerun",
+    "event": "step.complete",
+    "payload": {
+      "runId": "task-2011-rerun",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:42:19.916Z"
+  },
+  {
+    "id": "1775950939916-sjze9kn",
+    "runId": "task-2011-rerun",
+    "event": "step.started",
+    "payload": {
+      "runId": "task-2011-rerun",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:42:19.916Z"
   }
 ]

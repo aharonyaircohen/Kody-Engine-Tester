@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify bootstrap model override CLI flags",
+  "description": "Run `kody-engine-lite bootstrap --provider=minimax --model=MiniMax-M1 --force` to verify CLI flags correctly override the model/provider from kody.config.json. Previous run failed with ECONNREFUSED - this is a retry. Acceptance criteria: logs show 'Model: MiniMax-M1 (provider: minimax)', LiteLLM proxy started, artifacts generated in .kody/memory/ and .kody/steps/, and both --model=MiniMax-M1 and --model MiniMax-M1 syntax work.",
+  "scope": [
+    "kody.config.json",
+    ".kody/memory/",
+    ".kody/steps/"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md - T33 test case definition with verification criteria",
+    ".claude/commands/kody-test-suite.md - T33 test case documentation with exact command to run"
+  ],
+  "questions": []
+}
