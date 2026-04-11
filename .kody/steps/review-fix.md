@@ -225,19 +225,45 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 ## Repo Patterns
 
-- **Result type for error handling** (`src/utils/result.ts`): Use discriminated union `Result<T, E>` — prefer `ok()`/`err()` factories over throw patterns
-- **Surgical Edit over Write** (`src/auth/withAuth.ts`): `withAuth` wraps handlers — surgical edits to add roles/permissions, never rewrite the HOC
-- **Validation at API boundaries** (`src/validation/`): Zod schemas validate input before service calls — see `src/api/auth/login.ts` for pattern
-- **Service layer dependency injection** (`src/services/GradebookService.ts`): Constructor accepts dep interfaces (`GradebookServiceDeps`), not concrete types
-- **Type-safe DI container** (`src/utils/di-container.ts`): Register with `Container.register(token, factory)` using branded token types
+**Result type for error handling** (`src/utils/result.ts:1-110`): Use discriminated union `Result<T, E>` — prefer `ok()`/`err()` factories over throw patterns. Example at line 88-94:
+
+```typescript
+export function ok<T, E = Error>(value: T): Result<T, E> {
+  return new Ok(value)
+}
+export function err<T, E = Error>(error: E): Result<T, E> {
+  return new Err(error)
+}
+```
+
+**withAuth HOC pattern** (`src/auth/withAuth.ts:55-108`): Wraps route handlers with JWT validation and optional RBAC. Usage:
+
+```typescript
+export const GET = withAuth(
+  async (req, { user }, routeParams) => {
+    return Response.json({ data: user })
+  },
+  { roles: ['admin', 'editor'] },
+)
+```
+
+**Surgical Edit rule**: When fixing auth issues in `withAuth.ts`, only edit the specific lines needed (lines 82-89 for role checking). Never rewrite the entire HOC.
+
+**Service dependency injection** (`src/services/gradebook.ts`): Constructor accepts typed deps interfaces, e.g., `GradebookServiceDeps<GetQuizAttemptsFn, ...>` — decouples from Payload SDK.
+
+**Type assertion hotspots**: `dashboard/page.tsx:44-158` has multiple `as unknown as` casts — avoid adding new casts in this file.
 
 ## Improvement Areas
 
-- **Type assertion abuse** (`src/app/(frontend)/dashboard/page.tsx:XX`): Uses `as unknown as` casts — replace with proper type guards or branded types
-- **Dual auth systems**: `UserStore` in `src/auth/user-store.ts` (SHA-256) vs `AuthService` in `src/auth/auth-service.ts` (PBKDF2) — only fix new code paths, don't unify
-- **Role enum mismatch**: `UserStore.UserRole` ('admin'|'user'|'guest'|'student'|'instructor') vs `RbacRole` ('admin'|'editor'|'viewer') — avoid new code relying on either
-- **N+1 query risk** in `src/app/(frontend)/dashboard/page.tsx`: Lesson enrollments fetched individually — use Payload's `depth` param or batch loader
-- **Missing error wrapping**: Service methods in `src/services/` return raw errors — wrap with `Result.err()` for consistent error handling
+- **Excessive type assertions** (`src/app/(frontend)/dashboard/page.tsx:44,60,72,113,125,143,158`): 8 `as unknown as` casts for user/enrollment/lesson/assignment types — these should use proper Payload-generated types from `payload-types.ts` instead of casting to `any`.
+
+- **Raw error propagation in services** (`src/services/gradebook.ts:83,94,130,172,200`): Uses `as unknown as` to access nested fields — service should return `Result<T, E>` instead of throwing, allowing callers to handle errors explicitly.
+
+- **Inconsistent error handling** (`src/app/api/notes/route.ts:47,90`): Uses direct type cast then `JSON.stringify` rather than proper type transformation via shared `docToNote` utility — verify all note endpoints use consistent transformation.
+
+- **Missing validation middleware integration**: `src/middleware/validation.ts` exists but `src/app/api/notes/route.ts` and `src/app/api/enroll/route.ts` don't use Zod schemas for input validation.
+
+- **Potential N+1 in gradebook** (`src/services/gradebook.ts:174,179-180`): Iterates over quiz attempts with nested type casts — ensure `getQuizAttempts` is called with proper Payload `depth` param to avoid N+1.
 
 ## Acceptance Criteria
 
@@ -245,11 +271,13 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - [ ] Use `Edit` tool for surgical changes — no file rewrites
 - [ ] Run `pnpm test:int` after each fix — all tests pass
 - [ ] Run `pnpm tsc --noEmit` — zero type errors
-- [ ] No `as unknown as` type assertions in changed code
+- [ ] No `as unknown as` type assertions introduced in changed code (except in test files)
 - [ ] No `console.log` statements in production code
-- [ ] All async operations use try-catch with proper error propagation
-- [ ] Changes follow layered architecture: Route → Auth → Service → Repository
+- [ ] All async operations use try-catch with proper error propagation via `Result<T, E>`
+- [ ] Changes follow layered architecture: Route → Auth HOC → Service → Repository
 - [ ] No hardcoded secrets or config values — use environment variables
-- [ ] Zod validation schemas used for all new API input validation
+- [ ] New API input validation uses Zod schemas from `src/validation/` or `Schema` class from `src/utils/schema.ts`
+- [ ] Service layer methods return `Result<T, E>` from `src/utils/result.ts` for explicit error handling
+- [ ] New auth checks use `withAuth` HOC from `src/auth/withAuth.ts` with typed `RbacRole[]`
 
 {{TASK_CONTEXT}}
