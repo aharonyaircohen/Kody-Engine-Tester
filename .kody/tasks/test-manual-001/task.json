@@ -1,0 +1,17 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add leftPad utility function",
+  "description": "Create src/utils/leftPad.ts with a string left-padding function that pads a string with a specified character to reach a minimum length. Follow the existing pad-start.ts pattern with full TypeScript types and co-located unit tests in leftPad.test.ts.",
+  "scope": [
+    "src/utils/leftPad.ts",
+    "src/utils/leftPad.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/pad-start.ts - single-function utility module with TypeScript types",
+    "src/utils/pad-start.test.ts - vitest describe/it/expect test structure with edge case coverage"
+  ],
+  "questions": []
+}
+```

@@ -1,0 +1,43 @@
+{
+  "taskId": "test-manual-001",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-11T11:40:49.098Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1701
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "running",
+      "startedAt": "2026-04-11T11:40:53.014Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-11T11:39:55.164Z",
+  "updatedAt": "2026-04-11T11:40:53.014Z",
+  "sessions": {
+    "explore": "c6507948-8dc9-460e-b7ec-6e7e9c8e1c74"
+  }
+}

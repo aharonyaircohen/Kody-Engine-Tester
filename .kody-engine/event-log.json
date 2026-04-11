@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1775907629520-0op4qaa",
+    "runId": "test-manual-001",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "test-manual-001",
+      "issueNumber": 1847
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T11:40:29.520Z"
+  },
+  {
+    "id": "1775907629521-lt8zppy",
+    "runId": "test-manual-001",
+    "event": "step.started",
+    "payload": {
+      "runId": "test-manual-001",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T11:40:29.521Z"
+  },
+  {
+    "id": "1775907655470-aei2zk9",
+    "runId": "test-manual-001",
+    "event": "step.complete",
+    "payload": {
+      "runId": "test-manual-001",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T11:40:55.470Z"
+  },
+  {
+    "id": "1775907655470-be81c64",
+    "runId": "test-manual-001",
+    "event": "step.started",
+    "payload": {
+      "runId": "test-manual-001",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T11:40:55.470Z"
+  }
+]
