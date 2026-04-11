@@ -24,6 +24,7 @@ jobs:
     permissions:
       issues: write
       contents: read
+      actions: write
     steps:
       - uses: actions/checkout@v4
 
@@ -79,3 +80,10 @@ jobs:
           [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
           [ -n "${{ inputs.agent }}" ] && ARGS="$ARGS --agent ${{ inputs.agent }}"
           kody-engine watch $ARGS
+
+      - name: Upload agent logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-logs-${{ github.run_number }}
+          path: .kody/watch/agent-logs/
