@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -101,5 +121,32 @@ Guidelines:
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+
+## Repo Patterns
+
+- **Service DI pattern**: `src/services/discussions.ts` — constructor injection of store dependencies with typed interfaces (e.g., `DiscussionsStore`, `EnrollmentStore`); reuse this pattern for new services
+- **Auth HOC**: `src/auth/withAuth.ts` — wraps Next.js route handlers with JWT validation and `checkRole` RBAC; always use for protected routes
+- **Validation middleware**: `src/middleware/validation.ts` — schema-driven validation for `body`/`query`/`params` with type coercion; use at API boundaries
+- **Result type**: `src/utils/result.ts` — `Result<T, E>` discriminated union; use for explicit error handling instead of throwing
+- **Rubric grading**: `src/services/grading.ts` — `GradingService` with `GradingServiceDeps<A,S,C>` interface; follow for strategy-based services
+- **Batch fetching**: `src/app/(frontend)/dashboard/page.tsx` — avoids N+1 by batching lesson fetches per enrolled course; apply to similar list pages
+
+## Improvement Areas
+
+- **Dual auth systems**: `src/auth/user-store.ts` (SHA-256) vs `src/auth/auth-service.ts` (PBKDF2) — consolidate to AuthService for consistent password hashing
+- **Role divergence**: `UserStore.UserRole` (`'admin'|'user'|'guest'|'student'|'instructor'`) vs `RbacRole` (`'admin'|'editor'|'viewer'`) — align or consolidate
+- **Type casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` — replace with proper type guards
+- **N+1 risk**: Non-dashboard pages may batch lesson fetches inconsistently — audit for similar optimization opportunities
+
+## Acceptance Criteria
+
+- [ ] Scope contains exact file paths from Glob/Grep discovery
+- [ ] Title is actionable (starts with verb: Add, Fix, Refactor, Update)
+- [ ] Description captures intent and acceptance criteria from task description
+- [ ] Risk level matches scope size: low (1 file), medium (2-3 files), high (4+ files)
+- [ ] existing_patterns cites specific file paths and patterns from this repo to reuse
+- [ ] Questions (if any) are product/requirements only — max 3, no technical implementation questions
+- [ ] JSON is valid with no markdown fences, explanations, or extra text before/after
+- [ ] Assumptions section (if present) states key architectural/project assumptions explicitly
 
 {{TASK_CONTEXT}}

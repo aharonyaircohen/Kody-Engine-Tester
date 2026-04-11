@@ -16,10 +16,12 @@
 
 ## Patterns
 
+- **Setup**: `vitest.setup.ts` for global test setup (jsdom environment)
 - **Mocks**: `vi.fn()` + `mockResolvedValue` / `mockRejectedValue` for Payload SDK stubs
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **E2E Navigation**: Tests use absolute URLs (e.g., `page.goto('http://localhost:3000/admin')`) without baseURL
 
 ## CI Quality Gates
 
