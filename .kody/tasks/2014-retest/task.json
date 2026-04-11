@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Verify release PR creation via @kody release",
+  "description": "The @kody release command verification is already complete. Dry-run results confirm: version bump to 1.1.0 (minor), release/v1.1.0 branch creation, kody:release label, and changelog grouping by type all pass. The release process correctly enforces CI gate - blocked by pre-existing test failure in tests/int/api.int.spec.ts (SQL parameter $1 issue), which is unrelated to the release process itself.",
+  "scope": [
+    ".kody/tasks/2014-retest/task.json",
+    ".kody/tasks/2014-retest/task.md",
+    ".kody/tasks/2014-retest/status.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
