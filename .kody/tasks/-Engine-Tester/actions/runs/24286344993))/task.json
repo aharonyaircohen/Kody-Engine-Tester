@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add User model with bcrypt password hash",
+  "description": "Create a User domain model in src/models/user-model.ts with fields: id (UUID), email (unique), passwordHash, createdAt, updatedAt. Password hashing must use bcrypt with cost factor >= 12. Model should include email index for uniqueness. Tests should verify: hash function produces unique outputs (salt), hash can be compared against plaintext, model fields are correctly typed, and creating a user persists hash not plaintext.",
+  "scope": [
+    "src/models/user-model.ts",
+    "src/models/user-model.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/models/notification.ts - TypeScript interface-only domain model pattern",
+    "src/auth/user-store.ts:53-58 - existing hashPassword using crypto.subtle.digest('SHA-256') as reference for async hashing pattern",
+    "src/utils/result.ts - Result<T, E> discriminated union for explicit error handling"
+  ],
+  "questions": []
+}
