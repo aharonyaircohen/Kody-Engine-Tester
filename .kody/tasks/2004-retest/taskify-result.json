@@ -1,0 +1,26 @@
+{
+  "status": "ready",
+  "tasks": [
+    {
+      "title": "Add User model with password hash field",
+      "body": "## Context\nAdds the foundational User model needed for authentication. This model stores user credentials and must include a password hash field (never plain text) following security best practices.\n\n## Acceptance Criteria\n- User model in `src/models/User.ts`\n- Fields: `id` (UUID), `email` (unique), `passwordHash`, `createdAt`, `updatedAt`\n- Password is never stored in plain text — only the hash is persisted\n- TypeScript strict mode enabled\n- Model exports named export\n\n## Test Strategy\n- Unit test: model fields are correctly typed\n- Unit test: password hash is generated and verified correctly\n- Integration test: User can be created and retrieved from database",
+      "labels": ["backend", "database"],
+      "priority": "high",
+      "dependsOn": []
+    },
+    {
+      "title": "Add /login and /register API endpoints",
+      "body": "## Context\nImplements authentication endpoints that allow users to register a new account and login to receive a JWT token. Depends on the User model existing first.\n\n## Acceptance Criteria\n- `POST /register` — creates a new user, returns JWT on success\n- `POST /login` — validates credentials, returns JWT on success\n- Passwords are compared using bcrypt/scrypt (not plain text)\n- JWT contains userId and expires in configured TTL\n- Returns appropriate HTTP status codes (400 for validation, 401 for invalid creds, 201 for registration)\n- Endpoints live in `src/services/` or `src/routes/`\n\n## Test Strategy\n- Unit test: register creates user with hashed password\n- Unit test: login returns JWT for valid credentials\n- Unit test: login returns 401 for invalid password\n- Integration test: full register → login flow",
+      "labels": ["backend"],
+      "priority": "high",
+      "dependsOn": [0]
+    },
+    {
+      "title": "Add auth middleware to protect routes",
+      "body": "## Context\nAdds middleware that validates JWT tokens on protected routes. This middleware extracts and verifies the JWT from the Authorization header and attaches the user to the request context.\n\n## Acceptance Criteria\n- Middleware in `src/middleware/auth.ts`\n- Reads Bearer token from Authorization header\n- Verifies JWT signature and expiration\n- Attaches `userId` to request context on success\n- Returns 401 Unauthorized for missing or invalid tokens\n- Can be applied to any route that needs protection\n\n## Test Strategy\n- Unit test: valid token passes through with userId attached\n- Unit test: missing token returns 401\n- Unit test: expired token returns 401\n- Unit test: malformed token returns 401",
+      "labels": ["backend"],
+      "priority": "high",
+      "dependsOn": [1]
+    }
+  ]
+}

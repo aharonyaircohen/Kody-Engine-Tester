@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Verify taskify file mode creates proper sub-issues",
+  "description": "Verify kody-engine taskify --file docs/test-prd.md creates sub-issues with: (1) priority labels (priority:high, priority:medium, priority:low), (2) ## Test Strategy, ## Context, ## Acceptance Criteria sections per sub-issue, (3) dependency-ordered filing via topological sort. Pipeline currently running taskify stage on issue 2004.",
+  "scope": [
+    ".kody/tasks/2004-retest/status.json",
+    ".kody/tasks/2004-retest/task.md",
+    "docs/test-prd.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
