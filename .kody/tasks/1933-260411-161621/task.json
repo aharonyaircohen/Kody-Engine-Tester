@@ -1,0 +1,18 @@
+
+{
+  "task_type": "feature",
+  "title": "Add formatHelpers utility module with formatBytes, truncateMiddle, and slugify",
+  "description": "Create a new utility module `src/utils/formatHelpers.ts` with three functions: `formatBytes` to convert bytes to human-readable format (KB, MB, GB), `truncateMiddle` to truncate strings with ellipsis in the middle, and `slugify` to convert text to URL-safe slugs. Include full TypeScript types, JSDoc comments, and co-located tests in `src/utils/formatHelpers.test.ts` covering all edge cases. Note: `slugify` already exists at `src/utils/slugify.ts` and should be reused/imported rather than duplicated.",
+  "scope": [
+    "src/utils/formatHelpers.ts",
+    "src/utils/formatHelpers.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/slugify.ts - existing slugify implementation to reuse/import",
+    "src/utils/truncate.ts - existing truncate pattern for reference",
+    "src/utils/format-date.ts - JSDoc style and typed exports pattern",
+    "src/utils/*.test.ts - co-located test files using vitest"
+  ],
+  "questions": []
+}
