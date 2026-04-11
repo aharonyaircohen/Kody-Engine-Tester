@@ -1,0 +1,9 @@
+{
+  "id": "ep_review_001",
+  "runId": "approve`",
+  "source": "review",
+  "taskId": "approve`",
+  "createdAt": "2026-04-11T16:46:04.291Z",
+  "rawContent": "## Verdict: PASS\n\n## Summary\n\nAdded `src/models/user-model.ts` with `User` interface and `hashPassword`/`verifyPassword` functions using bcryptjs with cost factor 12. Tests pass and acceptance criteria are met.\n\n## Findings\n\n### Critical\nNone.\n\n### Major\nNone.\n\n### Minor\nNone.\n\n---\n\n## Two-Pass Review\n\n**Pass 1 — CRITICAL (must fix before merge):**\n\n### SQL & Data Safety\nNot applicable — this is a pure domain model with no DB operations.\n\n### Race Conditions & Concurrency\nNot applicable.\n\n### LLM Output Trust Boundary\nNot applicable.\n\n### Shell Injection\nNot applicable.\n\n### Enum & Value Completeness\nNot applicable — no new enum values introduced.\n\n---\n\n**Pass 2 — INFORMATIONAL (should review, may auto-fix):**\n\n### Conditional Side Effects\nNone.\n\n### Test Gaps\nNone — tests cover salt uniqueness, correct verification, wrong password rejection, and type correctness.\n\n### Dead Code & Consistency\nNone.\n\n### Crypto & Entropy\nNone — bcryptjs with cost factor 12 is appropriate.\n\n### Performan",
+  "extractedNodeIds": []
+}

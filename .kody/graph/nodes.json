@@ -1,0 +1,12 @@
+{
+  "conventions_models_1117474420445": {
+    "id": "conventions_models_1117474420445",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "models",
+    "content": "Added `src/models/user-model.ts` with `User` interface and `hashPassword`/`verifyPassword` functions using bcryptjs with cost factor 12. Tests pass and acceptance criteria are met.",
+    "episodeId": "ep_review_001",
+    "validFrom": "2026-04-11T16:46:04.294Z",
+    "validTo": null
+  }
+}

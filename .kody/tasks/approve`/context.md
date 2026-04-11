@@ -45,3 +45,45 @@ Implementation complete. Here's a summary:
 
 **Step 3: Created `src/mo
 ...(truncated)
+
+### autofix (2026-04-11T16:44:06)
+The `Users` collection existed before my branch. My changes (bcryptjs, `src/models/user-model.ts`, `src/models/user-model.test.ts`) did not create the `users` collection or `tests/int/api.int.spec.ts`.
+
+The integration test failure is a **pre-existing issue** in Payload CMS's schema introspection when calling `payload.find({ collection: 'users' })`. The error occurs in Payload's internal drizzle-kit code, not in my implementation.
+
+**Summary:**
+- My user model implementation (`src/models/user-mo
+...(truncated)
+
+### review (2026-04-11T16:46:04)
+## Verdict: PASS
+
+## Summary
+
+Added `src/models/user-model.ts` with `User` interface and `hashPassword`/`verifyPassword` functions using bcryptjs with cost factor 12. Tests pass and acceptance criteria are met.
+
+## Findings
+
+### Critical
+None.
+
+### Major
+None.
+
+### Minor
+None.
+
+---
+
+## Two-Pass Review
+
+**Pass 1 — CRITICAL (must fix before merge):**
+
+### SQL & Data Safety
+Not applicable — this is a pure domain model with no DB operations.
+
+### Race Conditions & Concurrency
+Not applicable.
+
+### LL
+...(truncated)
