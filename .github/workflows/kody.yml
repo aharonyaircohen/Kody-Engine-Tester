@@ -67,7 +67,7 @@ jobs:
       github.event.issue.state != 'closed' &&
       github.event.comment.user.type != 'Bot' &&
       github.event.comment.user.login != 'github-actions[bot]' &&
-      !(contains(github.event.comment.body, 'Kody pipeline started')) && !contains(github.event.comment.body, '@kody rerun') &&
+      !(contains(github.event.comment.body, 'Kody pipeline started')) &&
       !(startsWith(github.event.comment.body, '🎉')) && !(startsWith(github.event.comment.body, '❌')) &&
       (contains(github.event.comment.body, '@kody') || contains(github.event.comment.body, '/kody'))
     runs-on: ubuntu-latest
