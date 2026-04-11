@@ -2,20 +2,19 @@
 
 ## Code Style
 - Use TypeScript strict mode
-- Prefer functional style over imperative
-- Use const for all bindings that are not reassigned
-
-## Naming
-- Use kebab-case for file names
-- Use camelCase for functions and variables
-- Use PascalCase for types and classes
-
-## Testing
-- Unit tests must accompany all new utilities
-- Use describe/it pattern from Jest
-- Test edge cases including empty inputs, null, undefined
+- Prefer const over let
+- Use named exports over default exports for utilities
 
 ## Git Conventions
-- Use conventional commits: feat:, fix:, docs:, test:, refactor:
-- Keep commits focused and atomic
-- PR titles must reference the issue number
+- Use conventional commits: feat:, fix:, chore:, docs:
+- PR titles: type: short description
+
+## Testing
+- Place tests next to source files with .test.ts suffix
+- Use Vitest for unit tests
+
+## File Organization
+- Utils go in src/utils/
+- Middleware in src/middleware/
+- Services in src/services/
+- Models in src/models/
