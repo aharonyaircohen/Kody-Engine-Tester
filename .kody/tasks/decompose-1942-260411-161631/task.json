@@ -1,0 +1,26 @@
+{
+  "task_type": "feature",
+  "title": "Add string capitalize utility function",
+  "description": "Add a string capitalize utility function in src/utils/stringUtils.ts with co-located tests in src/utils/stringUtils.test.ts. The function should capitalize the first letter of a string (and only the first letter). This is a simple task with complexity_score expected to be < 4, triggering fallback to normal pipeline and PR creation via runPipeline().",
+  "scope": ["src/utils/stringUtils.ts", "src/utils/stringUtils.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    {
+      "file": "src/utils/capitalize-words.ts",
+      "description": "Single-function utility file with direct exports, following simple module pattern"
+    },
+    {
+      "file": "src/utils/capitalize-words.test.ts",
+      "description": "Co-located vitest test file using describe/it/expect pattern"
+    },
+    {
+      "file": "src/utils/clamp.ts",
+      "description": "Simple pure-function utility with no dependencies, consistent with string capitalize pattern"
+    },
+    {
+      "file": "src/utils/clamp.test.ts",
+      "description": "Standard unit test co-location and structure"
+    }
+  ],
+  "questions": []
+}
