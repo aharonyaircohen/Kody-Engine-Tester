@@ -132,6 +132,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
           token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          path: .
 
       - name: Checkout PR branch (for fix/rerun/review on PRs)
         if: github.event.issue.pull_request && (needs.parse.outputs.mode == 'fix' || needs.parse.outputs.mode == 'fix-ci' || needs.parse.outputs.mode == 'rerun' || needs.parse.outputs.mode == 'review' || needs.parse.outputs.mode == 'resolve')
