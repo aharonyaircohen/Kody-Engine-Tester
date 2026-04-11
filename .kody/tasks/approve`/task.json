@@ -1,0 +1,19 @@
+
+```json
+{
+  "task_type": "feature",
+  "title": "Add CORS middleware with tests",
+  "description": "Create a new CORS middleware in src/middleware/cors.ts with comprehensive unit tests in src/middleware/cors.test.ts. The middleware must: (1) set CORS headers (Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Max-Age), (2) handle preflight OPTIONS requests, (3) support configurable allowed origins via a config object, (4) return 403 with CORS headers for disallowed origins (strict approach per approval comment). Include proper TypeScript interfaces for config and types.",
+  "scope": [
+    "src/middleware/cors.ts",
+    "src/middleware/cors.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts: Factory function pattern (createRateLimiterMiddleware) returning middleware with config interface, uses NextRequest/NextResponse, sets headers on response",
+    "src/middleware/csrf-middleware.ts: Middleware factory with async handler, SAFE_METHODS array for GET/HEAD/OPTIONS passthrough, errorResponse helper returning JSON with status and headers",
+    "src/middleware/rate-limiter.test.ts: Vitest test suite with describe/it/expect, afterEach cleanup with destroy/vi.useRealTimers, factory helper makeRequest for creating NextRequest with headers"
+  ],
+  "questions": []
+}
+```
