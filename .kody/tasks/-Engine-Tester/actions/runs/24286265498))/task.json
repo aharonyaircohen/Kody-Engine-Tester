@@ -1,0 +1,23 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify auth middleware implementation",
+  "description": "Auth middleware functionality already exists: src/middleware/auth-middleware.ts provides createAuthMiddleware factory with JWT validation, rate limiting, 401 responses, and user context attachment. src/auth/withAuth.ts provides route-level protection for Next.js API routes. Multiple routes already use withAuth (enroll, admin-stats, gradebook, courses/search, quizzes, notes, notifications). Tests exist in src/middleware/auth-middleware.test.ts covering valid/invalid/expired/malformed tokens, revoked sessions, and rate limiting. Task may require adding Next.js global middleware.ts for route-segment-level global registration if not already present.",
+  "scope": [
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/_auth.ts",
+    "src/auth/jwt-service.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts:createAuthMiddleware factory with JWT verification, rate limiting, 401 responses, user/session context",
+    "src/auth/withAuth.ts:Next.js route handler wrapper with Bearer token extraction and role-based access control",
+    "src/auth/_auth.ts:extractBearerToken and checkRole utility functions",
+    "src/middleware/request-logger.ts:Express-style middleware chain pattern",
+    "src/utils/middleware.ts:Pipeline middleware composition utility"
+  ],
+  "questions": []
+}
+```
