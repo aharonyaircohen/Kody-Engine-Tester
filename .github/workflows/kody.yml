@@ -113,10 +113,7 @@ jobs:
   # ─── Orchestrate ─────────────────────────────────────────────────────────────
   orchestrate:
     needs: parse
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'issue_comment' && needs.parse.result == 'success') ||
-      (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested')
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request_review' || (github.event_name == 'issue_comment' && needs.parse.result == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
