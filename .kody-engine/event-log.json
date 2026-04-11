@@ -25,5 +25,59 @@
     ],
     "hookErrors": {},
     "emittedAt": "2026-04-11T16:28:14.012Z"
+  },
+  {
+    "id": "1775940669573-m5hnsik",
+    "runId": "2012-retest",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "2012-retest",
+      "issueNumber": 2012
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T20:51:09.573Z"
+  },
+  {
+    "id": "1775940669573-5o7f2z8",
+    "runId": "2012-retest",
+    "event": "step.started",
+    "payload": {
+      "runId": "2012-retest",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T20:51:09.573Z"
+  },
+  {
+    "id": "1775940875277-mezxug3",
+    "runId": "2012-retest",
+    "event": "step.complete",
+    "payload": {
+      "runId": "2012-retest",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T20:54:35.277Z"
+  },
+  {
+    "id": "1775940875277-6mdejym",
+    "runId": "2012-retest",
+    "event": "step.started",
+    "payload": {
+      "runId": "2012-retest",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T20:54:35.277Z"
   }
 ]
