@@ -125,9 +125,27 @@ wait_for_issue() {
       # Poll the new pipeline run directly (not the old one)
       while [ $(date +%s) -lt $deadline ]; do
         local status=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
-        if [[ "$status" == "completed/success" || "$status" == "completed/failure" || "$status" == "completed/cancelled" ]]; then
-          echo "[$(date +%H:%M:%S)] Approval run $run_id completed: $status"
+        if [[ "$status" == "completed/success" ]]; then
+          echo "[$(date +%H:%M:%S)] Approval run $run_id succeeded"
           return 0
+        elif [[ "$status" == "completed/failure" || "$status" == "completed/cancelled" ]]; then
+          # Approval pipeline was cancelled or failed — the error handler may have re-triggered.
+          # Check for a newer pipeline run on this issue.
+          local new_run=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$issue/comments \
+            --jq '[.[] | select(.body | contains("Kody pipeline started"))] | last.body' 2>/dev/null | \
+            grep -oP 'actions/runs/\K\d+' | tail -1)
+          if [ -n "$new_run" ] && [ "$new_run" != "$run_id" ]; then
+            echo "[$(date +%H:%M:%S)] Approval pipeline $run_id was replaced by $new_run — tracking new run"
+            run_id=$new_run
+            sleep 5
+            continue
+          fi
+          echo "[$(date +%H:%M:%S)] Approval run $run_id $status — retrying approval"
+          gh issue comment $issue --body "@kody approve
+
+1. Proceed with your best judgment" 2>/dev/null
+          sleep 10
+          continue
         fi
         sleep 15
       done
@@ -138,9 +156,25 @@ wait_for_issue() {
     # No pending approval — poll the current pipeline run if we have one
     if [ -n "$run_id" ]; then
       local status=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
-      if [[ "$status" == "completed/success" || "$status" == "completed/failure" || "$status" == "completed/cancelled" ]]; then
-        echo "[$(date +%H:%M:%S)] Run $run_id completed: $status"
+      if [[ "$status" == "completed/success" ]]; then
+        echo "[$(date +%H:%M:%S)] Run $run_id succeeded"
         return 0
+      elif [[ "$status" == "completed/failure" ]]; then
+        echo "[$(date +%H:%M:%S)] Run $run_id failed"
+        return 1
+      elif [[ "$status" == "completed/cancelled" ]]; then
+        # Pipeline was cancelled — check for a replacement run triggered by the error handler.
+        local new_run=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$issue/comments \
+          --jq '[.[] | select(.body | contains("Kody pipeline started"))] | last.body' 2>/dev/null | \
+          grep -oP 'actions/runs/\K\d+' | tail -1)
+        if [ -n "$new_run" ] && [ "$new_run" != "$run_id" ]; then
+          echo "[$(date +%H:%M:%S)] Run $run_id cancelled — tracking replacement $new_run"
+          run_id=$new_run
+        else
+          echo "[$(date +%H:%M:%S)] Run $run_id cancelled — no replacement found, re-triggering"
+          gh issue comment $issue --body "@kody" 2>/dev/null
+          sleep 30
+        fi
       fi
     else
       # No run ID yet — check labels (for pipelines without approval gates)
@@ -362,6 +396,30 @@ done
 wait
 ```
 
+**IMPORTANT — Auto-approve risk-gate questions:** After triggering all issues, wait ~60 seconds then check for approval questions on HIGH complexity issues (T03) and auto-answer them:
+```bash
+# Wait for plan stage to run and risk gate to fire
+sleep 60
+
+# Check T03's issue for approval question and answer it
+# (The issue number for T03 is stored — extract it from $PHASE1_ISSUES)
+T03_ISSUE=$(echo $PHASE1_ISSUES | tr ' ' '\n' | while read n; do
+  title=$(gh issue view $n --json title -q '.title')
+  if echo "$title" | grep -q "T03"; then echo $n; fi
+done)
+if [ -n "$T03_ISSUE" ]; then
+  question=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$T03_ISSUE/comments --jq '.[-2].body // ""' 2>/dev/null)
+  if echo "$question" | grep -qi "questions before\|asking.*before\|approve"; then
+    gh issue comment $T03_ISSUE --body "@kody approve
+
+1. Keep UserStore as a fallback for non-Payload operations during migration
+2. Check dependencies before removing — keep as fallback if anything still uses it
+3. Align UserRole to RbacRole — make RbacRole the source of truth"
+    echo "[$(date +%H:%M:%S)] Auto-approved T03 (#$T03_ISSUE)"
+  fi
+fi
+```
+
 ### STEP B2 — Monitor all Phase 1 pipelines (detached background)
 
 Launch all monitors in the background, then wait for all at once:
@@ -375,13 +433,14 @@ wait
 
 After ALL Phase 1 pipelines complete, verify each test and then proceed to Phase 2.
 
-### T03 — Contingency plan
+### T03 — Risk gate handling
 
-T03 must pause at the risk gate for T05 (approve) to work. If T03 doesn't pause (e.g., complexity auto-detected as MEDIUM instead of HIGH):
+In watch mode (single-shot `--print` execution), the agent cannot wait interactively for approval questions. After triggering T03, the auto-approve logic in STEP B handles the risk gate automatically.
 
-1. Check if complexity was detected correctly: `gh run view <id> --log | grep "Complexity"`
-2. If wrong complexity: close T03's issue, recreate with a more unambiguously HIGH task (e.g., "Redesign the entire authentication system: replace session-based auth with JWT, migrate the user schema, add RBAC with admin/editor/viewer roles, and update all API routes")
-3. Alternative: comment `@kody rerun --from plan` with a separate comment `@kody full --complexity high` to force HIGH
+If complexity is not detected as HIGH:
+1. Check: `gh run view <id> --log | grep "Complexity"`
+2. Force HIGH: close T03's issue, recreate with a more unambiguously HIGH task (e.g., "Redesign the entire authentication system: replace session-based auth with JWT, migrate the user schema, add RBAC with admin/editor/viewer roles, and update all API routes")
+3. Trigger with `@kody` and let the auto-approve logic handle it
 
 ### T19 — fix-ci auto-trigger
 
