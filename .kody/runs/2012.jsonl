@@ -1,0 +1,1 @@
+{"runId":"2012-retest","issueNumber":2012,"command":"run","startedAt":"2026-04-11T20:50:42.517Z","completedAt":"2026-04-11T20:58:48.214Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
