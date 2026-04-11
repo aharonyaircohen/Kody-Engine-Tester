@@ -93,7 +93,7 @@ jobs:
           node-version: 22
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/engine
+        run: npm install -g @kody-ade/kody-engine-lite
 
       - name: Parse inputs
         id: parse
@@ -124,7 +124,7 @@ jobs:
           node-version: 22
       - name: Install Kody Engine (parse)
         if: github.event_name == 'issue_comment'
-        run: npm install -g @kody-ade/engine
+        run: npm install -g @kody-ade/kody-engine-lite
       - name: Parse inputs
         if: github.event_name == 'issue_comment'
         id: parse-inline
@@ -174,7 +174,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/engine
+        run: npm install -g @kody-ade/kody-engine-lite
 
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
