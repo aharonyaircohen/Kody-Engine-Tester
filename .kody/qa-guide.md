@@ -73,6 +73,11 @@
 - **Name:** Media
 - **Fields:** alt
 
+### `/admin/collections/modules`
+
+- **Name:** Modules
+- **Fields:** title, course, order, description
+
 ### `/admin/collections/notifications`
 
 - **Name:** Notifications
@@ -96,7 +101,7 @@
 ### `/admin/collections/users`
 
 - **Name:** Users
-- **Fields:** firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
+- **Fields:** firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt, lastLogin, permissions
 
 ### `/admin/collections/certificates`
 

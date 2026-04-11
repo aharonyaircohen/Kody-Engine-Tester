@@ -1,4 +1,4 @@
-# Architecture (auto-detected 2026-04-04)
+# Architecture (auto-detected 2026-04-11)
 
 ## Overview
 
@@ -10,5 +10,5 @@
 - CMS: Payload CMS
 - Package manager: pnpm
 - Module system: ESM
-- Top-level directories: docs, scripts, skills, src, tests
-- src/ structure: api, app, auth, collections, components, contexts, hooks, middleware, migrations, pages, security, services, utils, validation
+- Top-level directories: docs, skills, src, tests
+- src/ structure: api, app, auth, collections, components, contexts, hooks, middleware, migrations, models, pages, routes, security, services, utils, validation
