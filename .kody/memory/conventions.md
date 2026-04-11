@@ -49,3 +49,5 @@ import { LessonEditor } from './LessonEditor'
 - Interface suffixes: `Options`, `Result`, `Input` for option/result types (e.g., `UrlShortenerOptions`, `ShortCodeResult`)
 - JSDoc: `@example` and `@param` tags for utility functions (see `src/utils/url-shortener.ts`)
 - ProtectedRoute: wrapper component for auth-protected pages (see `src/pages/auth/profile.tsx`)
+## Learned 2026-04-11 (task: 2009-retest)
+- Active directories: .kody/memory, .kody/steps, .kody
