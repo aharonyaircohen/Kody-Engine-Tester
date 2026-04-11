@@ -58,6 +58,7 @@ permissions:
   issues: write
   pull-requests: write
   contents: write
+  workflows: write
 
 jobs:
   # ─── Parse (issue_comment trigger only) ──────────────────────────────────────
@@ -132,7 +133,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: true
-          token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          # Always use GITHUB_TOKEN for git operations — app token lacks workflows: write
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: .
 
       - name: Checkout PR branch (for fix/rerun/review on PRs)
@@ -328,7 +330,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: true
-          token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          # Always use GITHUB_TOKEN for git operations — app token lacks workflows: write
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: .
 
       - name: Checkout PR branch (for fix/rerun/review on PRs)
