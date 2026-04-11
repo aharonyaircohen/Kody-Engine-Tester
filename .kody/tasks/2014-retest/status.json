@@ -1,6 +1,6 @@
 {
   "taskId": "2014-retest",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -15,22 +15,13 @@
     },
     "build": {
       "state": "completed",
-      "startedAt": "2026-04-11T20:55:46.201Z",
-      "completedAt": "2026-04-11T20:58:00.000Z",
+      "completedAt": "2026-04-11T20:58:04.246Z",
       "retries": 0,
-      "verification": {
-        "command": "kody-engine release --dry-run",
-        "results": {
-          "version_bump": "1.0.0 → 1.1.0 (minor) ✅",
-          "release_branch": "release/v1.1.0 ✅",
-          "release_label": "kody:release ✅",
-          "changelog_grouped": "Features, Bug Fixes, Maintenance, Other Changes, Tests ✅",
-          "ci_status_check": "Step 1/4 runs CI checks (blocked by pre-existing test failure unrelated to release process)"
-        }
-      }
+      "promptTokens": 4066
     },
     "verify": {
       "state": "completed",
+      "completedAt": "2026-04-11T20:59:34.735Z",
       "retries": 0
     },
     "review": {
@@ -42,13 +33,15 @@
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-11T20:59:34.738Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-11T20:50:42.093Z",
-  "updatedAt": "2026-04-11T20:58:00.000Z",
+  "updatedAt": "2026-04-11T20:59:34.738Z",
   "sessions": {
-    "explore": "2cf1203d-6726-4e8e-b5c5-824dd3f59358"
+    "explore": "2cf1203d-6726-4e8e-b5c5-824dd3f59358",
+    "build": "7afb52d5-d2ca-4f18-8f18-2a5f4aeddbff"
   }
 }
