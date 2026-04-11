@@ -1,0 +1,19 @@
+{
+  "task_type": "feature",
+  "title": "Add /login and /register HTTP endpoints",
+  "description": "Create POST /register and POST /login HTTP route handlers that expose the existing auth business logic as REST endpoints. The existing register() and login() functions in src/api/auth/ are already implemented but lack Next.js route handlers. New routes should follow the existing pattern in src/app/api/*/route.ts using NextRequest/NextResponse and getPayloadInstance().",
+  "scope": [
+    "src/app/api/auth/register/route.ts",
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.test.ts",
+    "src/app/api/auth/login/route.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/app/api/notes/route.ts - Next.js App Router route pattern with GET/POST exports, uses getPayloadInstance(), withAuth HOC, and returns JSON responses with proper status codes",
+    "src/api/auth/login.ts - Existing login() business logic that validates credentials and returns accessToken/refreshToken",
+    "src/api/auth/register.ts - Existing register() business logic that creates users with email/password and returns tokens",
+    "src/auth/jwt-service.ts - TokenPayload interface with userId, email, role, sessionId, generation fields"
+  ],
+  "questions": []
+}

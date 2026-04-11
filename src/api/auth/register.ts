@@ -22,6 +22,8 @@ export async function register(
   email: string,
   password: string,
   confirmPassword: string,
+  firstName: string,
+  lastName: string,
   ipAddress: string,
   userAgent: string,
   payload: Payload,
@@ -29,6 +31,10 @@ export async function register(
 ) {
   if (!email || !password || !confirmPassword) {
     throw createError('Email, password, and confirm password are required', 400)
+  }
+
+  if (!firstName || !lastName) {
+    throw createError('First name and last name are required', 400)
   }
 
   if (!EMAIL_REGEX.test(email)) {
@@ -61,6 +67,8 @@ export async function register(
     data: {
       email,
       password,
+      firstName,
+      lastName,
       role: 'viewer',
     } as any,
   })

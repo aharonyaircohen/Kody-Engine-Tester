@@ -55,7 +55,7 @@ describe('register', () => {
     mockPayload.create.mockResolvedValue({ id: 1, email: 'new@example.com', role: 'viewer' })
     mockPayload.update.mockResolvedValue(mockUser)
 
-    const result = await register('new@example.com', 'NewPass1!', 'NewPass1!', '127.0.0.1', 'UA', mockPayload as any, authService)
+    const result = await register('new@example.com', 'NewPass1!', 'NewPass1!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService)
 
     expect(result.accessToken).toBeDefined()
     expect(result.refreshToken).toBeDefined()
@@ -64,44 +64,44 @@ describe('register', () => {
   })
 
   it('should return 400 for invalid email', async () => {
-    await expect(register('not-an-email', 'NewPass1!', 'NewPass1!', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('not-an-email', 'NewPass1!', 'NewPass1!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 400 for mismatched passwords', async () => {
-    await expect(register('new@example.com', 'NewPass1!', 'Different1!', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('new@example.com', 'NewPass1!', 'Different1!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 400 for weak password - too short', async () => {
-    await expect(register('new@example.com', 'Ab1!', 'Ab1!', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('new@example.com', 'Ab1!', 'Ab1!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 400 for weak password - no uppercase', async () => {
-    await expect(register('new@example.com', 'password1!', 'password1!', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('new@example.com', 'password1!', 'password1!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 400 for weak password - no number', async () => {
-    await expect(register('new@example.com', 'Password!', 'Password!', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('new@example.com', 'Password!', 'Password!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 400 for weak password - no special char', async () => {
-    await expect(register('new@example.com', 'Password1', 'Password1', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('new@example.com', 'Password1', 'Password1', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
   it('should return 409 for duplicate email', async () => {
     mockPayload.find.mockResolvedValue({ docs: [{ id: 1, email: 'existing@example.com' }] })
 
-    await expect(register('existing@example.com', 'NewPass1!', 'NewPass1!', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('existing@example.com', 'NewPass1!', 'NewPass1!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 409 })
   })
 
   it('should return 400 for missing fields', async () => {
-    await expect(register('', '', '', '127.0.0.1', 'UA', mockPayload as any, authService))
+    await expect(register('', '', '', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService))
       .rejects.toMatchObject({ status: 400 })
   })
 
@@ -122,7 +122,7 @@ describe('register', () => {
     mockPayload.create.mockResolvedValue({ id: 1, email: 'new@example.com', role: 'viewer' })
     mockPayload.update.mockResolvedValue(mockUser)
 
-    const result = await register('new@example.com', 'NewPass1!', 'NewPass1!', '127.0.0.1', 'UA', mockPayload as any, authService)
+    const result = await register('new@example.com', 'NewPass1!', 'NewPass1!', 'John', 'Doe', '127.0.0.1', 'UA', mockPayload as any, authService)
 
     expect(result.user.role).toBe('viewer')
   })
