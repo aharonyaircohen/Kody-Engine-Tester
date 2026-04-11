@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add metrics collection middleware",
+  "description": "Create a new middleware in src/middleware/metricsMiddleware.ts that tracks request count, response time, and status codes per route; exposes metrics via /metrics endpoint in JSON format; stores metrics in memory with optional reset function; and adds X-Response-Time header to all responses. Include comprehensive tests in src/middleware/metricsMiddleware.test.ts.",
+  "scope": [
+    "src/middleware/metricsMiddleware.ts",
+    "src/middleware/metricsMiddleware.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts - Uses NextRequest/NextResponse, factory pattern with config object, excludePaths Set for filtering, Map for in-flight tracking",
+    "src/middleware/request-logger.test.ts - Uses vitest with beforeEach/afterEach for fake timers, mock logger objects, makeRequest helper for test requests"
+  ],
+  "questions": []
+}
