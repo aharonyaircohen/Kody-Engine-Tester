@@ -49,7 +49,9 @@ on:
     paths: ["src/**", "kody.config.json", "package.json"]
 
 concurrency:
-  group: kody-${{ github.event.inputs.task_id || github.event.issue.number || github.sha }}
+  # Per-issue concurrency using run_id as unique key — avoids cancellation cascades
+  # when multiple pipelines are triggered on different issues simultaneously.
+  group: kody-${{ github.event.inputs.task_id || github.run_id }}
 
 permissions:
   issues: write
