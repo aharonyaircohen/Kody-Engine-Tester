@@ -77,6 +77,7 @@ jobs:
       issue_number: ${{ steps.parse.outputs.issue_number }}
       pr_number: ${{ steps.parse.outputs.pr_number }}
       feedback: ${{ steps.parse.outputs.feedback }}
+      complexity: ${{ steps.parse.outputs.complexity }}
       ci_run_id: ${{ steps.parse.outputs.ci_run_id }}
       ticket_id: ${{ steps.parse.outputs.ticket_id }}
       prd_file: ${{ steps.parse.outputs.prd_file }}
@@ -111,32 +112,12 @@ jobs:
   orchestrate:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (needs.parse.result == 'success' && needs.parse.outputs.valid == 'true') ||
+      (needs.parse.result == 'success' && (needs.parse.outputs.valid == 'true' || needs.parse.outputs.valid == '')) ||
       (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested')
     needs: [parse]
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      # Parse steps (only for issue_comment trigger — for workflow_dispatch inputs come from github.event.inputs)
-      - uses: actions/setup-node@v4
-        if: github.event_name == 'issue_comment'
-        with:
-          node-version: 22
-      - name: Install Kody Engine (parse)
-        if: github.event_name == 'issue_comment'
-        run: npm install -g @kody-ade/engine
-      - name: Parse inputs
-        if: github.event_name == 'issue_comment'
-        id: parse-inline
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-          COMMENT_BODY: ${{ github.event.comment.body }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_IS_PR: ${{ github.event.issue.pull_request && 'true' || '' }}
-          TRIGGER_TYPE: comment
-        run: kody-engine ci-parse
-
       - name: Generate App token
         id: app-token
         if: vars.KODY_APP_ID != ''
@@ -150,7 +131,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
 
       - name: Checkout PR branch (for fix/rerun/review on PRs)
         if: github.event.issue.pull_request && (needs.parse.outputs.mode == 'fix' || needs.parse.outputs.mode == 'fix-ci' || needs.parse.outputs.mode == 'rerun' || needs.parse.outputs.mode == 'review' || needs.parse.outputs.mode == 'resolve')
@@ -207,7 +188,7 @@ jobs:
 
       - name: Run Kody pipeline
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           TASK_ID: ${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}
           MODE: ${{ github.event.inputs.mode || needs.parse.outputs.mode || 'full' }}
           FROM_STAGE: ${{ github.event.inputs.from_stage || needs.parse.outputs.from_stage }}
