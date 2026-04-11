@@ -29,3 +29,25 @@ I implemented the CORS middleware following the existing patterns in the codebas
 - `createCorsMiddleware(config)` factory function returning middleware
 - Sets CORS headers: `Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`, `Access-Control-Allow-Headers`, `Acc
 ...(truncated)
+
+### autofix (2026-04-11T02:27:08)
+Changed `let context` to `const context` on line 80. The variable is never reassigned, so this is a safe change that also prevents accidental future reassignment.
+
+
+### review (2026-04-11T02:30:31)
+## Verdict: PASS
+
+## Summary
+
+Created CORS middleware (`src/middleware/cors.ts`) with comprehensive unit tests (`src/middleware/cors.test.ts`, 29 tests) following existing middleware factory patterns from `rate-limiter.ts` and `csrf-middleware.ts`. The middleware handles preflight OPTIONS requests, configurable allowed origins (including wildcard), credentials, and returns 403 with CORS headers for disallowed origins per the approval comment.
+
+## Findings
+
+### Critical
+None.
+
+### Major
+None.
+
+##
+...(truncated)
