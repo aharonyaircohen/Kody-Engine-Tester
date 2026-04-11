@@ -163,17 +163,32 @@ wait_for_issue() {
         echo "[$(date +%H:%M:%S)] Run $run_id failed"
         return 1
       elif [[ "$status" == "completed/cancelled" ]]; then
-        # Pipeline was cancelled — check for a replacement run triggered by the error handler.
-        local new_run=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$issue/comments \
-          --jq '[.[] | select(.body | contains("Kody pipeline started"))] | last.body' 2>/dev/null | \
-          grep -oP 'actions/runs/\K\d+' | tail -1)
+        # Pipeline was cancelled — check if a replacement is already running (don't re-trigger)
+        local new_run=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs \
+          --jq ".workflow_runs[] | select(.event == \"issue_comment\" and .display_title | contains(\"#${issue}\")) | select(.status == \"in_progress\" or .status == \"queued\") | .id" 2>/dev/null | head -1)
         if [ -n "$new_run" ] && [ "$new_run" != "$run_id" ]; then
-          echo "[$(date +%H:%M:%S)] Run $run_id cancelled — tracking replacement $new_run"
+          echo "[$(date +%H:%M:%S)] Run $run_id cancelled — replacement $new_run already running, tracking it"
           run_id=$new_run
-        else
-          echo "[$(date +%H:%M:%S)] Run $run_id cancelled — no replacement found, re-triggering"
+          sleep 5
+          continue
+        elif [ -z "$new_run" ]; then
+          # No replacement — re-trigger and immediately track the new pipeline
+          echo "[$(date +%H:%M:%S)] Run $run_id cancelled — no active replacement, re-triggering"
           gh issue comment $issue --body "@kody" 2>/dev/null
-          sleep 30
+          local retry=0
+          while [ $retry -lt 60 ]; do
+            sleep 5
+            retry=$((retry + 5))
+            new_run=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs \
+              --jq ".workflow_runs[] | select(.event == \"issue_comment\" and .display_title | contains(\"#${issue}\")) | select(.status == \"in_progress\" or .status == \"queued\") | .id" 2>/dev/null | head -1)
+            if [ -n "$new_run" ] && [ "$new_run" != "$run_id" ]; then
+              run_id=$new_run
+              echo "[$(date +%H:%M:%S)] Re-trigger succeeded — tracking new run $run_id"
+              break
+            fi
+          done
+          sleep 10
+          continue
         fi
       fi
     else
@@ -182,6 +197,10 @@ wait_for_issue() {
       if echo "$labels" | grep -qE 'kody:done\|kody:failed'; then
         echo "[$(date +%H:%M:%S)] Issue #$issue done (no tracked run)"
         return 0
+      elif echo "$labels" | grep -q 'kody:paused'; then
+        echo "[$(date +%H:%M:%S)] Issue #$issue is paused — waiting for approval"
+        sleep 15
+        continue
       fi
     fi
 
@@ -403,28 +422,32 @@ done
 wait
 ```
 
-**IMPORTANT — Auto-approve risk-gate questions:** After triggering all issues, wait ~60 seconds then check for approval questions on HIGH complexity issues (T03) and auto-answer them:
+**IMPORTANT — Auto-approve risk-gate questions:** After triggering all issues, immediately start polling for approval questions on HIGH complexity issues (T03). Use a polling loop instead of `sleep` (single-shot Bash tool cannot reliably use `sleep &`):
 ```bash
-# Wait for plan stage to run and risk gate to fire
-sleep 60
+# Poll for approval question on T03 — runs in background so sleep works
+(
+  T03_ISSUE=$(echo $PHASE1_ISSUES | tr ' ' '\n' | while read n; do
+    title=$(gh issue view $n --json title -q '.title')
+    if echo "$title" | grep -q "T03"; then echo $n; fi
+  done)
+  if [ -z "$T03_ISSUE" ]; then exit 0; fi
 
-# Check T03's issue for approval question and answer it
-# (The issue number for T03 is stored — extract it from $PHASE1_ISSUES)
-T03_ISSUE=$(echo $PHASE1_ISSUES | tr ' ' '\n' | while read n; do
-  title=$(gh issue view $n --json title -q '.title')
-  if echo "$title" | grep -q "T03"; then echo $n; fi
-done)
-if [ -n "$T03_ISSUE" ]; then
-  question=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$T03_ISSUE/comments --jq '.[-2].body // ""' 2>/dev/null)
-  if echo "$question" | grep -qi "questions before\|asking.*before\|approve"; then
-    gh issue comment $T03_ISSUE --body "@kody approve
+  # Poll every 15s for up to 3 minutes
+  for i in $(seq 1 12); do
+    sleep 15
+    question=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$T03_ISSUE/comments --jq '.[-2].body // ""' 2>/dev/null)
+    if echo "$question" | grep -qi "questions before\|asking.*before\|approve"; then
+      gh issue comment $T03_ISSUE --body "@kody approve
 
 1. Keep UserStore as a fallback for non-Payload operations during migration
 2. Check dependencies before removing — keep as fallback if anything still uses it
 3. Align UserRole to RbacRole — make RbacRole the source of truth"
-    echo "[$(date +%H:%M:%S)] Auto-approved T03 (#$T03_ISSUE)"
-  fi
-fi
+      echo "[$(date +%H:%M:%S)] Auto-approved T03 (#$T03_ISSUE)"
+      exit 0
+    fi
+  done
+) &
+AUTO_APPROVE_PID=$!
 ```
 
 ### STEP B2 — Monitor all Phase 1 pipelines (detached background)
