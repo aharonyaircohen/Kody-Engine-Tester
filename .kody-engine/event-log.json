@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1775924894012-kwbwyg4",
+    "runId": "hotfix-1949-260411-161652",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "hotfix-1949-260411-161652",
+      "issueNumber": 1949
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:28:14.012Z"
+  },
+  {
+    "id": "1775924894012-m0h2yi9",
+    "runId": "hotfix-1949-260411-161652",
+    "event": "step.started",
+    "payload": {
+      "runId": "hotfix-1949-260411-161652",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:28:14.012Z"
+  }
+]
