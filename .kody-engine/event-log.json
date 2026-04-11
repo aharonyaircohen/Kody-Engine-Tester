@@ -25,5 +25,59 @@
     ],
     "hookErrors": {},
     "emittedAt": "2026-04-11T16:28:14.012Z"
+  },
+  {
+    "id": "1775950814578-l6v6tih",
+    "runId": "task-2003-rerun",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "task-2003-rerun",
+      "issueNumber": 2003
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:40:14.578Z"
+  },
+  {
+    "id": "1775950814578-02cwggv",
+    "runId": "task-2003-rerun",
+    "event": "step.started",
+    "payload": {
+      "runId": "task-2003-rerun",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:40:14.578Z"
+  },
+  {
+    "id": "1775950947476-mu1lg2v",
+    "runId": "task-2003-rerun",
+    "event": "step.complete",
+    "payload": {
+      "runId": "task-2003-rerun",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:42:27.476Z"
+  },
+  {
+    "id": "1775950947476-s62dde2",
+    "runId": "task-2003-rerun",
+    "event": "step.started",
+    "payload": {
+      "runId": "task-2003-rerun",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:42:27.476Z"
   }
 ]
