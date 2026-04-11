@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify T31 Bootstrap extend mode",
+  "description": "Verify bootstrap generates/extends memory files (.kody/memory/), step files (.kody/steps/), tools.yml, and creates lifecycle labels. Confirmed: 5 memory files, 6 step files, tools.yml exist. Git diff shows net line additions across all files (extend mode). 18 kody:* labels exist including core lifecycle labels (planning, building, done, review, failed, verifying, waiting).",
+  "scope": [".kody/memory/architecture.md", ".kody/memory/conventions.md", ".kody/memory/domain.md", ".kody/memory/patterns.md", ".kody/memory/testing-strategy.md", ".kody/steps/autofix.md", ".kody/steps/build.md", ".kody/steps/plan.md", ".kody/steps/review.md", ".kody/steps/review-fix.md", ".kody/steps/taskify.md", ".kody/tools.yml"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}

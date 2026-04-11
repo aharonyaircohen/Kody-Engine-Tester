@@ -37,5 +37,15 @@ import { LessonEditor } from './LessonEditor'
 - Uses eslint for linting
 
 ## Learned 2026-04-10 (task: 1529-260410-102822)
-- Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-11 (task: 2009-retest)
+- CSS Modules: import styles from `.module.css` files (e.g., `src/components/course-editor/ModuleList.tsx`)
+- Constants: UPPER_CASE for module-level constants (e.g., `HTML_ENTITIES` in `src/security/sanitizers.ts:1`)
+- Security utilities: dedicated `src/security/` directory for sanitizers (sanitizeHtml, sanitizeSql, sanitizeUrl)
+- Service classes: dependency injection via constructor (e.g., `DiscussionService` in `src/services/discussions.ts`)
+- Store classes: class-based data stores with private Map fields (e.g., `CertificatesStore` in `src/collections/certificates.ts`)
+- Recursive patterns: tree traversal functions (e.g., `getThreadDepth` in `src/services/discussions.ts`)
+- Interface suffixes: `Options`, `Result`, `Input` for option/result types (e.g., `UrlShortenerOptions`, `ShortCodeResult`)
+- JSDoc: `@example` and `@param` tags for utility functions (see `src/utils/url-shortener.ts`)
+- ProtectedRoute: wrapper component for auth-protected pages (see `src/pages/auth/profile.tsx`)
