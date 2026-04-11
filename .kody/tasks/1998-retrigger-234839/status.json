@@ -1,0 +1,43 @@
+{
+  "taskId": "1998-retrigger-234839",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-11T20:51:54.004Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 2237
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "running",
+      "startedAt": "2026-04-11T20:51:56.744Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-11T20:50:22.194Z",
+  "updatedAt": "2026-04-11T20:51:56.744Z",
+  "sessions": {
+    "explore": "bc043250-a838-4e52-91b2-7ebfa87dac6a"
+  }
+}
