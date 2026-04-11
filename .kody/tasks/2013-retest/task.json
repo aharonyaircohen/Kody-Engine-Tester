@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify release dry-run acceptance criteria",
+"description": "Verify that @kody release --dry-run correctly analyzes commits and previews release without making changes. All 5 acceptance criteria verified: (1) mode=release, dry_run=true with [dry-run] prefix in logs, (2) logs show 100 commits parsed and minor bump 1.0.0 → 1.1.0, (3) dry-run shows 'Would create PR' without actual PR creation, (4) no version files (package.json, CHANGELOG.md) modified in git status, (5) no tags created locally or remotely.",
+"scope": [".kody/tasks/2013-retest/task.md", ".kody/tasks/2013-retest/task.json", ".kody/tasks/2013-retest/status.json"],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}
