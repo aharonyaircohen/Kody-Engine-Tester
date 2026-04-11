@@ -39,3 +39,7 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-10 (task: 1529-260410-102822)
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-11 (task: 1896-260411-155209)
+- Uses @/ path aliases for imports
+- Active directories: src/app/api/auth/login, src/app/api/auth/register

@@ -1,0 +1,3 @@
+{"taskId":"1896-260411-155209","timestamp":"2026-04-11T16:00:43.958Z","stage":"review","patterns":["verdict:FAIL","finding:security"],"room":"api"}
+{"taskId":"1896-260411-155209","timestamp":"2026-04-11T16:03:47.243Z","stage":"review","patterns":["verdict:FAIL","finding:security"],"room":"api"}
+{"taskId":"1896-260411-155209","timestamp":"2026-04-11T16:05:42.003Z","stage":"review","patterns":["verdict:FAIL","finding:security"],"room":"api"}
