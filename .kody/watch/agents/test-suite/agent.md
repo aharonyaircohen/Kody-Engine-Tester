@@ -388,9 +388,16 @@ Track issue numbers in a single variable: `PHASE1_ISSUES=""`
 
 ### STEP B — Trigger all Phase 1 issues
 
-After ALL issues are created, trigger them all:
+After ALL issues are created, trigger them. **CRITICAL — avoid double-trigger:** Before triggering each issue, check if it already has an in-progress pipeline. If so, skip it (a pipeline is already running).
 ```bash
 for issue in $PHASE1_ISSUES; do
+  # Skip if pipeline already in progress (don't re-trigger — cancels running pipeline)
+  in_progress=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs \
+    --jq ".workflow_runs[] | select(.event == \"issue_comment\" and .display_title | contains(\"#${issue}\")) | select(.status == \"in_progress\") | .id" 2>/dev/null | head -1)
+  if [ -n "$in_progress" ]; then
+    echo "[$(date +%H:%M:%S)] Issue #$issue already has in-progress pipeline, skipping trigger"
+    continue
+  fi
   gh issue comment $issue --body "<command>" &
 done
 wait
