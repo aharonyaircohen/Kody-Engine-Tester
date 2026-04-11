@@ -1,1 +1,2 @@
 {"runId":"2003-retest","issueNumber":2003,"command":"run","startedAt":"2026-04-11T20:50:51.242Z","completedAt":"2026-04-11T21:30:34.319Z","outcome":"failed","failedStage":"verify","failedError":"Verification failed after autofix attempts","stagesCompleted":["taskify","plan","build"],"feedback":""}
+{"runId":"task-2003-rerun","issueNumber":2003,"command":"run","startedAt":"2026-04-11T23:39:46.749Z","completedAt":"2026-04-11T23:45:26.582Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
