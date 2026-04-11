@@ -1,12 +1,11 @@
 import { UserStore } from '../auth/user-store'
-import { SessionStore } from '../auth/session-store'
 import { JwtService } from '../auth/jwt-service'
 import type { User } from '../auth/user-store'
-import type { Session } from '../auth/session-store'
+import type { RbacRole } from '../auth/_auth'
 
 export interface AuthContext {
   user?: User
-  session?: Session
+  roles?: RbacRole[]
   error?: string
   status?: number
 }
@@ -24,9 +23,17 @@ interface RateLimitEntry {
   resetAt: number
 }
 
+/**
+ * Creates a stateless JWT-based authentication middleware.
+ *
+ * Unlike session-based auth, this validates the JWT directly without checking
+ * a session store. The JWT payload contains all necessary user information.
+ *
+ * @param userStore - User store for looking up user existence and status
+ * @param jwtService - JWT service for verifying tokens
+ */
 export function createAuthMiddleware(
   userStore: UserStore,
-  sessionStore: SessionStore,
   jwtService: JwtService
 ) {
   const rateLimitMap = new Map<string, RateLimitEntry>()
@@ -53,28 +60,21 @@ export function createAuthMiddleware(
 
     const token = authHeader.slice(7)
 
-    let payload
+    let payload: { userId: string; email: string; role: RbacRole; sessionId: string; generation: number }
     try {
-      payload = await jwtService.verify(token)
+      payload = await jwtService.verify(token) as any
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid token'
       return { error: message, status: 401 }
     }
 
-    const session = sessionStore.findByToken(token)
-    if (!session) {
-      return { error: 'Session not found or expired', status: 401 }
-    }
-
-    if (payload.generation < session.generation) {
-      return { error: 'Token has been superseded by a newer session', status: 401 }
-    }
-
+    // Verify user still exists and is active
     const user = await userStore.findById(payload.userId)
     if (!user || !user.isActive) {
       return { error: 'User not found or inactive', status: 401 }
     }
 
-    return { user, session }
+    // Return user with roles array for RBAC
+    return { user, roles: user.roles }
   }
 }

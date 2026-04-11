@@ -1,4 +1,6 @@
-export type RbacRole = 'admin' | 'editor' | 'viewer'
+import type { RbacRole } from './_auth'
+
+export type { RbacRole }
 
 export interface TokenPayload {
   userId: string

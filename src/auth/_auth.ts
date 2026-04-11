@@ -1,4 +1,7 @@
-import type { AuthenticatedUser, RbacRole } from './auth-service'
+import type { AuthenticatedUser } from './auth-service'
+
+// RbacRole is defined here and shared across auth modules to avoid circular dependencies
+export type RbacRole = 'admin' | 'editor' | 'viewer'
 
 export interface AuthContext {
   user?: AuthenticatedUser

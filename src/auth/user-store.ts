@@ -1,6 +1,24 @@
 import crypto from 'crypto'
+import type { RbacRole } from './_auth'
 
+// Legacy user role type for backward compatibility during migration
 export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
+
+// Mapping from legacy roles to RbacRole for migration compatibility
+function mapToRbacRole(role: UserRole): RbacRole {
+  switch (role) {
+    case 'admin':
+      return 'admin'
+    case 'instructor':
+    case 'user':
+      return 'editor'
+    case 'student':
+    case 'guest':
+      return 'viewer'
+    default:
+      return 'viewer'
+  }
+}
 
 export interface User {
   id: string
@@ -8,6 +26,7 @@ export interface User {
   passwordHash: string
   salt: string
   role: UserRole
+  roles: RbacRole[] // Array of RBAC roles for the new auth system
   createdAt: Date
   lastLoginAt?: Date
   isActive: boolean
@@ -69,12 +88,14 @@ export class UserStore {
   private async createInternal(input: CreateUserInput): Promise<User> {
     const salt = this.generateSalt()
     const passwordHash = await this.hashPassword(input.password, salt)
+    const legacyRole = input.role ?? 'user'
     const user: User = {
       id: this.generateId(),
       email: input.email,
       passwordHash,
       salt,
-      role: input.role ?? 'user',
+      role: legacyRole,
+      roles: [mapToRbacRole(legacyRole)], // Map legacy role to RbacRole array
       createdAt: new Date(),
       isActive: true,
       failedLoginAttempts: 0,
@@ -104,7 +125,11 @@ export class UserStore {
   async update(id: string, updates: Partial<Omit<User, 'id'>>): Promise<User | undefined> {
     const user = this.users.get(id)
     if (!user) return undefined
-    const updated = { ...user, ...updates }
+    let updated = { ...user, ...updates }
+    // If role is being updated, also update roles array to maintain consistency
+    if (updates.role && updates.role !== user.role) {
+      updated.roles = [mapToRbacRole(updates.role)]
+    }
     this.users.set(id, updated)
     if (updates.email && updates.email !== user.email) {
       this.emailIndex.delete(user.email)
