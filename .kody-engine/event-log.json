@@ -25,5 +25,59 @@
     ],
     "hookErrors": {},
     "emittedAt": "2026-04-11T16:28:14.012Z"
+  },
+  {
+    "id": "1775949781553-e9zaucv",
+    "runId": "task-2002-v9",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "task-2002-v9",
+      "issueNumber": 2002
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:23:01.553Z"
+  },
+  {
+    "id": "1775949781554-izr22lf",
+    "runId": "task-2002-v9",
+    "event": "step.started",
+    "payload": {
+      "runId": "task-2002-v9",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:23:01.554Z"
+  },
+  {
+    "id": "1775949935173-dqtdzmj",
+    "runId": "task-2002-v9",
+    "event": "step.complete",
+    "payload": {
+      "runId": "task-2002-v9",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:25:35.173Z"
+  },
+  {
+    "id": "1775949935173-smw4bi9",
+    "runId": "task-2002-v9",
+    "event": "step.started",
+    "payload": {
+      "runId": "task-2002-v9",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T23:25:35.173Z"
   }
 ]
