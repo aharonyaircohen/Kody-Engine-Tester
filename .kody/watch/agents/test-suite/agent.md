@@ -317,10 +317,19 @@ Phase 5: Reflect (verify memory, summarize, recommend enhancements)
 
 Before starting Phase 1:
 
-1. **Generate RUN_ID:**
+1. **State file:** Read or create the test-suite state file for cross-cycle persistence:
    ```bash
-   RUN_ID="run-$(date +%Y%m%d-%H%M)"
-   echo "Run ID: ${RUN_ID}"
+   STATE_FILE=".kody/watch/test-suite-state.json"
+   if [ -f "$STATE_FILE" ]; then
+     RUN_ID=$(jq -r '.run_id // empty' "$STATE_FILE")
+     PHASE=$(jq -r '.phase // "init"' "$STATE_FILE")
+     echo "Loaded state: RUN_ID=$RUN_ID, phase=$PHASE"
+   else
+     RUN_ID="run-$(date +%Y%m%d-%H%M)"
+     PHASE="init"
+     echo "{\"run_id\":\"$RUN_ID\",\"phase\":\"init\",\"phase1_issues\":[],\"phase2_issues\":[]}" > "$STATE_FILE"
+     echo "Created new state: RUN_ID=$RUN_ID"
+   fi
    ```
 
 2. **Clean stale temp issues from prior failed runs** (older than 3 days):
@@ -384,84 +393,175 @@ Then pick tasks that create NEW files. If a task creates files that already exis
 
 ### EXECUTION ORDER (CRITICAL — read before creating any issues)
 
-Phase 1 must be executed in this exact order:
+**Multi-cycle execution:** Due to the ~128 tool-call budget in single-shot mode, work is split across cycles using a state file. Each cycle saves its progress and exits; the next cycle resumes from where it left off.
+
 1. **STEP A — CREATE all issues** (see table below): create ALL Phase 1 temp issues first, in any order. Do NOT trigger any yet.
 2. **STEP B — TRIGGER all issues**: post `@kody` commands on ALL Phase 1 issues. Do this after all are created.
-3. **STEP B2 — MONITOR all issues**: wait for all Phase 1 pipelines to complete. Use the detached-background approach below.
+3. **STEP B2 — MONITOR all issues**: launch monitors as truly detached background processes, save state, and exit.
 4. **STEP C — PROCEED to Phase 2** only after ALL Phase 1 pipelines complete.
 
 **CRITICAL: Do NOT monitor individual issues while creating others. Do all creation, then all triggering, then all monitoring.**
 
 **Deferred cleanup:** T01, T02, T03, and T26 have Phase 2 dependents — defer their cleanup until after Phase 2 completes.
 
+**State-driven routing:**
+```bash
+case "$PHASE" in
+  init|create)
+    echo "=== PHASE: create ===" && do_phase1_create ;;
+  trigger)
+    echo "=== PHASE: trigger ===" && do_phase1_trigger ;;
+  monitoring)
+    echo "=== PHASE: monitoring ===" && do_phase1_monitor ;;
+  phase2)
+    echo "=== PHASE: phase2 ===" && do_phase2 ;;
+  *)
+    echo "=== PHASE: create ===" && do_phase1_create ;;
+esac
+```
+
 ### STEP A — Create all Phase 1 issues
 
-Create all Phase 1 issues from the table below in one batch. Example for each:
+**SKIP if already created:** Check the state file first. If `phase1_issues` already has numbers, load them and skip to STEP B.
 ```bash
-gh issue create \
-  --title "[${RUN_ID}] Txx: <description>" \
-  --body "<task body>" \
-  --label "test-suite-temp"
+do_phase1_create() {
+  # Check if already created
+  EXISTING=$(jq -r '.phase1_issues // [] | length' "$STATE_FILE")
+  if [ "$EXISTING" -gt 0 ]; then
+    PHASE1_ISSUES=$(jq -r '.phase1_issues | join(" ")' "$STATE_FILE")
+    echo "Phase 1 issues already created: $PHASE1_ISSUES"
+    jq '.phase = "trigger"' "$STATE_FILE" > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
+    return
+  fi
+
+  # Create all Phase 1 issues from the table below in one batch.
+  # Example for each:
+  #   gh issue create --title "[${RUN_ID}] Txx: <description>" --body "<task body>" --label "test-suite-temp"
+  #
+  # Track issue numbers in a single variable: PHASE1_ISSUES=""
+
+  # After all created, save to state file:
+  jq --arg run_id "$RUN_ID" --argjson issues "$(echo $PHASE1_ISSUES | tr ' ' '\n' | jq -s 'map(tonumber)')" \
+    '. * {run_id: $run_id, phase1_issues: $issues, phase: "trigger"}' "$STATE_FILE" > /tmp/ts_state.json \
+    && mv /tmp/ts_state.json "$STATE_FILE"
+  echo "Saved phase1_issues to state. Transitioning to trigger phase."
+}
 ```
-Track issue numbers in a single variable: `PHASE1_ISSUES=""`
 
 ### STEP B — Trigger all Phase 1 issues
 
-After ALL issues are created, trigger them. **CRITICAL — avoid double-trigger:** Before triggering each issue, check if it already has an in-progress pipeline. If so, skip it (a pipeline is already running).
 ```bash
-for issue in $PHASE1_ISSUES; do
-  # Skip if pipeline already in progress (don't re-trigger — cancels running pipeline)
-  in_progress=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs \
-    --jq ".workflow_runs[] | select(.event == \"issue_comment\" and .display_title | contains(\"#${issue}\")) | select(.status == \"in_progress\") | .id" 2>/dev/null | head -1)
-  if [ -n "$in_progress" ]; then
-    echo "[$(date +%H:%M:%S)] Issue #$issue already has in-progress pipeline, skipping trigger"
-    continue
+do_phase1_trigger() {
+  # Load PHASE1_ISSUES from state file
+  PHASE1_ISSUES=$(jq -r '.phase1_issues | join(" ")' "$STATE_FILE")
+  if [ -z "$PHASE1_ISSUES" ] || [ "$PHASE1_ISSUES" = "null" ]; then
+    echo "ERROR: No phase1_issues in state file. Run create phase first."
+    return 1
   fi
-  gh issue comment $issue --body "<command>" &
-done
-wait
+  echo "Triggering Phase 1 issues: $PHASE1_ISSUES"
+
+  # Trigger all issues (check in-progress first to avoid cancel-in-progress cancellation)
+  for issue in $PHASE1_ISSUES; do
+    in_progress=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs \
+      --jq ".workflow_runs[] | select(.event == \"issue_comment\" and .display_title | contains(\"#${issue}\")) | select(.status == \"in_progress\" or .status == \"queued\") | .id" 2>/dev/null | head -1)
+    if [ -n "$in_progress" ]; then
+      echo "[$(date +%H:%M:%S)] Issue #$issue already has pipeline $in_progress, skipping trigger"
+      continue
+    fi
+    gh issue comment $issue --body "<command>" &
+  done
+  wait
+
+  # Transition to monitoring phase and save state
+  jq '.phase = "monitoring"' "$STATE_FILE" > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
+  echo "Transitioned to monitoring phase."
+}
 ```
 
-**IMPORTANT — Auto-approve risk-gate questions:** After triggering all issues, immediately start polling for approval questions on HIGH complexity issues (T03). Use a polling loop instead of `sleep` (single-shot Bash tool cannot reliably use `sleep &`):
+**Auto-approve + monitors run as truly detached background processes** (so the agent can exit):
 ```bash
-# Poll for approval question on T03 — runs in background so sleep works
-(
+do_phase1_monitor() {
+  PHASE1_ISSUES=$(jq -r '.phase1_issues | join(" ")' "$STATE_FILE")
+
+  # ── Auto-approve script: detach with nohup ────────────────────────────────
   T03_ISSUE=$(echo $PHASE1_ISSUES | tr ' ' '\n' | while read n; do
     title=$(gh issue view $n --json title -q '.title')
     if echo "$title" | grep -q "T03"; then echo $n; fi
   done)
-  if [ -z "$T03_ISSUE" ]; then exit 0; fi
-
-  # Poll every 15s for up to 3 minutes
-  for i in $(seq 1 12); do
-    sleep 15
-    question=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$T03_ISSUE/comments --jq '.[-2].body // ""' 2>/dev/null)
-    if echo "$question" | grep -qi "questions before\|asking.*before\|approve"; then
-      gh issue comment $T03_ISSUE --body "@kody approve
+  if [ -n "$T03_ISSUE" ]; then
+    nohup bash -c "
+      for i in \$(seq 1 12); do
+        sleep 15
+        question=\$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$T03_ISSUE/comments --jq '.[-2].body // \"\"' 2>/dev/null)
+        if echo \"\$question\" | grep -qi \"questions before\|asking.*before\|approve\"; then
+          gh issue comment $T03_ISSUE --body \"@kody approve
 
 1. Keep UserStore as a fallback for non-Payload operations during migration
 2. Check dependencies before removing — keep as fallback if anything still uses it
-3. Align UserRole to RbacRole — make RbacRole the source of truth"
-      echo "[$(date +%H:%M:%S)] Auto-approved T03 (#$T03_ISSUE)"
-      exit 0
+3. Align UserRole to RbacRole — make RbacRole the source of truth\" 2>/dev/null
+          echo \"[\$(date +%H:%M:%S)] Auto-approved T03 (#$T03_ISSUE)\"
+          exit 0
+        fi
+      done
+    " > /dev/null 2>&1 &
+    echo "Auto-approve PID: $!"
+  fi
+
+  # ── Monitor scripts: detach each with nohup ─────────────────────────────────
+  MONITOR_LOG_DIR=".kody/watch/test-suite/monitor-logs"
+  mkdir -p "$MONITOR_LOG_DIR"
+  for issue in $PHASE1_ISSUES; do
+    nohup bash -c "
+      source /dev/stdin <<'WATCHFUNCS'
+$(declare -f wait_for_issue)
+wait_for_issue \$1
+WATCHFUNCS
+      wait_for_issue $issue
+    " > "$MONITOR_LOG_DIR/monitor-$issue.log" 2>&1 &
+    echo "[$(date +%H:%M:%S)] Started detached monitor for #$issue (log: $MONITOR_LOG_DIR/monitor-$issue.log)"
+  done
+
+  echo "All monitors launched. Saving state and exiting to allow next cycle."
+  # Save final state and exit (agent cycle complete)
+  jq '.phase = "monitoring", .monitor_started_at = "$(date -u +%Y-%m-%dT%H:%M:%SZ)"' "$STATE_FILE" > /tmp/ts_state.json \
+    && mv /tmp/ts_state.json "$STATE_FILE"
+}
+```
+
+### STEP B2 — Monitor all Phase 1 pipelines (check completion in next cycle)
+
+In the NEXT agent cycle, when `phase == "monitoring"`:
+1. Check if all Phase 1 issues have `kody:done` or `kody:failed` labels
+2. If all done: update state to `phase = "phase2"` and proceed to Phase 2
+3. If not all done: save state and exit (will be checked again in next cycle)
+
+```bash
+do_phase1_monitor() {
+  PHASE1_ISSUES=$(jq -r '.phase1_issues | join(" ")' "$STATE_FILE")
+
+  # Check if monitors from last cycle are done
+  MONITOR_LOG_DIR=".kody/watch/test-suite/monitor-logs"
+  all_done=true
+  for issue in $PHASE1_ISSUES; do
+    labels=$(gh issue view $issue --json labels -q '.labels[].name' 2>/dev/null)
+    if echo "$labels" | grep -qE 'kody:done|kody:failed'; then
+      echo "Issue #$issue: done/failed — $labels"
+    else
+      echo "Issue #$issue: still running — $labels"
+      all_done=false
     fi
   done
-) &
-AUTO_APPROVE_PID=$!
+
+  if $all_done; then
+    echo "All Phase 1 pipelines complete! Transitioning to Phase 2."
+    jq '.phase = "phase2"' "$STATE_FILE" > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
+  else
+    echo "Phase 1 not yet complete. Saving state and exiting for next cycle."
+    jq '.phase = "monitoring"' "$STATE_FILE" > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
+    exit 0
+  fi
+}
 ```
-
-### STEP B2 — Monitor all Phase 1 pipelines (detached background)
-
-Launch all monitors in the background, then wait for all at once:
-```bash
-for issue in $PHASE1_ISSUES; do
-  wait_for_issue $issue &
-done
-wait
-# All Phase 1 pipelines have completed (or timed out)
-```
-
-After ALL Phase 1 pipelines complete, verify each test and then proceed to Phase 2.
 
 ### T03 — Risk gate handling
 
