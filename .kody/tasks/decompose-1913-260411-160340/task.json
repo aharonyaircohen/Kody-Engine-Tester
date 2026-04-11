@@ -1,0 +1,22 @@
+{
+  "task_type": "feature",
+  "title": "Add capitalize-simple utility function",
+  "description": "Add a string capitalize utility function in src/utils/capitalize-simple.ts. This simple task should fall back to normal pipeline since complexity_score < 4. The function should capitalize only the first letter of a string (similar to the existing capitalize in cap.ts but with simpler logic). Test file should follow existing pattern with .test.ts suffix co-located.",
+  "scope": ["src/utils/capitalize-simple.ts", "src/utils/capitalize-simple.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    {
+      "file": "src/utils/cap.ts",
+      "description": "Single-function utility file exporting a capitalize function with basic string handling - empty string guard and first character uppercasing"
+    },
+    {
+      "file": "src/utils/capitalize-words.ts",
+      "description": "Capitalize utility following co-located test file pattern with .test.ts suffix"
+    },
+    {
+      "file": "src/utils/cap.test.ts",
+      "description": "Test file pattern using vitest with describe/it/expect, testing empty string, single char, and basic cases"
+    }
+  ],
+  "questions": []
+}
