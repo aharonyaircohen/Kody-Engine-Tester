@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Implement caching system with multiple adapters",
+  "description": "Create a caching system with three new components: 1) src/cache/memoryAdapter.ts - in-memory cache adapter with TTL support wrapping the existing Cache class; 2) src/cache/cacheManager.ts - cache manager that routes cache operations to different adapters (memory/redis/disk); 3) src/middleware/cacheMiddleware.ts - Next.js middleware factory following the createRequestLogger pattern. The middleware integrates caching into the request pipeline with configurable cache key resolution, TTL support, and X-Cache headers.",
+  "scope": [
+    "src/cache/memoryAdapter.ts",
+    "src/cache/cacheManager.ts",
+    "src/middleware/cacheMiddleware.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/cache.ts - Cache class with TTL, LRU eviction, and stats tracking reused for memory adapter implementation",
+    "src/middleware/rate-limiter.ts - SlidingWindowRateLimiter class pattern with config interfaces for middleware factory approach",
+    "src/middleware/request-logger.ts - createRequestLogger factory pattern returning { middleware, ...methods } structure",
+    "src/utils/middleware.ts - Express-style middleware chainable pipeline pattern"
+  ],
+  "questions": []
+}
