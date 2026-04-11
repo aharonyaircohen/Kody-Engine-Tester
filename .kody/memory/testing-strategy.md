@@ -12,6 +12,7 @@
 | ----------------- | --------------------------------------- | --------------------------------------------- |
 | Unit/Integration  | `src/**/*.test.ts`, `src/**/*.test.tsx` | Co-located with source                        |
 | Integration Specs | `tests/int/**/*.int.spec.ts`            | Dedicated integration folder                  |
+| Integration Tests | `tests/*.test.ts`                       | Domain behavior (EnrollmentStore, Progress)   |
 | E2E               | `tests/e2e/*.spec.ts`                   | Page-object style helpers in `tests/helpers/` |
 
 ## Patterns
@@ -20,6 +21,7 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **In-memory stores**: Integration tests simulate Payload behavior with local interfaces (e.g., `EnrollmentRecord`, `CourseRecord`)
 
 ## CI Quality Gates
 
