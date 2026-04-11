@@ -1,6 +1,6 @@
 {
   "taskId": "2013-retest",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -15,30 +15,33 @@
     },
     "build": {
       "state": "completed",
-      "completedAt": "2026-04-11T20:56:30.000Z",
-      "retries": 0
+      "completedAt": "2026-04-11T20:56:33.290Z",
+      "retries": 0,
+      "promptTokens": 4030
     },
     "verify": {
       "state": "completed",
-      "completedAt": "2026-04-11T20:56:30.000Z",
-      "retries": 0
+      "completedAt": "2026-04-11T21:03:15.572Z",
+      "retries": 1
     },
     "review": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-11T21:03:15.576Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-11T20:50:40.074Z",
-  "updatedAt": "2026-04-11T20:55:19.627Z",
+  "updatedAt": "2026-04-11T21:03:15.576Z",
   "sessions": {
-    "explore": "53c0b8c9-21a8-4565-8c23-c75dd501ab58"
+    "explore": "53c0b8c9-21a8-4565-8c23-c75dd501ab58",
+    "build": "902cb222-70b0-4ed8-90df-98d72db721e3"
   }
 }
