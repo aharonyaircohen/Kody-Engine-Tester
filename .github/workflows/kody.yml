@@ -115,7 +115,7 @@ jobs:
     needs: parse
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (needs.parse.result == 'success') ||
+      (github.event_name == 'issue_comment' && needs.parse.result == 'success') ||
       (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested')
     runs-on: ubuntu-latest
     timeout-minutes: 120
