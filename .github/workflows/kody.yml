@@ -117,7 +117,7 @@ jobs:
     timeout-minutes: 120
     steps:
       - name: Debug event name
-        run: echo "Event: ${{ github.event_name }}"
+        run: echo "Event name recorded"
 
       - name: Generate App token
         id: app-token
