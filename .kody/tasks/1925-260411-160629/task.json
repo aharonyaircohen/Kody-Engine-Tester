@@ -1,0 +1,14 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of auth middleware",
+  "description": "The auth middleware to protect routes is already fully implemented at src/middleware/auth-middleware.ts. It extracts Bearer tokens from Authorization headers, verifies JWT signatures, returns 401 for missing/invalid/expired tokens, and attaches decoded user info (user, session) to request context. Comprehensive tests exist in src/middleware/auth-middleware.test.ts and all 8 tests pass.",
+  "scope": ["src/middleware/auth-middleware.ts", "src/middleware/auth-middleware.test.ts", "src/auth/jwt-service.ts", "src/auth/withAuth.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts: Middleware factory using createAuthMiddleware(userStore, sessionStore, jwtService) pattern",
+    "src/auth/jwt-service.ts: JWT sign/verify with HS256 HMAC, token blacklisting, access/refresh token helpers",
+    "src/auth/withAuth.ts: HOC wrapper for route handlers with role-based access control",
+    "src/middleware/auth-middleware.test.ts: Unit tests covering valid/invalid/missing/expired tokens, rate limiting"
+  ],
+  "questions": []
+}
