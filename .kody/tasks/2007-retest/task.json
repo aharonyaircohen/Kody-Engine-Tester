@@ -1,0 +1,25 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify decompose flow for multi-area task 2007-retest",
+  "description": "Verify that the decompose pipeline correctly handles a complex multi-area task. The notification system implementation already exists with model, service, routes, utils, and tests. The task is to validate that the decompose flow (taskify → plan → build → verify → review → ship) produces correct sub-tasks, worktrees, and PR body with 'Decomposed Implementation' section.",
+  "scope": [
+    "src/models/notification.ts",
+    "src/services/notifications.ts",
+    "src/services/notifications.test.ts",
+    "src/routes/notifications.ts",
+    "src/utils/notificationHelpers.ts",
+    "src/utils/notificationHelpers.test.ts",
+    ".kody/tasks/2007-retest/task.md",
+    ".kody/tasks/2007-retest/status.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/services/notifications.ts - Service layer pattern using Payload SDK with constructor injection",
+    "src/models/notification.ts - Domain model with TypeScript types and interfaces",
+    "src/routes/notifications.ts - API route handler using withAuth HOC and NextRequest/Response",
+    "src/utils/notificationHelpers.ts - Utility functions with JSDoc examples",
+    "src/services/notifications.test.ts - Vitest unit tests with mockPayload pattern"
+  ],
+  "questions": []
+}
