@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify existing implementation of camelCase to kebab-case",
+"description": "Task asks to create src/utils/stringHelpers.ts with camelCase to kebab-case conversion, but src/utils/to-kebab-case.ts already implements this exact functionality with comprehensive tests (8 tests passing). This is a verification task to confirm the existing implementation covers all requirements.",
+"scope": ["src/utils/to-kebab-case.ts", "src/utils/to-kebab-case.test.ts"],
+"risk_level": "low",
+"existing_patterns": ["src/utils/to-kebab-case.ts - single-function utility file with camelCase-to-kebab-case conversion using regex replacement", "src/utils/to-kebab-case.test.ts - co-located vitest test file with describe/it/expect syntax"],
+"questions": []
+}
