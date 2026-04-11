@@ -131,10 +131,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: true
-          # Always use GITHUB_TOKEN for git operations — app token lacks workflows: write
+          persist-credentials: false
           token: ${{ secrets.GITHUB_TOKEN }}
           path: .
+
+      - name: Ensure GITHUB_TOKEN is used for git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git"
+          git config --local credential.helper "store --file /dev/null"
 
       - name: Checkout PR branch (for fix/rerun/review on PRs)
         if: github.event.issue.pull_request && (github.event.inputs.mode == 'fix' || github.event.inputs.mode == 'fix-ci' || github.event.inputs.mode == 'rerun' || github.event.inputs.mode == 'review' || github.event.inputs.mode == 'resolve')
