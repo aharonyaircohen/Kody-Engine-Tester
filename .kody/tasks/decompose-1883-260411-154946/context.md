@@ -19,3 +19,12 @@ The T26 test for `--no-compose` flag is **INCONCLUSIVE** due to test infrastruct
 3. **Pipeline Running**: Run 24285979293 is still in progress after 50+ minutes but appears to be hanging
 4. **No Artifacts**: No sub-task branches
 ...(truncated)
+
+### autofix (2026-04-11T16:13:21)
+## Summary
+
+**Root Cause Analysis:**
+1. `src/utils/bad-types.ts` - `getCount()` returned `number` (42) but was typed to return `string`
+2. `tests/helpers/seedUser.ts` - Payload `Users` collection requires `firstName`, `lastName`, `role` fields but test user only provided `email` and `password`
+3. `tests/int/api.int.spec.ts` - **Pre-existing Payload CMS/drizzle-kit infrastructure bug** where schema introspection query passes empty params array instead of required `connamespace` and `relname` para
+...(truncated)
