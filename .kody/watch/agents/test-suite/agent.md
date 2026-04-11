@@ -125,7 +125,7 @@ wait_for_issue() {
       # Poll the new pipeline run directly (not the old one)
       while [ $(date +%s) -lt $deadline ]; do
         local status=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
-        if [ "$status" = "completed/success" ] || [ "$status" = "completed/failure" ]; then
+        if [[ "$status" == "completed/success" || "$status" == "completed/failure" || "$status" == "completed/cancelled" ]]; then
           echo "[$(date +%H:%M:%S)] Approval run $run_id completed: $status"
           return 0
         fi
@@ -138,7 +138,7 @@ wait_for_issue() {
     # No pending approval — poll the current pipeline run if we have one
     if [ -n "$run_id" ]; then
       local status=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
-      if [ "$status" = "completed/success" ] || [ "$status" = "completed/failure" ]; then
+      if [[ "$status" == "completed/success" || "$status" == "completed/failure" || "$status" == "completed/cancelled" ]]; then
         echo "[$(date +%H:%M:%S)] Run $run_id completed: $status"
         return 0
       fi
