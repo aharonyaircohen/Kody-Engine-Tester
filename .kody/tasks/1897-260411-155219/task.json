@@ -1,0 +1,23 @@
+{
+  "task_type": "feature",
+  "title": "Add auth middleware to protect existing routes",
+  "description": "Create a Next.js middleware.ts file that uses the existing auth-middleware factory to protect API routes. The middleware should extract Bearer tokens from Authorization headers, return 401 for invalid/missing/expired tokens, and attach user { userId, email } to request context for valid tokens. The existing auth-middleware.ts is a factory function that needs to be instantiated and connected via a Next.js middleware entry point since no such file currently exists.",
+  "scope": [
+    "src/app/middleware.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/auth/user-store.ts",
+    "src/auth/session-store.ts",
+    "src/auth/jwt-service.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts - createAuthMiddleware factory with JWT verification, session validation, and rate limiting - already implements the core middleware logic",
+    "src/auth/withAuth.ts - current route-level auth wrapping pattern used by all protected routes",
+    "src/auth/jwt-service.ts - JwtService with signAccessToken, signRefreshToken, verify methods",
+    "src/auth/session-store.ts - SessionStore with create, findByToken, revoke methods",
+    "src/auth/user-store.ts - UserStore with findById, findByEmail methods",
+    "src/utils/middleware.ts - Express-style chainable middleware Pipeline pattern"
+  ],
+  "questions": []
+}
