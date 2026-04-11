@@ -1,0 +1,16 @@
+{
+  "task_type": "feature",
+  "title": "Add User model with password hash field",
+  "description": "Create a User domain model in src/models/user-model.ts with fields: id (UUID), email (unique, indexed), passwordHash, createdAt, updatedAt. Password hashing must use bcrypt with cost factor >= 12. No role/permission fields per acceptance criteria.",
+  "scope": [
+    "src/models/user-model.ts",
+    "package.json"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/models/notification.ts - domain model in kebab-case with TypeScript interface",
+    "src/auth/auth-service.ts:45-60 - password verification using crypto pbkdf2 (reference for password handling patterns)",
+    "src/auth/user-store.ts:53-58 - hashPassword using crypto.subtle (existing hashing pattern)"
+  ],
+  "questions": []
+}

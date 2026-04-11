@@ -19,6 +19,7 @@
     "ci": "payload migrate && pnpm build"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "@payloadcms/db-postgres": "3.80.0",
     "@payloadcms/next": "3.80.0",
     "@payloadcms/richtext-lexical": "3.80.0",
@@ -32,6 +33,7 @@
     "sharp": "0.34.2"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@eslint/eslintrc": "^3.2.0",
     "@kody-ade/engine": "0.1.62",
     "@playwright/test": "1.58.2",
