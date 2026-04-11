@@ -1,6 +1,6 @@
 {
   "taskId": "-Engine-Tester/actions/runs/24286230148))",
-  "state": "failed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -14,40 +14,34 @@
       "retries": 0
     },
     "build": {
-      "state": "failed",
-      "startedAt": "2026-04-11T16:23:46.292Z",
-      "completedAt": "2026-04-11T16:39:00.000Z",
+      "state": "completed",
+      "completedAt": "2026-04-11T16:39:55.900Z",
       "retries": 0,
-      "error": "Release pipeline ran for 18+ minutes without creating a release PR. Issue 1951 was manually closed. No release branch or PR was created."
+      "promptTokens": 3992
     },
     "verify": {
-      "state": "pending",
+      "state": "completed",
+      "completedAt": "2026-04-11T16:41:35.413Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-11T16:41:35.416Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-11T16:21:54.638Z",
-  "updatedAt": "2026-04-11T16:39:00.000Z",
+  "updatedAt": "2026-04-11T16:41:35.416Z",
   "sessions": {
-    "explore": "e4c1bc81-ecfb-4a19-8882-b389f8a310e0"
-  },
-  "testResult": {
-    "testId": "T41",
-    "command": "@kody release",
-    "result": "FAIL",
-    "expected": "Release PR created on release/v<version> branch with changelog grouped by type",
-    "actual": "No release PR created. Pipeline ran for 18+ minutes then issue was manually closed.",
-    "runsAttempted": ["24286230148", "24286400766", "24286516779", "24286657516", "24286390178"]
+    "explore": "e4c1bc81-ecfb-4a19-8882-b389f8a310e0",
+    "build": "e18b078e-38c6-4cd5-b799-d2b036cb116e"
   }
 }
