@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1775923676436-cn68njw",
+    "runId": "hotfix-1919-260411-160402",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "hotfix-1919-260411-160402",
+      "issueNumber": 1919
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:07:56.436Z"
+  },
+  {
+    "id": "1775923676436-w63tku1",
+    "runId": "hotfix-1919-260411-160402",
+    "event": "step.started",
+    "payload": {
+      "runId": "hotfix-1919-260411-160402",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:07:56.436Z"
+  }
+]
