@@ -40,3 +40,31 @@
 - `BCRYPT_COST_FACTOR = 12` constant
 
 ...(truncated)
+
+### autofix (2026-04-11T16:28:16)
+Fixed `let context` → `const context` at line 80. The `context` variable is only spread (lines 84, 119) and never reassigned, so `const` is correct.
+
+The drizzle-kit PostgreSQL error about missing `$1` parameter is pre-existing and unrelated to this PR's changes — per the human feedback, it's from an integration test and should be documented separately.
+
+
+### review (2026-04-11T16:31:20)
+## Verdict: PASS
+
+## Summary
+
+Added `User` domain model (`src/models/user-model.ts`) with `bcrypt` password hashing utilities and corresponding unit tests. The model includes required fields (id, email, passwordHash, createdAt, updatedAt), uses bcrypt with cost factor 12, and all 8 tests pass.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+`src/models/user-model.ts:26-31` — `PasswordHashingError` class is defined but never thrown. Both `hashPassword` (line 35) and `verifyPasswor
+...(truncated)
