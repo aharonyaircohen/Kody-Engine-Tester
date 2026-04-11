@@ -52,65 +52,127 @@ gh issue comment <n> --body "@kody"
 Note: Do NOT use `--auto-mode` — it would skip the risk gate, breaking T03 (HIGH complexity) and T05 (approve) tests. Instead, rely on the Approval Monitor Loop (Step 3) to auto-answer prompts.
 
 ### 3. APPROVAL MONITOR LOOP
-After triggering, monitor the issue for approval questions. This runs in parallel with the pipeline — poll every 30s until all approval questions are answered AND the pipeline completes.
+After triggering, monitor the issue for approval questions and pipeline completion. This runs in parallel with the pipeline — poll every 15s until all approval questions are answered AND the specific pipeline run completes.
+
+**Key fix:** After posting `@kody approve`, extract the new pipeline's run ID from the "🚀 Kody pipeline started" comment, then poll that specific run — NOT the issue labels. Checking labels after an approval posts a new pipeline run and causes premature exit (the old run's label is still on the issue).
 
 ```bash
-# Run this loop for every triggered issue
-while true; do
-  # Check for approval questions (second-to-last comment contains the question)
-  QUESTION=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/<issue_num>/comments --jq '.[-2].body // ""')
-  
-  if echo "$QUESTION" | grep -qi "questions before\|asking.*before\|approve"; then
-    # Answer based on what was asked
-    if echo "$QUESTION" | grep -qi "bug report.*repo\|file.*where"; then
-      gh issue comment <issue_num> --body "@kody approve
+# ─── Per-issue monitor ─────────────────────────────────────────────────────────
+# Tracks a specific pipeline run ID (from the "🚀 Kody pipeline started" comment)
+# so we don't exit early when the old pipeline's label is still present.
+
+wait_for_issue() {
+  local issue=$1
+  local run_id=""
+  local deadline=$(($(date +%s) + 7200))  # 2-hour max per issue
+
+  while [ $(date +%s) -lt $deadline ]; do
+
+    # Check for approval question (second-to-last comment)
+    local question=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$issue/comments --jq '.[-2].body // ""' 2>/dev/null)
+
+    if echo "$question" | grep -qi "questions before\|asking.*before\|approve"; then
+      # Before approving, grab the latest pipeline run ID (the new one that will spawn)
+      # We wait up to 90s for the "🚀 Kody pipeline started" comment to appear
+      local waited=0
+      while [ $waited -lt 90 ]; do
+        sleep 5
+        waited=$((waited + 5))
+        local latest=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$issue/comments --jq '[.[] | select(.body | contains("Kody pipeline started"))] | last.body' 2>/dev/null)
+        local extracted=$(echo "$latest" | grep -oP 'actions/runs/\K\d+' | tail -1)
+        if [ -n "$extracted" ] && [ "$extracted" != "$run_id" ]; then
+          run_id=$extracted
+          echo "[$(date +%H:%M:%S)] Tracking approval-triggered run $run_id"
+          break
+        fi
+      done
+
+      # Post the approval answer
+      if echo "$question" | grep -qi "bug report.*repo\|file.*where"; then
+        gh issue comment $issue --body "@kody approve
 
 1. File bug reports in aharonyaircohen/Kody-Engine-Lite (the engine repo)
 2. Use GitHub's default issue template
 3. File P1 items as bugs too — apply your own judgment"
-    
-    elif echo "$QUESTION" | grep -qi "UserStore\|migration\|auth.*migration\|role"; then
-      gh issue comment <issue_num> --body "@kody approve
+      elif echo "$question" | grep -qi "UserStore\|migration\|auth.*migration\|role"; then
+        gh issue comment $issue --body "@kody approve
 
 1. Keep UserStore as a fallback for non-Payload operations during migration
 2. Check dependencies before removing — keep as fallback if anything still uses it
 3. Align UserRole to RbacRole — make RbacRole the source of truth"
-    
-    elif echo "$QUESTION" | grep -qi "command.*exact\|exact command\|what.*trigger"; then
-      gh issue comment <issue_num> --body "@kody approve
+      elif echo "$question" | grep -qi "command.*exact\|exact command\|what.*trigger"; then
+        gh issue comment $issue --body "@kody approve
 
 1. Use the exact command shown in the test task description
 2. If not specified, use @kody full
 3. If complexity is low, the pipeline will skip plan/review stages automatically"
-    
-    elif echo "$QUESTION" | grep -qi "decompose.*compose\|no-compose"; then
-      gh issue comment <issue_num> --body "@kody approve
+      elif echo "$question" | grep -qi "decompose.*compose\|no-compose"; then
+        gh issue comment $issue --body "@kody approve
 
 1. Use @kody full first on the temp issue, then @kody decompose --no-compose if offered
 2. The test is verifying that decompose respects --no-compose flag
 3. Continue as-is — let the pipeline finish"
-    
-    else
-      # Generic fallback — approve with defaults
-      gh issue comment <issue_num> --body "@kody approve
+      else
+        gh issue comment $issue --body "@kody approve
 
 1. Proceed with your best judgment
 2. Default to safer/simpler options when unsure
 3. Keep artifacts minimal — don't over-engineer the solution"
+      fi
+
+      echo "[$(date +%H:%M:%S)] Posted @kody approve on #$issue"
+
+      # Poll the new pipeline run directly (not the old one)
+      while [ $(date +%s) -lt $deadline ]; do
+        local status=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
+        if [ "$status" = "completed/success" ] || [ "$status" = "completed/failure" ]; then
+          echo "[$(date +%H:%M:%S)] Approval run $run_id completed: $status"
+          return 0
+        fi
+        sleep 15
+      done
+      echo "[$(date +%H:%M:%S)] WARNING: Approval pipeline timed out for #$issue"
+      return 1
     fi
-  fi
-  
-  # Check if THIS issue's pipeline completed
-  labels=$(gh issue view <issue_num> --json labels -q '.labels[].name')
-  if echo "$labels" | grep -qE 'kody:done|kody:failed'; then
-    break
-  fi
-  
-  sleep 30
-done
+
+    # No pending approval — poll the current pipeline run if we have one
+    if [ -n "$run_id" ]; then
+      local status=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
+      if [ "$status" = "completed/success" ] || [ "$status" = "completed/failure" ]; then
+        echo "[$(date +%H:%M:%S)] Run $run_id completed: $status"
+        return 0
+      fi
+    else
+      # No run ID yet — check labels (for pipelines without approval gates)
+      local labels=$(gh issue view $issue --json labels -q '.labels[].name' 2>/dev/null)
+      if echo "$labels" | grep -qE 'kody:done\|kody:failed'; then
+        echo "[$(date +%H:%M:%S)] Issue #$issue done (no tracked run)"
+        return 0
+      fi
+    fi
+
+    sleep 15
+  done
+
+  echo "[$(date +%H:%M:%S)] WARNING: Timeout waiting for issue #$issue"
+  return 1
+}
+
+# ─── Phase 1B: Monitor all triggered issues in parallel ────────────────────────
+# After triggering all Phase 1 tests (T01-T04 + T19-T26 etc.), launch a background
+# monitor for each issue and wait for all to complete before proceeding to Phase 2.
+#
+# Usage in Phase 1 trigger loop:
+#   ISSUE_NUM=$(gh issue create ... | jq -r '.number')
+#   TRIGGERED_ISSUES="$TRIGGERED_ISSUES $ISSUE_NUM"
+#
+# After all issues created and triggered:
+#   for issue in $TRIGGERED_ISSUES; do wait_for_issue $issue & done; wait
+
+# Note: The above is a reference — the actual implementation iterates over
+# $TRIGGERED_ISSUES in a wait loop. See Phase 1 script for usage.
 ```
 
-### 4. WAIT
 Poll for workflow completion:
 ```bash
 gh run list --workflow=kody.yml --limit 5
