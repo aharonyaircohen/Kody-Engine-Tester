@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1775922684429-wm23kfp",
+    "runId": "hotfix-1887-260411-154951",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "hotfix-1887-260411-154951",
+      "issueNumber": 1887
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T15:51:24.429Z"
+  },
+  {
+    "id": "1775922684430-tu7b1qa",
+    "runId": "hotfix-1887-260411-154951",
+    "event": "step.started",
+    "payload": {
+      "runId": "hotfix-1887-260411-154951",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T15:51:24.430Z"
+  },
+  {
+    "id": "1775922773270-if02gte",
+    "runId": "hotfix-1887-260411-154951",
+    "event": "step.complete",
+    "payload": {
+      "runId": "hotfix-1887-260411-154951",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T15:52:53.270Z"
+  },
+  {
+    "id": "1775922773270-wvdv4xf",
+    "runId": "hotfix-1887-260411-154951",
+    "event": "step.started",
+    "payload": {
+      "runId": "hotfix-1887-260411-154951",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T15:52:53.270Z"
+  }
+]

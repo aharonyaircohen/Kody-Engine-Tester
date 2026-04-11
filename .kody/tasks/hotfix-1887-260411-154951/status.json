@@ -1,0 +1,43 @@
+{
+  "taskId": "hotfix-1887-260411-154951",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-11T15:52:48.849Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1726
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "running",
+      "startedAt": "2026-04-11T15:52:51.773Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-11T15:50:56.852Z",
+  "updatedAt": "2026-04-11T15:52:51.773Z",
+  "sessions": {
+    "explore": "949e9fe3-9595-4a15-ab2a-19d67e64665f"
+  }
+}
