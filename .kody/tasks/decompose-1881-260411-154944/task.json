@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify T24 simple task falls back to normal pipeline",
+  "description": "Created src/utils/strings.ts with capitalize function and src/utils/strings.test.ts with 5 tests. This is a test case (T24) verifying that a simple task (complexity_score < 4) correctly falls back to normal pipeline via runPipeline() rather than attempting decompose. The task is intentionally simple (single utility function + tests in one file) to verify decompose's fail-open behavior.",
+  "scope": ["src/utils/strings.ts", "src/utils/strings.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/cap.ts — single-function utility with capitalize implementation pattern",
+    "src/utils/cap.test.ts — co-located test file using vitest with describe/it/expect"
+  ],
+  "questions": []
+}
