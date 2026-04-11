@@ -1,0 +1,17 @@
+{
+  "task_type": "feature",
+  "title": "Add metrics collection middleware",
+  "description": "Create metrics middleware in src/middleware/metrics.ts that tracks request count by HTTP method/route pattern, measures response latency per endpoint, and records error counts by status code category (4xx/5xx). Normalize dynamic route segments (e.g., /api/users/123 → /api/users/:id). Expose metrics via src/app/api/metrics/route.ts returning JSON with totals, averages, and p50/p95/p99 percentiles. Include cleanup mechanism to prevent memory leaks. Tests go in src/middleware/metrics.test.ts.",
+  "scope": [
+    "src/middleware/metrics.ts",
+    "src/app/api/metrics/route.ts",
+    "src/middleware/metrics.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts - SlidingWindowRateLimiter class with setInterval cleanup pattern to prevent memory leaks",
+    "src/middleware/request-logger.ts - Request tracking pattern with method, path, status, responseTimeMs, and NextResponse.next() passthrough",
+    "src/app/api/health/route.ts - Simple Next.js route handler returning JSON Response"
+  ],
+  "questions": []
+}
