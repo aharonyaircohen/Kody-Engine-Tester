@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "title": "Add bcrypt password utilities",
+  "description": "Add hashPassword and verifyPassword utilities using bcryptjs with 12 salt rounds at src/auth/password.ts. These standalone utilities provide bcrypt-based password hashing for future auth migration, without modifying existing UserStore (SHA-256) or AuthService (PBKDF2).",
+  "scope": ["src/auth/password.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/auth-service.ts:45-60 - verifyPassword using PBKDF2 (reference for password verification interface)"
+  ],
+  "questions": []
+}
