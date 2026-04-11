@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of content-type-guard middleware",
+  "description": "The content-type-guard middleware is already implemented in src/middleware/content-type-guard.ts with 17 passing tests in src/middleware/content-type-guard.test.ts. Verified: rejects requests with body but no Content-Type (400), allows requests without body regardless of Content-Type, allows requests with body and valid Content-Type (application/json, multipart/form-data).",
+  "scope": ["src/middleware/content-type-guard.ts", "src/middleware/content-type-guard.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/middleware/request-logger.ts and src/middleware/rate-limiter.ts use Express-style chainable middleware pattern"],
+  "questions": []
+}
