@@ -1,0 +1,9 @@
+{
+"task_type": "feature",
+"title": "Add validators.ts with email, URL, and password validation",
+"description": "Create src/utils/validators.ts with three validation functions: isValidEmail (regex-based email validation), isValidUrl (regex-based URL validation), and isStrongPassword (checks min 8 chars, uppercase, lowercase, number, special char returning {valid, reasons[]}). Include co-located test file validators.test.ts following existing utility patterns.",
+"scope": ["src/utils/validators.ts", "src/utils/validators.test.ts"],
+"risk_level": "low",
+"existing_patterns": ["src/utils/isbn-validator.ts - single-function exports with JSDoc, input validation, co-located .test.ts", "src/utils/slugify.ts - utility function pattern with direct export"],
+"questions": []
+}

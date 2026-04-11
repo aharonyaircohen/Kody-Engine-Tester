@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1775924615402-q5mf8fh",
+    "runId": "1936-260411-161625",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "1936-260411-161625",
+      "issueNumber": 1936
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:23:35.402Z"
+  },
+  {
+    "id": "1775924615402-70z51br",
+    "runId": "1936-260411-161625",
+    "event": "step.started",
+    "payload": {
+      "runId": "1936-260411-161625",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:23:35.402Z"
+  },
+  {
+    "id": "1775924643131-r4hf0eb",
+    "runId": "1936-260411-161625",
+    "event": "step.complete",
+    "payload": {
+      "runId": "1936-260411-161625",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:24:03.131Z"
+  },
+  {
+    "id": "1775924643131-wkw1gpu",
+    "runId": "1936-260411-161625",
+    "event": "step.started",
+    "payload": {
+      "runId": "1936-260411-161625",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-11T16:24:03.131Z"
+  }
+]
