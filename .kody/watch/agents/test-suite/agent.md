@@ -329,20 +329,51 @@ Then pick tasks that create NEW files. If a task creates files that already exis
 | T40 | [${RUN_ID}] T40: Release: dry-run | `@kody release --dry-run` | Parses conventional commits, determines bump, generates changelog — no PR created. See T40 details below |
 | T41 | [${RUN_ID}] T41: Release: create release PR | `@kody release` | Bumps version, generates changelog, creates release PR targeting default branch. See T41 details below |
 
-**Parallelization:** T01-T04 can all trigger simultaneously (separate issues, no dependencies). T19-T26, T37, and T40 can run in parallel with T01-T04.
+### EXECUTION ORDER (CRITICAL — read before creating any issues)
 
-For each test:
+Phase 1 must be executed in this exact order:
+1. **STEP A — CREATE all issues** (see table below): create ALL Phase 1 temp issues first, in any order. Do NOT trigger any yet.
+2. **STEP B — TRIGGER all issues**: post `@kody` commands on ALL Phase 1 issues. Do this after all are created.
+3. **STEP B2 — MONITOR all issues**: wait for all Phase 1 pipelines to complete. Use the detached-background approach below.
+4. **STEP C — PROCEED to Phase 2** only after ALL Phase 1 pipelines complete.
 
-1. Create temp issue: `gh issue create --title "[${RUN_ID}] Txx: <description>" --body "<body>" --label "test-suite-temp"`
-2. Trigger: `gh issue comment <n> --body "<command>"`
-3. Wait for workflow: `gh run list --workflow=kody.yml --limit 5`
-4. Monitor: `gh run view <id>`
-5. Verify: check issue comments, labels, PR creation
-6. **Cleanup per Test Lifecycle Protocol** — PASS: close temp issue + PR/branch. FAIL: keep open, enter Fix-Retry Loop or file engine bug.
+**CRITICAL: Do NOT monitor individual issues while creating others. Do all creation, then all triggering, then all monitoring.**
 
-Launch T01-T04 in parallel — create all issues and trigger all commands at once, then monitor all runs.
+**Deferred cleanup:** T01, T02, T03, and T26 have Phase 2 dependents — defer their cleanup until after Phase 2 completes.
 
-**Deferred cleanup:** T01, T02, T03, and T26 have Phase 2 dependents — mark `cleanup_deferred=true` and skip step 6 until after Phase 2.
+### STEP A — Create all Phase 1 issues
+
+Create all Phase 1 issues from the table below in one batch. Example for each:
+```bash
+gh issue create \
+  --title "[${RUN_ID}] Txx: <description>" \
+  --body "<task body>" \
+  --label "test-suite-temp"
+```
+Track issue numbers in a single variable: `PHASE1_ISSUES=""`
+
+### STEP B — Trigger all Phase 1 issues
+
+After ALL issues are created, trigger them all:
+```bash
+for issue in $PHASE1_ISSUES; do
+  gh issue comment $issue --body "<command>" &
+done
+wait
+```
+
+### STEP B2 — Monitor all Phase 1 pipelines (detached background)
+
+Launch all monitors in the background, then wait for all at once:
+```bash
+for issue in $PHASE1_ISSUES; do
+  wait_for_issue $issue &
+done
+wait
+# All Phase 1 pipelines have completed (or timed out)
+```
+
+After ALL Phase 1 pipelines complete, verify each test and then proceed to Phase 2.
 
 ### T03 — Contingency plan
 
