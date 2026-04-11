@@ -1,0 +1,15 @@
+{
+  "task_type": "chore",
+  "title": "Verify @kody release creates release PR",
+  "description": "Test @kody release command to verify it: 1) bumps version correctly using conventional commits, 2) generates changelog grouped by commit type, 3) creates a release PR on release/v<version> branch targeting the default branch (main). This is part of the T41 test suite verifying the release feature of @kody-ade/engine v0.1.62.",
+  "scope": [
+    ".kody/tasks/-Engine-Tester/actions/runs/24286230148))/task.md",
+    ".kody/tasks/-Engine-Tester/actions/runs/24286230148))/status.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".claude/commands/kody-test-suite.md - Test suite pattern for Phase 3 release tests (T26 dry-run, T27 full release)",
+    "kody.config.json - Kody engine configuration with defaultBranch: main and github owner/repo settings"
+  ],
+  "questions": []
+}
