@@ -1,0 +1,12 @@
+{
+  "conventions_config_590430246821": {
+    "id": "conventions_config_590430246821",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "config",
+    "content": "Config: config-quality-typecheck — quality.typecheck references script 'tsc' which doesn't exist in package.json",
+    "episodeId": "ep_ci_failure_002",
+    "validFrom": "2026-04-11T20:58:28.760Z",
+    "validTo": null
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "ep_ci_failure_002",
+  "runId": "watch-cycle-96",
+  "source": "ci_failure",
+  "taskId": "cycle-96",
+  "createdAt": "2026-04-11T20:58:28.758Z",
+  "rawContent": "Config health: 1 finding(s)",
+  "extractedNodeIds": []
+}
