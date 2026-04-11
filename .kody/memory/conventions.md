@@ -44,3 +44,6 @@ import { LessonEditor } from './LessonEditor'
 
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-11 (task: task-2011-rerun)
+- Active directories: .kody/memory, .kody/steps
