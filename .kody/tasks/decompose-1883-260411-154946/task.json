@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Execute T26: Test --no-compose flag for decompose",
+  "description": "Execute test case T26 to verify that `kody decompose --no-compose` stops after parallel builds without triggering merge/verify/review/ship phases. Verification includes: parallel builds complete, decompose-state.json saved with subPipelines, no PR created, and sub-task branches exist on remote.",
+  "scope": [
+    ".kody/tasks/decompose-1883-260411-154946/task.md",
+    ".kody/tasks/decompose-1883-260411-154946/status.json",
+    ".kody/watch/agents/test-suite/agent.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md:613-628 - T26 test case definition with verification criteria",
+    ".kody/watch/agents/test-suite/agent.md:554-611 - T25 full decompose flow test pattern (similar complex task)"
+  ],
+  "questions": []
+}
