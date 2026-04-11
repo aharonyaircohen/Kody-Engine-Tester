@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -101,5 +121,36 @@ Guidelines:
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+
+---
+
+## Repo Patterns
+
+- **Auth HOC** (`src/auth/withAuth.ts`): Route handler wrapper with JWT validation and `checkRole` RBAC; exports `extractBearerToken(token: string): string`
+- **DI Container** (`src/utils/di-container.ts`): `Container.register<T>(token, factory, lifecycle)` with `singleton`/`transient`; `DIDisposable` for cleanup
+- **Result Type** (`src/utils/result.ts`): `Result<T, E>` discriminated union — `Ok(value)` and `Err(error)` variants with `.isOk()`/`.isErr()`
+- **Middleware Chain** (`src/middleware/request-logger.ts`): `createRequestLogger(config)` factory returns chainable `.use()` middleware; Strategy pattern for log levels
+- **Validation Middleware** (`src/middleware/validation.ts`): Schema-driven validation for `body`/`query`/`params` with Zod and type coercion
+- **Service Layer** (`src/services/GradebookService.ts`): Constructor accepts typed `GradebookServiceDeps` interface; getter-based private store pattern
+- **Payload Collections** (`src/collections/contacts.ts`): `contactsStore` hybrid repository with `getById|create|update|delete|query` methods
+
+## Improvement Areas
+
+- **Dual auth coexists**: `src/auth/user-store.ts` (SHA-256, in-memory `UserStore`) alongside `src/auth/auth-service.ts` (PBKDF2, `AuthService`) — password hashing is inconsistent; consolidate on `AuthService`
+- **Role fragmentation**: `UserStore.UserRole = 'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole = 'admin'|'editor'|'viewer'` in `src/auth/withAuth.ts` — no alignment between systems
+- **Unsafe casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` type assertions; replace with proper type guards or generic helpers from `src/utils/result.ts`
+- **N+1 queries**: `dashboard/page.tsx` batch-fetches lessons but `src/services/DiscussionService.ts` may not; check `findByLessonId` for batch optimization opportunities
+- **Inconsistent schema validation**: `src/utils/schema.ts` exports `SchemaError` but API routes use ad-hoc validation; prefer统一的 Zod schemas from `src/validation/`
+
+## Acceptance Criteria
+
+- [ ] Uses `Result<T, E>` from `src/utils/result.ts` for explicit error handling (not thrown exceptions)
+- [ ] New services declare typed dependency interfaces (e.g., `ServiceNameDeps`) following `GradebookServiceDeps` pattern
+- [ ] Auth checks use `withAuth` HOC from `src/auth/withAuth.ts` — do not bypass or duplicate auth logic
+- [ ] Payload collections in `src/collections/` are the only DB access pattern — no raw SQL or direct queries
+- [ ] All API routes in `src/api/` and `src/app/api/` validate input with Zod schemas from `src/validation/`
+- [ ] Role assumptions are checked against `RbacRole` ('admin'|'editor'|'viewer') not `UserStore.UserRole`
+- [ ] New utility functions in `src/utils/` have co-located `.test.ts` files with `vi.fn()` mocks
+- [ ] No `as unknown as` casts — use proper type guards or `Result` type for ambiguous unions
 
 {{TASK_CONTEXT}}

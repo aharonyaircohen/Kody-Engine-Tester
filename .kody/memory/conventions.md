@@ -1,41 +1,11 @@
-# LearnHub Coding Conventions
+## Learned 2026-04-11 (task: SDLC pipeline conventions)
 
-**Naming**: Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case (`.module.css`); collections → singular slug
-
-**Imports**: Use `import type` for types; path alias `@/*` for internal modules; named imports preferred
-
-```typescript
-import type { Module } from '@/collections/Modules'
-import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
-import { LessonEditor } from './LessonEditor'
-```
-
-**Exports**: Named exports for utilities/types; default export for page components only
-
-**Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
-
-**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
-
-**Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
-
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
-
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/utils
-
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-10 (task: 1529-260410-102822)
-- Uses Drizzle ORM
-- Uses Payload CMS collections
+- Class-based services with constructor dependency injection (e.g., `DiscussionService`, `CertificatesStore`)
+- Getter-based private data access pattern (`private store: DiscussionsStore`)
+- Security utilities in `src/security/sanitizers.ts` for HTML/SQL/URL sanitization
+- Payload CMS collection configs co-locate interfaces (e.g., `Certificate`, `Enrollment`) with collection definition
+- Async utility functions with JSDoc documentation in `src/utils/`
+- Drag-and-drop state managed with `useState<string | null>` for `draggingId`/`dragOverId`
+- Auth tokens stored in `localStorage` with `Bearer` header pattern for API calls
+- PATCH method for partial updates (profile password change in `src/pages/auth/profile.tsx`)
+- `'use client'` on all React component files; interfaces defined inline or alongside components
