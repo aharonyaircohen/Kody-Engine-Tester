@@ -58,7 +58,6 @@ permissions:
   issues: write
   pull-requests: write
   contents: write
-  workflows: write
 
 jobs:
   # ─── Parse (issue_comment trigger only) ──────────────────────────────────────
@@ -192,7 +191,8 @@ jobs:
 
       - name: Run Kody pipeline
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          # Use GITHUB_TOKEN directly — app token lacks workflows: write needed for pushing workflow changes
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TASK_ID: ${{ github.event.inputs.task_id }}
           MODE: ${{ github.event.inputs.mode || 'full' }}
           FROM_STAGE: ${{ github.event.inputs.from_stage }}
@@ -389,7 +389,8 @@ jobs:
 
       - name: Run Kody pipeline
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          # Use GITHUB_TOKEN directly — app token lacks workflows: write needed for pushing workflow changes
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TASK_ID: ${{ needs.parse.outputs.task_id }}
           MODE: ${{ needs.parse.outputs.mode || 'full' }}
           FROM_STAGE: ${{ needs.parse.outputs.from_stage }}
