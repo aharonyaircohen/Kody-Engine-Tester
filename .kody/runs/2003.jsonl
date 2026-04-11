@@ -1,0 +1,1 @@
+{"runId":"2003-retest","issueNumber":2003,"command":"run","startedAt":"2026-04-11T20:50:51.242Z","completedAt":"2026-04-11T21:30:34.319Z","outcome":"failed","failedStage":"verify","failedError":"Verification failed after autofix attempts","stagesCompleted":["taskify","plan","build"],"feedback":""}
