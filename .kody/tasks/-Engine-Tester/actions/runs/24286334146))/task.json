@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The auth middleware already exists at `src/middleware/auth-middleware.ts",
+  "description": "The auth middleware already exists at `src/middleware/auth-middleware.ts` with comprehensive tests covering all the acceptance criteria. The implementation validates JWTs, returns 401 for missing/invalid/expired tokens, and attaches user context.\n\n```json\n{\n  \"task_type\": \"chore\",\n  \"title\": \"Verify existing implementation of auth middleware\",\n  \"description\": \"The auth middleware already exists at src/middleware/auth-middleware.ts with full test coverage. Tests verify: Bearer token extraction, ",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
