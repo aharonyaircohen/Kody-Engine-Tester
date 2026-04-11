@@ -1,0 +1,52 @@
+{
+  "run_id": "run-20260411-2048",
+  "phase": "phase1_validating",
+  "phase1_issues": [
+    1998,
+    1999,
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014
+  ],
+  "phase2_issues": [],
+  "monitor_started_at": "2026-04-11T20:11:00Z",
+  "engine_version": "0.1.81",
+  "fix_applied": {
+    "commit": "c4b6d6f",
+    "description": "fix(entry.ts): remove @kody rerun from pipeline-start comment"
+  },
+  "path_fix_applied": {
+    "commit": "12812c12",
+    "description": "fix(kody.yml): checkout into workspace root — path: . added to actions/checkout"
+  },
+  "workflow_dispatch_fix_applied": {
+    "commit": "3138db15",
+    "description": "fix(kody.yml): remove needs: [parse] from orchestrate — workflow_dispatch now triggers correctly"
+  },
+  "workflow_package": "@kody-ade/engine",
+  "fix_verified": true,
+  "validation_run": {
+    "issue": 2006,
+    "run_id": 24291066696,
+    "status": "success",
+    "pr_created": "https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/2017",
+    "all_stages_completed": ["taskify", "plan", "build", "verify", "review", "review-fix", "ship"]
+  },
+  "note": "Path duplication bug fixed (path: . checkout). workflow_dispatch fixed (removed needs: [parse]). Manual rerun of issue 2006 succeeded — all stages completed, PR #2017 created.",
+  "blocker": null,
+  "blocker_description": null,
+  "blocked_issues": [],
+  "last_check": 1775938704.937762
+}
