@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Add truncateSimple utility function",
+  "description": "Create a simple string truncate utility in src/utils/truncate-simple.ts that truncates a string to a maximum length with ellipsis. This simple utility is used to test the decompose fallback mechanism - it should score below complexity threshold and fall back to normal pipeline.",
+  "scope": ["src/utils/truncate-simple.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/truncate.ts - existing truncate utility with similar signature but supports custom suffix",
+    "src/utils/reverse.ts - simple single-function utility pattern",
+    "src/utils/clamp.ts - simple utility with basic validation"
+  ],
+  "questions": []
+}
