@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify force-with-lease retry on rerun push",
+"description": "Verify that when a git push is rejected during a rerun (triggered via @kody rerun --from build), the kody-engine retries with 'git push --force-with-lease'. Verification criteria: logs should show 'force-with-lease' on push retry.",
+"scope": [".kody/tasks/2087-260412-130743/task.md"],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}
