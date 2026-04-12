@@ -49,10 +49,13 @@ on:
     paths: ["src/**", "kody.config.json", "package.json"]
 
 concurrency:
-  # Per-issue concurrency — cancels any existing pipeline when a new one starts on the same issue.
+  # Per-issue concurrency — prevents duplicate pipelines on the same issue.
   # For workflow_dispatch (manual), uses task_id. For issue_comment, uses issue number.
+  # Note: cancel-in-progress removed — test-suite agent triggers frequently and cancelling
+  # causes the pipeline to never complete. Multiple runs can coexist; the first to reach
+  # ship stage will close the issue.
   group: kody-${{ github.event.inputs.task_id || github.event.issue.number }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   issues: write
@@ -66,7 +69,9 @@ jobs:
       github.event_name == 'issue_comment' &&
       github.event.issue.state != 'closed' &&
       github.event.comment.user.type != 'Bot' &&
-      !(contains(github.event.comment.body, 'Kody pipeline started')) && !contains(github.event.comment.body, '@kody rerun') &&
+      github.event.comment.user.login != 'github-actions[bot]' &&
+      !(contains(github.event.comment.body, 'Kody pipeline started')) &&
+      !(startsWith(github.event.comment.body, '🎉')) && !(startsWith(github.event.comment.body, '❌')) &&
       (contains(github.event.comment.body, '@kody') || contains(github.event.comment.body, '/kody'))
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -108,12 +113,217 @@ jobs:
           COMMENT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
         run: kody-engine ci-parse
 
-  # ─── Orchestrate ─────────────────────────────────────────────────────────────
+  # ─── Orchestrate (workflow_dispatch / pull_request_review — no parse needed) ──
   orchestrate:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (needs.parse.result == 'success' && (needs.parse.outputs.valid == 'true' || needs.parse.outputs.valid == '')) ||
-      (github.event_name == 'pull_request_review' && github.event.review.state == 'changes_requested')
+    if: github.event_name != 'issue_comment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Debug event name
+        run: echo "Event name recorded"
+
+      - name: Generate App token
+        id: app-token
+        if: vars.KODY_APP_ID != ''
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.KODY_APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: .
+
+      - name: Ensure GITHUB_TOKEN is used for git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GH_REPO}.git"
+          git config --local credential.helper "store --file /dev/null"
+
+      - name: Checkout PR branch (for fix/rerun/review on PRs)
+        if: github.event.issue.pull_request && (github.event.inputs.mode == 'fix' || github.event.inputs.mode == 'fix-ci' || github.event.inputs.mode == 'rerun' || github.event.inputs.mode == 'review' || github.event.inputs.mode == 'resolve')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUM="${{ github.event.inputs.issue_number || github.event.issue.number }}"
+          PR_BRANCH=$(gh pr view "$PR_NUM" --json headRefName -q '.headRefName')
+          echo "Checking out PR branch: $PR_BRANCH"
+          git checkout "$PR_BRANCH"
+          git pull origin "$PR_BRANCH"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install Kody Engine
+        run: npm install -g @kody-ade/engine
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install LiteLLM proxy
+        run: pip install 'litellm[proxy]' prisma && python -m prisma py fetch
+
+      - name: Configure git
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+      - name: Export project secrets
+        env:
+          ALL_SECRETS: ${{ toJSON(secrets) }}
+        run: |
+          echo "$ALL_SECRETS" | jq -r 'to_entries[] | select(.key | test("^(GITHUB_TOKEN)$") | not) | @json' | while IFS= read -r entry; do
+            KEY=$(echo "$entry" | jq -r '.key')
+            VALUE=$(echo "$entry" | jq -r '.value')
+            DELIM="KODY_EOF_${KEY}"
+            echo "${KEY}<<${DELIM}" >> $GITHUB_ENV
+            echo "${VALUE}" >> $GITHUB_ENV
+            echo "${DELIM}" >> $GITHUB_ENV
+          done
+
+      - name: Warm up Next.js build cache
+        continue-on-error: true
+        run: npx next build 2>/dev/null || true
+        timeout-minutes: 15
+
+      - name: Run Kody pipeline
+        env:
+          # Use GITHUB_TOKEN directly — app token lacks workflows: write needed for pushing workflow changes
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TASK_ID: ${{ github.event.inputs.task_id }}
+          MODE: ${{ github.event.inputs.mode || 'full' }}
+          FROM_STAGE: ${{ github.event.inputs.from_stage }}
+          ISSUE_NUMBER: ${{ github.event.inputs.issue_number }}
+          FEEDBACK: ${{ github.event.inputs.feedback }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          AUTO_MODE: ${{ github.event.inputs.auto_mode || 'false' }}
+          RUN-URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          KODY_MEMORY_NUDGE: "true"
+        run: |
+          if [ "$MODE" = "release" ]; then
+            echo "Running release..."
+            ARGS=""
+            [ -n "$ISSUE_NUMBER" ] && ARGS="$ARGS --issue-number $ISSUE_NUMBER"
+            [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+            kody-engine release $ARGS
+          elif [ "$MODE" = "revert" ]; then
+            echo "Running revert..."
+            ARGS=""
+            [ -n "$ISSUE_NUMBER" ] && ARGS="$ARGS --issue-number $ISSUE_NUMBER"
+            [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+            kody-engine revert $ARGS
+          elif [ "$MODE" = "bootstrap" ]; then
+            echo "Running bootstrap..."
+            kody-engine bootstrap
+          elif [ "$MODE" = "taskify" ]; then
+            echo "Running taskify..."
+            ARGS=""
+            [ -n "$ISSUE_NUMBER" ] && ARGS="$ARGS --issue-number $ISSUE_NUMBER"
+            [ -n "$TASK_ID" ] && ARGS="$ARGS --task-id $TASK_ID"
+            kody-engine taskify $ARGS
+          else
+            CMD="run"
+            [ "$MODE" = "rerun" ] && CMD="rerun"
+            [ "$MODE" = "fix" ] && CMD="fix"
+            [ "$MODE" = "fix-ci" ] && CMD="fix-ci"
+            [ "$MODE" = "review" ] && CMD="review"
+            [ "$MODE" = "resolve" ] && CMD="resolve"
+            [ "$MODE" = "status" ] && CMD="status"
+            [ "$MODE" = "hotfix" ] && CMD="hotfix"
+            ARGS="--issue-number $ISSUE_NUMBER"
+            [ -n "$TASK_ID" ] && ARGS="$ARGS --task-id $TASK_ID"
+            [ -n "$FROM_STAGE" ] && ARGS="$ARGS --from $FROM_STAGE"
+            # FEEDBACK is also passed via env var (avoids shell escaping issues)
+            [ -n "$FEEDBACK" ] && ARGS="$ARGS --feedback \"$FEEDBACK\""
+            [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+            [ "$AUTO_MODE" = "true" ] && ARGS="$ARGS --auto-mode"
+            kody-engine $CMD $ARGS
+          fi
+
+      - name: Pipeline summary
+        if: always()
+        run: |
+          TASK_ID="${{ github.event.inputs.task_id }}"
+          STATUS_FILE=".kody/tasks/${TASK_ID}/status.json"
+          if [ -f "$STATUS_FILE" ]; then
+            STATE=$(jq -r '.state' "$STATUS_FILE")
+            ICON="❌"
+            [ "$STATE" = "completed" ] && ICON="✅"
+            echo "## ${ICON} Kody Pipeline: \`${TASK_ID}\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Status:** ${STATE}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Stage | State |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+            for stage in taskify plan build verify review review-fix ship; do
+              SSTATE=$(jq -r ".stages[\"$stage\"].state // \"—\"" "$STATUS_FILE")
+              case "$SSTATE" in
+                completed) SICON="✅" ;;
+                failed)    SICON="❌" ;;
+                timeout)   SICON="⏱" ;;
+                running)   SICON="▶️" ;;
+                *)         SICON="○" ;;
+              esac
+              echo "| ${stage} | ${SICON} ${SSTATE} |" >> $GITHUB_STEP_SUMMARY
+            done
+          fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: kody-tasks-${{ github.event.inputs.task_id }}
+          path: .kody/tasks/
+          retention-days: 3
+
+      - name: Persist run history
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -d ".kody/runs" ] && [ -n "$(ls -A .kody/runs/ 2>/dev/null)" ]; then
+            # Stash run history files, switch to main, apply, commit, push
+            cp -r .kody/runs/ /tmp/kody-runs-backup/
+            DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
+            git stash --include-untracked || true
+            git fetch origin "$DEFAULT_BRANCH"
+            git checkout "$DEFAULT_BRANCH"
+            git pull origin "$DEFAULT_BRANCH" --rebase || true
+            mkdir -p .kody/runs
+            # Merge: append new lines from backup into existing files
+            for f in /tmp/kody-runs-backup/*; do
+              fname=$(basename "$f")
+              if [ -f ".kody/runs/$fname" ]; then
+                # Append only new lines (lines in backup not in existing)
+                comm -13 <(sort ".kody/runs/$fname") <(sort "$f") >> ".kody/runs/$fname" || cat "$f" >> ".kody/runs/$fname"
+              else
+                cp "$f" ".kody/runs/$fname"
+              fi
+            done
+            git add .kody/runs/
+            if ! git diff --cached --quiet .kody/runs/; then
+              git commit -m "chore: update run history [skip ci]"
+              git push origin "$DEFAULT_BRANCH" || echo "Warning: could not push run history (non-fatal)"
+            fi
+          fi
+
+  # ─── Orchestrate (from parse outputs — issue_comment trigger) ─────────────────
+  orchestrate-from-parse:
+    needs: parse
+    if: needs.parse.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -130,7 +340,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: true
-          token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          # Always use GITHUB_TOKEN for git operations — app token lacks workflows: write
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: .
 
       - name: Checkout PR branch (for fix/rerun/review on PRs)
@@ -188,19 +399,19 @@ jobs:
 
       - name: Run Kody pipeline
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
-          TASK_ID: ${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}
-          MODE: ${{ github.event.inputs.mode || needs.parse.outputs.mode || 'full' }}
-          FROM_STAGE: ${{ github.event.inputs.from_stage || needs.parse.outputs.from_stage }}
-          ISSUE_NUMBER: ${{ github.event.inputs.issue_number || needs.parse.outputs.issue_number }}
+          # Use GITHUB_TOKEN directly — app token lacks workflows: write needed for pushing workflow changes
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TASK_ID: ${{ needs.parse.outputs.task_id }}
+          MODE: ${{ needs.parse.outputs.mode || 'full' }}
+          FROM_STAGE: ${{ needs.parse.outputs.from_stage }}
+          ISSUE_NUMBER: ${{ needs.parse.outputs.issue_number }}
           PR_NUMBER: ${{ needs.parse.outputs.pr_number }}
-          FEEDBACK: ${{ github.event.inputs.feedback || needs.parse.outputs.feedback }}
+          FEEDBACK: ${{ needs.parse.outputs.feedback }}
           COMPLEXITY: ${{ needs.parse.outputs.complexity }}
           CI_RUN_ID: ${{ needs.parse.outputs.ci_run_id }}
           TICKET_ID: ${{ needs.parse.outputs.ticket_id }}
           PRD_FILE: ${{ needs.parse.outputs.prd_file }}
-          DRY_RUN: ${{ github.event.inputs.dry_run || needs.parse.outputs.dry_run || 'false' }}
-          AUTO_MODE: ${{ github.event.inputs.auto_mode }}
+          DRY_RUN: ${{ needs.parse.outputs.dry_run || 'false' }}
           BUMP: ${{ needs.parse.outputs.bump }}
           FINALIZE: ${{ needs.parse.outputs.finalize }}
           NO_PUBLISH: ${{ needs.parse.outputs.no_publish }}
@@ -254,14 +465,13 @@ jobs:
             # FEEDBACK is also passed via env var (avoids shell escaping issues)
             [ -n "$FEEDBACK" ] && ARGS="$ARGS --feedback \"$FEEDBACK\""
             [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
-            [ "$AUTO_MODE" = "true" ] && ARGS="$ARGS --auto-mode"
             kody-engine $CMD $ARGS
           fi
 
       - name: Pipeline summary
         if: always()
         run: |
-          TASK_ID="${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}"
+          TASK_ID="${{ needs.parse.outputs.task_id }}"
           STATUS_FILE=".kody/tasks/${TASK_ID}/status.json"
           if [ -f "$STATUS_FILE" ]; then
             STATE=$(jq -r '.state' "$STATUS_FILE")
@@ -291,7 +501,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: kody-tasks-${{ github.event.inputs.task_id || needs.parse.outputs.task_id }}
+          name: kody-tasks-${{ needs.parse.outputs.task_id }}
           path: .kody/tasks/
           retention-days: 3
 
@@ -300,7 +510,6 @@ jobs:
         continue-on-error: true
         run: |
           if [ -d ".kody/runs" ] && [ -n "$(ls -A .kody/runs/ 2>/dev/null)" ]; then
-            # Stash run history files, switch to main, apply, commit, push
             cp -r .kody/runs/ /tmp/kody-runs-backup/
             DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
             git stash --include-untracked || true
@@ -308,11 +517,9 @@ jobs:
             git checkout "$DEFAULT_BRANCH"
             git pull origin "$DEFAULT_BRANCH" --rebase || true
             mkdir -p .kody/runs
-            # Merge: append new lines from backup into existing files
             for f in /tmp/kody-runs-backup/*; do
               fname=$(basename "$f")
               if [ -f ".kody/runs/$fname" ]; then
-                # Append only new lines (lines in backup not in existing)
                 comm -13 <(sort ".kody/runs/$fname") <(sort "$f") >> ".kody/runs/$fname" || cat "$f" >> ".kody/runs/$fname"
               else
                 cp "$f" ".kody/runs/$fname"
@@ -378,10 +585,7 @@ jobs:
 
   # ─── Error Notifications ─────────────────────────────────────────────────────
   notify-parse-error:
-    if: >-
-      github.event_name == 'issue_comment' &&
-      (needs.parse.outputs.valid != 'true' && needs.parse.outputs.valid != '') &&
-      (contains(github.event.comment.body, '@kody') || contains(github.event.comment.body, '/kody'))
+    if: github.event_name == 'issue_comment' && needs.parse.result == 'success' && needs.parse.outputs.valid != 'true' && (contains(github.event.comment.body, '@kody') || contains(github.event.comment.body, '/kody'))
     needs: [parse]
     runs-on: ubuntu-latest
     steps:
@@ -396,14 +600,14 @@ jobs:
             })
 
   notify-orchestrate-error:
-    if: failure() && needs.orchestrate.result == 'failure'
-    needs: [orchestrate]
+    if: failure()
+    needs: [orchestrate, orchestrate-from-parse]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v7
         with:
           script: |
-            const issueNumber = Number('${{ github.event.inputs.issue_number || needs.parse.outputs.issue_number || 0 }}');
+            const issueNumber = Number('${{ github.event.inputs.issue_number || github.event.issue.number || 0 }}');
             if (issueNumber > 0) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,

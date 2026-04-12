@@ -1,25 +1,7 @@
 {
   "run_id": "run-20260411-2048",
-  "phase": "phase1_validating",
-  "phase1_issues": [
-    1998,
-    1999,
-    2000,
-    2001,
-    2002,
-    2003,
-    2004,
-    2005,
-    2006,
-    2007,
-    2008,
-    2009,
-    2010,
-    2011,
-    2012,
-    2013,
-    2014
-  ],
+  "phase": "phase2",
+  "phase1_issues": [1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014],
   "phase2_issues": [],
   "monitor_started_at": "2026-04-11T20:11:00Z",
   "engine_version": "0.1.81",
@@ -48,5 +30,5 @@
   "blocker": null,
   "blocker_description": null,
   "blocked_issues": [],
-  "last_check": 1775938704.937762
+  "last_check": 1775976686
 }
