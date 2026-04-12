@@ -731,6 +731,9 @@ fire_test() {
   push_state
 
   echo "[$test_id] Fired. Pipeline running in background."
+
+  # Small delay between fires to avoid GitHub API rate limiting
+  sleep 3
 }
 ```
 
