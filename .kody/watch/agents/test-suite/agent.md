@@ -1247,6 +1247,11 @@ do_phase3() {
   echo "=== Phase 3: Edge Cases & Flag Combos ==="
   update_last_check
 
+  # ── Generate fresh RUN_ID for this phase run ──────────────────────────────────
+  RUN_ID="run-$(date +%Y%m%d-%H%M)"
+  jq ".run_id = \"$RUN_ID\"" "$STATE_FILE" > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
+  echo "[RUN_ID] Phase 3 run: $RUN_ID"
+
   # ── Load completed tests (crash-resume) ──────────────────────────────────────
   local done=""
   if [ -f "$STATE_FILE" ]; then
