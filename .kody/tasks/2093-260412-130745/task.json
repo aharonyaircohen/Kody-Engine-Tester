@@ -1,0 +1,12 @@
+{
+  "task_type": "chore",
+  "title": "Verify T34 tokenStats in observer-log.jsonl",
+  "description": "Verification task T34: Check that the observer-log.jsonl entry for run 2093-260412-130745 contains tokenStats with perStage breakdown. The pipeline is currently running (taskify stage active as of 2026-04-12T13:10:10.995Z). The observer-log.jsonl file does not yet exist — it should be created by the engine upon pipeline completion with tokenStats.totalPromptTokens, tokenStats.perStage entries for each executed stage, and tokenStats.memoryTokens.",
+  "scope": [],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/runs/*.jsonl — run log entries with runId, issueNumber, stagesCompleted structure",
+    ".kody-engine/event-log.json — event log entries for pipeline.started and step.started events"
+  ],
+  "questions": []
+}
