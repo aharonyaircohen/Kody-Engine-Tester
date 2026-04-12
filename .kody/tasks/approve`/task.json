@@ -1,0 +1,22 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of login and register API endpoints",
+  "description": "The login and register API endpoints already exist and are fully implemented. POST /login at src/app/api/auth/login/route.ts returns 200 with JWT tokens, POST /register at src/app/api/auth/register/route.ts returns 201. Both use AuthService (PBKDF2) for password hashing, with validation, appropriate HTTP status codes (400/401/409), and comprehensive unit tests in login.test.ts and register.test.ts.",
+  "scope": [
+    "src/api/auth/login.ts",
+    "src/api/auth/login.test.ts",
+    "src/api/auth/register.ts",
+    "src/api/auth/register.test.ts",
+    "src/app/api/auth/login/route.ts",
+    "src/app/api/auth/register/route.ts",
+    "src/auth/auth-service.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/auth-service.ts - AuthService with PBKDF2 password verification via verifyPassword function",
+    "src/auth/jwt-service.ts - JWT token generation and validation",
+    "src/api/auth/login.ts - login function using AuthService.login()",
+    "src/api/auth/register.ts - register function with password strength validation and Payload user creation"
+  ],
+  "questions": []
+}
