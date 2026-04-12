@@ -3,12 +3,12 @@ import { groupBy } from './group-by'
 
 describe('groupBy', () => {
   it('returns empty object for empty array', () => {
-    expect(groupBy([], 'name')).toEqual({})
+    expect(groupBy([] as { name: string }[], (item) => item.name)).toEqual({})
   })
 
   it('handles single item array', () => {
     const items = [{ name: 'Alice', dept: 'eng' }]
-    const result = groupBy(items, 'dept')
+    const result = groupBy(items, (item) => item.dept)
     expect(result).toEqual({ eng: [{ name: 'Alice', dept: 'eng' }] })
   })
 
@@ -18,35 +18,22 @@ describe('groupBy', () => {
       { name: 'Bob', dept: 'sales' },
       { name: 'Carol', dept: 'eng' },
     ]
-    const result = groupBy(items, 'dept')
+    const result = groupBy(items, (item) => item.dept)
     expect(result).toEqual({
       eng: [{ name: 'Alice', dept: 'eng' }, { name: 'Carol', dept: 'eng' }],
       sales: [{ name: 'Bob', dept: 'sales' }],
     })
   })
 
-  it('handles nested keys', () => {
-    const items = [
-      { name: 'Alice', address: { city: 'NYC' } },
-      { name: 'Bob', address: { city: 'LA' } },
-      { name: 'Carol', address: { city: 'NYC' } },
-    ]
-    type Address = { city: string }
-    const result = groupBy(items, 'address' as keyof typeof items[number])
-    expect(result).toEqual({
-      '[object Object]': items,
-    })
-  })
-
   it('does not mutate the original array', () => {
     const arr = [{ dept: 'eng' }, { dept: 'sales' }]
-    groupBy(arr, 'dept')
+    groupBy(arr, (item) => item.dept)
     expect(arr).toEqual([{ dept: 'eng' }, { dept: 'sales' }])
   })
 
   it('converts numeric keys to strings', () => {
     const items = [{ n: 10 }, { n: 20 }, { n: 10 }]
-    const result = groupBy(items, 'n')
+    const result = groupBy(items, (item) => String(item.n))
     expect(result['10']).toEqual([{ n: 10 }, { n: 10 }])
     expect(result['20']).toEqual([{ n: 20 }])
   })
@@ -57,11 +44,22 @@ describe('groupBy', () => {
       { name: 'second', dept: 'sales' },
       { name: 'third', dept: 'eng' },
     ]
-    const result = groupBy(items, 'dept')
+    const result = groupBy(items, (item) => item.dept)
     expect(result['eng']).toEqual([
       { name: 'first', dept: 'eng' },
       { name: 'third', dept: 'eng' },
     ])
     expect(result['sales']).toEqual([{ name: 'second', dept: 'sales' }])
+  })
+
+  it('supports dynamic key extraction', () => {
+    const items = [
+      { name: 'Alice', age: 30 },
+      { name: 'Bob', age: 25 },
+      { name: 'Carol', age: 30 },
+    ]
+    const result = groupBy(items, (item) => String(item.age))
+    expect(result['30']).toEqual([{ name: 'Alice', age: 30 }, { name: 'Carol', age: 30 }])
+    expect(result['25']).toEqual([{ name: 'Bob', age: 25 }])
   })
 })

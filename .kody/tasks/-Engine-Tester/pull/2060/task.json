@@ -1,0 +1,16 @@
+```json
+{
+  "task_type": "bugfix",
+  "title": "Revert PR #2024 groupBy signature change",
+  "description": "Revert changes from PR #2024 which changed groupBy function signature from keyFn callback to direct key parameter. Restore original implementation with signature groupBy<T>(items: readonly T[], keyFn: (item: T) => string). This includes both src/utils/group-by.ts and src/utils/group-by.test.ts.",
+  "scope": [
+    "src/utils/group-by.ts",
+    "src/utils/group-by.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/group-by.ts and group-by.test.ts - existing co-located test pattern for utility functions"
+  ],
+  "questions": []
+}
+```
