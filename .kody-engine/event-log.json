@@ -160,5 +160,32 @@
     ],
     "hookErrors": {},
     "emittedAt": "2026-04-12T07:56:03.262Z"
+  },
+  {
+    "id": "1775998810051-aim5xvy",
+    "runId": "2068-260412-125800",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "2068-260412-125800",
+      "issueNumber": 2068
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-12T13:00:10.051Z"
+  },
+  {
+    "id": "1775998810052-bk2nnge",
+    "runId": "2068-260412-125800",
+    "event": "step.started",
+    "payload": {
+      "runId": "2068-260412-125800",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-12T13:00:10.052Z"
   }
 ]
