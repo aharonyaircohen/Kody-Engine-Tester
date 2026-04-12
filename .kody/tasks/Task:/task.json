@@ -1,0 +1,23 @@
+{
+  "task_type": "feature",
+  "hasUI": true,
+  "title": "Add new dashboard page with charts and data tables",
+  "description": "Create a new dashboard page at src/app/(frontend)/dashboard/ with charts and data tables using React components. The implementation should follow existing dashboard patterns (CourseProgressCard, UpcomingDeadlines, RecentActivity) and include components for displaying metrics with charts and tabular data. This task also verifies that UI tasks automatically get Playwright MCP server injected into the build/verify stages when hasUI: true is set in task.json.",
+  "scope": [
+    "src/app/(frontend)/dashboard/page.tsx",
+    "src/components/dashboard/CourseProgressCard.tsx",
+    "src/components/dashboard/UpcomingDeadlines.tsx",
+    "src/components/dashboard/RecentActivity.tsx",
+    "src/components/dashboard/ProgressRing.tsx",
+    "kody.config.json",
+    ".kody/tools.yml"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "Dashboard page at `src/app/(frontend)/dashboard/page.tsx` uses ProgressService to fetch enrollments and build course cards",
+    "Dashboard components in `src/components/dashboard/` follow single-responsibility pattern (CourseProgressCard, UpcomingDeadlines, RecentActivity)",
+    "MCP servers configured in `kody.config.json` with stages filter (build, verify, review, review-fix)",
+    "Playwright tool detection via `playwright.config.ts` in `kody/tools.yml` with verify stage"
+  ],
+  "questions": []
+}
