@@ -1,0 +1,17 @@
+{
+  "task_type": "chore",
+  "title": "Verify --complexity low flag forces 4 stages",
+  "description": "Verify --complexity low flag forces 4 stages regardless of task complexity. Check logs for 'Complexity override:' (not 'auto-detected:'). Triggered via @kody --complexity low on issue 2063.",
+  "scope": [
+    ".kody/tasks/2063-260412-111907/task.md",
+    ".kody/tasks/2063-260412-111907/status.json",
+    ".kody/watch/agents/test-suite/agent.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md:1340-1347 - T10 test definition pattern with run_test function",
+    ".kody/watch/agents/test-suite/agent.md:1928-1939 - T10 verification protocol with log grep commands",
+    ".claude/commands/kody-test-suite.md:91 - T10 verification in CLI.md"
+  ],
+  "questions": []
+}
