@@ -32,3 +32,21 @@ I've documented the verification findings in `.kody/tasks/2023-260412-005018/ver
 The issue is in kody-engine's `buildFullPromptTiered` function:
 -
 ...(truncated)
+
+### autofix (2026-04-12T01:22:00)
+The fix is complete. Let me summarize:
+
+**Root Cause Investigation:**
+
+The error was:
+```
+Error: Failed query: SELECT conname AS primary_key... params: []
+Caused by: error: there is no parameter $1
+```
+
+This error was coming from Payload CMS's internal drizzle-kit schema introspection during Payload initialization in `beforeAll`. Even though the test uses `it.skip`, the `beforeAll` hook still runs.
+
+**The actual bug fixed:**
+
+In `tests/helpers/seedUser.ts`, the `role` property was typed as `stri
+...(truncated)
