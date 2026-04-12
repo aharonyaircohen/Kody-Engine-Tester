@@ -24,3 +24,7 @@ Implementation complete. I've created `src/models/User.ts` with:
 
 - **Named export** following the existing `notification.ts` pa
 ...(truncated)
+
+### autofix (2026-04-12T00:55:45)
+Fixed. The variable `context` on line 80 was declared with `let` but never reassigned — it was only ever spread into new objects, so `const` is the correct choice.
+
