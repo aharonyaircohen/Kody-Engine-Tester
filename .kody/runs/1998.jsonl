@@ -1,1 +1,2 @@
 {"runId":"1998-retrigger-234839","issueNumber":1998,"command":"run","startedAt":"2026-04-11T20:50:22.194Z","completedAt":"2026-04-11T20:56:32.054Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
+{"runId":"1998-260411-190913","issueNumber":1998,"command":"rerun","startedAt":"2026-04-12T07:51:51.937Z","completedAt":"2026-04-12T07:58:38.546Z","outcome":"completed","stagesCompleted":["verify","review","review-fix","ship"],"feedback":"","parentRunId":"1998-retrigger-234839"}
