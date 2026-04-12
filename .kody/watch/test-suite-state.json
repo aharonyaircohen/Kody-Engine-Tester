@@ -1,12 +1,1 @@
-{
-  "run_id": "run-20260412-1500",
-  "phase": "phase3",
-  "phase1_issues": [],
-  "phase2_issues": [],
-  "engine_version": "0.1.86",
-  "fix_verified": true,
-  "note": "New simplified fire-and-forget test suite. Each test fires immediately, summary checks labels after.",
-  "blocker": null,
-  "last_check": 0,
-  "phase3_issues": []
-}
+{"run_id":"run-20260412-1357","phase":"phase3_wait","phase1_issues":[],"phase2_issues":[],"engine_version":"0.1.86","fix_verified":true,"note":"Tests fired for run-20260412-1357, pipelines running. Summary pending.","blocker":null,"last_check":0,"phase3_issues":["T10","T11","T12","T13","T14","T15","T16","T17","T18","T23","T27","T30","T33b","T34","T35","T36"]}
