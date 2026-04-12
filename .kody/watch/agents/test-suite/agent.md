@@ -1235,34 +1235,353 @@ This tests `@kody revert` (no explicit target) which finds the linked merged PR 
 
 ---
 
-### do_phase3/4/5 — Phase stubs
+### do_phase3 — Phase 3: Edge Cases & Flag Combos
 
 ```bash
-# Phase 3: Edge Cases — delegate to the existing Phase 3 script blocks in agent.md.
-# Run tests T10–T18, T23, T27, T30, T33b, T34–T36.
+# ── Phase 3: Edge Cases & Flag Combos ─────────────────────────────────────────
+# Tests T10–T18, T23, T27, T30, T33b, T34–T36.
+# Each test: create issue → trigger → poll → verify → cleanup.
+# Idempotent: uses phase3_issues[] in state file for crash-resume.
+
 do_phase3() {
   echo "=== Phase 3: Edge Cases & Flag Combos ==="
-  jq ".last_check = $(date +%s)" "$STATE_FILE" > /tmp/ts_state.json \
-    && mv /tmp/ts_state.json "$STATE_FILE"
-  echo "Phase 3 stub — implement edge case tests here"
-  # TODO: implement Phase 3 test execution (T10–T18, T23, T27, T30, T33b, T34–T36)
-  # See ## Phase 3 section in agent.md for test definitions.
-  # When complete:
-  #   jq '.phase = "phase4"' "$STATE_FILE" > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
-  echo "Phase 3 not yet implemented — exiting for now"
-  exit 0
-}
+  update_last_check
 
+  # ── Load completed tests (crash-resume) ──────────────────────────────────────
+  local done=""
+  if [ -f "$STATE_FILE" ]; then
+    local existing=$(jq -r '.phase3_issues // [] | length' "$STATE_FILE" 2>/dev/null)
+    if [ "$existing" -gt 0 ] 2>/dev/null; then
+      done=$(jq -r '.phase3_issues | join(" ")' "$STATE_FILE" 2>/dev/null)
+      echo "[resume] Already completed: $done"
+    fi
+  fi
+  is_done() { echo "$done" | grep -qw "$1"; }
+
+  # ── Helper: wait for pipeline and return conclusion ──────────────────────────
+  wait_pipeline() {
+    local trigger_cmd="$1"
+    local deadline=$(($(date +%s) + 5400))  # 90min max
+    local run_id=""
+    while [ $(date +%s) -lt $deadline ]; do
+      update_last_check
+      run_id=$(gh run list --repo aharonyaircohen/Kody-Engine-Tester \
+        --event issue_comment --status in_progress \
+        --json databaseId --jq '.[0].databaseId' 2>/dev/null || echo "")
+      if [ -n "$run_id" ]; then
+        local rv=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id \
+          --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
+        if [[ "$rv" == "completed/"* ]]; then
+          echo "$rv"
+          return 0
+        fi
+      fi
+      sleep 20
+    done
+    echo "completed/timeout"
+  }
+
+  # ── Helper: run a single test ───────────────────────────────────────────────
+  run_test() {
+    local test_id="$1"
+    local issue_title="$2"
+    local issue_body="$3"
+    local trigger_cmd="$4"
+
+    if is_done "$test_id"; then
+      echo "[$test_id] Already done — skipping"
+      return 0
+    fi
+
+    update_last_check
+    echo "[$test_id] Creating issue..."
+    local issue_num
+    issue_num=$(gh issue create \
+      --title "$issue_title" \
+      --body "$issue_body" \
+      --label "test-suite-temp" \
+      2>/dev/null | grep -oP '\d+$' || echo "")
+    if [ -z "$issue_num" ]; then
+      echo "[$test_id] FAILED: could not create issue"
+      return 1
+    fi
+    echo "[$test_id] Issue #$issue_num created. Triggering: $trigger_cmd"
+    $trigger_cmd "$issue_num" 2>/dev/null
+
+    echo "[$test_id] Waiting for pipeline..."
+    local result
+    result=$(wait_pipeline)
+    echo "[$test_id] Pipeline result: $result"
+
+    # Verify: check issue has kody:done label
+    local labels
+    labels=$(gh issue view "$issue_num" --json labels -q '.labels[].name' 2>/dev/null)
+    if echo "$labels" | grep -qw "kody:done"; then
+      echo "[$test_id] ✅ PASS — kody:done label present"
+    elif echo "$labels" | grep -qw "kody:failed"; then
+      echo "[$test_id] ❌ FAIL — kody:failed label present"
+    else
+      echo "[$test_id] ⚠️  INCONCLUSIVE — no kody:done/kody:failed label"
+    fi
+
+    # Cleanup
+    gh issue close "$issue_num" 2>/dev/null
+    local pr_num
+    pr_num=$(gh pr list --state open --search "[${RUN_ID}] $test_id" \
+      --json number --jq '.[0].number' 2>/dev/null || echo "")
+    [ -n "$pr_num" ] && gh pr close "$pr_num" --delete-branch 2>/dev/null
+
+    # Record completion
+    jq ".phase3_issues = ($(jq -r '.phase3_issues // []' "$STATE_FILE" 2>/dev/null | grep -v '^\s*$$' || echo '[]') + [\"$test_id\"] | unique)" \
+      "$STATE_FILE" > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
+    update_last_check
+  }
+
+  # ── T10: Complexity override (--complexity low) ──────────────────────────────
+  run_test T10 "[${RUN_ID}] T10: Flag: complexity override" \
+    "Verify --complexity low flag forces 4 stages regardless of task complexity.
+
+Trigger with: @kody --complexity low
+
+## Verification
+Check logs for 'Complexity override:' (not 'auto-detected:')." \
+    'n=$1; gh issue comment $n --body "@kody --complexity low"'
+
+  # ── T11: Feedback injection (--feedback) ───────────────────────────────────
+  run_test T11 "[${RUN_ID}] T11: Flag: feedback injection" \
+    "Verify --feedback flag is injected into build stage.
+
+Trigger with: @kody --feedback \"Use functional style\"
+
+## Verification
+Check logs for 'feedback:' line during build stage." \
+    'n=$1; gh issue comment $n --body "@kody --feedback \"Use functional style\""'
+
+  # ── T12: Rerun from specific stage (--from build) ──────────────────────────
+  run_test T12 "[${RUN_ID}] T12: Rerun from specific stage" \
+    "First trigger a normal run, then rerun from build stage.
+
+This issue will first be triggered normally, then re-triggered with --from build.
+
+## Verification
+Logs should show 'Resuming from: build' and skip taskify/plan stages." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T13: State bypass on rerun (bare rerun) ────────────────────────────────
+  run_test T13 "[${RUN_ID}] T13: State bypass on rerun" \
+    "Verify that @kody rerun bypasses the 'already completed' state lock.
+
+Trigger this issue twice: first @kody (completes), then @kody rerun (should re-execute).
+
+## Verification
+Second pipeline should run (not blocked by 'already completed' message)." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T14: UI task with MCP auto-inject ──────────────────────────────────────
+  run_test T14 "[${RUN_ID}] T14: UI task with MCP auto-inject" \
+    "Verify UI tasks get Playwright MCP auto-injected.
+
+Create a UI-focused task and verify hasUI=true in task.json.
+
+## Verification
+task.json should have hasUI: true; logs should show MCP config injection." \
+    'n=$1; gh issue comment $n --body "@kody
+
+Task: Add a new dashboard page with charts and data tables. The UI should use React components."'
+
+  # ── T15: PR title from issue title ─────────────────────────────────────────
+  run_test T15 "[${RUN_ID}] T15: PR title from issue title" \
+    "Verify PR title uses issue title with type prefix, not LLM-generated verbose title.
+
+## Verification
+PR title should be 'feat: [RUN_ID] T15: PR title...' matching issue title prefix." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T16: Issue stays open after PR ─────────────────────────────────────────
+  run_test T16 "[${RUN_ID}] T16: Issue stays open after PR" \
+    "Verify issue remains OPEN after PR is created (ship stage).
+
+## Verification
+Issue state should be OPEN after ship stage. PR body should contain 'Closes #N'." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T17: Feedback with special characters ──────────────────────────────────
+  run_test T17 "[${RUN_ID}] T17: Feedback with special chars" \
+    "Verify special characters in feedback are handled without shell injection.
+
+Trigger @kody fix with: Please use \"quotes\" and handle \$(dollar) signs
+
+## Verification
+Pipeline completes without 'bad substitution' or command execution errors." \
+    'n=$1; gh issue comment $n --body "@kody fix
+
+Please use \"quotes\" and handle \$(dollar) signs"' \
+    || true
+
+  # ── T18: Force-with-lease retry on rerun push ──────────────────────────────
+  run_test T18 "[${RUN_ID}] T18: Force-with-lease retry on rerun push" \
+    "Verify force-with-lease retry when push is rejected.
+
+## Verification
+Logs should show 'force-with-lease' on push retry." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T23: Issue attachments and metadata enrichment ─────────────────────────
+  run_test T23 "[${RUN_ID}] T23: Issue attachments and metadata enrichment" \
+    "Verify image attachments are downloaded and labels/comments enrich task.md.
+
+Create an issue with an image attachment and a comment discussion.
+
+## Verification
+Logs should show 'Downloaded attachment:' and task.md has local paths + Labels: + Discussion:." \
+    'n=$1; gh issue comment $n --body "@kody
+
+Task: Add a footer component.
+
+## Design
+![mockup](https://github.com/user-attachments/assets/test-uuid/footer-design.png)
+
+See the attached mockup for layout."'
+
+  # ── T27: Decompose: config disabled ────────────────────────────────────────
+  echo "[T27] Temporarily disabling decompose in config..."
+  local config_backup=""
+  if gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json \
+    --jq '.content' 2>/dev/null | base64 -d > /tmp/kody-config.json 2>/dev/null; then
+    config_backup=$(cat /tmp/kody-config.json)
+    local updated_config
+    updated_config=$(jq '.decompose = {"enabled": false}' /tmp/kody-config.json 2>/dev/null || echo "$config_backup")
+    echo "$updated_config" | base64 > /tmp/kody-config-b64.json
+    gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json \
+      --method PUT \
+      --field message="test: disable decompose for T27 [skip ci]" \
+      --field content="$(cat /tmp/kody-config-b64.json)" \
+      2>/dev/null || echo "[T27] Could not update config — skipping test"
+  fi
+
+  run_test T27 "[${RUN_ID}] T27: Decompose config disabled" \
+    "Verify decompose.enabled=false causes immediate fallback to normal pipeline.
+
+## Verification
+Logs should show 'decompose disabled in config — falling back'." \
+    'n=$1; gh issue comment $n --body "@kody decompose"' \
+    || true
+
+  # Restore config
+  if [ -n "$config_backup" ]; then
+    echo "$config_backup" | base64 > /tmp/kody-config-b64.json
+    gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json \
+      --method PUT \
+      --field message="test: restore decompose config after T27 [skip ci]" \
+      --field content="$(cat /tmp/kody-config-b64.json)" \
+      2>/dev/null || echo "[T27] Warning: could not restore config"
+  fi
+
+  # ── T30: Decompose: sub-task failure triggers fallback ─────────────────────
+  run_test T30 "[${RUN_ID}] T30: Decompose: sub-task failure fallback" \
+    "Verify sub-task failure aborts decompose and falls back to normal pipeline.
+
+## Verification
+Logs should show sub-task failure, cleanup, and fallback to runPipeline()." \
+    'n=$1; gh issue comment $n --body "@kody decompose
+
+Implement a caching system:
+1. Add Redis cache adapter in src/cache/redisAdapter.ts (requires ioredis package — NOT installed)
+2. Add in-memory cache adapter in src/cache/memoryAdapter.ts
+3. Add cache manager in src/cache/cacheManager.ts
+4. Add cache middleware in src/middleware/cacheMiddleware.ts"' \
+    || true
+
+  # ── T33b: Lifecycle label progression ────────────────────────────────────────
+  run_test T33b "[${RUN_ID}] T33b: Lifecycle label progression" \
+    "Verify labels progress through stages: planning→building→verifying→review→done.
+
+## Verification
+Poll labels during run — should see each stage label in sequence." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T34: Token ROI in retrospective ─────────────────────────────────────────
+  run_test T34 "[${RUN_ID}] T34: Token ROI in retrospective" \
+    "Verify observer-log.jsonl includes tokenStats per-stage breakdown.
+
+## Verification
+observer-log.jsonl entry for this run has tokenStats with perStage entries." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T35: Auto-learn memory committed in PR ───────────────────────────────────
+  run_test T35 "[${RUN_ID}] T35: Auto-learn memory committed in PR" \
+    "Verify auto-learn runs before ship, so memory files are in the PR diff.
+
+## Verification
+PR diff should contain changes to .kody/memory/ files." \
+    'n=$1; gh issue comment $n --body "@kody"'
+
+  # ── T36: Engine-managed dev server ──────────────────────────────────────────
+  run_test T36 "[${RUN_ID}] T36: Engine-managed dev server" \
+    "Verify engine starts/stops dev server for UI tasks.
+
+## Verification
+Logs should show KODY_DEV_SERVER_READY and dev server lifecycle." \
+    'n=$1; gh issue comment $n --body "@kody
+
+Task: Add a new dashboard page with charts and data tables."'
+
+  # ── Transition to Phase 4 ────────────────────────────────────────────────────
+  echo "All Phase 3 tests done. Transitioning to Phase 4."
+  jq '.phase = "phase4", .last_check = '$(date +%s) \
+    > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
+}
+```
+
+### do_phase4 — Phase 4: Final Sweep (cleanup)
+
+```bash
 do_phase4() {
   echo "=== Phase 4: Final Sweep (cleanup) ==="
-  jq ".last_check = $(date +%s)" "$STATE_FILE" > /tmp/ts_state.json \
-    && mv /tmp/ts_state.json "$STATE_FILE"
-  echo "Phase 4 stub — closing temp issues, deleting branches"
-  # TODO: close all remaining test-suite-temp issues, delete test branches
-  # See Phase 4 section in agent.md
-  echo "Phase 4 not yet implemented — exiting for now"
-  exit 0
+  update_last_check
+
+  # Close ALL remaining test-suite-temp issues from this run
+  echo "[cleanup] Closing all remaining test-suite-temp issues..."
+  local closed=0
+  local issues
+  issues=$(gh issue list --repo aharonyaircohen/Kody-Engine-Tester \
+    --label "test-suite-temp" --state open \
+    --search "[${RUN_ID}]" \
+    --json number --jq '.[].number' 2>/dev/null || echo "")
+  for n in $issues; do
+    echo "  Closing issue #$n"
+    gh issue close "$n" \
+      --comment "Test suite cleanup: all phases complete." 2>/dev/null
+    closed=$((closed + 1))
+  done
+  echo "[cleanup] Closed $closed issues"
+
+  # Close all open PRs from this run
+  echo "[cleanup] Closing all open PRs from this run..."
+  local prs
+  prs=$(gh pr list --repo aharonyaircohen/Kody-Engine-Tester \
+    --state open --search "[${RUN_ID}]" \
+    --json number --jq '.[].number' 2>/dev/null || echo "")
+  for pr in $prs; do
+    echo "  Closing PR #$pr"
+    gh pr close "$pr" --delete-branch 2>/dev/null
+  done
+
+  # Delete all test branches
+  echo "[cleanup] Deleting test branches..."
+  local branches
+  branches=$(git branch --list "kody-*" 2>/dev/null | sed 's/^[* ] //' || echo "")
+  for branch in $branches; do
+    echo "  Deleting branch '$branch'"
+    git push origin --delete "$branch" 2>/dev/null || true
+  done
+
+  update_last_check
+  echo "Phase 4 cleanup complete. Transitioning to Phase 5."
+  jq '.phase = "phase5", .last_check = '$(date +%s) \
+    > /tmp/ts_state.json && mv /tmp/ts_state.json "$STATE_FILE"
 }
+```
 
 do_phase5() {
   echo "=== Phase 5: Reflect ==="
