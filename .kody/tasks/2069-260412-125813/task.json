@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify state bypass on rerun",
+  "description": "Verify that @kody rerun bypasses the 'already completed' state lock. First @kody pipeline completes, then @kody rerun re-executes. Verification: second pipeline should run (not blocked by 'already completed' message).",
+  "scope": [
+    ".kody/tasks/2069-260412-125813/status.json",
+    ".kody-engine/event-log.json",
+    ".github/workflows/kody.yml"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".claude/commands/kody-test-suite.md - Test suite pattern for T12 (rerun --from build) verification",
+    ".github/workflows/kody.yml - Pipeline orchestration with mode=rerun handling"
+  ],
+  "questions": []
+}
