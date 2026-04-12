@@ -1,0 +1,17 @@
+{
+  "task_type": "chore",
+  "title": "Verify label progression T33b",
+  "description": "Verify labels progress through stages: planning→building→verifying→review→done. Poll GitHub issue labels during run to confirm each stage label appears in sequence. Currently issue #2091 shows kody:planning label. Pipeline run 24307463951 is in_progress with orchestrate-from-parse job running.",
+  "scope": [
+    ".kody/tasks/2091-260412-130744/task.md",
+    ".kody/tasks/2091-260412-130744/status.json",
+    ".kody-engine/event-log.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody-engine/event-log.json - github-label hook fires on step.started events, labels should update at each stage transition",
+    ".kody/runs/*.jsonl - stagesCompleted array tracks completed stages for run history",
+    "kody.config.json - mcp.stages defines build, verify, review, review-fix stages"
+  ],
+  "questions": []
+}
