@@ -1,0 +1,14 @@
+```json
+{
+  "task_type": "feature",
+  "title": "Add User model with password hash field",
+  "description": "Create a User domain model in `src/models/User.ts` with fields: `id` (UUID), `email` (unique), `passwordHash`, `createdAt`, `updatedAt`. Password must never be stored in plain text — only the hash is persisted. Follow the existing `src/models/notification.ts` pattern for TypeScript interface structure. The model should use PBKDF2 for password hashing (matching `src/auth/auth-service.ts`) rather than SHA-256 (used in `src/auth/user-store.ts`). Export as a named export.",
+  "scope": ["src/models/User.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/models/notification.ts - TypeScript interface pattern for domain models with named export",
+    "src/auth/auth-service.ts - PBKDF2 password hashing (25000 iterations, sha256, 512 bits)"
+  ],
+  "questions": []
+}
+```
