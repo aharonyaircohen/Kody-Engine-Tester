@@ -1263,18 +1263,32 @@ do_phase3() {
   fi
   is_done() { echo "$done" | grep -qw "$1"; }
 
-  # ── Helper: wait for pipeline and return conclusion ──────────────────────────
+  # ── Helper: wait for THIS issue's pipeline to complete ────────────────────────
+  # Extracts the run URL from the engine's "pipeline started" comment on the
+  # issue, then polls that specific run. This prevents the cascade bug where
+  # the previous implementation picked "any" in_progress pipeline — causing the
+  # next test to fire before its own pipeline had even started.
   wait_pipeline() {
-    local trigger_cmd="$1"
+    local issue_num="$1"
     local deadline=$(($(date +%s) + 5400))  # 90min max
-    local run_id=""
     while [ $(date +%s) -lt $deadline ]; do
       update_last_check
-      run_id=$(gh run list --repo aharonyaircohen/Kody-Engine-Tester \
-        --event issue_comment --status in_progress \
-        --json databaseId --jq '.[0].databaseId' 2>/dev/null || echo "")
-      if [ -n "$run_id" ]; then
-        local rv=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/actions/runs/$run_id \
+
+      # Primary: extract [logs](URL) from the engine's "pipeline started" comment
+      local run_url
+      run_url=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/issues/$issue_num/comments \
+        --jq '[.[] | select(.body | contains("Kody pipeline started")) | .body] |
+               .[0] | capture("\\[logs]\\((?<url>[^)]+)\\)").url' 2>/dev/null || echo "")
+
+      # Fallback: if RUN-URL wasn't set in CI, find the run via gh run list
+      if [ -z "$run_url" ]; then
+        run_url=$(gh run list --repo aharonyaircohen/Kody-Engine-Tester \
+          --event issue_comment --status in_progress \
+          --json url --jq '[.[] | select(.display_title | contains("'"$issue_num"'"))][0].url' 2>/dev/null || echo "")
+      fi
+
+      if [ -n "$run_url" ]; then
+        local rv=$(gh api "$run_url" \
           --jq '.status + "/" + (.conclusion // "null")' 2>/dev/null)
         if [[ "$rv" == "completed/"* ]]; then
           echo "$rv"
@@ -1315,7 +1329,7 @@ do_phase3() {
 
     echo "[$test_id] Waiting for pipeline..."
     local result
-    result=$(wait_pipeline)
+    result=$(wait_pipeline "$issue_num")
     echo "[$test_id] Pipeline result: $result"
 
     # Verify: check issue has kody:done label

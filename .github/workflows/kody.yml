@@ -51,11 +51,10 @@ on:
 concurrency:
   # Per-issue concurrency — prevents duplicate pipelines on the same issue.
   # For workflow_dispatch (manual), uses task_id. For issue_comment, uses issue number.
-  # Note: cancel-in-progress removed — test-suite agent triggers frequently and cancelling
-  # causes the pipeline to never complete. Multiple runs can coexist; the first to reach
-  # ship stage will close the issue.
+  # cancel-in-progress: true is safe because wait_pipeline now tracks the specific pipeline
+  # for each test, so the agent never fires a new trigger until the current one has started.
   group: kody-${{ github.event.inputs.task_id || github.event.issue.number }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   issues: write
