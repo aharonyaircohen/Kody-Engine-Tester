@@ -14,28 +14,16 @@ import { LessonEditor } from './LessonEditor'
 
 **Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
 
-**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
+**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`; security utilities in `src/security/`
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
+**JSDoc**: Use JSDoc for public utility functions with @param, @returns, @example tags (see `src/utils/url-shortener.ts`)
 
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
+**Dependency Injection**: Services accept dependencies via constructor (see `src/services/discussions.ts:21`)
 
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/utils
+**Store Pattern**: In-memory stores use Map<string, T> with private fields; separate interface definitions from Payload collection configs (see `src/collections/certificates.ts`)
 
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
+**Sanitization**: Security utilities export single-purpose functions; use Record types for lookup maps; prefer regex replacement with callbacks over manual loops (see `src/security/sanitizers.ts`)
 
-## Learned 2026-04-10 (task: 1529-260410-102822)
-- Uses Drizzle ORM
-- Uses Payload CMS collections
+**ESLint**: `@typescript-eslint/no-unused-vars` ignores args starting with `_`, caught errors matching `^(_|ignore)`, and destructured values matching `^_`

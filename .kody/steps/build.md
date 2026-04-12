@@ -314,4 +314,31 @@ Single-responsibility modules; one function per file; co-located `.test.ts`.
 - [ ] No hardcoded secrets; use `process.env` with validation
 - [ ] New components include `'use client'` directive where needed
 
+## Repo Patterns
+
+- **withAuth HOC** (`src/auth/withAuth.ts:55-108`): Wraps route handlers with JWT auth. Usage: `export const GET = withAuth(async (req, { user }, routeParams) => {...}, { roles: ['admin'] })`
+- **Generic Typed Dependencies** (`src/services/gradebook.ts:36-55`): `GradebookServiceDeps<T...>` interface decouples service from Payload — reuse this pattern for new services
+- **Validation Middleware** (`src/middleware/validation.ts:201-278`): Schema-driven validation via `createValidationMiddleware(schema)` — apply to new API routes
+- **Constructor DI** (`src/services/gradebook.ts:72`): Services accept deps via constructor — follow this pattern, don't use global singletons
+- **Payload Collection Config** (`src/collections/Users.ts`): CollectionConfig with typed fields, access controls, and hooks — model new collections on this
+
+## Improvement Areas
+
+- **Dual auth systems**: `src/auth/user-store.ts` (SHA-256, in-memory) vs `src/auth/auth-service.ts` (PBKDF2, JWT) — inconsistent hashing. Pick one (`AuthService` preferred) and migrate
+- **Role mismatch**: `UserStore.UserRole` ('admin'|'user'|'guest'|'student'|'instructor') vs `RbacRole` ('admin'|'editor'|'viewer') in `src/auth/_auth.ts` — no alignment
+- **N+1 in dashboard** (`src/app/(frontend)/dashboard/page.tsx:52-73`): Fetches enrollments then loops to get lessons — batch-fetch all at once like the page already does
+- **Unsafe type casts** (`src/app/(frontend)/dashboard/page.tsx:44`): Uses `as unknown as PayloadDoc` instead of proper type guards — replace with type guard functions
+- **Redundant stores**: `contactsStore` reimplements Payload collection patterns — prefer direct Payload queries for new features
+
+## Acceptance Criteria
+
+- [ ] New services use `GradebookServiceDeps`-style typed dependencies, not direct Payload imports
+- [ ] New API routes apply `createValidationMiddleware` with explicit `ValidationSchema`
+- [ ] New collections follow `src/collections/Users.ts` pattern (access controls, hooks, typed fields)
+- [ ] Auth flows use `withAuth` HOC, not manual header parsing
+- [ ] Tests co-located with source (`*.test.ts` next to `*.ts`) using `vi.fn()` mocks
+- [ ] No `as unknown as` casts — use proper type guards
+- [ ] No new in-memory stores — use Payload collections for persistence
+- [ ] Run `pnpm test:int` and `pnpm test:e2e` pass before marking done
+
 {{TASK_CONTEXT}}
