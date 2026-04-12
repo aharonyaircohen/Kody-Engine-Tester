@@ -95,9 +95,25 @@ do_fire() {
     --description "Temporary issues from test-suite runs" \
     --color "FBCA04" 2>/dev/null || true
 
+  # ── Batch firing config ─────────────────────────────────────────────────────
+  # Fire tests in batches with delays between batches.
+  # This prevents cancel-in-progress cascades and gives pipelines time to start.
+  BATCH_SIZE=10
+  BATCH_DELAY=60
+  batch_count=0
+  batch_num=1
+  batch_fire() {
+    fire_test "$@"
+    batch_count=$((batch_count + 1))
+    if [ $((batch_count % BATCH_SIZE)) -eq 0 ]; then
+      echo "[batch $((batch_count / BATCH_SIZE))] Done $batch_count tests. Sleeping ${BATCH_DELAY}s before next batch..."
+      sleep $BATCH_DELAY
+    fi
+  }
+
   # ── Phase 1 tests ──────────────────────────────────────────────────────────
 
-  fire_test P1T01 "[${RUN_ID}] P1T01: Simple utility function" \
+  batch_fire P1T01 "[${RUN_ID}] P1T01: Simple utility function" \
     "Verify @kody on a low-complexity task creates a 4-stage pipeline and PR.
 
 Task: Add a \`formatDate(date: Date, locale: string): string\` utility function in src/utils/dateUtils.ts with JSDoc. Include unit tests in src/utils/dateUtils.test.ts.
@@ -108,7 +124,7 @@ Command: @kody
 Check logs: complexity=LOW, 4 stages run, PR created." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P1T02 "[${RUN_ID}] P1T02: Medium complexity with explicit full" \
+  batch_fire P1T02 "[${RUN_ID}] P1T02: Medium complexity with explicit full" \
     "Verify @kody full on a medium task runs 6+ stages.
 
 Task: Add request-rate-limiting middleware in src/middleware/rateLimit.ts that tracks requests per IP using an in-memory Map. Include unit tests.
@@ -119,7 +135,7 @@ Command: @kody full
 Check logs: complexity=MEDIUM, 6+ stages run, PR created." \
     'n=$1; gh issue comment $n --body "@kody full"'
 
-  fire_test P1T03 "[${RUN_ID}] P1T03: HIGH complexity triggers risk gate" \
+  batch_fire P1T03 "[${RUN_ID}] P1T03: HIGH complexity triggers risk gate" \
     "Verify HIGH complexity task triggers the risk gate and pauses pipeline at plan stage.
 
 Task: Replace the entire session-based authentication system with JWT-based authentication. Migrate the user schema to include jwt_secret, exp, and iat fields. Add RBAC with admin/editor/viewer roles. Update all API routes to use the new auth middleware. Run database migrations.
@@ -130,7 +146,7 @@ Command: @kody
 Pipeline should pause at plan stage (kody:paused label). Launch nohup auto-approve monitor (see code). After approval, pipeline resumes and completes." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P1T04 "[${RUN_ID}] P1T04: Dry-run skips all stages" \
+  batch_fire P1T04 "[${RUN_ID}] P1T04: Dry-run skips all stages" \
     "Verify --dry-run skips all stages without creating PRs.
 
 Task: Add a CSV parser utility in src/utils/csvParser.ts with tests.
@@ -141,7 +157,7 @@ Command: @kody full --dry-run
 Logs show all stages skipped; no PR created." \
     'n=$1; gh issue comment $n --body "@kody full --dry-run"'
 
-  fire_test P1T19 "[${RUN_ID}] P1T19: Fix-CI auto-trigger" \
+  batch_fire P1T19 "[${RUN_ID}] P1T19: Fix-CI auto-trigger" \
     "Verify fix-ci workflow job triggers when CI fails on a PR.
 
 **Multi-step setup:**
@@ -170,7 +186,7 @@ YAML
 **Cleanup:** Revert the break-CI commit from the PR branch." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P1T20 "[${RUN_ID}] P1T20: Status command no-op" \
+  batch_fire P1T20 "[${RUN_ID}] P1T20: Status command no-op" \
     "Verify @kody status prints pipeline state without executing stages.
 
 Command: @kody status
@@ -179,7 +195,7 @@ Command: @kody status
 Pipeline state printed; no stages executed." \
     'n=$1; gh issue comment $n --body "@kody status"'
 
-  fire_test P1T21 "[${RUN_ID}] P1T21: Taskify with priority labels" \
+  batch_fire P1T21 "[${RUN_ID}] P1T21: Taskify with priority labels" \
     "Verify @kody taskify creates sub-issues with priority labels, Test Strategy sections, and correct topo order.
 
 Command: @kody taskify --file docs/test-prd.md
@@ -194,7 +210,7 @@ Setup: Create docs/test-prd.md with a spec spanning 3 dependent tasks.
 5. Topological order correct (depends-on filed before dependent)" \
     'n=$1; gh issue comment $n --body "@kody taskify --file docs/test-prd.md"'
 
-  fire_test P1T22 "[${RUN_ID}] P1T22: Taskify context injection" \
+  batch_fire P1T22 "[${RUN_ID}] P1T22: Taskify context injection" \
     "Verify taskify receives project memory and file tree context.
 
 Command: @kody taskify --file docs/test-prd.md
@@ -203,7 +219,7 @@ Command: @kody taskify --file docs/test-prd.md
 Logs show memory content and file tree injected into taskify stage." \
     'n=$1; gh issue comment $n --body "@kody taskify --file docs/test-prd.md"'
 
-  fire_test P1T24 "[${RUN_ID}] P1T24: Decompose fallback for simple task" \
+  batch_fire P1T24 "[${RUN_ID}] P1T24: Decompose fallback for simple task" \
     "Verify @kody decompose falls back to normal pipeline for simple tasks.
 
 Task: Add a string capitalize utility in src/utils/strings.ts with tests.
@@ -216,7 +232,7 @@ Logs show complexity_score < 4 or not decomposable, then Delegating to normal pi
 
 Task: Add a string capitalize utility in src/utils/strings.ts with tests."'
 
-  fire_test P1T25 "[${RUN_ID}] P1T25: Decompose complex multi-area task" \
+  batch_fire P1T25 "[${RUN_ID}] P1T25: Decompose complex multi-area task" \
     "Verify @kody decompose splits complex tasks into parallel sub-tasks.
 
 Task: Add a complete notification system: model in src/models/notification.ts, service in src/services/notificationService.ts, API routes in src/routes/notifications.ts, helpers in src/utils/notificationHelpers.ts, plus tests.
@@ -229,7 +245,7 @@ Logs show complexity_score >= 4, decomposable: true, 2+ sub-tasks. Worktrees cre
 
 Task: Add a complete notification system with model, service, routes, helpers, and tests across multiple directories."'
 
-  fire_test P1T26 "[${RUN_ID}] P1T26: Decompose --no-compose flag" \
+  batch_fire P1T26 "[${RUN_ID}] P1T26: Decompose --no-compose flag" \
     "Verify @kody decompose --no-compose stops after parallel builds.
 
 Task: Add a config validator module in src/utils/configValidator.ts with tests.
@@ -242,7 +258,7 @@ Logs show --no-compose respected, decompose-state.json saved, NO merge/verify/re
 
 Task: Add a config validator module in src/utils/configValidator.ts with tests."'
 
-  fire_test P1T31 "[${RUN_ID}] P1T31: Bootstrap extend mode" \
+  batch_fire P1T31 "[${RUN_ID}] P1T31: Bootstrap extend mode" \
     "Verify @kody bootstrap generates/extends memory, step files, tools.yml, and creates lifecycle labels.
 
 Command: @kody bootstrap
@@ -251,7 +267,7 @@ Command: @kody bootstrap
 Logs show .kody/memory/ and .kody/steps/ artifacts. gh label list shows kody: lifecycle labels." \
     'n=$1; gh issue comment $n --body "@kody bootstrap"'
 
-  fire_test P1T32 "[${RUN_ID}] P1T32: Watch health monitoring" \
+  batch_fire P1T32 "[${RUN_ID}] P1T32: Watch health monitoring" \
     "Verify watch --dry-run runs health plugins without posting to GitHub.
 
 Command: @kody watch --dry-run
@@ -260,7 +276,7 @@ Command: @kody watch --dry-run
 Plugins execute; no comments posted to GitHub." \
     'n=$1; gh issue comment $n --body "@kody watch --dry-run"'
 
-  fire_test P1T33 "[${RUN_ID}] P1T33: Bootstrap model override" \
+  batch_fire P1T33 "[${RUN_ID}] P1T33: Bootstrap model override" \
     "Verify bootstrap respects --model and --provider flags.
 
 Command: @kody bootstrap --provider=minimax --model=MiniMax-M1 --force
@@ -271,7 +287,7 @@ Logs show MiniMax-M1 model used, not config default." \
 
 Task: Add retry logic to the API client."'
 
-  fire_test P1T37 "[${RUN_ID}] P1T37: Hotfix fast-track pipeline" \
+  batch_fire P1T37 "[${RUN_ID}] P1T37: Hotfix fast-track pipeline" \
     "Verify @kody hotfix runs build→verify(skip tests)→ship, skipping taskify/plan/review.
 
 Task: Fix the missing default export in src/utils/helpers.ts.
@@ -284,7 +300,7 @@ Logs show mode=hotfix, only 3 stages run (build/verify/ship), tests NOT run duri
 
 Task: Fix the missing default export in src/utils/helpers.ts."'
 
-  fire_test P1T40 "[${RUN_ID}] P1T40: Release dry-run" \
+  batch_fire P1T40 "[${RUN_ID}] P1T40: Release dry-run" \
     "Verify @kody release --dry-run analyzes commits and previews release without side effects.
 
 Command: @kody release --dry-run
@@ -293,7 +309,7 @@ Command: @kody release --dry-run
 Logs show mode=release, dry_run=true, commit parsing, bump type determined, changelog previewed. No PR created." \
     'n=$1; gh issue comment $n --body "@kody release --dry-run"'
 
-  fire_test P1T41 "[${RUN_ID}] P1T41: Release creates PR" \
+  batch_fire P1T41 "[${RUN_ID}] P1T41: Release creates PR" \
     "Verify @kody release bumps version, generates changelog, creates release PR.
 
 Command: @kody release
@@ -304,7 +320,7 @@ PR created with branch release/v*, version bumped in package.json, changelog in 
 
   # ── Phase 2 tests ──────────────────────────────────────────────────────────
 
-  fire_test P2T05 "[${RUN_ID}] P2T05: Approve resumes paused pipeline" \
+  batch_fire P2T05 "[${RUN_ID}] P2T05: Approve resumes paused pipeline" \
     "Verify @kody approve on a paused issue resumes the pipeline.
 
 Depends on: P1T03 (HIGH complexity)
@@ -317,7 +333,7 @@ After approval on P1T03 issue, pipeline resumes from plan stage and completes." 
 2. Check dependencies before removing — keep as fallback if anything still uses it
 3. Align UserRole to RbacRole — make RbacRole the source of truth"'
 
-  fire_test P2T06 "[${RUN_ID}] P2T06: Review on PR" \
+  batch_fire P2T06 "[${RUN_ID}] P2T06: Review on PR" \
     "Verify @kody review posts a review comment referencing files from the PR diff.
 
 Depends on: P1T01 or P1T02
@@ -326,7 +342,7 @@ Depends on: P1T01 or P1T02
 Review comment references files in PR diff, not random repo files. Logs show git diff against base branch." \
     'n=$1; gh issue comment $n --body "@kody review"'
 
-  fire_test P2T07 "[${RUN_ID}] P2T07: Fix rebuilds from build stage" \
+  batch_fire P2T07 "[${RUN_ID}] P2T07: Fix rebuilds from build stage" \
     "Verify @kody fix rebuilds from build stage and pushes to same PR.
 
 Depends on: P2T06
@@ -335,7 +351,7 @@ Depends on: P2T06
 Pipeline runs build stage on existing PR. Fix pushed to same PR branch, not new branch/PR." \
     'n=$1; gh issue comment $n --body "@kody fix"'
 
-  fire_test P2T07b "[${RUN_ID}] P2T07b: Re-review after fix" \
+  batch_fire P2T07b "[${RUN_ID}] P2T07b: Re-review after fix" \
     "Verify second @kody review shows different findings after fix.
 
 Depends on: P2T07
@@ -344,7 +360,7 @@ Depends on: P2T07
 New review comment posted (not duplicate). Findings differ from P2T06 or acknowledge fixes." \
     'n=$1; gh issue comment $n --body "@kody review"'
 
-  fire_test P2T08 "[${RUN_ID}] P2T08: Resolve merge conflicts" \
+  batch_fire P2T08 "[${RUN_ID}] P2T08: Resolve merge conflicts" \
     "Verify @kody resolve detects and resolves merge conflicts on a PR.
 
 **Safe conflict creation (DO NOT modify default branch directly):**
@@ -365,7 +381,7 @@ Depends on: Any completed PR
 Pipeline detects conflict, merges base, resolves conflicts, verifies, pushes. Resolve comment confirms success." \
     'n=$1; gh issue comment $n --body "@kody resolve"'
 
-  fire_test P2T09 "[${RUN_ID}] P2T09: Rerun from specific stage" \
+  batch_fire P2T09 "[${RUN_ID}] P2T09: Rerun from specific stage" \
     "Verify @kody rerun --from verify re-runs from verify stage.
 
 Depends on: Any completed task
@@ -374,7 +390,7 @@ Depends on: Any completed task
 Pipeline resumes from verify stage. State bypass confirmed — fresh start without loading prior state." \
     'n=$1; gh issue comment $n --body "@kody rerun --from verify"'
 
-  fire_test P2T28 "[${RUN_ID}] P2T28: Compose after --no-compose" \
+  batch_fire P2T28 "[${RUN_ID}] P2T28: Compose after --no-compose" \
     "Verify @kody compose merges sub-task branches after P1T26.
 
 Depends on: P1T26
@@ -383,7 +399,7 @@ Depends on: P1T26
 Reads decompose-state.json, merges sub-task branches, verify, review, ship. PR created." \
     'n=$1; gh issue comment $n --body "@kody compose"'
 
-  fire_test P2T29 "[${RUN_ID}] P2T29: Compose retry after failure" \
+  batch_fire P2T29 "[${RUN_ID}] P2T29: Compose retry after failure" \
     "Verify compose retry skips already-merged branches and retries from verify.
 
 Depends on: P2T28
@@ -392,7 +408,7 @@ Depends on: P2T28
 Compose skips merge (already done), retries from verify stage." \
     'n=$1; gh issue comment $n --body "@kody compose"'
 
-  fire_test P2T38 "[${RUN_ID}] P2T38: Revert merged PR" \
+  batch_fire P2T38 "[${RUN_ID}] P2T38: Revert merged PR" \
     "Verify @kody revert reverts a merged PR.
 
 Depends on: Any merged PR
@@ -401,7 +417,7 @@ Depends on: Any merged PR
 Pipeline reverts merged changes, runs verify, creates revert PR." \
     'n=$1; gh issue comment $n --body "@kody revert"'
 
-  fire_test P2T39 "[${RUN_ID}] P2T39: Revert with no target (auto-find)" \
+  batch_fire P2T39 "[${RUN_ID}] P2T39: Revert with no target (auto-find)" \
     "Verify @kody revert on an issue auto-finds the linked merged PR.
 
 Depends on: P2T38
@@ -412,7 +428,7 @@ Pipeline finds linked PR via branch naming and reverts it." \
 
   # ── Phase 3 tests ──────────────────────────────────────────────────────────
 
-  fire_test P3T10 "[${RUN_ID}] P3T10: --complexity override" \
+  batch_fire P3T10 "[${RUN_ID}] P3T10: --complexity override" \
     "Verify --complexity low flag forces 4 stages regardless of task complexity.
 
 Command: @kody --complexity low
@@ -421,7 +437,7 @@ Command: @kody --complexity low
 Logs show Complexity override: low (not auto-detected). 4 stages run." \
     'n=$1; gh issue comment $n --body "@kody --complexity low"'
 
-  fire_test P3T11 "[${RUN_ID}] P3T11: --feedback injection" \
+  batch_fire P3T11 "[${RUN_ID}] P3T11: --feedback injection" \
     "Verify --feedback flag is injected into build stage.
 
 Command: @kody --feedback \"Use functional style\"
@@ -430,7 +446,7 @@ Command: @kody --feedback \"Use functional style\"
 Logs show feedback: line during build stage." \
     'n=$1; gh issue comment $n --body "@kody --feedback \"Use functional style\""'
 
-  fire_test P3T12 "[${RUN_ID}] P3T12: --from stage flag" \
+  batch_fire P3T12 "[${RUN_ID}] P3T12: --from stage flag" \
     "Verify --from <stage> re-runs pipeline from the specified stage.
 
 This is a two-step test: first trigger @kody (pipeline starts), then after it completes fire @kody --from build (pipeline resumes from build stage).
@@ -442,7 +458,7 @@ Step 1: Pipeline completes normally.
 Step 2: Logs show 'Resuming from: build' — taskify and plan stages are skipped, build stage runs." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T13 "[${RUN_ID}] P3T13: State bypass on rerun" \
+  batch_fire P3T13 "[${RUN_ID}] P3T13: State bypass on rerun" \
     "Verify @kody rerun bypasses the 'already completed' state lock.
 
 This is a two-step test: first trigger @kody (pipeline completes), then after it finishes fire @kody rerun (pipeline re-executes despite kody:done label).
@@ -454,7 +470,7 @@ Step 1: Pipeline completes with kody:done label.
 Step 2: Pipeline re-executes (not blocked by 'already completed' message)." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T14 "[${RUN_ID}] P3T14: Dry-run mode" \
+  batch_fire P3T14 "[${RUN_ID}] P3T14: Dry-run mode" \
     "Verify --dry-run skips all stages without creating PRs.
 
 Command: @kody --dry-run
@@ -463,7 +479,7 @@ Command: @kody --dry-run
 Logs show all stages skipped; no PR created." \
     'n=$1; gh issue comment $n --body "@kody --dry-run"'
 
-  fire_test P3T15 "[${RUN_ID}] P3T15: PR title from issue title" \
+  batch_fire P3T15 "[${RUN_ID}] P3T15: PR title from issue title" \
     "Verify bare @kody uses issue title as PR title.
 
 Command: @kody
@@ -472,7 +488,7 @@ Command: @kody
 PR title matches issue title, not hardcoded." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T16 "[${RUN_ID}] P3T16: Issue stays open after ship" \
+  batch_fire P3T16 "[${RUN_ID}] P3T16: Issue stays open after ship" \
     "Verify issue remains OPEN after PR is shipped (not auto-closed).
 
 Command: @kody
@@ -481,7 +497,7 @@ Command: @kody
 Issue still OPEN after ship. PR is merged." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T17 "[${RUN_ID}] P3T17: Special characters in feedback" \
+  batch_fire P3T17 "[${RUN_ID}] P3T17: Special characters in feedback" \
     "Verify special characters handled without shell injection.
 
 Command: @kody --feedback 'Use \"quotes\" and handle \$(dollar) signs'
@@ -490,7 +506,7 @@ Command: @kody --feedback 'Use \"quotes\" and handle \$(dollar) signs'
 Pipeline completes without bad substitution errors." \
     'n=$1; gh issue comment $n --body "Please use \"quotes\" and handle \$(dollar) signs"'
 
-  fire_test P3T18 "[${RUN_ID}] P3T18: UI task gets Playwright MCP" \
+  batch_fire P3T18 "[${RUN_ID}] P3T18: UI task gets Playwright MCP" \
     "Verify UI tasks get Playwright MCP auto-injected.
 
 Task: Add a dashboard page with charts and data tables.
@@ -503,7 +519,7 @@ task.json has hasUI: true; logs show MCP config injection." \
 
 Task: Add a new dashboard page with charts and data tables."'
 
-  fire_test P3T19 "[${RUN_ID}] P3T19: Force-with-lease retry on rerun push" \
+  batch_fire P3T19 "[${RUN_ID}] P3T19: Force-with-lease retry on rerun push" \
     "Verify force-with-lease retry when push is rejected during rerun.
 
 Trigger @kody on an issue that already has a pushed branch.
@@ -512,7 +528,7 @@ Trigger @kody on an issue that already has a pushed branch.
 Logs show force-with-lease on push retry. Either outcome accepted — test validates the retry mechanism exists." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T23 "[${RUN_ID}] P3T23: Issue attachments and metadata enrichment" \
+  batch_fire P3T23 "[${RUN_ID}] P3T23: Issue attachments and metadata enrichment" \
     "Verify image attachments are downloaded and labels/comments enrich task.md.
 
 Create an issue with an image in the body and at least one label, plus a comment.
@@ -530,7 +546,7 @@ Task: Add a footer component.
 
 See the attached mockup for layout."'
 
-  fire_test P3T27 "[${RUN_ID}] P3T27: Decompose with config disabled" \
+  batch_fire P3T27 "[${RUN_ID}] P3T27: Decompose with config disabled" \
     "Verify decompose.enabled=false causes immediate fallback to normal pipeline.
 
 **Manual setup before firing:** Disable decompose in config first:
@@ -546,7 +562,7 @@ Logs should show 'decompose disabled in config — falling back'." \
 
 Task: Add pagination to the course list page."'
 
-  fire_test P3T30 "[${RUN_ID}] P3T30: Decompose sub-task failure triggers fallback" \
+  batch_fire P3T30 "[${RUN_ID}] P3T30: Decompose sub-task failure triggers fallback" \
     "Verify sub-task failure aborts decompose and falls back to normal pipeline.
 
 Task: Implement a caching system with a sub-task requiring ioredis package (NOT installed).
@@ -563,7 +579,7 @@ Implement a caching system:
 3. Add cache manager in src/cache/cacheManager.ts
 4. Add cache middleware in src/middleware/cacheMiddleware.ts"'
 
-  fire_test P3T33b "[${RUN_ID}] P3T33b: Lifecycle label progression" \
+  batch_fire P3T33b "[${RUN_ID}] P3T33b: Lifecycle label progression" \
     "Verify labels progress through stages: kody:planning → kody:building → kody:verifying → kody:review → kody:done.
 
 Poll issue labels during the run to confirm each stage label appears in sequence. Complexity label (kody:low/medium/high) persists throughout.
@@ -574,7 +590,7 @@ Command: @kody
 Each stage adds its label and removes the previous one. Complexity label persists throughout pipeline." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T34 "[${RUN_ID}] P3T34: Token ROI in retrospective" \
+  batch_fire P3T34 "[${RUN_ID}] P3T34: Token ROI in retrospective" \
     "Verify observer-log.jsonl includes tokenStats per-stage breakdown.
 
 Command: @kody
@@ -583,7 +599,7 @@ Command: @kody
 observer-log.jsonl entry has tokenStats with perStage entries." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T35 "[${RUN_ID}] P3T35: Auto-learn memory in PR" \
+  batch_fire P3T35 "[${RUN_ID}] P3T35: Auto-learn memory in PR" \
     "Verify auto-learn runs before ship so memory files are in PR diff.
 
 Command: @kody
@@ -592,7 +608,7 @@ Command: @kody
 PR diff contains changes to .kody/memory/ files." \
     'n=$1; gh issue comment $n --body "@kody"'
 
-  fire_test P3T36 "[${RUN_ID}] P3T36: Engine-managed dev server" \
+  batch_fire P3T36 "[${RUN_ID}] P3T36: Engine-managed dev server" \
     "Verify engine starts/stops dev server for UI tasks.
 
 Task: Add a new dashboard page with charts and data tables.
