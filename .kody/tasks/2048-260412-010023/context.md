@@ -34,3 +34,23 @@ Those are the replacement lines (correctly replacing the placeholder at runtime)
    - Three fallbacks to `.kody/memory.md` in `readProjectMemoryTiered` function:
      - W
 ...(truncated)
+
+### review (2026-04-12T01:19:58)
+## Verdict: PASS
+
+## Summary
+
+The task added `.kody/memory.md` fallback support and `git ls-files` file tree output to the Kody engine's `readProjectMemoryTiered` and `buildFullPromptTiered` functions via a pnpm patch. Three fallback points were added to `readProjectMemoryTiered` and a `git ls-files` block was appended to `buildFullPromptTiered`. The fix follows the exact pattern from the standalone `kody taskify` command (lines 6368-6388).
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+##
+...(truncated)
