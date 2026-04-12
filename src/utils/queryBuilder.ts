@@ -3,7 +3,7 @@
  * - Arrays are encoded by repeating the key (e.g., ?key=1&key=2)
  * - Nested objects are JSON-stringified
  * - Values are wrapped in double quotes
- * - Dollar signs ($) are preserved as-is
+ * - Dollar signs ($) are encoded via encodeURIComponent (e.g. $ becomes %24)
  * - null and undefined values are skipped
  */
 export function queryBuilder(params: Record<string, unknown>): string {
