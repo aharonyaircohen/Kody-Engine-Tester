@@ -49,10 +49,13 @@ on:
     paths: ["src/**", "kody.config.json", "package.json"]
 
 concurrency:
-  # Per-issue concurrency — cancels any existing pipeline when a new one starts on the same issue.
+  # Per-issue concurrency — prevents duplicate pipelines on the same issue.
   # For workflow_dispatch (manual), uses task_id. For issue_comment, uses issue number.
+  # Note: cancel-in-progress removed — test-suite agent triggers frequently and cancelling
+  # causes the pipeline to never complete. Multiple runs can coexist; the first to reach
+  # ship stage will close the issue.
   group: kody-${{ github.event.inputs.task_id || github.event.issue.number }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   issues: write
