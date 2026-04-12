@@ -1,0 +1,14 @@
+{
+  "task_type": "chore",
+  "title": "Verify feedback flag injection into build stage",
+  "description": "Verification test that @kody --feedback \"Use functional style\" correctly injects the feedback flag into the build stage. Check logs for 'feedback:' line during build stage. The workflow passes --feedback via ARGS variable and the engine logs it when the build stage runs.",
+  "scope": [
+    ".github/workflows/kody.yml"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".github/workflows/kody.yml:250 - FEEDBACK arg passed to kody-engine: `[ -n \"$FEEDBACK\" ] && ARGS=\"$ARGS --feedback \\\"$FEEDBACK\\\"\"`",
+    ".github/workflows/kody.yml:466 - same FEEDBACK arg injection pattern"
+  ],
+  "questions": []
+}
