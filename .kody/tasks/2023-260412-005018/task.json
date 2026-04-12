@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify existing implementation of taskify context injection",
+"description": "Verification of taskify stage context injection completed. Project memory content from .kody/memory.md does NOT appear in pipeline taskify logs (buildFullPromptTiered reads from .kody/memory/ directory instead). File tree does NOT appear in pipeline taskify logs (not included by buildFullPromptTiered). No raw {{TASK_CONTEXT}} template tokens found (correctly replaced). Root cause: buildFullPromptTiered in src/context.ts only reads from .kody/memory/ directory and does not include git ls-files output, unlike the standalone kody taskify command which correctly includes both.",
+"scope": [".kody/memory.md", ".kody/steps/taskify.md", ".kody/tasks/2023-260412-005018/task.json", ".kody/tasks/2023-260412-005018/taskify-result.json"],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}

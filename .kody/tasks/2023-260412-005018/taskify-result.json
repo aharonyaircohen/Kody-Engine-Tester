@@ -1,0 +1,19 @@
+{
+  "status": "ready",
+  "tasks": [
+    {
+      "title": "Add .kody/memory.md and file tree to taskify stage context injection",
+      "body": "## Context\nThe taskify stage of the Kody pipeline is missing project memory and file tree in its context injection. The standalone `kody taskify` command correctly includes `.kody/memory.md` content and `git ls-files` output in `projectContext`, but the pipeline's `buildFullPromptTiered` function (src/context.ts) reads project memory from `.kody/memory/` directory and does not include file tree at all.\n\nThe issue is in `buildFullPromptTiered` which calls `readProjectMemoryTiered` that only reads from `.kody/memory/` directory. It does not fall back to `.kody/memory.md` and does not include the file tree.\n\n## Acceptance Criteria\n- `.kody/memory.md` content is included in the taskify stage prompt (not just `.kody/memory/` directory)\n- File tree (from `git ls-files`) is included in the taskify stage prompt\n- No raw `{{TASK_CONTEXT}}` or other template tokens appear in the final prompt\n- The fix follows the same pattern as the standalone `kody taskify` command (see lines 6370-6388 in cli.js)\n\n## Test Strategy\n1. After implementing the fix, run `kody-engine run --issue-number 2023 --from taskify` to execute just the taskify stage\n2. Capture the prompt sent to the LLM (check Claude Code logs or engine logs)\n3. Verify the prompt contains:\n   - Content from `.kody/memory.md` (e.g., \"TypeScript strict mode\", \"conventional commits\", \"Vitest testing\")\n   - File tree output from `git ls-files`\n4. Verify no `{{TASK_CONTEXT}}` placeholder remains unreplaced\n5. Alternatively, run the full pipeline and check `.kody/tasks/<task-id>/` for generated files",
+      "labels": ["backend", "kody-engine"],
+      "priority": "high",
+      "dependsOn": []
+    },
+    {
+      "title": "Verify taskify context injection works end-to-end",
+      "body": "## Context\nAfter fixing the context injection, verify that the taskify stage correctly incorporates project memory and file tree into its prompt. This is a validation task to confirm the fix works in the actual pipeline.\n\n## Acceptance Criteria\n- Project memory content from `.kody/memory.md` appears in taskify stage logs or prompt output\n- File tree representation appears in taskify stage logs or prompt output\n- No raw `{{TASK_CONTEXT}}` or other `{{ }}` template tokens appear in taskify stage logs\n- The taskify stage completes successfully and produces valid `taskify-result.json`\n\n## Test Strategy\n1. Run the full pipeline: `kody-engine run --issue-number 2023`\n2. After taskify stage completes, examine the generated prompt (check Claude Code runner output, engine debug logs, or `.kody/tasks/<task-id>/` directory)\n3. Verify project conventions from `.kody/memory.md` are present (TypeScript strict mode, conventional commits, Vitest testing, file organization rules)\n4. Verify file tree structure is present (list of project files from `git ls-files`)\n5. Search for any `{{` and `}}` patterns to confirm no template tokens remain\n6. Verify `taskify-result.json` is created with valid JSON output",
+      "labels": ["testing", "verification"],
+      "priority": "high",
+      "dependsOn": [0]
+    }
+  ]
+}
