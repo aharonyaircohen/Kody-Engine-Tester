@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Based on my analysis, I now understand the issue. Let me provide my clas",
+  "description": "Based on my analysis, I now understand the issue. Let me provide my classification of this task.\n\n```json\n{\n  \"task_type\": \"bugfix\",\n  \"title\": \"Fix taskify context injection to include memory and file tree\",\n  \"description\": \"The taskify stage template `.kody/steps/taskify.md` uses `{{TASK_CONTEXT}}` which only injects task-specific files (task.md, task.json, spec.md, plan.md). The project memory (`.kody/memory.md`) and file tree are NOT being injected via this placeholder. The `{{PROJECT_CONTE",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

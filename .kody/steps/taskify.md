@@ -103,3 +103,50 @@ Guidelines:
 - [ ] JSON is valid with no markdown fences or extra text
 
 {{TASK_CONTEXT}}
+
+## File Tree
+
+```
+src/
+├── api/auth/          # Auth route handlers (login, logout, refresh, profile, register)
+├── app/               # Next.js App Router pages
+│   ├── (frontend)/    # Public/authenticated frontend routes
+│   └── (payload)/    # Payload admin routes (/admin)
+├── auth/              # Auth utilities (JWT service, session store, withAuth HOC)
+├── collections/       # Payload collection configs (Course, Lesson, Enrollment, etc.)
+├── components/        # Custom React components
+├── contexts/          # React contexts
+├── hooks/             # Custom React hooks
+├── middleware/        # Express-style middleware (rate-limiter, request-logger)
+├── migrations/        # Payload database migrations
+├── models/            # Data models
+├── pages/             # Legacy pages (auth, board, contacts, notes, notifications)
+├── routes/            # API route handlers
+├── security/          # Security utilities (password hashing, RBAC, validation)
+├── services/          # Business logic services (GradebookService, GradingService)
+├── utils/             # Pure utility functions (debounce, retry, flatten, result)
+├── validation/        # Zod schemas for input validation
+├── payload.config.ts  # Payload CMS configuration
+└── payload-types.ts    # Generated Payload types
+```
+
+## Project Conventions (from .kody/memory.md)
+
+### Code Style
+- Use TypeScript strict mode
+- Prefer const over let
+- Use named exports over default exports for utilities
+
+### Git Conventions
+- Use conventional commits: feat:, fix:, chore:, docs:
+- PR titles: type: short description
+
+### Testing
+- Place tests next to source files with .test.ts suffix
+- Use Vitest for unit tests
+
+### File Organization
+- Utils go in src/utils/
+- Middleware in src/middleware/
+- Services in src/services/
+- Models in src/models/
