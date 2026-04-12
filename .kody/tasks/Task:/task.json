@@ -1,0 +1,14 @@
+{
+  "task_type": "chore",
+  "title": "Verify engine-managed dev server lifecycle",
+  "description": "Verify engine starts/stops dev server for UI tasks. The test creates a UI-focused issue, triggers @kody, and checks that logs show: Starting dev server (engine starts it), KODY_DEV_SERVER_READY env var, Dev server ready at url, and Dev server stopped. The agent should NOT start its own dev server when engine manages it.",
+  "scope": [
+    ".kody/watch/agents/test-suite/agent.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md — run_test function pattern for creating temp issues and verifying logs",
+    ".kody/watch/agents/test-suite/agent.md lines 2193-2215 — T36 dev server lifecycle test definition"
+  ],
+  "questions": []
+}
