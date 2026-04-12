@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify --complexity low flag forces 4 stages",
+"description": "Verification task for Kody Engine --complexity low flag. Pipeline is running at GitHub Actions run 24307463949. Must verify: (1) 'Complexity override:' appears in logs (not 'auto-detected:'), (2) Only 4 stages execute (taskify→build→verify→ship). The implementation is in the external kody-engine CLI (@kody-ade/engine).",
+"scope": [".kody/tasks/2079-260412-130746/task.md", ".kody/tasks/2079-260412-130746/status.json", ".github/workflows/kody.yml"],
+"risk_level": "low",
+"existing_patterns": [".claude/commands/kody-test-suite.md describes T05 (@kody --complexity low) verification as 'Logs show Complexity override: low. taskify→build→verify→ship (4 stages only)'"],
+"questions": []
+}
