@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify issue stays open after PR (ship stage)",
+  "description": "Verification task T16 to confirm issue #2085 remains OPEN after the ship stage creates a PR, and that the PR body contains 'Closes #2085'. This tests that the pipeline does not prematurely close issues when PRs are created - closing only happens on PR merge via the close-issue-on-merge workflow job.",
+  "scope": [
+    ".kody/tasks/2085-260412-130756/task.md",
+    ".kody/tasks/2085-260412-130756/status.json",
+    ".kody/watch/agents/test-suite/agent.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md lines 2001-2011 - T16 test definition with verification steps for issue lifecycle",
+    ".github/workflows/kody.yml lines 535-584 - close-issue-on-merge job that closes issues only on PR merge"
+  ],
+  "questions": []
+}
