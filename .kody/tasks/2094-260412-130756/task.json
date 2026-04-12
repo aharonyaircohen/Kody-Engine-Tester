@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify auto-learn memory in PR diff (T35)",
+"description": "Verify that auto-learn runs before ship stage and .kody/memory/ files appear in the PR diff. This is a test-suite verification task that checks the auto-learn mechanism works correctly - after full pipeline completion (build → verify → review → ship), memory files should be committed before the PR is created.",
+"scope": [".kody/memory/", ".kody/runs/", ".kody/tasks/2094-260412-130756/"],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}
