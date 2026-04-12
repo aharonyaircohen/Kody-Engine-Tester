@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify existing implementation of taskify context injection",
+"description": "This task validates that the taskify stage correctly injects project memory and file tree context when processing a ticket. Based on analysis of the engine implementation (referenced in task.json), the context injection mechanism IS working correctly: the engine reads `.kody/memory.md` (up to 2000 chars) and generates a file tree via `git ls-files` (up to 150 files), then injects them via `{{PROJECT_CONTEXT}}` placeholder in the `taskify-ticket.md` template. The previous pipeline failures with exit code 143 (SIGTERM) are timeout-related, not a context injection bug. The `.kody/steps/taskify.md` file uses `{{TASK_CONTEXT}}` but this is a different template (task classification mode) - the issue decomposition uses `taskify-ticket.md` which correctly uses `{{PROJECT_CONTEXT}}`.",
+"scope": [".kody/memory.md", ".kody/steps/taskify.md", ".kody/tasks/2028-260412-011612/task.json", ".kody/tasks/2028-260412-011612/task.md"],
+"risk_level": "low",
+"existing_patterns": ["Project memory injection via `{{PROJECT_CONTEXT}}` in buildPrompt() function", "File tree generation via `git ls-files`", "Context tiers system using `injectTaskContextTiered()` for plan/build/review stages"],
+"questions": []
+}
