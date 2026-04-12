@@ -1,0 +1,15 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of auth middleware",
+  "description": "The auth middleware already exists at `src/middleware/auth-middleware.ts` and meets all acceptance criteria: it reads Bearer tokens from Authorization header, verifies JWT signature and expiration via JwtService, attaches userId to request context on success, and returns 401 for missing/invalid/expired tokens. The co-located test file `src/middleware/auth-middleware.test.ts` covers all required test cases (valid token, missing token, expired token, malformed token).",
+  "scope": ["src/middleware/auth-middleware.ts", "src/middleware/auth-middleware.test.ts", "src/auth/jwt-service.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/auth-middleware.ts: createAuthMiddleware factory function that returns async middleware with rate limiting, Bearer token extraction, JWT verification via JwtService, session validation, and user lookup",
+    "src/auth/jwt-service.ts: JwtService with sign/verify methods using HMAC-SHA256, TokenPayload type with userId, email, role, sessionId, generation, iat, exp fields",
+    "src/middleware/auth-middleware.test.ts: vitest describe/it blocks with beforeEach setup, makeAuthenticatedContext helper, full test coverage for valid/missing/invalid/expired tokens"
+  ],
+  "questions": []
+}
+```
