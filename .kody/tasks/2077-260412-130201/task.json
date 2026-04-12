@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Verify auto-learn memory committed in PR",
+  "description": "Verify auto-learn runs before ship, so memory files are in the PR diff. PR diff should contain changes to .kody/memory/ files.",
+  "scope": [
+    ".kody/tasks/2077-260412-130201/"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".kody/watch/agents/test-suite/agent.md:2174-2191 — T35 test definition with verification criteria"
+  ],
+  "questions": []
+}
