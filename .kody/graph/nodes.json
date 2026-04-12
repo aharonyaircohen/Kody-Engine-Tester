@@ -1,0 +1,12 @@
+{
+  "conventions_general_840138603306": {
+    "id": "conventions_general_840138603306",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "general",
+    "content": "All 15 `queryBuilder` tests pass, including `handles dollar signs` which verifies `'$100'` encodes to `'%24100'`.",
+    "episodeId": "ep_review_001",
+    "validFrom": "2026-04-12T13:21:32.683Z",
+    "validTo": null
+  }
+}

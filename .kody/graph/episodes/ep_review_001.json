@@ -1,0 +1,9 @@
+{
+  "id": "ep_review_001",
+  "runId": "2086-260412-130931",
+  "source": "review",
+  "taskId": "2086-260412-130931",
+  "createdAt": "2026-04-12T13:21:32.679Z",
+  "rawContent": "## Verdict: PASS\n\n## Summary\n\nThe change in `src/utils/queryBuilder.ts` is a **comment correction** — the function was already correctly encoding dollar signs via `encodeURIComponent` (`$` → `%24`), but the doc comment incorrectly stated \"Dollar signs ($) are preserved as-is\". This fix aligns the documentation with the actual secure behavior.\n\nAll 15 `queryBuilder` tests pass, including `handles dollar signs` which verifies `'$100'` encodes to `'%24100'`.\n\n## Findings\n\n### Critical\nNone.\n\n### Major\nNone.\n\n### Minor\nNone.\n\n## Notes\n\nThe verify.md pipeline report shows pre-existing failures (TypeScript errors in `.next/types/validator.ts`, `src/utils/bad-types.ts`, `tests/helpers/seedUser.ts`; lint errors in various files; DB connection errors in `api.int.spec.ts`) — these are **not related** to the `queryBuilder` change and appear to be existing issues in the codebase.\n\nThe `queryBuilder` change itself is correct:\n- `encodeURIComponent` inherently encodes `$` to `%24`\n- The test suite c",
+  "extractedNodeIds": []
+}
