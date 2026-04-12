@@ -1,0 +1,16 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify PR title uses issue title with type prefix",
+  "description": "Verification test T15 that checks PR title format uses issue title '[run-20260412-1223] T15: PR title from issue title' with type prefix 'feat:' and RUN_ID '[2070-260412-125824]', not LLM-generated verbose title. Expected PR title: 'feat: [2070-260412-125824] T15: PR title from issue title'",
+  "scope": [
+    ".kody/tasks/2070-260412-125824/status.json",
+    ".kody/tasks/2070-260412-125824/task.md"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "PR titles follow pattern '{type}: [{RUN_ID}] {issue_title}' based on recent PRs like 'chore: [run-20260412-1223] T10: Flag: complexity override' and 'fix: [run-20260411-2048] T38: Revert: undo PR #2024'"
+  ],
+  "questions": []
+}
+```
