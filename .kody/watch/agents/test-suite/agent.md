@@ -32,12 +32,20 @@ State updates are pushed via GitHub API so they persist across agent cycles:
 push_state() {
   local tmp=$(mktemp)
   cat "$STATE_FILE" > "$tmp"
-  gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/watch/test-suite-state.json \
-    --method PUT \
-    --field message="update state [skip ci]" \
-    --field content="$(base64 -b 0 < "$tmp")" \
-    --field sha="$(gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/watch/test-suite-state.json --jq '.sha' 2>/dev/null)" \
-    > /dev/null 2>&1 || true
+  # Fetch SHA fresh (right before push to minimize race window)
+  local sha
+  sha=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/watch/test-suite-state.json \
+    --jq '.sha' 2>/dev/null || echo "")
+  if [ -n "$sha" ]; then
+    gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/watch/test-suite-state.json \
+      --method PUT \
+      --field message="update state [skip ci]" \
+      --field content="$(base64 -b 0 < "$tmp")" \
+      --field sha="$sha" \
+      > /dev/null 2>&1 || echo "[push_state] WARN: push failed (sha=$sha)"
+  else
+    echo "[push_state] WARN: could not get file SHA, skipping push"
+  fi
 }
 ```
 
@@ -84,8 +92,10 @@ do_fire() {
   # ── Fresh RUN_ID ────────────────────────────────────────────────────────────
   RUN_ID="run-$(date +%Y%m%d-%H%M)"
 
-  # Init or reset state
-  echo "{\"run_id\":\"$RUN_ID\",\"phase\":\"fire\",\"all_issues\":[],\"last_check\":$(date +%s)}" \
+  # Init or reset state — fetch remote SHA first so push_state can use it
+  INITIAL_SHA=$(gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.kody/watch/test-suite-state.json \
+    --jq '.sha' 2>/dev/null || echo "")
+  echo "{\"run_id\":\"$RUN_ID\",\"phase\":\"fire\",\"all_issues\":[],\"sha\":\"$INITIAL_SHA\",\"last_check\":$(date +%s)}" \
     > "$STATE_FILE"
   push_state
   echo "[RUN_ID] $RUN_ID"
