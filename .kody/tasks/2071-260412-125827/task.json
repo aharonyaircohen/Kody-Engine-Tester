@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Verify issue stays OPEN after PR creation",
+"description": "Test T16 verifies that issue #2071 remains OPEN after the ship stage creates a PR with 'Closes #N' in the body. This validates the Kody engine correctly keeps issues open when PRs use close keywords.",
+"scope": [],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}
