@@ -1,0 +1,15 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of T12 rerun from build",
+  "description": "Task 2081-260412-130745 is a test verification task for T12 in the kody-test-suite. It verifies that `@kody rerun --from build` command correctly skips taskify and plan stages and resumes from the build stage. The verification checks are: (1) logs show 'Resuming from: build', (2) taskify and plan stages are NOT executed, (3) pipeline re-executes not blocked by 'already completed' state. The pipeline is currently running via GitHub Actions (run 24307463967) and the task status.json shows taskify stage in progress.",
+  "scope": [
+    ".kody/tasks/2081-260412-130745/task.md",
+    ".kody/tasks/2081-260412-130745/status.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    ".claude/commands/kody-test-suite.md - T12 verification criteria defined at lines 193-206",
+    ".kody/runs/*.jsonl - historical run logs showing 'Resuming from' pattern"
+  ],
+  "questions": []
+}
