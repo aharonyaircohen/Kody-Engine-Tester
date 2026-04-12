@@ -31,24 +31,15 @@
     "servers": {
       "filesystem": {
         "command": "npx",
-        "args": [
-          "-y",
-          "@modelcontextprotocol/server-filesystem",
-          "./"
-        ],
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "./"],
         "env": {}
       }
     },
-    "stages": [
-      "build",
-      "verify",
-      "review",
-      "review-fix"
-    ]
+    "stages": ["build", "verify", "review", "review-fix"]
   },
   "watch": {
     "enabled": true,
-    "activityLog": 369,
+    "activityLog": 1474,
     "model": "MiniMax-M2.7-highspeed",
     "provider": "minimax"
   },

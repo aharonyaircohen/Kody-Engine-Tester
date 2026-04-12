@@ -1,15 +1,19 @@
 # QA Guide
 
+## Quick Reference
+
+- **Dev server:** `pnpm dev` at `http://localhost:3000`
+- **Login page:** `/login`
+- **Admin panel:** `/admin/:...segments?`
+
 ## Authentication
 
 ### Test Accounts
 
-<!-- Fill in your test/preview environment credentials below -->
-
-| Role  | Email             | Password  |
-| ----- | ----------------- | --------- |
-| Admin | admin@example.com | CHANGE_ME |
-| User  | user@example.com  | CHANGE_ME |
+| Role  | Email             | Password             |
+| ----- | ----------------- | -------------------- |
+| Admin | ${QA_ADMIN_EMAIL} | ${QA_ADMIN_PASSWORD} |
+| User  | ${QA_USER_EMAIL}  | ${QA_USER_PASSWORD}  |
 
 ### Login Steps
 
@@ -20,7 +24,7 @@
 
 ### Auth Files
 
-- `src/auth`
+- `src/auth/` — JWT authentication, `withAuth` HOC, role guards
 
 ## Roles
 
@@ -30,90 +34,109 @@
 - `CTO`
 - `Researcher`
 
-## Key Pages
+## Navigation Map
 
-### Frontend
+### Admin Panel
 
-- `/`
-- `/dashboard`
-- `/instructor/courses/:id/edit`
-- `/notes`
-- `/notes/:id`
-- `/notes/create`
-- `/notes/edit/:id`
+| Collection    | URL                                | Expected Elements                                                    |
+| ------------- | ---------------------------------- | -------------------------------------------------------------------- |
+| Assignments   | `/admin/collections/assignments`   | List view with title, module, dueDate, maxScore columns              |
+| Courses       | `/admin/collections/courses`       | Grid/list toggle, title, slug, instructor, status, difficulty fields |
+| Enrollments   | `/admin/collections/enrollments`   | Student, course, enrolledAt, status, completedLessons                |
+| Lessons       | `/admin/collections/lessons`       | title, course, module, order, type (video/text), estimatedMinutes    |
+| Media         | `/admin/collections/media`         | Upload area, alt text field                                          |
+| Modules       | `/admin/collections/modules`       | title, course, order, description                                    |
+| Notifications | `/admin/collections/notifications` | recipient, type, title, message, link, isRead toggle                 |
+| Quiz Attempts | `/admin/collections/quiz-attempts` | user, quiz, score, passed, startedAt, completedAt                    |
+| Quizzes       | `/admin/collections/quizzes`       | title, module, passingScore, timeLimit, maxAttempts, questions       |
+| Submissions   | `/admin/collections/submissions`   | assignment, student, status, grade, feedback                         |
+| Users         | `/admin/collections/users`         | firstName, lastName, displayName, role, organization                 |
+| Certificates  | `/admin/collections/certificates`  | student, course, issuedAt, certificateNumber, finalGrade             |
+| Notes         | `/admin/collections/notes`         | title, content, tags                                                 |
 
-### Admin
+### Frontend Pages
 
-- `/admin/:...segments?`
+| Path                           | Expected Content  | Key Interactions                         |
+| ------------------------------ | ----------------- | ---------------------------------------- |
+| `/`                            | Home/landing page | Navigation links, hero content           |
+| `/dashboard`                   | User dashboard    | Course progress, recent activity         |
+| `/instructor/courses/:id/edit` | Course editor     | Edit course details, add modules/lessons |
+| `/notes`                       | Notes list        | Search, filter by tags                   |
+| `/notes/:id`                   | Note detail view  | Display title, content, tags             |
+| `/notes/create`                | Create note form  | Title, content, tags fields              |
+| `/notes/edit/:id`              | Edit note form    | Pre-filled fields, save button           |
 
-## Admin Collections
+### API Endpoints
 
-### `/admin/collections/assignments`
+| Path                        | Methods          | Purpose                           |
+| --------------------------- | ---------------- | --------------------------------- |
+| `/api/notes`                | GET, POST        | Note CRUD with search             |
+| `/api/notes/:id`            | GET, PUT, DELETE | Single note operations            |
+| `/api/courses/search`       | GET              | Course search                     |
+| `/api/enroll`               | POST             | Enrollment (requires viewer role) |
+| `/api/gradebook/course/:id` | GET              | Grades per course (editor/admin)  |
 
-- **Name:** Assignments
-- **Fields:** title, module, instructions, dueDate, maxScore, rubric, criterion, maxPoints, description
+## Component Verification Patterns
 
-### `/admin/collections/courses`
+### Admin Collection List
 
-- **Name:** Courses
-- **Fields:** title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label, maxEnrollments, quizWeight, assignmentWeight
+- Navigate to `/admin/collections/{slug}`
+- Verify table/list displays with correct columns
+- Test pagination if available
+- Verify search/filter functionality
 
-### `/admin/collections/enrollments`
+### Admin Edit Form
 
-- **Name:** Enrollments
-- **Fields:** student, course, enrolledAt, status, completedAt, completedLessons
+- Click row or "Edit" button to open edit form
+- Verify all fields render correctly
+- Test save/cancel actions
+- Verify validation errors appear for invalid input
 
-### `/admin/collections/lessons`
+### Frontend Forms
 
-- **Name:** Lessons
-- **Fields:** title, course, module, order, type, content, videoUrl, estimatedMinutes
+- `/notes/create` — fill title, content, tags; verify note appears in list
+- `/notes/edit/:id` — pre-populated fields; modify and save; verify changes persist
 
-### `/admin/collections/media`
+## Common Test Scenarios
 
-- **Name:** Media
-- **Fields:** alt
+### Admin CRUD Workflow
 
-### `/admin/collections/notifications`
+1. Navigate to `/admin/collections/notes`
+2. Click "Create New" button
+3. Fill required fields (title, content)
+4. Save and verify redirect to list
+5. Verify new record appears in list
 
-- **Name:** Notifications
-- **Fields:** recipient, type, title, message, link, isRead
+### Login Flow
 
-### `/admin/collections/quiz-attempts`
+1. Navigate to `/login`
+2. Enter admin credentials
+3. Verify redirect to `/dashboard`
+4. Verify role-appropriate navigation appears
 
-- **Name:** QuizAttempts
-- **Fields:** user, quiz, score, passed, answers, questionIndex, answer, startedAt, completedAt
+### Course Editing
 
-### `/admin/collections/quizzes`
+1. Navigate to `/instructor/courses/:id/edit`
+2. Modify course title or description
+3. Add/remove modules
+4. Save changes
+5. Verify modifications persist
 
-- **Name:** Quizzes
-- **Fields:** title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options, isCorrect, correctAnswer, points
+## Environment Setup
 
-### `/admin/collections/submissions`
+Required env vars:
 
-- **Name:** Submissions
-- **Fields:** assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores, criterion, score, comment
+- `DATABASE_URL` — PostgreSQL connection string
+- `PAYLOAD_SECRET` — Payload CMS secret key
 
-### `/admin/collections/users`
+Optional for testing:
 
-- **Name:** Users
-- **Fields:** firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
-
-### `/admin/collections/certificates`
-
-- **Name:** certificates
-- **Fields:** student, course, issuedAt, certificateNumber, finalGrade
-
-### `/admin/collections/notes`
-
-- **Name:** notes
-- **Fields:** title, content, tags
-
-## Required Environment Variables
-
-- `DATABASE_URL`
-- `PAYLOAD_SECRET`
+- `QA_ADMIN_EMAIL` — admin test account email
+- `QA_ADMIN_PASSWORD` — admin test account password
+- `QA_USER_EMAIL` — user test account email
+- `QA_USER_PASSWORD` — user test account password
 
 ## Dev Server
 
-- Command: `pnpm dev`
-- URL: `http://localhost:3000`
+- **Command:** `pnpm dev`
+- **URL:** `http://localhost:3000`
