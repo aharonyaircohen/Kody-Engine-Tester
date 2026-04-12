@@ -144,17 +144,30 @@ Logs show all stages skipped; no PR created." \
   fire_test P1T19 "[${RUN_ID}] P1T19: Fix-CI auto-trigger" \
     "Verify fix-ci workflow job triggers when CI fails on a PR.
 
-Setup: T19 needs a broken CI workflow on a PR branch. The test first checks if test-ci.yml exists, creates it if not, then deliberately breaks CI on a PR branch to trigger the workflow_run event.
+**Multi-step setup:**
+Step 1 — Create breakable CI workflow on main (if not exists):
+  gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/.github/workflows/test-ci.yml --method PUT \
+    --field message='ci: add test-ci for T19 [skip ci]' \
+    --field content=\"\$(echo 'name: Test CI\non: [pull_request]\njobs:\n  health:\n    runs-on: ubuntu-latest\n    steps:\n      - run: echo CI health check' | base64)\"
 
-Command: @kody (manual trigger)
+Step 2 — After Kody creates PR from T01/T02, fetch and break CI:
+  git fetch origin <pr-branch> && git checkout <pr-branch>
+  cat >> .github/workflows/test-ci.yml << 'YAML'
+      - run: exit 1  # intentionally break CI for T19 test
+YAML
+  git add .github/workflows/test-ci.yml
+  git commit -m 'chore: break CI for T19 test [skip ci]'
+  git push origin <pr-branch>
 
 ## Verification
-1. test-ci.yml exists on main branch
-2. Break CI on PR branch (add 'exit 1' step)
-3. workflow_run event fires fix-ci-trigger job
-4. @kody fix-ci comment auto-posted on PR
-5. Pipeline runs in fix-ci mode, pushes fix to same PR
-6. Loop guard prevents second auto-trigger within 24h" \
+1. workflow_run event fires fix-ci-trigger job
+2. Loop guard passes (no prior fix-ci comment in 24h)
+3. @kody fix-ci comment auto-posted on PR
+4. Pipeline runs mode=fix-ci, fetches CI logs, rebuilds from build stage
+5. Fix pushed to same PR
+6. Loop guard verified: second @kody fix-ci NOT auto-posted within 24h
+
+**Cleanup:** Revert the break-CI commit from the PR branch." \
     'n=$1; gh issue comment $n --body "@kody"'
 
   fire_test P1T20 "[${RUN_ID}] P1T20: Status command no-op" \
@@ -334,10 +347,22 @@ New review comment posted (not duplicate). Findings differ from P2T06 or acknowl
   fire_test P2T08 "[${RUN_ID}] P2T08: Resolve merge conflicts" \
     "Verify @kody resolve detects and resolves merge conflicts on a PR.
 
+**Safe conflict creation (DO NOT modify default branch directly):**
+1. Get a file the PR modified (from gh pr diff)
+2. Get PR base branch: gh pr view <n> --json baseRefName
+3. Create conflict on base branch:
+   git fetch origin <base> && git checkout <base>
+   # Edit the same lines as the PR changed
+   git commit -m 'test: create conflict for T08' && git push origin <base>
+4. gh issue comment <n> --body '@kody resolve'
+
+**Mandatory cleanup:** Revert the conflict commit from base branch after test:
+  git revert <conflict-commit-hash> --no-edit && git push origin <base>
+
 Depends on: Any completed PR
 
 ## Verification
-Pipeline detects conflict, merges base, resolves conflicts, verifies, pushes." \
+Pipeline detects conflict, merges base, resolves conflicts, verifies, pushes. Resolve comment confirms success." \
     'n=$1; gh issue comment $n --body "@kody resolve"'
 
   fire_test P2T09 "[${RUN_ID}] P2T09: Rerun from specific stage" \
@@ -472,47 +497,76 @@ task.json has hasUI: true; logs show MCP config injection." \
 
 Task: Add a new dashboard page with charts and data tables."'
 
-  fire_test P3T23 "[${RUN_ID}] P3T23: Decompose respects --no-compose" \
-    "Verify @kody decompose --no-compose skips compose step.
+  fire_test P3T19 "[${RUN_ID}] P3T19: Force-with-lease retry on rerun push" \
+    "Verify force-with-lease retry when push is rejected during rerun.
 
-Command: @kody decompose --no-compose
+Trigger @kody on an issue that already has a pushed branch.
 
 ## Verification
-Logs show compose skipped; decompose-state.json saved." \
-    'n=$1; gh issue comment $n --body "@kody decompose --no-compose
+Logs show force-with-lease on push retry. Either outcome accepted — test validates the retry mechanism exists." \
+    'n=$1; gh issue comment $n --body "@kody"'
 
-Task: Add breadcrumb navigation to the notes page."'
+  fire_test P3T23 "[${RUN_ID}] P3T23: Issue attachments and metadata enrichment" \
+    "Verify image attachments are downloaded and labels/comments enrich task.md.
+
+Create an issue with an image in the body and at least one label, plus a comment.
+
+## Verification
+1. Logs show 'Downloaded attachment:' and task.md has local paths + Labels: + Discussion:
+2. If image URL is unreachable (404), verify graceful fallback: original URL preserved, warning logged, pipeline continues
+3. PASS: attachments/ downloaded, Labels: and Discussion: sections present in task.md" \
+    'n=$1; gh issue comment $n --body "@kody
+
+Task: Add a footer component.
+
+## Design
+![mockup](https://github.com/user-attachments/assets/test-uuid/footer-design.png)
+
+See the attached mockup for layout."'
 
   fire_test P3T27 "[${RUN_ID}] P3T27: Decompose with config disabled" \
-    "Verify decompose works when disabled in kody.config.json.
+    "Verify decompose.enabled=false causes immediate fallback to normal pipeline.
+
+**Manual setup before firing:** Disable decompose in config first:
+  gh api repos/aharonyaircohen/Kody-Engine-Tester/contents/kody.config.json --method PUT \
+    --field message='test: disable decompose for T27 [skip ci]' \
+    --field content=\"\$(jq '.decompose = {\"enabled\": false}' <<< \$(gh api ... --jq '.content' | base64 -d) | base64 -b 0)\"
 
 Command: @kody decompose
 
 ## Verification
-Pipeline runs decompose; config override respected." \
+Logs should show 'decompose disabled in config — falling back'." \
     'n=$1; gh issue comment $n --body "@kody decompose
 
 Task: Add pagination to the course list page."'
 
-  fire_test P3T30 "[${RUN_ID}] P3T30: Auto-mode skips plan/review" \
-    "Verify auto-mode or equivalent skips plan and review stages.
+  fire_test P3T30 "[${RUN_ID}] P3T30: Decompose sub-task failure triggers fallback" \
+    "Verify sub-task failure aborts decompose and falls back to normal pipeline.
 
-Command: @kody --auto-mode
+Task: Implement a caching system with a sub-task requiring ioredis package (NOT installed).
 
-## Verification
-Pipeline completes with fewer stages; plan/review not executed." \
-    'n=$1; gh issue comment $n --body "@kody --auto-mode"'
-
-  fire_test P3T33b "[${RUN_ID}] P3T33b: Bootstrap model override" \
-    "Verify bootstrap respects --model override flag.
-
-Command: @kody bootstrap --force
+Command: @kody decompose
 
 ## Verification
-Bootstrap uses specified model, not config default." \
-    'n=$1; gh issue comment $n --body "@kody bootstrap --force
+Logs show sub-task failure, cleanup, and fallback to runPipeline(). Pipeline completes via normal path." \
+    'n=$1; gh issue comment $n --body "@kody decompose
 
-Task: Add retry logic to the API client."'
+Implement a caching system:
+1. Add Redis cache adapter in src/cache/redisAdapter.ts (requires ioredis package — NOT installed)
+2. Add in-memory cache adapter in src/cache/memoryAdapter.ts
+3. Add cache manager in src/cache/cacheManager.ts
+4. Add cache middleware in src/middleware/cacheMiddleware.ts"'
+
+  fire_test P3T33b "[${RUN_ID}] P3T33b: Lifecycle label progression" \
+    "Verify labels progress through stages: kody:planning → kody:building → kody:verifying → kody:review → kody:done.
+
+Poll issue labels during the run to confirm each stage label appears in sequence. Complexity label (kody:low/medium/high) persists throughout.
+
+Command: @kody
+
+## Verification
+Each stage adds its label and removes the previous one. Complexity label persists throughout pipeline." \
+    'n=$1; gh issue comment $n --body "@kody"'
 
   fire_test P3T34 "[${RUN_ID}] P3T34: Token ROI in retrospective" \
     "Verify observer-log.jsonl includes tokenStats per-stage breakdown.
