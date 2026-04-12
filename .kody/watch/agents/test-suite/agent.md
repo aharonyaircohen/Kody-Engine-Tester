@@ -433,20 +433,26 @@ Logs show feedback: line during build stage." \
   fire_test P3T12 "[${RUN_ID}] P3T12: --from stage flag" \
     "Verify --from <stage> re-runs pipeline from the specified stage.
 
-Command: @kody --from build
+This is a two-step test: first trigger @kody (pipeline starts), then after it completes fire @kody --from build (pipeline resumes from build stage).
+
+Command (step 1): @kody
 
 ## Verification
-Logs show Resuming from stage: build." \
-    'n=$1; gh issue comment $n --body "@kody --from build"'
+Step 1: Pipeline completes normally.
+Step 2: Logs show 'Resuming from: build' — taskify and plan stages are skipped, build stage runs." \
+    'n=$1; gh issue comment $n --body "@kody"'
 
   fire_test P3T13 "[${RUN_ID}] P3T13: State bypass on rerun" \
-    "Verify --from flag bypasses state loading for fresh pipeline start.
+    "Verify @kody rerun bypasses the 'already completed' state lock.
 
-Command: @kody --from plan
+This is a two-step test: first trigger @kody (pipeline completes), then after it finishes fire @kody rerun (pipeline re-executes despite kody:done label).
+
+Command (step 1): @kody
 
 ## Verification
-Logs show state bypass or pipeline starts fresh." \
-    'n=$1; gh issue comment $n --body "@kody --from plan"'
+Step 1: Pipeline completes with kody:done label.
+Step 2: Pipeline re-executes (not blocked by 'already completed' message)." \
+    'n=$1; gh issue comment $n --body "@kody"'
 
   fire_test P3T14 "[${RUN_ID}] P3T14: Dry-run mode" \
     "Verify --dry-run skips all stages without creating PRs.
@@ -628,6 +634,56 @@ Task: Add a new dashboard page with charts and data tables."'
       echo \"[\$(date +%H:%M:%S)] Auto-approve timeout for P1T03\"
     " > /tmp/auto-approve-T03.log 2>&1 &
     echo "[auto-approve] PID: $!"
+  fi
+
+  # ── P3T12: second step — @kody --from build ──────────────────────────────
+  # After P3T12's first pipeline completes, fire @kody --from build on same issue
+  P3T12_ISSUE=$(jq -r '.all_issues[]' "$STATE_FILE" 2>/dev/null | while read n; do
+    title=$(gh issue view "$n" --json title -q '.title' 2>/dev/null)
+    echo "$title" | grep -q "P3T12" && echo "$n"
+  done | head -1)
+
+  if [ -n "$P3T12_ISSUE" ]; then
+    echo "[P3T12] Launching nohup second-step monitor for #$P3T12_ISSUE..."
+    nohup bash -c "
+      for i in \$(seq 1 60); do
+        sleep 30
+        labels=\$(gh issue view $P3T12_ISSUE --json labels --jq '[.labels[].name] | join(\",\")' 2>/dev/null)
+        if echo \"\$labels\" | grep -qE 'kody:done|kody:failed'; then
+          echo \"[\$(date +%H:%M:%S)] P3T12 first pipeline done. Firing @kody --from build...\"
+          gh issue comment $P3T12_ISSUE --body '@kody --from build' 2>/dev/null
+          echo \"[\$(date +%H:%M:%S)] P3T12 second step triggered.\"
+          exit 0
+        fi
+      done
+      echo \"[\$(date +%H:%M:%S)] P3T12 timeout waiting for first pipeline.\"
+    " > /tmp/P3T12-step2.log 2>&1 &
+    echo "[P3T12] Monitor PID: $!"
+  fi
+
+  # ── P3T13: second step — @kody rerun ─────────────────────────────────────
+  # After P3T13's first pipeline completes, fire @kody rerun on same issue
+  P3T13_ISSUE=$(jq -r '.all_issues[]' "$STATE_FILE" 2>/dev/null | while read n; do
+    title=$(gh issue view "$n" --json title -q '.title' 2>/dev/null)
+    echo "$title" | grep -q "P3T13" && echo "$n"
+  done | head -1)
+
+  if [ -n "$P3T13_ISSUE" ]; then
+    echo "[P3T13] Launching nohup second-step monitor for #$P3T13_ISSUE..."
+    nohup bash -c "
+      for i in \$(seq 1 60); do
+        sleep 30
+        labels=\$(gh issue view $P3T13_ISSUE --json labels --jq '[.labels[].name] | join(\",\")' 2>/dev/null)
+        if echo \"\$labels\" | grep -qE 'kody:done|kody:failed'; then
+          echo \"[\$(date +%H:%M:%S)] P3T13 first pipeline done. Firing @kody rerun...\"
+          gh issue comment $P3T13_ISSUE --body '@kody rerun' 2>/dev/null
+          echo \"[\$(date +%H:%M:%S)] P3T13 second step triggered.\"
+          exit 0
+        fi
+      done
+      echo \"[\$(date +%H:%M:%S)] P3T13 timeout waiting for first pipeline.\"
+    " > /tmp/P3T13-step2.log 2>&1 &
+    echo "[P3T13] Monitor PID: $!"
   fi
 
   echo "All tests fired. Transitioning to fire_wait."
