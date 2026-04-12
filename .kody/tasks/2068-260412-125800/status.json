@@ -30,21 +30,18 @@
     },
     "review-fix": {
       "state": "completed",
-      "completedAt": "2026-04-12T13:09:00.000Z",
+      "completedAt": "2026-04-12T13:11:05.367Z",
       "retries": 0,
-      "findings": {
-        "critical": 0,
-        "major": 0,
-        "minor": 0
-      }
+      "promptTokens": 6156
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-12T13:11:05.411Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-12T12:59:39.869Z",
-  "updatedAt": "2026-04-12T13:08:53.356Z",
+  "updatedAt": "2026-04-12T13:11:05.411Z",
   "sessions": {
     "build": "7265ddc5-13e3-4a41-985a-d4aea24031eb",
     "review": "e481dd00-45bd-46f0-aeac-22407bb8e6c9"
