@@ -1,0 +1,76 @@
+diff --git a/dist/bin/cli.js b/dist/bin/cli.js
+index 503f95834d8a7136d21f52cdaf5c892bca97b391..1c2623fe542f6d4a62571cf00c2399ca39e4f0ee 100755
+--- a/dist/bin/cli.js
++++ b/dist/bin/cli.js
+@@ -3908,9 +3908,29 @@ function readProjectMemoryTiered(projectDir, tier, hallFilter, roomFilter) {
+     return graphNodesToMarkdown(filtered);
+   }
+   const memoryDir = path15.join(projectDir, ".kody", "memory");
+-  if (!fs16.existsSync(memoryDir)) return "";
++  if (!fs16.existsSync(memoryDir)) {
++    // Fallback to .kody/memory.md if directory doesn't exist
++    const memoryMdPath = path15.join(projectDir, ".kody", "memory.md");
++    if (fs16.existsSync(memoryMdPath)) {
++      const content = fs16.readFileSync(memoryMdPath, "utf-8").trim();
++      if (content) {
++        return `# Project Memory\n${content}`;
++      }
++    }
++    return "";
++  }
+   let files = fs16.readdirSync(memoryDir).filter((f) => f.endsWith(".md")).sort();
+-  if (files.length === 0) return "";
++  if (files.length === 0) {
++    // Fallback to .kody/memory.md if no files in directory
++    const memoryMdPath = path15.join(projectDir, ".kody", "memory.md");
++    if (fs16.existsSync(memoryMdPath)) {
++      const content = fs16.readFileSync(memoryMdPath, "utf-8").trim();
++      if (content) {
++        return `# Project Memory\n${content}`;
++      }
++    }
++    return "";
++  }
+   if (hallFilter && hallFilter.length > 0) {
+     files = files.filter((f) => hallFilter.includes(inferHallFromFilename(f)));
+   }
+@@ -3920,7 +3940,17 @@ function readProjectMemoryTiered(projectDir, tier, hallFilter, roomFilter) {
+       return room === null || roomFilter.includes(room);
+     });
+   }
+-  if (files.length === 0) return "";
++  if (files.length === 0) {
++    // Fallback to .kody/memory.md after filtering
++    const memoryMdPath = path15.join(projectDir, ".kody", "memory.md");
++    if (fs16.existsSync(memoryMdPath)) {
++      const content = fs16.readFileSync(memoryMdPath, "utf-8").trim();
++      if (content) {
++        return `# Project Memory\n${content}`;
++      }
++    }
++    return "";
++  }
+   const tierLabel2 = tier === "L2" ? "full" : tier === "L1" ? "overview" : "abstract";
+   const sections = [];
+   for (const file of files) {
+@@ -12154,6 +12184,20 @@ ${prompt}` : prompt;
+ 
+ ${diaryBlock}
+ `;
++  }
++  // Add file tree from git ls-files
++  try {
++    const output = execSync("git ls-files", { cwd: projectDir, encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] });
++    const lines = output.split("\n").filter(Boolean).slice(0, 150);
++    if (lines.length > 0) {
++      assembled += `
++### File Tree
++\`\`\`
++${lines.join("\n")}
++\`\`\`
++`;
++    }
++  } catch {
+   }
+   const tokens = estimateTokens(assembled);
+   if (tokens > tokenBudget) {
