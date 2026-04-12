@@ -18,3 +18,7 @@ The issue was that the `injectTaskContextTiered` and `injectTaskContext` functio
 ## Fix Applied
 I patched the compiled kody-engine CLI (`node_modules/.pnpm/@ko
 ...(truncated)
+
+### autofix (2026-04-12T01:19:08)
+Fixed `let context` → `const context` on line 80 of `src/utils/logger/index.ts`. The variable is closed over by the `dispatch` function but never reassigned, so `const` is appropriate.
+
