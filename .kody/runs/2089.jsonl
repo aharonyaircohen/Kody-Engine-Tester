@@ -1,0 +1,1 @@
+{"runId":"decompose-2089-260412-130747","issueNumber":2089,"command":"run","startedAt":"2026-04-12T13:09:47.459Z","completedAt":"2026-04-12T13:18:53.295Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
