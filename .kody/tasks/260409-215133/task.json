@@ -1,0 +1,23 @@
+{
+  "task_type": "feature",
+  "title": "Add input validation to user registration form",
+  "description": "Add email format and password strength validation to the registration form at src/pages/auth/register.tsx. The form currently has basic email regex validation and a PasswordStrengthBar visual component, but lacks: (1) a passwordStrength validator in src/validation/validators.ts to prevent weak passwords, (2) proper integration with the useFormValidation hook, (3) server-consistent password strength rules. Should reuse existing validation patterns from src/validation/validators.ts and align password strength rules with src/api/auth/register.ts (8+ chars, uppercase, number, special character).",
+  "scope": [
+    "src/pages/auth/register.tsx",
+    "src/validation/validators.ts",
+    "src/validation/useFormValidation.ts",
+    "src/validation/validateForm.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/validation/validators.ts - validator function pattern (required, minLength, pattern, email) to follow for new passwordStrength validator",
+    "src/validation/useFormValidation.ts - useFormValidation hook for schema-based form validation",
+    "src/api/auth/register.ts - password strength rules (8+ chars, uppercase, number, special char) to align with",
+    "src/components/auth/PasswordStrengthBar.tsx - existing visual password strength feedback to enhance"
+  ],
+  "questions": [
+    "Should the password strength rules match exactly what the API requires (8+ chars, uppercase, number, special char), or should there be client-side feedback that allows 'weaker' passwords with a warning before submission?",
+    "Should confirmPassword validation (matching password) also be added as a validator, similar to how it exists in the API?",
+    "Is there a desired UX pattern - inline errors on blur, form-level errors on submit, or both?"
+  ]
+}

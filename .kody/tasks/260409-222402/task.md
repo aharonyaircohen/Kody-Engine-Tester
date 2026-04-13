@@ -1,0 +1,1 @@
+Add JWT token validation to the auth middleware

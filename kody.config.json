@@ -29,12 +29,10 @@
   "mcp": {
     "enabled": true,
     "servers": {
-      "filesystem": {
-        "command": "npx",
-        "args": ["-y", "@anthropic-ai/mcp-filesystem", "./src"]
-      }
+      "github": "github",
+      "filesystem": "filesystem"
     },
-    "stages": ["build", "verify"]
+    "stages": ["build", "verify", "review"]
   },
   "watch": {
     "enabled": true,

@@ -1,0 +1,13 @@
+{
+  "task_type": "chore",
+  "title": "Create README.md in src/utils/ documenting all utility functions",
+  "description": "Created src/utils/README.md documenting 60+ utility functions across 11 categories: Array, String, Number, Formatting, Functional, Async, Event/Messaging, State, Object, Validation, and Infrastructure. Each utility is listed with its signature and a brief description. All utilities follow the co-located .test.ts pattern.",
+  "scope": ["src/utils/README.md"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/clamp.ts - Single-function file without JSDoc, simple and minimal",
+    "src/utils/debounce.ts - Single-function file with typed interfaces for options",
+    "src/utils/result.ts - Multi-export module with Ok/Err discriminated union"
+  ],
+  "questions": []
+}

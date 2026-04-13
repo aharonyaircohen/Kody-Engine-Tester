@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { required, minLength, maxLength, pattern, email, min, max, oneOf } from './validators'
+import { required, minLength, maxLength, pattern, email, min, max, oneOf, passwordStrength, confirmPassword } from './validators'
 
 describe('required', () => {
   it('returns valid for non-empty string', () => {
@@ -152,5 +152,59 @@ describe('oneOf', () => {
   it('returns invalid for custom error message when value is not in the allowed list', () => {
     const validator = oneOf(['red', 'green', 'blue'], 'Choose a primary color')
     expect(validator('yellow')).toEqual({ valid: false, error: 'Choose a primary color' })
+  })
+})
+
+describe('passwordStrength', () => {
+  it('returns valid for strong passwords meeting all requirements', () => {
+    expect(passwordStrength()('Password1!')).toEqual({ valid: true })
+    expect(passwordStrength()('MyP@ssw0rd')).toEqual({ valid: true })
+  })
+
+  it('returns invalid when password is less than 8 characters', () => {
+    const result = passwordStrength()('Pass1!')
+    expect(result.valid).toBe(false)
+    expect((result as { valid: false; error: string }).error).toBe('Password must be at least 8 characters')
+  })
+
+  it('returns invalid when password lacks uppercase letter', () => {
+    const result = passwordStrength()('password1!')
+    expect(result.valid).toBe(false)
+    expect((result as { valid: false; error: string }).error).toBe('Password must contain at least one uppercase letter')
+  })
+
+  it('returns invalid when password lacks number', () => {
+    const result = passwordStrength()('Password!')
+    expect(result.valid).toBe(false)
+    expect((result as { valid: false; error: string }).error).toBe('Password must contain at least one number')
+  })
+
+  it('returns invalid when password lacks special character', () => {
+    const result = passwordStrength()('Password1')
+    expect(result.valid).toBe(false)
+    expect((result as { valid: false; error: string }).error).toBe('Password must contain at least one special character')
+  })
+
+  it('returns invalid for empty string', () => {
+    const result = passwordStrength()('')
+    expect(result.valid).toBe(false)
+  })
+})
+
+describe('confirmPassword', () => {
+  it('returns valid when passwords match', () => {
+    expect(confirmPassword('password123')('password123')).toEqual({ valid: true })
+  })
+
+  it('returns invalid when passwords do not match', () => {
+    const result = confirmPassword('password123')('different')
+    expect(result.valid).toBe(false)
+    expect((result as { valid: false; error: string }).error).toBe('Passwords do not match')
+  })
+
+  it('returns invalid for empty confirmation', () => {
+    const result = confirmPassword('password123')('')
+    expect(result.valid).toBe(false)
+    expect((result as { valid: false; error: string }).error).toBe('Passwords do not match')
   })
 })

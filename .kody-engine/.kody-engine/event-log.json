@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1776103939215-iacq3yl",
+    "runId": "2223-260413-211041",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "issueNumber": 2223
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:12:19.215Z"
+  },
+  {
+    "id": "1776103939215-qw9e54e",
+    "runId": "2223-260413-211041",
+    "event": "step.started",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:12:19.215Z"
+  }
+]

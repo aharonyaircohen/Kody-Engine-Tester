@@ -1,0 +1,85 @@
+[
+  {
+    "id": "1776103850524-4m66r85",
+    "runId": "2223-260413-211041",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "issueNumber": 2223
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:10:50.524Z"
+  },
+  {
+    "id": "1776103850524-vs1cj4s",
+    "runId": "2223-260413-211041",
+    "event": "step.started",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:10:50.524Z"
+  },
+  {
+    "id": "1776103886867-4zzsvoo",
+    "runId": "2223-260413-211041",
+    "event": "step.complete",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:11:26.867Z"
+  },
+  {
+    "id": "1776103886867-mrwkk0b",
+    "runId": "2223-260413-211041",
+    "event": "step.started",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:11:26.867Z"
+  },
+  {
+    "id": "1776103887780-ga0edlr",
+    "runId": "2223-260413-211041",
+    "event": "step.failed",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "step": "build",
+      "error": "Exit code 1\nwarn: CPU lacks AVX support, strange crashes may occur. Reinstall Bun or use *-baseline build:\n  https://github.com/oven-sh/bun/releases/download/bun-v1.3.11/bun-darwin-x64-baseline.zip\nError: Invalid MCP configuration:\nmcpServers.github: Does not adhere to MCP server configuration schema\nmcpServers.filesystem: Does not adhere to MCP server configuration schema\n"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:11:27.780Z"
+  },
+  {
+    "id": "1776103887780-qn7hse8",
+    "runId": "2223-260413-211041",
+    "event": "pipeline.failed",
+    "payload": {
+      "runId": "2223-260413-211041",
+      "error": "Stage failed",
+      "issueNumber": 2223
+    },
+    "hooksFired": [
+      "github-label",
+      "log"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-13T18:11:27.780Z"
+  }
+]

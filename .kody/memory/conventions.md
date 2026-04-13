@@ -57,3 +57,12 @@ import { LessonEditor } from './LessonEditor'
 
 ## Learned 2026-04-09 (task: 863-260409-174540)
 - Active directories: .kody/graph/episodes, .kody/graph, src/utils
+
+## Learned 2026-04-09 (task: 260409-215133)
+- Active directories: src/pages/auth, src/validation
+
+## Learned 2026-04-09 (task: 260409-221218)
+- Active directories: src/app/(frontend), src/components
+
+## Learned 2026-04-09 (task: 260409-222402)
+- Active directories: src/middleware, src/auth

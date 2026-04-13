@@ -1,0 +1,1 @@
+{"task_type":"feature","title":"Test memory injection","scope":["src/middleware/auth-middleware.ts","src/auth/withAuth.ts"],"risk_level":"low"}

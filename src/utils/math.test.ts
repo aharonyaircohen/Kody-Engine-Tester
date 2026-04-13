@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { isOdd } from './math'
+import { add, isOdd } from './math'
 
 describe('isOdd', () => {
   it('returns true for positive odd numbers', () => {
@@ -37,5 +37,31 @@ describe('isOdd', () => {
 
   it('returns false for zero', () => {
     expect(isOdd(0)).toBe(false)
+  })
+})
+
+describe('add', () => {
+  it('returns correct sum for positive numbers', () => {
+    expect(add(1, 2)).toBe(3)
+    expect(add(5, 10)).toBe(15)
+    expect(add(100, 200)).toBe(300)
+  })
+
+  it('returns correct sum for negative numbers', () => {
+    expect(add(-1, -2)).toBe(-3)
+    expect(add(-5, -10)).toBe(-15)
+    expect(add(-100, -200)).toBe(-300)
+  })
+
+  it('returns correct sum for mixed positive and negative', () => {
+    expect(add(-1, 2)).toBe(1)
+    expect(add(5, -10)).toBe(-5)
+    expect(add(100, -50)).toBe(50)
+  })
+
+  it('returns correct sum with zero', () => {
+    expect(add(0, 0)).toBe(0)
+    expect(add(5, 0)).toBe(5)
+    expect(add(0, 5)).toBe(5)
   })
 })

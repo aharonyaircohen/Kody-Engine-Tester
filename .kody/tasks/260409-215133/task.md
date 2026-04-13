@@ -1,0 +1,1 @@
+Add input validation to the user registration form (email format, password strength)

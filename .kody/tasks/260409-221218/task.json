@@ -1,0 +1,9 @@
+{
+  "task_type": "feature",
+  "title": "Add dark mode toggle to header component",
+  "description": "Add dark mode toggle to a header component. However, no header component currently exists in the codebase. The frontend layout (src/app/(frontend)/layout.tsx) only contains a minimal structure with <main>{children}</main>. A fully implemented DarkModeToggle component already exists at src/components/dark-mode-toggle.tsx with comprehensive tests. This task requires clarification: (1) should a new header/navigation component be created that includes the dark mode toggle, and (2) where should the header appear (frontend-only pages or all pages)?",
+  "scope": ["src/app/(frontend)/layout.tsx", "src/components/dark-mode-toggle.tsx"],
+  "risk_level": "medium",
+  "existing_patterns": ["src/components/dark-mode-toggle.tsx - Fully implemented DarkModeToggle component with localStorage persistence, system preference detection, and data-theme attribute application", "src/app/(frontend)/layout.tsx - Frontend layout that wraps children in main element"],
+  "questions": ["Should a new header/navigation component be created, or does one already exist that I should locate?", "Where should the header appear — only on frontend pages (app/(frontend)), or also on admin/dashboard pages?", "What navigation links or branding should the header contain alongside the dark mode toggle?"]
+}

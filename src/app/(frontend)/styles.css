@@ -26,7 +26,7 @@ body {
   line-height: 32px;
 
   margin: 0;
-  color: rgb(1000, 1000, 1000);
+  color: rgb(255, 255, 255);
 
   @media (max-width: 1024px) {
     font-size: 15px;
@@ -89,6 +89,36 @@ svg {
   vertical-align: middle;
 }
 
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgb(0, 0, 0);
+  border-bottom: 1px solid rgb(60, 60, 60);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.header-logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -129,14 +159,14 @@ svg {
 
     .admin {
       color: rgb(0, 0, 0);
-      background: rgb(1000, 1000, 1000);
+      background: rgb(255, 255, 255);
       border: 1px solid rgb(0, 0, 0);
     }
 
     .docs {
-      color: rgb(1000, 1000, 1000);
+      color: rgb(255, 255, 255);
       background: rgb(0, 0, 0);
-      border: 1px solid rgb(1000, 1000, 1000);
+      border: 1px solid rgb(255, 255, 255);
     }
   }
 

@@ -1,0 +1,1 @@
+Add a simple add function to src/utils/math.ts that returns sum of two numbers

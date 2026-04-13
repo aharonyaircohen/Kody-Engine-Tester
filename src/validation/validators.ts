@@ -49,3 +49,17 @@ export const oneOf = <T>(
   values.includes(value)
     ? { valid: true }
     : { valid: false, error: message ?? `Must be one of: ${values.join(', ')}` }
+
+export const passwordStrength = (): Validator<string> => (value) => {
+  const str = String(value)
+  if (str.length < 8) return { valid: false, error: 'Password must be at least 8 characters' }
+  if (!/[A-Z]/.test(str)) return { valid: false, error: 'Password must contain at least one uppercase letter' }
+  if (!/[0-9]/.test(str)) return { valid: false, error: 'Password must contain at least one number' }
+  if (!/[^A-Za-z0-9]/.test(str)) return { valid: false, error: 'Password must contain at least one special character' }
+  return { valid: true }
+}
+
+export const confirmPassword = (originalPassword: string): Validator<string> => (value) =>
+  value === originalPassword
+    ? { valid: true }
+    : { valid: false, error: 'Passwords do not match' }
