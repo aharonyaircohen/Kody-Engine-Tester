@@ -99,6 +99,7 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           SESSION_ID: ${{ github.event.inputs.sessionId }}
           MODEL: ${{ github.event.inputs.model || 'MiniMax-M2.7-highspeed' }}
+          LOG_LEVEL: debug
           INITIAL_MESSAGE: ${{ github.event.inputs.message }}
         run: |
           if [ -n "$INITIAL_MESSAGE" ]; then
