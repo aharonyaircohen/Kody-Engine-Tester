@@ -2,5 +2,6 @@
   "migration": 1,
   "plan": 22,
   "nudge": 2,
-  "retrospective": 0
+  "retrospective": 0,
+  "ci_failure": 1
 }

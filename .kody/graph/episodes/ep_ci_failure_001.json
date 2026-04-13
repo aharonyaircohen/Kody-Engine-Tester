@@ -1,0 +1,10 @@
+{
+  "id": "ep_ci_failure_001",
+  "runId": "2223-260413-211041",
+  "source": "ci_failure",
+  "taskId": "2223-260413-211041",
+  "createdAt": "2026-04-13T18:11:46.451Z",
+  "rawContent": "Task: 2223-260413-211041 | Outcome: failed | Observation: Task 2223-260413-211041 failed at the build stage with exit code 1 after 42s in full mode. The build stage failed with an Invalid MCP configuration error stating that both mcpServers.github and mcpServers.filesystem do not adhere to the MCP server configuration schema. This is a new failure mode distinct from the 19 consecutive verify-to-ship gate flaw runs — the pipeline did not reach verify stage, review, or ship at all. CPU AVX warning also appeared, indicating possible environment issues. The retry logic worked (build retried once), but the retry did not resolve the MCP configuration error. The task scope was adding retryWithBackoff utility to utils/retry.ts. | Failed at: build | Pattern: This is a new failure pattern not seen in the 19 prior consecutive verify-to-ship gate flaw runs. The previous 19 runs all exhibited verify reporting FAIL followed by successful progression to ship. This run failed at build due to MCP configuration, never reaching the verify stage. The build stage is treating MCP configuration errors as non-retryable structural failures rather than recoverable setup issues. | Suggestion: Fix the MCP server configuration schema for mcpServers.github and mcpServers.filesystem — the configuration format does not match what the MCP server runtime expects. Validate the MCP server configuration format in the pipeline environment before the build stage executes, and add retry logic or a more informative error message when MCP configuration is invalid rather than allowing a silent exit code 1 with no diagnostic output. | Flaw: build — MCP server configuration validation failure causes build to exit with code 1, but no diagnostic output explains what schema the configuration must follow | Stages: taskify:completed, plan:completed, build:failed, verify:pending, review:pending, review-fix:pending, ship:pending",
+  "extractedNodeIds": [],
+  "linkedFiles": []
+}
