@@ -1,0 +1,9 @@
+{
+  "id": "ep_review_001",
+  "runId": "2223-260413-211041",
+  "source": "review",
+  "taskId": "2223-260413-211041",
+  "createdAt": "2026-04-13T18:28:21.220Z",
+  "rawContent": "## Verdict: PASS\n\n## Summary\n\nAdded `retryWithBackoff` function to `src/utils/retry.ts` with `maxAttempts` semantics (total attempts including initial, vs `retry`'s `maxRetries` which counts retries after initial). The new function exports `RetryWithBackoffOptions` interface with `maxAttempts`, `initialDelay`, `maxDelay`, `backoffMultiplier`, and `shouldRetry` parameters. Comprehensive test suite in `retry.test.ts` covers both functions across success, failure, exponential backoff, maxDelay caps, shouldRetry predicate, and default options.\n\n## Findings\n\n### Critical\n\nNone.\n\n### Major\n\nNone.\n\n### Minor\n\nNone.\n\n## Two-Pass Review\n\n**Pass 1 — CRITICAL:**\n\n### SQL & Data Safety\nNot applicable — pure utility function, no database operations.\n\n### Race Conditions & Concurrency\nNot applicable — synchronous retry loop within a single async call, no shared state.\n\n### LLM Output Trust Boundary\nNot applicable — no LLM-generated values.\n\n### Shell Injection\nNot applicable — no shell execution.\n\n#",
+  "extractedNodeIds": []
+}

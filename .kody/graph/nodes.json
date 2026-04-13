@@ -688,5 +688,15 @@
     "episodeId": "ep_test_002",
     "validFrom": "2026-04-09T19:27:34.043Z",
     "validTo": null
+  },
+  "conventions_utils_4335823738304458": {
+    "id": "conventions_utils_4335823738304458",
+    "type": "conventions",
+    "hall": "conventions",
+    "room": "utils",
+    "content": "tested with equivalent coverage",
+    "episodeId": "ep_review_001",
+    "validFrom": "2026-04-13T18:28:21.223Z",
+    "validTo": null
   }
 }

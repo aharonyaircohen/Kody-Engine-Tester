@@ -3,5 +3,6 @@
   "plan": 22,
   "nudge": 2,
   "retrospective": 0,
-  "ci_failure": 1
+  "ci_failure": 1,
+  "review": 1
 }
