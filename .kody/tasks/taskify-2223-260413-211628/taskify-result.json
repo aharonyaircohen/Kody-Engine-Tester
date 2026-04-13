@@ -1,0 +1,12 @@
+{
+  "status": "ready",
+  "tasks": [
+    {
+      "title": "Verify retryWithBackoff implementation meets spec",
+      "body": "## Context\nThe GitHub issue requests adding a `retryWithBackoff` function to `utils/retry.ts` with configurable `maxAttempts`, `initialDelay`, and `backoffMultiplier` parameters. The implementation already exists and tests pass.\n\n## Acceptance Criteria\n- [x] `retry.ts` exists at `src/utils/retry.ts`\n- [x] Exports `retryWithBackoff` function with `maxAttempts`, `initialDelay`, `backoffMultiplier` parameters\n- [x] `retry.test.ts` exists with comprehensive tests (16 tests passing)\n- [x] TypeScript compiles without errors\n- [x] All parameters are configurable as specified\n\n## Test Strategy\n- Run `pnpm vitest run src/utils/retry.test.ts` to verify all 16 tests pass\n- Run `pnpm tsc --noEmit src/utils/retry.ts` to verify TypeScript compilation\n",
+      "labels": ["utility", "verification"],
+      "priority": "medium",
+      "dependsOn": []
+    }
+  ]
+}
