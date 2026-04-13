@@ -11,6 +11,10 @@ on:
         description: "Model to use (default: from kody.config.json)"
         type: string
         default: ""
+      message:
+        description: "Initial chat message (creates session file)"
+        type: string
+        default: ""
 
 concurrency:
   group: chat-${{ github.event.inputs.sessionId }}
@@ -92,7 +96,13 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           SESSION_ID: ${{ github.event.inputs.sessionId }}
           MODEL: ${{ github.event.inputs.model || 'MiniMax-M2.7-highspeed' }}
+          INITIAL_MESSAGE: ${{ github.event.inputs.message }}
         run: |
+          if [ -n "$INITIAL_MESSAGE" ]; then
+            mkdir -p .kody/sessions .kody/events
+            echo '{"role":"user","content":"'"$INITIAL_MESSAGE"'","timestamp":"'"$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"'","toolCalls":[]}' \
+              >> .kody/sessions/${SESSION_ID}.jsonl
+          fi
           kody-engine chat \
             --session "$SESSION_ID" \
             --model "$MODEL" \
