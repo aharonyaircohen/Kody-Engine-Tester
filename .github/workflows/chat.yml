@@ -8,11 +8,7 @@ on:
         description: "Session ID (= taskId) for this chat session"
         type: string
       model:
-        description: "Model to use (default: claude-sonnet-4-6)"
-        type: string
-        default: ""
-      dashboardUrl:
-        description: "Dashboard URL to post events to"
+        description: "Model to use (default: from kody.config.json)"
         type: string
         default: ""
 
@@ -26,7 +22,7 @@ permissions:
 jobs:
   chat:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 360
 
     steps:
       - name: Generate App token
@@ -88,11 +84,6 @@ jobs:
             echo "${DELIM}" >> $GITHUB_ENV
           done
 
-      - name: Set dashboard URL
-        if: github.event.inputs.dashboardUrl != ''
-        run: |
-          echo "KODY_DASHBOARD_ENDPOINTS=[\"{\"url\":\"${{ github.event.inputs.dashboardUrl }}\"}\"]" >> $GITHUB_ENV
-
       - name: Install kody-engine
         run: npm install -g @kody-ade/engine
 
@@ -100,11 +91,12 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
           SESSION_ID: ${{ github.event.inputs.sessionId }}
-          MODEL: ${{ github.event.inputs.model || 'claude-sonnet-4-6' }}
+          MODEL: ${{ github.event.inputs.model || 'MiniMax-M2.7-highspeed' }}
         run: |
           kody-engine chat \
             --session "$SESSION_ID" \
             --model "$MODEL" \
+            --poll \
             --cwd .
 
       - name: Upload session artifacts
