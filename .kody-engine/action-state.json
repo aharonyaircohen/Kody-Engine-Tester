@@ -11,5 +11,16 @@
     "cancel": false,
     "lastHeartbeat": "2026-04-14T12:23:24.000Z",
     "createdAt": "2026-04-14T12:23:24.000Z"
+  },
+  {
+    "runId": "chat-two-msg-test-1776169404771",
+    "actionId": "chat-two-msg-test-1776169404771",
+    "sessionId": "two-msg-test",
+    "status": "waiting",
+    "step": "chat",
+    "instructions": [],
+    "cancel": false,
+    "lastHeartbeat": "2026-04-14T12:23:32.315Z",
+    "createdAt": "2026-04-14T12:23:32.315Z"
   }
 ]
