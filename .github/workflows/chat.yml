@@ -113,26 +113,34 @@ jobs:
               >> .kody/sessions/${SESSION_ID}.jsonl
 
             # 2. Enqueue in action-state queue so polling loop picks it up
-            #    runId format must match: chat-${SESSION_ID}-<timestamp>
             RUNID="chat-${SESSION_ID}-init"
             mkdir -p .kody-engine
-            if [ ! -f .kody-engine/action-state.json ] || [ "$(cat .kody-engine/action-state.json)" = "" ] || [ "$(cat .kody-engine/action-state.json)" = "null" ]; then
+            # Ensure action-state.json is a valid object (not array or empty)
+            if [ ! -f .kody-engine/action-state.json ] || [ "$(cat .kody-engine/action-state.json)" = "[]" ] || [ "$(cat .kody-engine/action-state.json)" = "" ] || [ "$(cat .kody-engine/action-state.json)" = "null" ]; then
+              echo "{}" > .kody-engine/action-state.json
+            fi
+            # Use jq to add the entry: convert to object first if it's an array
+            CONTENT=$(cat .kody-engine/action-state.json)
+            if echo "$CONTENT" | jq -e 'type == "array"' > /dev/null 2>&1; then
               echo "{}" > .kody-engine/action-state.json
             fi
             TMP=$(mktemp)
             cat .kody-engine/action-state.json > "$TMP"
-            jq '."'"$RUNID"'" = {
-              "actionId": "'"$RUNID"'",
-              "runId": "'"$RUNID"'",
-              "sessionId": "'"$SESSION_ID"'",
-              "status": "waiting",
-              "step": "chat",
-              "instructions": ["'"$INITIAL_MESSAGE"'"],
-              "cancel": false,
-              "lastHeartbeat": "'"$TS"'",
-              "createdAt": "'"$TS"'"
-            }' "$TMP" > .kody-engine/action-state.json
-            rm -f TMP
+            jq --arg runid "$RUNID" --arg sess "$SESSION_ID" --arg instr "$INITIAL_MESSAGE" --arg ts "$TS" \
+              'setpath(["\($runid)"]; {
+                "actionId": $runid,
+                "runId": $runid,
+                "sessionId": $sess,
+                "status": "waiting",
+                "step": "chat",
+                "instructions": [$instr],
+                "cancel": false,
+                "lastHeartbeat": $ts,
+                "createdAt": $ts
+              })' "$TMP" > .kody-engine/action-state.json && rm -f "$TMP" || {
+              echo "{}" > .kody-engine/action-state.json
+              rm -f "$TMP"
+            }
           fi
 
           kody-engine chat \
