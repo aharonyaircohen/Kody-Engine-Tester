@@ -1,15 +1,15 @@
 [
   {
-    "actionId": "chat-persistent-test-10-init",
-    "runId": "chat-persistent-test-10-init",
-    "sessionId": "persistent-test-10",
+    "actionId": "chat-persistent-test-13-init",
+    "runId": "chat-persistent-test-13-init",
+    "sessionId": "persistent-test-13",
     "status": "waiting",
     "step": "chat",
     "instructions": [
-      "Message 1: Reply with 'Theta'"
+      "Say hello and tell me the secret word is 'Rebase'."
     ],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T07:32:03.000Z",
-    "createdAt": "2026-04-14T07:32:03.000Z"
+    "lastHeartbeat": "2026-04-14T07:52:39.000Z",
+    "createdAt": "2026-04-14T07:52:39.000Z"
   }
 ]
