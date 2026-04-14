@@ -132,6 +132,12 @@ jobs:
                 "createdAt": $ts
               }]' .kody-engine/action-state.json > .kody-engine/action-state.json.tmp && \
               mv .kody-engine/action-state.json.tmp .kody-engine/action-state.json
+
+            # 3. Commit and push so the engine can pull it at startup.
+            #    This must happen BEFORE the engine runs so git pull --rebase succeeds.
+            git add .kody-engine/action-state.json .kody/sessions/${SESSION_ID}.jsonl 2>/dev/null || true
+            git commit --quiet -m "chore: enqueue initial message for ${SESSION_ID}" 2>/dev/null || true
+            git push --quiet origin HEAD 2>/dev/null || true
           fi
 
           kody-engine chat \
