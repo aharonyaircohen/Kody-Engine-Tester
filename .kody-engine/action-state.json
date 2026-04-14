@@ -1,15 +1,15 @@
 [
   {
-    "actionId": "chat-persistent-test-9-init",
-    "runId": "chat-persistent-test-9-init",
-    "sessionId": "persistent-test-9",
+    "actionId": "chat-persistent-test-10-init",
+    "runId": "chat-persistent-test-10-init",
+    "sessionId": "persistent-test-10",
     "status": "waiting",
     "step": "chat",
     "instructions": [
-      "Message 1: Reply with 'Eta'"
+      "Message 1: Reply with 'Theta'"
     ],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T07:20:52.000Z",
-    "createdAt": "2026-04-14T07:20:52.000Z"
+    "lastHeartbeat": "2026-04-14T07:32:03.000Z",
+    "createdAt": "2026-04-14T07:32:03.000Z"
   }
 ]
