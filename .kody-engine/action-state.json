@@ -1,15 +1,15 @@
 [
   {
-    "actionId": "chat-persistent-test-14-init",
-    "runId": "chat-persistent-test-14-init",
-    "sessionId": "persistent-test-14",
+    "actionId": "chat-persistent-test-15-init",
+    "runId": "chat-persistent-test-15-init",
+    "sessionId": "persistent-test-15",
     "status": "waiting",
     "step": "chat",
     "instructions": [
-      "Say hello and tell me the secret word is 'Reset'."
+      "Say hello and tell me the secret word is 'API'."
     ],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T08:02:38.000Z",
-    "createdAt": "2026-04-14T08:02:38.000Z"
+    "lastHeartbeat": "2026-04-14T08:15:48.000Z",
+    "createdAt": "2026-04-14T08:15:48.000Z"
   }
 ]
