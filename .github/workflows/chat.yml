@@ -112,22 +112,15 @@ jobs:
             echo '{"role":"user","content":"'"$INITIAL_MESSAGE"'","timestamp":"'"$TS"'","toolCalls":[]}' \
               >> .kody/sessions/${SESSION_ID}.jsonl
 
-            # 2. Enqueue in action-state queue so polling loop picks it up
+            # 2. Enqueue in action-state queue so polling loop picks it up.
+            #    The action-state.json file stores an ARRAY of ActionState objects.
             RUNID="chat-${SESSION_ID}-init"
             mkdir -p .kody-engine
-            # Ensure action-state.json is a valid object (not array or empty)
-            if [ ! -f .kody-engine/action-state.json ] || [ "$(cat .kody-engine/action-state.json)" = "[]" ] || [ "$(cat .kody-engine/action-state.json)" = "" ] || [ "$(cat .kody-engine/action-state.json)" = "null" ]; then
-              echo "{}" > .kody-engine/action-state.json
-            fi
-            # Use jq to add the entry: convert to object first if it's an array
-            CONTENT=$(cat .kody-engine/action-state.json)
-            if echo "$CONTENT" | jq -e 'type == "array"' > /dev/null 2>&1; then
-              echo "{}" > .kody-engine/action-state.json
-            fi
-            TMP=$(mktemp)
-            cat .kody-engine/action-state.json > "$TMP"
+            # Always write as a valid array (reset if corrupt)
+            echo "[]" > .kody-engine/action-state.json
+            # Use jq to append an entry to the array
             jq --arg runid "$RUNID" --arg sess "$SESSION_ID" --arg instr "$INITIAL_MESSAGE" --arg ts "$TS" \
-              'setpath(["\($runid)"]; {
+              '. + [{
                 "actionId": $runid,
                 "runId": $runid,
                 "sessionId": $sess,
@@ -137,10 +130,8 @@ jobs:
                 "cancel": false,
                 "lastHeartbeat": $ts,
                 "createdAt": $ts
-              })' "$TMP" > .kody-engine/action-state.json && rm -f "$TMP" || {
-              echo "{}" > .kody-engine/action-state.json
-              rm -f "$TMP"
-            }
+              }]' .kody-engine/action-state.json > .kody-engine/action-state.json.tmp && \
+              mv .kody-engine/action-state.json.tmp .kody-engine/action-state.json
           fi
 
           kody-engine chat \
