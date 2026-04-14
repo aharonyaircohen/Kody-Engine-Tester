@@ -16,9 +16,12 @@
     "sessionId": "two-msg-test",
     "status": "waiting",
     "step": "chat",
-    "instructions": [],
+    "instructions": [
+      "The secret word is \"Bidirectional\". Remember it.",
+      "The secret word is \"Bidirectional\". What was the secret word I told you?"
+    ],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T12:26:00.000Z",
+    "lastHeartbeat": "2026-04-14T12:30:00.000Z",
     "createdAt": "2026-04-14T12:23:32.315Z"
   }
 ]
