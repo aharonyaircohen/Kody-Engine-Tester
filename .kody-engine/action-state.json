@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "actionId": "chat-persistent-test-9-init",
+    "runId": "chat-persistent-test-9-init",
+    "sessionId": "persistent-test-9",
+    "status": "waiting",
+    "step": "chat",
+    "instructions": [
+      "Message 1: Reply with 'Eta'"
+    ],
+    "cancel": false,
+    "lastHeartbeat": "2026-04-14T07:20:52.000Z",
+    "createdAt": "2026-04-14T07:20:52.000Z"
+  }
+]
