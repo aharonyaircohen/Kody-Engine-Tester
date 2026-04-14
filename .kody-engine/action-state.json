@@ -1,15 +1,13 @@
 [
   {
-    "actionId": "chat-persistent-test-19-init",
-    "runId": "chat-persistent-test-19-init",
+    "runId": "chat-persistent-test-19-1776164838675",
+    "actionId": "chat-persistent-test-19-1776164838675",
     "sessionId": "persistent-test-19",
     "status": "waiting",
     "step": "chat",
-    "instructions": [
-      "Say hello and tell me the secret word is 'Correct'."
-    ],
+    "instructions": [],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T11:07:17.000Z",
-    "createdAt": "2026-04-14T11:07:17.000Z"
+    "lastHeartbeat": "2026-04-14T11:07:26.153Z",
+    "createdAt": "2026-04-14T11:07:26.153Z"
   }
 ]
