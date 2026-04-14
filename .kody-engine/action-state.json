@@ -16,9 +16,12 @@
     "sessionId": "multi-msg-1776172244",
     "status": "waiting",
     "step": "chat",
-    "instructions": [],
+    "instructions": [
+      "The secret word is Orchestration. What was the secret word I told you?"
+    ],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T13:11:59.685Z",
+    "lastHeartbeat": "2026-04-14T13:20:00.000Z",
     "createdAt": "2026-04-14T13:11:59.685Z"
   }
 ]
+
