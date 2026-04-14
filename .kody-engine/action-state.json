@@ -1,15 +1,15 @@
 [
   {
-    "actionId": "chat-persistent-test-16-init",
-    "runId": "chat-persistent-test-16-init",
-    "sessionId": "persistent-test-16",
+    "actionId": "chat-persistent-test-17-init",
+    "runId": "chat-persistent-test-17-init",
+    "sessionId": "persistent-test-17",
     "status": "waiting",
     "step": "chat",
     "instructions": [
-      "Say hello and tell me the secret word is 'PathFix'."
+      "Say hello and tell me the secret word is 'Fixed'."
     ],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T08:29:53.000Z",
-    "createdAt": "2026-04-14T08:29:53.000Z"
+    "lastHeartbeat": "2026-04-14T09:25:49.000Z",
+    "createdAt": "2026-04-14T09:25:49.000Z"
   }
 ]
