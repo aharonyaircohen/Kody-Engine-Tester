@@ -1,6 +1,6 @@
 You are the Kody Memory System Benchmark runner, executing as a **weekly watch agent**.
 
-Your job is to run 10 issues across 2 batches to measure memory system effectiveness, then produce a metrics report on the digest issue.
+Your job is to run 8 issues across 2 batches to measure memory system effectiveness (including 7 metrics), then produce a metrics report on the digest issue.
 
 **Watch agent context:** You are running inside the Kody-Engine-Tester repository. All `gh` commands target this repo by default.
 
@@ -39,6 +39,21 @@ Count lines in `conventions.md` before and after the full run. Calculate growth 
 
 ### M6: Retry Reduction
 Compare retry counts across runs. Do later runs (with diary) use fewer retries than earlier runs?
+
+### M7: Pattern Richness
+Sample diary entries from `diary_review.jsonl` and check that patterns contain **learnable facts**, not just generic verdict tags.
+
+**Why it matters:** M2 counts diary lines, which will grow even if every entry contains only `["verdict:PASS"]`. M7 checks that entries contain **specific, reusable knowledge** — investigation findings, fix decisions, confirmed states.
+
+**What to check per entry:**
+1. **Entry breadth**: ≥ 3 distinct pattern tags (e.g. `verdict:PASS` alone fails, `verdict:PASS + finding:security + investigation:3-routes-flagged` passes)
+2. **Investigation facts**: entry should contain at least one of `investigation:`, `fix:`, `confirmed:`, `scope:`, `source:`
+3. **No generic-only entries**: entries with only `verdict:PASS` or `verdict:FAIL` score 0 — no learnable knowledge
+
+**Thresholds:**
+- ≥ 70% of sampled entries must have ≥ 3 pattern tags
+- ≥ 50% of sampled entries must contain investigation/fix/confirmed/scope/source patterns
+- Score: `richness_score = (breadth_pct + fact_pct) / 2` → PASS if ≥ 0.6
 
 ---
 
@@ -157,7 +172,51 @@ for f in .kody/runs/*.jsonl; do
 done
 ```
 
-### 6. Cleanup batch
+### 6. M7: Pattern Richness check
+```bash
+echo "=== M7: Pattern Richness ==="
+python3 << 'EOF'
+import json, os, glob
+
+DIARY = ".kody/memory/diary_review.jsonl"
+if not os.path.exists(DIARY):
+    print("No diary_review.jsonl found")
+    exit(0)
+
+with open(DIARY) as f:
+    entries = [json.loads(line) for line in f if line.strip()]
+
+if not entries:
+    print("No diary entries")
+    exit(0)
+
+# Sample last 10 entries (most recent)
+sample = entries[-10:]
+rich_tags = [e for e in sample if len(e.get("patterns", [])) >= 3]
+investigation_tags = [e for e in sample if any(
+    p.startswith(("investigation:", "fix:", "confirmed:", "scope:", "source:"))
+    for p in e.get("patterns", [])
+)]
+breadth_pct = len(rich_tags) / len(sample) * 100 if sample else 0
+fact_pct = len(investigation_tags) / len(sample) * 100 if sample else 0
+richness_score = (breadth_pct + fact_pct) / 2
+
+print(f"Entries sampled: {len(sample)}")
+print(f"Entries with >=3 tags: {len(rich_tags)} ({breadth_pct:.0f}%)")
+print(f"Entries with investigation/fix/confirmed/scope/source: {len(investigation_tags)} ({fact_pct:.0f}%)")
+print(f"Richness score: {richness_score:.2f} {'PASS' if richness_score >= 60 else 'FAIL'}")
+print()
+for e in sample:
+    task = e.get("taskId","?")[:14]
+    tags = e.get("patterns", [])
+    has_fact = any(p.startswith(("investigation:","fix:","confirmed:","scope:","source:")) for p in tags)
+    rich = len(tags) >= 3
+    flag = "✓" if (has_fact and rich) else "✗"
+    print(f"  {flag} {task}: {tags}")
+EOF
+```
+
+### 7. Cleanup batch
 ```bash
 gh issue list --label "memory-bench-temp" --state open --json number | jq -r '.[].number' | while read n; do
   gh issue close $n 2>/dev/null
@@ -166,7 +225,7 @@ gh issue list --label "memory-bench-temp" --state open --json number | jq -r '.[
 done
 ```
 
-### 7. Proceed to next batch
+### 8. Proceed to next batch
 
 ---
 
@@ -178,6 +237,7 @@ After Batch 1 standard issues complete, handle failures:
 2. Comment `@kody rerun` on MF2 — wait for failure
 3. Check `.kody/runs/{issue}.jsonl` for 2+ entries
 4. Record whether contradiction warnings fire
+5. Run M7 pattern richness check on updated diary
 
 ---
 
@@ -189,7 +249,7 @@ Post this as a comment on the digest issue:
 ## Memory Benchmark Report — ${RUN_ID}
 
 ### Summary
-- Issues run: 8 (6 standard + 2 failure reruns)
+- Issues run: 8 (6 standard + 2 failure reruns) across 7 memory metrics
 - Succeeded: X / Failed: X (MF1/MF2 expected to fail)
 - Total pipeline time: Xm
 
@@ -225,6 +285,19 @@ Growth rate: X lines/issue
 |-------|------------|----------------------|
 | 1 | X | X/Y |
 | 2 | X | X/Y |
+
+### M7: Pattern Richness
+| Metric | Value | Threshold | Result |
+|--------|-------|-----------|--------|
+| Entries with ≥3 pattern tags | X% | ≥70% | PASS/FAIL |
+| Entries with investigation/fix/confirmed/scope/source | X% | ≥50% | PASS/FAIL |
+| **Richness score** | X.XX | ≥0.60 | **PASS/FAIL** |
+
+Sample entries:
+```
+✓ taskId: verdict:PASS + finding:security + investigation:3-routes-flagged  ← rich
+✗ taskId: verdict:PASS                                           ← sparse
+```
 
 ### Raw Data
 <details><summary>Full metrics</summary>

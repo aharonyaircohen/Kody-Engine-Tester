@@ -1,6 +1,6 @@
 {
   "name": "memory-bench",
-  "description": "Memory system benchmark — runs 20+ varied issues to measure compression savings, diary accumulation, room scoping, contradiction detection, and dedup effectiveness",
+  "description": "Memory system benchmark — runs 8 issues across 2 batches to measure 7 memory metrics: token compression (M1), diary growth (M2), room scoping (M3), contradiction detection (M4), dedup effectiveness (M5), retry reduction (M6), and pattern richness (M7)",
   "cron": "0 4 * * SUN",
   "reportOnFailure": true,
   "timeoutMs": 7200000
