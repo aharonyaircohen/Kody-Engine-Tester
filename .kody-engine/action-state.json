@@ -1,24 +1,15 @@
 [
   {
-    "actionId": "chat-persistent-test-20-init",
-    "runId": "chat-persistent-test-20-init",
-    "sessionId": "persistent-test-20",
+    "actionId": "chat-multi-msg-test-init",
+    "runId": "chat-multi-msg-test-init",
+    "sessionId": "multi-msg-test",
     "status": "waiting",
     "step": "chat",
-    "instructions": [],
+    "instructions": [
+      "The secret word is 'Orchestration'. Remember it."
+    ],
     "cancel": false,
-    "lastHeartbeat": "2026-04-14T11:17:57.000Z",
-    "createdAt": "2026-04-14T11:17:57.000Z"
-  },
-  {
-    "runId": "chat-persistent-test-20-1776165478496",
-    "actionId": "chat-persistent-test-20-1776165478496",
-    "sessionId": "persistent-test-20",
-    "status": "waiting",
-    "step": "chat",
-    "instructions": [],
-    "cancel": false,
-    "lastHeartbeat": "2026-04-14T11:18:06.016Z",
-    "createdAt": "2026-04-14T11:18:06.016Z"
+    "lastHeartbeat": "2026-04-14T12:00:20.000Z",
+    "createdAt": "2026-04-14T12:00:20.000Z"
   }
 ]
