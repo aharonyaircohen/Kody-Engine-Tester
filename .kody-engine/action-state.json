@@ -11,5 +11,16 @@
     "cancel": false,
     "lastHeartbeat": "2026-04-14T13:11:50.000Z",
     "createdAt": "2026-04-14T13:11:50.000Z"
+  },
+  {
+    "runId": "chat-multi-msg-1776172244-1776172311319",
+    "actionId": "chat-multi-msg-1776172244-1776172311319",
+    "sessionId": "multi-msg-1776172244",
+    "status": "waiting",
+    "step": "chat",
+    "instructions": [],
+    "cancel": false,
+    "lastHeartbeat": "2026-04-14T13:11:59.685Z",
+    "createdAt": "2026-04-14T13:11:59.685Z"
   }
 ]
