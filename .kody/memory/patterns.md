@@ -1,4 +1,4 @@
-## LearnHub LMS Design Patterns
+# LearnHub LMS Design Patterns
 
 ### Creational Patterns
 

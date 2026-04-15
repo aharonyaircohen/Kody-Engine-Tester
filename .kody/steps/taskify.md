@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -101,5 +121,31 @@ Guidelines:
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+
+{{TASK_CONTEXT}}
+
+## Repo Patterns — Real code examples from this repo that demonstrate the patterns to follow
+
+- **Service interface pattern**: `src/services/gradebook.ts:15` defines `GradebookServiceDeps` interface with all injected deps; service constructor accepts typed deps object
+- **Route handler with auth**: `src/app/api/notes/route.ts` uses `withAuth` HOC and calls service layer; input validated via `src/validation/` schemas
+- **Collection schema**: `src/collections/users.ts` uses Payload's chained schema builder with `email`, `password`, `role` fields; hooks defined inline
+- **Error handling**: `src/app/api/quizzes/[id]/submit/route.ts:22` uses try-catch with `Result.err()` for grading failures rather than throwing
+
+## Improvement Areas — Gaps or anti-patterns found in the codebase
+
+- **`src/auth/user-store.ts:8`**: Uses `crypto.createHash('sha256')` for password storage — AuthService (PBKDF2) should be preferred; both stores coexist
+- **`src/app/(frontend)/dashboard/page.tsx:45`**: `as unknown as` type cast bypasses TypeScript; replace with proper type guard or `Result` type from `src/utils/result.ts`
+- **No transaction boundaries**: `src/services/enrollments.ts` performs multiple Payload operations without explicit transaction; failure mid-operation leaves partial state
+- **Missing validation layer**: `src/collections/notes.ts` lacks input sanitization despite storing user-generated HTML (use `src/security/sanitizers.ts`)
+
+## Acceptance Criteria — A concrete checklist for "done" in this repo
+
+- [ ] Task touches Payload collections via SDK (`src/collections/*.ts`) or service layer (`src/services/*.ts`) — never raw SQL
+- [ ] Auth-protected routes use `withAuth` HOC from `src/auth/withAuth.ts`; JWT via `JwtService`
+- [ ] New services define typed dependency interfaces (e.g., `ServiceNameDeps`) and accept deps via constructor
+- [ ] Error handling uses `Result<T, E>` type from `src/utils/result.ts` instead of throwing
+- [ ] User input sanitized with `sanitizeHtml`/`sanitizeSql` from `src/security/sanitizers.ts`
+- [ ] Tests co-located with source (`*.test.ts` next to `*.ts`) or in `tests/int/` for integration specs
+- [ ] Role checks use `checkRole` from `src/auth/withAuth.ts`; do not mix `UserStore.UserRole` with `RbacRole`
 
 {{TASK_CONTEXT}}

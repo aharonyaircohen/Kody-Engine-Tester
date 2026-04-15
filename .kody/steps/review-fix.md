@@ -230,14 +230,18 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - **Validation at API boundaries** (`src/validation/`): Zod schemas validate input before service calls — see `src/api/auth/login.ts` for pattern
 - **Service layer dependency injection** (`src/services/GradebookService.ts`): Constructor accepts dep interfaces (`GradebookServiceDeps`), not concrete types
 - **Type-safe DI container** (`src/utils/di-container.ts`): Register with `Container.register(token, factory)` using branded token types
+- **Contacts store pattern** (`src/collections/contacts.ts`): Hybrid repository with `getById|create|update|delete|query` methods on `contactsStore`
+- **Certificate numbering** (`src/collections/certificates.ts`): Format `LH-{courseId}-{year}-{seq}`
+- **Strategy pattern for logging** (`src/middleware/request-logger.ts`): Log format and level switch via strategy objects
 
 ## Improvement Areas
 
-- **Type assertion abuse** (`src/app/(frontend)/dashboard/page.tsx:XX`): Uses `as unknown as` casts — replace with proper type guards or branded types
+- **Type assertion abuse** (`src/app/(frontend)/dashboard/page.tsx`): Uses `as unknown as` casts — replace with proper type guards or branded types
 - **Dual auth systems**: `UserStore` in `src/auth/user-store.ts` (SHA-256) vs `AuthService` in `src/auth/auth-service.ts` (PBKDF2) — only fix new code paths, don't unify
 - **Role enum mismatch**: `UserStore.UserRole` ('admin'|'user'|'guest'|'student'|'instructor') vs `RbacRole` ('admin'|'editor'|'viewer') — avoid new code relying on either
 - **N+1 query risk** in `src/app/(frontend)/dashboard/page.tsx`: Lesson enrollments fetched individually — use Payload's `depth` param or batch loader
 - **Missing error wrapping**: Service methods in `src/services/` return raw errors — wrap with `Result.err()` for consistent error handling
+- **Inconsistent non-critical fallbacks**: `src/pages/auth/profile.tsx:27` uses `.catch(() => {})` — apply consistently but only for truly non-critical paths
 
 ## Acceptance Criteria
 
@@ -251,5 +255,7 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - [ ] Changes follow layered architecture: Route → Auth → Service → Repository
 - [ ] No hardcoded secrets or config values — use environment variables
 - [ ] Zod validation schemas used for all new API input validation
+- [ ] Sanitize user input with `src/security/sanitizers.ts` (sanitizeHtml, sanitizeSql, sanitizeUrl)
+- [ ] Service constructors accept dep interfaces, not concrete Payload types
 
 {{TASK_CONTEXT}}
