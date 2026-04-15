@@ -5,9 +5,7 @@
     "sessionId": "chat-live-1776275076",
     "status": "waiting",
     "step": "chat",
-    "instructions": [
-      "hello"
-    ],
+    "instructions": [],
     "cancel": false,
     "lastHeartbeat": "2026-04-15T17:45:07.000Z",
     "createdAt": "2026-04-15T17:45:07.000Z"
