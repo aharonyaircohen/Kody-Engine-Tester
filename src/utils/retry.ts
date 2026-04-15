@@ -6,6 +6,12 @@ export interface RetryOptions {
   shouldRetry?: (error: Error) => boolean
 }
 
+export interface RetryWithBackoffOptions {
+  maxAttempts?: number
+  initialDelay?: number
+  backoffMultiplier?: number
+}
+
 // TODO: Add circuit breaker pattern to prevent cascading failures
 export async function retry<T>(
   fn: () => Promise<T>,
@@ -36,6 +42,36 @@ export async function retry<T>(
       }
 
       const delay = Math.min(initialDelay * Math.pow(backoffFactor, attempt), maxDelay)
+      await new Promise((resolve) => setTimeout(resolve, delay))
+    }
+  }
+
+  throw lastError!
+}
+
+export async function retryWithBackoff<T>(
+  fn: () => Promise<T>,
+  options: RetryWithBackoffOptions = {}
+): Promise<T> {
+  const {
+    maxAttempts = 3,
+    initialDelay = 1000,
+    backoffMultiplier = 2,
+  } = options
+
+  let lastError: Error
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    try {
+      return await fn()
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error))
+
+      if (attempt === maxAttempts - 1) {
+        throw lastError
+      }
+
+      const delay = initialDelay * Math.pow(backoffMultiplier, attempt)
       await new Promise((resolve) => setTimeout(resolve, delay))
     }
   }

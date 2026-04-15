@@ -1,0 +1,7 @@
+The implementation is complete. I've added the `retryWithBackoff` function to `src/utils/retry.ts` with:
+
+- **`maxAttempts`** (default: 3) - total number of attempts
+- **`initialDelay`** (default: 1000ms) - starting delay before first retry
+- **`backoffMultiplier`** (default: 2) - exponential backoff multiplier
+
+The function is a simpler variant of the existing `retry` function, without `shouldRetry` predicate or `maxDelay` cap as specified in the task.

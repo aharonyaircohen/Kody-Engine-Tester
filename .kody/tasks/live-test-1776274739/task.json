@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "title": "Add retryWithBackoff function to utils/retry.ts",
+  "description": "Add a retryWithBackoff function to src/utils/retry.ts that provides exponential backoff retry logic with configurable maxAttempts (total attempts), initialDelay, and backoffMultiplier. This is a simpler variant of the existing retry function, focused on basic backoff without shouldRetry predicate or maxDelay cap.",
+  "scope": ["src/utils/retry.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/retry.ts:existing retry function uses similar exponential backoff pattern with configurable initialDelay and backoffFactor"
+  ],
+  "questions": []
+}
