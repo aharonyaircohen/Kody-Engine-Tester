@@ -26,6 +26,7 @@
 - `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
 - Playwright `forbidOnly: true` prevents committed `.only()` tests
 - Retries enabled on CI (2x) to reduce flaky failure noise
+- `test-ci.yml` runs a health check on every PR (echo + exit 1 to verify CI setup)
 
 ## Coverage
 

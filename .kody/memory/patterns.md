@@ -10,6 +10,7 @@
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Validation Middleware** (`src/middleware/validation.ts`): Generic `validate(schema, data, target)` function with `FieldDefinition`, `ValidationSchema` for body/query/params validation.
 
 ### Behavioral Patterns
 
@@ -20,7 +21,7 @@
 ### Architectural Layers
 
 ```
-Route Handlers (src/api/*, src/app/*)
+Route Handlers (src/app/*/route.ts, src/api/*)
     ↓
 Auth HOC (src/auth/withAuth.ts) → JWT Service → AuthService
     ↓
@@ -36,12 +37,14 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - **Entry points**: API routes, Next.js pages
 - **Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole`
 - **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`) decouple services from Payload
+- **Validation boundary**: `src/middleware/validation.ts` + Zod schemas in `src/validation/`
 
 ### Reusable Abstractions
 
 - `Container.register<T>(token, factory)` — generic DI
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
+- `validate(schema, data, target)` — generic request validation
 - Zod schemas in `src/validation/` for input validation at API boundaries
 
 ### Anti-Patterns / Inconsistencies

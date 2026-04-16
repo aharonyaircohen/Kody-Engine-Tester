@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -77,29 +97,33 @@ Guidelines:
 
 ## Repo Patterns
 
-- **Utility modules**: Single-function files in `src/utils/` (e.g., `debounce.ts`, `retry.ts`, `flatten.ts`) with co-located `.test.ts` files
-- **Auth HOC**: `src/auth/withAuth.ts` wraps route handlers with JWT validation and RBAC via `checkRole`
-- **Result type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling
-- **DI container**: `src/utils/di-container.ts` with token-based registration and singleton/transient lifecycles
-- **Middleware chain**: `src/middleware/request-logger.ts` and `rate-limiter.ts` use Express-style chainable pattern
-- **Service layer**: `src/services/` (e.g., `GradebookService`, `GradingService`) with typed dependency interfaces like `GradebookServiceDeps`
-- **Payload collections**: `src/collections/*.ts` define data models; avoid direct DB calls, use Payload SDK
+- **DI Container**: `src/utils/di-container.ts` — token-based registration with singleton/transient lifecycles; services use typed dep interfaces (e.g., `GradebookServiceDeps<T>`)
+- **Auth HOC**: `src/auth/withAuth.ts` — wraps route handlers with JWT validation and `checkRole` RBAC
+- **Result Type**: `src/utils/result.ts` — `Result<T, E>` discriminated union for explicit error handling
+- **Chainable Middleware**: `src/middleware/request-logger.ts`, `src/middleware/rate-limiter.ts` — Express-style chainable pattern for Next.js
+- **Validation Middleware**: `src/middleware/validation.ts` — generic `validate(schema, data, target)` with `FieldDefinition`, `ValidationSchema`
+- **Service Layer**: `src/services/GradebookService`, `src/services/GradingService` — business logic decoupled via dependency interfaces
+- **Repository/Store**: `src/collections/contacts.ts` — exposes `contactsStore` with `getById|create|update|delete|query`
+- **Mini-Zod Schema**: `src/utils/schema.ts` — `Schema`, `StringSchema`, `NumberSchema`, `BooleanSchema`, `SchemaError`, `Infer<T>`
 
 ## Improvement Areas
 
 - **Dual auth systems**: `src/auth/user-store.ts` (SHA-256) coexists with `src/auth/auth-service.ts` (PBKDF2) — inconsistent password hashing; prefer AuthService
-- **Role mismatch**: `UserStore.UserRole` uses `'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole` uses `'admin'|'editor'|'viewer'` — no alignment
+- **Role mismatch**: `UserStore.UserRole` (`'admin'|'user'|'guest'|'student'|'instructor'`) vs `RbacRole` (`'admin'|'editor'|'viewer'`) — no alignment
 - **Type safety**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts instead of proper type guards
 - **N+1 risk**: Dashboard page batches lesson fetches but other pages may miss optimization opportunities
+- **Dual ORM**: `src/models/` uses Drizzle ORM while `src/collections/` uses Payload SDK — inconsistent data access patterns
 
 ## Acceptance Criteria
 
-- [ ] Scope contains exact file paths from Glob/Grep discovery
+- [ ] Scope contains exact file paths discovered via Glob/Grep
 - [ ] Title is actionable (starts with verb: Add, Fix, Refactor, Update)
 - [ ] Description captures intent and acceptance criteria from task
 - [ ] Risk level matches scope size and impact (low/medium/high heuristics)
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+- [ ] Assumptions section (if present) reflects actual codebase state
+- [ ] task_type is one of: feature, bugfix, refactor, docs, chore
 
 {{TASK_CONTEXT}}
