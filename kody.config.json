@@ -15,44 +15,23 @@
     "repo": "Kody-Engine-Tester"
   },
   "agent": {
-    "provider": "minimax",
+    "provider": "anthropic",
     "modelMap": {
-      "cheap": "MiniMax-M2.7-highspeed",
-      "mid": "MiniMax-M2.7-highspeed",
-      "strong": "MiniMax-M2.7-highspeed"
+      "cheap": "claude-haiku-4-5-20251001",
+      "mid": "claude-sonnet-4-6",
+      "strong": "claude-opus-4-6"
     }
+  },
+  "mcp": {
+    "enabled": true,
+    "servers": {},
+    "stages": ["build", "review"]
   },
   "devServer": {
     "command": "pnpm dev",
     "url": "http://localhost:3000"
   },
-  "mcp": {
-    "enabled": true,
-    "servers": {
-      "filesystem": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "@modelcontextprotocol/server-filesystem",
-          "./"
-        ],
-        "env": {}
-      }
-    },
-    "stages": [
-      "build",
-      "verify",
-      "review",
-      "review-fix"
-    ]
-  },
   "watch": {
-    "enabled": true,
-    "activityLog": 369,
-    "model": "MiniMax-M2.7-highspeed",
-    "provider": "minimax"
-  },
-  "decompose": {
-    "enabled": false
+    "enabled": true
   }
 }
