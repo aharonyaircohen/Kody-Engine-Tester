@@ -105,7 +105,7 @@ jobs:
           node-version: 22
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/engine@0.1.126-test.0
+        run: npm install -g @kody-ade/engine
 
       - name: Validate author
         id: safety
@@ -191,7 +191,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/engine@0.1.126-test.0
+        run: npm install -g @kody-ade/engine
 
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
@@ -503,7 +503,7 @@ jobs:
         run: kody-engine ci-export-secrets
 
       - name: Install kody-engine
-        run: npm install -g @kody-ade/engine@0.1.126-test.0
+        run: npm install -g @kody-ade/engine
 
       - name: Run chat session
         env:
@@ -581,7 +581,7 @@ jobs:
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Install Kody Engine
-        run: npm install -g @kody-ade/engine@0.1.126-test.0
+        run: npm install -g @kody-ade/engine
 
       - name: Install LiteLLM proxy
         if: hashFiles('.kody/watch/agents/*/agent.json') != ''
