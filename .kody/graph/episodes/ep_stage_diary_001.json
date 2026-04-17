@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2433-260417-234853",
+  "source": "stage_diary",
+  "taskId": "2433-260417-234853",
+  "createdAt": "2026-04-17T23:59:39.751Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Verification-only tasks are classified as 'chore' with risk 'low' and require no file modifications.\",\"scope\":\"task.md classification\"},{\"kind\":\"lesson\",\"text\":\"Multi-step pipeline tests that depend on a prior stage completing can be chained via a nohup monitor — no manual intervention needed after step 1 fires.\",\"scope\":\"agent.md / test-suite\"},{\"kind\":\"decision\",\"text\":\"The --from flag was pre-implemented; this stage only confirmed it in production by observing 'Resuming from: build' in logs.\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

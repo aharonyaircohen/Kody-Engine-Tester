@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_taskmd_classification_674226406323": {
+      "id": "conventions_taskmd_classification_674226406323",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "task.md classification",
+      "content": "Verification-only tasks are classified as 'chore' with risk 'low' and require no file modifications.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:59:39.756Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2433-260417-234853",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_agentmd__testsuite_674228415278": {
+      "id": "facts_agentmd__testsuite_674228415278",
+      "type": "facts",
+      "hall": "facts",
+      "room": "agent.md / test-suite",
+      "content": "Multi-step pipeline tests that depend on a prior stage completing can be chained via a nohup monitor — no manual intervention needed after step 1 fires.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:59:39.758Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2433-260417-234853",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_674229806969": {
+      "id": "facts_kody_pipeline_674229806969",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline",
+      "content": "The --from flag was pre-implemented; this stage only confirmed it in production by observing 'Resuming from: build' in logs.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:59:39.759Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2433-260417-234853",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
