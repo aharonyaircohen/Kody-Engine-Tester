@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2288-260417-184341",
+  "source": "stage_diary",
+  "taskId": "2288-260417-184341",
+  "createdAt": "2026-04-17T19:11:02.921Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The verify.md overall result can show FAIL due to pre-existing errors in unrelated files outside the diff, even when the target task passes all checks.\",\"scope\":\"verify-taskify.ts\"},{\"kind\":\"lesson\",\"text\":\"Unused variables (e.g. issueUrlPattern, issueNumbers) should be prefixed with _ or removed to avoid ESLint noise, even when they have no behavioral impact.\",\"scope\":\"verify-taskify.ts\"},{\"kind\":\"decision\",\"text\":\"Writing the plan file directly (without subagents or redundant exploration) avoids permission-prompt failures that plague plan-file write attempts.\",\"scope\":\"plan.md\"},{\"kind\":\"convention\",\"text\":\"kody taskify sub-issues use priority:high/medium/low labels and include ## Context, ## Acceptance Criteria, ## Test Strategy body sections.\",\"scope\":\"kody taskify\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2288-260417-184341",
+  "source": "stage_diary",
+  "taskId": "2288-260417-184341",
+  "createdAt": "2026-04-17T19:12:38.557Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"When a plan file can't be written to disk (permission prompts), submit the plan as text instead — it still executes normally.\",\"scope\":\"pipeline/plan.md\"},{\"kind\":\"gotcha\",\"text\":\"Unused variables (e.g., `issueUrlPattern`, `issueNumbers`) declared but not read will cause ESLint failures in verify scripts — prefix with `_` to suppress.\",\"scope\":\"verify-taskify.ts\"},{\"kind\":\"decision\",\"text\":\"Use Kahn's algorithm for topological ordering verification — clean, O(V+E), and unambiguous compared to manual comparisons.\",\"scope\":\"topo order verification\"},{\"kind\":\"decision\",\"text\":\"Run `kody taskify` in local mode (no MCP/GH credentials required) and read from `taskify-result.json` for deterministic scripted verification.\",\"scope\":\"kody taskify verification\"},{\"kind\":\"lesson\",\"text\":\"Verify script failures in `verify.md` can be driven by pre-existing errors in unrelated files — isolate verification to only the target output.\",\"scope\":\"",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

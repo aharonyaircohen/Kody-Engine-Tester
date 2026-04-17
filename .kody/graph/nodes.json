@@ -80,6 +80,118 @@
         "kind:decision"
       ],
       "confidence": 0.7
+    },
+    "thoughts_verifytaskifyts_1663218073786": {
+      "id": "thoughts_verifytaskifyts_1663218073786",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "verify-taskify.ts",
+      "content": "The verify.md overall result can show FAIL due to pre-existing errors in unrelated files outside the diff, even when the target task passes all checks.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:11:02.924Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2288-260417-184341",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_verifytaskifyts_1663219727030": {
+      "id": "facts_verifytaskifyts_1663219727030",
+      "type": "facts",
+      "hall": "facts",
+      "room": "verify-taskify.ts",
+      "content": "Unused variables (e.g. issueUrlPattern, issueNumbers) should be prefixed with _ or removed to avoid ESLint noise, even when they have no behavioral impact.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:11:02.926Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2288-260417-184341",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_planmd_1663221262363": {
+      "id": "facts_planmd_1663221262363",
+      "type": "facts",
+      "hall": "facts",
+      "room": "plan.md",
+      "content": "Writing the plan file directly (without subagents or redundant exploration) avoids permission-prompt failures that plague plan-file write attempts.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:11:02.928Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2288-260417-184341",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelineplanmd_1758853616216": {
+      "id": "facts_pipelineplanmd_1758853616216",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/plan.md",
+      "content": "When a plan file can't be written to disk (permission prompts), submit the plan as text instead — it still executes normally.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:12:38.560Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2288-260417-184341",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_verifytaskifyts_1758855196837": {
+      "id": "thoughts_verifytaskifyts_1758855196837",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "verify-taskify.ts",
+      "content": "Unused variables (e.g., `issueUrlPattern`, `issueNumbers`) declared but not read will cause ESLint failures in verify scripts — prefix with `_` to suppress.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:12:38.561Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2288-260417-184341",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_topo_order_verification_1758856648435": {
+      "id": "facts_topo_order_verification_1758856648435",
+      "type": "facts",
+      "hall": "facts",
+      "room": "topo order verification",
+      "content": "Use Kahn's algorithm for topological ordering verification — clean, O(V+E), and unambiguous compared to manual comparisons.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:12:38.563Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2288-260417-184341",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_verifytaskifyts_1758858605087": {
+      "id": "facts_verifytaskifyts_1758858605087",
+      "type": "facts",
+      "hall": "facts",
+      "room": "verify-taskify.ts",
+      "content": "Verify script failures in `verify.md` can be driven by pre-existing errors in unrelated files — isolate verification to only the target output.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:12:38.565Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2288-260417-184341",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
     }
   }
 }
