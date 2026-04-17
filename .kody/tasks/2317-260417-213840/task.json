@@ -1,0 +1,9 @@
+{
+"task_type": "chore",
+"title": "Append memory supersede test note to README",
+"description": "Append one new short line to README.md to document that this run (live-test-0.4.1) tests Kody Engine Lite 0.4.1 memory supersede, citation, and confidence features end-to-end.",
+"scope": ["README.md"],
+"risk_level": "low",
+"existing_patterns": [],
+"questions": []
+}
