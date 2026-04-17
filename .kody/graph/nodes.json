@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_pipelinesandbox_643318131285": {
+      "id": "thoughts_pipelinesandbox_643318131285",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline/sandbox",
+      "content": "Agent is sandboxed to task directory only (/.kody/tasks/<id>/) and cannot access parent dirs, src/, or package.json — Explore agents also fail due to same model restriction.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:11:15.869Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2318-260417-185319",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_nextjs_643319548335": {
+      "id": "conventions_nextjs_643319548335",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "nextjs",
+      "content": "Chart/table components in Next.js server-component dashboards must use 'use client' directive even if parent is a server component.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:11:15.871Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2318-260417-185319",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_frontend_643321547044": {
+      "id": "conventions_frontend_643321547044",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "frontend",
+      "content": "No chart/table libraries pre-installed (no recharts, chart.js, tanstack-table) — must install dependency first before using.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:11:15.873Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2318-260417-185319",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_build_643322799259": {
+      "id": "facts_build_643322799259",
+      "type": "facts",
+      "hall": "facts",
+      "room": "build",
+      "content": "The build stage should run `npm install` and `npm run build` after code changes to verify compilation succeeds; skipping this means build errors go undetected.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:11:15.874Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2318-260417-185319",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2318-260417-185319",
+  "source": "stage_diary",
+  "taskId": "2318-260417-185319",
+  "createdAt": "2026-04-17T19:11:15.864Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Agent is sandboxed to task directory only (/.kody/tasks/<id>/) and cannot access parent dirs, src/, or package.json — Explore agents also fail due to same model restriction.\",\"scope\":\"pipeline/sandbox\"},{\"kind\":\"convention\",\"text\":\"Chart/table components in Next.js server-component dashboards must use 'use client' directive even if parent is a server component.\",\"scope\":\"nextjs\"},{\"kind\":\"convention\",\"text\":\"No chart/table libraries pre-installed (no recharts, chart.js, tanstack-table) — must install dependency first before using.\",\"scope\":\"frontend\"},{\"kind\":\"lesson\",\"text\":\"The build stage should run `npm install` and `npm run build` after code changes to verify compilation succeeds; skipping this means build errors go undetected.\",\"scope\":\"build\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
