@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_pipeline_890850275513": {
+      "id": "facts_pipeline_890850275513",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "Chore tasks can still have meaningful build verification — the build stage here confirmed decompose creates worktrees and triggers parallel builds even when source files pre-exist.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:57:18.008Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2291-260417-184347",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_890851563880": {
+      "id": "conventions_kody_890851563880",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody",
+      "content": "The decompose pipeline requires complexity_score >= 4 and decomposable: true to trigger sub-task splitting; these thresholds are enforced in status.json.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:57:18.009Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2291-260417-184347",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_890853194610": {
+      "id": "conventions_kody_890853194610",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody",
+      "content": "Decompose expects 2+ sub-tasks, parallel builds, and a PR body with a 'Decomposed Implementation' section as part of its verification contract.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:57:18.011Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2291-260417-184347",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_890854585211": {
+      "id": "thoughts_kody_890854585211",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody",
+      "content": "Without prior decompose runs, globbing for decompose log files in the task directory will return nothing — logs only appear after decompose executes.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:57:18.012Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2291-260417-184347",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2291-260417-184347",
+  "source": "stage_diary",
+  "taskId": "2291-260417-184347",
+  "createdAt": "2026-04-17T18:57:18.003Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"Chore tasks can still have meaningful build verification — the build stage here confirmed decompose creates worktrees and triggers parallel builds even when source files pre-exist.\",\"scope\":\"pipeline\"},{\"kind\":\"convention\",\"text\":\"The decompose pipeline requires complexity_score >= 4 and decomposable: true to trigger sub-task splitting; these thresholds are enforced in status.json.\",\"scope\":\"kody\"},{\"kind\":\"convention\",\"text\":\"Decompose expects 2+ sub-tasks, parallel builds, and a PR body with a 'Decomposed Implementation' section as part of its verification contract.\",\"scope\":\"kody\"},{\"kind\":\"gotcha\",\"text\":\"Without prior decompose runs, globbing for decompose log files in the task directory will return nothing — logs only appear after decompose executes.\",\"scope\":\"kody\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
