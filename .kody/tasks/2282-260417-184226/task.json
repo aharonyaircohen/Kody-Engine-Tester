@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Classification complete. The project is a fresh Payload CMS 3.0 blank te",
+  "description": "Classification complete. The project is a fresh Payload CMS 3.0 blank template — no existing `src/` source files at all. The task requires:\n\n- **`src/utils/dateUtils.ts`** — new file with `formatDate(date: Date, locale: string): string` using `Intl.DateTimeFormat`, with JSDoc\n- **`src/utils/dateUtils.test.ts`** — new co-located vitest test file covering multiple locales and edge cases\n\nRisk: **low** (2 new files, no existing code affected). No external dependencies needed — uses the built-in `In",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
