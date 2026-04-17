@@ -1,0 +1,21 @@
+Here's the complete classification based on my analysis of the task:
+
+---
+
+**Task Type:** `chore`
+
+**Title:** Classify test suite digest run-20260417-1832
+
+**Description:** Parse and classify the test suite digest from run-20260417-1832 containing 44 Kody Engine CLI integration tests. The digest shows 20 PASS, 17 FAIL, 7 INCONCLUSIVE, 2 RUNNING, 1 PAUSED across all pipeline stages. No code changes required — this is a pure classification task.
+
+**Scope:** `[".kody/tasks/never/task.md"]`
+
+**Risk Level:** `low`
+
+**Existing Patterns:** `[]`
+
+**Questions:** `[]`
+
+---
+
+**Rationale:** The `never` pipeline is a classification-only task — the entire `task.md` is an existing test suite report to be parsed and categorized. No source files in `src/`, `src/collections/`, `src/auth/`, etc. are affected. The task asks the agent to read the digest and produce a JSON classification, which is a `chore` / `low` risk task with no code modifications.
