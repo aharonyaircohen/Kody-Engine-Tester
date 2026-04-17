@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "hotfix-2418-260417-234714",
+  "source": "stage_diary",
+  "taskId": "hotfix-2418-260417-234714",
+  "createdAt": "2026-04-17T23:52:35.383Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"The reported bug may already be fixed; always verify the actual file state before generating a plan or making changes.\",\"scope\":\"src/utils/helpers.ts\"},{\"kind\":\"convention\",\"text\":\"Kody config (kody.config.json) defines quality commands (typecheck, lint, test) separately from the pipeline stages that consume them.\",\"scope\":\"kody.config.json\"},{\"kind\":\"convention\",\"text\":\"Plans are written to .kody/plans/ with auto-generated names like lively-seeking-clover.md during the build stage.\",\"scope\":\".kody/plans/\"},{\"kind\":\"gotcha\",\"text\":\"Hotfix mode skips tests during verify — do not rely on test results for validation in a hotfix pipeline.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
