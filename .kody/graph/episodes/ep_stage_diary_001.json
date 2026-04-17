@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2306-260417-184459",
+  "source": "stage_diary",
+  "taskId": "2306-260417-184459",
+  "createdAt": "2026-04-17T19:16:19.206Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"For external npm packages (like @kody-ade/engine), verification is done by inspecting the installed CLI binary in node_modules, not by modifying source.\",\"scope\":\"pipeline verification\"},{\"kind\":\"convention\",\"text\":\"Chore tasks (read-only verification) have no build step and no source changes; the implementation is just writing verify.md with PASS/FAIL.\",\"scope\":\"pipeline verification\"},{\"kind\":\"gotcha\",\"text\":\"The compose skip-logic is gated on decomposeState.mergeOutcome === \\\"merged\\\" at line ~18312 in the compiled CLI binary.\",\"scope\":\"@kody compose\"},{\"kind\":\"decision\",\"text\":\"Phase 2 Verify + Review always run after a skipped merge, so retrying compose after failure always resumes from the verify stage.\",\"scope\":\"@kody compose\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

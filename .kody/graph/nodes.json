@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_pipeline_verification_1520739185714": {
+      "id": "facts_pipeline_verification_1520739185714",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline verification",
+      "content": "For external npm packages (like @kody-ade/engine), verification is done by inspecting the installed CLI binary in node_modules, not by modifying source.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:16:19.213Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2306-260417-184459",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_verification_1520740520876": {
+      "id": "conventions_pipeline_verification_1520740520876",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline verification",
+      "content": "Chore tasks (read-only verification) have no build step and no source changes; the implementation is just writing verify.md with PASS/FAIL.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:16:19.214Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2306-260417-184459",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_compose_1520741735084": {
+      "id": "thoughts_kody_compose_1520741735084",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "@kody compose",
+      "content": "The compose skip-logic is gated on decomposeState.mergeOutcome === \"merged\" at line ~18312 in the compiled CLI binary.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:16:19.215Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2306-260417-184459",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_compose_1520743157258": {
+      "id": "facts_kody_compose_1520743157258",
+      "type": "facts",
+      "hall": "facts",
+      "room": "@kody compose",
+      "content": "Phase 2 Verify + Review always run after a skipped merge, so retrying compose after failure always resumes from the verify stage.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:16:19.217Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2306-260417-184459",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_task_classification_1618599251092": {
+      "id": "facts_task_classification_1618599251092",
+      "type": "facts",
+      "hall": "facts",
+      "room": "task classification",
+      "content": "Chore/verification tasks that don't modify source are classified as low-risk and don't require implementation beyond a verdict file",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:17:57.073Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2306-260417-184459",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pnpm_monorepo_1618600859730": {
+      "id": "thoughts_pnpm_monorepo_1618600859730",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pnpm monorepo",
+      "content": "pnpm's node_modules layout uses scoped paths like .pnpm/@kody-ade+engine@0.4.0_*/node_modules/@kody-ade/engine/ — glob patterns needed for path-agnostic lookup",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:17:57.074Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2306-260417-184459",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

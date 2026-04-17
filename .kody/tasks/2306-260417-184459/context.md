@@ -23,3 +23,20 @@ I've written the plan to the plan file. Here's a summary of my findings:
 - `runCompose` (line 18258): Loads `decompose-state.json` and checks `mergeOutcome`
 - Line 18312: `"Compose Phase 1: Merge 
 ...(truncated)
+
+### review (2026-04-17T19:16:10)
+
+
+The plan for P2T29 is ready. It's a **chore** — read-only verification of the `@kody compose` CLI behavior. No source code is introduced or changed.
+
+**Summary of the plan:**
+
+P2T29 is a verification-only task for an external npm package (`@kody-ade/engine`). The `runCompose` function in the CLI binary was confirmed to:
+1. Skip Phase 1 Merge when `decomposeState.mergeOutcome === "merged"` (line 18312)
+2. Always run Phase 2 Verify + Review afterward (line 18314)
+
+The implementation step is simp
+...(truncated)
+
+### review-fix (2026-04-17T19:17:49)
+The plan is ready for your review. The review-fix stage updated `verify.md` with the **PASS** verdict — confirming `@kody compose` skips already-merged branches (Phase 1 skipped when `mergeOutcome === "merged"`, line 18288) and always runs Phase 2 Verify + Review (line 18314), with state persisted via `decompose-state.json`.

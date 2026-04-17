@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2306-260417-184459",
+  "source": "stage_diary",
+  "taskId": "2306-260417-184459",
+  "createdAt": "2026-04-17T19:17:57.070Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"External npm packages can be verified by reading their installed CLI binaries in node_modules rather than modifying source code\",\"scope\":\"verification\"},{\"kind\":\"decision\",\"text\":\"Chore/verification tasks that don't modify source are classified as low-risk and don't require implementation beyond a verdict file\",\"scope\":\"task classification\"},{\"kind\":\"gotcha\",\"text\":\"pnpm's node_modules layout uses scoped paths like .pnpm/@kody-ade+engine@0.4.0_*/node_modules/@kody-ade/engine/ — glob patterns needed for path-agnostic lookup\",\"scope\":\"pnpm monorepo\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
