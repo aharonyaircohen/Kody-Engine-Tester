@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kody_decompose_898626894844": {
+      "id": "thoughts_kody_decompose_898626894844",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "@kody decompose",
+      "content": "ioredis is NOT installed by default; dynamic import() for it fails at sub-task execution time, not planning time.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:18:24.190Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2322-260417-185340",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_decompose_898628736288": {
+      "id": "facts_kody_decompose_898628736288",
+      "type": "facts",
+      "hall": "facts",
+      "room": "@kody decompose",
+      "content": "Decompose catches sub-task failure, runs cleanup, and falls back to runPipeline() automatically — no manual intervention needed.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:18:24.192Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2322-260417-185340",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srccache_898630154268": {
+      "id": "conventions_srccache_898630154268",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/cache",
+      "content": "Cache adapters follow a common base/interface pattern; MemoryCacheAdapter extends the existing Cache class from src/utils/cache.ts.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:18:24.193Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2322-260417-185340",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutilsdicontainerts_898631665413": {
+      "id": "conventions_srcutilsdicontainerts_898631665413",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/di-container.ts",
+      "content": "Cache lifecycle is managed via createToken<T> and DIDisposable from src/utils/di-container.ts.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:18:24.195Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2322-260417-185340",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

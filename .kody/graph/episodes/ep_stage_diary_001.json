@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2322-260417-185340",
+  "source": "stage_diary",
+  "taskId": "2322-260417-185340",
+  "createdAt": "2026-04-17T19:18:24.184Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"ioredis is NOT installed by default; dynamic import() for it fails at sub-task execution time, not planning time.\",\"scope\":\"@kody decompose\"},{\"kind\":\"lesson\",\"text\":\"Decompose catches sub-task failure, runs cleanup, and falls back to runPipeline() automatically — no manual intervention needed.\",\"scope\":\"@kody decompose\"},{\"kind\":\"convention\",\"text\":\"Cache adapters follow a common base/interface pattern; MemoryCacheAdapter extends the existing Cache class from src/utils/cache.ts.\",\"scope\":\"src/cache\"},{\"kind\":\"convention\",\"text\":\"Cache lifecycle is managed via createToken<T> and DIDisposable from src/utils/di-container.ts.\",\"scope\":\"src/utils/di-container.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
