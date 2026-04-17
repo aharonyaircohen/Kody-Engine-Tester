@@ -1,0 +1,15 @@
+{
+  "task_type": "feature",
+  "title": "Add formatDate utility function in dateUtils.ts",
+  "description": "Create a new utility function `formatDate(date: Date, locale: string): string` in `src/utils/dateUtils.ts` using `Intl.DateTimeFormat` for locale-aware date formatting. Add JSDoc documentation and co-located unit tests in `src/utils/dateUtils.test.ts`. Reuse existing test patterns from `src/utils/format-date.test.ts` (vitest with `describe/it/expect`). Note: existing `src/utils/format-date.ts` uses a different signature and `FormatDateOptions` object — this is a separate, simpler utility.",
+  "scope": [
+    "src/utils/dateUtils.ts",
+    "src/utils/dateUtils.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/format-date.ts — uses Intl.DateTimeFormat for locale formatting; dateUtils should reuse the same native `Intl` approach",
+    "src/utils/format-date.test.ts — vitest test structure with `describe/it/expect` to reuse for dateUtils.test.ts"
+  ],
+  "questions": []
+}

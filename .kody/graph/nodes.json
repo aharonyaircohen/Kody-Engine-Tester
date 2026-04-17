@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcutils_516853737525": {
+      "id": "thoughts_srcutils_516853737525",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/utils",
+      "content": "src/utils/ already had format-date.ts with a complex FormatDateOptions object; the new function may need to distinguish itself from the existing implementation or reuse it.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:23:25.048Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2404-260417-231809",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_taskclassification_516855628375": {
+      "id": "facts_taskclassification_516855628375",
+      "type": "facts",
+      "hall": "facts",
+      "room": "task-classification",
+      "content": "For LOW complexity tasks with complete descriptions, no clarification phase is needed — proceed directly to implementation.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:23:25.050Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2404-260417-231809",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
