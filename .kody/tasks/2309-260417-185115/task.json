@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify --complexity low forces 4 stages",
+  "description": "Verify that `@kody --complexity low` logs 'Complexity override: low (not auto-detected)' and runs exactly 4 stages instead of the full 7-stage pipeline (taskify → plan → build → verify → review → review-fix → ship).",
+  "scope": [],
+  "risk_level": "low",
+  "existing_patterns": [".kody/tasks/1305-260410-044024/verify.md — verify.md format using '# Verification Report', '## Result: PASS/FAIL', '## Errors', '## Summary', and '## Raw Output' sections"],
+  "questions": []
+}
