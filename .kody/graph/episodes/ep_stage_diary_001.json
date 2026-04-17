@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2319-260417-185323",
+  "source": "stage_diary",
+  "taskId": "2319-260417-185323",
+  "createdAt": "2026-04-17T19:16:59.901Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"decision\",\"text\":\"Either push outcome is accepted — test validates the retry mechanism exists, not the final push result\",\"scope\":\"test verification\"},{\"kind\":\"convention\",\"text\":\"The Kody Engine CLI is the bundled entry point at node_modules/@kody-ade/engine/dist/bin/cli.js\",\"scope\":\"engine integration\"},{\"kind\":\"lesson\",\"text\":\"For verifying bundled engine behavior, read the bundled dist file directly rather than source; the pushBranch logic is at lines 12817-12836\",\"scope\":\"engine debugging\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

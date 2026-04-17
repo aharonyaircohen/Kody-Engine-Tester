@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "ExitPlanMode is awaiting your approval. Once confirmed, I'll proceed to ",
+  "description": "ExitPlanMode is awaiting your approval. Once confirmed, I'll proceed to write the plan file and execute. Please also grant the Write tool permission when you approve the exit.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_test_verification_1197110049695": {
+      "id": "facts_test_verification_1197110049695",
+      "type": "facts",
+      "hall": "facts",
+      "room": "test verification",
+      "content": "Either push outcome is accepted — test validates the retry mechanism exists, not the final push result",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:16:59.907Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2319-260417-185323",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_engine_integration_1197111775395": {
+      "id": "conventions_engine_integration_1197111775395",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "engine integration",
+      "content": "The Kody Engine CLI is the bundled entry point at node_modules/@kody-ade/engine/dist/bin/cli.js",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:16:59.908Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2319-260417-185323",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_engine_debugging_1197113375120": {
+      "id": "facts_engine_debugging_1197113375120",
+      "type": "facts",
+      "hall": "facts",
+      "room": "engine debugging",
+      "content": "For verifying bundled engine behavior, read the bundled dist file directly rather than source; the pushBranch logic is at lines 12817-12836",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:16:59.910Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2319-260417-185323",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
