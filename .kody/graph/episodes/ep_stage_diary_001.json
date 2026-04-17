@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2414-260417-234700",
+  "source": "stage_diary",
+  "taskId": "decompose-2414-260417-234700",
+  "createdAt": "2026-04-17T23:55:15.204Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Use the existing s API from src/utils/schema.ts and Result<T, E> from src/utils/result.ts instead of importing Zod directly.\",\"scope\":\"src/utils/configValidator\"},{\"kind\":\"gotcha\",\"text\":\"The --no-compose flag stops after parallel builds: decompose-state.json is saved but merge/verify/review/ship phases and PR creation are skipped entirely.\",\"scope\":\"decompose pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

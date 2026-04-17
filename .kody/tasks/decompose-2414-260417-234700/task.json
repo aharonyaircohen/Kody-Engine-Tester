@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. Here's a summary of what it proposes:",
+  "description": "The plan is ready for your review. Here's a summary of what it proposes:\n\n**Task**: Add `src/utils/configValidator.ts` + `src/utils/configValidator.test.ts`\n\n**Approach**: Reuse the existing mini-Zod schema builder (`src/utils/schema.ts` — the `s` API) and `Result<T, E>` type from `src/utils/result.ts` to build a validated `KodyConfig` type from `kody.config.json`. The validator function returns `Result<KodyConfig, SchemaError>` for explicit error handling.\n\n**Scope**: 2 new files in `src/utils/",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

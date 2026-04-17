@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcutilsconfigvalidator_697906517943": {
+      "id": "conventions_srcutilsconfigvalidator_697906517943",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/configValidator",
+      "content": "Use the existing s API from src/utils/schema.ts and Result<T, E> from src/utils/result.ts instead of importing Zod directly.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:55:15.210Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2414-260417-234700",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_decompose_pipeline_697908231377": {
+      "id": "thoughts_decompose_pipeline_697908231377",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "decompose pipeline",
+      "content": "The --no-compose flag stops after parallel builds: decompose-state.json is saved but merge/verify/review/ship phases and PR creation are skipped entirely.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:55:15.211Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2414-260417-234700",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
