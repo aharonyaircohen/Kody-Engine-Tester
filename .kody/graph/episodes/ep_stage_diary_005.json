@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2322-260417-185340",
+  "source": "stage_diary",
+  "taskId": "2322-260417-185340",
+  "createdAt": "2026-04-17T19:31:01.877Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build stage produced zero src/ changes — only modified .kody/ metadata, logs, and skill docs. No implementation was generated.\",\"scope\":\"kody pipeline\"},{\"kind\":\"lesson\",\"text\":\"When a task verifies pipeline behavior (fallback) vs. implementing features, a failed build still validates the test scenario (sub-task failure → fallback).\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

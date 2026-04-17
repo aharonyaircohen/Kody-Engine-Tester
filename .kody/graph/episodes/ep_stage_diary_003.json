@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2322-260417-185340",
+  "source": "stage_diary",
+  "taskId": "2322-260417-185340",
+  "createdAt": "2026-04-17T19:27:51.350Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"A build stage that crashes with error_max_budget_usd produces zero source files; review-fix then has nothing to review and must FAIL with a clear no-code-found verdict.\",\"scope\":\"pipeline stages\"},{\"kind\":\"lesson\",\"text\":\"Budget must be allocated sufficiently for at least one full implementation pass; a build that dies before creating any files leaves review with nothing actionable.\",\"scope\":\"pipeline budgeting\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

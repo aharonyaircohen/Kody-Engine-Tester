@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2322-260417-185340",
+  "source": "stage_diary",
+  "taskId": "2322-260417-185340",
+  "createdAt": "2026-04-17T19:22:09.185Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"error_max_budget_usd can fire during planning/exploration before any source files are written, leaving zero implementation to review\",\"scope\":\"build stage\"},{\"kind\":\"lesson\",\"text\":\"When a prior stage exhausts budget in planning, the next stage must minimize exploration and produce a minimal viable implementation immediately\",\"scope\":\"build stage\"},{\"kind\":\"lesson\",\"text\":\"ioredis is not installed in the environment; any dynamic import of it will fail, triggering the decompose fallback path\",\"scope\":\"src/cache\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

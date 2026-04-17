@@ -64,6 +64,230 @@
         "kind:convention"
       ],
       "confidence": 0.7
+    },
+    "thoughts_build_stage_1123625089778": {
+      "id": "thoughts_build_stage_1123625089778",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "build stage",
+      "content": "error_max_budget_usd can fire during planning/exploration before any source files are written, leaving zero implementation to review",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:22:09.188Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_build_stage_1123626617069": {
+      "id": "facts_build_stage_1123626617069",
+      "type": "facts",
+      "hall": "facts",
+      "room": "build stage",
+      "content": "When a prior stage exhausts budget in planning, the next stage must minimize exploration and produce a minimal viable implementation immediately",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:22:09.190Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srccache_1123628196497": {
+      "id": "facts_srccache_1123628196497",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/cache",
+      "content": "ioredis is not installed in the environment; any dynamic import of it will fail, triggering the decompose fallback path",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:22:09.191Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_stages_1465789811060": {
+      "id": "thoughts_pipeline_stages_1465789811060",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline stages",
+      "content": "A build stage that crashes with error_max_budget_usd produces zero source files; review-fix then has nothing to review and must FAIL with a clear no-code-found verdict.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:27:51.353Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2322-260417-185340",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_budgeting_1465791212644": {
+      "id": "facts_pipeline_budgeting_1465791212644",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline budgeting",
+      "content": "Budget must be allocated sufficiently for at least one full implementation pass; a build that dies before creating any files leaves review with nothing actionable.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:27:51.354Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2322-260417-185340",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_pipeline_1486389044314": {
+      "id": "thoughts_kody_pipeline_1486389044314",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline",
+      "content": "Build stage exhausted its USD budget on planning/exploration without producing any src/ files. Check remaining budget before starting implementation.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:28:11.952Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_1486390468343": {
+      "id": "facts_kody_pipeline_1486390468343",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline",
+      "content": "If `git diff HEAD~1 --name-status` shows zero src/ changes, the build stage failed silently and no reviewable code exists.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:28:11.954Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_pipeline_1656318186308": {
+      "id": "thoughts_kody_pipeline_1656318186308",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline",
+      "content": "Build stage produced zero src/ changes — only modified .kody/ metadata, logs, and skill docs. No implementation was generated.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-17T19:31:01.881Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2322-260417-185340",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_1656319895528": {
+      "id": "facts_kody_pipeline_1656319895528",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline",
+      "content": "When a task verifies pipeline behavior (fallback) vs. implementing features, a failed build still validates the test scenario (sub-task failure → fallback).",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-17T19:31:01.883Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2322-260417-185340",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_pipeline_1685341484717": {
+      "id": "thoughts_kody_pipeline_1685341484717",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline",
+      "content": "Build stage must reserve budget for writing code; exhaustive exploration before any file creation risks exhausting the USD budget with zero output.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-17T19:31:30.905Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_1685342922088": {
+      "id": "facts_kody_pipeline_1685342922088",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline",
+      "content": "When a task requires writing source files, write at least one file early in the build stage rather than deferring all file creation to the end.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-17T19:31:30.906Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilscachets_1685344817496": {
+      "id": "facts_srcutilscachets_1685344817496",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/cache.ts",
+      "content": "ioredis dynamic import failure is expected; the decompose flow catches it and falls back to runPipeline() with MemoryCacheAdapter — this fallback mechanism works as designed.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-17T19:31:30.908Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srccache_1685346299741": {
+      "id": "conventions_srccache_1685346299741",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/cache/",
+      "content": "Cache layer follows existing patterns: adapter in src/cache/, middleware in src/middleware/, using MemoryCacheAdapter as in-memory fallback with redisAdapter.ts for production.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-17T19:31:30.909Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_decompose_1685347900427": {
+      "id": "thoughts_kody_decompose_1685347900427",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody decompose",
+      "content": "Decompose sub-task failure (import ioredis) cleanly triggers cleanup and fallback, but only if build stage actually produces the code being tested — a zero-output build yields nothing to verify.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-17T19:31:30.911Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2322-260417-185340",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
     }
   }
 }

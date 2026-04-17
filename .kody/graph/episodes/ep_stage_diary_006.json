@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_006",
+  "runId": "2322-260417-185340",
+  "source": "stage_diary",
+  "taskId": "2322-260417-185340",
+  "createdAt": "2026-04-17T19:31:30.902Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build stage must reserve budget for writing code; exhaustive exploration before any file creation risks exhausting the USD budget with zero output.\",\"scope\":\"kody pipeline\"},{\"kind\":\"lesson\",\"text\":\"When a task requires writing source files, write at least one file early in the build stage rather than deferring all file creation to the end.\",\"scope\":\"kody pipeline\"},{\"kind\":\"decision\",\"text\":\"ioredis dynamic import failure is expected; the decompose flow catches it and falls back to runPipeline() with MemoryCacheAdapter — this fallback mechanism works as designed.\",\"scope\":\"src/utils/cache.ts\"},{\"kind\":\"convention\",\"text\":\"Cache layer follows existing patterns: adapter in src/cache/, middleware in src/middleware/, using MemoryCacheAdapter as in-memory fallback with redisAdapter.ts for production.\",\"scope\":\"src/cache/\"},{\"kind\":\"gotcha\",\"text\":\"Decompose sub-task failure (import ioredis) cleanly triggers cleanup and fallback, but on",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

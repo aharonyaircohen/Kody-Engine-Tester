@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2322-260417-185340",
+  "source": "stage_diary",
+  "taskId": "2322-260417-185340",
+  "createdAt": "2026-04-17T19:28:11.949Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build stage exhausted its USD budget on planning/exploration without producing any src/ files. Check remaining budget before starting implementation.\",\"scope\":\"kody pipeline\"},{\"kind\":\"lesson\",\"text\":\"If `git diff HEAD~1 --name-status` shows zero src/ changes, the build stage failed silently and no reviewable code exists.\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
