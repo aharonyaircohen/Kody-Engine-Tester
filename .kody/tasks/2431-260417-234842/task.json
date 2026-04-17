@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. Here's the summary:  - **Task**: P3T1",
+  "description": "The plan is ready for your review. Here's the summary:\n\n- **Task**: P3T10 — Verify `--complexity low` forces 4 stages\n- **Type**: `chore` (test-suite verification, no implementation needed)\n- **Risk**: `low` — just verifying log output and stage count\n- **Verification**: Check run logs confirm `\"Complexity override: low\"` (not auto-detected) and only `taskify → build → verify → ship` ran (4 stages, `plan`/`review`/`review-fix` skipped)",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
