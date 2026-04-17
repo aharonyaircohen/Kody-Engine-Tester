@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2290-260417-184350",
+  "source": "stage_diary",
+  "taskId": "2290-260417-184350",
+  "createdAt": "2026-04-17T18:51:06.732Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"decision\",\"text\":\"Taskify classified this as a 'feature' task type, not decomposable. Complexity score < 4 triggers fallback to normal pipeline rather than decomposed subtasks.\",\"scope\":\"kody/decompose\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

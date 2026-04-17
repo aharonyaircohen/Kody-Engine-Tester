@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_kodydecompose_468961456259": {
+      "id": "facts_kodydecompose_468961456259",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody/decompose",
+      "content": "Taskify classified this as a 'feature' task type, not decomposable. Complexity score < 4 triggers fallback to normal pipeline rather than decomposed subtasks.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:51:06.737Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2290-260417-184350",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
