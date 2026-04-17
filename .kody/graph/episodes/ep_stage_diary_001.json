@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2302-260417-184424",
+  "source": "stage_diary",
+  "taskId": "2302-260417-184424",
+  "createdAt": "2026-04-17T19:13:05.343Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"P2T07/P2T07b are GitHub issue identifiers, not local task directories — globbing or grepping for them locally will find nothing and waste budget.\",\"scope\":\"pipeline\"},{\"kind\":\"lesson\",\"text\":\"In this pipeline, task files (task.md, plan.md, review.md) are synthesized from GitHub issue context at runtime — do not search for local copies of prior task artifacts.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

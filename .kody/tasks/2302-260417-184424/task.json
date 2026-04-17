@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready. Here's a summary of what I found and my plan:  **Diag",
+  "description": "The plan is ready. Here's a summary of what I found and my plan:\n\n**Diagnosis of previous failure:** The prior attempt ran out of the $1.5 budget by making ~50+ tool calls — globbing the filesystem, searching for P2T07 in task directories (which don't exist locally — they're GitHub issues #2287/#2288), retrying APIs, and making parallel calls that got cancelled. It never reached the actual task.\n\n**What this task is:** P2T07b (GitHub issue #2302) is a Phase 2 review pipeline test. It posts `@kod",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

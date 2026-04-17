@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_pipeline_1369715908283": {
+      "id": "thoughts_pipeline_1369715908283",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline",
+      "content": "P2T07/P2T07b are GitHub issue identifiers, not local task directories — globbing or grepping for them locally will find nothing and waste budget.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:13:05.348Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2302-260417-184424",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_1369717304847": {
+      "id": "facts_pipeline_1369717304847",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "In this pipeline, task files (task.md, plan.md, review.md) are synthesized from GitHub issue context at runtime — do not search for local copies of prior task artifacts.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:13:05.350Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2302-260417-184424",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
