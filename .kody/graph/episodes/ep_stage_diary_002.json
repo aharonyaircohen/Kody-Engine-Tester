@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2279-260417-180229",
+  "source": "stage_diary",
+  "taskId": "2279-260417-180229",
+  "createdAt": "2026-04-17T18:09:24.892Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build stage reported successful edit but git diff shows zero changes — always verify actual committed diff, not just stage logs.\",\"scope\":\"git\"},{\"kind\":\"gotcha\",\"text\":\"Comment text mismatch: task.md specifies `<!-- kody observability smoke 0.4.0 2026-04-17 -->` but acceptance says `<!-- observability-smoke-0.4.0 -->` — clarify exact string before editing.\",\"scope\":\"task.md\"},{\"kind\":\"lesson\",\"text\":\"A failed edit silently succeeds if the file content already matches the intended change — verify with git diff to confirm actual modification.\",\"scope\":\"edit verification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2279-260417-180229",
+  "source": "stage_diary",
+  "taskId": "2279-260417-180229",
+  "createdAt": "2026-04-17T18:10:31.550Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"A build stage reporting success does not guarantee the edit was committed — check the actual diff in the review stage\",\"scope\":\"pipeline execution\"},{\"kind\":\"lesson\",\"text\":\"When the task is a single-line append, verify the file was modified before assuming the pipeline succeeded\",\"scope\":\"smoke test tasks\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

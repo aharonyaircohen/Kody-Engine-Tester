@@ -15,6 +15,66 @@
         "task:2279-260417-180229",
         "kind:gotcha"
       ]
+    },
+    "thoughts_git_507346727339": {
+      "id": "thoughts_git_507346727339",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "git",
+      "content": "Build stage reported successful edit but git diff shows zero changes — always verify actual committed diff, not just stage logs.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:09:24.896Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2279-260417-180229",
+        "kind:gotcha"
+      ]
+    },
+    "facts_edit_verification_507348225180": {
+      "id": "facts_edit_verification_507348225180",
+      "type": "facts",
+      "hall": "facts",
+      "room": "edit verification",
+      "content": "A failed edit silently succeeds if the file content already matches the intended change — verify with git diff to confirm actual modification.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:09:24.897Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2279-260417-180229",
+        "kind:lesson"
+      ]
+    },
+    "thoughts_pipeline_execution_574003427979": {
+      "id": "thoughts_pipeline_execution_574003427979",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline execution",
+      "content": "A build stage reporting success does not guarantee the edit was committed — check the actual diff in the review stage",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T18:10:31.553Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2279-260417-180229",
+        "kind:gotcha"
+      ]
+    },
+    "facts_smoke_test_tasks_574004771412": {
+      "id": "facts_smoke_test_tasks_574004771412",
+      "type": "facts",
+      "hall": "facts",
+      "room": "smoke test tasks",
+      "content": "When the task is a single-line append, verify the file was modified before assuming the pipeline succeeded",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T18:10:31.554Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2279-260417-180229",
+        "kind:lesson"
+      ]
     }
   }
 }
