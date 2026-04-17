@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2275-260417-182600",
+  "source": "stage_diary",
+  "taskId": "2275-260417-182600",
+  "createdAt": "2026-04-17T15:36:36.766Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"decision\",\"text\":\"Kody 0.3.2 verify-gate allows PRs to progress despite pre-existing TS/ESLint errors in unrelated files—this is intentional design.\",\"scope\":\"kody\"},{\"kind\":\"convention\",\"text\":\"'live-test' task type validates Kody engine improvements by running actual pipeline tasks with specific constraints.\",\"scope\":\"kody\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

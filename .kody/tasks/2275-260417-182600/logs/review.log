@@ -1,0 +1,21 @@
+warn: CPU lacks AVX support, strange crashes may occur. Reinstall Bun or use *-baseline build:
+  https://github.com/oven-sh/bun/releases/download/bun-v1.3.11/bun-darwin-x64-baseline.zip
+## Verdict: PASS
+
+## Summary
+
+Trivial documentation change: appends a one-line note to `README.md` describing the repository's purpose as a test harness for `@kody-ade/engine`'s memory system and verify-gate improvements. Remaining diff is Kody pipeline infrastructure (task status, graph nodes, event logs, gitignore updates).
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+None.
+
+### Minor
+
+None.

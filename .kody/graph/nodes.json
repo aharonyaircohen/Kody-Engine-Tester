@@ -45,6 +45,36 @@
         "task:2275-260417-182600",
         "kind:gotcha"
       ]
+    },
+    "facts_kody_4671119810007583": {
+      "id": "facts_kody_4671119810007583",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody",
+      "content": "Kody 0.3.2 verify-gate allows PRs to progress despite pre-existing TS/ESLint errors in unrelated files—this is intentional design.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T15:36:36.777Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2275-260417-182600",
+        "kind:decision"
+      ]
+    },
+    "conventions_kody_4671119814754458": {
+      "id": "conventions_kody_4671119814754458",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody",
+      "content": "'live-test' task type validates Kody engine improvements by running actual pipeline tasks with specific constraints.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T15:36:36.782Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2275-260417-182600",
+        "kind:convention"
+      ]
     }
   }
 }
