@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_pipeline_4683807051590791": {
+      "id": "conventions_pipeline_4683807051590791",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline",
+      "content": "Pipeline stage names (taskify, build, etc.) differ from task names — the task itself is numbered (2338-260417-220513) and gets sub-stages.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:03.873Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2338-260417-220513",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_4683807054981375": {
+      "id": "conventions_pipeline_4683807054981375",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline",
+      "content": "taskify stage summarises the plan BEFORE the build runs, noting risk level and scope (e.g. 'single file, low risk').",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:03.876Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2338-260417-220513",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_build_stage_4683807060911250": {
+      "id": "facts_build_stage_4683807060911250",
+      "type": "facts",
+      "hall": "facts",
+      "room": "build stage",
+      "content": "Simple content additions use targeted line-based edits (e.g. append before a heading at a known line number).",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:03.882Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2338-260417-220513",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

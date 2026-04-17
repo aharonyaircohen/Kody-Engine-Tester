@@ -82,6 +82,8 @@ Kody's pipeline is customized to this repo via `.kody/steps/` — each stage (ta
 
 These step files are auto-generated during `kody init` and can be manually refined in `.kody/steps/`.
 
+Kody's memory is **evolving**, not just accumulating — it refines its patterns, drops anti-patterns, and sharpens its instincts over time.
+
 ## Testing
 
 - Unit tests: Vitest, co-located as `*.test.ts` next to source

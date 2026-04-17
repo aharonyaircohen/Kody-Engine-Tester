@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2338-260417-220513",
+  "source": "stage_diary",
+  "taskId": "2338-260417-220513",
+  "createdAt": "2026-04-17T19:08:03.857Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Pipeline stage names (taskify, build, etc.) differ from task names — the task itself is numbered (2338-260417-220513) and gets sub-stages.\",\"scope\":\"pipeline\"},{\"kind\":\"convention\",\"text\":\"taskify stage summarises the plan BEFORE the build runs, noting risk level and scope (e.g. 'single file, low risk').\",\"scope\":\"pipeline\"},{\"kind\":\"lesson\",\"text\":\"Simple content additions use targeted line-based edits (e.g. append before a heading at a known line number).\",\"scope\":\"build stage\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
