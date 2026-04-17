@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_payload_collections_643147337311": {
+      "id": "conventions_payload_collections_643147337311",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "payload collections",
+      "content": "Payload collections live in src/collections/ with a .ts extension and export a typed config object with a slug constant.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:17:27.997Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2335-260417-190801",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_payload_auth_collection_643148606928": {
+      "id": "thoughts_payload_auth_collection_643148606928",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "payload auth collection",
+      "content": "Setting auth: true on a Payload collection automatically adds email (unique), hash, and salt fields — do NOT redefine them manually.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:17:27.998Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2335-260417-190801",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_payloadconfigts_643150130379": {
+      "id": "conventions_payloadconfigts_643150130379",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "payload.config.ts",
+      "content": "The admin auth collection is configured in payload.config.ts via the admin.user property, referenced as Users.slug rather than a hardcoded string.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:17:28.000Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2335-260417-190801",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

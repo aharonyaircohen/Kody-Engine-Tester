@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2335-260417-190801",
+  "source": "stage_diary",
+  "taskId": "2335-260417-190801",
+  "createdAt": "2026-04-17T19:17:27.991Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Payload collections live in src/collections/ with a .ts extension and export a typed config object with a slug constant.\",\"scope\":\"payload collections\"},{\"kind\":\"gotcha\",\"text\":\"Setting auth: true on a Payload collection automatically adds email (unique), hash, and salt fields — do NOT redefine them manually.\",\"scope\":\"payload auth collection\"},{\"kind\":\"convention\",\"text\":\"The admin auth collection is configured in payload.config.ts via the admin.user property, referenced as Users.slug rather than a hardcoded string.\",\"scope\":\"payload.config.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
