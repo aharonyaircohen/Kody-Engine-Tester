@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2285-260417-184337",
+  "source": "stage_diary",
+  "taskId": "2285-260417-184337",
+  "createdAt": "2026-04-17T18:55:07.826Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"--dry-run skips all pipeline stages including planning and building; no PRs or artifacts are created when using this flag.\",\"scope\":\"kody CLI\"},{\"kind\":\"convention\",\"text\":\"New utility functions go in src/utils/ with a co-located .test.ts file following vitest patterns.\",\"scope\":\"src/utils/\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

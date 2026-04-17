@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kody_cli_722327403938": {
+      "id": "thoughts_kody_cli_722327403938",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody CLI",
+      "content": "--dry-run skips all pipeline stages including planning and building; no PRs or artifacts are created when using this flag.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:55:07.831Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2285-260417-184337",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutils_722328659870": {
+      "id": "conventions_srcutils_722328659870",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/",
+      "content": "New utility functions go in src/utils/ with a co-located .test.ts file following vitest patterns.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:55:07.833Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2285-260417-184337",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

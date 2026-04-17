@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is written and ready for your review. Here's a summary of the c",
+  "description": "The plan is written and ready for your review. Here's a summary of the classification:\n\n**Task type:** `feature` — new utility, no existing file\n**Risk level:** `low` — two new files, no side effects\n**Scope:** `src/utils/csvParser.ts` + `src/utils/csvParser.test.ts`\n\nThe task is unambiguous — add a CSV parser following the established `src/utils/` pattern (single function + vitest co-located tests). No questions were needed since all implementation decisions are determined by existing codebase ",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
