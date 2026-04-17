@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2299-260417-184411",
+  "source": "stage_diary",
+  "taskId": "2299-260417-184411",
+  "createdAt": "2026-04-17T19:11:10.956Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Both the workflow YAML safety step AND kody engine's parseCommentInputs() block pipeline resume on non-COLLABORATOR/MEMBER/OWNER comment authors.\",\"scope\":\"kody engine\"},{\"kind\":\"lesson\",\"text\":\"Authorization checks on comments prevent @kody approve from resuming paused pipelines when the approver lacks required GitHub association.\",\"scope\":\"auth/pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
