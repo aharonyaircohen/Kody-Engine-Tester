@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. It classifies **P3T23** as a `chore` ",
+  "description": "The plan is ready for your review. It classifies **P3T23** as a `chore` — a Kody Engine pipeline verification task (low risk, no code changes). The taskify agent's only job is to write `task.json` and update `status.json`. No source files in `src/` are affected.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
