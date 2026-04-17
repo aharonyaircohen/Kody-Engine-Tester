@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2337-260417-190815",
+  "source": "stage_diary",
+  "taskId": "2337-260417-190815",
+  "createdAt": "2026-04-17T19:17:33.627Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Routes were already wrapped with withAuth; the gap was error message wording, not missing auth logic\",\"scope\":\"auth middleware\"},{\"kind\":\"convention\",\"text\":\"withAuth uses 'Missing or invalid Authorization header' for missing tokens, but acceptance criteria requires '{ error: \\\"Unauthorized\\\" }'\",\"scope\":\"src/auth/withAuth.ts\"},{\"kind\":\"convention\",\"text\":\"checkRole uses 'Forbidden: requires role ...' for RBAC failures, but should normalize to '{ error: \\\"Unauthorized\\\" }' for consistency\",\"scope\":\"src/auth/_auth.ts\"},{\"kind\":\"lesson\",\"text\":\"When auth is already implemented, always check exact error message wording against acceptance criteria before assuming the gap is missing code\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

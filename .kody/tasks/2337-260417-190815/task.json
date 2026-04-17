@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Here's a summary of my complete analysis:  **All specified routes are al",
+  "description": "Here's a summary of my complete analysis:\n\n**All specified routes are already wrapped with `withAuth`** — the implementation exists. But two gaps prevent the acceptance criteria from passing:\n\n**Gap 1 — Error messages mismatch** (`src/auth/withAuth.ts`):\n- `withAuth` returns `{ error: 'Missing or invalid Authorization header' }` for missing tokens, but acceptance criteria requires `{ error: 'Unauthorized' }`\n- `checkRole` in `src/auth/_auth.ts` returns `{ error: 'Forbidden: requires role ...' }`",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

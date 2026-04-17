@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_auth_middleware_496697172819": {
+      "id": "thoughts_auth_middleware_496697172819",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth middleware",
+      "content": "Routes were already wrapped with withAuth; the gap was error message wording, not missing auth logic",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:17:33.633Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2337-260417-190815",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcauthwithauthts_496698566821": {
+      "id": "conventions_srcauthwithauthts_496698566821",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth/withAuth.ts",
+      "content": "withAuth uses 'Missing or invalid Authorization header' for missing tokens, but acceptance criteria requires '{ error: \"Unauthorized\" }'",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:17:33.634Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2337-260417-190815",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcauth_authts_496700091368": {
+      "id": "conventions_srcauth_authts_496700091368",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth/_auth.ts",
+      "content": "checkRole uses 'Forbidden: requires role ...' for RBAC failures, but should normalize to '{ error: \"Unauthorized\" }' for consistency",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:17:33.636Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2337-260417-190815",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_496701481332": {
+      "id": "facts_auth_496701481332",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "When auth is already implemented, always check exact error message wording against acceptance criteria before assuming the gap is missing code",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:17:33.637Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2337-260417-190815",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
