@@ -1,3 +1,5 @@
 {
-  "ci_failure": 1
+  "ci_failure": 1,
+  "stage_diary": 5,
+  "review": 1
 }

@@ -1,5 +1,7 @@
 # LearnHub LMS
 
+> v0.4.0: Configuration now uses unified `provider/model` strings instead of separate provider + model fields.
+
 A full-featured Learning Management System built with Next.js, Payload CMS, and PostgreSQL.
 
 ## Vision

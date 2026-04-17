@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2277-260417-173832",
+  "source": "stage_diary",
+  "taskId": "2277-260417-173832",
+  "createdAt": "2026-04-17T17:46:49.909Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When a task specifies exact verbatim text (e.g. a one-line note), the plan and implementation must reproduce that exact string — substituting with a semantically similar but different wording causes t\",\"scope\":\"task execution\"},{\"kind\":\"lesson\",\"text\":\"A plan that deviates from the task's exact wording (even for a simple one-line insert) creates a mismatch that will fail automated review checks.\",\"scope\":\"task/payload review\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2277-260417-173832",
+  "source": "stage_diary",
+  "taskId": "2277-260417-173832",
+  "createdAt": "2026-04-17T17:48:06.032Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Simple file edits can fail silently — previous commit only touched skill files and artifacts, leaving README.md untouched despite planning to edit it.\",\"scope\":\"README.md\"},{\"kind\":\"lesson\",\"text\":\"When a task says 'modify X', the fix must literally modify X on disk. Verify with `git diff` or file read before assuming the edit succeeded.\",\"scope\":\"file modification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

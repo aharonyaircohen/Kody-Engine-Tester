@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2277-260417-173832",
+  "source": "stage_diary",
+  "taskId": "2277-260417-173832",
+  "createdAt": "2026-04-17T17:47:26.512Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The agent committed changes to .kody/ and .agents/ artifacts but never touched README.md — a common sign the implementation step ran but failed to identify or edit the actual target file.\",\"scope\":\"README.md\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

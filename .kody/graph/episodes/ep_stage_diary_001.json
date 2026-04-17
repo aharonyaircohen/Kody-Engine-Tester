@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2277-260417-173832",
+  "source": "stage_diary",
+  "taskId": "2277-260417-173832",
+  "createdAt": "2026-04-17T17:45:30.018Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When task.md specifies exact verbatim text to insert, the plan must use that exact string — paraphrasing or rephrasing is a spec violation, even if the meaning is similar.\",\"scope\":\"plan / task specification\"},{\"kind\":\"lesson\",\"text\":\"The plan text should be a direct copy-paste of the task specification text, not a reformulation with the same meaning.\",\"scope\":\"plan authoring\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

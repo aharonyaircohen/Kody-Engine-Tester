@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_plan__task_specification_435885283168": {
+      "id": "thoughts_plan__task_specification_435885283168",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "plan / task specification",
+      "content": "When task.md specifies exact verbatim text to insert, the plan must use that exact string — paraphrasing or rephrasing is a spec violation, even if the meaning is similar.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T17:45:30.023Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2277-260417-173832",
+        "kind:gotcha"
+      ]
+    },
+    "facts_plan_authoring_435886602841": {
+      "id": "facts_plan_authoring_435886602841",
+      "type": "facts",
+      "hall": "facts",
+      "room": "plan authoring",
+      "content": "The plan text should be a direct copy-paste of the task specification text, not a reformulation with the same meaning.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T17:45:30.024Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2277-260417-173832",
+        "kind:lesson"
+      ]
+    },
+    "thoughts_task_execution_515774556390": {
+      "id": "thoughts_task_execution_515774556390",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "task execution",
+      "content": "When a task specifies exact verbatim text (e.g. a one-line note), the plan and implementation must reproduce that exact string — substituting with a semantically similar but different wording causes t",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T17:46:49.912Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2277-260417-173832",
+        "kind:gotcha"
+      ]
+    },
+    "facts_taskpayload_review_515775821437": {
+      "id": "facts_taskpayload_review_515775821437",
+      "type": "facts",
+      "hall": "facts",
+      "room": "task/payload review",
+      "content": "A plan that deviates from the task's exact wording (even for a simple one-line insert) creates a mismatch that will fail automated review checks.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T17:46:49.914Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2277-260417-173832",
+        "kind:lesson"
+      ]
+    },
+    "thoughts_readmemd_552377051741": {
+      "id": "thoughts_readmemd_552377051741",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "README.md",
+      "content": "The agent committed changes to .kody/ and .agents/ artifacts but never touched README.md — a common sign the implementation step ran but failed to identify or edit the actual target file.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T17:47:26.515Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2277-260417-173832",
+        "kind:gotcha"
+      ]
+    },
+    "thoughts_readmemd_591899578730": {
+      "id": "thoughts_readmemd_591899578730",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "README.md",
+      "content": "Simple file edits can fail silently — previous commit only touched skill files and artifacts, leaving README.md untouched despite planning to edit it.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T17:48:06.037Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2277-260417-173832",
+        "kind:gotcha"
+      ]
+    },
+    "facts_file_modification_591900886978": {
+      "id": "facts_file_modification_591900886978",
+      "type": "facts",
+      "hall": "facts",
+      "room": "file modification",
+      "content": "When a task says 'modify X', the fix must literally modify X on disk. Verify with `git diff` or file read before assuming the edit succeeded.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T17:48:06.039Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2277-260417-173832",
+        "kind:lesson"
+      ]
+    },
+    "conventions_general_623964852048": {
+      "id": "conventions_general_623964852048",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "general",
+      "content": "Commit `18c9f2d` correctly inserted the exact task-specified line into `README.md` at line 3, directly under the title. The README now reads:",
+      "episodeId": "ep_review_001",
+      "validFrom": "2026-04-17T17:48:38.103Z",
+      "validTo": null
+    },
+    "conventions_general_623965878483": {
+      "id": "conventions_general_623965878483",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "general",
+      "content": "# LearnHub LMS",
+      "episodeId": "ep_review_001",
+      "validFrom": "2026-04-17T17:48:38.104Z",
+      "validTo": null
+    },
+    "conventions_general_623966959367": {
+      "id": "conventions_general_623966959367",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "general",
+      "content": "> v0.4.0: Configuration now uses unified `provider/model` strings instead of separate provider + model fields.",
+      "episodeId": "ep_review_001",
+      "validFrom": "2026-04-17T17:48:38.105Z",
+      "validTo": null
+    },
+    "conventions_general_623968046563": {
+      "id": "conventions_general_623968046563",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "general",
+      "content": "A full-featured Learning Management System...",
+      "episodeId": "ep_review_001",
+      "validFrom": "2026-04-17T17:48:38.106Z",
+      "validTo": null
+    },
+    "conventions_general_623968968722": {
+      "id": "conventions_general_623968968722",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "general",
+      "content": "The inserted line is a **verbatim match** of the task specification: `> v0.4.0: Configuration now uses unified \\`provider/model\\` strings instead of separate provider + model fields.`",
+      "episodeId": "ep_review_001",
+      "validFrom": "2026-04-17T17:48:38.107Z",
+      "validTo": null
+    },
+    "thoughts_readmemd_710430695507": {
+      "id": "thoughts_readmemd_710430695507",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "README.md",
+      "content": "The plan suggested a different line than the task specified. The plan used 'HISTORY' prefix and CHANGELOG link, but the task required a specific verbatim line. The agent correctly used the task-specif",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-17T17:50:04.568Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2277-260417-173832",
+        "kind:gotcha"
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2277-260417-173832",
+  "source": "stage_diary",
+  "taskId": "2277-260417-173832",
+  "createdAt": "2026-04-17T17:50:04.565Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The plan suggested a different line than the task specified. The plan used 'HISTORY' prefix and CHANGELOG link, but the task required a specific verbatim line. The agent correctly used the task-specif\",\"scope\":\"README.md\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
