@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_kody_decompose_277389692571": {
+      "id": "facts_kody_decompose_277389692571",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody decompose",
+      "content": "When @kody decompose detects complexity_score < 4 or a non-decomposable task, it delegates to the normal pipeline — no special handling needed.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:51:02.597Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2412-260417-234652",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutils_277391132584": {
+      "id": "conventions_srcutils_277391132584",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils",
+      "content": "Co-located vitest tests use .test.ts suffix next to their source file, matching src/utils/ patterns like debounce.ts / debounce.test.ts.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:51:02.599Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2412-260417-234652",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_decompose_277392564814": {
+      "id": "facts_kody_decompose_277392564814",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody decompose",
+      "content": "Low-risk, purely additive features (new files only) are classified as simple tasks and skip decomposition.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:51:02.600Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2412-260417-234652",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

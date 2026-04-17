@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2412-260417-234652",
+  "source": "stage_diary",
+  "taskId": "decompose-2412-260417-234652",
+  "createdAt": "2026-04-17T23:51:02.591Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"When @kody decompose detects complexity_score < 4 or a non-decomposable task, it delegates to the normal pipeline — no special handling needed.\",\"scope\":\"kody decompose\"},{\"kind\":\"convention\",\"text\":\"Co-located vitest tests use .test.ts suffix next to their source file, matching src/utils/ patterns like debounce.ts / debounce.test.ts.\",\"scope\":\"src/utils\"},{\"kind\":\"decision\",\"text\":\"Low-risk, purely additive features (new files only) are classified as simple tasks and skip decomposition.\",\"scope\":\"kody decompose\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
