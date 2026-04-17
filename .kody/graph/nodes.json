@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcmiddleware_626369879218": {
+      "id": "conventions_srcmiddleware_626369879218",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Always write tests first (TDD) following existing test patterns like csrf-middleware.test.ts — same directory structure and mocking style.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:56:39.305Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2405-260417-234631",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_plan_writing_626371351618": {
+      "id": "thoughts_plan_writing_626371351618",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "plan writing",
+      "content": "The Write tool requires explicit permission before writing plan files — taskify agents may fail silently or halt if this permission isn't pre-granted.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:56:39.307Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcmiddlewareratelimitts_626373124569": {
+      "id": "facts_srcmiddlewareratelimitts_626373124569",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "Fixed-window rate limiter in rateLimit.ts is a separate implementation from the existing sliding-window rate-limiter.ts — not a replacement, both coexist.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:56:39.308Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2405-260417-234631",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcmiddlewareratelimitts_626374737351": {
+      "id": "facts_srcmiddlewareratelimitts_626374737351",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "Use existing rate-limiter.ts as a reference for IP resolution (byIp), whitelist/blacklist logic, and header conventions (X-RateLimit-*, Retry-After).",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:56:39.310Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2405-260417-234631",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

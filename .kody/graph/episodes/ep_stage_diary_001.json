@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2405-260417-234631",
+  "source": "stage_diary",
+  "taskId": "2405-260417-234631",
+  "createdAt": "2026-04-17T23:56:39.299Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Always write tests first (TDD) following existing test patterns like csrf-middleware.test.ts — same directory structure and mocking style.\",\"scope\":\"src/middleware\"},{\"kind\":\"gotcha\",\"text\":\"The Write tool requires explicit permission before writing plan files — taskify agents may fail silently or halt if this permission isn't pre-granted.\",\"scope\":\"plan writing\"},{\"kind\":\"decision\",\"text\":\"Fixed-window rate limiter in rateLimit.ts is a separate implementation from the existing sliding-window rate-limiter.ts — not a replacement, both coexist.\",\"scope\":\"src/middleware/rateLimit.ts\"},{\"kind\":\"lesson\",\"text\":\"Use existing rate-limiter.ts as a reference for IP resolution (byIp), whitelist/blacklist logic, and header conventions (X-RateLimit-*, Retry-After).\",\"scope\":\"src/middleware/rateLimit.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
