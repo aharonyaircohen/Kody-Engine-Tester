@@ -1,5 +1,7 @@
 # LearnHub LMS
 
+<!-- live-test: kody fix-mode feedback verification -->
+
 A full-featured Learning Management System built with Next.js, Payload CMS, and PostgreSQL.
 
 ## Vision
