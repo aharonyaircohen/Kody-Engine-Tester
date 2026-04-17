@@ -16,9 +16,9 @@
   },
   "agent": {
     "modelMap": {
-      "cheap": "claude/claude-haiku-4-5-20251001",
-      "mid": "claude/claude-sonnet-4-6",
-      "strong": "claude/claude-opus-4-6"
+      "cheap": "minimax/MiniMax-M2.7-highspeed",
+      "mid": "minimax/MiniMax-M2.7-highspeed",
+      "strong": "minimax/MiniMax-M2.7"
     }
   },
   "mcp": {
