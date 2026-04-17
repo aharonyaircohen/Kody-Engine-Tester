@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The Write tool requires permissions I don't have for this session. Here ",
+  "description": "The Write tool requires permissions I don't have for this session. Here is the complete task classification output:\n\n```json\n{\n  \"task_type\": \"chore\",\n  \"title\": \"Verify Kody decompose pipeline for complex multi-area task\",\n  \"description\": \"Confirm the @kody decompose command correctly splits the notification-system task (model + service + routes + helpers + tests) into parallel sub-tasks, produces a complexity_score >= 4, creates worktrees, runs parallel builds, merges results, and emits a PR ",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
