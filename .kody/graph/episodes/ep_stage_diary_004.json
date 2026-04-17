@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2310-260417-185128",
+  "source": "stage_diary",
+  "taskId": "2310-260417-185128",
+  "createdAt": "2026-04-17T19:21:51.366Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The plan agent wasted 30 turns reading the 658KB compiled engine CLI from node_modules instead of checking whether project source files exist first.\",\"scope\":\"pipeline planning\"},{\"kind\":\"convention\",\"text\":\"Kody pipeline metadata lives in .kody-engine/, .kody/, .kody/, .agents/, and skills-lock.json — commits may contain only these files.\",\"scope\":\"pipeline metadata\"},{\"kind\":\"lesson\",\"text\":\"When verifying features that live in compiled npm packages, check node_modules for the compiled artifact and inspect it directly rather than assuming local src/ files exist.\",\"scope\":\"engine verification\"},{\"kind\":\"decision\",\"text\":\"The --feedback flag is parsed at line 17529, stored in ctx.input.feedback at line 19246, and logged as feedback: during the build stage at lines 14742–14743 — all in the compiled engine CLI.\",\"scope\":\"--feedback flag implementation\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

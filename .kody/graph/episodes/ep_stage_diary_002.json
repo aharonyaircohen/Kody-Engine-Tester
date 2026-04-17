@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2310-260417-185128",
+  "source": "stage_diary",
+  "taskId": "2310-260417-185128",
+  "createdAt": "2026-04-17T19:17:56.650Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"Before reading compiled output, verify the source files exist in src/ — if they're missing, read the compiled code instead of reading node_modules\",\"scope\":\"kody pipeline investigation\"},{\"kind\":\"gotcha\",\"text\":\"Plan agents can exhaust turns reading compiled engine output without finding project source files that don't exist\",\"scope\":\"kody pipeline investigation\"},{\"kind\":\"convention\",\"text\":\"The feedback logging injection for --feedback already exists in compiled cli.js at lines 14742-14743 under def.name === 'build'\",\"scope\":\"kody engine src/cli.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -34,3 +34,37 @@ The plan is ready for your review. Here's a summary of what I found:
 2. **Context creation** (line ~19246): `feedback` is forwarded into `ctx.input.feedback`
 3. **Build stage log** (lines ~14742–14743): `if (ctx.input.feedback && def.name ==
 ...(truncated)
+
+### review (2026-04-17T19:17:47)
+
+
+Now I have enough context to produce the structured review. Let me compile the full picture:
+
+---
+
+## Verdict: FAIL
+
+## Summary
+
+The `--feedback` feature cannot be reviewed in this repository because `src/cli.ts`, `src/pipeline/context.ts`, and `src/stages/build.ts` do not exist here — only the compiled engine binary exists in `node_modules/@kody-ade/engine/dist/bin/cli.js`. The build agent's changeset appears to be empty (no files created). Verification errors are pre-existing lint issues in 
+...(truncated)
+
+### review-fix (2026-04-17T19:21:00)
+Here's a summary of what I found and what the plan covers:
+
+---
+
+**Root cause of the FAIL verdict**: The `--feedback` feature is already **fully implemented** in the compiled Kody Engine CLI at `node_modules/@kody-ade/engine/dist/bin/cli.js` — parsed at line 17529, forwarded into `ctx.input.feedback` at line 19246, and logged during the build stage at lines 14742–14743. The task scope files (`src/cli.ts`, `src/pipeline/context.ts`, `src/stages/build.ts`) don't exist because the feature lives in 
+...(truncated)
+
+### review (2026-04-17T19:21:42)
+
+
+I now have the complete picture. Let me produce the structured review.
+
+## Verdict: PASS
+
+## Summary
+
+The `--feedback` feature is already fully implemented in the compiled Kody Engine CLI (`node_modules/@kody-ade/engine/dist/bin/cli.js`). The `--feedback` flag is parsed at line 17529, forwarded into `ctx.input.feedback` at line 19246, and emitted as a `feedback:` log line during the build stage at lines 14742–14743. The task scope files (`src/cli.ts`, `src/pipeline/context.ts`, `src/stages/bui
+...(truncated)

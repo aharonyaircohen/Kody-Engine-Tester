@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2310-260417-185128",
+  "source": "stage_diary",
+  "taskId": "2310-260417-185128",
+  "createdAt": "2026-04-17T19:21:08.556Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The engine binary in node_modules is compiled; source files for src/cli.ts, src/pipeline/, src/stages/ don't exist yet — always verify src/ exists before diving into node_modules.\",\"scope\":\"pipeline/stages\"},{\"kind\":\"lesson\",\"text\":\"An empty changeset (no files created) means the feature was never implemented; verification of feature behavior is impossible without implementation.\",\"scope\":\"build-stage\"},{\"kind\":\"lesson\",\"text\":\"Pre-existing lint errors in unrelated source files can appear during verification — filter by file relevance before treating them as evidence of failure.\",\"scope\":\"verification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

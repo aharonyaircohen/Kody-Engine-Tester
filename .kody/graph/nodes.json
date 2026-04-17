@@ -64,6 +64,150 @@
         "kind:decision"
       ],
       "confidence": 0.7
+    },
+    "facts_kody_pipeline_investigation_1451636214882": {
+      "id": "facts_kody_pipeline_investigation_1451636214882",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline investigation",
+      "content": "Before reading compiled output, verify the source files exist in src/ — if they're missing, read the compiled code instead of reading node_modules",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:17:56.654Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2310-260417-185128",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_pipeline_investigation_1451637779261": {
+      "id": "thoughts_kody_pipeline_investigation_1451637779261",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline investigation",
+      "content": "Plan agents can exhaust turns reading compiled engine output without finding project source files that don't exist",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:17:56.655Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2310-260417-185128",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_engine_srcclits_1451641072173": {
+      "id": "conventions_kody_engine_srcclits_1451641072173",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody engine src/cli.ts",
+      "content": "The feedback logging injection for --feedback already exists in compiled cli.js at lines 14742-14743 under def.name === 'build'",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T19:17:56.659Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2310-260417-185128",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipelinestages_1643542309105": {
+      "id": "thoughts_pipelinestages_1643542309105",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline/stages",
+      "content": "The engine binary in node_modules is compiled; source files for src/cli.ts, src/pipeline/, src/stages/ don't exist yet — always verify src/ exists before diving into node_modules.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:21:08.560Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2310-260417-185128",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_buildstage_1643543808961": {
+      "id": "facts_buildstage_1643543808961",
+      "type": "facts",
+      "hall": "facts",
+      "room": "build-stage",
+      "content": "An empty changeset (no files created) means the feature was never implemented; verification of feature behavior is impossible without implementation.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:21:08.561Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2310-260417-185128",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_verification_1643545654274": {
+      "id": "facts_verification_1643545654274",
+      "type": "facts",
+      "hall": "facts",
+      "room": "verification",
+      "content": "Pre-existing lint errors in unrelated source files can appear during verification — filter by file relevance before treating them as evidence of failure.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:21:08.563Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2310-260417-185128",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_metadata_1686352396518": {
+      "id": "conventions_pipeline_metadata_1686352396518",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline metadata",
+      "content": "Kody pipeline metadata lives in .kody-engine/, .kody/, .kody/, .agents/, and skills-lock.json — commits may contain only these files.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:21:51.370Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2310-260417-185128",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_engine_verification_1686354288257": {
+      "id": "facts_engine_verification_1686354288257",
+      "type": "facts",
+      "hall": "facts",
+      "room": "engine verification",
+      "content": "When verifying features that live in compiled npm packages, check node_modules for the compiled artifact and inspect it directly rather than assuming local src/ files exist.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:21:51.372Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2310-260417-185128",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_feedback_flag_implementation_1686355841585": {
+      "id": "facts_feedback_flag_implementation_1686355841585",
+      "type": "facts",
+      "hall": "facts",
+      "room": "--feedback flag implementation",
+      "content": "The --feedback flag is parsed at line 17529, stored in ctx.input.feedback at line 19246, and logged as feedback: during the build stage at lines 14742–14743 — all in the compiled engine CLI.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:21:51.373Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2310-260417-185128",
+        "kind:decision"
+      ],
+      "confidence": 0.7
     }
   }
 }
