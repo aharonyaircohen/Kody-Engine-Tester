@@ -8,37 +8,37 @@ on:
         type: string
       mode:
         type: string
-        default: 'full'
+        default: "full"
       from_stage:
         type: string
-        default: ''
+        default: ""
       issue_number:
         type: string
-        default: ''
+        default: ""
       feedback:
         type: string
-        default: ''
+        default: ""
       dry_run:
         type: boolean
         default: false
       provider:
         type: string
-        default: ''
+        default: ""
       model:
         type: string
-        default: ''
+        default: ""
       agent:
-        description: 'Agent to run (omit for all, used by watch)'
+        description: "Agent to run (omit for all, used by watch)"
         required: false
         type: string
       sessionId:
-        description: 'Session ID for chat mode (kody-engine chat)'
+        description: "Session ID for chat mode (kody-engine chat)"
         type: string
-        default: ''
+        default: ""
       message:
-        description: 'Initial chat message (creates session file)'
+        description: "Initial chat message (creates session file)"
         type: string
-        default: ''
+        default: ""
       auto_mode:
         type: boolean
         default: false
@@ -53,15 +53,15 @@ on:
     types: [submitted]
 
   workflow_run:
-    workflows: ['CI']
+    workflows: ["CI"]
     types: [completed]
 
   push:
     branches: [main, dev]
-    paths: ['src/**', 'kody.config.json', 'package.json']
+    paths: ["src/**", "kody.config.json", "package.json"]
 
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: "*/30 * * * *"
 
 concurrency:
   group: kody-${{ github.event.inputs.task_id || github.event.issue.number || github.event.pull_request.number || github.event.workflow_run.id || github.sha }}
@@ -147,10 +147,13 @@ jobs:
 
   # ─── Orchestrate ─────────────────────────────────────────────────────────────
   orchestrate:
+    # Only wait for parse on issue_comment; workflow_dispatch and pull_request_review bypass it
     if: >-
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'pull_request_review' ||
-      (github.event_name == 'issue_comment' && needs.parse.result == 'success' && needs.parse.outputs.valid == 'true')
+      (github.event_name == 'issue_comment' && needs.parse.outputs.valid == 'true')
+    needs:
+      - parse
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
