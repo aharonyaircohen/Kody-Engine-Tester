@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready. Here's a summary of what I found and what needs to ha",
+  "description": "The plan is ready. Here's a summary of what I found and what needs to happen:\n\n---\n\n**T19: Fix-CI auto-trigger — Verification Plan**\n\nThis is a Kody pipeline verification task (not a code implementation task). The goal is to execute a sequence of gh/git commands to test that the fix-ci workflow fires correctly when CI breaks on a PR.\n\n**Key constraint:** This session is sandboxed to the task directory only — I cannot run gh/git commands or access the repo root. The plan documents all exact comma",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
