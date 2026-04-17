@@ -1,0 +1,9 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of default export in src/utils/helpers.ts",
+  "description": "The task describes adding a missing default export to src/utils/helpers.ts. Upon inspection, the file already exists at src/utils/helpers.ts with the default export present (line 51: export default helpers). The file defines a helpers object containing isDefined, isString, isNumber, toString, and toNumber utilities. No changes are required — the fix is already in place.",
+  "scope": ["src/utils/helpers.ts"],
+  "risk_level": "low",
+  "existing_patterns": ["src/utils/debounce.ts", "src/utils/retry.ts", "src/utils/flatten.ts"],
+  "questions": []
+}

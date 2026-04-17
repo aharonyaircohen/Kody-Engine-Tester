@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcutilshelpersts_327314253509": {
+      "id": "thoughts_srcutilshelpersts_327314253509",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/utils/helpers.ts",
+      "content": "src/utils/helpers.ts did not exist at build start; the hotfix created it from scratch.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:48:59.712Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2296-260417-184401",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_327315584613": {
+      "id": "facts_pipeline_327315584613",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "Hotfix mode confirmed: only build→verify→ship stages run; taskify/plan/review are correctly skipped.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:48:59.713Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2296-260417-184401",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_327316983954": {
+      "id": "facts_pipeline_327316983954",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "Verify stage runs without executing tests in hotfix mode, confirming tests are only skipped in this flow.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:48:59.714Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2296-260417-184401",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

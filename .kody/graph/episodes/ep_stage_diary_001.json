@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2296-260417-184401",
+  "source": "stage_diary",
+  "taskId": "2296-260417-184401",
+  "createdAt": "2026-04-17T18:48:59.706Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"src/utils/helpers.ts did not exist at build start; the hotfix created it from scratch.\",\"scope\":\"src/utils/helpers.ts\"},{\"kind\":\"decision\",\"text\":\"Hotfix mode confirmed: only build→verify→ship stages run; taskify/plan/review are correctly skipped.\",\"scope\":\"pipeline\"},{\"kind\":\"decision\",\"text\":\"Verify stage runs without executing tests in hotfix mode, confirming tests are only skipped in this flow.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
