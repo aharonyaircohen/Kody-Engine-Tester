@@ -1,0 +1,5 @@
+The plan is ready for your review. It covers:
+
+1. **Running** `kody taskify --file docs/test-prd.md` in local mode (no MCP/GH required)
+2. **Reading** the generated `taskify-result.json` from the task output directory
+3. **Verifying** all 5 criteria programmatically — priority labels with `priority:` prefix, `## Context`/`## Acceptance Criteria`/`## Test Strategy` in each body, and correct topo order via Kahn's algorithm

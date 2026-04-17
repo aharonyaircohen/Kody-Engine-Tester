@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_plan_mode_1488111691392": {
+      "id": "thoughts_plan_mode_1488111691392",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "plan mode",
+      "content": "Plan files may fail to write to disk due to permission prompts; plan text is still submitted even if file write fails",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:07.818Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2288-260417-184341",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_taskify_1488112998271": {
+      "id": "conventions_kody_taskify_1488112998271",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody taskify",
+      "content": "Priority labels use a `priority:` prefix (e.g., `priority:high`, `priority:medium`, `priority:low`)",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:07.819Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2288-260417-184341",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_taskify_1488114513127": {
+      "id": "facts_kody_taskify_1488114513127",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody taskify",
+      "content": "When GH/MCP credentials are unavailable, `kody taskify` can run in local mode with `--file`, writing output to a JSON file",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:07.821Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2288-260417-184341",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_taskify_1488115922736": {
+      "id": "conventions_kody_taskify_1488115922736",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody taskify",
+      "content": "Taskify sub-issue bodies must contain ## Context, ## Acceptance Criteria, and ## Test Strategy sections",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:07.822Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2288-260417-184341",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_verifytaskifyts_1488117250414": {
+      "id": "facts_verifytaskifyts_1488117250414",
+      "type": "facts",
+      "hall": "facts",
+      "room": "verify-taskify.ts",
+      "content": "Kahn's algorithm is a reliable programmatic approach for verifying topological order of depends-on relationships",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:08:07.824Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2288-260417-184341",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2288-260417-184341",
+  "source": "stage_diary",
+  "taskId": "2288-260417-184341",
+  "createdAt": "2026-04-17T19:08:07.812Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Plan files may fail to write to disk due to permission prompts; plan text is still submitted even if file write fails\",\"scope\":\"plan mode\"},{\"kind\":\"convention\",\"text\":\"Priority labels use a `priority:` prefix (e.g., `priority:high`, `priority:medium`, `priority:low`)\",\"scope\":\"kody taskify\"},{\"kind\":\"lesson\",\"text\":\"When GH/MCP credentials are unavailable, `kody taskify` can run in local mode with `--file`, writing output to a JSON file\",\"scope\":\"kody taskify\"},{\"kind\":\"convention\",\"text\":\"Taskify sub-issue bodies must contain ## Context, ## Acceptance Criteria, and ## Test Strategy sections\",\"scope\":\"kody taskify\"},{\"kind\":\"decision\",\"text\":\"Kahn's algorithm is a reliable programmatic approach for verifying topological order of depends-on relationships\",\"scope\":\"verify-taskify.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "status": "ready",
+  "tasks": [
+    {
+      "title": "Add User Payload collection with password hash field",
+      "body": "## Context\nThe codebase has dual auth systems (UserStore with SHA-256 vs AuthService with PBKDF2/JWT) creating inconsistency. This task creates a proper User collection in Payload CMS that stores hashed passwords, replacing or unifying the existing user representation.\n\n## Acceptance Criteria\n- Create `src/collections/Users.ts` Payload collection\n- Collection includes `email` (unique), `passwordHash` (field name `password` using Payload's built-in auth hash), and `role` fields\n- Password field uses Payload's built-in hash field type (handles salting + hashing via PBKDF2)\n- Auth hooks verify password on login attempts\n- Collection indexed on `email` for fast lookups\n- Migration script generated for `pnpm payload migrate`\n\n\n## Test Strategy\n- Unit: verify password hash field type is `auth` in Payload config\n- Unit: verify collection has unique email index\n- Integration: run `pnpm payload migrate` and verify migration succeeds\n- Manual: create a user via Payload admin panel, verify password is hashed (not plaintext)",
+      "labels": ["backend", "database"],
+      "priority": "high",
+      "dependsOn": []
+    },
+    {
+      "title": "Implement /login and /register API route handlers",
+      "body": "## Context\nAPI endpoints needed to issue JWTs after authenticating against the User collection. These replace the legacy `UserStore` in-memory auth. Depends on User collection existing.\n\n\n## Acceptance Criteria\n- `POST /api/auth/register` — accepts `{ email, password }`, creates user via Payload, returns JWT\n- `POST /api/auth/login` — accepts `{ email, password }`, verifies credentials via Payload, returns JWT + user payload\n- Both endpoints return `{ token: string, user: { id, email, role } }`\n- Passwords validated (min 8 chars) using Zod schema\n- Errors return appropriate 4xx status codes with `{ error: string }`\n- JWT issued via existing `JwtService` (Web Crypto API)\n- Sessions stored in `SessionStore`\n\n## Test Strategy\n- Integration: `tests/int/auth/register.int.ts` — register new user, verify token returned\n- Integration: `tests/int/auth/login.int.ts` — login with valid credentials, login with wrong password (401)\n- Unit: Zod schema validation rejects short password\n- Manual: `curl -X POST /api/auth/login -d '{...}'` returns expected shape",
+      "labels": ["backend"],
+      "priority": "high",
+      "dependsOn": [0]
+    },
+    {
+      "title": "Wire auth middleware to protect existing API routes",
+      "body": "## Context\nThe `withAuth` HOC already exists and can wrap route handlers for JWT validation and RBAC. This task applies `withAuth` to protect existing routes that should require authentication.\n\n## Acceptance Criteria\n- Identify routes requiring auth: `/api/notes`, `/api/quizzes/*`, `/api/courses/search`, `/api/enroll`, `/api/gradebook/*`\n- Wrap each route handler with `withAuth` HOC\n- `withAuth` accepts optional `allowedRoles` parameter for RBAC (e.g., only `editor`/`admin` can access gradebook)\n- Unauthenticated requests return 401 with `{ error: 'Unauthorized' }`\n- Requests with insufficient role return 403 with `{ error: 'Forbidden' }`\n\n## Test Strategy\n- Integration: request `/api/notes` without token → 401\n- Integration: request `/api/notes` with valid token → passes through\n- Integration: request `/api/gradebook/course/1` as `viewer` role → 403\n- Integration: request `/api/gradebook/course/1` as `admin` role → 200",
+      "labels": ["backend"],
+      "priority": "high",
+      "dependsOn": [1]
+    }
+  ]
+}
