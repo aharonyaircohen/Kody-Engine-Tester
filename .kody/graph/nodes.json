@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_bootstrapcommand__clijs_811364856031": {
+      "id": "thoughts_bootstrapcommand__clijs_811364856031",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "bootstrapCommand / cli.js",
+      "content": "`parseProviderModel` requires the `provider/model` format and throws on bare model names like `MiniMax-M1` — needs a guard or format normalization upstream.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:56:07.964Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2295-260417-184359",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_parseprovidermodel_utility_811366305530": {
+      "id": "thoughts_parseprovidermodel_utility_811366305530",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "parseProviderModel utility",
+      "content": "`parseProviderModel` throws (not a graceful error) when the model string doesn't match `provider/model` — callers must handle this.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:56:07.965Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2295-260417-184359",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_cli_argument_passthrough_811367688170": {
+      "id": "facts_cli_argument_passthrough_811367688170",
+      "type": "facts",
+      "hall": "facts",
+      "room": "CLI argument passthrough",
+      "content": "CLI handlers can silently drop flags not explicitly forwarded to sub-commands — always audit the options object passed to the inner command.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:56:07.966Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2295-260417-184359",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kodyadeengine_dist_patching_811368912536": {
+      "id": "facts_kodyadeengine_dist_patching_811368912536",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody-ade/engine dist patching",
+      "content": "The fix targets `dist/bin/cli.js` (the published build) rather than source, so no TypeScript source changes are needed — a valid approach for hotfixing published packages.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:56:07.968Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2295-260417-184359",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_model_string_format_811370392749": {
+      "id": "conventions_model_string_format_811370392749",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "model string format",
+      "content": "Bare model names without a provider prefix are not supported — the codebase expects `provider/model` format from CLI input.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:56:07.969Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2295-260417-184359",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

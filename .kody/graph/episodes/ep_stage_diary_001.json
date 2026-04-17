@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2295-260417-184359",
+  "source": "stage_diary",
+  "taskId": "2295-260417-184359",
+  "createdAt": "2026-04-17T18:56:07.957Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"`parseProviderModel` requires the `provider/model` format and throws on bare model names like `MiniMax-M1` — needs a guard or format normalization upstream.\",\"scope\":\"bootstrapCommand / cli.js\"},{\"kind\":\"gotcha\",\"text\":\"`parseProviderModel` throws (not a graceful error) when the model string doesn't match `provider/model` — callers must handle this.\",\"scope\":\"parseProviderModel utility\"},{\"kind\":\"lesson\",\"text\":\"CLI handlers can silently drop flags not explicitly forwarded to sub-commands — always audit the options object passed to the inner command.\",\"scope\":\"CLI argument passthrough\"},{\"kind\":\"decision\",\"text\":\"The fix targets `dist/bin/cli.js` (the published build) rather than source, so no TypeScript source changes are needed — a valid approach for hotfixing published packages.\",\"scope\":\"kody-ade/engine dist patching\"},{\"kind\":\"convention\",\"text\":\"Bare model names without a provider prefix are not supported — the codebase expect",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
