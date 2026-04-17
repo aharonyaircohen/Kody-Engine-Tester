@@ -1,0 +1,14 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify issue remains OPEN after PR ship",
+  "description": "Verify that issue P3T16 stays OPEN after a PR is shipped and merged, confirming that the Kody pipeline does not auto-close issues on PR merge. This is an observational verification task confirming expected pipeline behavior.",
+  "scope": [
+    ".kody/tasks/2437-260417-234909/task.md",
+    ".kody/tasks/2437-260417-234909/status.json"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
+```

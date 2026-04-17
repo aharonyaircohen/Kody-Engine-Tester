@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2437-260417-234909",
+  "source": "stage_diary",
+  "taskId": "2437-260417-234909",
+  "createdAt": "2026-04-17T23:58:05.257Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Sub-agents (Explore) fail with haiku-model API errors in pipeline stages; use read/glob/grep directly instead.\",\"scope\":\"pipeline\"},{\"kind\":\"lesson\",\"text\":\"Chore/low-risk verification tasks should use direct tool calls (read/glob/grep) rather than sub-agents.\",\"scope\":\"pipeline\"},{\"kind\":\"convention\",\"text\":\"Chore verification tasks scope is limited to task.md and status.json — no code changes needed.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

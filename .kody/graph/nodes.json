@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_pipeline_557350377167": {
+      "id": "thoughts_pipeline_557350377167",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline",
+      "content": "Sub-agents (Explore) fail with haiku-model API errors in pipeline stages; use read/glob/grep directly instead.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:58:05.262Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2437-260417-234909",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_557351588793": {
+      "id": "facts_pipeline_557351588793",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "Chore/low-risk verification tasks should use direct tool calls (read/glob/grep) rather than sub-agents.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:58:05.263Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2437-260417-234909",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_557352839999": {
+      "id": "conventions_pipeline_557352839999",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline",
+      "content": "Chore verification tasks scope is limited to task.md and status.json — no code changes needed.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:58:05.265Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2437-260417-234909",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
