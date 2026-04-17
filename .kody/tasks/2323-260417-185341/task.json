@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "**Task Classification Output:**  ```json {   \"task_type\": \"chore\",   \"ti",
+  "description": "**Task Classification Output:**\n\n```json\n{\n  \"task_type\": \"chore\",\n  \"title\": \"Verify lifecycle label progression P3T33b\",\n  \"description\": \"Live-end-to-end verification that Kody engine manages GitHub issue labels through pipeline stages: kody:planning → kody:building → kody:verifying → kody:review → kody:done. Complexity label (kody:low/medium/high) must persist throughout. This is test T01 of the Kody Complete Test Suite running on aharonyaircohen/Kody-Engine-Tester. The pipeline is already r",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
