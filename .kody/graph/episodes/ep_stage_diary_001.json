@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2310-260417-185128",
+  "source": "stage_diary",
+  "taskId": "2310-260417-185128",
+  "createdAt": "2026-04-17T19:15:22.965Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Plan agents spent turns reading 658KB compiled CLI from node_modules instead of finding non-existent src/ files — always check if source files exist before reading compiled output\",\"scope\":\"pipeline/stages\"},{\"kind\":\"lesson\",\"text\":\"The fix needed is not adding new logging code but ensuring --feedback is parsed and forwarded into ctx.input.feedback — the logger already exists at cli.js:14742\",\"scope\":\"src/cli.ts\"},{\"kind\":\"convention\",\"text\":\"Build stage injection uses ctx.input.feedback with a 200-char slice limit — any solution must populate this field in the pipeline context\",\"scope\":\"src/pipeline/context.ts\"},{\"kind\":\"decision\",\"text\":\"TDD approach: write the test first (src/stages/build.test.ts) before modifying source, so the failing test drives the implementation\",\"scope\":\"testing\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

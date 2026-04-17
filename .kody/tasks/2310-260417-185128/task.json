@@ -1,0 +1,13 @@
+{
+  "task_type": "feature",
+  "title": "Inject --feedback flag into build stage logs",
+  "description": "Parse the --feedback CLI flag (e.g. @kody --feedback \"Use functional style\") and emit a 'feedback: <message>' log line during the build stage. The pipeline context must carry the feedback value from CLI parsing through to the build stage so the log line appears in build-stage output.",
+  "scope": [
+    "src/cli.ts",
+    "src/pipeline/context.ts",
+    "src/stages/build.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [],
+  "questions": []
+}

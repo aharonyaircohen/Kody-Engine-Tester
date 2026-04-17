@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_pipelinestages_1297953751654": {
+      "id": "thoughts_pipelinestages_1297953751654",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline/stages",
+      "content": "Plan agents spent turns reading 658KB compiled CLI from node_modules instead of finding non-existent src/ files — always check if source files exist before reading compiled output",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:15:22.971Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2310-260417-185128",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcclits_1297955186202": {
+      "id": "facts_srcclits_1297955186202",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/cli.ts",
+      "content": "The fix needed is not adding new logging code but ensuring --feedback is parsed and forwarded into ctx.input.feedback — the logger already exists at cli.js:14742",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:15:22.973Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2310-260417-185128",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcpipelinecontextts_1297956798502": {
+      "id": "conventions_srcpipelinecontextts_1297956798502",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/pipeline/context.ts",
+      "content": "Build stage injection uses ctx.input.feedback with a 200-char slice limit — any solution must populate this field in the pipeline context",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:15:22.974Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2310-260417-185128",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testing_1297958405712": {
+      "id": "facts_testing_1297958405712",
+      "type": "facts",
+      "hall": "facts",
+      "room": "testing",
+      "content": "TDD approach: write the test first (src/stages/build.test.ts) before modifying source, so the failing test drives the implementation",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:15:22.976Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2310-260417-185128",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
