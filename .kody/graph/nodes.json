@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_readmemd_350614414745": {
+      "id": "thoughts_readmemd_350614414745",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "README.md",
+      "content": "Comment text differs across artifacts: task.md specifies 'kody observability smoke 0.4.0 2026-04-17' but the build stage plan uses 'observability-smoke-0.4.0'. Ensure the exact string from task.md is ",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T18:06:48.164Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2279-260417-180229",
+        "kind:gotcha"
+      ]
+    }
+  }
+}

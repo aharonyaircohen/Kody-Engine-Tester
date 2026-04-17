@@ -1,0 +1,1 @@
+The plan is ready. Awaiting your approval to exit plan mode and execute — the task is a single-line append to `README.md`.
