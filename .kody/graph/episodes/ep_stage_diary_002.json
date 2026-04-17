@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2291-260417-184347",
+  "source": "stage_diary",
+  "taskId": "2291-260417-184347",
+  "createdAt": "2026-04-17T18:59:26.851Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"React hooks (useCallback, useEffect, etc.) cannot be placed after an early-return guard; move all hook calls before any conditional return to satisfy react-hooks/rules-of-hooks.\",\"scope\":\"src/components/notifications/toast.tsx\"},{\"kind\":\"gotcha\",\"text\":\"Files produced by @kody decompose introduce lint errors (unused imports, missing return types, barrel re-exports) that must be fixed before pipeline merge — generated code is not lint-clean by default\",\"scope\":\"@kody decompose pipeline\"},{\"kind\":\"lesson\",\"text\":\"When a component has an early no-op return, all useCallback/useEffect calls must precede it even if they appear logically unnecessary — the call site, not the function body, determines the rule violat\",\"scope\":\"React Hooks\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

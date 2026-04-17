@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2291-260417-184347",
+  "source": "stage_diary",
+  "taskId": "2291-260417-184347",
+  "createdAt": "2026-04-17T19:15:35.063Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"@kody decompose can introduce lint errors into the codebase — always run lint/verify after a decompose run to catch issues before merge.\",\"scope\":\"pipeline\"},{\"kind\":\"lesson\",\"text\":\"Conditional useCallback calls inside early returns violate React hooks rules and must be restructured so hooks are called unconditionally at the top level.\",\"scope\":\"React hooks\"},{\"kind\":\"convention\",\"text\":\"When fix-lint runs on a stage with known lint failures, fix those errors in the same stage rather than surfacing them for a later pass.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

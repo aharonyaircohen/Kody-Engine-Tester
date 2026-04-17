@@ -1,7 +1,6 @@
 {
   "taskId": "2291-260417-184347",
   "state": "running",
-  "currentStage": "verify",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -19,32 +18,37 @@
     },
     "build": {
       "state": "completed",
-      "startedAt": "2026-04-17T18:51:55.206Z",
-      "completedAt": "2026-04-17T18:55:20.000Z",
+      "completedAt": "2026-04-17T18:57:18.013Z",
       "retries": 0,
-      "outputFile": "build-report.md",
-      "notes": "All 20 notification system files verified complete. 127/128 test files pass (1 failure in tests/int/api.int.spec.ts due to unrelated Drizzle DB query issue). No TypeScript errors for notification files. Worktrees and PR will be created by subsequent decompose/ship stages."
+      "promptTokens": 4384
     },
     "verify": {
-      "state": "pending",
+      "state": "completed",
+      "completedAt": "2026-04-17T18:58:29.938Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
-      "retries": 0
+      "state": "completed",
+      "completedAt": "2026-04-17T19:17:03.655Z",
+      "retries": 1,
+      "outputFile": "review.md",
+      "promptTokens": 5507
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-17T19:17:04.619Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-17T18:45:10.398Z",
-  "updatedAt": "2026-04-17T18:55:20.000Z",
+  "updatedAt": "2026-04-17T19:17:04.619Z",
   "sessions": {
-    "explore": "667fcee0-e6bc-4e22-93a1-f98dfe2b671f"
+    "explore": "667fcee0-e6bc-4e22-93a1-f98dfe2b671f",
+    "review": "48b71e59-2d72-4404-8ea0-e2131b48d629",
+    "build": "f6f8d021-67a2-4bf1-b7ce-5f64f3bdad66"
   }
 }

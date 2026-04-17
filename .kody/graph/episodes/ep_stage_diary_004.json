@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2291-260417-184347",
+  "source": "stage_diary",
+  "taskId": "2291-260417-184347",
+  "createdAt": "2026-04-17T19:17:03.645Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"payload.find({limit:0}) discards results; markAllRead was counting the query result (always 0), not actual matching rows.\",\"scope\":\"src/services/notifications.ts:42-50\"},{\"kind\":\"gotcha\",\"text\":\"Dynamic $and/$or operators in payload.find() create SQL injection surface even with the ORM; prefer explicit typed queries over raw object merging.\",\"scope\":\"src/services/notifications.ts\"},{\"kind\":\"lesson\",\"text\":\"Pipeline verification tasks generate artifacts (event logs, stage diaries, graph nodes) that get committed alongside any real changes — review must separate signal from noise.\",\"scope\":\"pipeline/kody\"},{\"kind\":\"decision\",\"text\":\"The task decomposition verification succeeded: @kody decompose correctly split the composite notification-system task into parallel sub-tasks covering models, services, routes, utils, and tests.\",\"scope\":\"pipeline/kody\"},{\"kind\":\"convention\",\"text\":\"Review stage should produce a verdict (PASS/FAIL), summa",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -39,3 +39,7 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-10 (task: 1529-260410-102822)
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-17 (task: 2291-260417-184347)
+- Date operations should consider UTC vs local time
+- Active directories: .kody/tasks/2291-260417-184347, src/models, src/services, src/routes, src/utils, src/collections, src/app/api/notifications, src/app/api/notifications/read-all, src/app/api/notifications/[id]/read

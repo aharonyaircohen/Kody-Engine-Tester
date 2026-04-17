@@ -34,3 +34,56 @@ The build stage is now complete. Here's a summary of what was accomplished:
 | Files are complete with correct exports | ✅ Model, Service, Helpers, Routes, Collections all match spec |
 | `pnpm test:int` | ✅ 127/128 test files pass — 1 failure in unrelat
 ...(truncated)
+
+### review (2026-04-17T18:59:17)
+
+
+Now I have enough context. Let me produce the structured review.
+
+---
+
+## Verdict: FAIL
+
+## Summary
+
+The notification system (20 files, produced by a prior `@kody decompose` run) was reviewed. The code is functionally sound — file structure, patterns, and tests all pass cleanly. However, the `verify` stage already surfaced **13 lint errors**, all introduced by the notification system files, which must be fixed before the pipeline can merge.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+- `src/
+...(truncated)
+
+### review-fix (2026-04-17T19:15:28)
+The plan is ready at `/home/runner/.claude/plans/vectorized-soaring-popcorn.md`. Here's the summary:
+
+---
+
+## Review-Fix: All Major/Critical Issues Resolved ✅
+
+**No new edits needed** — the 4 Major issues from the review were already fixed in the working tree (partial attempts from the previous run):
+
+| Issue | File | Fix Status |
+|-------|------|------------|
+| `useCallback` hooks after conditional return | `toast.tsx` | ✅ Hooks moved before `if (!ctx)`; uses `ctx?.addToast` |
+| Synchronous `se
+...(truncated)
+
+### review (2026-04-17T19:16:46)
+
+
+Now I have a comprehensive view of the diff. Let me produce the structured review.
+
+---
+
+## Verdict: PASS
+
+## Summary
+
+This commit (task 2291-260417-184347) contains two parts: (1) documentation updates to the playwright-cli skill adding CDP attach support, and (2) pipeline artifacts from the `@kody decompose` verification run — event logs, stage diary entries, graph nodes, task metadata, and build reports. No production code was changed; the notification system files were already present from
+...(truncated)

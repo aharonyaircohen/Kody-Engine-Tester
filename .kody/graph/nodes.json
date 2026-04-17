@@ -64,6 +64,182 @@
         "kind:gotcha"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srccomponentsnotificationstoasttsx_1019697365101": {
+      "id": "thoughts_srccomponentsnotificationstoasttsx_1019697365101",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/components/notifications/toast.tsx",
+      "content": "React hooks (useCallback, useEffect, etc.) cannot be placed after an early-return guard; move all hook calls before any conditional return to satisfy react-hooks/rules-of-hooks.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:59:26.855Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_decompose_pipeline_1019698830493": {
+      "id": "thoughts_kody_decompose_pipeline_1019698830493",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "@kody decompose pipeline",
+      "content": "Files produced by @kody decompose introduce lint errors (unused imports, missing return types, barrel re-exports) that must be fixed before pipeline merge — generated code is not lint-clean by default",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:59:26.857Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_react_hooks_1019700264372": {
+      "id": "facts_react_hooks_1019700264372",
+      "type": "facts",
+      "hall": "facts",
+      "room": "React Hooks",
+      "content": "When a component has an early no-op return, all useCallback/useEffect calls must precede it even if they appear logically unnecessary — the call site, not the function body, determines the rule violat",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:59:26.858Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_1987907731518": {
+      "id": "thoughts_pipeline_1987907731518",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline",
+      "content": "@kody decompose can introduce lint errors into the codebase — always run lint/verify after a decompose run to catch issues before merge.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:15:35.066Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2291-260417-184347",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_react_hooks_1987909140812": {
+      "id": "facts_react_hooks_1987909140812",
+      "type": "facts",
+      "hall": "facts",
+      "room": "React hooks",
+      "content": "Conditional useCallback calls inside early returns violate React hooks rules and must be restructured so hooks are called unconditionally at the top level.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:15:35.067Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2291-260417-184347",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_1987910446403": {
+      "id": "conventions_pipeline_1987910446403",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline",
+      "content": "When fix-lint runs on a stage with known lint failures, fix those errors in the same stage rather than surfacing them for a later pass.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:15:35.068Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2291-260417-184347",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcservicesnotificationsts4250_2076490660168": {
+      "id": "thoughts_srcservicesnotificationsts4250_2076490660168",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/services/notifications.ts:42-50",
+      "content": "payload.find({limit:0}) discards results; markAllRead was counting the query result (always 0), not actual matching rows.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:17:03.648Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcservicesnotificationsts_2076492098255": {
+      "id": "thoughts_srcservicesnotificationsts_2076492098255",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/services/notifications.ts",
+      "content": "Dynamic $and/$or operators in payload.find() create SQL injection surface even with the ORM; prefer explicit typed queries over raw object merging.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:17:03.650Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelinekody_2076493389815": {
+      "id": "facts_pipelinekody_2076493389815",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/kody",
+      "content": "Pipeline verification tasks generate artifacts (event logs, stage diaries, graph nodes) that get committed alongside any real changes — review must separate signal from noise.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:17:03.651Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelinekody_2076494949861": {
+      "id": "facts_pipelinekody_2076494949861",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/kody",
+      "content": "The task decomposition verification succeeded: @kody decompose correctly split the composite notification-system task into parallel sub-tasks covering models, services, routes, utils, and tests.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:17:03.653Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_review_process_2076496270664": {
+      "id": "conventions_review_process_2076496270664",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "review process",
+      "content": "Review stage should produce a verdict (PASS/FAIL), summary, and findings grouped by severity before listing pass/fail criteria.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-17T19:17:03.654Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2291-260417-184347",
+        "kind:convention"
+      ],
+      "confidence": 0.7
     }
   }
 }
