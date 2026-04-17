@@ -18,24 +18,8 @@ import { LessonEditor } from './LessonEditor'
 
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
+**TypeScript**: strict mode enabled; use `interface` for object shapes; export types alongside implementations in `src/collections/` and `src/services/`
 
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
+**JSDoc**: Document public utilities with `@param`, `@returns`, `@example` blocks (see `src/utils/url-shortener.ts`)
 
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/utils
-
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-10 (task: 1529-260410-102822)
-- Uses Drizzle ORM
-- Uses Payload CMS collections
+**Security**: Sanitizers in `src/security/sanitizers.ts` — `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl`; always validate/sanitize user input before DB queries
