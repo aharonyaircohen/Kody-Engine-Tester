@@ -1,15 +1,19 @@
 # QA Guide
 
+## Quick Reference
+
+- Dev server: `pnpm dev` at http://localhost:3000
+- Login page: `/login`
+- Admin panel: `/admin` (wildcard: `/admin/:...segments?`)
+
 ## Authentication
 
 ### Test Accounts
 
-<!-- Fill in your test/preview environment credentials below -->
-
-| Role  | Email             | Password  |
-| ----- | ----------------- | --------- |
-| Admin | admin@example.com | CHANGE_ME |
-| User  | user@example.com  | CHANGE_ME |
+| Role  | Email            | Password            |
+| ----- | ---------------- | ------------------- |
+| Admin | `QA_ADMIN_EMAIL` | `QA_ADMIN_PASSWORD` |
+| User  | `QA_USER_EMAIL`  | `QA_USER_PASSWORD`  |
 
 ### Login Steps
 
@@ -20,7 +24,7 @@
 
 ### Auth Files
 
-- `src/auth`
+- `src/auth/`
 
 ## Roles
 
@@ -30,90 +34,101 @@
 - `CTO`
 - `Researcher`
 
-## Key Pages
+## Navigation Map
 
-### Frontend
+### Admin Panel
 
-- `/`
-- `/dashboard`
-- `/instructor/courses/:id/edit`
-- `/notes`
-- `/notes/:id`
-- `/notes/create`
-- `/notes/edit/:id`
+#### Collections Management
 
-### Admin
+- `/admin/collections/assignments` — Assignments list and edit form. Fields: title, module, instructions, dueDate, maxScore, rubric, criterion, maxPoints, description
+- `/admin/collections/courses` — Courses list and edit form. Fields: title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label, maxEnrollments, quizWeight, assignmentWeight
+- `/admin/collections/enrollments` — Enrollments list. Fields: student, course, enrolledAt, status, completedAt, completedLessons
+- `/admin/collections/lessons` — Lessons list. Fields: title, course, module, order, type, content, videoUrl, estimatedMinutes
+- `/admin/collections/media` — Media uploads. Fields: alt
+- `/admin/collections/notifications` — Notifications list. Fields: recipient, type, title, message, link, isRead
+- `/admin/collections/quiz-attempts` — Quiz attempts. Fields: user, quiz, score, passed, answers, questionIndex, answer, startedAt, completedAt
+- `/admin/collections/quizzes` — Quizzes list. Fields: title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options, isCorrect, correctAnswer, points
+- `/admin/collections/submissions` — Submissions list. Fields: assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores, criterion, score, comment
+- `/admin/collections/users` — Users list. Fields: firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
+- `/admin/collections/certificates` — Certificates list. Fields: student, course, issuedAt, certificateNumber, finalGrade
+- `/admin/collections/notes` — Notes list. Fields: title, content, tags
 
-- `/admin/:...segments?`
+### Frontend Pages
 
-## Admin Collections
+- `/` — Home page with course listings
+- `/dashboard` — User dashboard with enrollments and progress
+- `/instructor/courses/:id/edit` — Course editor for instructors
+- `/notes` — Notes list view
+- `/notes/:id` — Single note view
+- `/notes/create` — Create new note
+- `/notes/edit/:id` — Edit existing note
 
-### `/admin/collections/assignments`
+### API Endpoints
 
-- **Name:** Assignments
-- **Fields:** title, module, instructions, dueDate, maxScore, rubric, criterion, maxPoints, description
+- `GET/POST /api/notes` — Note CRUD with search
+- `GET /api/notes/[id]` — Single note retrieval
+- `GET /api/quizzes/[id]` — Quiz retrieval
+- `POST /api/quizzes/[id]/submit` — Quiz grading
+- `GET /api/quizzes/[id]/attempts` — User's quiz attempts
+- `GET /api/courses/search` — Course search
+- `POST /api/enroll` — Enrollment (viewer role required)
+- `GET /api/gradebook/course/[id]` — Grades per course (editor/admin)
 
-### `/admin/collections/courses`
+## Component Verification Patterns
 
-- **Name:** Courses
-- **Fields:** title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label, maxEnrollments, quizWeight, assignmentWeight
+### Payload CMS Admin Components
 
-### `/admin/collections/enrollments`
+- Collection lists show data table with sortable columns
+- Edit forms display all collection fields with appropriate input types
+- Media field shows image preview after upload
+- Relationship fields render as dropdowns/pickers
+- Rich text fields render as WYSIWYG editors
 
-- **Name:** Enrollments
-- **Fields:** student, course, enrolledAt, status, completedAt, completedLessons
+### Frontend Components
 
-### `/admin/collections/lessons`
+- Navigation: verify role-based menu items appear
+- Forms: verify validation messages on invalid input
+- Lists: verify pagination, empty states, and loading skeletons
 
-- **Name:** Lessons
-- **Fields:** title, course, module, order, type, content, videoUrl, estimatedMinutes
+## Common Test Scenarios
 
-### `/admin/collections/media`
+### Admin Workflows
 
-- **Name:** Media
-- **Fields:** alt
+1. Create a new course with all fields
+2. Edit an existing course
+3. Upload media and attach to a course
+4. View and manage user enrollments
+5. Review quiz submissions and grade assignments
 
-### `/admin/collections/notifications`
+### Frontend Workflows
 
-- **Name:** Notifications
-- **Fields:** recipient, type, title, message, link, isRead
+1. User login and dashboard access
+2. Browse and enroll in courses
+3. Create and edit personal notes
+4. Take a quiz and view results
+5. View certificate upon course completion
 
-### `/admin/collections/quiz-attempts`
+## Environment Setup
 
-- **Name:** QuizAttempts
-- **Fields:** user, quiz, score, passed, answers, questionIndex, answer, startedAt, completedAt
-
-### `/admin/collections/quizzes`
-
-- **Name:** Quizzes
-- **Fields:** title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options, isCorrect, correctAnswer, points
-
-### `/admin/collections/submissions`
-
-- **Name:** Submissions
-- **Fields:** assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores, criterion, score, comment
-
-### `/admin/collections/users`
-
-- **Name:** Users
-- **Fields:** firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
-
-### `/admin/collections/certificates`
-
-- **Name:** certificates
-- **Fields:** student, course, issuedAt, certificateNumber, finalGrade
-
-### `/admin/collections/notes`
-
-- **Name:** notes
-- **Fields:** title, content, tags
-
-## Required Environment Variables
+Required env vars:
 
 - `DATABASE_URL`
 - `PAYLOAD_SECRET`
+- `QA_ADMIN_EMAIL`
+- `QA_ADMIN_PASSWORD`
+- `QA_USER_EMAIL`
+- `QA_USER_PASSWORD`
 
 ## Dev Server
 
 - Command: `pnpm dev`
 - URL: `http://localhost:3000`
+
+## Rules
+
+- Be SPECIFIC to this project — reference actual URLs, collection names, component names
+- For admin panels (Payload CMS), use exact `/admin/collections/{slug}` paths
+- Include visual assertions: "verify X is visible", "you should see Y"
+- Include interaction tests: "click button X", "fill field Y"
+- Keep under 200 lines total
+- Output ONLY the markdown
