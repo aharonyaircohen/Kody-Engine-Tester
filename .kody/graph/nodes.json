@@ -80,6 +80,118 @@
         "kind:convention"
       ],
       "confidence": 0.7
+    },
+    "thoughts_bootstrap_cli_1040406052393": {
+      "id": "thoughts_bootstrap_cli_1040406052393",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "bootstrap CLI",
+      "content": "The fix targets node_modules/@kody-ade/engine/dist/bin/cli.js — the published build, not source. Local source changes won't take effect unless rebuilt and republished.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:59:57.005Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2295-260417-184359",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_bootstrapcommand_model_parsing_1040408038173": {
+      "id": "facts_bootstrapcommand_model_parsing_1040408038173",
+      "type": "facts",
+      "hall": "facts",
+      "room": "bootstrapCommand model parsing",
+      "content": "The model-resolution helper parseProviderModel expects 'provider/model' format (e.g. 'minimax/MiniMax-M1'). If model and provider come in separately, they must be combined before calling it.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:59:57.007Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2295-260417-184359",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_cli_argument_passthrough_1040409454402": {
+      "id": "facts_cli_argument_passthrough_1040409454402",
+      "type": "facts",
+      "hall": "facts",
+      "room": "CLI argument passthrough",
+      "content": "The --provider flag was parsed from CLI args but silently dropped before being forwarded to bootstrapCommand — a classic argument-tunneling bug.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:59:57.008Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2295-260417-184359",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_bootstrap_model_flag_behavior_1040410796382": {
+      "id": "thoughts_bootstrap_model_flag_behavior_1040410796382",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "bootstrap --model flag behavior",
+      "content": "The --model flag alone works because it encodes the provider as a prefix; --provider only matters when used alongside --model without the prefix.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T18:59:57.009Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2295-260417-184359",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcserverpayload_1238062825057": {
+      "id": "thoughts_srcserverpayload_1238062825057",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/server/payload",
+      "content": "The CLI handler parsed --provider but never passed it in the options object to bootstrapCommand, silently dropping it downstream.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:03:14.661Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2295-260417-184359",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcserverpayload_1238064192775": {
+      "id": "conventions_srcserverpayload_1238064192775",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/server/payload",
+      "content": "parseProviderModel expects 'provider/model' format (e.g. 'minimax/MiniMax-M1'), not separate provider and model args.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:03:14.663Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2295-260417-184359",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcserverpayload_1238065927925": {
+      "id": "facts_srcserverpayload_1238065927925",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/server/payload",
+      "content": "Minimal 2-line fix: pass provider in the CLI handler options and combine provider+model into the required 'provider/model' string.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-17T19:03:14.665Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2295-260417-184359",
+        "kind:decision"
+      ],
+      "confidence": 0.7
     }
   }
 }

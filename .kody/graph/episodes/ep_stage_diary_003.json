@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2295-260417-184359",
+  "source": "stage_diary",
+  "taskId": "2295-260417-184359",
+  "createdAt": "2026-04-17T19:03:14.658Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The CLI handler parsed --provider but never passed it in the options object to bootstrapCommand, silently dropping it downstream.\",\"scope\":\"src/server/payload\"},{\"kind\":\"convention\",\"text\":\"parseProviderModel expects 'provider/model' format (e.g. 'minimax/MiniMax-M1'), not separate provider and model args.\",\"scope\":\"src/server/payload\"},{\"kind\":\"decision\",\"text\":\"Minimal 2-line fix: pass provider in the CLI handler options and combine provider+model into the required 'provider/model' string.\",\"scope\":\"src/server/payload\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

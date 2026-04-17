@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2295-260417-184359",
+  "source": "stage_diary",
+  "taskId": "2295-260417-184359",
+  "createdAt": "2026-04-17T18:59:57.001Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The fix targets node_modules/@kody-ade/engine/dist/bin/cli.js — the published build, not source. Local source changes won't take effect unless rebuilt and republished.\",\"scope\":\"bootstrap CLI\"},{\"kind\":\"lesson\",\"text\":\"The model-resolution helper parseProviderModel expects 'provider/model' format (e.g. 'minimax/MiniMax-M1'). If model and provider come in separately, they must be combined before calling it.\",\"scope\":\"bootstrapCommand model parsing\"},{\"kind\":\"decision\",\"text\":\"The --provider flag was parsed from CLI args but silently dropped before being forwarded to bootstrapCommand — a classic argument-tunneling bug.\",\"scope\":\"CLI argument passthrough\"},{\"kind\":\"gotcha\",\"text\":\"The --model flag alone works because it encodes the provider as a prefix; --provider only matters when used alongside --model without the prefix.\",\"scope\":\"bootstrap --model flag behavior\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
