@@ -1,0 +1,7 @@
+{
+  "decomposable": false,
+  "reason": "Trivial single-file change: 1 step modifying only README.md with a one-line append. No dependencies, no coupling, and below complexity threshold for decomposition.",
+  "complexity_score": 1,
+  "recommended_subtasks": 1,
+  "sub_tasks": []
+}

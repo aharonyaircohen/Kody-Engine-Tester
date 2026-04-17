@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2275-260417-182600",
+  "source": "stage_diary",
+  "taskId": "2275-260417-182600",
+  "createdAt": "2026-04-17T15:27:56.247Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"decision\",\"text\":\"Test tasks for verify-gate improvements use single-file modifications to isolate gate filtering logic from broader task scope.\",\"scope\":\"kody-engine\"},{\"kind\":\"convention\",\"text\":\"Verify-gate validation runs trivial changes through full pipeline to confirm gates differentiate task-modified files from pre-existing errors in unrelated code.\",\"scope\":\"kody-engine\"},{\"kind\":\"gotcha\",\"text\":\"Build stage may report pre-existing TS/ESLint errors even if verify-gate is designed to skip them; gate behavior must be validated independently of build output.\",\"scope\":\"kody-engine\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

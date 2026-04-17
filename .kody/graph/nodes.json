@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_kodyengine_4670599275640000": {
+      "id": "facts_kodyengine_4670599275640000",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody-engine",
+      "content": "Test tasks for verify-gate improvements use single-file modifications to isolate gate filtering logic from broader task scope.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T15:27:56.260Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2275-260417-182600",
+        "kind:decision"
+      ]
+    },
+    "conventions_kodyengine_4670599280955458": {
+      "id": "conventions_kodyengine_4670599280955458",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody-engine",
+      "content": "Verify-gate validation runs trivial changes through full pipeline to confirm gates differentiate task-modified files from pre-existing errors in unrelated code.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T15:27:56.265Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2275-260417-182600",
+        "kind:convention"
+      ]
+    },
+    "thoughts_kodyengine_4670599288480333": {
+      "id": "thoughts_kodyengine_4670599288480333",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody-engine",
+      "content": "Build stage may report pre-existing TS/ESLint errors even if verify-gate is designed to skip them; gate behavior must be validated independently of build output.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T15:27:56.273Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2275-260417-182600",
+        "kind:gotcha"
+      ]
+    }
+  }
+}
