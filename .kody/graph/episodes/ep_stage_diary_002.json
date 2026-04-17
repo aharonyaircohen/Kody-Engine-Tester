@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "never",
+  "source": "stage_diary",
+  "taskId": "never",
+  "createdAt": "2026-04-17T21:18:32.830Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build agent failed silently — produced truncated JSONL files and never wrote classify.json. Always verify the output file exists before marking done.\",\"scope\":\"never pipeline task\"},{\"kind\":\"gotcha\",\"text\":\"Verify step (pnpm verify) surfaced 13 pre-existing errors unrelated to this task. These need to be suppressed when they predate the current task.\",\"scope\":\"task verification\"},{\"kind\":\"lesson\",\"text\":\"For 'never' (classification-only) tasks, no source files should be touched — only classify.json and status.json.\",\"scope\":\"never pipeline task\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

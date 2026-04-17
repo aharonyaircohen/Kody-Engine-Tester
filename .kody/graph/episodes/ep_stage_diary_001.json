@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "never",
+  "source": "stage_diary",
+  "taskId": "never",
+  "createdAt": "2026-04-17T21:17:32.849Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The build agent failed silently — JSONL output was truncated and classify.json was never written. No error was surfaced in the build step output.\",\"scope\":\"pipeline/agent-outputs\"},{\"kind\":\"gotcha\",\"text\":\"pnpm verify (lint/typecheck) catches pre-existing errors in the broader codebase, not just the task at hand. Classification-only tasks should suppress it.\",\"scope\":\"src/server/payload\"},{\"kind\":\"lesson\",\"text\":\"Classification-only tasks write no source files — they only produce an output artifact (classify.json) and update status.json. The verify step is extraneous noise for such tasks.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

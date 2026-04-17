@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_pipelineagentoutputs_882597401014": {
+      "id": "thoughts_pipelineagentoutputs_882597401014",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline/agent-outputs",
+      "content": "The build agent failed silently — JSONL output was truncated and classify.json was never written. No error was surfaced in the build step output.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T21:17:32.855Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:never",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcserverpayload_882598828887": {
+      "id": "thoughts_srcserverpayload_882598828887",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/server/payload",
+      "content": "pnpm verify (lint/typecheck) catches pre-existing errors in the broader codebase, not just the task at hand. Classification-only tasks should suppress it.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T21:17:32.856Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:never",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_882600066594": {
+      "id": "facts_pipeline_882600066594",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "Classification-only tasks write no source files — they only produce an output artifact (classify.json) and update status.json. The verify step is extraneous noise for such tasks.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T21:17:32.858Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:never",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_task_verification_942576066943": {
+      "id": "thoughts_task_verification_942576066943",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "task verification",
+      "content": "Verify step (pnpm verify) surfaced 13 pre-existing errors unrelated to this task. These need to be suppressed when they predate the current task.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T21:18:32.834Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:never",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_never_pipeline_task_942577401736": {
+      "id": "facts_never_pipeline_task_942577401736",
+      "type": "facts",
+      "hall": "facts",
+      "room": "never pipeline task",
+      "content": "For 'never' (classification-only) tasks, no source files should be touched — only classify.json and status.json.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T21:18:32.835Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:never",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
