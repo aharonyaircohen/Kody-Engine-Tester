@@ -1,0 +1,1 @@
+Plan is ready for your review. The task is a **chore** (low risk) that classifies P2T29 — a test-suite Phase 2 verification task that fires a GitHub issue to verify `@kody compose` skips already-merged branches and retries from the verify stage. The implementation is simply writing a `task.json` with the classification; no code changes.
