@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2423-260417-234844",
+  "source": "stage_diary",
+  "taskId": "2423-260417-234844",
+  "createdAt": "2026-04-17T23:54:47.774Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"ensureFeatureBranchIfNeeded only synced base branch when prNumber was set — it never checked out the PR head branch, so pipeline ran on wrong branch.\",\"scope\":\"kody engine cli.js\"},{\"kind\":\"gotcha\",\"text\":\"The fix target is the compiled engine at node_modules/@kody-ade/engine/dist/bin/cli.js, not source. Must also add prHeadBranch to ctx.input.\",\"scope\":\"kody engine\"},{\"kind\":\"lesson\",\"text\":\"When patching a dependency's compiled output, both the context population and the function logic must be updated together.\",\"scope\":\"kody engine patch strategy\"},{\"kind\":\"convention\",\"text\":\"PR details from getPRDetails include both baseBranch and headBranch — both must be stored in ctx.input and used together.\",\"scope\":\"kody engine pr context\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

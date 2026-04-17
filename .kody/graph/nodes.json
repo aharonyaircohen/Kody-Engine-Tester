@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kody_engine_clijs_568712180095": {
+      "id": "thoughts_kody_engine_clijs_568712180095",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody engine cli.js",
+      "content": "ensureFeatureBranchIfNeeded only synced base branch when prNumber was set — it never checked out the PR head branch, so pipeline ran on wrong branch.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:54:47.780Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2423-260417-234844",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_engine_568714245476": {
+      "id": "thoughts_kody_engine_568714245476",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody engine",
+      "content": "The fix target is the compiled engine at node_modules/@kody-ade/engine/dist/bin/cli.js, not source. Must also add prHeadBranch to ctx.input.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:54:47.782Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2423-260417-234844",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_engine_patch_strategy_568715460982": {
+      "id": "facts_kody_engine_patch_strategy_568715460982",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody engine patch strategy",
+      "content": "When patching a dependency's compiled output, both the context population and the function logic must be updated together.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:54:47.783Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2423-260417-234844",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_engine_pr_context_568716787035": {
+      "id": "conventions_kody_engine_pr_context_568716787035",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody engine pr context",
+      "content": "PR details from getPRDetails include both baseBranch and headBranch — both must be stored in ctx.input and used together.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T23:54:47.784Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2423-260417-234844",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
