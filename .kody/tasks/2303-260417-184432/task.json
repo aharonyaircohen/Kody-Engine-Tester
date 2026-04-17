@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. The key change from the failed attemp",
+  "description": "The plan is ready for your review. The key change from the failed attempt: skip all Explore subagents and excessive codebase exploration — the test workflow is fully self-contained in the task definition. Proceeding will run the integration test steps (find PR → create conflict → trigger `@kody resolve` → verify → cleanup with `git revert`).",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_test_workflow_1017077843914": {
+      "id": "facts_test_workflow_1017077843914",
+      "type": "facts",
+      "hall": "facts",
+      "room": "test workflow",
+      "content": "For CLI-based integration tests, skip Explore subagents and pre-emptive codebase exploration — the task definition already contains the full self-contained workflow.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-17T19:04:09.203Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2303-260417-184432",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

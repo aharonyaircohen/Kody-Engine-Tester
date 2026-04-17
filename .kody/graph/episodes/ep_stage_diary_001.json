@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2303-260417-184432",
+  "source": "stage_diary",
+  "taskId": "2303-260417-184432",
+  "createdAt": "2026-04-17T19:04:09.197Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"For CLI-based integration tests, skip Explore subagents and pre-emptive codebase exploration — the task definition already contains the full self-contained workflow.\",\"scope\":\"test workflow\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
