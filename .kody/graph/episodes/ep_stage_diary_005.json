@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2788-260418-164733",
+  "source": "stage_diary",
+  "taskId": "2788-260418-164733",
+  "createdAt": "2026-04-18T17:17:21.560Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Changing a login/sign-in function signature (e.g., removing parameters or altering return shape) in auth-service.ts breaks all callers — including callers outside the auth module. Always check cross-m\",\"scope\":\"auth-service.ts\"},{\"kind\":\"convention\",\"text\":\"Sensitive fields in Payload collections use dual guard: `hidden: true` plus `access: { read: () => false, update: () => false }`. Reuse this pattern for any secret field.\",\"scope\":\"Payload collections\"},{\"kind\":\"convention\",\"text\":\"PBKDF2 hashing in this codebase uses `crypto.pbkdf2(password, salt, 25000, 512, 'sha256', callback)` — parameters are fixed; new utility must match exactly.\",\"scope\":\"password hashing\"},{\"kind\":\"decision\",\"text\":\"Password hash utilities are centralized into a standalone module (`password-hash.ts`) rather than inlined in hooks or AuthService, enabling reuse across login, registration, and reset flows.\",\"scope\":\"password hashing utility\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

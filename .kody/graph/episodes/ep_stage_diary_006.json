@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_006",
+  "runId": "2788-260418-164733",
+  "source": "stage_diary",
+  "taskId": "2788-260418-164733",
+  "createdAt": "2026-04-18T17:18:56.822Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"A beforeChange hook that returns undefined when data.password is absent destroys the existing stored passwordHash on any profile update.\",\"scope\":\"src/collections/Users.ts:161-169\"},{\"kind\":\"lesson\",\"text\":\"Tests for field-level behavior must validate the correct (fixed) behavior, not the pre-existing broken behavior, otherwise they lock in the bug.\",\"scope\":\"src/collections/Users.test.ts:274\"},{\"kind\":\"convention\",\"text\":\"Hidden + read-guarded fields like passwordHash should use both hidden: true and access: { read: () => false } for defense in depth.\",\"scope\":\"src/collections/Users.ts\"},{\"kind\":\"decision\",\"text\":\"PBKDF2 with 25000 iterations and sha256 was chosen to align with the existing AuthService.verifyPassword pattern.\",\"scope\":\"password hashing\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2788-260418-164733",
+  "source": "stage_diary",
+  "taskId": "2788-260418-164733",
+  "createdAt": "2026-04-18T17:07:19.868Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Creating a new utility function without wiring it into the consuming code makes it dead code. The verifyPasswordHash utility existed but AuthService never called it, breaking the acceptance criterion.\",\"scope\":\"auth\"},{\"kind\":\"convention\",\"text\":\"Payload hidden fields use both `hidden: true` AND `access: { read: () => false, update: () => false }` together — one is not enough.\",\"scope\":\"src/server/payload\"},{\"kind\":\"convention\",\"text\":\"PBKDF2 config in this codebase: crypto.pbkdf2(password, salt, 25000, 512, 'sha256', callback) — iterations=25000, keylen=512.\",\"scope\":\"src/auth\"},{\"kind\":\"lesson\",\"text\":\"When adding a new field that must be used at runtime, verify it is consumed by existing code paths, not just added to the schema.\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

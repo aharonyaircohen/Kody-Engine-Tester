@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2788-260418-164733",
+  "source": "stage_diary",
+  "taskId": "2788-260418-164733",
+  "createdAt": "2026-04-18T17:08:24.160Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Adding a required field to login() breaks auth for all pre-existing users lacking that field; handle missing values gracefully or migrate existing records first\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"A password hash field requires a corresponding salt field in the same hook and collection; omitting salt makes verification impossible\",\"scope\":\"auth\"},{\"kind\":\"convention\",\"text\":\"Hidden fields in Payload should use both `hidden: true` and `access: { read: () => false }` to prevent accidental exposure via API\",\"scope\":\"src/server/payload\"},{\"kind\":\"convention\",\"text\":\"Colocate PBKDF2 hashing in a shared utility module rather than duplicating pbkdf2 calls across hooks and services\",\"scope\":\"src/auth\"},{\"kind\":\"decision\",\"text\":\"Use Payload's `beforeChange` hook to hash passwords at write time, keeping the plain-text password out of the request lifecycle entirely\",\"scope\":\"src/auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

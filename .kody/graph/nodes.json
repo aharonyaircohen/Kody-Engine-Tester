@@ -64,6 +64,214 @@
         "kind:decision"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcserverauthauthservicets_682868771594": {
+      "id": "thoughts_srcserverauthauthservicets_682868771594",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/server/auth/AuthService.ts",
+      "content": "Utility functions defined and tested are not automatically integrated; must explicitly wire new code into existing consumers like AuthService",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T16:58:35.706Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_auth_1207034354692": {
+      "id": "thoughts_auth_1207034354692",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth",
+      "content": "Creating a new utility function without wiring it into the consuming code makes it dead code. The verifyPasswordHash utility existed but AuthService never called it, breaking the acceptance criterion.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:07:19.872Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2788-260418-164733",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcauth_1207035923724": {
+      "id": "conventions_srcauth_1207035923724",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth",
+      "content": "PBKDF2 config in this codebase: crypto.pbkdf2(password, salt, 25000, 512, 'sha256', callback) — iterations=25000, keylen=512.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:07:19.873Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2788-260418-164733",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_1207037626924": {
+      "id": "facts_auth_1207037626924",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "When adding a new field that must be used at runtime, verify it is consumed by existing code paths, not just added to the schema.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:07:19.875Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2788-260418-164733",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_auth_1271325795756": {
+      "id": "thoughts_auth_1271325795756",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth",
+      "content": "Adding a required field to login() breaks auth for all pre-existing users lacking that field; handle missing values gracefully or migrate existing records first",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:08:24.163Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_1271327372380": {
+      "id": "facts_auth_1271327372380",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "A password hash field requires a corresponding salt field in the same hook and collection; omitting salt makes verification impossible",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:08:24.165Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcauth_1271328658175": {
+      "id": "conventions_srcauth_1271328658175",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth",
+      "content": "Colocate PBKDF2 hashing in a shared utility module rather than duplicating pbkdf2 calls across hooks and services",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:08:24.166Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcauth_1271330474020": {
+      "id": "facts_srcauth_1271330474020",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/auth",
+      "content": "Use Payload's `beforeChange` hook to hash passwords at write time, keeping the plain-text password out of the request lifecycle entirely",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:08:24.168Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_authservicets_1808726061015": {
+      "id": "thoughts_authservicets_1808726061015",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth-service.ts",
+      "content": "Changing a login/sign-in function signature (e.g., removing parameters or altering return shape) in auth-service.ts breaks all callers — including callers outside the auth module. Always check cross-m",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:17:21.563Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2788-260418-164733",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_password_hashing_utility_1808728070086": {
+      "id": "facts_password_hashing_utility_1808728070086",
+      "type": "facts",
+      "hall": "facts",
+      "room": "password hashing utility",
+      "content": "Password hash utilities are centralized into a standalone module (`password-hash.ts`) rather than inlined in hooks or AuthService, enabling reuse across login, registration, and reset flows.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:17:21.565Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2788-260418-164733",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srccollectionsusersts161169_1903987527499": {
+      "id": "thoughts_srccollectionsusersts161169_1903987527499",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/collections/Users.ts:161-169",
+      "content": "A beforeChange hook that returns undefined when data.password is absent destroys the existing stored passwordHash on any profile update.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T17:18:56.825Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srccollectionsuserstestts274_1903988918808": {
+      "id": "facts_srccollectionsuserstestts274_1903988918808",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/collections/Users.test.ts:274",
+      "content": "Tests for field-level behavior must validate the correct (fixed) behavior, not the pre-existing broken behavior, otherwise they lock in the bug.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T17:18:56.826Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_password_hashing_1903990735394": {
+      "id": "facts_password_hashing_1903990735394",
+      "type": "facts",
+      "hall": "facts",
+      "room": "password hashing",
+      "content": "PBKDF2 with 25000 iterations and sha256 was chosen to align with the existing AuthService.verifyPassword pattern.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T17:18:56.828Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2788-260418-164733",
+        "kind:decision"
+      ],
+      "confidence": 0.7
     }
   }
 }

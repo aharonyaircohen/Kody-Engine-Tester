@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2788-260418-164733",
+  "source": "stage_diary",
+  "taskId": "2788-260418-164733",
+  "createdAt": "2026-04-18T16:58:35.703Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Utility functions defined and tested are not automatically integrated; must explicitly wire new code into existing consumers like AuthService\",\"scope\":\"src/server/auth/AuthService.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
