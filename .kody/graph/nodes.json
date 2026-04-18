@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_auth_1389198976556": {
+      "id": "thoughts_auth_1389198976556",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth",
+      "content": "Dual auth systems coexist: SessionStore/UserStore (SHA-256, session) and AuthService/JwtService (PBKDF2, JWT) — consolidate before adding new features.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:13:35.736Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2650-260418-100454",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_1389205489940": {
+      "id": "facts_auth_1389205489940",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "JWT auth already fully implemented (HMAC-SHA256, rotation, blacklist, refresh) — the task is integration, not implementation.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:13:35.742Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2650-260418-100454",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_1389206742146": {
+      "id": "facts_pipeline_1389206742146",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "HIGH complexity tasks (30+ files) trigger a risk gate that pauses the pipeline at plan stage — complexity scoring gates deployment.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:13:35.744Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2650-260418-100454",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_migrations_1389207805998": {
+      "id": "thoughts_migrations_1389207805998",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "migrations",
+      "content": "New JWT fields (jwt_secret, exp, iat) require database migrations — schema changes must be applied before middleware swaps.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:13:35.745Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2650-260418-100454",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_authrbac_1389208988388": {
+      "id": "facts_authrbac_1389208988388",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth/RBAC",
+      "content": "RBAC roles (admin/editor/viewer) must be layered onto the JWT payload — define role claims before updating middleware.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:13:35.746Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2650-260418-100454",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

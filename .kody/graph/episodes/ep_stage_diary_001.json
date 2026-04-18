@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2650-260418-100454",
+  "source": "stage_diary",
+  "taskId": "2650-260418-100454",
+  "createdAt": "2026-04-18T10:13:35.731Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Dual auth systems coexist: SessionStore/UserStore (SHA-256, session) and AuthService/JwtService (PBKDF2, JWT) — consolidate before adding new features.\",\"scope\":\"auth\"},{\"kind\":\"decision\",\"text\":\"JWT auth already fully implemented (HMAC-SHA256, rotation, blacklist, refresh) — the task is integration, not implementation.\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"HIGH complexity tasks (30+ files) trigger a risk gate that pauses the pipeline at plan stage — complexity scoring gates deployment.\",\"scope\":\"pipeline\"},{\"kind\":\"gotcha\",\"text\":\"New JWT fields (jwt_secret, exp, iat) require database migrations — schema changes must be applied before middleware swaps.\",\"scope\":\"migrations\"},{\"kind\":\"decision\",\"text\":\"RBAC roles (admin/editor/viewer) must be layered onto the JWT payload — define role claims before updating middleware.\",\"scope\":\"auth/RBAC\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

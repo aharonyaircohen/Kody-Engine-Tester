@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The questions have been presented to the user. The task classification i",
+  "description": "The questions have been presented to the user. The task classification is complete — this is clearly a **HIGH risk** task touching ~30+ files across auth, middleware, collections, and migrations.\n\n**Summary of my findings:**\n\n- The codebase has a **dual auth system**: `SessionStore`/`UserStore` (SHA-256, session-based) coexists with `AuthService`/`JwtService` (PBKDF2, JWT-based)\n- JWT auth already exists (`JwtService` with HMAC-SHA256, blacklist, rotation) — but the old session system in `src/ap",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
