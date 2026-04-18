@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready. Here's a summary of what I found and what the plan pr",
+  "description": "The plan is ready. Here's a summary of what I found and what the plan proposes:\n\n**What went wrong in the previous attempts:**\nBoth taskify agents tried to use the `Explore` subagent, which requires `claude-haiku-4-5-20251001` — a model not available on this API key. Both failed immediately with API errors, then spent the remaining budget searching for `@kody-ade/engine` source code in `node_modules` (it's an external npm package, not local source), and ran out of budget before writing any plan.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

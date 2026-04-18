@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2507-260418-035547",
+  "source": "stage_diary",
+  "taskId": "2507-260418-035547",
+  "createdAt": "2026-04-18T04:11:03.683Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Explore subagent requires model claude-haiku-4-5-20251001 which may not be available on all API keys, causing immediate API errors\",\"scope\":\"subagent/Explore\"},{\"kind\":\"lesson\",\"text\":\"@kody-ade/engine is an external npm package, not local source code in node_modules — searching local node_modules for it will fail\",\"scope\":\"kody engine\"},{\"kind\":\"decision\",\"text\":\"PR title derivation confirmed: ship stage reads task.md first line heading via heading.replace(/^#\\\\s*/, '').trim() and slices to 72 chars\",\"scope\":\"ship stage\"},{\"kind\":\"convention\",\"text\":\"Verification tasks in build stage may find nothing to implement if behavior is already correct; plan should account for this\",\"scope\":\"verification tasks\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

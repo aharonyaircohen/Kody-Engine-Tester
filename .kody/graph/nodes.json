@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_subagentexplore_1142648846494": {
+      "id": "thoughts_subagentexplore_1142648846494",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "subagent/Explore",
+      "content": "Explore subagent requires model claude-haiku-4-5-20251001 which may not be available on all API keys, causing immediate API errors",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:03.688Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2507-260418-035547",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_engine_1142650377165": {
+      "id": "facts_kody_engine_1142650377165",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody engine",
+      "content": "@kody-ade/engine is an external npm package, not local source code in node_modules — searching local node_modules for it will fail",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:03.690Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2507-260418-035547",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_ship_stage_1142651811318": {
+      "id": "facts_ship_stage_1142651811318",
+      "type": "facts",
+      "hall": "facts",
+      "room": "ship stage",
+      "content": "PR title derivation confirmed: ship stage reads task.md first line heading via heading.replace(/^#\\s*/, '').trim() and slices to 72 chars",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:03.691Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2507-260418-035547",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_verification_tasks_1142653199555": {
+      "id": "conventions_verification_tasks_1142653199555",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "verification tasks",
+      "content": "Verification tasks in build stage may find nothing to implement if behavior is already correct; plan should account for this",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:03.693Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2507-260418-035547",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
