@@ -1,6 +1,6 @@
 {
   "taskId": "hotfix-2785-260418-164531",
-  "state": "completed",
+  "state": "running",
   "stages": {
     "taskify": {
       "state": "completed",
@@ -12,28 +12,32 @@
     },
     "build": {
       "state": "completed",
-      "completedAt": "2026-04-18T16:57:00.000Z",
-      "retries": 0
+      "completedAt": "2026-04-18T16:58:49.212Z",
+      "retries": 0,
+      "promptTokens": 5881
     },
     "verify": {
-      "state": "skipped",
-           "reason": "hotfix pipeline skips tests",
+      "state": "completed",
+      "completedAt": "2026-04-18T16:59:08.240Z",
       "retries": 0
     },
     "review": {
-      "state": "skipped",
-      "reason": "hotfix pipeline skips review",
+      "state": "completed",
       "retries": 0
     },
     "review-fix": {
-      "state": "skipped",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-18T16:59:08.243Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-18T16:46:45.391Z",
-  "updatedAt": "2026-04-18T16:57:00.000Z"
+  "updatedAt": "2026-04-18T16:59:08.243Z",
+  "sessions": {
+    "build": "e0e67b0a-6652-4233-8f08-1a94cd6eee2f"
+  }
 }
