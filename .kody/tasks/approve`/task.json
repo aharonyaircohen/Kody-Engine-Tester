@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Based on my thorough exploration, here is the classification:  - **Most ",
+  "description": "Based on my thorough exploration, here is the classification:\n\n- **Most routes** in `src/app/api/` are already wrapped with `withAuth` (15 of 16 route files)\n- **`src/app/api/csrf-token/route.ts`** is NOT wrapped with `withAuth` — it's the only unprotected route\n- **`src/app/api/health/route.ts`** doesn't exist (only the test file does)\n- Several routes have **redundant inline role checks** already handled by `withAuth` options\n- Some routes lack `roles` RBAC options entirely (quiz attempts/subm",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

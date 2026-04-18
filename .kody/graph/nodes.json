@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcappapicsrftokenroutets_833582746933": {
+      "id": "thoughts_srcappapicsrftokenroutets_833582746933",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/csrf-token/route.ts",
+      "content": "csrf-token route intentionally bypasses withAuth — CSRF tokens must be obtainable without prior auth",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:34:23.136Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_833584528266": {
+      "id": "conventions_auth_833584528266",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth",
+      "content": "withAuth wraps route handlers, options like { roles: ['admin'] } handle RBAC — avoid redundant inline role checks",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:34:23.138Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_833585869095": {
+      "id": "facts_auth_833585869095",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "Before adding withAuth everywhere, audit which routes intentionally need no auth (CSRF, health, etc.)",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:34:23.140Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

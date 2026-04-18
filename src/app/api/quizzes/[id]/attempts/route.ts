@@ -9,13 +9,6 @@ export const GET = withAuth(
     { user },
     routeParams?: { params: Promise<{ id: string }> },
   ) => {
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'Authentication required' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      })
-    }
-
     const params = await routeParams?.params
     const id = params?.id
 
@@ -31,7 +24,7 @@ export const GET = withAuth(
     const attempts = await payload.find({
       collection: 'quiz-attempts' as any,
       where: {
-        user: { equals: user.id },
+        user: { equals: user!.id },
         quiz: { equals: id },
       },
       sort: '-completedAt',

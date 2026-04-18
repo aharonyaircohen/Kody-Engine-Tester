@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T10:34:23.131Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"csrf-token route intentionally bypasses withAuth — CSRF tokens must be obtainable without prior auth\",\"scope\":\"src/app/api/csrf-token/route.ts\"},{\"kind\":\"convention\",\"text\":\"withAuth wraps route handlers, options like { roles: ['admin'] } handle RBAC — avoid redundant inline role checks\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"Before adding withAuth everywhere, audit which routes intentionally need no auth (CSRF, health, etc.)\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

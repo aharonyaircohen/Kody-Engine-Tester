@@ -27,5 +27,6 @@ export const PATCH = withAuth(
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     })
-  }
+  },
+  { roles: ['viewer', 'editor', 'admin'] }
 )

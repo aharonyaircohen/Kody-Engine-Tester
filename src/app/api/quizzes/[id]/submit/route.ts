@@ -10,13 +10,6 @@ export const POST = withAuth(
     { user },
     routeParams?: { params: Promise<{ id: string }> },
   ) => {
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'Authentication required' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      })
-    }
-
     const params = await routeParams?.params
     const id = params?.id
 
@@ -87,7 +80,7 @@ export const POST = withAuth(
     const existingAttempts = await payload.find({
       collection: 'quiz-attempts' as any,
       where: {
-        user: { equals: user.id },
+        user: { equals: user!.id },
         quiz: { equals: id },
       },
       limit: 0,
@@ -115,7 +108,7 @@ export const POST = withAuth(
     await payload.create({
       collection: 'quiz-attempts' as any,
       data: {
-        user: user.id,
+        user: user!.id,
         quiz: id,
         score: result.score,
         passed: result.passed,

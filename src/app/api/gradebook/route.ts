@@ -9,17 +9,10 @@ import { PayloadGradebookService } from '@/services/gradebook-payload'
  * Requires viewer role (formerly student).
  */
 export const GET = withAuth(async (request: NextRequest, { user }) => {
-  if (!user) {
-    return new Response(JSON.stringify({ error: 'Authentication required' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
   const payload = await getPayloadInstance()
   const gradebookSvc = new PayloadGradebookService(payload)
 
-  const gradebook = await gradebookSvc.getStudentGradebook(String(user.id))
+  const gradebook = await gradebookSvc.getStudentGradebook(String(user!.id))
 
   return new Response(JSON.stringify(gradebook), {
     status: 200,
