@@ -162,6 +162,7 @@ jobs:
             })
 
       - name: Parse inputs (issue_comment)
+        id: parse-issue
         if: github.event_name == 'issue_comment'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -174,6 +175,7 @@ jobs:
         run: kody-engine ci-parse
 
       - name: Parse inputs (pull_request_review)
+        id: parse-pr
         if: github.event_name == 'pull_request_review'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
