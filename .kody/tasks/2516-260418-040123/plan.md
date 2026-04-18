@@ -1,45 +1,44 @@
-# Plan: Lifecycle Label Progression Test
+# Plan: review-fix — Fix Critical Issue from Code Review
 
 ## Context
 
-Task 2516 (`P3T33b`) requires verifying labels progress through kody pipeline stages: `kody:planning → kody:building → kody:verifying → kody:review → kody:done`. Each stage adds its label and removes the previous one; the complexity label (`kody:low/medium/high`) persists throughout. The task is currently in the **`build`** stage.
+The review for task 2516 (`P3T33b`) returned a **FAIL** verdict with a **Critical** finding: the build agent exited plan mode but never executed the implementation. The test file `.kody/tasks/2516-260418-040123/label-progression.test.ts` was never created.
 
-## What to Build
+## Critical Fix
 
-A vitest integration test at `.kody/tasks/2516-260418-040123/label-progression.test.ts` that:
-1. Reads `status.json` to get the current running stage
-2. Calls `gh issue view 2516 --json labels` to get current GitHub labels
-3. Asserts the correct lifecycle label for the current stage is present
-4. Asserts no future-stage lifecycle labels are present
-5. Asserts the complexity label (`kody:low/medium/high`) is present
+### 1. Create `label-progression.test.ts`
 
-## Stage → Label Mapping
+**File:** `.kody/tasks/2516-260418-040123/label-progression.test.ts`
 
-| Stage       | Label           |
-|-------------|-----------------|
-| plan        | `kody:planning` |
-| build       | `kody:building` |
-| verify      | `kody:verifying`|
-| review      | `kody:review`   |
-| review-fix  | `kody:review`   |
-| ship        | `kody:done`     |
+The test:
+- Reads `status.json` via Node.js `fs` to get the current running stage
+- Calls `gh issue view 2516 --json labels` via `child_process.execSync` to get live GitHub labels
+- Asserts the correct lifecycle label for the current stage is present
+- Asserts no future-stage lifecycle labels are present (e.g., `kody:verifying` not present during `review`)
+- Asserts no past-stage lifecycle labels are present (e.g., `kody:building` not present during `review`)
+- Asserts the complexity label (`kody:low/medium/high/feature/bug/chore`) persists
 
-Complexity label: `kody:low` | `kody:medium` | `kody:high` | `kody:feature` | `kody:bug` | `kody:chore`
+**Key logic note:** `review` and `review-fix` both use the `kody:review` label. The past/future stage checks skip stages whose label equals the current stage's label to avoid false negatives.
 
-## Files
+**Stage → Label mapping:**
+| Stage | Label |
+|-------|-------|
+| plan | `kody:planning` |
+| build | `kody:building` |
+| verify | `kody:verifying` |
+| review | `kody:review` |
+| review-fix | `kody:review` |
+| ship | `kody:done` |
 
-- **Create**: `.kody/tasks/2516-260418-040123/label-progression.test.ts`
-  - Node.js `fs` to read `status.json` (relative to `__dirname`)
-  - `gh issue view 2516 --json labels` via `child_process.execSync` to get labels
-  - `describe`/`it`/`expect` from vitest
-  - `describe`: "Lifecycle Label Progression"
-  - `it`: "applies correct stage label and persists complexity label"
+### 2. Update `vitest.config.mts`
 
-## Decisions
+**File:** `vitest.config.mts`
 
-1. **Runtime**: Use vitest (already in project) via `pnpm test:int` — no new runtime needed
-2. **Polling**: Single check (not polling) — labels are set before the agent runs, so the test can assert immediately
-3. **Early stages**: `taskify` has no label expected — skip that stage assertion gracefully
+Added `.kody/tasks/*/label-progression.test.ts` to the `include` array so vitest discovers the test.
+
+### 3. Fix logic bug (surgical edit)
+
+The initial implementation had a bug: when current stage is `review`, `kody:review` was incorrectly flagged as a "future-stage label" because `review-fix` is in the `FUTURE_STAGES` set and also maps to `kody:review`. Fixed by changing the skip condition from `stage === future` to `futureLabel === expectedLabel` (checking label equality rather than stage name equality).
 
 ## Verification
 
@@ -48,4 +47,6 @@ cd /home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester
 pnpm test:int .kody/tasks/2516-260418-040123/label-progression.test.ts
 ```
 
-Expected in current `build` stage: `kody:building` present, no future labels, complexity label (`kody:feature`) present.
+**Result:** ✅ 1 test passed.
+
+Full suite: 128 test files passed, 1 pre-existing failure in `tests/int/api.int.spec.ts` (Payload `$1` parameter error — unrelated to these changes).

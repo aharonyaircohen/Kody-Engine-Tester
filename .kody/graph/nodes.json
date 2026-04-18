@@ -64,6 +64,150 @@
         "kind:lesson"
       ],
       "confidence": 0.7
+    },
+    "thoughts_kody_pipeline_618006940173": {
+      "id": "thoughts_kody_pipeline_618006940173",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline",
+      "content": "Exiting plan mode without calling Write tool means zero code is produced. The build agent planned but never wrote the file.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T04:13:16.134Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2516-260418-040123",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_agent_execution_910785732243": {
+      "id": "thoughts_agent_execution_910785732243",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "agent execution",
+      "content": "An agent can exit plan mode without writing any code — plan success != implementation executed. Always verify the Write/Edit tool was actually called.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T04:18:08.913Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2516-260418-040123",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_agent_design_910787353660": {
+      "id": "thoughts_agent_design_910787353660",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "agent design",
+      "content": "The review agent detects issues but does not write files. A fixup stage targeting a missing deliverable must do the implementation itself, not re-invoke the review agent.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T04:18:08.914Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2516-260418-040123",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_design_910788765758": {
+      "id": "facts_pipeline_design_910788765758",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline design",
+      "content": "Fix stages should create the missing deliverable (the test file) directly rather than re-running the agent that was supposed to produce it.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T04:18:08.916Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2516-260418-040123",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_lifecycle_labels_961005793909": {
+      "id": "thoughts_kody_lifecycle_labels_961005793909",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody lifecycle labels",
+      "content": "Test stage names must not share the same label as their parent stage; 'review-fix' and 'review' both emit 'kody:review', causing false-positive failures when validating label removal.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T04:18:59.133Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2516-260418-040123",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_labelprogression_test_961007449170": {
+      "id": "facts_kody_labelprogression_test_961007449170",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody label-progression test",
+      "content": "When validating stage label removal, distinguish between 'label still present from current stage' vs 'label left over from a past stage'; the check must account for the label being legitimately re-add",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T04:18:59.134Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2516-260418-040123",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_lifecycle_961009203657": {
+      "id": "conventions_kody_lifecycle_961009203657",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody lifecycle",
+      "content": "Kody lifecycle stages follow a strict sequence: planning → building → verifying → review → done; each stage adds its own label and removes the previous one.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T04:18:59.136Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2516-260418-040123",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_test_logic_1181764569927": {
+      "id": "thoughts_test_logic_1181764569927",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "test logic",
+      "content": "When stages share label names (e.g., 'review' and 'review-fix' both use 'kody:review'), the test must resolve the task ID from status.json rather than comparing label strings in isolation, otherwise p",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T04:22:39.891Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2516-260418-040123",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_labelprogressiontestts_1286221103568": {
+      "id": "thoughts_labelprogressiontestts_1286221103568",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "label-progression.test.ts",
+      "content": "getGitHubLabels() splits on \\\\n, which breaks if any label contains whitespace or unusual characters; use a more robust parsing method.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T04:24:24.348Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2516-260418-040123",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
     }
   }
 }

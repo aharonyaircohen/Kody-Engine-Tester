@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2516-260418-040123",
+  "source": "stage_diary",
+  "taskId": "2516-260418-040123",
+  "createdAt": "2026-04-18T04:18:59.129Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Test stage names must not share the same label as their parent stage; 'review-fix' and 'review' both emit 'kody:review', causing false-positive failures when validating label removal.\",\"scope\":\"kody lifecycle labels\"},{\"kind\":\"lesson\",\"text\":\"When validating stage label removal, distinguish between 'label still present from current stage' vs 'label left over from a past stage'; the check must account for the label being legitimately re-add\",\"scope\":\"kody label-progression test\"},{\"kind\":\"convention\",\"text\":\"Kody lifecycle stages follow a strict sequence: planning → building → verifying → review → done; each stage adds its own label and removes the previous one.\",\"scope\":\"kody lifecycle\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

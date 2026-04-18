@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2516-260418-040123",
+  "source": "stage_diary",
+  "taskId": "2516-260418-040123",
+  "createdAt": "2026-04-18T04:13:16.130Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Exiting plan mode without calling Write tool means zero code is produced. The build agent planned but never wrote the file.\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

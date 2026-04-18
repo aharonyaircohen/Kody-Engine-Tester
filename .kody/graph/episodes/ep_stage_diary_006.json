@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_006",
+  "runId": "2516-260418-040123",
+  "source": "stage_diary",
+  "taskId": "2516-260418-040123",
+  "createdAt": "2026-04-18T04:24:24.345Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"getGitHubLabels() splits on \\\\\\\\n, which breaks if any label contains whitespace or unusual characters; use a more robust parsing method.\",\"scope\":\"label-progression.test.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

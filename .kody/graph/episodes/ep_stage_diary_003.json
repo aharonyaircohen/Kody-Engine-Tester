@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2516-260418-040123",
+  "source": "stage_diary",
+  "taskId": "2516-260418-040123",
+  "createdAt": "2026-04-18T04:18:08.909Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"An agent can exit plan mode without writing any code — plan success != implementation executed. Always verify the Write/Edit tool was actually called.\",\"scope\":\"agent execution\"},{\"kind\":\"gotcha\",\"text\":\"The review agent detects issues but does not write files. A fixup stage targeting a missing deliverable must do the implementation itself, not re-invoke the review agent.\",\"scope\":\"agent design\"},{\"kind\":\"lesson\",\"text\":\"Fix stages should create the missing deliverable (the test file) directly rather than re-running the agent that was supposed to produce it.\",\"scope\":\"pipeline design\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

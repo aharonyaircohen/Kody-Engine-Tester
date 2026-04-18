@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2516-260418-040123",
+  "source": "stage_diary",
+  "taskId": "2516-260418-040123",
+  "createdAt": "2026-04-18T04:22:39.888Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When stages share label names (e.g., 'review' and 'review-fix' both use 'kody:review'), the test must resolve the task ID from status.json rather than comparing label strings in isolation, otherwise p\",\"scope\":\"test logic\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
