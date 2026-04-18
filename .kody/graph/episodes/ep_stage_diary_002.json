@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:07:18.061Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"buildTargets validation only checks for Array type, not that elements are strings — {buildTargets: [42]} would pass validation\",\"scope\":\"src/utils/configValidator.ts\"},{\"kind\":\"convention\",\"text\":\"Use Result<T, E> type from src/utils/result.ts for fallible operations instead of throwing\",\"scope\":\"src/utils\"},{\"kind\":\"convention\",\"text\":\"Vitest tests are co-located next to source files using .test.ts suffix (e.g., retry.test.ts, result.test.ts)\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"TypeScript type errors are caught at build step, not just at runtime — validating element types of arrays is a distinct concern from array type itself\",\"scope\":\"src/utils/configValidator.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -48,6 +48,70 @@
         "kind:decision"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcutilsconfigvalidatorts_1332221832480": {
+      "id": "thoughts_srcutilsconfigvalidatorts_1332221832480",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/utils/configValidator.ts",
+      "content": "buildTargets validation only checks for Array type, not that elements are strings — {buildTargets: [42]} would pass validation",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:07:18.064Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutils_1332223256682": {
+      "id": "conventions_srcutils_1332223256682",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils",
+      "content": "Use Result<T, E> type from src/utils/result.ts for fallible operations instead of throwing",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:07:18.066Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testing_1332224721014": {
+      "id": "conventions_testing_1332224721014",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Vitest tests are co-located next to source files using .test.ts suffix (e.g., retry.test.ts, result.test.ts)",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:07:18.067Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsconfigvalidatorts_1332226309040": {
+      "id": "facts_srcutilsconfigvalidatorts_1332226309040",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/configValidator.ts",
+      "content": "TypeScript type errors are caught at build step, not just at runtime — validating element types of arrays is a distinct concern from array type itself",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:07:18.069Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
     }
   }
 }
