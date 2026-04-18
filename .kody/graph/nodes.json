@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_pipeline_1054757735449": {
+      "id": "facts_pipeline_1054757735449",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "When verifying existing @kody behavior, check ship stage in engine source — PR title construction logic is there, not in agent code.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:51:37.386Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2826-260418-184622",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_1054759252181": {
+      "id": "facts_pipeline_1054759252181",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "Verified: PR title = `${prefix}: ${issue_title}` where prefix comes from task_type field and issue_title from the `# ` heading in task.md.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:51:37.387Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2826-260418-184622",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_1054761040061": {
+      "id": "facts_pipeline_1054761040061",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "task_type mapping: feature→feat, bugfix→fix, chore→chore (default). Only these types affect the prefix.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:51:37.389Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2826-260418-184622",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

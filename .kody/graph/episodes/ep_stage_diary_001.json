@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2826-260418-184622",
+  "source": "stage_diary",
+  "taskId": "2826-260418-184622",
+  "createdAt": "2026-04-18T18:51:37.381Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"When verifying existing @kody behavior, check ship stage in engine source — PR title construction logic is there, not in agent code.\",\"scope\":\"pipeline\"},{\"kind\":\"decision\",\"text\":\"Verified: PR title = `${prefix}: ${issue_title}` where prefix comes from task_type field and issue_title from the `# ` heading in task.md.\",\"scope\":\"pipeline\"},{\"kind\":\"decision\",\"text\":\"task_type mapping: feature→feat, bugfix→fix, chore→chore (default). Only these types affect the prefix.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
