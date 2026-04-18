@@ -1,0 +1,71 @@
+{
+  "taskId": "Task:",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-18T11:54:36.398Z",
+      "retries": 0,
+      "outputFile": "task.json",
+      "promptTokens": 1669
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-18T11:55:17.460Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "running",
+      "startedAt": "2026-04-18T12:00:00.000Z",
+      "retries": 0,
+      "verificationResults": {
+        "attachments_directory": {
+          "status": "FAIL",
+          "found": false,
+          "details": "No attachments/ directory exists in the task folder"
+        },
+        "downloaded_attachment_logs": {
+          "status": "FAIL",
+          "found": false,
+          "details": "No 'Downloaded attachment:' log entries found in any task files or logs"
+        },
+        "labels_section": {
+          "status": "FAIL",
+          "found": false,
+          "details": "No 'Labels:' metadata section found in task.md (word only appears in verification checklist text)"
+        },
+        "discussion_section": {
+          "status": "PASS",
+          "found": true,
+          "details": "Discussion: section is present with image URL: https://github.com/user-attachments/assets/test-uuid/footer-design.png"
+        },
+        "graceful_fallback": {
+          "status": "PASS",
+          "details": "Attachment URL https://github.com/user-attachments/assets/test-uuid/footer-design.png returns HTTP 404 (unreachable) — graceful fallback is that the Discussion section retains the original GitHub URL as markdown reference"
+        }
+      },
+      "summary": "3/5 verification criteria met: Discussion section present, graceful fallback confirmed (404 URL retained in Discussion). FAILED: attachments/ directory missing, no download logs, Labels section missing."
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-18T11:53:49.775Z",
+  "updatedAt": "2026-04-18T12:00:00.000Z",
+  "sessions": {
+    "explore": "443de597-2035-4f09-9e15-ecb1648e115d"
+  }
+}

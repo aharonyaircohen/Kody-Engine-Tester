@@ -1,0 +1,11 @@
+```json
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of attachment download and metadata enrichment",
+  "description": "The task.md already contains the Discussion section with the image attachment URL and labels. This verification confirms: (1) attachments/ directory was downloaded, (2) Logs show 'Downloaded attachment:' entries, (3) Labels: and Discussion: sections are present in task.md. The image URL https://github.com/user-attachments/assets/test-uuid/footer-design.png is referenced via Markdown, and the graceful fallback behavior should be confirmed by examining attachment download logs.",
+  "scope": [".kody/tasks/Task:/task.md", ".kody/tasks/Task:/status.json", ".kody/tasks/Task:/agent-taskify.1.jsonl"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}
+```
