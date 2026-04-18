@@ -1,8 +1,11 @@
-name: Test CI
-on: [pull_request]
-jobs:
+name: Test CW
+non:
+  push:
+    branches:
+      - '**'\njobs:
   health:
     runs-on: ubuntu-latest
+
     steps:
       - run: echo "CI health check"
       - run: exit 1
