@@ -382,6 +382,13 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           repositories: ${{ github.event.repository.name }}
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Kody Engine
+        run: npm install -g @kody-ade/engine
+
       - name: Run fix-ci-trigger
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
