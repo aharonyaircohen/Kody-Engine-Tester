@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T04:13:58.417Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"decision\",\"text\":\"Charts implemented as pure inline SVG, no external charting library — avoids deps and matches existing ProgressRing pattern.\",\"scope\":\"src/components/dashboard\"},{\"kind\":\"decision\",\"text\":\"Data tables added alongside existing lists, not replacing them — preserves current functionality.\",\"scope\":\"src/app/(frontend)/dashboard\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

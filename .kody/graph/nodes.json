@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_srccomponentsdashboard_528354969952": {
+      "id": "facts_srccomponentsdashboard_528354969952",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/components/dashboard",
+      "content": "Charts implemented as pure inline SVG, no external charting library — avoids deps and matches existing ProgressRing pattern.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:13:58.423Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcappfrontenddashboard_528356499708": {
+      "id": "facts_srcappfrontenddashboard_528356499708",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/app/(frontend)/dashboard",
+      "content": "Data tables added alongside existing lists, not replacing them — preserves current functionality.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:13:58.424Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

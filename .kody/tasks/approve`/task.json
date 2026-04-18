@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Kody's 3 product questions are the right ones — they must be answered be",
+  "description": "Kody's 3 product questions are the right ones — they must be answered before I can finalize the implementation plan. I've surfaced them above.\n\n**In the meantime, here's the plan skeleton I'll finalize once you answer:**\n\n- **Files to create**: `src/app/(frontend)/dashboard/page.tsx`, `src/components/dashboard/Charts.tsx`, `src/components/dashboard/DataTable.tsx`\n- **Patterns to reuse**: `ProgressRing` SVG pattern (for inline SVG), `GradebookService` for data, `Result<T, E>` for error handling, ",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
