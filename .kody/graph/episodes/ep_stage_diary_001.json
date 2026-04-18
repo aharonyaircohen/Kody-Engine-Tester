@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2616-260418-095152",
+  "source": "stage_diary",
+  "taskId": "2616-260418-095152",
+  "createdAt": "2026-04-18T09:59:50.840Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The codebase already has a SlidingWindowRateLimiter with in-memory Map, byIp key resolver, and createRateLimiterMiddleware factory—duplicate implementations should be avoided.\",\"scope\":\"src/middleware/rate-limiter.ts\"},{\"kind\":\"convention\",\"text\":\"Middleware follows a factory pattern: a limiter class (SlidingWindowRateLimiter) paired with a createXxxMiddleware factory function.\",\"scope\":\"src/middleware\"},{\"kind\":\"lesson\",\"text\":\"Medium-complexity tasks classified as 'chore' + 'low' risk are often already implemented; check existing code before creating new files.\",\"scope\":\"taskify classification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

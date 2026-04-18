@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. Here's the summary:  **Classification",
+  "description": "The plan is ready for your review. Here's the summary:\n\n**Classification: `chore` · Risk: `low`**\n\nThe rate-limit middleware described in the task is **already fully implemented**:\n\n| File | Status |\n|---|---|\n| `src/middleware/rate-limiter.ts` | ✅ Exists — `SlidingWindowRateLimiter` with in-memory `Map<string, number[]>`, `byIp` key resolver, `createRateLimiterMiddleware` factory |\n| `src/middleware/rate-limiter.test.ts` | ✅ Exists — 450+ lines covering sliding window expiry, per-IP tracking, 4",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

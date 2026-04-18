@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcmiddlewareratelimiterts_502633427451": {
+      "id": "thoughts_srcmiddlewareratelimiterts_502633427451",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/middleware/rate-limiter.ts",
+      "content": "The codebase already has a SlidingWindowRateLimiter with in-memory Map, byIp key resolver, and createRateLimiterMiddleware factory—duplicate implementations should be avoided.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:50.846Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2616-260418-095152",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_502634848518": {
+      "id": "conventions_srcmiddleware_502634848518",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Middleware follows a factory pattern: a limiter class (SlidingWindowRateLimiter) paired with a createXxxMiddleware factory function.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:50.847Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2616-260418-095152",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_taskify_classification_502636237095": {
+      "id": "facts_taskify_classification_502636237095",
+      "type": "facts",
+      "hall": "facts",
+      "room": "taskify classification",
+      "content": "Medium-complexity tasks classified as 'chore' + 'low' risk are often already implemented; check existing code before creating new files.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:50.849Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2616-260418-095152",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
