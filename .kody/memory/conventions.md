@@ -39,3 +39,6 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-10 (task: 1529-260410-102822)
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-18 (task: 2837-260418-203449)
+- Active directories: /home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/watch/agents/test-suite, /home/runner/work/Kody-Engine-Tester/Kody-Engine-Tester/.kody/runs
