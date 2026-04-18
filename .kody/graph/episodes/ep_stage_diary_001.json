@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2781-260418-164536",
+  "source": "stage_diary",
+  "taskId": "decompose-2781-260418-164536",
+  "createdAt": "2026-04-18T16:54:52.035Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Utility modules follow a typed Options interface pattern (e.g., debounce, retry, configValidator) with named exports and JSDoc comments.\",\"scope\":\"src/utils\"},{\"kind\":\"convention\",\"text\":\"Use Result<T, E> discriminated union (Ok/Err) from src/utils/result.ts for explicit error handling instead of throwing.\",\"scope\":\"src/utils/result.ts\"},{\"kind\":\"convention\",\"text\":\"Tests co-located next to source (configValidator.test.ts beside configValidator.ts), using describe/it blocks, vi.fn(), and beforeEach/afterEach for cleanup.\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"The @kody command prefix must precede all kody invocations; bare commands without @kody fail to parse with a usage error.\",\"scope\":\"kody CLI\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

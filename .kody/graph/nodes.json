@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcutils_998647416968": {
+      "id": "conventions_srcutils_998647416968",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils",
+      "content": "Utility modules follow a typed Options interface pattern (e.g., debounce, retry, configValidator) with named exports and JSDoc comments.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:54:52.042Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2781-260418-164536",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutilsresultts_998648802094": {
+      "id": "conventions_srcutilsresultts_998648802094",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/result.ts",
+      "content": "Use Result<T, E> discriminated union (Ok/Err) from src/utils/result.ts for explicit error handling instead of throwing.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:54:52.043Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2781-260418-164536",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testing_998650110755": {
+      "id": "conventions_testing_998650110755",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Tests co-located next to source (configValidator.test.ts beside configValidator.ts), using describe/it blocks, vi.fn(), and beforeEach/afterEach for cleanup.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:54:52.045Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2781-260418-164536",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_cli_998651214970": {
+      "id": "facts_kody_cli_998651214970",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody CLI",
+      "content": "The @kody command prefix must precede all kody invocations; bare commands without @kody fail to parse with a usage error.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:54:52.046Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2781-260418-164536",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
