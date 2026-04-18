@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. Once you approve, I'll move into impl",
+  "description": "The plan is ready for your review. Once you approve, I'll move into implementation (adding the fields to `Users.ts`, creating `password-hash.ts`, refactoring `auth-service.ts`, and adding the tests).",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
