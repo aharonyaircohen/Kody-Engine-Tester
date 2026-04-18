@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2708-260418-124328",
+  "source": "stage_diary",
+  "taskId": "2708-260418-124328",
+  "createdAt": "2026-04-18T12:54:12.436Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Next.js route handlers follow the file-based routing pattern: a `route.ts` file in a directory matching the URL path segment.\",\"scope\":\"src/app/api/auth\"},{\"kind\":\"gotcha\",\"text\":\"Request body must be explicitly parsed with `await request.json()` before accessing fields, unlike Express which parses automatically.\",\"scope\":\"src/app/api/auth/register/route.ts\"},{\"kind\":\"lesson\",\"text\":\"Payload operations (user creation) are asynchronous and must be awaited; this pattern should be consistent across all route handlers.\",\"scope\":\"Payload\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

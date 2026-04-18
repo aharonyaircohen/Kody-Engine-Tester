@@ -5,7 +5,7 @@ import { JwtService } from './jwt-service'
 import { getPayloadInstance } from '@/services/progress'
 import { extractBearerToken, checkRole } from './_auth'
 
-export { extractBearerToken, checkRole }
+export { extractBearerToken, checkRole, getAuthService }
 export type { AuthContext, AuthOptions } from './_auth'
 
 let jwtServiceInstance: JwtService | null = null

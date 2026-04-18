@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I now have all the context needed. The task is clear: create the registe",
+  "description": "I now have all the context needed. The task is clear: create the register route handler. The file `src/api/auth/register.ts` exists and already has all validation logic. I need to create the Next.js route handler wrapping it. No ambiguous questions remain.\n\n{\"task_type\":\"feature\",\"title\":\"Create POST /api/auth/register route handler\",\"description\":\"Create a Next.js route handler at `src/app/api/auth/register/route.ts` that accepts email, password, and confirmPassword in the request body JSON, de",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcappapiauth_965365270096": {
+      "id": "conventions_srcappapiauth_965365270096",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api/auth",
+      "content": "Next.js route handlers follow the file-based routing pattern: a `route.ts` file in a directory matching the URL path segment.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:54:12.441Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2708-260418-124328",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiauthregisterroutets_965366560200": {
+      "id": "thoughts_srcappapiauthregisterroutets_965366560200",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/register/route.ts",
+      "content": "Request body must be explicitly parsed with `await request.json()` before accessing fields, unlike Express which parses automatically.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:54:12.442Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2708-260418-124328",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_payload_965367782002": {
+      "id": "facts_payload_965367782002",
+      "type": "facts",
+      "hall": "facts",
+      "room": "Payload",
+      "content": "Payload operations (user creation) are asynchronous and must be awaited; this pattern should be consistent across all route handlers.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:54:12.444Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2708-260418-124328",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
