@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_build_stage_471495436461": {
+      "id": "facts_build_stage_471495436461",
+      "type": "facts",
+      "hall": "facts",
+      "room": "build stage",
+      "content": "Verification-only tasks (no code changes) still require full exploration — the agent traced executeDecompose and createWorktree in dist/bin/cli.js before confirming behavior.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:41:38.604Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2846-260418-203515",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_decompose_pipeline_471497205161": {
+      "id": "facts_decompose_pipeline_471497205161",
+      "type": "facts",
+      "hall": "facts",
+      "room": "decompose pipeline",
+      "content": "Decompose pipeline design: executeDecompose returns either sub-tasks (parallel branch) or null (fallback trigger), making the null path the explicit fallback signal.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:41:38.606Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2846-260418-203515",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_engine_dist_artifact_471499101670": {
+      "id": "conventions_engine_dist_artifact_471499101670",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "engine dist artifact",
+      "content": "Decompose verification targets live in dist/bin/cli.js rather than src — line numbers like 18529 and 19071 reference the compiled output.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:41:38.608Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2846-260418-203515",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

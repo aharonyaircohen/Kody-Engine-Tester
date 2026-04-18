@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2846-260418-203515",
+  "source": "stage_diary",
+  "taskId": "decompose-2846-260418-203515",
+  "createdAt": "2026-04-18T20:41:38.598Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"Verification-only tasks (no code changes) still require full exploration — the agent traced executeDecompose and createWorktree in dist/bin/cli.js before confirming behavior.\",\"scope\":\"build stage\"},{\"kind\":\"decision\",\"text\":\"Decompose pipeline design: executeDecompose returns either sub-tasks (parallel branch) or null (fallback trigger), making the null path the explicit fallback signal.\",\"scope\":\"decompose pipeline\"},{\"kind\":\"convention\",\"text\":\"Decompose verification targets live in dist/bin/cli.js rather than src — line numbers like 18529 and 19071 reference the compiled output.\",\"scope\":\"engine dist artifact\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
