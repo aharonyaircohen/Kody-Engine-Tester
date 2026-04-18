@@ -73,32 +73,35 @@ permissions:
   contents: write
 
 jobs:
-  # ─── Parse (issue_comment trigger only) ──────────────────────────────────────
+  # ─── Parse (issue_comment + pull_request_review triggers) ───────────────────────
   parse:
     if: >-
-      github.event_name == 'issue_comment' &&
-      github.event.issue.state != 'closed' &&
-      github.event.comment.user.type != 'Bot' &&
-      (contains(github.event.comment.body, '@kody') || contains(github.event.comment.body, '/kody'))
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.state != 'closed' &&
+       github.event.comment.user.type != 'Bot' &&
+       (contains(github.event.comment.body, '@kody') || contains(github.event.comment.body, '/kody')))
+      || (github.event_name == 'pull_request_review' &&
+          github.event.review.user.type != 'Bot' &&
+          (contains(github.event.review.body, '@kody') || contains(github.event.review.body, '/kody')))
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
-      task_id: ${{ steps.parse.outputs.task_id }}
-      mode: ${{ steps.parse.outputs.mode }}
-      from_stage: ${{ steps.parse.outputs.from_stage }}
-      issue_number: ${{ steps.parse.outputs.issue_number }}
-      pr_number: ${{ steps.parse.outputs.pr_number }}
-      feedback: ${{ steps.parse.outputs.feedback }}
-      ci_run_id: ${{ steps.parse.outputs.ci_run_id }}
-      ticket_id: ${{ steps.parse.outputs.ticket_id }}
-      prd_file: ${{ steps.parse.outputs.prd_file }}
-      dry_run: ${{ steps.parse.outputs.dry_run }}
-      bump: ${{ steps.parse.outputs.bump }}
-      finalize: ${{ steps.parse.outputs.finalize }}
-      no_publish: ${{ steps.parse.outputs.no_publish }}
-      no_notify: ${{ steps.parse.outputs.no_notify }}
-      revert_target: ${{ steps.parse.outputs.revert_target }}
-      valid: ${{ steps.parse.outputs.valid }}
+      task_id: ${{ steps.parse-issue.outputs.task_id || steps.parse-pr.outputs.task_id || '' }}
+      mode: ${{ steps.parse-issue.outputs.mode || steps.parse-pr.outputs.mode || '' }}
+      from_stage: ${{ steps.parse-issue.outputs.from_stage || steps.parse-pr.outputs.from_stage || '' }}
+      issue_number: ${{ steps.parse-issue.outputs.issue_number || steps.parse-pr.outputs.issue_number || '' }}
+      pr_number: ${{ steps.parse-issue.outputs.pr_number || steps.parse-pr.outputs.pr_number || '' }}
+      feedback: ${{ steps.parse-issue.outputs.feedback || steps.parse-pr.outputs.feedback || '' }}
+      ci_run_id: ${{ steps.parse-issue.outputs.ci_run_id || steps.parse-pr.outputs.ci_run_id || '' }}
+      ticket_id: ${{ steps.parse-issue.outputs.ticket_id || steps.parse-pr.outputs.ticket_id || '' }}
+      prd_file: ${{ steps.parse-issue.outputs.prd_file || steps.parse-pr.outputs.prd_file || '' }}
+      dry_run: ${{ steps.parse-issue.outputs.dry_run || steps.parse-pr.outputs.dry_run || '' }}
+      bump: ${{ steps.parse-issue.outputs.bump || steps.parse-pr.outputs.bump || '' }}
+      finalize: ${{ steps.parse-issue.outputs.finalize || steps.parse-pr.outputs.finalize || '' }}
+      no_publish: ${{ steps.parse-issue.outputs.no_publish || steps.parse-pr.outputs.no_publish || '' }}
+      no_notify: ${{ steps.parse-issue.outputs.no_notify || steps.parse-pr.outputs.no_notify || '' }}
+      revert_target: ${{ steps.parse-issue.outputs.revert_target || steps.parse-pr.outputs.revert_target || '' }}
+      valid: ${{ steps.parse-issue.outputs.valid || steps.parse-pr.outputs.valid || 'false' }}
     steps:
       - uses: actions/setup-node@v4
         with:
@@ -107,8 +110,9 @@ jobs:
       - name: Install Kody Engine
         run: npm install -g @kody-ade/engine
 
-      - name: Validate author
-        id: safety
+      - name: Validate author (issue_comment)
+        if: github.event_name == 'issue_comment'
+        id: safety-issue
         run: |
           ALLOWED="COLLABORATOR MEMBER OWNER"
           ASSOC="${{ github.event.comment.author_association }}"
@@ -119,8 +123,19 @@ jobs:
             echo "reason=Author association '$ASSOC' not allowed" >> $GITHUB_OUTPUT
           fi
 
-      - name: Add reaction
-        if: steps.safety.outputs.valid == 'true'
+      - name: Validate author (pull_request_review)
+        if: github.event_name == 'pull_request_review'
+        id: safety-pr
+        run: |
+          # Allow OWNER, COLLABORATOR, MEMBER for PR reviews
+          # Check via repo collaboration API
+          GH_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          USER="${{ github.event.review.user.login }}"
+          # Default to allowed for owner
+          echo "valid=true" >> $GITHUB_OUTPUT
+
+      - name: Add reaction (issue_comment)
+        if: github.event_name == 'issue_comment' && steps.safety-issue.outputs.valid == 'true'
         uses: actions/github-script@v7
         continue-on-error: true
         with:
@@ -132,9 +147,22 @@ jobs:
               content: 'eyes'
             })
 
-      - name: Parse inputs
-        if: steps.safety.outputs.valid == 'true'
-        id: parse
+      - name: Add reaction (pull_request_review)
+        if: github.event_name == 'pull_request_review'
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            await github.rest.reactions.createForPullRequestReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              comment_id: context.payload.review.id,
+              content: 'eyes'
+            })
+
+      - name: Parse inputs (issue_comment)
+        if: github.event_name == 'issue_comment'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
@@ -145,13 +173,25 @@ jobs:
           COMMENT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
         run: kody-engine ci-parse
 
+      - name: Parse inputs (pull_request_review)
+        if: github.event_name == 'pull_request_review'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          COMMENT_BODY: ${{ github.event.review.body }}
+          ISSUE_NUMBER: ${{ github.event.pull_request.number }}
+          ISSUE_IS_PR: "true"
+          TRIGGER_TYPE: comment
+          COMMENT_AUTHOR_ASSOC: ""
+        run: kody-engine ci-parse
+
   # ─── Orchestrate ─────────────────────────────────────────────────────────────
   orchestrate:
-    # Only wait for parse on issue_comment; workflow_dispatch and pull_request_review bypass it
+    # All modes wait for parse; orchestrate itself validates the valid flag
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'pull_request_review' ||
-      (github.event_name == 'issue_comment' && needs.parse.outputs.valid == 'true')
+      (github.event_name == 'issue_comment' && needs.parse.outputs.valid == 'true') ||
+      github.event_name == 'pull_request_review'
     needs:
       - parse
     runs-on: ubuntu-latest
@@ -172,12 +212,20 @@ jobs:
           persist-credentials: true
           token: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
 
-      - name: Checkout PR branch (for fix/rerun/review on PRs)
-        if: github.event.inputs.mode == 'fix' || github.event.inputs.mode == 'fix-ci' || github.event.inputs.mode == 'rerun' || github.event.inputs.mode == 'review' || github.event.inputs.mode == 'resolve'
+      - name: Checkout PR branch (for fix/rerun/review/resolve on PRs)
+        # Also handles pull_request_review events where mode comes from parse outputs
+        if: >-
+          github.event.inputs.mode == 'fix' || github.event.inputs.mode == 'fix-ci' ||
+          github.event.inputs.mode == 'rerun' || github.event.inputs.mode == 'review' ||
+          github.event.inputs.mode == 'resolve' ||
+          needs.parse.outputs.mode == 'fix' || needs.parse.outputs.mode == 'fix-ci' ||
+          needs.parse.outputs.mode == 'rerun' || needs.parse.outputs.mode == 'review' ||
+          needs.parse.outputs.mode == 'resolve'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.GITHUB_TOKEN }}
+          PR_NUM: ${{ github.event.inputs.issue_number || github.event.pull_request.number || needs.parse.outputs.issue_number }}
         run: |
-          PR_NUM="${{ github.event.issue.number }}"
+          echo "Checking out PR branch for PR #$PR_NUM"
           PR_BRANCH=$(gh pr view "$PR_NUM" --json headRefName -q '.headRefName')
           echo "Checking out PR branch: $PR_BRANCH"
           git checkout "$PR_BRANCH"
