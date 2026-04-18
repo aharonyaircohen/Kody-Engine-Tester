@@ -18,7 +18,7 @@ function getJwtService(): JwtService {
   return jwtServiceInstance
 }
 
-function getAuthService(): AuthService {
+export function getAuthService(): AuthService {
   if (!authServiceInstance) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     authServiceInstance = new AuthService(getPayloadInstance() as any, getJwtService())

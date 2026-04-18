@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_srcauth_719089488799": {
+      "id": "facts_srcauth_719089488799",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/auth",
+      "content": "getAuthService() was a private module-level singleton in withAuth.ts — had to export it for route handler reuse",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:59:31.373Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcappapi_719090865231": {
+      "id": "conventions_srcappapi_719090865231",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api",
+      "content": "Route handlers return new Response(JSON.stringify(...), {status, headers}) — no framework wrappers, pure Next.js Response",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:59:31.374Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcauth_719092460176": {
+      "id": "thoughts_srcauth_719092460176",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth",
+      "content": "AuthService.login() throws {message, status} errors; catch err.status to set HTTP response — no Result type needed at route boundary",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:59:31.376Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcappapi_719093771913": {
+      "id": "conventions_srcappapi_719093771913",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api",
+      "content": "Test files are co-located next to route files as *.test.ts, using vi.useFakeTimers() and NextRequest construction",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:59:31.377Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcappapi_719095169427": {
+      "id": "conventions_srcappapi_719095169427",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api",
+      "content": "CORS headers are present on other routes and should be included on new auth routes for consistency",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:59:31.379Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

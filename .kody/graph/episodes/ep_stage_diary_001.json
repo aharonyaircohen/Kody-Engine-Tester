@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T12:59:31.367Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"decision\",\"text\":\"getAuthService() was a private module-level singleton in withAuth.ts — had to export it for route handler reuse\",\"scope\":\"src/auth\"},{\"kind\":\"convention\",\"text\":\"Route handlers return new Response(JSON.stringify(...), {status, headers}) — no framework wrappers, pure Next.js Response\",\"scope\":\"src/app/api\"},{\"kind\":\"gotcha\",\"text\":\"AuthService.login() throws {message, status} errors; catch err.status to set HTTP response — no Result type needed at route boundary\",\"scope\":\"src/auth\"},{\"kind\":\"convention\",\"text\":\"Test files are co-located next to route files as *.test.ts, using vi.useFakeTimers() and NextRequest construction\",\"scope\":\"src/app/api\"},{\"kind\":\"convention\",\"text\":\"CORS headers are present on other routes and should be included on new auth routes for consistency\",\"scope\":\"src/app/api\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
