@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:10:47.655Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"AuthService (Payload-based PBKDF2) is the correct auth mechanism for login endpoints, not UserStore — they are not interchangeable.\",\"scope\":\"auth\"},{\"kind\":\"convention\",\"text\":\"Route handlers in this project live at src/app/(frontend)/api/ not src/app/api/ — the (frontend) segment matters for routing.\",\"scope\":\"src/app\"},{\"kind\":\"convention\",\"text\":\"API handlers follow a standard middleware chain: withAuth HOC → rate-limiter → handler, all returning Result<T, E>.\",\"scope\":\"API handlers\"},{\"kind\":\"convention\",\"text\":\"Input validation uses Zod schemas imported from src/validation/ at the API boundary before any service calls.\",\"scope\":\"src/validation\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

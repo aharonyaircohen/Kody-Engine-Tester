@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_auth_1081592500498": {
+      "id": "facts_auth_1081592500498",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "AuthService (Payload-based PBKDF2) is the correct auth mechanism for login endpoints, not UserStore — they are not interchangeable.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:10:47.660Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcapp_1081593890274": {
+      "id": "conventions_srcapp_1081593890274",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app",
+      "content": "Route handlers in this project live at src/app/(frontend)/api/ not src/app/api/ — the (frontend) segment matters for routing.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:10:47.661Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_api_handlers_1081595428878": {
+      "id": "conventions_api_handlers_1081595428878",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "API handlers",
+      "content": "API handlers follow a standard middleware chain: withAuth HOC → rate-limiter → handler, all returning Result<T, E>.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:10:47.663Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcvalidation_1081596577659": {
+      "id": "conventions_srcvalidation_1081596577659",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/validation",
+      "content": "Input validation uses Zod schemas imported from src/validation/ at the API boundary before any service calls.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:10:47.664Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
