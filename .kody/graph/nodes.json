@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_repo_architecture_349315267165": {
+      "id": "facts_repo_architecture_349315267165",
+      "type": "facts",
+      "hall": "facts",
+      "room": "repo architecture",
+      "content": "The Kody engine source lives in a separate repo (aharonyaircohen/Kody-ADE-Engine), while the test runner/validation logic is in this repo — source-level changes require working across both.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:40:33.122Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2845-260418-203502",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_conventions_349316646825": {
+      "id": "conventions_pipeline_conventions_349316646825",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline conventions",
+      "content": "E2E test suites (like P3T19) are named with pipeline prefixes and run as triggered Kody pipeline stages rather than as standard unit tests.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:40:33.123Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2845-260418-203502",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
