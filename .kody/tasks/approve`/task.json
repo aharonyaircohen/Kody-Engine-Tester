@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I've asked the three clarifying questions above. Once you answer them, I",
+  "description": "I've asked the three clarifying questions above. Once you answer them, I'll incorporate your preferences into the plan and call `ExitPlanMode` to submit it for approval.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

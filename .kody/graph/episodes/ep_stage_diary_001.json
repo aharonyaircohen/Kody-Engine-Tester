@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T10:08:01.586Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"When verifying risk gate behavior, the task title/label describes the verification goal, not the implementation task itself — keep scope narrow.\",\"scope\":\"kody pipeline\"},{\"kind\":\"gotcha\",\"text\":\"This codebase has two auth systems coexisting: legacy session-based auth in src/auth/ and a newer auth system. Any migration must target the legacy system specifically.\",\"scope\":\"src/auth\"},{\"kind\":\"convention\",\"text\":\"The build stage handles both clarifying questions for the plan AND the implementation. ExitPlanMode is called before proceeding to build.\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
