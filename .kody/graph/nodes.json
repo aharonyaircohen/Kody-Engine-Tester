@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcapiauth_1651853860540": {
+      "id": "conventions_srcapiauth_1651853860540",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/api/auth",
+      "content": "AuthService test pattern: mock @/getPayload, new JwtService('test-secret'), new AuthService(mockPayload, jwtService), vi.clearAllMocks() in beforeEach — apply to all auth endpoint tests.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:10:40.302Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2711-260418-124338",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcapiauthlogints_1651855456921": {
+      "id": "thoughts_srcapiauthlogints_1651855456921",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/api/auth/login.ts",
+      "content": "login.ts was using UserStore SHA-256 while register.ts used AuthService PBKDF2 — these must be unified so Payload is the single auth source.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:10:40.304Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2711-260418-124338",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcapiauthlogints_1651857181343": {
+      "id": "facts_srcapiauthlogints_1651857181343",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/api/auth/login.ts",
+      "content": "login.ts becomes a thin wrapper; all user lookup, PBKDF2 verification (25000 iters), token gen, and refresh token storage live in AuthService.login().",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:10:40.306Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2711-260418-124338",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcapiauthregisterts_1651858575205": {
+      "id": "facts_srcapiauthregisterts_1651858575205",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/api/auth/register.ts",
+      "content": "register.ts already delegates to authService.login() at line 69 — login.ts follows the same delegation pattern.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:10:40.307Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2711-260418-124338",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

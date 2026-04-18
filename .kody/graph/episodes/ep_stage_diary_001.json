@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2711-260418-124338",
+  "source": "stage_diary",
+  "taskId": "2711-260418-124338",
+  "createdAt": "2026-04-18T13:10:40.296Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"AuthService test pattern: mock @/getPayload, new JwtService('test-secret'), new AuthService(mockPayload, jwtService), vi.clearAllMocks() in beforeEach — apply to all auth endpoint tests.\",\"scope\":\"src/api/auth\"},{\"kind\":\"gotcha\",\"text\":\"login.ts was using UserStore SHA-256 while register.ts used AuthService PBKDF2 — these must be unified so Payload is the single auth source.\",\"scope\":\"src/api/auth/login.ts\"},{\"kind\":\"decision\",\"text\":\"login.ts becomes a thin wrapper; all user lookup, PBKDF2 verification (25000 iters), token gen, and refresh token storage live in AuthService.login().\",\"scope\":\"src/api/auth/login.ts\"},{\"kind\":\"decision\",\"text\":\"register.ts already delegates to authService.login() at line 69 — login.ts follows the same delegation pattern.\",\"scope\":\"src/api/auth/register.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
