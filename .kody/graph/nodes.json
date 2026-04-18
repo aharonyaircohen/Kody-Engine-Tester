@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_kody_pipeline_1098979286390": {
+      "id": "facts_kody_pipeline_1098979286390",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline",
+      "content": "Verification tests (P3T series) confirm Kody Engine internals like flag injection — they don't produce application code changes",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T19:01:43.199Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2822-260418-184558",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2822-260418-184558",
+  "source": "stage_diary",
+  "taskId": "2822-260418-184558",
+  "createdAt": "2026-04-18T19:01:43.193Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"Verification tests (P3T series) confirm Kody Engine internals like flag injection — they don't produce application code changes\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
