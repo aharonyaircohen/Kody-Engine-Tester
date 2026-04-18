@@ -80,6 +80,70 @@
         "kind:gotcha"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcauthuserstorets_1065927780722": {
+      "id": "thoughts_srcauthuserstorets_1065927780722",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth/user-store.ts",
+      "content": "UserStore.verifyPassword() uses === for hash comparison, creating a timing-attack vulnerability. Always use crypto.timingSafeEqual for comparing secrets/hashes.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:05:44.665Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2791-260418-164939",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcusersusersts_1065929760066": {
+      "id": "facts_srcusersusersts_1065929760066",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/users/Users.ts",
+      "content": "Fields that must be write-only for clients (like hash/salt) need both hidden:true and access:{read:()=>false,update:()=>false} — neither alone is sufficient.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:05:44.667Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2791-260418-164939",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcauth_1065931268980": {
+      "id": "conventions_srcauth_1065931268980",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth",
+      "content": "The codebase uses PBKDF2 with 25000 iterations, sha256, and 512-bit output for password hashing. Extract params to shared module before using.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:05:44.668Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2791-260418-164939",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcauthpasswordutilsts_1065932753890": {
+      "id": "facts_srcauthpasswordutilsts_1065932753890",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/auth/password-utils.ts",
+      "content": "Splitting password logic into a dedicated password-utils.ts module keeps AuthService clean and enables reuse across UserStore and other auth paths.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:05:44.670Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2791-260418-164939",
+        "kind:decision"
+      ],
+      "confidence": 0.7
     }
   }
 }

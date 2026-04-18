@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2791-260418-164939",
+  "source": "stage_diary",
+  "taskId": "2791-260418-164939",
+  "createdAt": "2026-04-18T17:05:44.661Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"UserStore.verifyPassword() uses === for hash comparison, creating a timing-attack vulnerability. Always use crypto.timingSafeEqual for comparing secrets/hashes.\",\"scope\":\"src/auth/user-store.ts\"},{\"kind\":\"lesson\",\"text\":\"Fields that must be write-only for clients (like hash/salt) need both hidden:true and access:{read:()=>false,update:()=>false} — neither alone is sufficient.\",\"scope\":\"src/users/Users.ts\"},{\"kind\":\"convention\",\"text\":\"The codebase uses PBKDF2 with 25000 iterations, sha256, and 512-bit output for password hashing. Extract params to shared module before using.\",\"scope\":\"src/auth\"},{\"kind\":\"decision\",\"text\":\"Splitting password logic into a dedicated password-utils.ts module keeps AuthService clean and enables reuse across UserStore and other auth paths.\",\"scope\":\"src/auth/password-utils.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
