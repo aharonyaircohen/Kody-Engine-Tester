@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2656-260418-100644",
+  "source": "stage_diary",
+  "taskId": "2656-260418-100644",
+  "createdAt": "2026-04-18T10:22:38.325Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The diff only contained infrastructure/task metadata but no source code files — review must verify both that files exist AND that they are actually in the diff.\",\"scope\":\"code review process\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

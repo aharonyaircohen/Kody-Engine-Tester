@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2656-260418-100644",
+  "source": "stage_diary",
+  "taskId": "2656-260418-100644",
+  "createdAt": "2026-04-18T10:23:39.506Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The diff contained only task metadata files (`.kody/tasks/`), not the actual source code. Files must be created on disk, not just planned.\",\"scope\":\"implementation scope\"},{\"kind\":\"lesson\",\"text\":\"When Glob confirms 0 results for expected files like `src/utils/hash-password.ts`, the previous step did no real work — start fresh rather than trying to iterate on its output.\",\"scope\":\"task workflow\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

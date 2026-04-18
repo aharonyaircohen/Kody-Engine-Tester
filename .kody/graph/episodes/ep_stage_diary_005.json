@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2656-260418-100644",
+  "source": "stage_diary",
+  "taskId": "2656-260418-100644",
+  "createdAt": "2026-04-18T10:23:50.471Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The diff from HEAD~1 contained only metadata files and no source code changes. The required deliverables (hash-password utility, User Payload collection, User service, User routes) were all missing fr\",\"scope\":\"pipeline stage\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

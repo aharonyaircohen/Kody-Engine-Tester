@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcutils_srccollections_846347615867": {
+      "id": "thoughts_srcutils_srccollections_846347615867",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/utils, src/collections",
+      "content": "Build stage completed with status 'completed' but zero source files were created on disk. Glob confirms no files at expected paths.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:20:28.023Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2656-260418-100644",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_846348684866": {
+      "id": "facts_pipeline_846348684866",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "Verify actual file existence on disk rather than inferring success from a pipeline status field.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:20:28.024Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2656-260418-100644",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_846350264797": {
+      "id": "facts_pipeline_846350264797",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "A pipeline stage can report 'completed' without any actual work being done — always validate deliverables independently.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:20:28.025Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2656-260418-100644",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_936133919109": {
+      "id": "thoughts_pipeline_936133919109",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline",
+      "content": "Build stage reported 'completed' with zero files created on disk. Never trust build status alone — verify actual file existence via Glob or fs reads.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T10:21:57.809Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2656-260418-100644",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_newprojectsetup_936135116193": {
+      "id": "thoughts_newprojectsetup_936135116193",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "new-project-setup",
+      "content": "The task directory contains only metadata; the referenced codebase paths (src/collections/, src/utils/, src/auth/) don't exist yet. Files must be created fresh, not modified.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T10:21:57.810Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2656-260418-100644",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_936136709091": {
+      "id": "facts_pipeline_936136709091",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline",
+      "content": "When a stage shows status=completed but zero files exist, check whether the build step actually wrote to the correct working directory vs a stale/empty directory.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T10:21:57.812Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2656-260418-100644",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_code_review_process_976654093871": {
+      "id": "thoughts_code_review_process_976654093871",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "code review process",
+      "content": "The diff only contained infrastructure/task metadata but no source code files — review must verify both that files exist AND that they are actually in the diff.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T10:22:38.329Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2656-260418-100644",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_implementation_scope_1037834370431": {
+      "id": "thoughts_implementation_scope_1037834370431",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "implementation scope",
+      "content": "The diff contained only task metadata files (`.kody/tasks/`), not the actual source code. Files must be created on disk, not just planned.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T10:23:39.509Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2656-260418-100644",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_task_workflow_1037835658156": {
+      "id": "facts_task_workflow_1037835658156",
+      "type": "facts",
+      "hall": "facts",
+      "room": "task workflow",
+      "content": "When Glob confirms 0 results for expected files like `src/utils/hash-password.ts`, the previous step did no real work — start fresh rather than trying to iterate on its output.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T10:23:39.511Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2656-260418-100644",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_stage_1048799278768": {
+      "id": "thoughts_pipeline_stage_1048799278768",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline stage",
+      "content": "The diff from HEAD~1 contained only metadata files and no source code changes. The required deliverables (hash-password utility, User Payload collection, User service, User routes) were all missing fr",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T10:23:50.474Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2656-260418-100644",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

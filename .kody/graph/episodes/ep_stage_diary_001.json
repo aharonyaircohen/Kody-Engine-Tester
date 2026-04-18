@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2656-260418-100644",
+  "source": "stage_diary",
+  "taskId": "2656-260418-100644",
+  "createdAt": "2026-04-18T10:20:28.016Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build stage completed with status 'completed' but zero source files were created on disk. Glob confirms no files at expected paths.\",\"scope\":\"src/utils, src/collections\"},{\"kind\":\"lesson\",\"text\":\"Verify actual file existence on disk rather than inferring success from a pipeline status field.\",\"scope\":\"pipeline\"},{\"kind\":\"lesson\",\"text\":\"A pipeline stage can report 'completed' without any actual work being done — always validate deliverables independently.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

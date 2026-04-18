@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2656-260418-100644",
+  "source": "stage_diary",
+  "taskId": "2656-260418-100644",
+  "createdAt": "2026-04-18T10:21:57.806Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build stage reported 'completed' with zero files created on disk. Never trust build status alone — verify actual file existence via Glob or fs reads.\",\"scope\":\"pipeline\"},{\"kind\":\"gotcha\",\"text\":\"The task directory contains only metadata; the referenced codebase paths (src/collections/, src/utils/, src/auth/) don't exist yet. Files must be created fresh, not modified.\",\"scope\":\"new-project-setup\"},{\"kind\":\"lesson\",\"text\":\"When a stage shows status=completed but zero files exist, check whether the build step actually wrote to the correct working directory vs a stale/empty directory.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
