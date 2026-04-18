@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2698-260418-123920",
+  "source": "stage_diary",
+  "taskId": "2698-260418-123920",
+  "createdAt": "2026-04-18T12:49:32.121Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"X-RateLimit-Reset header used retryAfterMs (relative duration) as an absolute timestamp; must divide by 1000 for seconds and add to Date.now()\",\"scope\":\"src/middleware/rateLimit.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

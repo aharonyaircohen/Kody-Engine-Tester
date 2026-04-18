@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2698-260418-123920",
+  "source": "stage_diary",
+  "taskId": "2698-260418-123920",
+  "createdAt": "2026-04-18T12:53:53.851Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"X-RateLimit-Reset header expects an absolute Unix timestamp in ms (Date.now()), but retryAfterMs is a duration. Use Date.now() + retryAfterMs, not just retryAfterMs.\",\"scope\":\"src/middleware/rateLimit.ts:55\"},{\"kind\":\"convention\",\"text\":\"Middleware files live in src/middleware/ and co-located tests use the .test.ts suffix in the same directory.\",\"scope\":\"src/middleware\"},{\"kind\":\"convention\",\"text\":\"Follow the factory pattern: createXxxMiddleware(config) returning a NextResponse | undefined, with destroy() on the limiter for cleanup.\",\"scope\":\"src/middleware\"},{\"kind\":\"convention\",\"text\":\"Tests use afterEach with vi.useRealTimers() after timer-based tests and call limiter.destroy() for cleanup.\",\"scope\":\"src/middleware\"},{\"kind\":\"lesson\",\"text\":\"When adding a new file that overlaps with an existing one (rate-limiter vs rateLimit), name it distinctly and mirror the existing patterns to avoid reviewers second-guessing intent.\",\"s",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

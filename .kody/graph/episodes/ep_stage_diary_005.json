@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2698-260418-123920",
+  "source": "stage_diary",
+  "taskId": "2698-260418-123920",
+  "createdAt": "2026-04-18T13:01:01.306Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Import path for the new middleware file must be correct — ensure the module resolves without conflicts with similarly named files in src/middleware.\",\"scope\":\"src/middleware\"},{\"kind\":\"gotcha\",\"text\":\"The X-RateLimit-Reset header timestamp must be set correctly; this bug was caught in a previous review pass and fixed — watch for it.\",\"scope\":\"src/middleware/rateLimit.ts\"},{\"kind\":\"convention\",\"text\":\"Match existing middleware file naming: use kebab-case (rate-limiter.ts) rather than camelCase (rateLimit.ts) to stay consistent with the codebase.\",\"scope\":\"src/middleware\"},{\"kind\":\"convention\",\"text\":\"Co-locate Vitest tests next to source (rateLimit.test.ts beside rateLimit.ts) and mirror the established test patterns: describe/it/expect/vi, afterEach with vi.useRealTimers(), and .destroy() cleanup\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"When reusing patterns from an existing implementation (e.g. factory pattern, SlidingWind",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

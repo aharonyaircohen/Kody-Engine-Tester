@@ -80,6 +80,278 @@
         "kind:decision"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcmiddlewareratelimitts_782906175128": {
+      "id": "thoughts_srcmiddlewareratelimitts_782906175128",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "X-RateLimit-Reset header used retryAfterMs (relative duration) as an absolute timestamp; must divide by 1000 for seconds and add to Date.now()",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T12:49:32.124Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_1044636762050": {
+      "id": "conventions_srcmiddleware_1044636762050",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Middleware files live in src/middleware/ and co-located tests use the .test.ts suffix in the same directory.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T12:53:53.855Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_1044638142594": {
+      "id": "conventions_srcmiddleware_1044638142594",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Follow the factory pattern: createXxxMiddleware(config) returning a NextResponse | undefined, with destroy() on the limiter for cleanup.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T12:53:53.856Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcmiddlewareratelimitts_1044639496050": {
+      "id": "facts_srcmiddlewareratelimitts_1044639496050",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "When adding a new file that overlaps with an existing one (rate-limiter vs rateLimit), name it distinctly and mirror the existing patterns to avoid reviewers second-guessing intent.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T12:53:53.857Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcmiddlewareratelimitts_1079497855747": {
+      "id": "thoughts_srcmiddlewareratelimitts_1079497855747",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "IP blacklist/whitelist precedence: check blacklist BEFORE whitelist, not after. Existing rate-limiter.ts does this correctly, new code inverted the order.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T12:54:28.716Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddlewareratelimiterts_1079502238185": {
+      "id": "conventions_srcmiddlewareratelimiterts_1079502238185",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware/rateLimiter.ts",
+      "content": "Middleware factory pattern (create*Middleware) + limiter class with destroy() cleanup is the established convention in this codebase.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T12:54:28.720Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcmiddlewareratelimitts_1079503770463": {
+      "id": "facts_srcmiddlewareratelimitts_1079503770463",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "X-RateLimit-Reset should be Unix seconds (integer), not milliseconds. Client-side Retry-After parsing depends on this.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T12:54:28.722Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_1079505245676": {
+      "id": "conventions_srcmiddleware_1079505245676",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Tests co-located with source (rateLimit.test.ts alongside rateLimit.ts), using vi.useRealTimers() in afterEach and NextRequest factory helper.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T12:54:28.723Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcmiddleware_1472092678283": {
+      "id": "thoughts_srcmiddleware_1472092678283",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/middleware",
+      "content": "Import path for the new middleware file must be correct — ensure the module resolves without conflicts with similarly named files in src/middleware.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T13:01:01.311Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcmiddlewareratelimitts_1472094145750": {
+      "id": "thoughts_srcmiddlewareratelimitts_1472094145750",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "The X-RateLimit-Reset header timestamp must be set correctly; this bug was caught in a previous review pass and fixed — watch for it.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T13:01:01.312Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_1472095853795": {
+      "id": "conventions_srcmiddleware_1472095853795",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Match existing middleware file naming: use kebab-case (rate-limiter.ts) rather than camelCase (rateLimit.ts) to stay consistent with the codebase.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T13:01:01.314Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testing_1472097497209": {
+      "id": "conventions_testing_1472097497209",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Co-locate Vitest tests next to source (rateLimit.test.ts beside rateLimit.ts) and mirror the established test patterns: describe/it/expect/vi, afterEach with vi.useRealTimers(), and .destroy() cleanup",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T13:01:01.315Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_middleware_1472098843591": {
+      "id": "facts_middleware_1472098843591",
+      "type": "facts",
+      "hall": "facts",
+      "room": "middleware",
+      "content": "When reusing patterns from an existing implementation (e.g. factory pattern, SlidingWindowRateLimiter), extract the structural template (create*Middleware factory, cleanup timer, destroy method) rathe",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T13:01:01.317Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2698-260418-123920",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcmiddlewareratelimitts_1512268126465": {
+      "id": "thoughts_srcmiddlewareratelimitts_1512268126465",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "X-RateLimit-Reset header uses `(Date.now() + retryAfterMs) / 1000` which computes an absolute Unix timestamp that drifts — use a stable reset time computed at response time, not derived from Date.now(",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T13:01:41.486Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcmiddlewareratelimittestts_1512269742439": {
+      "id": "facts_srcmiddlewareratelimittestts_1512269742439",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/middleware/rateLimit.test.ts",
+      "content": "Always verify newly exported helpers (like `byApiKey`) are covered by tests before merging; untested exports are easy to miss in diff review.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T13:01:41.488Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_1512271566439": {
+      "id": "conventions_srcmiddleware_1512271566439",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Middleware uses a factory pattern: `createXxxMiddleware()` returning a handler, with a paired `XxxConfig` interface and X-RateLimit-* + 429+Retry-After response shape.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T13:01:41.490Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testts_1512273575193": {
+      "id": "conventions_testts_1512273575193",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "*.test.ts",
+      "content": "Test files use `describe/it/expect/vi`, `afterEach` with `vi.useRealTimers()`, a `NextRequest` factory helper, and call `limiter.destroy()` for cleanup.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T13:01:41.492Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
     }
   }
 }

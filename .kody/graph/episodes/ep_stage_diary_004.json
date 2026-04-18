@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2698-260418-123920",
+  "source": "stage_diary",
+  "taskId": "2698-260418-123920",
+  "createdAt": "2026-04-18T12:54:28.713Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"IP blacklist/whitelist precedence: check blacklist BEFORE whitelist, not after. Existing rate-limiter.ts does this correctly, new code inverted the order.\",\"scope\":\"src/middleware/rateLimit.ts\"},{\"kind\":\"convention\",\"text\":\"Middleware factory pattern (create*Middleware) + limiter class with destroy() cleanup is the established convention in this codebase.\",\"scope\":\"src/middleware/rateLimiter.ts\"},{\"kind\":\"lesson\",\"text\":\"X-RateLimit-Reset should be Unix seconds (integer), not milliseconds. Client-side Retry-After parsing depends on this.\",\"scope\":\"src/middleware/rateLimit.ts\"},{\"kind\":\"convention\",\"text\":\"Tests co-located with source (rateLimit.test.ts alongside rateLimit.ts), using vi.useRealTimers() in afterEach and NextRequest factory helper.\",\"scope\":\"src/middleware\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

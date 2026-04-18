@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_006",
+  "runId": "2698-260418-123920",
+  "source": "stage_diary",
+  "taskId": "2698-260418-123920",
+  "createdAt": "2026-04-18T13:01:41.482Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"X-RateLimit-Reset header uses `(Date.now() + retryAfterMs) / 1000` which computes an absolute Unix timestamp that drifts — use a stable reset time computed at response time, not derived from Date.now(\",\"scope\":\"src/middleware/rateLimit.ts\"},{\"kind\":\"lesson\",\"text\":\"Always verify newly exported helpers (like `byApiKey`) are covered by tests before merging; untested exports are easy to miss in diff review.\",\"scope\":\"src/middleware/rateLimit.test.ts\"},{\"kind\":\"convention\",\"text\":\"Middleware uses a factory pattern: `createXxxMiddleware()` returning a handler, with a paired `XxxConfig` interface and X-RateLimit-* + 429+Retry-After response shape.\",\"scope\":\"src/middleware\"},{\"kind\":\"convention\",\"text\":\"Test files use `describe/it/expect/vi`, `afterEach` with `vi.useRealTimers()`, a `NextRequest` factory helper, and call `limiter.destroy()` for cleanup.\",\"scope\":\"*.test.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
