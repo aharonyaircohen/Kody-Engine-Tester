@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. To summarize:  - **Bug:** `.github/wo",
+  "description": "The plan is ready for your review. To summarize:\n\n- **Bug:** `.github/workflows/kody.yml` line 56 has `workflows: [\"CI\"]` which prevents `fix-ci-trigger` from firing for workflows not named exactly \"CI\" (like the T19 test's \"Test CI\")\n- **Fix:** Remove `workflows: [\"CI\"]` from the `workflow_run` trigger — the existing `if:` condition on the job already gates on `conclusion == 'failure' && event == 'pull_request'`\n- **Then:** Execute the full T19 verification steps (create breakable workflow, bre",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

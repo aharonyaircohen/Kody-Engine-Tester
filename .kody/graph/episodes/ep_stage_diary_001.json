@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2474-260418-040103",
+  "source": "stage_diary",
+  "taskId": "2474-260418-040103",
+  "createdAt": "2026-04-18T04:09:02.453Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"workflow_run trigger's workflows:[...] filter matches workflow NAME (title), not filename — a workflow named 'Test CI' won't match workflows:['CI']\",\"scope\":\"github-actions\"},{\"kind\":\"decision\",\"text\":\"Removed workflows:[...] from workflow_run trigger; the job-level if: condition already gates on conclusion=='failure' && event=='pull_request', making the workflow-name filter redundant and overly str\",\"scope\":\".github/workflows/kody.yml\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_githubactions_618521477708": {
+      "id": "thoughts_githubactions_618521477708",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "github-actions",
+      "content": "workflow_run trigger's workflows:[...] filter matches workflow NAME (title), not filename — a workflow named 'Test CI' won't match workflows:['CI']",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:09:02.458Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2474-260418-040103",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_githubworkflowskodyyml_618523195452": {
+      "id": "facts_githubworkflowskodyyml_618523195452",
+      "type": "facts",
+      "hall": "facts",
+      "room": ".github/workflows/kody.yml",
+      "content": "Removed workflows:[...] from workflow_run trigger; the job-level if: condition already gates on conclusion=='failure' && event=='pull_request', making the workflow-name filter redundant and overly str",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:09:02.460Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2474-260418-040103",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
