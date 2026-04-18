@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2778-260418-164551",
+  "source": "stage_diary",
+  "taskId": "decompose-2778-260418-164551",
+  "createdAt": "2026-04-18T16:50:38.981Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"@kody decompose is not a valid subcommand; available subcommands are full|rerun|fix|fix-ci|review|resolve|status.\",\"scope\":\"kody CLI\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

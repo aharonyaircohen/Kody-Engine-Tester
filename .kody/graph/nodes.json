@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kody_cli_494430930033": {
+      "id": "thoughts_kody_cli_494430930033",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody CLI",
+      "content": "@kody decompose is not a valid subcommand; available subcommands are full|rerun|fix|fix-ci|review|resolve|status.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:50:38.987Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2778-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
