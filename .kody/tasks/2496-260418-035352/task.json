@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I'm ready to hand off. Here's a summary of what I found and what I need ",
+  "description": "I'm ready to hand off. Here's a summary of what I found and what I need to proceed:\n\n**What I know (from project memory + task description):**\n\n- The project is a Next.js 16.2.1 + TypeScript + Payload CMS app\n- Two existing auth implementations exist at `src/api/auth/login.ts` and `src/api/auth/register.ts` using different backends (UserStore SHA-256 vs AuthService PBKDF2)\n- AuthService (PBKDF2) is the preferred backend; `JwtService` exists for token generation\n- Payload Users collection at `src",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
