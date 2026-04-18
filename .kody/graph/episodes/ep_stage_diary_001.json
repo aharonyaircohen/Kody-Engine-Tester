@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "hotfix-2589-260418-091447",
+  "source": "stage_diary",
+  "taskId": "hotfix-2589-260418-091447",
+  "createdAt": "2026-04-18T09:19:22.732Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"Always verify the reported bug still exists before making changes; the fix was already in git state, requiring no code change.\",\"scope\":\"src/utils/helpers.ts\"},{\"kind\":\"convention\",\"text\":\"hotfix pipeline COMPLEXITY_SKIP=[\\\"taskify\\\",\\\"plan\\\",\\\"review\\\",\\\"review-fix\\\"] — only build/verify/ship run, tests skipped\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

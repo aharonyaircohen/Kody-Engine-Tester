@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_srcutilshelpersts_427831117605": {
+      "id": "facts_srcutilshelpersts_427831117605",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/helpers.ts",
+      "content": "Always verify the reported bug still exists before making changes; the fix was already in git state, requiring no code change.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:19:22.738Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2589-260418-091447",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_pipeline_427832482305": {
+      "id": "conventions_kody_pipeline_427832482305",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody pipeline",
+      "content": "hotfix pipeline COMPLEXITY_SKIP=[\"taskify\",\"plan\",\"review\",\"review-fix\"] — only build/verify/ship run, tests skipped",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:19:22.739Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2589-260418-091447",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
