@@ -15,31 +15,33 @@
     },
     "build": {
       "state": "completed",
-      "startedAt": "2026-04-18T20:39:14.585Z",
-      "completedAt": "2026-04-18T20:41:00.000Z",
+      "completedAt": "2026-04-18T20:40:33.124Z",
       "retries": 0,
-      "notes": "P3T19 verification: external Kody engine (aharonyaircohen/Kody-ADE-Engine) handles force-with-lease retry logic. No application code changes needed in Kody-Engine-Tester. Pipeline triggered by @kody in task.md. Verification criteria: logs show force-with-lease on push retry."
+      "promptTokens": 4004
     },
     "verify": {
-      "state": "pending",
+      "state": "completed",
+      "completedAt": "2026-04-18T20:41:57.157Z",
       "retries": 0
     },
     "review": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "review-fix": {
-      "state": "pending",
+      "state": "completed",
       "retries": 0
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-18T20:41:57.160Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-18T20:36:21.797Z",
-  "updatedAt": "2026-04-18T20:41:00.000Z",
+  "updatedAt": "2026-04-18T20:41:57.160Z",
   "sessions": {
-    "explore": "8cf4275e-afe6-475c-b6b4-208ca8d68ba8"
+    "explore": "8cf4275e-afe6-475c-b6b4-208ca8d68ba8",
+    "build": "d53c2396-3137-4177-b1d0-687d0c8c93da"
   }
 }
