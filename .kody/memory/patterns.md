@@ -10,12 +10,14 @@
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Error Boundary** (`src/components/error-boundary.tsx`): React class component using `getDerivedStateFromError` and `componentDidCatch` for fallback UI rendering with optional `fallbackRender` callback.
 
 ### Behavioral Patterns
 
 - **Strategy**: `request-logger.ts` switches between `json`/`text` output formats; log level Strategy maps HTTP status codes to `debug|info|warn|error`.
-- **Repository/Store**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` — hybrid repository-pattern store.
-- **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling.
+- **Repository/Store**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` — hybrid repository-pattern store. Also `NotificationsStore`, `EnrollmentStore`, and `SessionStore` follow the same pattern.
+- **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union (`Ok`/`Err`) with `map`, `mapErr`, `andThen`, and `match` combinators.
+- **Role Guard**: `src/middleware/role-guard.ts` uses hierarchical role checking (`admin` > `editor` > `viewer`) as a decorator function for endpoint protection.
 
 ### Architectural Layers
 
@@ -24,9 +26,9 @@ Route Handlers (src/api/*, src/app/*)
     ↓
 Auth HOC (src/auth/withAuth.ts) → JWT Service → AuthService
     ↓
-Service Layer (src/services/*.ts: GradebookService, GradingService)
+Service Layer (src/services/*.ts: GradebookService, GradingService, ProgressService)
     ↓
-Repository Layer (Payload Collections, contactsStore)
+Repository Layer (Payload Collections, contactsStore, NotificationsStore, EnrollmentStore)
     ↓
 Database (PostgreSQL via @payloadcms/db-postgres)
 ```
@@ -36,13 +38,17 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - **Entry points**: API routes, Next.js pages
 - **Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole`
 - **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`) decouple services from Payload
+- **Context boundary**: `AuthContext` (`src/contexts/auth-context.tsx`) provides client-side auth state with token refresh scheduling via `useRef` + `setTimeout`
 
 ### Reusable Abstractions
 
 - `Container.register<T>(token, factory)` — generic DI
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
-- Zod schemas in `src/validation/` for input validation at API boundaries
+- `createRateLimiterMiddleware(config)` — sliding window rate limiter with IP whitelist/blacklist
+- `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl`, `sanitizeFilePath` — input sanitization suite
+- `ProgressService.markLessonComplete` — idempotent lesson completion
+- `VirtualList` (`src/components/virtual-list.tsx`) — windowed rendering with binary search for variable-height items, uses `forwardRef` and `ResizeObserver`
 
 ### Anti-Patterns / Inconsistencies
 

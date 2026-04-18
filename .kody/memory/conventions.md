@@ -1,41 +1,15 @@
-# LearnHub Coding Conventions
+## Learned 2026-04-18 (task: conventions)
 
-**Naming**: Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case (`.module.css`); collections → singular slug
+**CSS Modules**: Use `styles from './ModuleList.module.css'` pattern for component-scoped styling (see `src/components/course-editor/ModuleList.tsx`)
 
-**Imports**: Use `import type` for types; path alias `@/*` for internal modules; named imports preferred
+**Service Layer**: Business logic in `src/services/` as classes with constructor dependency injection (see `src/services/discussions.ts:DiscussionService`)
 
-```typescript
-import type { Module } from '@/collections/Modules'
-import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
-import { LessonEditor } from './LessonEditor'
-```
+**Security Utilities**: Input sanitization in `src/security/sanitizers.ts` — `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl` for XSS/SQLi/path traversal prevention
 
-**Exports**: Named exports for utilities/types; default export for page components only
+**Store Pattern**: In-memory stores using `private Map` for domain objects with helper methods (see `src/collections/certificates.ts:CertificatesStore`)
 
-**Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
+**Context + Hooks Pattern**: `useContext(AuthContext)` with `ProtectedRoute` wrapper for auth-guarded pages (see `src/pages/auth/profile.tsx`)
 
-**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
+**Drag-and-Drop**: HTML5 `dataTransfer` API with `e.dataTransfer.setData/getData` for module reordering (see `src/components/course-editor/ModuleList.tsx:handleDragStart`)
 
-**Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
-
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
-
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/utils
-
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-10 (task: 1529-260410-102822)
-- Uses Drizzle ORM
-- Uses Payload CMS collections
+**HTML Entity Decoding**: Manual map-based decoding for HTML entities in `src/security/sanitizers.ts`

@@ -321,4 +321,88 @@ Lesson fetches may not batch properly on all pages; verify `findAll` calls use P
 - [ ] New error paths use `Result<T, E>` pattern from `src/utils/result.ts`
 - [ ] Auth changes respect `withAuth` HOC boundary, do not duplicate auth logic
 
+---
+
+## Repo Patterns — Additional Examples
+
+**Store Pattern with private Map** (`src/collections/certificates.ts:CertificatesStore`):
+
+```typescript
+private certificates = new Map<string, Certificate>()
+getById(id: string): Certificate | undefined { return this.certificates.get(id) }
+create(data: Certificate): Certificate { this.certificates.set(data.id, data); return data }
+```
+
+**CSS Modules for Component Scoping** (`src/components/course-editor/ModuleList.tsx`):
+
+```typescript
+import styles from './ModuleList.module.css'
+// Use: <div className={styles.moduleItem}>
+```
+
+**DiscussionService with Constructor DI** (`src/services/discussions.ts`):
+
+```typescript
+class DiscussionService {
+  constructor(
+    private readonly notificationsStore: NotificationsStore,
+    private readonly enrollmentStore: EnrollmentStore,
+  ) {}
+}
+```
+
+**VirtualList with forwardRef** (`src/components/virtual-list.tsx`):
+
+```typescript
+const VirtualList = forwardRef<HTMLDivElement, VirtualListProps>((props, ref) => { ... })
+```
+
+**Drag-and-Drop via dataTransfer** (`src/components/course-editor/ModuleList.tsx:handleDragStart`):
+
+```typescript
+e.dataTransfer.setData('text/plain', lessonId)
+```
+
+**AuthContext with useRef for Token Refresh** (`src/contexts/auth-context.tsx`):
+
+```typescript
+const refreshTimeoutRef = useRef<NodeJS.Timeout>()
+scheduleTokenRefresh(expiryTime)
+// Uses setTimeout with useRef for cleanup on unmount
+```
+
+**Input Sanitization Suite** (`src/security/sanitizers.ts`):
+
+```typescript
+sanitizeHtml(input: string): string   // XSS prevention
+sanitizeSql(input: string): string    // SQLi prevention
+sanitizeUrl(input: string): string    // URL validation
+sanitizeFilePath(input: string): string // path traversal prevention
+```
+
+## Improvement Areas — Extended
+
+**HTML Entity Decoding in Sanitizers** (`src/security/sanitizers.ts`):
+Uses manual map-based decoding — verify entity maps are complete for all supported HTML entities.
+
+**Context + ProtectedRoute Pattern** (`src/pages/auth/profile.tsx`):
+Error handling uses `.catch(() => {})` silently — non-critical fallback may hide real errors. See line 27 anti-pattern.
+
+**Inconsistent Error Handling** (`src/pages/auth/profile.tsx:27`):
+`.catch(() => {})` swallows errors silently — prefer `Result` type or explicit error logging.
+
+**Missing Error Boundary on Some Routes**:
+React error boundary (`src/components/error-boundary.tsx`) exists but may not wrap all page components.
+
+## Acceptance Criteria — Extended
+
+- [ ] All new services use `Result<T, E>` for error paths, not thrown exceptions
+- [ ] CSS Modules pattern used for all new React components (no global CSS class pollution)
+- [ ] Input sanitization applied at API boundaries using `src/security/sanitizers.ts`
+- [ ] Store classes use `private Map` with typed keys, not plain objects
+- [ ] Constructor DI used for all service layer classes
+- [ ] `withAuth` HOC used for all protected route handlers (no inline JWT validation)
+- [ ] No `as unknown as` type casts — fix type mismatches at source
+- [ ] Fake timers properly cleaned up with `vi.useRealTimers()` after tests
+
 {{TASK_CONTEXT}}

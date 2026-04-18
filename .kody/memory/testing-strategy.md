@@ -1,33 +1,14 @@
-# LearnHub LMS Testing Strategy
+## Setup Files
 
-## Stack
+- `vitest.setup.ts` — shared test setup loaded for all vitest runs (configured in `vitest.config.mts`)
 
-- **Integration**: Vitest 4.0 (`vitest.config.mts`) — `pnpm test:int`
-- **E2E**: Playwright 1.58 (`playwright.config.ts`) — `pnpm test:e2e`
-- **Runner**: `pnpm test` executes both suites sequentially
+## Test Helpers
 
-## Organization
+- `tests/helpers/login.ts` — authenticates a user for E2E tests
+- `tests/helpers/seedUser.ts` — creates/tears down test user via `seedTestUser()` / `cleanupTestUser()`
+- Example usage in `tests/e2e/admin.e2e.spec.ts`: `browser.newContext()` + `login({ page, user: testUser })` in `beforeAll`
 
-| Type              | Location                                | Pattern                                       |
-| ----------------- | --------------------------------------- | --------------------------------------------- |
-| Unit/Integration  | `src/**/*.test.ts`, `src/**/*.test.tsx` | Co-located with source                        |
-| Integration Specs | `tests/int/**/*.int.spec.ts`            | Dedicated integration folder                  |
-| E2E               | `tests/e2e/*.spec.ts`                   | Page-object style helpers in `tests/helpers/` |
+## Additional Test Examples
 
-## Patterns
-
-- **Mocks**: `vi.fn()` + `mockResolvedValue` / `mockRejectedValue` for Payload SDK stubs
-- **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
-- **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
-- **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
-
-## CI Quality Gates
-
-- `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
-- Playwright `forbidOnly: true` prevents committed `.only()` tests
-- Retries enabled on CI (2x) to reduce flaky failure noise
-
-## Coverage
-
-- No explicit threshold configured; vitest run passes `--coverage` implicitly
-- Example coverage: `CourseSearchService` tested via mocked Payload find calls
+- `src/utils/url-parser.test.ts` — unit tests for URL parsing with `describe`/`it`/`expect`
+- `src/utils/retry-queue.test.ts` — fake timer tests using `vi.useFakeTimers()` + `vi.advanceTimersByTimeAsync()` for async queue behavior
