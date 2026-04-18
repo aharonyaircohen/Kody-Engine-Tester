@@ -53,7 +53,7 @@ on:
     types: [submitted]
 
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["test-ci"]
     types: [completed]
 
   push:
