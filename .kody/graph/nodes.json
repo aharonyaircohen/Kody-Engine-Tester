@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_kody_engine_450094471921": {
+      "id": "conventions_kody_engine_450094471921",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody engine",
+      "content": "Project memory is stored at `.kody/memory.md` and injected into taskify via the `{{PROJECT_CONTEXT}}` block in `prompts/taskify-ticket.md`.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:23:08.653Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2582-260418-091709",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_engine_450095999021": {
+      "id": "conventions_kody_engine_450095999021",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody engine",
+      "content": "The file tree is generated using `git ls-files` (not `find` or tree walkers) and injected alongside project memory into the PROJECT_CONTEXT block.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:23:08.655Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2582-260418-091709",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_450097388402": {
+      "id": "facts_kody_pipeline_450097388402",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline",
+      "content": "Verification-only tasks use task.md to document the expected behavior and confirm it already works, requiring no code changes.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:23:08.656Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2582-260418-091709",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

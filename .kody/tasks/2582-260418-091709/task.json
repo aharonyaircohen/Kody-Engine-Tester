@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is written and ready for review. Here's a summary of my finding",
+  "description": "The plan is written and ready for review. Here's a summary of my findings:\n\n**This is a verification task** — no code changes are needed. The taskify stage in the Kody Engine already:\n\n1. **Reads `.kody/memory.md`** (project memory) and injects it as `### Project Memory` in the `PROJECT_CONTEXT` block\n2. **Runs `git ls-files`** to get the file tree and injects it as `### File Tree`\n3. Both are assembled into `projectContext` and injected into `prompts/taskify-ticket.md` via the `{{PROJECT_CONTEX",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

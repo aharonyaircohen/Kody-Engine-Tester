@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2582-260418-091709",
+  "source": "stage_diary",
+  "taskId": "2582-260418-091709",
+  "createdAt": "2026-04-18T09:23:08.648Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Project memory is stored at `.kody/memory.md` and injected into taskify via the `{{PROJECT_CONTEXT}}` block in `prompts/taskify-ticket.md`.\",\"scope\":\"kody engine\"},{\"kind\":\"convention\",\"text\":\"The file tree is generated using `git ls-files` (not `find` or tree walkers) and injected alongside project memory into the PROJECT_CONTEXT block.\",\"scope\":\"kody engine\"},{\"kind\":\"lesson\",\"text\":\"Verification-only tasks use task.md to document the expected behavior and confirm it already works, requiring no code changes.\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
