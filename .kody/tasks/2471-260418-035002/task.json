@@ -1,0 +1,16 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing rate-limiter implementation",
+  "description": "The rate-limiting middleware is already fully implemented at src/middleware/rate-limiter.ts with a SlidingWindowRateLimiter class using an in-memory Map, IP-based key resolution via x-forwarded-for headers, and a createRateLimiterMiddleware factory. Unit tests are already in src/middleware/rate-limiter.test.ts covering SlidingWindowRateLimiter behavior, middleware responses (429, headers), IP whitelist/blacklist, concurrent request handling, window expiry, and X-RateLimit headers. The task is complete and passes.",
+  "scope": [
+    "src/middleware/rate-limiter.ts",
+    "src/middleware/rate-limiter.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/request-logger.ts - Express-style middleware chain pattern with config objects and typed interfaces",
+    "src/utils/di-container.ts - Token-based DI with singleton/transient lifecycles",
+    "vitest test patterns - tests co-located in *.test.ts files next to source, using describe/it/expect/vi from vitest"
+  ],
+  "questions": []
+}
