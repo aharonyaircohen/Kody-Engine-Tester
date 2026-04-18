@@ -1,33 +1,26 @@
-# LearnHub LMS Testing Strategy
-
-## Stack
-
-- **Integration**: Vitest 4.0 (`vitest.config.mts`) — `pnpm test:int`
-- **E2E**: Playwright 1.58 (`playwright.config.ts`) — `pnpm test:e2e`
-- **Runner**: `pnpm test` executes both suites sequentially
-
-## Organization
-
-| Type              | Location                                | Pattern                                       |
-| ----------------- | --------------------------------------- | --------------------------------------------- |
-| Unit/Integration  | `src/**/*.test.ts`, `src/**/*.test.tsx` | Co-located with source                        |
-| Integration Specs | `tests/int/**/*.int.spec.ts`            | Dedicated integration folder                  |
-| E2E               | `tests/e2e/*.spec.ts`                   | Page-object style helpers in `tests/helpers/` |
-
-## Patterns
-
-- **Mocks**: `vi.fn()` + `mockResolvedValue` / `mockRejectedValue` for Payload SDK stubs
-- **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
-- **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
-- **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
-
-## CI Quality Gates
-
-- `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
-- Playwright `forbidOnly: true` prevents committed `.only()` tests
-- Retries enabled on CI (2x) to reduce flaky failure noise
-
 ## Coverage
 
 - No explicit threshold configured; vitest run passes `--coverage` implicitly
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
+
+## Configuration Details
+
+- **Vitest setup**: `vitest.setup.ts` loaded before tests; environment `jsdom`
+- **Vitest include**: `src/**/*.test.ts`, `src/**/*.test.tsx`, `tests/int/**/*.int.spec.ts`
+- **Playwright projects**: Chromium only (`channel: 'chromium'`); HTML reporter; `webServer` starts `pnpm dev`
+
+## Additional CI Gates
+
+- `test-ci.yml` runs health check echo and `exit 1` on PR events (placeholder)
+- `kody.yml` triggers on `push` to `src/**`, `kody.config.json`, `package.json` changes; concurrent group prevents parallel runs
+- Playwright `forbidOnly: !!process.env.CI` blocks `.only()` in CI
+
+## Test Data
+
+- E2E: `tests/helpers/seedUser.ts` creates `testUser` fixture; `login()` helper authenticates via UI
+- Integration: `vi.useFakeTimers()` / `vi.useRealTimers()` for async RetryQueue tests
+
+## Example References
+
+- Unit: `src/utils/url-parser.test.ts`, `src/utils/retry-queue.test.ts`
+- E2E: `tests/e2e/admin.e2e.spec.ts`, `tests/e2e/frontend.e2e.spec.ts`

@@ -19,23 +19,39 @@ import { LessonEditor } from './LessonEditor'
 **Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
 
 ## Learned 2026-04-04 (task: 403-260404-211531)
+
 - Uses vitest for testing
 - Uses eslint for linting
 
 ## Learned 2026-04-05 (task: 420-260405-054611)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/app/api/health
 
 ## Learned 2026-04-05 (task: 444-260405-212643)
+
 - Uses vitest for testing
 - Uses eslint for linting
 - Active directories: src/utils
 
 ## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
+
 - Uses vitest for testing
 - Uses eslint for linting
 
 ## Learned 2026-04-10 (task: 1529-260410-102822)
+
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-18 (architecture analysis)
+
+- Service pattern: Classes in `src/services/` use constructor dependency injection (e.g., `DiscussionService` receives `store`, `enrollmentStore`, `getUser`, `enrollmentChecker`)
+- Store pattern: `CertificatesStore` in `src/collections/certificates.ts` uses private `Map`-based in-memory storage
+- Security utilities: `src/security/sanitizers.ts` exports `sanitizeHtml`, `sanitizeSql`, `sanitizeUrl` for input sanitization
+- Crypto utilities: `src/utils/url-shortener.ts` uses `crypto.subtle.digest('SHA-256', ...)` for deterministic hashing
+- Recursive patterns: Discussion threads use recursive `getThreadDepth` and `buildReplies` with depth limiting (max 3 levels)
+- Rich text: `RichTextContent` type imported from `src/collections/Discussions`
+- Directory structure: `src/security/`, `src/services/`, `src/validation/` directories exist
+- Module system: ESM with `import crypto from 'crypto'` (default import for Node crypto)
