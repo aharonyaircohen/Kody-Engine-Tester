@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "decompose-2779-260418-164551",
+  "source": "stage_diary",
+  "taskId": "decompose-2779-260418-164551",
+  "createdAt": "2026-04-18T17:30:37.709Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Calling createNotificationService() at request time creates a fresh in-memory store per request — data written in one handler is invisible to another.\",\"scope\":\"src/services/notificationService.ts:64-66\"},{\"kind\":\"lesson\",\"text\":\"Use a singleton service instance (top-level `let service`) initialized once, not a factory called per request, when the store is in-memory.\",\"scope\":\"src/services/notificationService.ts\"},{\"kind\":\"convention\",\"text\":\"TDD ordering: write tests first per area, then implementation, per step in the plan.\",\"scope\":\"plan.md step ordering\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

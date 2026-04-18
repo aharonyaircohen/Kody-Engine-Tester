@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcservices_2067824716908": {
+      "id": "thoughts_srcservices_2067824716908",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/services",
+      "content": "Creating services per request (e.g. `createNotificationService()` in route handlers) resets in-memory state and causes data loss across requests.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:15:58.003Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcservices_2067826515821": {
+      "id": "facts_srcservices_2067826515821",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/services",
+      "content": "A singleton store module-level (`let store = ...`) is initialized once at load time; if that store is later replaced by reassignment inside a factory function, callers still hold the old reference and",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:15:58.005Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcservices_2067827846775": {
+      "id": "conventions_srcservices_2067827846775",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/services",
+      "content": "Prefer singleton class instances (shared `static` field) over module-level `let` variables for shared mutable state — the class field is stable and won't be shadowed.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:15:58.006Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcservicesnotificationservicets6466_2947534292438": {
+      "id": "thoughts_srcservicesnotificationservicets6466_2947534292438",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/services/notificationService.ts:64-66",
+      "content": "Calling createNotificationService() at request time creates a fresh in-memory store per request — data written in one handler is invisible to another.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:30:37.712Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcservicesnotificationservicets_2947536167387": {
+      "id": "facts_srcservicesnotificationservicets_2947536167387",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/services/notificationService.ts",
+      "content": "Use a singleton service instance (top-level `let service`) initialized once, not a factory called per request, when the store is in-memory.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:30:37.714Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_planmd_step_ordering_2947537516413": {
+      "id": "conventions_planmd_step_ordering_2947537516413",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "plan.md step ordering",
+      "content": "TDD ordering: write tests first per area, then implementation, per step in the plan.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:30:37.716Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcroutesnotificationstestts_3041441127061": {
+      "id": "thoughts_srcroutesnotificationstestts_3041441127061",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/routes/notifications.test.ts",
+      "content": "A review-fix run introduced new TS errors in test files that weren't in the original build failures. Fixing one thing can break another.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:32:11.619Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_notificationservicetestts_3041442632613": {
+      "id": "thoughts_notificationservicetestts_3041442632613",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "notificationService.test.ts",
+      "content": "A 'uses default store' test pollutes a singleton store, affecting subsequent tests. Tests sharing singleton state must clean up or isolate.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:32:11.621Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_test_mocking_3041443945032": {
+      "id": "facts_test_mocking_3041443945032",
+      "type": "facts",
+      "hall": "facts",
+      "room": "test mocking",
+      "content": "When mocking NextRequest via `makeNextRequest` with spread, ensure all constructor arguments are accounted for or TS2554 errors occur.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:32:11.622Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcroutesnotificationstestts_3314907636843": {
+      "id": "thoughts_srcroutesnotificationstestts_3314907636843",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/routes/notifications.test.ts",
+      "content": "Review-fix runs that touch test files can introduce new TypeScript compilation errors even while fixing runtime issues — always run build after fixing tests.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:36:45.086Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcservicesnotificationservicetestts_3314909393994": {
+      "id": "facts_srcservicesnotificationservicetestts_3314909393994",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/services/notificationService.test.ts",
+      "content": "Tests for singleton-based services (e.g. default store) that mutate global state must run last or be isolated with beforeEach/teardown to avoid polluting subsequent tests in the same file.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:36:45.087Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcservicesnotificationservicetestts_3314910881641": {
+      "id": "thoughts_srcservicesnotificationservicetestts_3314910881641",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/services/notificationService.test.ts",
+      "content": "Patching a stub back to a real implementation at the end of a test without proper teardown causes singleton pollution that silently breaks unrelated tests in the same suite.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:36:45.089Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcservicesnotificationservicets_3314912316740": {
+      "id": "facts_srcservicesnotificationservicets_3314912316740",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/services/notificationService.ts",
+      "content": "Request-time service instantiation (vs. module-level) was the correct fix for the original bug — it allows request-scoped overrides and prevents shared mutable state across concurrent requests.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:36:45.090Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcroutesnotificationsts_3314913818483": {
+      "id": "conventions_srcroutesnotificationsts_3314913818483",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/routes/notifications.ts",
+      "content": "Route handlers requiring auth should consistently apply `withAuth` middleware — PATCH and DELETE were missed while GET/POST had it.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:36:45.092Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:decompose-2779-260418-164551",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcservices_3535594341829": {
+      "id": "thoughts_srcservices_3535594341829",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/services",
+      "content": "ServiceResult union type members don't expose .val/.err properties; tests that access these must narrow the type first with guards or casts.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:40:25.772Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testing_3535596405236": {
+      "id": "facts_testing_3535596405236",
+      "type": "facts",
+      "hall": "facts",
+      "room": "testing",
+      "content": "Co-located test files are typechecked as part of the project; test code must satisfy the same TypeScript constraints as production code.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:40:25.774Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcroutes_3535598110663": {
+      "id": "facts_srcroutes_3535598110663",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/routes",
+      "content": "Handler call arity mismatches in route test files indicate the test is passing wrong number of arguments to the handler function.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:40:25.776Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2779-260418-164551",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

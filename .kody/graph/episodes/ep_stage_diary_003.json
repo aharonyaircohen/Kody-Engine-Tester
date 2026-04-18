@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "decompose-2779-260418-164551",
+  "source": "stage_diary",
+  "taskId": "decompose-2779-260418-164551",
+  "createdAt": "2026-04-18T17:32:11.616Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"A review-fix run introduced new TS errors in test files that weren't in the original build failures. Fixing one thing can break another.\",\"scope\":\"src/routes/notifications.test.ts\"},{\"kind\":\"gotcha\",\"text\":\"A 'uses default store' test pollutes a singleton store, affecting subsequent tests. Tests sharing singleton state must clean up or isolate.\",\"scope\":\"notificationService.test.ts\"},{\"kind\":\"lesson\",\"text\":\"When mocking NextRequest via `makeNextRequest` with spread, ensure all constructor arguments are accounted for or TS2554 errors occur.\",\"scope\":\"test mocking\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

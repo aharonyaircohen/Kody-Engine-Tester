@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2779-260418-164551",
+  "source": "stage_diary",
+  "taskId": "decompose-2779-260418-164551",
+  "createdAt": "2026-04-18T17:15:57.997Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Creating services per request (e.g. `createNotificationService()` in route handlers) resets in-memory state and causes data loss across requests.\",\"scope\":\"src/services\"},{\"kind\":\"lesson\",\"text\":\"A singleton store module-level (`let store = ...`) is initialized once at load time; if that store is later replaced by reassignment inside a factory function, callers still hold the old reference and\",\"scope\":\"src/services\"},{\"kind\":\"convention\",\"text\":\"Prefer singleton class instances (shared `static` field) over module-level `let` variables for shared mutable state — the class field is stable and won't be shadowed.\",\"scope\":\"src/services\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

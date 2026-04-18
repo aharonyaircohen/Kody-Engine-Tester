@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "decompose-2779-260418-164551",
+  "source": "stage_diary",
+  "taskId": "decompose-2779-260418-164551",
+  "createdAt": "2026-04-18T17:40:25.769Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"ServiceResult union type members don't expose .val/.err properties; tests that access these must narrow the type first with guards or casts.\",\"scope\":\"src/services\"},{\"kind\":\"lesson\",\"text\":\"Co-located test files are typechecked as part of the project; test code must satisfy the same TypeScript constraints as production code.\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"Handler call arity mismatches in route test files indicate the test is passing wrong number of arguments to the handler function.\",\"scope\":\"src/routes\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "decompose-2779-260418-164551",
+  "source": "stage_diary",
+  "taskId": "decompose-2779-260418-164551",
+  "createdAt": "2026-04-18T17:36:45.082Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Review-fix runs that touch test files can introduce new TypeScript compilation errors even while fixing runtime issues — always run build after fixing tests.\",\"scope\":\"src/routes/notifications.test.ts\"},{\"kind\":\"lesson\",\"text\":\"Tests for singleton-based services (e.g. default store) that mutate global state must run last or be isolated with beforeEach/teardown to avoid polluting subsequent tests in the same file.\",\"scope\":\"src/services/notificationService.test.ts\"},{\"kind\":\"gotcha\",\"text\":\"Patching a stub back to a real implementation at the end of a test without proper teardown causes singleton pollution that silently breaks unrelated tests in the same suite.\",\"scope\":\"src/services/notificationService.test.ts\"},{\"kind\":\"decision\",\"text\":\"Request-time service instantiation (vs. module-level) was the correct fix for the original bug — it allows request-scoped overrides and prevents shared mutable state across concurrent requests",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
