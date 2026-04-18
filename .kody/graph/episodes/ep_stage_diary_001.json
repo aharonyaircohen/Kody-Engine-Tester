@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2623-260418-095230",
+  "source": "stage_diary",
+  "taskId": "decompose-2623-260418-095230",
+  "createdAt": "2026-04-18T09:58:09.012Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The capitalize (sentence-case) utility already exists in src/utils/cap.ts — the task spec didn't reflect existing code.\",\"scope\":\"src/utils\"},{\"kind\":\"convention\",\"text\":\"Two distinct capitalize functions exist: capitalize (sentence-case) in cap.ts, capitalizeWords (title-case) in capitalize-words.ts.\",\"scope\":\"src/utils\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

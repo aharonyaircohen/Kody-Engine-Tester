@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcutils_358245590097": {
+      "id": "thoughts_srcutils_358245590097",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/utils",
+      "content": "The capitalize (sentence-case) utility already exists in src/utils/cap.ts — the task spec didn't reflect existing code.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:58:09.018Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2623-260418-095230",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutils_358248379284": {
+      "id": "conventions_srcutils_358248379284",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils",
+      "content": "Two distinct capitalize functions exist: capitalize (sentence-case) in cap.ts, capitalizeWords (title-case) in capitalize-words.ts.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:58:09.020Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2623-260418-095230",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

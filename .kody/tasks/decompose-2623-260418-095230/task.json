@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready. The task is straightforward with no product-level amb",
+  "description": "The plan is ready. The task is straightforward with no product-level ambiguity to clarify — \"capitalize\" means sentence-case (first character only), which is distinct from the existing `capitalizeWords` title-case utility. Ready for your approval.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
