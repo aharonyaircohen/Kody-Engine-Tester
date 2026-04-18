@@ -1,0 +1,20 @@
+{
+  "task_type": "feature",
+  "title": "Add User Payload collection with PBKDF2 password hash field",
+  "description": "Define a User Payload collection in src/collections/User.ts with: email field (unique, for login identity), passwordHash field (PBKDF2, never plaintext), role field (aligned with RbacRole: 'admin'|'editor'|'viewer'), and timestamps. Add a Payload beforeChange hook to PBKDF2-hash passwords on create/update. Create src/utils/hash-password.ts exporting hash/verify functions using PBKDF2 (consistent with AuthService, not the SHA-256 from UserStore). Include a find-by-email accessor for login flow. Tests: unit test for hash generation on create, unit test verifying same password produces different salted hashes, integration test for create-via-Payload and hash existence.",
+  "scope": [
+    "src/collections/User.ts",
+    "src/utils/hash-password.ts",
+    "src/utils/hash-password.test.ts",
+    "src/collections/User.test.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/auth/auth-service.ts - PBKDF2 hashing to reuse (not SHA-256 from UserStore)",
+    "src/auth/user-store.ts - legacy user representation (SHA-256, UserRole misalignment)",
+    "src/utils/result.ts - Result<T,E> discriminated union for explicit error handling",
+    "src/utils/di-container.ts - token-based DI, singleton/transient lifecycles",
+    "src/services/ - GradebookService/GradingService typed dependency interface pattern (e.g. GradebookServiceDeps)"
+  ],
+  "questions": []
+}
