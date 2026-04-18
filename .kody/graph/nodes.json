@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_testing_870510452083": {
+      "id": "conventions_testing_870510452083",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Async tests in this codebase use vi.useFakeTimers() with vi.fn() for controlling timing in describe/it blocks.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:15:18.998Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:compose",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcvalidationcomposets_870511819682": {
+      "id": "conventions_srcvalidationcomposets_870511819682",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/validation/compose.ts",
+      "content": "Validator chains short-circuit on first failure and no-op on empty input — reuse this pattern in src/validation/compose.ts.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:15:18.999Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:compose",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsretryqueuets_870513149951": {
+      "id": "facts_srcutilsretryqueuets_870513149951",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/retry-queue.ts",
+      "content": "Track merged branches via a _mergedBranches Set in the retry-queue; expose skipMerged/unskipMerged/isMerged methods rather than mutating queue items.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:15:19.001Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:compose",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

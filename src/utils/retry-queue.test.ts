@@ -263,6 +263,70 @@ describe('RetryQueue', () => {
     expect(results).toEqual(['a', 'b'])
   })
 
+  it('skips an item whose branch is already merged and does not call its handler', async () => {
+    const queue = new RetryQueue<string>()
+    const handler = vi.fn().mockResolvedValue(undefined)
+
+    queue.enqueue('feature/abc', handler)
+    queue.skipMerged('feature/abc')
+    await queue.process()
+
+    expect(handler).not.toHaveBeenCalled()
+    expect(queue.stats().processed).toBe(0)
+  })
+
+  it('isMerged returns true after skipMerged is called for a branch', async () => {
+    const queue = new RetryQueue<string>()
+
+    expect(queue.isMerged('feature/xyz')).toBe(false)
+    queue.skipMerged('feature/xyz')
+    expect(queue.isMerged('feature/xyz')).toBe(true)
+  })
+
+  it('skipMerged is idempotent — calling twice does not double-add', async () => {
+    const queue = new RetryQueue<string>()
+
+    queue.skipMerged('branch-a')
+    queue.skipMerged('branch-a')
+    expect(queue.isMerged('branch-a')).toBe(true)
+  })
+
+  it('unskipMerged removes a branch from the merged set', async () => {
+    const queue = new RetryQueue<string>()
+
+    queue.skipMerged('branch-b')
+    expect(queue.isMerged('branch-b')).toBe(true)
+    queue.unskipMerged('branch-b')
+    expect(queue.isMerged('branch-b')).toBe(false)
+  })
+
+  it('unskipMerged is idempotent — calling on a non-merged branch does not throw', async () => {
+    const queue = new RetryQueue<string>()
+
+    expect(() => queue.unskipMerged('never-merged')).not.toThrow()
+  })
+
+  it('unskipMerged on a re-skipped branch restores merged state', async () => {
+    const queue = new RetryQueue<string>()
+
+    queue.skipMerged('branch-c')
+    queue.unskipMerged('branch-c')
+    queue.skipMerged('branch-c')
+    expect(queue.isMerged('branch-c')).toBe(true)
+  })
+
+  it('processed count is unchanged for skipped items', async () => {
+    const queue = new RetryQueue<string>()
+    const handler = vi.fn().mockResolvedValue(undefined)
+
+    queue.enqueue('branch-d', handler)
+    queue.skipMerged('branch-d')
+    await queue.process()
+
+    expect(queue.stats().processed).toBe(0)
+    expect(queue.stats().dead).toBe(0)
+  })
+
   it('accumulates dead letter items across multiple process() calls', async () => {
     const queue = new RetryQueue<string>({ maxRetries: 0 })
     const handler = vi.fn().mockRejectedValue(new Error('fail'))

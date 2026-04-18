@@ -9,3 +9,11 @@ export function compose<T>(...validators: Validator<T>[]): Validator<T> {
     return { valid: true }
   }
 }
+
+export function composeWithSkip<T>(skippedBranches: string[], ...validators: Validator<T>[]): Validator<T> {
+  const skipSet = new Set(skippedBranches)
+  return (value: T) => {
+    if (skipSet.has(String(value))) return { valid: true }
+    return compose(...validators)(value)
+  }
+}

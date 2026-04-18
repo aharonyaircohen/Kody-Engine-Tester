@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "compose",
+  "source": "stage_diary",
+  "taskId": "compose",
+  "createdAt": "2026-04-18T18:15:18.992Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Async tests in this codebase use vi.useFakeTimers() with vi.fn() for controlling timing in describe/it blocks.\",\"scope\":\"testing\"},{\"kind\":\"convention\",\"text\":\"Validator chains short-circuit on first failure and no-op on empty input — reuse this pattern in src/validation/compose.ts.\",\"scope\":\"src/validation/compose.ts\"},{\"kind\":\"decision\",\"text\":\"Track merged branches via a _mergedBranches Set in the retry-queue; expose skipMerged/unskipMerged/isMerged methods rather than mutating queue items.\",\"scope\":\"src/utils/retry-queue.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

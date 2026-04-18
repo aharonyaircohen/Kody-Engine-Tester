@@ -48,6 +48,7 @@ export class RetryQueue<T> {
   private _failedAttempts = 0
   private _retrying = 0
   private _dead = 0
+  private _mergedBranches = new Set<string>()
 
   constructor(options: RetryQueueOptions = {}) {
     this.maxRetries = options.maxRetries ?? 3
@@ -68,6 +69,18 @@ export class RetryQueue<T> {
     this.deadLetterCallbacks.push(callback)
   }
 
+  skipMerged(branch: string): void {
+    this._mergedBranches.add(branch)
+  }
+
+  unskipMerged(branch: string): void {
+    this._mergedBranches.delete(branch)
+  }
+
+  isMerged(branch: string): boolean {
+    return this._mergedBranches.has(branch)
+  }
+
   async process(): Promise<void> {
     const toProcess = this.pending.splice(0)
 
@@ -77,6 +90,7 @@ export class RetryQueue<T> {
   }
 
   private async _processEntry(entry: QueueEntry<T>): Promise<void> {
+    if (this._mergedBranches.has(String(entry.item))) return
     while (true) {
       try {
         await entry.handler(entry.item)
