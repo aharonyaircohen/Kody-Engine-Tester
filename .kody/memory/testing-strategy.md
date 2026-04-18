@@ -31,3 +31,26 @@
 
 - No explicit threshold configured; vitest run passes `--coverage` implicitly
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
+
+## Vitest Include Scope
+
+Vitest config (`vitest.config.mts`) includes:
+
+- `src/**/*.test.ts` — unit tests co-located with source
+- `src/**/*.test.tsx` — React component tests
+- `tests/**/*.test.ts` — general test helpers/utilities
+- `tests/int/**/*.int.spec.ts` — integration specs with `.int.spec.ts` suffix
+
+## Playwright Configuration
+
+- Browser: Chromium only (`channel: 'chromium'`)
+- `trace: 'on-first-retry'` for debugging failed tests
+- WebServer: `pnpm dev` on `http://localhost:3000`
+- Helpers in `tests/helpers/` (e.g., `login.ts`, `seedUser.ts`) provide reusable auth and setup logic
+
+## Example Test Files
+
+- `tests/e2e/admin.e2e.spec.ts` — E2E admin navigation with auth via `login()` helper
+- `tests/e2e/frontend.e2e.spec.ts` — E2E homepage smoke test
+- `src/utils/url-parser.test.ts` — URL parsing unit tests with full component coverage
+- `src/utils/retry-queue.test.ts` — Async queue with fake timers (`vi.useFakeTimers`)
