@@ -1,0 +1,86 @@
+[
+  {
+    "id": "1776544576529-czebw4u",
+    "runId": "decompose-2839-260418-203424",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "decompose-2839-260418-203424",
+      "issueNumber": 2839
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T20:36:16.529Z"
+  },
+  {
+    "id": "1776544576529-v3qji4a",
+    "runId": "decompose-2839-260418-203424",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2839-260418-203424",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T20:36:16.529Z"
+  },
+  {
+    "id": "1776544689488-ze4629t",
+    "runId": "decompose-2839-260418-203424",
+    "event": "step.complete",
+    "payload": {
+      "runId": "decompose-2839-260418-203424",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T20:38:09.488Z"
+  },
+  {
+    "id": "1776544689489-x2gpea0",
+    "runId": "decompose-2839-260418-203424",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2839-260418-203424",
+      "step": "plan"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T20:38:09.489Z"
+  },
+  {
+    "id": "1776544836396-uxqt2ny",
+    "runId": "decompose-2839-260418-203424",
+    "event": "step.complete",
+    "payload": {
+      "runId": "decompose-2839-260418-203424",
+      "step": "plan"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T20:40:36.396Z"
+  },
+  {
+    "id": "1776544836396-y4esjmi",
+    "runId": "decompose-2839-260418-203424",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2839-260418-203424",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T20:40:36.396Z"
+  }
+]
