@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T12:21:28.684Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"If a task says 'verify X exists', the build stage must first create X — a non-existent file fails verification even if the code changes are correct.\",\"scope\":\"kody pipeline\"},{\"kind\":\"convention\",\"text\":\"Task description 'Verify X includes Y' implies build must produce X with Y section — not just check it exists.\",\"scope\":\"kody pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

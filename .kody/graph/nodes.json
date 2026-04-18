@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kody_pipeline_538854588235": {
+      "id": "thoughts_kody_pipeline_538854588235",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline",
+      "content": "If a task says 'verify X exists', the build stage must first create X — a non-existent file fails verification even if the code changes are correct.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:21:28.689Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_pipeline_538855948995": {
+      "id": "conventions_kody_pipeline_538855948995",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody pipeline",
+      "content": "Task description 'Verify X includes Y' implies build must produce X with Y section — not just check it exists.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:21:28.691Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
