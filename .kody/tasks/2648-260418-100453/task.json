@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready. Here's a summary of the classification:  **Task type:",
+  "description": "The plan is ready. Here's a summary of the classification:\n\n**Task type:** `feature`  \n**Title:** Add request-rate-limiting middleware  \n**Risk level:** `low` — single new file + co-located test, no breaking changes  \n**Scope:** `src/middleware/rateLimit.ts`, `src/middleware/rateLimit.test.ts`  \n**Patterns to reuse:** Express-style chainable middleware (`src/middleware/request-logger.ts`), Result type (`src/utils/result.ts`)  \n**Questions:** none — the task description is clear and complete",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

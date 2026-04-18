@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2648-260418-100453",
+  "source": "stage_diary",
+  "taskId": "2648-260418-100453",
+  "createdAt": "2026-04-18T10:11:11.075Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Test files live co-located next to source: `rateLimit.test.ts` next to `rateLimit.ts`, matching `request-logger.ts` pattern.\",\"scope\":\"src/middleware\"},{\"kind\":\"convention\",\"text\":\"Express chainable middleware pattern (req, res, next) is the standard shape for new middleware in this codebase.\",\"scope\":\"src/middleware\"},{\"kind\":\"decision\",\"text\":\"In-memory Map is chosen for IP tracking in rate limiting — appropriate for single-instance, low-risk feature with no persistence requirement.\",\"scope\":\"src/middleware/rateLimit.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
