@@ -39,3 +39,6 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-10 (task: 1529-260410-102822)
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-18 (task: 2790-260418-164733)
+- Active directories: src/app/api/notes, src/app/api/notes/[id], src/app/api/enroll, src/app/api/gradebook, src/app/api/gradebook/course/[id], src/auth
