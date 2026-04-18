@@ -30,17 +30,18 @@
     },
     "review-fix": {
       "state": "completed",
-      "completedAt": "2026-04-18T11:05:00.000Z",
+      "completedAt": "2026-04-18T11:06:12.625Z",
       "retries": 0,
-      "notes": "Review PASS — no Critical/Major issues. Verify.md lint errors are in pre-existing, unmodified files (no src/ files were in the changeset). No fixes required."
+      "promptTokens": 4799
     },
     "ship": {
-      "state": "pending",
+      "state": "running",
+      "startedAt": "2026-04-18T11:06:12.659Z",
       "retries": 0
     }
   },
   "createdAt": "2026-04-18T10:53:07.534Z",
-  "updatedAt": "2026-04-18T11:03:40.036Z",
+  "updatedAt": "2026-04-18T11:06:12.659Z",
   "sessions": {
     "build": "22fb1e8e-d11a-4692-80d7-3aae0cd13428",
     "review": "4d50eae9-4363-40dd-9e47-bf3c0d0d4bf8"
