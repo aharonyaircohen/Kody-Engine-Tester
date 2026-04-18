@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2823-260418-184606",
+  "source": "stage_diary",
+  "taskId": "2823-260418-184606",
+  "createdAt": "2026-04-18T18:52:58.512Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"When --from points to the current stage name, the runner should still execute that stage rather than skip it entirely\",\"scope\":\"kody CLI pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_kody_cli_pipeline_492447361124": {
+      "id": "facts_kody_cli_pipeline_492447361124",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody CLI pipeline",
+      "content": "When --from points to the current stage name, the runner should still execute that stage rather than skip it entirely",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:52:58.518Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2823-260418-184606",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
