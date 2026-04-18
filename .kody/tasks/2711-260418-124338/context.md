@@ -23,3 +23,11 @@ Confirmed — the stash/pop cycle ran successfully and restored our changes. The
 3. The `api.int.spec.ts` failure wasn't in the first 5 grep lines (due to verbose stderr from unrelated tests) but we've already established it's a pre-existing DB infrastructure issue unrelated to our changes
 
 The implementation is complete and verified.
+
+### review (2026-04-18T13:14:26)
+## Verdict: PASS
+
+## Summary
+
+Refactored `src/api/auth/login.ts` to delegate entirely to `AuthService.login()`, eliminating the dual auth system anti-pattern where it previously used `UserStore` (in-memory SHA-256) alongside `SessionStore`. Simultaneously rewrote `src/api/auth/login.test.ts` to use the established `AuthService`-based test pattern (mock `@/getPayload`, `JwtService` + `AuthService` instantiation, `vi.clearAllMocks()` in `beforeEach`), matching the exact pattern in `logout.test.ts`
+...(truncated)

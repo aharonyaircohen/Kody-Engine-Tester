@@ -39,3 +39,8 @@ import { LessonEditor } from './LessonEditor'
 ## Learned 2026-04-10 (task: 1529-260410-102822)
 - Uses Drizzle ORM
 - Uses Payload CMS collections
+
+## Learned 2026-04-18 (task: 2711-260418-124338)
+- Date operations should consider UTC vs local time
+- Uses @/ path aliases for imports
+- Active directories: src/api/auth

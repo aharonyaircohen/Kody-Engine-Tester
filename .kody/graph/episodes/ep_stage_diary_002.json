@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2711-260418-124338",
+  "source": "stage_diary",
+  "taskId": "2711-260418-124338",
+  "createdAt": "2026-04-18T13:14:37.110Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Auth test files must follow exact pattern: mock @/getPayload, new JwtService(...), new AuthService(...), vi.clearAllMocks() in beforeEach\",\"scope\":\"src/api/auth\"},{\"kind\":\"gotcha\",\"text\":\"An endpoint that appears unchanged may still have been wrong — register.ts already delegated to authService but was overlooked\",\"scope\":\"src/api/auth/register.ts\"},{\"kind\":\"lesson\",\"text\":\"Consolidation work may reveal the target endpoint was already correct; scope the change to only what is actually broken\",\"scope\":\"src/api/auth/login.ts\"},{\"kind\":\"decision\",\"text\":\"Delegation pattern (service.login() call) is preferred over inline auth logic in route handlers\",\"scope\":\"src/api/auth\"},{\"kind\":\"gotcha\",\"text\":\"Dual auth anti-pattern: endpoints using different mechanisms (in-memory SHA-256 vs Payload PBKDF2) must be unified to one source\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

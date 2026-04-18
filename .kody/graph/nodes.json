@@ -64,6 +64,70 @@
         "kind:decision"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcapiauthregisterts_1888664383692": {
+      "id": "thoughts_srcapiauthregisterts_1888664383692",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/api/auth/register.ts",
+      "content": "An endpoint that appears unchanged may still have been wrong — register.ts already delegated to authService but was overlooked",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:14:37.113Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2711-260418-124338",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcapiauthlogints_1888665823042": {
+      "id": "facts_srcapiauthlogints_1888665823042",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/api/auth/login.ts",
+      "content": "Consolidation work may reveal the target endpoint was already correct; scope the change to only what is actually broken",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:14:37.114Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2711-260418-124338",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcapiauth_1888667399368": {
+      "id": "facts_srcapiauth_1888667399368",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/api/auth",
+      "content": "Delegation pattern (service.login() call) is preferred over inline auth logic in route handlers",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:14:37.116Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2711-260418-124338",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_auth_1888669211225": {
+      "id": "thoughts_auth_1888669211225",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth",
+      "content": "Dual auth anti-pattern: endpoints using different mechanisms (in-memory SHA-256 vs Payload PBKDF2) must be unified to one source",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:14:37.118Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2711-260418-124338",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
     }
   }
 }
