@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_build_diagnostics_805325179971": {
+      "id": "thoughts_build_diagnostics_805325179971",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "build diagnostics",
+      "content": "Task description said fix src/utils/helpers.ts, but that file already had export default — the real build-breaking errors were in src/pages/ files.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:05:04.165Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2484-260418-035159",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_nextjs_pages_router_805326645667": {
+      "id": "facts_nextjs_pages_router_805326645667",
+      "type": "facts",
+      "hall": "facts",
+      "room": "Next.js Pages Router",
+      "content": "Next.js Pages Router requires every file in src/pages/ to have a default export; named-only exports cause build failures.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:05:04.166Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2484-260418-035159",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcpages_805328405583": {
+      "id": "facts_srcpages_805328405583",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/pages/",
+      "content": "Components (not pages) in src/pages/ should be moved out rather than given a dummy default export.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:05:04.168Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2484-260418-035159",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1776484436668-ycil6ez",
+    "runId": "hotfix-2484-260418-035159",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "hotfix-2484-260418-035159",
+      "issueNumber": 2484
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T03:53:56.668Z"
+  },
+  {
+    "id": "1776484436668-xoe87k1",
+    "runId": "hotfix-2484-260418-035159",
+    "event": "step.started",
+    "payload": {
+      "runId": "hotfix-2484-260418-035159",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T03:53:56.668Z"
+  }
+]

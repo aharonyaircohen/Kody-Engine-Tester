@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "hotfix-2484-260418-035159",
+  "source": "stage_diary",
+  "taskId": "hotfix-2484-260418-035159",
+  "createdAt": "2026-04-18T04:05:04.159Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Task description said fix src/utils/helpers.ts, but that file already had export default — the real build-breaking errors were in src/pages/ files.\",\"scope\":\"build diagnostics\"},{\"kind\":\"lesson\",\"text\":\"Next.js Pages Router requires every file in src/pages/ to have a default export; named-only exports cause build failures.\",\"scope\":\"Next.js Pages Router\"},{\"kind\":\"decision\",\"text\":\"Components (not pages) in src/pages/ should be moved out rather than given a dummy default export.\",\"scope\":\"src/pages/\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
