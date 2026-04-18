@@ -373,6 +373,10 @@ jobs:
       issues: write
       pull-requests: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: Generate App token
         id: app-token
         if: vars.KODY_APP_ID != ''
