@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_label_lifecycle_2959523755080": {
+      "id": "conventions_label_lifecycle_2959523755080",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "label lifecycle",
+      "content": "Label management logic lives in the engine repo (aharonyaircohen/Kody-ADE-Engine), not in tester/repo-codebase repos. Tester repos only observe and verify.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:37:44.759Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2689-260418-115246",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_verification_2959525229138": {
+      "id": "facts_pipeline_verification_2959525229138",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline verification",
+      "content": "Verification-only pipeline stages confirm behavior by observing external state (GitHub labels) rather than by running local code assertions.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:37:44.760Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2689-260418-115246",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

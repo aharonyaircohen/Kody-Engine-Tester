@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2689-260418-115246",
+  "source": "stage_diary",
+  "taskId": "2689-260418-115246",
+  "createdAt": "2026-04-18T12:37:44.753Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Label management logic lives in the engine repo (aharonyaircohen/Kody-ADE-Engine), not in tester/repo-codebase repos. Tester repos only observe and verify.\",\"scope\":\"label lifecycle\"},{\"kind\":\"lesson\",\"text\":\"Verification-only pipeline stages confirm behavior by observing external state (GitHub labels) rather than by running local code assertions.\",\"scope\":\"pipeline verification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
