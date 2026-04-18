@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2575-260418-091202",
+  "source": "stage_diary",
+  "taskId": "2575-260418-091202",
+  "createdAt": "2026-04-18T09:16:04.094Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Task specifies dateUtils.ts but implementation lives in format-date.ts — verify actual file paths before assuming missing code\",\"scope\":\"src/utils\"},{\"kind\":\"lesson\",\"text\":\"For meta/verification tasks (e.g., testing pipeline behavior), the 'already implemented' path is the expected outcome to validate, not a failure\",\"scope\":\"pipeline verification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

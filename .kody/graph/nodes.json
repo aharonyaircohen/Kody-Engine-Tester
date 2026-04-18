@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcutils_321310918320": {
+      "id": "thoughts_srcutils_321310918320",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/utils",
+      "content": "Task specifies dateUtils.ts but implementation lives in format-date.ts — verify actual file paths before assuming missing code",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:16:04.100Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2575-260418-091202",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_verification_321312381425": {
+      "id": "facts_pipeline_verification_321312381425",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline verification",
+      "content": "For meta/verification tasks (e.g., testing pipeline behavior), the 'already implemented' path is the expected outcome to validate, not a failure",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:16:04.101Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2575-260418-091202",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
