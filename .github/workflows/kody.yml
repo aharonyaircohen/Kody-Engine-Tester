@@ -53,7 +53,7 @@ on:
     types: [submitted]
 
   workflow_run:
-    workflows: ["test-ci"]
+    workflows: ["Test CI"]
     types: [completed]
 
   push:
@@ -366,8 +366,7 @@ jobs:
   fix-ci-trigger:
     if: >-
       github.event_name == 'workflow_run' &&
-      github.event.workflow_run.conclusion == 'failure' &&
-      github.event.workflow_run.event == 'pull_request'
+      github.event.workflow_run.conclusion == 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -669,3 +668,4 @@ jobs:
           [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
           [ -n "${{ inputs.agent }}" ] && ARGS="$ARGS --agent ${{ inputs.agent }}"
           kody-engine watch $ARGS
+
