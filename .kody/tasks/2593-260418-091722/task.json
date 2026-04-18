@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Waiting for the user's answer to proceed with classifying this task. The",
+  "description": "Waiting for the user's answer to proceed with classifying this task. The source files (route definitions, `withAuth.ts`, auth service) are needed to enumerate all API routes and verify their auth coverage.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

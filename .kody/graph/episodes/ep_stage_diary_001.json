@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2593-260418-091722",
+  "source": "stage_diary",
+  "taskId": "2593-260418-091722",
+  "createdAt": "2026-04-18T09:25:41.330Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"When auditing auth coverage, the actual code change may be minimal — the bulk of the effort is verification, not modification.\",\"scope\":\"auth\"},{\"kind\":\"gotcha\",\"text\":\"A leftover 'my-route' placeholder file existed in the codebase and had to be deleted, highlighting that scaffold artifacts should be cleaned up before production.\",\"scope\":\"src/app\"},{\"kind\":\"decision\",\"text\":\"The /health and /csrf-token endpoints are intentionally left unprotected as they serve infrastructure and CSRF needs respectively.\",\"scope\":\"auth\"},{\"kind\":\"convention\",\"text\":\"All /api/* routes must use the `withAuth` HOC; exceptions are explicitly enumerated (health, csrf-token) rather than implicit.\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"Auth audit tasks should first enumerate all routes and then compare against protection status, making deletion the simplest fix when a route shouldn't exist at all.\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

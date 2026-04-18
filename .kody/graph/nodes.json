@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_auth_519767721695": {
+      "id": "facts_auth_519767721695",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "When auditing auth coverage, the actual code change may be minimal — the bulk of the effort is verification, not modification.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:41.336Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2593-260418-091722",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcapp_519769219022": {
+      "id": "thoughts_srcapp_519769219022",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app",
+      "content": "A leftover 'my-route' placeholder file existed in the codebase and had to be deleted, highlighting that scaffold artifacts should be cleaned up before production.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:41.338Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2593-260418-091722",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_519770699435": {
+      "id": "facts_auth_519770699435",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "The /health and /csrf-token endpoints are intentionally left unprotected as they serve infrastructure and CSRF needs respectively.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:41.339Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2593-260418-091722",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_519771935568": {
+      "id": "conventions_auth_519771935568",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth",
+      "content": "All /api/* routes must use the `withAuth` HOC; exceptions are explicitly enumerated (health, csrf-token) rather than implicit.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:41.340Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2593-260418-091722",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_519773329610": {
+      "id": "facts_auth_519773329610",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "Auth audit tasks should first enumerate all routes and then compare against protection status, making deletion the simplest fix when a route shouldn't exist at all.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:41.342Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2593-260418-091722",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
