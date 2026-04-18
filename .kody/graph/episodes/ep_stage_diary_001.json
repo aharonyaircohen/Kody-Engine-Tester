@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "hotfix-2726-260418-131609",
+  "source": "stage_diary",
+  "taskId": "hotfix-2726-260418-131609",
+  "createdAt": "2026-04-18T13:33:35.036Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Next.js PagesRouter validator enforces default exports on every file under src/pages/, not just pages themselves — components inside subdirectories like board/ and error/ must also have default export\",\"scope\":\"src/pages/\"},{\"kind\":\"lesson\",\"text\":\"The reported file (src/utils/helpers.ts) was already fixed; the pipeline surfaced missing defaults in unrelated pages/ subdirectory files that happened to also block the build.\",\"scope\":\"build\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1776518272210-fs28yhb",
+    "runId": "hotfix-2726-260418-131609",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "hotfix-2726-260418-131609",
+      "issueNumber": 2726
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T13:17:52.210Z"
+  },
+  {
+    "id": "1776518272211-ulyxcs6",
+    "runId": "hotfix-2726-260418-131609",
+    "event": "step.started",
+    "payload": {
+      "runId": "hotfix-2726-260418-131609",
+      "step": "build"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T13:17:52.211Z"
+  }
+]

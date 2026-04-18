@@ -98,3 +98,5 @@ export function TaskModal({ initialValues, onSubmit, onClose }: TaskModalProps) 
     </div>
   )
 }
+
+export default TaskModal

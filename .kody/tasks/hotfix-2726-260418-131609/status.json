@@ -1,0 +1,39 @@
+{
+  "taskId": "hotfix-2726-260418-131609",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "retries": 0
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "retries": 0
+    },
+    "verify": {
+      "state": "completed",
+      "skipped": true,
+      "retries": 0
+    },
+    "review": {
+      "state": "completed",
+      "skipped": true,
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "completed",
+      "skipped": true,
+      "retries": 0
+    },
+    "ship": {
+      "state": "completed",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-18T13:17:19.235Z",
+  "updatedAt": "2026-04-18T13:17:50.678Z"
+}

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcpages_1129187669029": {
+      "id": "thoughts_srcpages_1129187669029",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/pages/",
+      "content": "Next.js PagesRouter validator enforces default exports on every file under src/pages/, not just pages themselves — components inside subdirectories like board/ and error/ must also have default export",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:33:35.041Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2726-260418-131609",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_build_1129189106891": {
+      "id": "facts_build_1129189106891",
+      "type": "facts",
+      "hall": "facts",
+      "room": "build",
+      "content": "The reported file (src/utils/helpers.ts) was already fixed; the pipeline surfaced missing defaults in unrelated pages/ subdirectory files that happened to also block the build.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:33:35.043Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2726-260418-131609",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
