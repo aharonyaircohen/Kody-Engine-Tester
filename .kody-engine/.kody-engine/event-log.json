@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1776506032102-52hsuu0",
+    "runId": "2619-260418-095204",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "2619-260418-095204",
+      "issueNumber": 2619
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:53:52.102Z"
+  },
+  {
+    "id": "1776506032102-zikfb0d",
+    "runId": "2619-260418-095204",
+    "event": "step.started",
+    "payload": {
+      "runId": "2619-260418-095204",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:53:52.102Z"
+  },
+  {
+    "id": "1776506281075-reipjox",
+    "runId": "2619-260418-095204",
+    "event": "step.complete",
+    "payload": {
+      "runId": "2619-260418-095204",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:58:01.075Z"
+  },
+  {
+    "id": "1776506281075-owupncs",
+    "runId": "2619-260418-095204",
+    "event": "step.started",
+    "payload": {
+      "runId": "2619-260418-095204",
+      "step": "build"
+    },
+    "hooksFired": [
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:58:01.075Z"
+  }
+]

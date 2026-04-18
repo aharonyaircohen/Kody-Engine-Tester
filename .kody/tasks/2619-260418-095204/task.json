@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I've identified a key gap: the `fix-ci-trigger` job in `kody.yml` listen",
+  "description": "I've identified a key gap: the `fix-ci-trigger` job in `kody.yml` listens for `workflow_run` events from a workflow named `\"CI\"`, but **no `ci.yml` exists** in this repo — meaning the auto-trigger can never fire on its own.\n\nThe plan covers 4 steps:\n1. **Create `ci.yml`** — needed to make the `workflow_run` trigger fire\n2. **Verify `kody.yml` fix-ci-trigger job** — already correctly implemented\n3. **Verify engine source** — loop guard + bot commit guard live in `@kody-ade/engine` npm package\n4. ",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

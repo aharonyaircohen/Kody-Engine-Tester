@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_github_actions_513322820465": {
+      "id": "thoughts_github_actions_513322820465",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "GitHub Actions",
+      "content": "workflow_run triggers in kody.yml listen for a workflow named 'CI' but fail silently if ci.yml doesn't exist — the job simply never fires.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:13.781Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2619-260418-095204",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kodyyml_513324310041": {
+      "id": "facts_kodyyml_513324310041",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody.yml",
+      "content": "kody.yml fix-ci-trigger job was already correctly implemented; no source changes needed there.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:13.783Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2619-260418-095204",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kodyadeengine_513325736060": {
+      "id": "facts_kodyadeengine_513325736060",
+      "type": "facts",
+      "hall": "facts",
+      "room": "@kody-ade/engine",
+      "content": "Loop guard and bot commit guard logic lives in the @kody-ade/engine npm package, not in repo source.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:13.784Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2619-260418-095204",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

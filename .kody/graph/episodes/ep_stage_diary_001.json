@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2619-260418-095204",
+  "source": "stage_diary",
+  "taskId": "2619-260418-095204",
+  "createdAt": "2026-04-18T09:59:13.776Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"workflow_run triggers in kody.yml listen for a workflow named 'CI' but fail silently if ci.yml doesn't exist — the job simply never fires.\",\"scope\":\"GitHub Actions\"},{\"kind\":\"decision\",\"text\":\"kody.yml fix-ci-trigger job was already correctly implemented; no source changes needed there.\",\"scope\":\"kody.yml\"},{\"kind\":\"lesson\",\"text\":\"Loop guard and bot commit guard logic lives in the @kody-ade/engine npm package, not in repo source.\",\"scope\":\"@kody-ade/engine\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
