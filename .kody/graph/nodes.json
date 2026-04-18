@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_auth_middleware_688185489343": {
+      "id": "thoughts_auth_middleware_688185489343",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth middleware",
+      "content": "All target routes were already protected with withAuth before the task began; the real work was identifying residual gaps.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:40.710Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_auth_middleware_688186733312": {
+      "id": "thoughts_auth_middleware_688186733312",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth middleware",
+      "content": "withAuth HOC had no unit tests and protected endpoints had no integration tests — a common gap when auth is added incrementally.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:40.712Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth__type_safety_688187837069": {
+      "id": "facts_auth__type_safety_688187837069",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth / type safety",
+      "content": "Role type mismatch between UserStore.UserRole and withAuth's expected roles is a common footgun when auth is wired up across layers.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:40.713Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

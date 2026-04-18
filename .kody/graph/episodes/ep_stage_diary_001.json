@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T04:11:40.706Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"All target routes were already protected with withAuth before the task began; the real work was identifying residual gaps.\",\"scope\":\"auth middleware\"},{\"kind\":\"gotcha\",\"text\":\"withAuth HOC had no unit tests and protected endpoints had no integration tests — a common gap when auth is added incrementally.\",\"scope\":\"auth middleware\"},{\"kind\":\"lesson\",\"text\":\"Role type mismatch between UserStore.UserRole and withAuth's expected roles is a common footgun when auth is wired up across layers.\",\"scope\":\"auth / type safety\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

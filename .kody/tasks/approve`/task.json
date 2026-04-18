@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I've completed my exploration and identified the key gaps. I'm waiting o",
+  "description": "I've completed my exploration and identified the key gaps. I'm waiting on your answers to the three questions above, which will shape the final plan. Once you answer, I'll write the plan file and call `ExitPlanMode`.\n\nHere's a quick summary of what I found:\n\n**All 5 routes are already protected with `withAuth`** — the wrapping work is done. The gaps are:\n- No unit tests for the `withAuth` HOC itself\n- No integration tests for the protected API endpoints\n- A role mismatch: `UserStore.UserRole` us",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
