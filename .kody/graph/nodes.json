@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_pipeline_verification_463362590383": {
+      "id": "facts_pipeline_verification_463362590383",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline verification",
+      "content": "Verifying --from <stage> resume requires running the full pipeline first to establish state before testing the skip behavior.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:01:31.092Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2502-260418-035418",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

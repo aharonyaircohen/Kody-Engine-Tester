@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2502-260418-035418",
+  "source": "stage_diary",
+  "taskId": "2502-260418-035418",
+  "createdAt": "2026-04-18T04:01:31.087Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"Verifying --from <stage> resume requires running the full pipeline first to establish state before testing the skip behavior.\",\"scope\":\"pipeline verification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
