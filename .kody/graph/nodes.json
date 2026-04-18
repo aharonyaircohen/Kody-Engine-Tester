@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_auth_765684777456": {
+      "id": "facts_auth_765684777456",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "withAuth guarantees user is present before the handler runs, making inner if(!user) guards dead code after withAuth is applied.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:20:00.290Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

@@ -9,13 +9,6 @@ export const GET = withAuth(
     { user },
     routeParams?: { params: Promise<{ id: string }> },
   ) => {
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'Authentication required' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      })
-    }
-
     const params = await routeParams?.params
     const id = params?.id
 

@@ -4,13 +4,6 @@ import { withAuth } from '@/auth/withAuth'
 import { getPayloadInstance } from '@/services/progress'
 
 export const POST = withAuth(async (request: NextRequest, { user }) => {
-  if (!user) {
-    return new Response(JSON.stringify({ error: 'Authentication required' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
   // Only viewers (formerly students) can enroll
   if (user.role !== 'viewer' && user.role !== 'admin') {
     return new Response(JSON.stringify({ error: 'Forbidden: requires viewer role' }), {

@@ -6,7 +6,7 @@ import { NotificationService } from '@/services/notifications'
 export const PATCH = withAuth(
   async (
     request: NextRequest,
-    { user },
+    {},
     routeParams?: { params: Promise<{ id: string }> },
   ) => {
     const params = await routeParams?.params

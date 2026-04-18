@@ -25,7 +25,7 @@ function docToNote(doc: NoteDoc): Note {
   }
 }
 
-export const GET = withAuth(async (request: NextRequest) => {
+export const GET = withAuth(async (request: NextRequest, {}) => {
   const payload = await getPayloadInstance()
   const q = request.nextUrl.searchParams.get('q')
 
@@ -51,13 +51,6 @@ export const GET = withAuth(async (request: NextRequest) => {
 }, { optional: true })
 
 export const POST = withAuth(async (request: NextRequest, { user }) => {
-  if (!user) {
-    return new Response(JSON.stringify({ error: 'Authentication required' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
   // Only admin and editor can create notes
   if (user.role !== 'admin' && user.role !== 'editor') {
     return new Response(JSON.stringify({ error: 'Forbidden: requires admin or editor role' }), {

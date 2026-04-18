@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Now I have a complete picture. Let me compile the audit findings and pro",
+  "description": "Now I have a complete picture. Let me compile the audit findings and produce the classification.\n\n**Audit Summary:**\n\nAll 15 API routes in `src/app/api/` already use `withAuth`. However, several issues exist:\n\n1. **Dead code (`if (!user)` checks after `withAuth`)**: `withAuth` guarantees user is present before the handler runs, so inner `if (!user)` guards are redundant dead code in 8 routes.\n2. **Duplicate routes**: `src/routes/notifications.ts` duplicates `src/app/api/notifications/route.ts` (",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

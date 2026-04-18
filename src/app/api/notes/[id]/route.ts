@@ -28,7 +28,7 @@ function docToNote(doc: NoteDoc): Note {
 export const GET = withAuth(
   async (
     _request: NextRequest,
-    { user },
+    {},
     routeParams?: { params: Promise<{ id: string }> },
   ) => {
     const params = await routeParams?.params
