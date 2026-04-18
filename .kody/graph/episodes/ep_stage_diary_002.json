@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T13:03:59.021Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Reuse `getAuthService()` singleton from `withAuth.ts` instead of instantiating `JwtService` directly — it manages the singleton lifecycle.\",\"scope\":\"auth\"},{\"kind\":\"gotcha\",\"text\":\"`Access-Control-Allow-Origin: *` in the OPTIONS handler conflicts with the same-origin default used elsewhere in the codebase.\",\"scope\":\"src/app/api\"},{\"kind\":\"convention\",\"text\":\"Co-located `*.test.ts` next to `route.ts` using `vi.useFakeTimers()` and `NextRequest` is the established test pattern here.\",\"scope\":\"testing\"},{\"kind\":\"decision\",\"text\":\"Routing through `AuthService.login()` (PBKDF2/Payload) vs old `src/api/auth/login.ts` (SHA-256/UserStore) intentionally avoids dual-auth anti-pattern.\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"Old `src/api/auth/login.ts` utility was intentionally left untouched since the task scope only covered adding the new route handler.\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

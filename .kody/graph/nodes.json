@@ -80,6 +80,70 @@
         "kind:convention"
       ],
       "confidence": 0.7
+    },
+    "conventions_auth_986741041647": {
+      "id": "conventions_auth_986741041647",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth",
+      "content": "Reuse `getAuthService()` singleton from `withAuth.ts` instead of instantiating `JwtService` directly — it manages the singleton lifecycle.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:03:59.025Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapi_986742656031": {
+      "id": "thoughts_srcappapi_986742656031",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api",
+      "content": "`Access-Control-Allow-Origin: *` in the OPTIONS handler conflicts with the same-origin default used elsewhere in the codebase.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:03:59.026Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_986744600131": {
+      "id": "facts_auth_986744600131",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "Routing through `AuthService.login()` (PBKDF2/Payload) vs old `src/api/auth/login.ts` (SHA-256/UserStore) intentionally avoids dual-auth anti-pattern.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:03:59.028Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_986745800414": {
+      "id": "facts_auth_986745800414",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "Old `src/api/auth/login.ts` utility was intentionally left untouched since the task scope only covered adding the new route handler.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T13:03:59.029Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
     }
   }
 }
