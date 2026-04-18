@@ -41,5 +41,8 @@
   },
   "watch": {
     "enabled": true
+  },
+  "decompose": {
+    "enabled": false
   }
 }

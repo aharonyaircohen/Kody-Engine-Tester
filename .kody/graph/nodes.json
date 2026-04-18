@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kody_decompose_480644642361": {
+      "id": "thoughts_kody_decompose_480644642361",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody decompose",
+      "content": "Config gates must verify both enabled AND disabled paths — this test only validates the disabled fallback, not the enabled path",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T11:58:18.558Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2687-260418-115243",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_config_480645816489": {
+      "id": "facts_kody_pipeline_config_480645816489",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline config",
+      "content": "Feature gates in kody.config.json should log a specific fallback message ('decompose disabled in config — falling back') so verification is deterministic",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T11:58:18.559Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2687-260418-115243",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
