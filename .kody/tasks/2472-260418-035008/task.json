@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. Here's a summary of the classificatio",
+  "description": "The plan is ready for your review. Here's a summary of the classification:\n\n**Task Type:** `feature`  \n**Risk Level:** `high` — 20+ files across auth, middleware, collections, and API routes; database schema changes; core authentication logic\n\n**Key findings from exploration:**\n- The codebase has **two auth systems coexisting**: `session-store.ts`/`user-store.ts` (SHA-256, session-dependent) and `auth-service.ts`/`jwt-service.ts` (PBKDF2+JWT, the preferred pattern per project conventions)\n- `src",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
