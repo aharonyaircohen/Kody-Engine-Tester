@@ -3,7 +3,7 @@
  * @module utils/notificationHelpers
  */
 
-import type { Notification, NotificationFilter, NotificationSeverity } from '@/models/notification'
+import type { Notification, NotificationFilter, NotificationSeverity, NotificationRecord } from '@/models/notification'
 
 /**
  * Formats a notification into a readable string representation
@@ -49,4 +49,59 @@ export function getUnreadCount(notifications: Notification[]): number {
 export function sortBySeverity(notifications: Notification[]): Notification[] {
   const order: Record<NotificationSeverity, number> = { error: 0, warning: 1, info: 2 }
   return [...notifications].sort((a, b) => order[a.severity] - order[b.severity])
+}
+
+// ---------------------------------------------------------------------------
+// New notification helpers (use NotificationRecord type from @/models/notification)
+// ---------------------------------------------------------------------------
+
+/**
+ * Format a notification for display.
+ * Returns the title; mention patterns are preserved as-is.
+ */
+export function formatNotificationMessage(notification: NotificationRecord): string {
+  return notification.title
+}
+
+/**
+ * Group notifications by type for dashboard display.
+ */
+export function groupNotificationsByType(
+  notifications: NotificationRecord[],
+): Record<NotificationRecord['type'], NotificationRecord[]> {
+  const grouped: Record<string, NotificationRecord[]> = {
+    info: [],
+    warning: [],
+    error: [],
+    success: [],
+  }
+  for (const n of notifications) {
+    if (grouped[n.type]) {
+      grouped[n.type].push(n)
+    }
+  }
+  return grouped as Record<NotificationRecord['type'], NotificationRecord[]>
+}
+
+/**
+ * Returns true if the notification is unread.
+ */
+export function isUnread(notification: NotificationRecord): boolean {
+  return notification.read === false
+}
+
+/**
+ * Build a notification payload object with defaults applied.
+ * Does not include id or createdAt — those are assigned by the store.
+ */
+export function buildNotificationPayload(
+  data: { userId: string; title: string; message: string; type?: NotificationRecord['type']; read?: boolean },
+): Omit<NotificationRecord, 'id' | 'createdAt'> {
+  return {
+    userId: data.userId,
+    title: data.title,
+    message: data.message,
+    type: data.type ?? 'info',
+    read: data.read ?? false,
+  }
 }

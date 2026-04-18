@@ -1,0 +1,85 @@
+[
+  {
+    "id": "1776530864121-vwdbgrk",
+    "runId": "decompose-2779-260418-164551",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "decompose-2779-260418-164551",
+      "issueNumber": 2779
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T16:47:44.121Z"
+  },
+  {
+    "id": "1776530864122-23hjmqg",
+    "runId": "decompose-2779-260418-164551",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2779-260418-164551",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T16:47:44.122Z"
+  },
+  {
+    "id": "1776530916037-keceyz4",
+    "runId": "decompose-2779-260418-164551",
+    "event": "step.complete",
+    "payload": {
+      "runId": "decompose-2779-260418-164551",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T16:48:36.037Z"
+  },
+  {
+    "id": "1776530916037-pmbahmy",
+    "runId": "decompose-2779-260418-164551",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2779-260418-164551",
+      "step": "plan"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T16:48:36.037Z"
+  },
+  {
+    "id": "1776530974772-vqmczkq",
+    "runId": "decompose-2779-260418-164551",
+    "event": "step.complete",
+    "payload": {
+      "runId": "decompose-2779-260418-164551",
+      "step": "plan"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T16:49:34.772Z"
+  },
+  {
+    "id": "1776530974773-og41ojt",
+    "runId": "decompose-2779-260418-164551",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2779-260418-164551",
+      "step": "build"
+    },
+    "hooksFired": [
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T16:49:34.773Z"
+  }
+]

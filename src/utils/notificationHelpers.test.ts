@@ -4,8 +4,12 @@ import {
   filterNotifications,
   getUnreadCount,
   sortBySeverity,
+  formatNotificationMessage,
+  groupNotificationsByType,
+  isUnread,
+  buildNotificationPayload,
 } from './notificationHelpers'
-import type { Notification } from '@/models/notification'
+import type { Notification, NotificationRecord } from '@/models/notification'
 
 const mockNotification = (overrides: Partial<Notification> = {}): Notification => ({
   id: '1',
@@ -20,6 +24,7 @@ const mockNotification = (overrides: Partial<Notification> = {}): Notification =
 })
 
 describe('notificationHelpers', () => {
+  // Original helpers (use Notification type with recipient, severity, isRead)
   describe('formatNotification', () => {
     it('should format notification with severity prefix', () => {
       const n = mockNotification({ severity: 'error', title: 'Error occurred' })
@@ -127,6 +132,102 @@ describe('notificationHelpers', () => {
       sortBySeverity(notifications)
       expect(notifications[0].id).toBe(original[0].id)
       expect(notifications[1].id).toBe(original[1].id)
+    })
+  })
+
+  // New helpers (use NotificationRecord type with userId, type, read)
+  describe('formatNotificationMessage', () => {
+    it('returns title by default', () => {
+      const n: NotificationRecord = {
+        id: 'n1', userId: 'u1', type: 'info', title: 'Test', message: 'Test message',
+        read: false, createdAt: new Date(),
+      }
+      expect(formatNotificationMessage(n)).toBe('Test')
+    })
+
+    it('returns title when no mention pattern found', () => {
+      const n: NotificationRecord = {
+        id: 'n1', userId: 'u1', type: 'info', title: 'Greeting', message: 'Hello world',
+        read: false, createdAt: new Date(),
+      }
+      expect(formatNotificationMessage(n)).toBe('Greeting')
+    })
+  })
+
+  describe('groupNotificationsByType', () => {
+    it('groups notifications by type', () => {
+      const notifications: NotificationRecord[] = [
+        { id: '1', userId: 'u1', type: 'info', title: 'T', message: 'M', read: false, createdAt: new Date() },
+        { id: '2', userId: 'u1', type: 'warning', title: 'T', message: 'M', read: false, createdAt: new Date() },
+        { id: '3', userId: 'u1', type: 'info', title: 'T', message: 'M', read: false, createdAt: new Date() },
+        { id: '4', userId: 'u1', type: 'error', title: 'T', message: 'M', read: false, createdAt: new Date() },
+        { id: '5', userId: 'u1', type: 'success', title: 'T', message: 'M', read: false, createdAt: new Date() },
+      ]
+      const grouped = groupNotificationsByType(notifications)
+      expect(grouped.info).toHaveLength(2)
+      expect(grouped.warning).toHaveLength(1)
+      expect(grouped.error).toHaveLength(1)
+      expect(grouped.success).toHaveLength(1)
+    })
+
+    it('returns empty arrays for missing types', () => {
+      const notifications: NotificationRecord[] = [
+        { id: '1', userId: 'u1', type: 'info', title: 'T', message: 'M', read: false, createdAt: new Date() },
+      ]
+      const grouped = groupNotificationsByType(notifications)
+      expect(grouped.warning).toHaveLength(0)
+      expect(grouped.error).toHaveLength(0)
+      expect(grouped.success).toHaveLength(0)
+    })
+
+    it('does not mutate original array', () => {
+      const notifications: NotificationRecord[] = [
+        { id: '1', userId: 'u1', type: 'info', title: 'T', message: 'M', read: false, createdAt: new Date() },
+      ]
+      const original = [...notifications]
+      groupNotificationsByType(notifications)
+      expect(notifications[0].id).toBe(original[0].id)
+    })
+  })
+
+  describe('isUnread', () => {
+    it('returns true for unread notifications', () => {
+      const n: NotificationRecord = {
+        id: 'n1', userId: 'u1', type: 'info', title: 'T', message: 'M',
+        read: false, createdAt: new Date(),
+      }
+      expect(isUnread(n)).toBe(true)
+    })
+
+    it('returns false for read notifications', () => {
+      const n: NotificationRecord = {
+        id: 'n1', userId: 'u1', type: 'info', title: 'T', message: 'M',
+        read: true, createdAt: new Date(),
+      }
+      expect(isUnread(n)).toBe(false)
+    })
+  })
+
+  describe('buildNotificationPayload', () => {
+    it('builds payload with info type and read=false by default', () => {
+      const payload = buildNotificationPayload({ userId: 'u1', title: 'T', message: 'M' })
+      expect(payload.type).toBe('info')
+      expect(payload.read).toBe(false)
+      expect(payload.userId).toBe('u1')
+      expect(payload.title).toBe('T')
+      expect(payload.message).toBe('M')
+    })
+
+    it('allows override of type', () => {
+      const payload = buildNotificationPayload({ userId: 'u1', title: 'T', message: 'M', type: 'error' })
+      expect(payload.type).toBe('error')
+      expect(payload.read).toBe(false)
+    })
+
+    it('does not include id or createdAt', () => {
+      const payload = buildNotificationPayload({ userId: 'u1', title: 'T', message: 'M' })
+      expect('id' in payload).toBe(false)
+      expect('createdAt' in payload).toBe(false)
     })
   })
 })
