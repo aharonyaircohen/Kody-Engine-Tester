@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srccacheredisadapterts_1404538669558": {
+      "id": "thoughts_srccacheredisadapterts_1404538669558",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/cache/redisAdapter.ts",
+      "content": "ioredis throws at import time when the package is not installed, which naturally triggers the fallback mechanism rather than a runtime error later.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:12:10.112Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2515-260418-035622",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srccachecachemanagerts_1404540039567": {
+      "id": "facts_srccachecachemanagerts_1404540039567",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/cache/cacheManager.ts",
+      "content": "Dynamic import defers the import-time throw, allowing the cacheManager to catch the error and fall back gracefully instead of crashing the process.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:12:10.114Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2515-260418-035622",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srccache_1404541364141": {
+      "id": "conventions_srccache_1404541364141",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/cache",
+      "content": "Cache adapters follow an interface pattern: a shared CacheAdapter interface in cacheAdapter.ts, with concrete implementations (redisAdapter, memoryAdapter) in separate files.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:12:10.115Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2515-260418-035622",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srccachecachemanagerts_1404542756031": {
+      "id": "facts_srccachecachemanagerts_1404542756031",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/cache/cacheManager.ts",
+      "content": "Using Result<T, E> from src/utils/result.ts for typed error handling lets the cache manager distinguish recoverable errors from fatal ones.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:12:10.116Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2515-260418-035622",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelinedecompose_1404544089351": {
+      "id": "facts_pipelinedecompose_1404544089351",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/decompose",
+      "content": "Sub-task failures during decompose abort the current path and fall back to runPipeline(), completing the pipeline via the normal route rather than crashing.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:12:10.118Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2515-260418-035622",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

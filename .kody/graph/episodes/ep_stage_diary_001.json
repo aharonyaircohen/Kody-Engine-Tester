@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2515-260418-035622",
+  "source": "stage_diary",
+  "taskId": "decompose-2515-260418-035622",
+  "createdAt": "2026-04-18T04:12:10.106Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"ioredis throws at import time when the package is not installed, which naturally triggers the fallback mechanism rather than a runtime error later.\",\"scope\":\"src/cache/redisAdapter.ts\"},{\"kind\":\"lesson\",\"text\":\"Dynamic import defers the import-time throw, allowing the cacheManager to catch the error and fall back gracefully instead of crashing the process.\",\"scope\":\"src/cache/cacheManager.ts\"},{\"kind\":\"convention\",\"text\":\"Cache adapters follow an interface pattern: a shared CacheAdapter interface in cacheAdapter.ts, with concrete implementations (redisAdapter, memoryAdapter) in separate files.\",\"scope\":\"src/cache\"},{\"kind\":\"decision\",\"text\":\"Using Result<T, E> from src/utils/result.ts for typed error handling lets the cache manager distinguish recoverable errors from fatal ones.\",\"scope\":\"src/cache/cacheManager.ts\"},{\"kind\":\"lesson\",\"text\":\"Sub-task failures during decompose abort the current path and fall back to runPipeline(), com",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

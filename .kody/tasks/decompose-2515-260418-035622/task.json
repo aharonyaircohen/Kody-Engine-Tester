@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. Here's a summary of what it covers:  ",
+  "description": "The plan is ready for your review. Here's a summary of what it covers:\n\n**5 files to create:**\n1. `src/cache/cacheAdapter.ts` — shared `CacheAdapter` interface + config types\n2. `src/cache/redisAdapter.ts` — imports `ioredis` (not installed → throws at import time, triggering fallback)\n3. `src/cache/memoryAdapter.ts` — wraps existing `Cache` class from `src/utils/cache.ts`\n4. `src/cache/cacheManager.ts` — adapter selector using dynamic import + `Result<T, E>` from `src/utils/result.ts`\n5. `src/m",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
