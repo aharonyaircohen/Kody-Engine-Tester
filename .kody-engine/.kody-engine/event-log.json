@@ -26,5 +26,83 @@
     ],
     "hookErrors": {},
     "emittedAt": "2026-04-17T23:49:29.400Z"
+  },
+  {
+    "id": "1776470171464-cp98qau",
+    "runId": "2423-260417-234844",
+    "event": "step.complete",
+    "payload": {
+      "runId": "2423-260417-234844",
+      "step": "build"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-17T23:56:11.464Z"
+  },
+  {
+    "id": "1776470171464-73zk2u2",
+    "runId": "2423-260417-234844",
+    "event": "step.started",
+    "payload": {
+      "runId": "2423-260417-234844",
+      "step": "verify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-17T23:56:11.464Z"
+  },
+  {
+    "id": "1776470174566-rly0m1l",
+    "runId": "2423-260417-234844",
+    "event": "step.complete",
+    "payload": {
+      "runId": "2423-260417-234844",
+      "step": "verify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-17T23:56:14.566Z"
+  },
+  {
+    "id": "1776470174566-8bm94d3",
+    "runId": "2423-260417-234844",
+    "event": "step.started",
+    "payload": {
+      "runId": "2423-260417-234844",
+      "step": "review"
+    },
+    "hooksFired": [
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-17T23:56:14.566Z"
+  },
+  {
+    "id": "1776470704586-xeqrisb",
+    "runId": "2423-260417-234844",
+    "event": "step.complete",
+    "payload": {
+      "runId": "2423-260417-234844",
+      "step": "review"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T00:05:04.586Z"
+  },
+  {
+    "id": "1776470704586-i1a0i9w",
+    "runId": "2423-260417-234844",
+    "event": "step.started",
+    "payload": {
+      "runId": "2423-260417-234844",
+      "step": "review-fix"
+    },
+    "hooksFired": [
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T00:05:04.586Z"
   }
 ]

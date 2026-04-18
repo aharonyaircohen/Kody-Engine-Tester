@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2423-260417-234844",
+  "source": "stage_diary",
+  "taskId": "2423-260417-234844",
+  "createdAt": "2026-04-18T00:05:02.251Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Pipeline review caught that 'kody fix' runs may produce a plan file without actually applying any code changes — the fix was never applied, causing FAIL verdict.\",\"scope\":\"pipeline verification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

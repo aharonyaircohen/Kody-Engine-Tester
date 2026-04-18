@@ -1,0 +1,1 @@
+The review is complete and the plan file has been written. I'm requesting to exit plan mode so the structured review verdict (FAIL — fix never applied) can be submitted to the pipeline.

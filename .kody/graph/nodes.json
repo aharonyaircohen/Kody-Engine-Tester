@@ -64,6 +64,118 @@
         "kind:convention"
       ],
       "confidence": 0.7
+    },
+    "thoughts_review_stage_875283356855": {
+      "id": "thoughts_review_stage_875283356855",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "review stage",
+      "content": "Pipeline max_turns crash during review stage caused the fix to never be applied — the build agent wrote the plan but never executed the edits.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T23:59:54.351Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2423-260417-234844",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_verification_875284761844": {
+      "id": "facts_verification_875284761844",
+      "type": "facts",
+      "hall": "facts",
+      "room": "verification",
+      "content": "When a stage depends on a prior stage (P2T06), verify the fix actually exists in the changeset before marking the stage complete.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T23:59:54.352Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2423-260417-234844",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_build_stage_875286346627": {
+      "id": "thoughts_build_stage_875286346627",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "build stage",
+      "content": "The engine fix requires editing `node_modules/@kody-ade/engine/dist/bin/cli.js` directly; changes to project scaffolding alone do not satisfy the task.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T23:59:54.354Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2423-260417-234844",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcsharedpipelinets_961597864667": {
+      "id": "thoughts_srcsharedpipelinets_961597864667",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/shared/pipeline.ts",
+      "content": "In ensureFeatureBranchIfNeeded, when prNumber is set (fix-ci on existing PR), the code syncs the base branch but never checks out the PR's head branch, causing pipeline to run on default branch.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T00:01:20.665Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2423-260417-234844",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_961599674689": {
+      "id": "conventions_kody_961599674689",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody",
+      "content": "Kody fix push to existing PR must land on the same PR branch, not create a new branch or new PR.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T00:01:20.667Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2423-260417-234844",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_verification_1183195079232": {
+      "id": "thoughts_pipeline_verification_1183195079232",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline verification",
+      "content": "Pipeline review caught that 'kody fix' runs may produce a plan file without actually applying any code changes — the fix was never applied, causing FAIL verdict.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T00:05:02.263Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2423-260417-234844",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelinebranching_1266139083066": {
+      "id": "facts_pipelinebranching_1266139083066",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/branching",
+      "content": "fix-ci on a PR requires both fetching the PR head ref AND explicitly checking it out; syncing base alone is insufficient",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T00:06:25.207Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2423-260417-234844",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
     }
   }
 }
