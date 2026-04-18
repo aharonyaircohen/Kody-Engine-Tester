@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2635-260418-095557",
+  "source": "stage_diary",
+  "taskId": "2635-260418-095557",
+  "createdAt": "2026-04-18T10:04:06.890Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Login/register route handlers do NOT use withAuth — they are the auth entrypoints and must accept unauthenticated requests\",\"scope\":\"src/app/api/auth\"},{\"kind\":\"lesson\",\"text\":\"Route handlers should delegate to existing service-layer functions rather than duplicating auth logic\",\"scope\":\"src/app/api/auth\"},{\"kind\":\"convention\",\"text\":\"Use getPayloadInstance() from @/services/progress for Payload CMS initialization in route handlers\",\"scope\":\"src/app/api\"},{\"kind\":\"convention\",\"text\":\"Follow the established singleton pattern from src/auth/withAuth.ts for consistent Payload access across the codebase\",\"scope\":\"src/auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

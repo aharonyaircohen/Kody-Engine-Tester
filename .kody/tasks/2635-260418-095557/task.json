@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. It covers: - Two new route handler fi",
+  "description": "The plan is ready for your review. It covers:\n- Two new route handler files to create\n- Reuse of the existing singleton pattern from `src/auth/withAuth.ts`\n- Reuse of `AuthService.login()` and `register()` from the service layer\n- The established Payload initialization pattern from `@payload-config`\n- A consistent error-handling approach mapping service-layer errors to HTTP status codes",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

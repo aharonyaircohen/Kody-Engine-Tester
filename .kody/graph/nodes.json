@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcappapiauth_511648747684": {
+      "id": "conventions_srcappapiauth_511648747684",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api/auth",
+      "content": "Login/register route handlers do NOT use withAuth — they are the auth entrypoints and must accept unauthenticated requests",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:04:06.895Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2635-260418-095557",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcappapiauth_511653567415": {
+      "id": "facts_srcappapiauth_511653567415",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/app/api/auth",
+      "content": "Route handlers should delegate to existing service-layer functions rather than duplicating auth logic",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:04:06.900Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2635-260418-095557",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcappapi_511655138999": {
+      "id": "conventions_srcappapi_511655138999",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api",
+      "content": "Use getPayloadInstance() from @/services/progress for Payload CMS initialization in route handlers",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:04:06.902Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2635-260418-095557",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcauth_511656416293": {
+      "id": "conventions_srcauth_511656416293",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth",
+      "content": "Follow the established singleton pattern from src/auth/withAuth.ts for consistent Payload access across the codebase",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:04:06.903Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2635-260418-095557",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
