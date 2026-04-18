@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1776503675887-ey7sktv",
+    "runId": "decompose-2584-260418-091247",
+    "event": "pipeline.started",
+    "payload": {
+      "runId": "decompose-2584-260418-091247",
+      "issueNumber": 2584
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:14:35.887Z"
+  },
+  {
+    "id": "1776503675887-e42rtmw",
+    "runId": "decompose-2584-260418-091247",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2584-260418-091247",
+      "step": "taskify"
+    },
+    "hooksFired": [
+      "github-label",
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:14:35.887Z"
+  },
+  {
+    "id": "1776503784612-xbi63ei",
+    "runId": "decompose-2584-260418-091247",
+    "event": "step.complete",
+    "payload": {
+      "runId": "decompose-2584-260418-091247",
+      "step": "taskify"
+    },
+    "hooksFired": [],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:16:24.612Z"
+  },
+  {
+    "id": "1776503784613-z6rnnyp",
+    "runId": "decompose-2584-260418-091247",
+    "event": "step.started",
+    "payload": {
+      "runId": "decompose-2584-260418-091247",
+      "step": "build"
+    },
+    "hooksFired": [
+      "log",
+      "webhook"
+    ],
+    "hookErrors": {},
+    "emittedAt": "2026-04-18T09:16:24.613Z"
+  }
+]
