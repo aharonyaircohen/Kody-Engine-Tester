@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. The plan file is at `/home/runner/.cl",
+  "description": "The plan is ready for your review. The plan file is at `/home/runner/.claude/plans/shimmering-skipping-mochi.md`. \n\nIt covers 4 implementation steps:\n1. **`src/utils/password.ts`** — export `hashPassword` (and `verifyPassword`) using PBKDF2 matching the existing AuthService algorithm\n2. **`src/collections/Users.ts`** — add `passwordHash` text field with `beforeChange` hook that hashes incoming passwords; additive only\n3. **Migration `src/migrations/20260418_000000_add_password_hash.ts`** — purel",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
