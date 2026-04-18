@@ -252,4 +252,73 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - [ ] No hardcoded secrets or config values — use environment variables
 - [ ] Zod validation schemas used for all new API input validation
 
+## Repo Patterns — Real code examples from this repo that demonstrate the patterns to follow
+
+### Auth Pattern — `withAuth` HOC wrapper
+
+```typescript
+// src/auth/withAuth.ts
+export function withAuth(handler: RouteHandler, roles?: RbacRole[]) {
+  return async (req: Request) => {
+    const user = await authenticate(req) // throws 401 if invalid
+    if (roles && !roles.includes(user.role)) throw new ForbiddenError()
+    return handler(req, user)
+  }
+}
+```
+
+### Sanitization Pattern — always use `src/security/sanitizers.ts`
+
+```typescript
+// src/security/sanitizers.ts
+export const sanitizeHtml = (input: string): string => { ... }
+export const sanitizeSql = (input: string): string => { ... }
+export const sanitizeUrl = (input: string): string => { ... }
+```
+
+### Service Constructor Injection
+
+```typescript
+// src/services/certificates.service.ts
+export class CertificatesService {
+  constructor(
+    private store: CertificateStore,
+    private enrollmentStore: EnrollmentStore,
+  ) {}
+}
+```
+
+### Middleware Chain — role-guard
+
+```typescript
+// src/middleware/role-guard.ts
+export function roleGuard(roles: RbacRole[]): Middleware {
+  return async (req, ctx) => {
+    if (!roles.includes(ctx.user.role)) throw new ForbiddenError()
+  }
+}
+```
+
+## Improvement Areas — Gaps or anti-patterns found in the codebase
+
+- **`src/auth/user-store.ts`** — SHA-256 password hashing (insecure, no salt). Use PBKDF2 or Argon2 via `AuthService` pattern instead.
+- **`src/app/(frontend)/dashboard/page.tsx`** — Uses `as unknown as` type casts for narrowing; prefer proper type guards or Zod parsing.
+- **Dual validation**: `src/middleware/validation.ts` vs `src/validation/*.ts` Zod schemas — unclear which takes precedence; consolidate to Zod at route boundaries.
+- **In-memory stores** (`SessionStore`, `UserStore`) with `Map<string, T>` — data lost on restart. Ensure production uses PostgreSQL-backed Payload collections.
+- **`src/app/api/notifications/`** — `NotificationSeverity` enum (`info/warning/error`) needs allowlist check when rendering; XSS risk if rendered unsanitized.
+
+## Acceptance Criteria — Concrete checklist for "done" in this repo
+
+- [ ] All `src/app/api/` route handlers are wrapped with `withAuth` or have explicit auth checks
+- [ ] New enum values are traced through every `switch`/`if-elsif` chain and allowlist array
+- [ ] User input is sanitized via `src/security/sanitizers.ts` before HTML/SQL/URL concatenation
+- [ ] Role changes in `src/collections/` are reflected in `src/middleware/role-guard.ts`
+- [ ] No `as unknown as` type casts in `src/app/(frontend)/` pages — use proper type narrowing
+- [ ] All new API routes have corresponding Vitest integration tests in `tests/int/`
+- [ ] No `Math.random()` or `Date.now()` for security-sensitive values (tokens, IDs)
+- [ ] Zod schemas in `src/validation/` are used for request validation (not custom `validation.ts` middleware)
+- [ ] Payload migrations are added for any schema changes (`payload migrate:generate`)
+- [ ] Run `pnpm test:int` after each fix — all tests pass
+- [ ] Run `pnpm tsc --noEmit` — zero type errors
+
 {{TASK_CONTEXT}}
