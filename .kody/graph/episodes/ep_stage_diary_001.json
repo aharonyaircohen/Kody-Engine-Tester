@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2770-260418-164530",
+  "source": "stage_diary",
+  "taskId": "2770-260418-164530",
+  "createdAt": "2026-04-18T16:48:45.925Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"@kody commands in GitHub Discussion require a verb subcommand (full|rerun|fix|fix-ci|review|resolve|status) — bare @kody fails with 'Failed to parse command'.\",\"scope\":\"CI/kody integration\"},{\"kind\":\"lesson\",\"text\":\"A 'build' stage that only runs tests cannot verify pipeline structure (4 stages, PR creation) — a separate review or diff stage is needed to inspect the generated files and PR metadata.\",\"scope\":\"pipeline verification\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_cikody_integration_276022901321": {
+      "id": "thoughts_cikody_integration_276022901321",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "CI/kody integration",
+      "content": "@kody commands in GitHub Discussion require a verb subcommand (full|rerun|fix|fix-ci|review|resolve|status) — bare @kody fails with 'Failed to parse command'.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:48:45.931Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2770-260418-164530",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_verification_276024254556": {
+      "id": "facts_pipeline_verification_276024254556",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline verification",
+      "content": "A 'build' stage that only runs tests cannot verify pipeline structure (4 stages, PR creation) — a separate review or diff stage is needed to inspect the generated files and PR metadata.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:48:45.933Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2770-260418-164530",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

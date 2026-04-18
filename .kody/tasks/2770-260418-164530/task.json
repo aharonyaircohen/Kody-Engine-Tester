@@ -1,0 +1,14 @@
+{
+  "task_type": "feature",
+  "title": "Add formatDate utility function with unit tests",
+  "description": "Create src/utils/dateUtils.ts with a formatDate(date: Date, locale: string): string function including JSDoc documentation. Also create src/utils/dateUtils.test.ts with unit tests. Follow the existing utility module pattern: single-function files in src/utils/ with co-located .test.ts files.",
+  "scope": ["src/utils/dateUtils.ts", "src/utils/dateUtils.test.ts"],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/utils/debounce.ts — single-function utility file with JSDoc and co-located test file",
+    "src/utils/retry.ts — single-function utility file with JSDoc and co-located test file",
+    "src/utils/flatten.ts — single-function utility file with JSDoc and co-located test file",
+    "vitest testing framework (configured in project as devDependency)"
+  ],
+  "questions": []
+}
