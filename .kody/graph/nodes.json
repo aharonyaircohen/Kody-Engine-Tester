@@ -16,6 +16,54 @@
         "kind:gotcha"
       ],
       "confidence": 0.7
+    },
+    "conventions_skillslockjson_1086897126199": {
+      "id": "conventions_skillslockjson_1086897126199",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "skills-lock.json",
+      "content": "Skills lock file (skills-lock.json) hash must be updated whenever a skill definition file changes — this is a required part of the skill update convention.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T11:03:40.032Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2667-260418-105256",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_gitignore_1086899119640": {
+      "id": "conventions_gitignore_1086899119640",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": ".gitignore",
+      "content": "When adding skill documentation that may produce transient files, the relevant artifact patterns are added to .gitignore in the same commit.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T11:03:40.034Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2667-260418-105256",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kodyengine_cibuildargs_1239489426077": {
+      "id": "thoughts_kodyengine_cibuildargs_1239489426077",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody-engine ci-build-args",
+      "content": "The kody-engine ci-build-args command must include --from build for fix-ci mode to skip taskify/plan stages and resume from the failed build stage.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T11:06:12.624Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2667-260418-105256",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
     }
   }
 }

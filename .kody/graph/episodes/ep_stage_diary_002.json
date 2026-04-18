@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2667-260418-105256",
+  "source": "stage_diary",
+  "taskId": "2667-260418-105256",
+  "createdAt": "2026-04-18T11:03:40.029Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Skills lock file (skills-lock.json) hash must be updated whenever a skill definition file changes — this is a required part of the skill update convention.\",\"scope\":\"skills-lock.json\"},{\"kind\":\"convention\",\"text\":\"When adding skill documentation that may produce transient files, the relevant artifact patterns are added to .gitignore in the same commit.\",\"scope\":\".gitignore\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2667-260418-105256",
+  "source": "stage_diary",
+  "taskId": "2667-260418-105256",
+  "createdAt": "2026-04-18T11:06:12.621Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The kody-engine ci-build-args command must include --from build for fix-ci mode to skip taskify/plan stages and resume from the failed build stage.\",\"scope\":\"kody-engine ci-build-args\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
