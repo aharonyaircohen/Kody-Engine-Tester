@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2647-260418-100457",
+  "source": "stage_diary",
+  "taskId": "2647-260418-100457",
+  "createdAt": "2026-04-18T10:08:41.903Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Utility functions in src/utils/ follow a single-function-per-file pattern; tests live in a sibling .test.ts file in the same directory.\",\"scope\":\"src/utils/\"},{\"kind\":\"decision\",\"text\":\"formatDate uses toLocaleDateString with explicit year/month/day options for consistent cross-locale output rather than a raw format string.\",\"scope\":\"src/utils/dateUtils.ts\"},{\"kind\":\"convention\",\"text\":\"New utility files include JSDoc on the exported function as standard practice.\",\"scope\":\"src/utils/\"},{\"kind\":\"convention\",\"text\":\"Low-complexity tasks trigger a 4-stage pipeline; the build stage outputs a plan covering source, test file, and verification command.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

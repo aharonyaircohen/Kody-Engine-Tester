@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcutils_346773608412": {
+      "id": "conventions_srcutils_346773608412",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/",
+      "content": "Utility functions in src/utils/ follow a single-function-per-file pattern; tests live in a sibling .test.ts file in the same directory.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:08:41.909Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2647-260418-100457",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsdateutilsts_346774920903": {
+      "id": "facts_srcutilsdateutilsts_346774920903",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/dateUtils.ts",
+      "content": "formatDate uses toLocaleDateString with explicit year/month/day options for consistent cross-locale output rather than a raw format string.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:08:41.911Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2647-260418-100457",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutils_346776297245": {
+      "id": "conventions_srcutils_346776297245",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/",
+      "content": "New utility files include JSDoc on the exported function as standard practice.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:08:41.912Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2647-260418-100457",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_346778094567": {
+      "id": "conventions_pipeline_346778094567",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline",
+      "content": "Low-complexity tasks trigger a 4-stage pipeline; the build stage outputs a plan covering source, test file, and verification command.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:08:41.914Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2647-260418-100457",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
