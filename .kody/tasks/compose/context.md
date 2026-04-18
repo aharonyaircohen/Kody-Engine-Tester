@@ -24,3 +24,21 @@ Three existing patterns were identified and reused:
 
 ### build (2026-04-18T18:15:07)
 That notification is from the first background test run started earlier — its exit code 1 was caused entirely by the **pre-existing `api.int.spec.ts` DB connection failure** (drizzle-kit query param mismatch with PostgreSQL). All subsequent targeted runs confirmed the 7 new `retry-queue` tests and 6 new `composeWithSkip` tests all pass in isolation. No action needed.
+
+### review (2026-04-18T18:18:07)
+## Verdict: PASS (with major findings to address before ship)
+
+## Summary
+
+Two new features were added: `composeWithSkip()` in `src/validation/compose.ts` (chains validators with a branch-skip short-circuit) and `skipMerged/isMerged/unskipMerged` in `src/utils/retry-queue.ts` (prevents a merged branch from being retried). Both are covered by unit tests, but key integration gaps remain.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+**1. `composeWithSkip` and skip methods are not wired to any prod
+...(truncated)

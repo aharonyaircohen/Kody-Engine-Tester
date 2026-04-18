@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "compose",
+  "source": "stage_diary",
+  "taskId": "compose",
+  "createdAt": "2026-04-18T18:18:16.264Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"New public APIs (`composeWithSkip`, `skipMerged`) were unit-tested but never wired to any production call site — integration must be verified explicitly.\",\"scope\":\"src/validation/compose.ts\"},{\"kind\":\"lesson\",\"text\":\"Unit tests alone are insufficient; a feature needs at least one integration test showing it wired to an actual production code path.\",\"scope\":\"testing\"},{\"kind\":\"decision\",\"text\":\"Extended existing `retry-queue.ts` with `skipMerged`/`isMerged`/`unskipMerged` rather than creating a new module, keeping state co-located with the queue logic.\",\"scope\":\"src/utils/retry-queue.ts\"},{\"kind\":\"convention\",\"text\":\"Branches are identified by target ID; `skipMerged` uses a `Set<string>` keyed on target ID to track which branches have been merged.\",\"scope\":\"compose retry\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

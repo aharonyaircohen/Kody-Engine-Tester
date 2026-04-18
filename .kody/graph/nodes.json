@@ -48,6 +48,70 @@
         "kind:decision"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcvalidationcomposets_1047779370972": {
+      "id": "thoughts_srcvalidationcomposets_1047779370972",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/validation/compose.ts",
+      "content": "New public APIs (`composeWithSkip`, `skipMerged`) were unit-tested but never wired to any production call site — integration must be verified explicitly.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:18:16.267Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:compose",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testing_1047780770666": {
+      "id": "facts_testing_1047780770666",
+      "type": "facts",
+      "hall": "facts",
+      "room": "testing",
+      "content": "Unit tests alone are insufficient; a feature needs at least one integration test showing it wired to an actual production code path.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:18:16.268Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:compose",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsretryqueuets_1047782202080": {
+      "id": "facts_srcutilsretryqueuets_1047782202080",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/retry-queue.ts",
+      "content": "Extended existing `retry-queue.ts` with `skipMerged`/`isMerged`/`unskipMerged` rather than creating a new module, keeping state co-located with the queue logic.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:18:16.270Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:compose",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_compose_retry_1047783745424": {
+      "id": "conventions_compose_retry_1047783745424",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "compose retry",
+      "content": "Branches are identified by target ID; `skipMerged` uses a `Set<string>` keyed on target ID to track which branches have been merged.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:18:16.271Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:compose",
+        "kind:convention"
+      ],
+      "confidence": 0.7
     }
   }
 }
