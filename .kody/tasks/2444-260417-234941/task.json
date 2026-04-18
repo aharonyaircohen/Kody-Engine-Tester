@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. To summarize the classification:  | F",
+  "description": "The plan is ready for your review. To summarize the classification:\n\n| Field | Value |\n|-------|-------|\n| **task_type** | `chore` |\n| **title** | Verify T33b: Lifecycle label progression in Kody pipeline |\n| **risk_level** | `low` |\n| **scope** | 2 files: `task.md`, `status.json` in the task directory |\n| **questions** | `[]` |\n\nThe pipeline for task 2444 is already running. This is a test-suite verification chore — the label progression logic is in the `@kody-ade/engine` package, not in this r",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
