@@ -1,4 +1,5 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
+import { hashPassword } from '../auth/password-utils'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -145,5 +146,45 @@ export const Users: CollectionConfig = {
         update: () => false,
       },
     },
+    {
+      name: 'hash',
+      type: 'text',
+      required: false,
+      hidden: true,
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: () => false,
+        create: () => false,
+        update: ({ req: { user } }) => (user as { role?: string } | null)?.role === 'admin',
+      },
+    },
+    {
+      name: 'salt',
+      type: 'text',
+      required: false,
+      hidden: true,
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: () => false,
+        create: () => false,
+        update: ({ req: { user } }) => (user as { role?: string } | null)?.role === 'admin',
+      },
+    },
   ],
+  hooks: {
+    beforeChange: [
+      async ({ data, operation }: { data: Record<string, unknown>; operation: string }) => {
+        if (data.password && operation === 'create') {
+          const { hash, salt } = await hashPassword(data.password as string)
+          data.hash = hash
+          data.salt = salt
+        }
+        return data
+      },
+    ],
+  },
 }

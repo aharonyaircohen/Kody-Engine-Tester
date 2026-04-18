@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcserverpayloadcollectionsusersts_903638179647": {
+      "id": "conventions_srcserverpayloadcollectionsusersts_903638179647",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/server/payload/collections/Users.ts",
+      "content": "Sensitive fields use { hidden: true, access: { read: () => false, update: () => false } } — mirror this exactly for hash/salt.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:03:02.375Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2791-260418-164939",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcserverpayloadcollectionsusersts_903639626313": {
+      "id": "facts_srcserverpayloadcollectionsusersts_903639626313",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/server/payload/collections/Users.ts",
+      "content": "beforeChange hooks auto-populate fields on write — same pattern used by displayName field for hash/salt population.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:03:02.377Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2791-260418-164939",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcserverauthservicets_903641178537": {
+      "id": "facts_srcserverauthservicets_903641178537",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/server/auth-service.ts",
+      "content": "PBKDF2 params (25000 iters, sha256, 512 bits) should be extracted to a shared utility to avoid duplication between the hook and AuthService verifyPassword.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:03:02.378Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2791-260418-164939",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcserverpayloadcollectionsuserstestts_903642572685": {
+      "id": "conventions_srcserverpayloadcollectionsuserstestts_903642572685",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/server/payload/collections/Users.test.ts",
+      "content": "Co-located tests in Users.test.ts use findField() helper + makeMockReq() pattern — follow this for new field tests.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:03:02.379Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2791-260418-164939",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcserverpayload_903644158494": {
+      "id": "thoughts_srcserverpayload_903644158494",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/server/payload",
+      "content": "Payload's built-in auth:true handles passwords internally but doesn't expose hash/salt to app code — explicit fields are needed for AuthService integration.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:03:02.381Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2791-260418-164939",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

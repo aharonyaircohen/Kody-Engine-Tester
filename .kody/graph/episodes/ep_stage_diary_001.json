@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2791-260418-164939",
+  "source": "stage_diary",
+  "taskId": "2791-260418-164939",
+  "createdAt": "2026-04-18T17:03:02.369Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Sensitive fields use { hidden: true, access: { read: () => false, update: () => false } } — mirror this exactly for hash/salt.\",\"scope\":\"src/server/payload/collections/Users.ts\"},{\"kind\":\"lesson\",\"text\":\"beforeChange hooks auto-populate fields on write — same pattern used by displayName field for hash/salt population.\",\"scope\":\"src/server/payload/collections/Users.ts\"},{\"kind\":\"decision\",\"text\":\"PBKDF2 params (25000 iters, sha256, 512 bits) should be extracted to a shared utility to avoid duplication between the hook and AuthService verifyPassword.\",\"scope\":\"src/server/auth-service.ts\"},{\"kind\":\"convention\",\"text\":\"Co-located tests in Users.test.ts use findField() helper + makeMockReq() pattern — follow this for new field tests.\",\"scope\":\"src/server/payload/collections/Users.test.ts\"},{\"kind\":\"gotcha\",\"text\":\"Payload's built-in auth:true handles passwords internally but doesn't expose hash/salt to app code — explicit fields are ",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

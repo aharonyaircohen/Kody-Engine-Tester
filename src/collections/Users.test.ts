@@ -305,3 +305,137 @@ describe('Users access control - delete', () => {
     expect(result).toBe(true)
   })
 })
+
+// --- hash / salt fields ---
+
+describe('Users fields - hash', () => {
+  it('should have a hash text field', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('hash') as any
+    expect(field).toBeDefined()
+    expect(field.type).toBe('text')
+  })
+
+  it('should have hash hidden from admin UI', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('hash') as any
+    expect(field.hidden).toBe(true)
+  })
+
+  it('should deny read access to hash for all users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('hash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.read({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should deny create access to hash for all users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('hash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.create({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should deny update access to hash for non-admin users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('hash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'editor' } })
+    const result = field.access.update({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should allow update access to hash for admin users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('hash') as any
+    const req = makeMockReq({ user: { id: 'admin1', collection: 'users', role: 'admin' } })
+    const result = field.access.update({ req } as AccessArgs)
+    expect(result).toBe(true)
+  })
+})
+
+describe('Users fields - salt', () => {
+  it('should have a salt text field', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('salt') as any
+    expect(field).toBeDefined()
+    expect(field.type).toBe('text')
+  })
+
+  it('should have salt hidden from admin UI', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('salt') as any
+    expect(field.hidden).toBe(true)
+  })
+
+  it('should deny read access to salt for all users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('salt') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.read({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should deny create access to salt for all users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('salt') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.create({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should deny update access to salt for non-admin users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('salt') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'viewer' } })
+    const result = field.access.update({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should allow update access to salt for admin users', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('salt') as any
+    const req = makeMockReq({ user: { id: 'admin1', collection: 'users', role: 'admin' } })
+    const result = field.access.update({ req } as AccessArgs)
+    expect(result).toBe(true)
+  })
+})
+
+describe('Users collection hooks - beforeChange for hash/salt', () => {
+  it('should have a collection-level beforeChange hook defined', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const hooks = (Users as any).hooks
+    expect(hooks).toBeDefined()
+    expect(Array.isArray(hooks?.beforeChange)).toBe(true)
+    expect(hooks.beforeChange.length).toBeGreaterThan(0)
+  })
+
+  it('should populate hash and salt on user creation', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const hooks = (Users as any).hooks
+    const beforeChangeHook = hooks?.beforeChange?.[0]
+    expect(typeof beforeChangeHook).toBe('function')
+
+    const data = { password: 'TestPass1!' }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = await beforeChangeHook({ data, operation: 'create' } as any)
+    expect(result.hash).toBeDefined()
+    expect(result.salt).toBeDefined()
+    expect(typeof result.hash).toBe('string')
+    expect(typeof result.salt).toBe('string')
+  })
+
+  it('should not repopulate hash/salt on update when password unchanged', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const hooks = (Users as any).hooks
+    const beforeChangeHook = hooks?.beforeChange?.[0]
+    expect(typeof beforeChangeHook).toBe('function')
+
+    const data = { firstName: 'Jane', lastName: 'Doe' } // no password
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = await beforeChangeHook({ data, operation: 'update' } as any)
+    expect(result.hash).toBeUndefined()
+    expect(result.salt).toBeUndefined()
+  })
+})

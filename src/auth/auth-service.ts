@@ -1,7 +1,7 @@
 import type { Payload } from 'payload'
 import type { CollectionSlug } from 'payload'
-import crypto from 'crypto'
 import { JwtService } from './jwt-service'
+import { verifyPassword } from './password-utils'
 
 export type RbacRole = 'admin' | 'editor' | 'viewer'
 
@@ -36,27 +36,6 @@ function createError(message: string, status: number): Error & { status: number 
   const err = new Error(message) as Error & { status: number }
   err.status = status
   return err
-}
-
-/**
- * Verifies a password against a Payload-stored hash using PBKDF2.
- * Matches Payload's generatePasswordSaltHash algorithm: 25000 iterations, sha256, 512 bits.
- */
-async function verifyPassword(password: string, hash: string, salt: string): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    crypto.pbkdf2(password, salt, 25000, 512, 'sha256', (err, derivedKey) => {
-      if (err) {
-        reject(err)
-        return
-      }
-      const storedHashBuffer = Buffer.from(hash, 'hex')
-      if (derivedKey.length === storedHashBuffer.length && crypto.timingSafeEqual(derivedKey, storedHashBuffer)) {
-        resolve(true)
-      } else {
-        resolve(false)
-      }
-    })
-  })
 }
 
 export class AuthService {

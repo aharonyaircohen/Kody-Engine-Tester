@@ -1,0 +1,18 @@
+{
+  "task_type": "feature",
+  "title": "Add hash and salt fields to Users Payload collection",
+  "description": "Add `hash` and `salt` text fields to the Users Payload collection with client-hidden/admin-only access controls. Add Payload hooks to auto-populate `hash` and `salt` via PBKDF2 on user creation/registration. Wire AuthService password verification to read from the stored fields instead of relying on Payload's internal auth. Existing tests must pass or be updated accordingly.",
+  "scope": [
+    "src/collections/Users.ts",
+    "src/auth/auth-service.ts",
+    "src/collections/Users.ts",
+    "src/collections/**/*.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    "src/utils/result.ts — Result<T, E> discriminated union for explicit error handling, should be used for auth operation return types",
+    "src/auth/auth-service.ts — PBKDF2 hashing already implemented; reuse its hashing utilities for the hook",
+    "src/auth/withAuth.ts — RBAC via checkRole; access control patterns already established for fields"
+  ],
+  "questions": []
+}
