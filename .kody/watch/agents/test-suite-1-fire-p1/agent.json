@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-1-fire-p1",
+  "description": "Fire Phase 1 (core pipeline) test issues — runs nightly at 00:00. Fires 17 independent P1 tests and launches auto-approve monitor for P1T03 risk gate.",
+  "cron": "0 0 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}
