@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2505-260418-035537",
+  "source": "stage_diary",
+  "taskId": "2505-260418-035537",
+  "createdAt": "2026-04-18T04:09:28.619Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Auth is enforced via `withAuth` HOC, not inline checks. Always use the HOC at the route level.\",\"scope\":\"src/app/api/\"},{\"kind\":\"gotcha\",\"text\":\"Landing page (`page.tsx`) may only do client-side auth checks without role enforcement — acceptable for public-facing entry points.\",\"scope\":\"src/app/\"},{\"kind\":\"gotcha\",\"text\":\"Frontend pages under `notes/*` may lack auth redirect UX even when API routes are protected; protect both layers independently.\",\"scope\":\"src/app/notes/\"},{\"kind\":\"lesson\",\"text\":\"Role enforcement (`withAuth({ roles: [...] })`) must be explicitly specified per route for instructor/admin pages — no inherited roles.\",\"scope\":\"auth\"},{\"kind\":\"decision\",\"text\":\"Two routes are intentionally public: `/health` and `/csrf-token` — these are explicitly excluded from auth coverage audits.\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

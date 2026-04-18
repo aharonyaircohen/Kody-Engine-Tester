@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Waiting for plan approval. Here's a quick summary of what I've verified:",
+  "description": "Waiting for plan approval. Here's a quick summary of what I've verified:\n\n**API Routes (13 + 2 public):** All ✅ — every protected route uses `withAuth`, and the two intentionally public routes (`/health`, `/csrf-token`) are correctly unprotected.\n\n**Frontend Pages (6 pages):** Mostly ✅ with 2 gaps:\n- `dashboard/page.tsx` — full auth + role enforcement ✅\n- `page.tsx` — auth check (no role, acceptable for landing page) ⚠️\n- `notes/*` pages (3 pages) — no auth redirect UX ⚠️\n- `instructor/courses/[",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcappapi_824868587401": {
+      "id": "conventions_srcappapi_824868587401",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api/",
+      "content": "Auth is enforced via `withAuth` HOC, not inline checks. Always use the HOC at the route level.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:09:28.625Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2505-260418-035537",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcapp_824870144165": {
+      "id": "thoughts_srcapp_824870144165",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/",
+      "content": "Landing page (`page.tsx`) may only do client-side auth checks without role enforcement — acceptable for public-facing entry points.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:09:28.626Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2505-260418-035537",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappnotes_824871713903": {
+      "id": "thoughts_srcappnotes_824871713903",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/notes/",
+      "content": "Frontend pages under `notes/*` may lack auth redirect UX even when API routes are protected; protect both layers independently.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:09:28.628Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2505-260418-035537",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_824873148780": {
+      "id": "facts_auth_824873148780",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "Role enforcement (`withAuth({ roles: [...] })`) must be explicitly specified per route for instructor/admin pages — no inherited roles.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:09:28.629Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2505-260418-035537",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_824874736852": {
+      "id": "facts_auth_824874736852",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "Two routes are intentionally public: `/health` and `/csrf-token` — these are explicitly excluded from auth coverage audits.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:09:28.631Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2505-260418-035537",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
