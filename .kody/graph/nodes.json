@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_auth_middleware_563565029127": {
+      "id": "thoughts_auth_middleware_563565029127",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth middleware",
+      "content": "When a route is wrapped with withAuth HOC, the handler is never called with user=null. Any `if (!user)` guards are dead code and should be removed.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:33.496Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2634-260418-095432",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_563566288149": {
+      "id": "conventions_auth_563566288149",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth",
+      "content": "The codebase uses withAuth HOC (src/auth/withAuth.ts) to protect routes, not inline middleware. All protected routes under src/app/api/* must be wrapped.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:33.497Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2634-260418-095432",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_route_protection_563567495069": {
+      "id": "facts_route_protection_563567495069",
+      "type": "facts",
+      "hall": "facts",
+      "room": "route protection",
+      "content": "Always check existing routes before planning route-level changes — routes may already be protected by existing wrappers, making the task only about cleanup.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:33.499Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2634-260418-095432",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

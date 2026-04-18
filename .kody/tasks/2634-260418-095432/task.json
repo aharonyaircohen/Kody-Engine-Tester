@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I've completed my analysis and written the plan. The key findings are:  ",
+  "description": "I've completed my analysis and written the plan. The key findings are:\n\n1. **All routes are already wrapped** with `withAuth` — no new route changes needed\n2. **Two concrete fixes required:**\n   - Fix 401 message in `src/auth/withAuth.ts` from `\"Missing or invalid Authorization header\"` → `\"Unauthorized\"` (1 line)\n   - Remove 7 dead `if (!user)` blocks across route handlers since `withAuth` guarantees the user exists when the handler runs",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

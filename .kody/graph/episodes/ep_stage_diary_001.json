@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2634-260418-095432",
+  "source": "stage_diary",
+  "taskId": "2634-260418-095432",
+  "createdAt": "2026-04-18T10:02:33.491Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When a route is wrapped with withAuth HOC, the handler is never called with user=null. Any `if (!user)` guards are dead code and should be removed.\",\"scope\":\"auth middleware\"},{\"kind\":\"convention\",\"text\":\"The codebase uses withAuth HOC (src/auth/withAuth.ts) to protect routes, not inline middleware. All protected routes under src/app/api/* must be wrapped.\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"Always check existing routes before planning route-level changes — routes may already be protected by existing wrappers, making the task only about cleanup.\",\"scope\":\"route protection\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
