@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2698-260418-123920",
+  "source": "stage_diary",
+  "taskId": "2698-260418-123920",
+  "createdAt": "2026-04-18T12:46:36.174Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Middleware factories (create*Middleware) attach the underlying limiter instance as a property on the returned function (middleware.limiter = limiter) so tests can call mw.limiter.destroy() for cleanup\",\"scope\":\"src/middleware\"},{\"kind\":\"convention\",\"text\":\"Tests always use afterEach with vi.useRealTimers() to restore real timers after fake-timer tests, and call limiter?.destroy() on the instance under test.\",\"scope\":\"src/middleware\"},{\"kind\":\"convention\",\"text\":\"Fake timers (vi.useFakeTimers()) are called inside individual tests, not in a beforeEach — each test manages its own timer state independently.\",\"scope\":\"src/middleware\"},{\"kind\":\"gotcha\",\"text\":\"cleanupTimer.unref() must be called on setInterval cleanup timers so the Node process can exit even with an active interval.\",\"scope\":\"src/middleware/rateLimit.ts\"},{\"kind\":\"decision\",\"text\":\"New SimpleRateLimiter reuses the existing byIp helper from rate-limiter.ts via import r",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

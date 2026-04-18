@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcmiddleware_606961868941": {
+      "id": "conventions_srcmiddleware_606961868941",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Middleware factories (create*Middleware) attach the underlying limiter instance as a property on the returned function (middleware.limiter = limiter) so tests can call mw.limiter.destroy() for cleanup",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:46:36.180Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_606963737253": {
+      "id": "conventions_srcmiddleware_606963737253",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Tests always use afterEach with vi.useRealTimers() to restore real timers after fake-timer tests, and call limiter?.destroy() on the instance under test.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:46:36.182Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_606965265523": {
+      "id": "conventions_srcmiddleware_606965265523",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Fake timers (vi.useFakeTimers()) are called inside individual tests, not in a beforeEach — each test manages its own timer state independently.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:46:36.183Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2698-260418-123920",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcmiddlewareratelimitts_606966656688": {
+      "id": "thoughts_srcmiddlewareratelimitts_606966656688",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "cleanupTimer.unref() must be called on setInterval cleanup timers so the Node process can exit even with an active interval.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:46:36.185Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2698-260418-123920",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcmiddlewareratelimitts_606968132340": {
+      "id": "facts_srcmiddlewareratelimitts_606968132340",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/middleware/rateLimit.ts",
+      "content": "New SimpleRateLimiter reuses the existing byIp helper from rate-limiter.ts via import rather than duplicating x-forwarded-for parsing logic.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:46:36.186Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2698-260418-123920",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
