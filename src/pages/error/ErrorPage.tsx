@@ -48,3 +48,5 @@ export function ErrorPage({ error, statusCode = 500 }: ErrorPageProps) {
     </div>
   )
 }
+
+export default ErrorPage

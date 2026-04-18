@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "hotfix-2785-260418-164531",
+  "source": "stage_diary",
+  "taskId": "hotfix-2785-260418-164531",
+  "createdAt": "2026-04-18T16:58:49.203Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Next.js Pages Router type checks fail if a page component lacks a default export; always export default for pages/*.tsx files\",\"scope\":\"src/pages\"},{\"kind\":\"convention\",\"text\":\"Hotfix pipeline runs build→verify(skip tests)→ship, bypassing taskify/plan/review stages entirely\",\"scope\":\"pipeline\"},{\"kind\":\"gotcha\",\"text\":\"The @kody hotfix command does not exist; valid aliases are full, rerun, fix, fix-ci, review, resolve, status\",\"scope\":\"kody CLI\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

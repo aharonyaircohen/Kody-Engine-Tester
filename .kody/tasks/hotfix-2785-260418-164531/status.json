@@ -1,0 +1,39 @@
+{
+  "taskId": "hotfix-2785-260418-164531",
+  "state": "completed",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "retries": 0
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "completed",
+      "completedAt": "2026-04-18T16:57:00.000Z",
+      "retries": 0
+    },
+    "verify": {
+      "state": "skipped",
+           "reason": "hotfix pipeline skips tests",
+      "retries": 0
+    },
+    "review": {
+      "state": "skipped",
+      "reason": "hotfix pipeline skips review",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "skipped",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-18T16:46:45.391Z",
+  "updatedAt": "2026-04-18T16:57:00.000Z"
+}

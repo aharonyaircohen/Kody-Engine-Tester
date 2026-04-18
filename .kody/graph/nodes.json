@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcpages_815245071755": {
+      "id": "thoughts_srcpages_815245071755",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/pages",
+      "content": "Next.js Pages Router type checks fail if a page component lacks a default export; always export default for pages/*.tsx files",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:58:49.208Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2785-260418-164531",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_pipeline_815246825887": {
+      "id": "conventions_pipeline_815246825887",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "pipeline",
+      "content": "Hotfix pipeline runs build→verify(skip tests)→ship, bypassing taskify/plan/review stages entirely",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:58:49.210Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2785-260418-164531",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_kody_cli_815248195390": {
+      "id": "thoughts_kody_cli_815248195390",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody CLI",
+      "content": "The @kody hotfix command does not exist; valid aliases are full, rerun, fix, fix-ci, review, resolve, status",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:58:49.211Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:hotfix-2785-260418-164531",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

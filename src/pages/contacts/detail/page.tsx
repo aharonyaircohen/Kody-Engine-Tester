@@ -9,6 +9,7 @@ import styles from './detail.module.css'
 export default function ContactDetailPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  if (!searchParams) return null
   const id = searchParams.get('id')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
