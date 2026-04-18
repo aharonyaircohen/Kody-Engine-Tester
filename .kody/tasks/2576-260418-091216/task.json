@@ -1,0 +1,17 @@
+
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of rate-limiting middleware",
+  "description": "The task asks to add request-rate-limiting middleware in src/middleware/rateLimit.ts tracking requests per IP with an in-memory Map and unit tests. Upon investigation, the identical implementation already exists at src/middleware/rate-limiter.ts (sliding-window rate limiter using Map, in-memory tracking per IP via byIp(), 429/403 responses, whitelist/blacklist, rate-limit headers) and comprehensive tests at src/middleware/rate-limiter.test.ts covering SlidingWindowRateLimiter, createRateLimiterMiddleware, IP whitelist/blacklist, concurrent requests, window expiry, and X-RateLimit headers. The file name in the task (rateLimit.ts) differs from the project's existing convention (rate-limiter.ts).",
+  "scope": [
+    "src/middleware/rate-limiter.ts",
+    "src/middleware/rate-limiter.test.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/middleware/rate-limiter.ts: SlidingWindowRateLimiter class with in-memory Map store, check/cleanup/reset/destroy methods, and createRateLimiterMiddleware factory — already implements the exact feature requested",
+    "src/middleware/rate-limiter.ts: byIp() key resolver using x-forwarded-for header — matches the IP-tracking requirement",
+    "src/middleware/rate-limiter.test.ts: Full test suite with vitest using fake timers for window expiry — matches the unit tests requirement"
+  ],
+  "questions": []
+}
