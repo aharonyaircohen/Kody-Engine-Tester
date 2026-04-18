@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The taskify classification is ready. The task is a **low-risk, single-fi",
+  "description": "The taskify classification is ready. The task is a **low-risk, single-file feature** to add a `capitalize` utility following the established `src/utils/` pattern (single-function file + co-located `.test.ts` with vitest). No questions remain — the scope is clear and no further clarification is needed.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

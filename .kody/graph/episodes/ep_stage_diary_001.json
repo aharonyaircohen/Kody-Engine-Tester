@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2583-260418-091402",
+  "source": "stage_diary",
+  "taskId": "decompose-2583-260418-091402",
+  "createdAt": "2026-04-18T09:18:32.523Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"decision\",\"text\":\"When complexity_score < 4 (or task is not decomposable), @kody decompose delegates to the normal pipeline instead of splitting the task.\",\"scope\":\"kody decompose\"},{\"kind\":\"convention\",\"text\":\"String utilities live in src/utils/strings.ts, one function per file, with co-located .test.ts using vitest.\",\"scope\":\"src/utils\"},{\"kind\":\"lesson\",\"text\":\"'capitalize' means first-char-only by convention; 'capitalizeWords' is a separate function for every-word capitalization — do not conflate them.\",\"scope\":\"src/utils/strings\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

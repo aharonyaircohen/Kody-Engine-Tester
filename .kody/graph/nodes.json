@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_kody_decompose_290874817542": {
+      "id": "facts_kody_decompose_290874817542",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody decompose",
+      "content": "When complexity_score < 4 (or task is not decomposable), @kody decompose delegates to the normal pipeline instead of splitting the task.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:18:32.528Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2583-260418-091402",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutils_290876164399": {
+      "id": "conventions_srcutils_290876164399",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils",
+      "content": "String utilities live in src/utils/strings.ts, one function per file, with co-located .test.ts using vitest.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:18:32.530Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2583-260418-091402",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsstrings_290877620336": {
+      "id": "facts_srcutilsstrings_290877620336",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/strings",
+      "content": "'capitalize' means first-char-only by convention; 'capitalizeWords' is a separate function for every-word capitalization — do not conflate them.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:18:32.531Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2583-260418-091402",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
