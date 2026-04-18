@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2405-260417-234631",
+  "source": "stage_diary",
+  "taskId": "2405-260417-234631",
+  "createdAt": "2026-04-17T23:59:32.919Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"@kody full committed only skill docs; the actual implementation files (src/middleware/rateLimit.ts, rateLimit.test.ts) were never created. A FAIL verdict means the required source files are absent.\",\"scope\":\"kody pipeline\"},{\"kind\":\"lesson\",\"text\":\"When a pipeline stage ends in FAIL, the agent must examine the actual diff (not assumptions) to determine whether required source files were written — build stages that pass on skill-doc-only commits \",\"scope\":\"kody pipeline\"},{\"kind\":\"convention\",\"text\":\"Source files that a task explicitly requires (e.g., src/middleware/rateLimit.ts) must exist in the repository; pipeline state/artifact updates alone do not satisfy task requirements.\",\"scope\":\"src/middleware\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

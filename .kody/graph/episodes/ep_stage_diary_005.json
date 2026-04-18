@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2405-260417-234631",
+  "source": "stage_diary",
+  "taskId": "2405-260417-234631",
+  "createdAt": "2026-04-18T00:02:40.456Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When Write permission is denied mid-pipeline, the agent committed skill docs + pipeline state instead of the required implementation files. The task silently failed without surfacing the permission er\",\"scope\":\"pipeline execution\"},{\"kind\":\"lesson\",\"text\":\"A failed plan-write (permission denied) led to a silent FAIL rather than surfacing the error — the root cause was masked by the pipeline state commit.\",\"scope\":\"pipeline execution\"},{\"kind\":\"decision\",\"text\":\"Taskify correctly identified that the Write tool needs explicit permission grants; this should block the build stage from running if the plan was never written.\",\"scope\":\"pipeline gating\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

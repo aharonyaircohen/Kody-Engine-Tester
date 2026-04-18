@@ -64,6 +64,246 @@
         "kind:lesson"
       ],
       "confidence": 0.7
+    },
+    "thoughts_kody_pipeline_799987571435": {
+      "id": "thoughts_kody_pipeline_799987571435",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline",
+      "content": "@kody full committed only skill docs; the actual implementation files (src/middleware/rateLimit.ts, rateLimit.test.ts) were never created. A FAIL verdict means the required source files are absent.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T23:59:32.923Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_799990205834": {
+      "id": "facts_kody_pipeline_799990205834",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline",
+      "content": "When a pipeline stage ends in FAIL, the agent must examine the actual diff (not assumptions) to determine whether required source files were written — build stages that pass on skill-doc-only commits ",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T23:59:32.925Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcmiddleware_799992002199": {
+      "id": "conventions_srcmiddleware_799992002199",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/middleware",
+      "content": "Source files that a task explicitly requires (e.g., src/middleware/rateLimit.ts) must exist in the repository; pipeline state/artifact updates alone do not satisfy task requirements.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-17T23:59:32.927Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipelineexecution_870520159145": {
+      "id": "thoughts_pipelineexecution_870520159145",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline/execution",
+      "content": "The agent updated skill documentation files instead of writing the required implementation. No actual code was committed.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T00:00:43.455Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipelinepermissions_870521588455": {
+      "id": "thoughts_pipelinepermissions_870521588455",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline/permissions",
+      "content": "Plan file could not be written to disk due to missing Write tool permission — this blocked plan-phase progression.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T00:00:43.457Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcmiddleware_870523411063": {
+      "id": "facts_srcmiddleware_870523411063",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/middleware",
+      "content": "No src/middleware/ directory exists in this repository; a new directory would need to be created as part of the implementation.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T00:00:43.459Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2405-260417-234631",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_stages_910319466023": {
+      "id": "thoughts_pipeline_stages_910319466023",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline stages",
+      "content": "Build/tool stages may pass on skill-doc-only commits even when required source files are absent; only review stages catch the delta.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T00:01:23.255Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_stages_910320810974": {
+      "id": "thoughts_pipeline_stages_910320810974",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline stages",
+      "content": "Same failure mode recurred: skill docs + pipeline state files committed, zero source files created.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T00:01:23.256Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_review_910322158821": {
+      "id": "facts_review_910322158821",
+      "type": "facts",
+      "hall": "facts",
+      "room": "review",
+      "content": "Review stage validates actual source file presence in the commit diff, not just build/tool success.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T00:01:23.257Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_execution_987524200155": {
+      "id": "thoughts_pipeline_execution_987524200155",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline execution",
+      "content": "When Write permission is denied mid-pipeline, the agent committed skill docs + pipeline state instead of the required implementation files. The task silently failed without surfacing the permission er",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T00:02:40.459Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_execution_987525989117": {
+      "id": "facts_pipeline_execution_987525989117",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline execution",
+      "content": "A failed plan-write (permission denied) led to a silent FAIL rather than surfacing the error — the root cause was masked by the pipeline state commit.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T00:02:40.461Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2405-260417-234631",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipeline_gating_987527426972": {
+      "id": "facts_pipeline_gating_987527426972",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline gating",
+      "content": "Taskify correctly identified that the Write tool needs explicit permission grants; this should block the build stage from running if the plan was never written.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T00:02:40.463Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2405-260417-234631",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_gitpipeline_1049862161763": {
+      "id": "thoughts_gitpipeline_1049862161763",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "git/pipeline",
+      "content": "A commit with only skill docs, references, and pipeline state files contains zero implementation code — the actual task was not done.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T00:03:42.797Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_verification_1049864182098": {
+      "id": "facts_verification_1049864182098",
+      "type": "facts",
+      "hall": "facts",
+      "room": "verification",
+      "content": "'Success' verification requires actual source files (e.g. src/middleware/rateLimit.ts) to exist in the repo, not just pipeline/artifact state.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T00:03:42.799Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_agentbehavior_1049866706678": {
+      "id": "facts_agentbehavior_1049866706678",
+      "type": "facts",
+      "hall": "facts",
+      "room": "agent-behavior",
+      "content": "This failure mode was flagged in a prior review, indicating the agent repeated the same mistake across pipeline runs.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T00:03:42.802Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2405-260417-234631",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
     }
   }
 }

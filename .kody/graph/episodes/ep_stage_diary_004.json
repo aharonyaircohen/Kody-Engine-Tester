@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2405-260417-234631",
+  "source": "stage_diary",
+  "taskId": "2405-260417-234631",
+  "createdAt": "2026-04-18T00:01:23.252Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Build/tool stages may pass on skill-doc-only commits even when required source files are absent; only review stages catch the delta.\",\"scope\":\"pipeline stages\"},{\"kind\":\"gotcha\",\"text\":\"Same failure mode recurred: skill docs + pipeline state files committed, zero source files created.\",\"scope\":\"pipeline stages\"},{\"kind\":\"lesson\",\"text\":\"Review stage validates actual source file presence in the commit diff, not just build/tool success.\",\"scope\":\"review\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

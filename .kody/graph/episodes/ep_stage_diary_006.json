@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_006",
+  "runId": "2405-260417-234631",
+  "source": "stage_diary",
+  "taskId": "2405-260417-234631",
+  "createdAt": "2026-04-18T00:03:42.794Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"A commit with only skill docs, references, and pipeline state files contains zero implementation code — the actual task was not done.\",\"scope\":\"git/pipeline\"},{\"kind\":\"lesson\",\"text\":\"'Success' verification requires actual source files (e.g. src/middleware/rateLimit.ts) to exist in the repo, not just pipeline/artifact state.\",\"scope\":\"verification\"},{\"kind\":\"lesson\",\"text\":\"This failure mode was flagged in a prior review, indicating the agent repeated the same mistake across pipeline runs.\",\"scope\":\"agent-behavior\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
