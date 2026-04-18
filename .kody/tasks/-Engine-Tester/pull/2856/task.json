@@ -1,0 +1,9 @@
+{
+  "task_type": "docs",
+  "title": "Add tagline to README.md",
+  "description": "Append a single tagline line to the bottom of README.md, with one blank line separating it from the existing content. The line must be exactly: `_LearnHub LMS — built collaboratively._`",
+  "scope": ["README.md"],
+  "risk_level": "low",
+  "existing_patterns": [],
+  "questions": []
+}

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_gitpush_182907802274": {
+      "id": "thoughts_gitpush_182907802274",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "git/push",
+      "content": "kody2 may fail to push if the generated branch name is too long or contains invalid characters, but the actual file edits can still succeed on retry.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T21:47:04.840Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2856",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelinedebugging_182909163806": {
+      "id": "facts_pipelinedebugging_182909163806",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/debugging",
+      "content": "A failed commit/push doesn't necessarily mean the file edit failed; re-examining the artifact output can reveal the edit was actually applied.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T21:47:04.841Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2856",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
