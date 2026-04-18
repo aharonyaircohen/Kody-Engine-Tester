@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2790-260418-164733",
+  "source": "stage_diary",
+  "taskId": "2790-260418-164733",
+  "createdAt": "2026-04-18T17:03:59.516Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Integration tests go in tests/int/ and verify both positive (200 with valid token) and negative (401 without token) cases.\",\"scope\":\"testing\"},{\"kind\":\"gotcha\",\"text\":\"withAuth HOC extracts Bearer token from Authorization header and returns 401 for missing, invalid, or expired tokens — no extra middleware needed.\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

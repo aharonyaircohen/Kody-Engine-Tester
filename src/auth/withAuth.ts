@@ -8,6 +8,20 @@ import { extractBearerToken, checkRole } from './_auth'
 export { extractBearerToken, checkRole }
 export type { AuthContext, AuthOptions } from './_auth'
 
+// ─── Test utilities (no-ops in production) ─────────────────────────────────────
+// These are re-exported here so that test files can import them from @/auth/withAuth.
+// In production they are no-ops; in tests they are replaced by vi.mock.
+export function setMockUser(
+  _token: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  _user: { id?: string; email?: string; role?: string; isActive?: boolean; firstName?: string; lastName?: string }
+): void {
+  // no-op in production; replaced by vi.mock in tests
+}
+export function clearMockUsers(): void {
+  // no-op in production; replaced by vi.mock in tests
+}
+
 let jwtServiceInstance: JwtService | null = null
 let authServiceInstance: AuthService | null = null
 

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_testing_1066310860325": {
+      "id": "conventions_testing_1066310860325",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Integration tests go in tests/int/ and verify both positive (200 with valid token) and negative (401 without token) cases.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:03:59.522Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2790-260418-164733",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_auth_1066312300723": {
+      "id": "thoughts_auth_1066312300723",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth",
+      "content": "withAuth HOC extracts Bearer token from Authorization header and returns 401 for missing, invalid, or expired tokens — no extra middleware needed.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:03:59.524Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2790-260418-164733",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
