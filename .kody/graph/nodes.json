@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_srcutils_1150218810412": {
+      "id": "facts_srcutils_1150218810412",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils",
+      "content": "When adding a new module in src/utils/, follow the established co-located test pattern: src/utils/<name>.test.ts next to src/utils/<name>.ts, matching existing files like retry.test.ts and result.test",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:04:16.061Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_configvalidator_1150220186616": {
+      "id": "thoughts_configvalidator_1150220186616",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "configValidator",
+      "content": "Kody's clarifying questions about config fields and rules went unanswered, blocking the implementation — product answers must precede code generation.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:04:16.063Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutils_1150221457053": {
+      "id": "facts_srcutils_1150221457053",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils",
+      "content": "Use TDD: write the test file first (red), then implement the module (green), per project acceptance criteria for new utilities.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:04:16.064Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:04:16.056Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"When adding a new module in src/utils/, follow the established co-located test pattern: src/utils/<name>.test.ts next to src/utils/<name>.ts, matching existing files like retry.test.ts and result.test\",\"scope\":\"src/utils\"},{\"kind\":\"gotcha\",\"text\":\"Kody's clarifying questions about config fields and rules went unanswered, blocking the implementation — product answers must precede code generation.\",\"scope\":\"configValidator\"},{\"kind\":\"decision\",\"text\":\"Use TDD: write the test file first (red), then implement the module (green), per project acceptance criteria for new utilities.\",\"scope\":\"src/utils\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
