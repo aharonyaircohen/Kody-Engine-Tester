@@ -1,41 +1,10 @@
-# LearnHub Coding Conventions
+### Learned 2026-04-18 (task: conventions update)
 
-**Naming**: Components/Types → PascalCase; functions/utils → camelCase; files → kebab-case (`.module.css`); collections → singular slug
-
-**Imports**: Use `import type` for types; path alias `@/*` for internal modules; named imports preferred
-
-```typescript
-import type { Module } from '@/collections/Modules'
-import type { Lesson, UpdateLessonInput } from '@/collections/Lessons'
-import { LessonEditor } from './LessonEditor'
-```
-
-**Exports**: Named exports for utilities/types; default export for page components only
-
-**Error Handling**: async/await with try-catch; `.catch(() => {})` for non-critical fallbacks (see `src/pages/auth/profile.tsx:27`)
-
-**File Organization**: Single-responsibility utils in `src/utils/`; business logic in `src/services/`; Payload configs in `src/collections/`; React components in `src/components/`
-
-**Style**: Prettier singleQuote, trailingComma=all, printWidth=100, semi=false; ESLint strict TypeScript; `'use client'` directive on all client components
-
-## Learned 2026-04-04 (task: 403-260404-211531)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-05 (task: 420-260405-054611)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/app/api/health
-
-## Learned 2026-04-05 (task: 444-260405-212643)
-- Uses vitest for testing
-- Uses eslint for linting
-- Active directories: src/utils
-
-## Learned 2026-04-05 (task: fix-pr-461-260405-214201)
-- Uses vitest for testing
-- Uses eslint for linting
-
-## Learned 2026-04-10 (task: 1529-260410-102822)
-- Uses Drizzle ORM
-- Uses Payload CMS collections
+- CSS modules: `import styles from './ModuleList.module.css'`
+- Service classes: `constructor(private store: DiscussionsStore, ...)` with dependency injection
+- JSDoc comments with `@example` in utility files
+- `CollectionConfig`, `CollectionSlug` from Payload; collection slugs are singular (`'certificates'`)
+- Sanitizers in `src/security/sanitizers.ts` with HTML entity decoding map
+- ProtectedRoute wrapper pattern for page-level auth
+- Bearer token auth: `Authorization: \`Bearer ${accessToken}\``
+- Collections export both `CollectionConfig` and interfaces (`export interface Certificate`)

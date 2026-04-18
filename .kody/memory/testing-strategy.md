@@ -31,3 +31,16 @@
 
 - No explicit threshold configured; vitest run passes `--coverage` implicitly
 - Example coverage: `CourseSearchService` tested via mocked Payload find calls
+
+## Kody Engine Test Suite
+
+The project includes a dedicated test suite runner for the Kody pipeline:
+
+| File                             | Purpose                                              |
+| -------------------------------- | ---------------------------------------------------- |
+| `tests/helpers/login.ts`         | E2E authentication helper                            |
+| `tests/helpers/seedUser.ts`      | User fixture setup/teardown                          |
+| `tests/e2e/admin.e2e.spec.ts`    | Admin panel navigation (dashboard, list, edit views) |
+| `tests/e2e/frontend.e2e.spec.ts` | Frontend homepage smoke test                         |
+
+Kody workflow (`kody.yml`) triggers on: issue comments (`@kody`), PR reviews, workflow completion, push to `main/dev`, and scheduled cron (`*/30 * * * *`).
