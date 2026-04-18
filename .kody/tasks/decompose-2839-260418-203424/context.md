@@ -37,3 +37,15 @@ if (config.decompose?.enabled === false) {
 
 The 
 ...(truncated)
+
+### review (2026-04-18T20:46:28)
+
+
+Now I have a full picture of the diff. Let me compile the structured review.
+
+## Verdict: PASS
+
+## Summary
+
+The commit adds the `decompose: { "enabled": true }` feature-flag section to `kody.config.json`, making the engine's existing feature-flag guard (already in `@kody-ade/engine@0.4.4` at lines 19010–19012) operational. The guard checks `config.decompose?.enabled === false` and immediately falls back to the normal pipeline with the log message `"decompose disabled in config — falling back t
+...(truncated)

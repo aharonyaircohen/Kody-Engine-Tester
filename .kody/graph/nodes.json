@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_feature_flags_1353849452158": {
+      "id": "thoughts_feature_flags_1353849452158",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "feature flags",
+      "content": "The guard checks `config.decompose?.enabled === false` (strict equality with boolean `false`). Undefined/null does NOT trigger fallback — the config must explicitly set `enabled: false`.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:46:37.617Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2839-260418-203424",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_config_1353850786306": {
+      "id": "conventions_config_1353850786306",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "config",
+      "content": "When adding a new top-level config section, include it in `kody.config.json` itself so the engine's own config is self-consistent and `config.decompose?.enabled` resolves at runtime.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:46:37.618Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2839-260418-203424",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_engine_integration_1353852094385": {
+      "id": "facts_engine_integration_1353852094385",
+      "type": "facts",
+      "hall": "facts",
+      "room": "engine integration",
+      "content": "The engine version (`@kody-ade/engine@0.4.4`) ships the guard already — the task only needed to populate the config key to make it operational, not implement the guard.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:46:37.619Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2839-260418-203424",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_feature_flags_1353853448621": {
+      "id": "facts_feature_flags_1353853448621",
+      "type": "facts",
+      "hall": "facts",
+      "room": "feature flags",
+      "content": "The feature flag is boolean — `enabled: false` means fallback, `enabled: true` (or absent with `=== false` check) means normal decompose behavior.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T20:46:37.621Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2839-260418-203424",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

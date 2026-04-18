@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2839-260418-203424",
+  "source": "stage_diary",
+  "taskId": "decompose-2839-260418-203424",
+  "createdAt": "2026-04-18T20:46:37.611Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The guard checks `config.decompose?.enabled === false` (strict equality with boolean `false`). Undefined/null does NOT trigger fallback — the config must explicitly set `enabled: false`.\",\"scope\":\"feature flags\"},{\"kind\":\"convention\",\"text\":\"When adding a new top-level config section, include it in `kody.config.json` itself so the engine's own config is self-consistent and `config.decompose?.enabled` resolves at runtime.\",\"scope\":\"config\"},{\"kind\":\"lesson\",\"text\":\"The engine version (`@kody-ade/engine@0.4.4`) ships the guard already — the task only needed to populate the config key to make it operational, not implement the guard.\",\"scope\":\"engine integration\"},{\"kind\":\"decision\",\"text\":\"The feature flag is boolean — `enabled: false` means fallback, `enabled: true` (or absent with `=== false` check) means normal decompose behavior.\",\"scope\":\"feature flags\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
