@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srcappapiauthregister_1042470378266": {
+      "id": "thoughts_srcappapiauthregister_1042470378266",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/register",
+      "content": "When a multi-step operation's first step succeeds (user created) but second fails (login), the catch block must not reuse the second error's status/code—it should prefer the first step's outcome or a ",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:08:54.035Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiauthregister_1042471847322": {
+      "id": "thoughts_srcappapiauthregister_1042471847322",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/register",
+      "content": "Bare `catch {}` that silently swallows payload.delete() failures masks cleanup errors; the outer catch then reports the wrong error and status.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:08:54.037Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_authregister_1042473453833": {
+      "id": "facts_authregister_1042473453833",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth/register",
+      "content": "Checking email existence then creating a user is a TOCTOU race; duplicate inserts will throw a DB-level error, not the intended 409, unless uniqueness is enforced at the schema level before the insert",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:08:54.038Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcappapiauthregister_1042474724960": {
+      "id": "conventions_srcappapiauthregister_1042474724960",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api/auth/register",
+      "content": "Return early after a failed `payload.delete()` in error-recovery cleanup rather than continuing to re-throw, so the user isn't created twice on retry.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T17:08:54.040Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiauthregisterroutets_1267830382146": {
+      "id": "thoughts_srcappapiauthregisterroutets_1267830382146",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/register/route.ts",
+      "content": "After creating a user, always catch DB/persistence errors separately from auth errors; conflating them overwrites the correct status code (e.g., turning 401 auth failures into 500).",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:12:39.395Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_1370838492278": {
+      "id": "facts_auth_1370838492278",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "Use DB-level unique constraints (e.g., Payload's `unique: true`) rather than application-level checks to prevent duplicate emails, avoiding TOCTOU races.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:14:22.403Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_1370839888535": {
+      "id": "conventions_auth_1370839888535",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth",
+      "content": "Return generic error messages (e.g., 'Invalid credentials') for all auth failures to prevent user enumeration attacks.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:14:22.405Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

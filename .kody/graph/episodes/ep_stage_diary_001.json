@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:08:54.029Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When a multi-step operation's first step succeeds (user created) but second fails (login), the catch block must not reuse the second error's status/code—it should prefer the first step's outcome or a \",\"scope\":\"src/app/api/auth/register\"},{\"kind\":\"gotcha\",\"text\":\"Bare `catch {}` that silently swallows payload.delete() failures masks cleanup errors; the outer catch then reports the wrong error and status.\",\"scope\":\"src/app/api/auth/register\"},{\"kind\":\"lesson\",\"text\":\"Checking email existence then creating a user is a TOCTOU race; duplicate inserts will throw a DB-level error, not the intended 409, unless uniqueness is enforced at the schema level before the insert\",\"scope\":\"auth/register\"},{\"kind\":\"convention\",\"text\":\"Return early after a failed `payload.delete()` in error-recovery cleanup rather than continuing to re-throw, so the user isn't created twice on retry.\",\"scope\":\"src/app/api/auth/register\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

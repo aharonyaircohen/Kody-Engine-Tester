@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:12:39.392Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"After creating a user, always catch DB/persistence errors separately from auth errors; conflating them overwrites the correct status code (e.g., turning 401 auth failures into 500).\",\"scope\":\"src/app/api/auth/register/route.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

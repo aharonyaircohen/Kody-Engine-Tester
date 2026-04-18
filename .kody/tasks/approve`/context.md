@@ -41,3 +41,52 @@ All 5 steps are complete. Here's a summary of what was implemented:
 
 ### `src/app/ap
 ...(truncated)
+
+### review (2026-04-18T17:08:44)
+Now I have a complete picture of all the changed files. Let me do the structured review.
+
+## Verdict: FAIL
+
+## Summary
+
+Two Next.js route handlers (`login/route.ts`, `register/route.ts`) and their co-located integration tests were added. The login endpoint is solid; the register endpoint has a correctness bug in post-creation error cleanup and a TOCTOU race condition on duplicate-email detection.
+
+---
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+`src/app/api/auth/register/route.ts:146–160` — **
+...(truncated)
+
+### review-fix (2026-04-18T17:12:34)
+All three Major findings are resolved. Here's the summary:
+
+---
+
+## Fixes Applied
+
+### `src/app/api/auth/register/route.ts`
+
+**Major #1 — Missing user cleanup on post-creation error** (lines 144–166)
+
+- Added a `userCreated` boolean flag and `newUserId` variable scoped to the entire post-creation block
+- The catch block now uses `if (userCreated && newUserId !== undefined)` guard — so any failure *after* the user is created (login error, future `enrollInWelcomeCourse`, `createDefaultNote`, etc.)
+...(truncated)
+
+### review (2026-04-18T17:14:16)
+I now have a complete picture. Here is my structured review:
+
+---
+
+## Verdict: PASS
+
+## Summary
+
+Two Next.js route handlers (`POST /api/auth/login`, `POST /api/auth/register`) were added alongside co-located Vitest integration tests. The implementation is well-structured: register uses Payload's DB-level unique constraint to catch duplicate emails (avoiding TOCTOU), both handlers use the mini-Zod schema library for input validation, and auth errors return generic messages to prevent information 
+...(truncated)

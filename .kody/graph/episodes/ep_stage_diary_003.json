@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:14:22.400Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"Use DB-level unique constraints (e.g., Payload's `unique: true`) rather than application-level checks to prevent duplicate emails, avoiding TOCTOU races.\",\"scope\":\"auth\"},{\"kind\":\"convention\",\"text\":\"Return generic error messages (e.g., 'Invalid credentials') for all auth failures to prevent user enumeration attacks.\",\"scope\":\"auth\"},{\"kind\":\"gotcha\",\"text\":\"Bare `catch {}` blocks silently swallow `payload.delete()` failures during post-creation error cleanup, leaving orphaned user records.\",\"scope\":\"src/app/api/auth/register/route.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}
