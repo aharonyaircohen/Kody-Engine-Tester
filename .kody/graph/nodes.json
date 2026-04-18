@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kodyengine_cibuildargs_887620580702": {
+      "id": "thoughts_kodyengine_cibuildargs_887620580702",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody-engine ci-build-args",
+      "content": "The `buildArgs` function was missing `--from build` in `fix-ci` mode, causing pipelines to restart from taskify/plan instead of the failing build stage.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T11:00:20.755Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2667-260418-105256",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
