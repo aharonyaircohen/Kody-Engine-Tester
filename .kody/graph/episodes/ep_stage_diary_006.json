@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_006",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:48:02.725Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Register endpoint omits firstName/lastName (required:true in Payload Users), causing 500 on every registration in production. Integration tests mask this because they mock payload.create without field\",\"scope\":\"src/app/api/auth/register/route.ts\"},{\"kind\":\"lesson\",\"text\":\"When mocking payload.create in tests, always validate the fields passed to it, otherwise required-field gaps go undetected until production.\",\"scope\":\"testing\"},{\"kind\":\"convention\",\"text\":\"Payload CMS collections may have required fields beyond the obvious; always inspect the collection definition before writing create() calls.\",\"scope\":\"src/server/payload\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

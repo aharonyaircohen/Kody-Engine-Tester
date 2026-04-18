@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:36:49.877Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"In the register route, authService and payloadInstance were instantiated but never used — the handler only called registerUser from payload directly. Always audit that every injected dependency is act\",\"scope\":\"src/app/api/auth/register/route.ts\"},{\"kind\":\"lesson\",\"text\":\"When a route handler imports both a service class and a singleton instance (e.g. payload), confirm which is actually called in the handler body — dead imports silently compile but cause runtime misbeh\",\"scope\":\"src/app/api/auth/register/route.ts\"},{\"kind\":\"convention\",\"text\":\"Payload singleton is used directly as `payload` in route handlers (not injected via a container). When adding auth service dependencies, prefer consistent instantiation per-handler invocation rather t\",\"scope\":\"src/app/api/auth/\"},{\"kind\":\"decision\",\"text\":\"Rate limiting middleware (next()) and Zod validation were confirmed as the project's standard approach for auth route hardening, matc",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

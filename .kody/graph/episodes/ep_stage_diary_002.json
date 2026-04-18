@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:13:08.271Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Register route instantiates AuthService and payloadInstance but never uses them — falls back to old UserStore utility, violating task requirements\",\"scope\":\"src/app/api/auth/register/route.ts\"},{\"kind\":\"gotcha\",\"text\":\"When a task requires using AuthService (PBKDF2) over a legacy utility, adding dead code that looks correct will pass a casual review but fail correctness checks\",\"scope\":\"auth implementation\"},{\"kind\":\"lesson\",\"text\":\"Always verify the call chain — confirming AuthService is instantiated is insufficient; confirm it is actually invoked in the request path\",\"scope\":\"code review\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -64,6 +64,246 @@
         "kind:convention"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcappapiauthregisterroutets_1222207230374": {
+      "id": "thoughts_srcappapiauthregisterroutets_1222207230374",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/register/route.ts",
+      "content": "Register route instantiates AuthService and payloadInstance but never uses them — falls back to old UserStore utility, violating task requirements",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:13:08.275Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_auth_implementation_1222208906914": {
+      "id": "thoughts_auth_implementation_1222208906914",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth implementation",
+      "content": "When a task requires using AuthService (PBKDF2) over a legacy utility, adding dead code that looks correct will pass a casual review but fail correctness checks",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:13:08.276Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_code_review_1222210888265": {
+      "id": "facts_code_review_1222210888265",
+      "type": "facts",
+      "hall": "facts",
+      "room": "code review",
+      "content": "Always verify the call chain — confirming AuthService is instantiated is insufficient; confirm it is actually invoked in the request path",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T17:13:08.278Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiauthregisterroutets_2643812518265": {
+      "id": "thoughts_srcappapiauthregisterroutets_2643812518265",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/register/route.ts",
+      "content": "In the register route, authService and payloadInstance were instantiated but never used — the handler only called registerUser from payload directly. Always audit that every injected dependency is act",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:36:49.880Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcappapiauthregisterroutets_2643814051603": {
+      "id": "facts_srcappapiauthregisterroutets_2643814051603",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/app/api/auth/register/route.ts",
+      "content": "When a route handler imports both a service class and a singleton instance (e.g. payload), confirm which is actually called in the handler body — dead imports silently compile but cause runtime misbeh",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:36:49.881Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcappapiauth_2643815330749": {
+      "id": "conventions_srcappapiauth_2643815330749",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api/auth/",
+      "content": "Payload singleton is used directly as `payload` in route handlers (not injected via a container). When adding auth service dependencies, prefer consistent instantiation per-handler invocation rather t",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:36:49.883Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_middleware_and_validation_2643816483693": {
+      "id": "facts_middleware_and_validation_2643816483693",
+      "type": "facts",
+      "hall": "facts",
+      "room": "middleware and validation",
+      "content": "Rate limiting middleware (next()) and Zod validation were confirmed as the project's standard approach for auth route hardening, matching existing patterns in the codebase.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T17:36:49.884Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_auth_2705948294150": {
+      "id": "thoughts_auth_2705948294150",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth",
+      "content": "Refresh tokens must never be returned in the JSON response body — always send them via HttpOnly cookies to prevent XSS exfiltration.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:37:52.016Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_2705949679847": {
+      "id": "facts_auth_2705949679847",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "When fixing a security pattern (e.g. moving tokens to HttpOnly cookies), audit all similar endpoints to apply the fix consistently.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T17:37:52.017Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiauthloginroutets_3137395119064": {
+      "id": "thoughts_srcappapiauthloginroutets_3137395119064",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/login/route.ts",
+      "content": "login route had security issue with refresh token - must use HttpOnly cookie, not JSON body response (same fix as register route)",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:45:03.463Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_endpoints_3137396992812": {
+      "id": "facts_auth_endpoints_3137396992812",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth endpoints",
+      "content": "A fix applied to register (HttpOnly cookie) must be mirrored to login - when copying a pattern, audit all instances for the same issue",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:45:03.464Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_review_process_3137398402896": {
+      "id": "conventions_review_process_3137398402896",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "review process",
+      "content": "Review-fix stage must close ALL critical findings before approval; partial fixes don't meet bar",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T17:45:03.466Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiauthregisterroutets_3316660510304": {
+      "id": "thoughts_srcappapiauthregisterroutets_3316660510304",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/auth/register/route.ts",
+      "content": "Register endpoint omits firstName/lastName (required:true in Payload Users), causing 500 on every registration in production. Integration tests mask this because they mock payload.create without field",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T17:48:02.728Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testing_3316662157102": {
+      "id": "facts_testing_3316662157102",
+      "type": "facts",
+      "hall": "facts",
+      "room": "testing",
+      "content": "When mocking payload.create in tests, always validate the fields passed to it, otherwise required-field gaps go undetected until production.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T17:48:02.730Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcserverpayload_3316663482575": {
+      "id": "conventions_srcserverpayload_3316663482575",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/server/payload",
+      "content": "Payload CMS collections may have required fields beyond the obvious; always inspect the collection definition before writing create() calls.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-18T17:48:02.731Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
     }
   }
 }

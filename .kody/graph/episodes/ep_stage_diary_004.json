@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:37:52.013Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Refresh tokens must never be returned in the JSON response body — always send them via HttpOnly cookies to prevent XSS exfiltration.\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"When fixing a security pattern (e.g. moving tokens to HttpOnly cookies), audit all similar endpoints to apply the fix consistently.\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

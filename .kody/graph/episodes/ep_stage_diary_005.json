@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T17:45:03.459Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"login route had security issue with refresh token - must use HttpOnly cookie, not JSON body response (same fix as register route)\",\"scope\":\"src/app/api/auth/login/route.ts\"},{\"kind\":\"lesson\",\"text\":\"A fix applied to register (HttpOnly cookie) must be mirrored to login - when copying a pattern, audit all instances for the same issue\",\"scope\":\"auth endpoints\"},{\"kind\":\"convention\",\"text\":\"Review-fix stage must close ALL critical findings before approval; partial fixes don't meet bar\",\"scope\":\"review process\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
