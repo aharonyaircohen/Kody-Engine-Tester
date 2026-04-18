@@ -1,11 +1,11 @@
-name: Test CW
-non:
+name: Test CI
+on:
   push:
     branches:
-      - '**'\njobs:
+      - '**'
+jobs:
   health:
     runs-on: ubuntu-latest
-
     steps:
       - run: echo "CI health check"
       - run: exit 1
