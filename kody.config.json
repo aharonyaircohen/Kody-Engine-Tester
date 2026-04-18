@@ -21,13 +21,27 @@
       "strong": "minimax/MiniMax-M2.7"
     },
     "budgets": {
-      "taskify":    { "maxBudgetUsd": 15 },
-      "plan":       { "maxBudgetUsd": 10 },
-      "build":      { "maxBudgetUsd": 50 },
-      "verify":     { "maxBudgetUsd": 5 },
-      "review":     { "maxBudgetUsd": 10 },
-      "review-fix": { "maxBudgetUsd": 30 },
-      "ship":       { "maxBudgetUsd": 5 }
+      "taskify": {
+        "maxBudgetUsd": 15
+      },
+      "plan": {
+        "maxBudgetUsd": 10
+      },
+      "build": {
+        "maxBudgetUsd": 50
+      },
+      "verify": {
+        "maxBudgetUsd": 5
+      },
+      "review": {
+        "maxBudgetUsd": 10
+      },
+      "review-fix": {
+        "maxBudgetUsd": 30
+      },
+      "ship": {
+        "maxBudgetUsd": 5
+      }
     }
   },
   "mcp": {
@@ -40,6 +54,7 @@
     "url": "http://localhost:3000"
   },
   "watch": {
-    "enabled": true
+    "enabled": true,
+    "activityLog": 1474
   }
 }

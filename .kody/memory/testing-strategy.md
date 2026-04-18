@@ -1,5 +1,3 @@
-# LearnHub LMS Testing Strategy
-
 ## Stack
 
 - **Integration**: Vitest 4.0 (`vitest.config.mts`) — `pnpm test:int`
@@ -26,6 +24,7 @@
 - `pnpm ci` runs `payload migrate` → `pnpm build` → `pnpm test`
 - Playwright `forbidOnly: true` prevents committed `.only()` tests
 - Retries enabled on CI (2x) to reduce flaky failure noise
+- `test-ci.yml` runs health check on PRs; main testing via `kody.yml` pipeline on push to `main`/`dev`
 
 ## Coverage
 

@@ -225,31 +225,77 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 ## Repo Patterns
 
-- **Result type for error handling** (`src/utils/result.ts`): Use discriminated union `Result<T, E>` — prefer `ok()`/`err()` factories over throw patterns
-- **Surgical Edit over Write** (`src/auth/withAuth.ts`): `withAuth` wraps handlers — surgical edits to add roles/permissions, never rewrite the HOC
-- **Validation at API boundaries** (`src/validation/`): Zod schemas validate input before service calls — see `src/api/auth/login.ts` for pattern
-- **Service layer dependency injection** (`src/services/GradebookService.ts`): Constructor accepts dep interfaces (`GradebookServiceDeps`), not concrete types
-- **Type-safe DI container** (`src/utils/di-container.ts`): Register with `Container.register(token, factory)` using branded token types
+### Auth Boundary — `withAuth` HOC pattern
+
+`src/auth/withAuth.ts` — wraps route handlers, extracts bearer token, validates JWT, enforces RBAC via `checkRole`:
+
+```typescript
+export function withAuth(...allowedRoles: RbacRole[]) {
+  return async (req: Request) => {
+    const token = extractBearerToken(req.headers.get('authorization'))
+    const payload = await jwtService.verify(token)
+    if (!allowedRoles.includes(payload.role)) return unauthorized()
+    return handler(req)
+  }
+}
+```
+
+### DI Container — `src/utils/di-container.ts`
+
+Register factories with `Container.register<T>(token, factory, lifecycle)`; singleton lifecycle caches in `singletons` Map; use typed dep interfaces (e.g., `GradingServiceDeps<A,S,C>`).
+
+### Result Type — `src/utils/result.ts`
+
+Discriminated union `Result<T, E>` for explicit error handling — prefer over throwing in service layer.
+
+### Validation Middleware — `src/middleware/validation.ts`
+
+`validate(schema, data, target)` with typed `FieldDefinition` — use Zod schemas from `src/validation/` at API boundaries.
+
+### Sanitization — `src/security/sanitizers.ts`
+
+`sanitizeHtml()` applied to user-generated content; returns empty string for invalid input, never throws.
+
+---
 
 ## Improvement Areas
 
-- **Type assertion abuse** (`src/app/(frontend)/dashboard/page.tsx:XX`): Uses `as unknown as` casts — replace with proper type guards or branded types
-- **Dual auth systems**: `UserStore` in `src/auth/user-store.ts` (SHA-256) vs `AuthService` in `src/auth/auth-service.ts` (PBKDF2) — only fix new code paths, don't unify
-- **Role enum mismatch**: `UserStore.UserRole` ('admin'|'user'|'guest'|'student'|'instructor') vs `RbacRole` ('admin'|'editor'|'viewer') — avoid new code relying on either
-- **N+1 query risk** in `src/app/(frontend)/dashboard/page.tsx`: Lesson enrollments fetched individually — use Payload's `depth` param or batch loader
-- **Missing error wrapping**: Service methods in `src/services/` return raw errors — wrap with `Result.err()` for consistent error handling
+### Dual Auth Systems (known anti-pattern)
+
+`src/auth/user-store.ts` (SHA-256, in-memory sessions) coexists with `AuthService` (PBKDF2, JWT). Password hashing and user representation are inconsistent — new auth code should use `AuthService` only.
+
+### Role Divergence
+
+`UserStore.UserRole = 'admin'|'user'|'guest'|'student'|'instructor'` vs `RbacRole = 'admin'|'editor'|'viewer'`. When adding new roles, align with `RbacRole` in `src/auth/rbac.ts`.
+
+### Type Narrowing in Dashboard
+
+`src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` casts rather than proper type guards — prefer explicit narrowing with guard functions.
+
+### N+1 Risk in Enrollments
+
+`src/services/enrollment-service.ts` — ensure eager loading via `include` option when fetching enrollments with nested relations (lesson, course, user).
+
+### Stale Fixture Pattern
+
+E2E fixtures at `tests/helpers/` may reference `seedTestUser()` / `cleanupTestUser()` — verify these still match current `users` collection schema after field changes.
+
+---
 
 ## Acceptance Criteria
 
-- [ ] Fix only Critical/Major issues from the review report
-- [ ] Use `Edit` tool for surgical changes — no file rewrites
-- [ ] Run `pnpm test:int` after each fix — all tests pass
-- [ ] Run `pnpm tsc --noEmit` — zero type errors
-- [ ] No `as unknown as` type assertions in changed code
-- [ ] No `console.log` statements in production code
-- [ ] All async operations use try-catch with proper error propagation
-- [ ] Changes follow layered architecture: Route → Auth → Service → Repository
-- [ ] No hardcoded secrets or config values — use environment variables
-- [ ] Zod validation schemas used for all new API input validation
+- [ ] New enum/status values traced to ALL consumers before merge
+- [ ] Auth changes use `withAuth` HOC, not direct `UserStore` access
+- [ ] Role additions aligned with `RbacRole` allowlist in `src/auth/rbac.ts`
+- [ ] Payload collection changes have migration in `src/migrations/`
+- [ ] Service layer uses `Result<T, E>` for explicit error returns, not thrown exceptions
+- [ ] API routes validate input with Zod schemas from `src/validation/`
+- [ ] User-generated content sanitized with `sanitizeHtml()` from `@/security/sanitizers`
+- [ ] `pnpm build` passes after changes
+- [ ] `pnpm test:int` passes (vitest integration tests)
+- [ ] `pnpm test:e2e` passes (Playwright E2E tests)
+- [ ] No `as unknown as` casts added — use proper type guards
+- [ ] No direct DB writes bypassing Payload collection `create`/`update` methods
+- [ ] Auth JWT secret uses crypto-secure random, not `Math.random()`
 
 {{TASK_CONTEXT}}
