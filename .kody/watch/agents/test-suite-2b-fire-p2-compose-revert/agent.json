@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-2b-fire-p2-compose-revert",
+  "description": "Fire Phase 2 compose/rerun/revert tests (5 tests) at 01:30 UTC.",
+  "cron": "30 1 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}
