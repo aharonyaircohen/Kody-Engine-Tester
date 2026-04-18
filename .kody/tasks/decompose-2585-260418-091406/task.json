@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Here's a summary of my research and the proposed plan:  ---  **Task: Add",
+  "description": "Here's a summary of my research and the proposed plan:\n\n---\n\n**Task: Add `src/utils/configValidator.ts` with tests**\n\n**Exploration findings:**\n- `src/utils/` exists with ~100+ single-function utility files, each with co-located `.test.ts`\n- **Existing validation patterns to reuse:**\n  - `src/utils/schema.ts` — mini-Zod builder (`s.string()`, `s.object()`, etc.) with `SchemaError`\n  - `src/utils/result.ts` — `Result<T, E>` discriminated union (`Ok`/`Err` classes)\n  - Test patterns from `cache.te",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

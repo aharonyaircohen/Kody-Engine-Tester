@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2585-260418-091406",
+  "source": "stage_diary",
+  "taskId": "decompose-2585-260418-091406",
+  "createdAt": "2026-04-18T09:20:24.461Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"src/utils/ follows a co-located test pattern: each utility file has a sibling .test.ts\",\"scope\":\"src/utils\"},{\"kind\":\"decision\",\"text\":\"schema.ts provides a mini-Zod builder (s.string, s.object) worth reusing for config validation before reaching for full Zod\",\"scope\":\"src/utils/schema.ts\"},{\"kind\":\"decision\",\"text\":\"result.ts provides Result<T,E> discriminated union (Ok/Err) — prefer over throwing for validator errors\",\"scope\":\"src/utils/result.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

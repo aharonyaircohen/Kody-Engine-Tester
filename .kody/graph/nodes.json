@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcutils_520672202328": {
+      "id": "conventions_srcutils_520672202328",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils",
+      "content": "src/utils/ follows a co-located test pattern: each utility file has a sibling .test.ts",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:20:24.467Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2585-260418-091406",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsschemats_520673709106": {
+      "id": "facts_srcutilsschemats_520673709106",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/schema.ts",
+      "content": "schema.ts provides a mini-Zod builder (s.string, s.object) worth reusing for config validation before reaching for full Zod",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:20:24.468Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2585-260418-091406",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsresultts_520675599535": {
+      "id": "facts_srcutilsresultts_520675599535",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/result.ts",
+      "content": "result.ts provides Result<T,E> discriminated union (Ok/Err) — prefer over throwing for validator errors",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:20:24.470Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2585-260418-091406",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
