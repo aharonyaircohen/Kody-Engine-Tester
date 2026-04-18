@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "decompose-2781-260418-164536",
+  "source": "stage_diary",
+  "taskId": "decompose-2781-260418-164536",
+  "createdAt": "2026-04-18T16:57:49.570Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When declaring a `validate: (value: unknown) => value is T` type guard interface, the `value is T` predicate is only meaningful if the function body uses a type assertion; if it returns a plain boolea\",\"scope\":\"src/utils/configValidator.ts:114\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

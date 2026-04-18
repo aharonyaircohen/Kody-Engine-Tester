@@ -64,6 +64,22 @@
         "kind:lesson"
       ],
       "confidence": 0.7
+    },
+    "thoughts_srcutilsconfigvalidatorts114_1176179149835": {
+      "id": "thoughts_srcutilsconfigvalidatorts114_1176179149835",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/utils/configValidator.ts:114",
+      "content": "When declaring a `validate: (value: unknown) => value is T` type guard interface, the `value is T` predicate is only meaningful if the function body uses a type assertion; if it returns a plain boolea",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T16:57:49.574Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:decompose-2781-260418-164536",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
     }
   }
 }

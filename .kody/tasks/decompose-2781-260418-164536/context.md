@@ -30,3 +30,21 @@ A single-responsibility config validation module with:
 - **Rule factory functions** — `required()`, `minLength()`, `maxLength()`, `min()`, `max()`, `enumValue()`, `custom()`, `combine()`
 - **`validate()`** — aggregates **all** field error
 ...(truncated)
+
+### review (2026-04-18T16:57:44)
+## Verdict: PASS
+
+## Summary
+
+Two new files added: `src/utils/configValidator.ts` (pure config validation utility with `validate`/`validateOne`, `ConfigValidators` factory object) and `src/utils/configValidator.test.ts` (15 co-located vitest tests). All 15 tests pass; no new TypeScript errors introduced.
+
+## Findings
+
+### Critical
+
+None.
+
+### Major
+
+`src/utils/configValidator.ts:114` — `custom<T>`'s type guard `validate: (value: unknown) => value is T` is not actually a type guard (it returns a 
+...(truncated)
