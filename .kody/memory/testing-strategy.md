@@ -20,6 +20,8 @@
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Vitest Setup**: `vitest.setup.ts` loaded via `setupFiles` in vitest config
+- **Playwright Workers**: Parallelism disabled on CI (`workers: 1`) to avoid port conflicts
 
 ## CI Quality Gates
 

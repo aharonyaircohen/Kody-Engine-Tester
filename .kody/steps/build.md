@@ -16,6 +16,7 @@ CRITICAL RULES:
 5. Do NOT commit or push — the orchestrator handles git.
 6. If the plan says to write tests first, write tests first.
 7. Document any deviations from the plan (if absolutely necessary).
+8. If a `## Human Feedback` section is present and non-empty, treat it as authoritative scope. Implement what it asks for even if the Task Description / Plan appears complete — the feedback supersedes stale plans. In fix-mode there is no fresh plan, so Human Feedback is often the ONLY source of truth for what to build. Do not conclude "nothing to do" while Human Feedback contains open requirements.
 
 Implementation discipline:
 
@@ -24,6 +25,27 @@ Implementation discipline:
 - Run `pnpm test` after each logical group of changes
 - Run `pnpm tsc --noEmit` periodically to catch type errors early
 - If a test fails after your change, fix it immediately — don't continue
+
+Persistence & recovery (when a command or test fails):
+
+- Diagnose the root cause BEFORE retrying — read the error carefully, don't repeat the same failing approach
+- Try at least 2 different strategies before declaring something blocked
+- 3-failure circuit breaker: if the same sub-task fails 3 times with different approaches, document the blocker clearly and move on to the next task item
+- After applying a fix, ALWAYS re-run the failing command to verify it actually worked
+
+Parallel execution (for multi-file tasks):
+
+- Make independent file changes in parallel — don't wait for one file edit to finish before starting another
+- Batch file reads: when investigating related code, issue multiple Read/Grep/Glob calls in a single response
+- Run tests ONCE after all related changes are complete, not after each individual file edit
+- Use multiple tool calls per response whenever the operations are independent
+
+Sub-agent delegation (for complex tasks):
+
+- You have access to specialized sub-agents: researcher (explore codebase), test-writer (write tests), security-checker (review security), fixer (fix bugs)
+- Delegate to them when the task benefits from specialization
+- Low complexity tasks: handle everything yourself
+- Mid/high complexity: consider delegating to sub-agents for focused work
 
 ## Project Memory (architecture, conventions, patterns, domain, testing)
 
@@ -145,6 +167,7 @@ import { LessonEditor } from './LessonEditor'
 
 - **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
 - **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Validation Middleware** (`src/middleware/validation.ts`): Schema-driven field validation with type coercion for `body|query|params` targets; returns `ValidateResult` discriminated union.
 
 ### Behavioral Patterns
 
@@ -159,7 +182,7 @@ Route Handlers (src/api/*, src/app/*)
     ↓
 Auth HOC (src/auth/withAuth.ts) → JWT Service → AuthService
     ↓
-Service Layer (src/services/*.ts: GradebookService, GradingService)
+Service Layer (src/services/*.ts: GradebookService, GradingService, ProgressService)
     ↓
 Repository Layer (Payload Collections, contactsStore)
     ↓
@@ -171,6 +194,7 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - **Entry points**: API routes, Next.js pages
 - **Auth boundary**: `withAuth` HOC + `extractBearerToken` + `checkRole`
 - **Service deps**: Typed interfaces (e.g., `GradingServiceDeps<A,S,C>`) decouple services from Payload
+- **Validation boundary**: `validate(schema, data, target)` middleware at API entry points
 
 ### Reusable Abstractions
 
@@ -178,6 +202,7 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
 - Zod schemas in `src/validation/` for input validation at API boundaries
+- `parseUrl(url, options)` in `src/utils/url-parser.ts` — extracted URL component parser
 
 ### Anti-Patterns / Inconsistencies
 
@@ -210,6 +235,8 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
+- **Vitest Setup**: `vitest.setup.ts` loaded via `setupFiles` in vitest config
+- **Playwright Workers**: Parallelism disabled on CI (`workers: 1`) to avoid port conflicts
 
 ## CI Quality Gates
 
@@ -224,7 +251,7 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 
 ## Repo Patterns
 
-### DI Container Pattern (`src/utils/di-container.ts`)
+### DI Container Registration (`src/utils/di-container.ts`)
 
 ```typescript
 export const container = new Container()
@@ -234,9 +261,7 @@ container.register<JwtService>(DI_TOKENS.JWT_SERVICE, {
 })
 ```
 
-Use token-based registration with factory functions. Services receive deps via constructor injection.
-
-### Result Type for Error Handling (`src/utils/result.ts`)
+### Result Type for Explicit Error Handling (`src/utils/result.ts`)
 
 ```typescript
 export type Result<T, E = string> = { ok: true; value: T } | { ok: false; error: E }
@@ -244,9 +269,18 @@ export const ok = <T>(value: T): Result<T> => ({ ok: true, value })
 export const err = <E>(error: E): Result<never, E> => ({ ok: false, error })
 ```
 
-Use `Result<T, E>` instead of throwing; pattern: `result.ok ? result.value : handleError(result.error)`.
+### Service Layer with Dependency Injection (`src/services/gradebook.service.ts`)
 
-### withAuth HOC (`src/auth/withAuth.ts`)
+```typescript
+export class GradebookService<T extends Config> {
+  constructor(private deps: GradebookServiceDeps<T>) {}
+  async calculateGrades(userId: string): Promise<number> {
+    /* ... */
+  }
+}
+```
+
+### withAuth HOC Pattern (`src/auth/withAuth.ts`)
 
 ```typescript
 export function withAuth(handler: NextHandler, options?: AuthOptions): NextHandler {
@@ -261,57 +295,34 @@ export function withAuth(handler: NextHandler, options?: AuthOptions): NextHandl
 }
 ```
 
-Wrap API routes with `withAuth(handler, { roles: ['admin'] })`.
-
-### Service Layer Pattern (`src/services/`)
+### Validation Middleware (`src/middleware/validation.ts`)
 
 ```typescript
-export class GradebookService<T extends Config> {
-  constructor(private deps: GradebookServiceDeps<T>) {}
-  async calculateGrades(userId: string): Promise<number> {
-    /* ... */
-  }
-}
+export function validate(schema: Schema, data: unknown, target: 'body' | 'query' | 'params'): ValidateResult { ... }
 ```
-
-Services are classes with `deps` injected via constructor; business logic lives here.
-
-### Utility Function Pattern (`src/utils/debounce.ts`)
-
-```typescript
-export function debounce<T extends (...args: unknown[]) => unknown>(
-  fn: T,
-  delay: number,
-): (...args: Parameters<T>) => void {
-  let timeout: ReturnType<typeof setTimeout>
-  return (...args) => {
-    clearTimeout(timeout)
-    timeout = setTimeout(() => fn(...args), delay)
-  }
-}
-```
-
-Single-responsibility modules; one function per file; co-located `.test.ts`.
 
 ## Improvement Areas
 
-- **Dual Auth Systems**: `src/auth/user-store.ts` (SHA-256) vs `src/auth/auth-service.ts` (PBKDF2+JWT) — inconsistent hashing. Prefer `AuthService` pattern.
-- **Role Mismatch**: `UserStore.UserRole` vs `RbacRole` enum in `src/auth/_auth.ts` — no alignment between systems. Use `RbacRole` consistently.
-- **Unsafe Type Casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` rather than proper type guards. Use `Result` type or explicit type narrowing.
-- **In-Memory Stores**: `SessionStore` and `UserStore` in `src/auth/` are in-memory only — lost on restart. Consider Persistence for production.
-- **Missing Error Boundaries**: React components lack error boundaries; unhandled promise rejections may crash the app.
+- **Dual auth systems**: `src/auth/user-store.ts` (SHA-256, in-memory) vs `src/auth/auth-service.ts` (PBKDF2+JWT) — inconsistent password hashing. Use `AuthService` pattern.
+- **Role mismatch**: `UserStore.UserRole` vs `RbacRole` enum in `src/auth/_auth.ts` — no alignment between user store and RBAC. Use `RbacRole` consistently.
+- **Unsafe type casts**: `src/app/(frontend)/dashboard/page.tsx` uses `as unknown as` rather than proper type guards. Prefer `Result` type or explicit narrowing.
+- **In-memory session store**: `SessionStore` and `UserStore` are in-memory only — lost on restart. Not suitable for production without persistence.
+- **Missing error boundaries**: React components lack error boundaries; unhandled promise rejections may crash the app.
 
 ## Acceptance Criteria
 
-- [ ] Code follows Layer Architecture: Route → withAuth HOC → Service → Repository
-- [ ] New utilities go in `src/utils/*.ts` with co-located `.test.ts`
+- [ ] Code follows Layer Architecture: Route Handler → withAuth HOC → Service → Repository
+- [ ] New utilities go in `src/utils/*.ts` with co-located `.test.ts` files
 - [ ] New services follow `ServiceDeps<T>` interface pattern with constructor injection
 - [ ] API routes use `withAuth` HOC and return `Result<T, E>` for error handling
 - [ ] All async operations use try-catch with meaningful error messages
 - [ ] Run `pnpm tsc --noEmit` — zero type errors before PR
-- [ ] Run `pnpm test:int` — all Vitest tests pass
-- [ ] No `console.log` in production code; use logging library
-- [ ] No hardcoded secrets; use `process.env` with validation
-- [ ] New components include `'use client'` directive where needed
+- [ ] Run `pnpm test:int` — all Vitest integration tests pass
+- [ ] Run `pnpm test:e2e` — all Playwright E2E tests pass
+- [ ] No `console.log` in production code; use `createRequestLogger` from `src/middleware/request-logger.ts`
+- [ ] No hardcoded secrets; use `process.env` with validation via `src/validation/` Zod schemas
+- [ ] New client components include `'use client'` directive
+- [ ] Follow naming: PascalCase for components/types, camelCase for functions/utils, kebab-case for CSS files
+- [ ] Use `import type` for type-only imports; path alias `@/*` for internal modules
 
 {{TASK_CONTEXT}}

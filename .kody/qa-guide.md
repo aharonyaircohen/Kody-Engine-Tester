@@ -1,10 +1,15 @@
 # QA Guide
 
+## Quick Reference
+
+- **Dev server:** `pnpm dev`
+- **URL:** http://localhost:3000
+- **Login page:** `/login`
+- **Admin panel:** `/admin/:...segments?`
+
 ## Authentication
 
 ### Test Accounts
-
-<!-- Fill in your test/preview environment credentials below -->
 
 | Role  | Email             | Password  |
 | ----- | ----------------- | --------- |
@@ -30,90 +35,133 @@
 - `CTO`
 - `Researcher`
 
-## Key Pages
+## Navigation Map
 
-### Frontend
+### Admin Collections
 
-- `/`
-- `/dashboard`
-- `/instructor/courses/:id/edit`
-- `/notes`
-- `/notes/:id`
-- `/notes/create`
-- `/notes/edit/:id`
-
-### Admin
-
-- `/admin/:...segments?`
-
-## Admin Collections
-
-### `/admin/collections/assignments`
+#### `/admin/collections/assignments`
 
 - **Name:** Assignments
 - **Fields:** title, module, instructions, dueDate, maxScore, rubric, criterion, maxPoints, description
 
-### `/admin/collections/courses`
+#### `/admin/collections/courses`
 
 - **Name:** Courses
-- **Fields:** title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label, maxEnrollments, quizWeight, assignmentWeight
+- **Fields:** title, slug, description, thumbnail, instructor, status, difficulty, estimatedHours, tags, label
 
-### `/admin/collections/enrollments`
+#### `/admin/collections/enrollments`
 
 - **Name:** Enrollments
 - **Fields:** student, course, enrolledAt, status, completedAt, completedLessons
 
-### `/admin/collections/lessons`
+#### `/admin/collections/lessons`
 
 - **Name:** Lessons
 - **Fields:** title, course, module, order, type, content, videoUrl, estimatedMinutes
 
-### `/admin/collections/media`
+#### `/admin/collections/media`
 
 - **Name:** Media
 - **Fields:** alt
 
-### `/admin/collections/notifications`
+#### `/admin/collections/modules`
+
+- **Name:** Modules
+- **Fields:** title, course, order, description
+
+#### `/admin/collections/notifications`
 
 - **Name:** Notifications
 - **Fields:** recipient, type, title, message, link, isRead
 
-### `/admin/collections/quiz-attempts`
+#### `/admin/collections/quiz-attempts`
 
 - **Name:** QuizAttempts
 - **Fields:** user, quiz, score, passed, answers, questionIndex, answer, startedAt, completedAt
 
-### `/admin/collections/quizzes`
+#### `/admin/collections/quizzes`
 
 - **Name:** Quizzes
-- **Fields:** title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options, isCorrect, correctAnswer, points
+- **Fields:** title, module, order, passingScore, timeLimit, maxAttempts, questions, text, type, options
 
-### `/admin/collections/submissions`
+#### `/admin/collections/submissions`
 
 - **Name:** Submissions
-- **Fields:** assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores, criterion, score, comment
+- **Fields:** assignment, student, content, attachments, file, submittedAt, status, grade, feedback, rubricScores
 
-### `/admin/collections/users`
+#### `/admin/collections/users`
 
 - **Name:** Users
 - **Fields:** firstName, lastName, displayName, avatar, bio, role, organization, refreshToken, tokenExpiresAt, lastTokenUsedAt
 
-### `/admin/collections/certificates`
+#### `/admin/collections/certificates`
 
-- **Name:** certificates
+- **Name:** Certificates
 - **Fields:** student, course, issuedAt, certificateNumber, finalGrade
 
-### `/admin/collections/notes`
+#### `/admin/collections/notes`
 
-- **Name:** notes
+- **Name:** Notes
 - **Fields:** title, content, tags
 
-## Required Environment Variables
+### Frontend Pages
+
+| Path                           | Expected Content | Key Interactions                        |
+| ------------------------------ | ---------------- | --------------------------------------- |
+| `/`                            | Home page        | Verify navigation, hero content         |
+| `/dashboard`                   | User dashboard   | Check enrolled courses, recent activity |
+| `/instructor/courses/:id/edit` | Course editor    | Edit course details, manage lessons     |
+| `/notes`                       | Notes list       | List, search notes                      |
+| `/notes/:id`                   | Note detail      | View note content                       |
+| `/notes/create`                | Create note      | Fill title, content, tags               |
+| `/notes/edit/:id`              | Edit note        | Modify and save note                    |
+
+### API Endpoints
+
+| Path                        | Methods   | Purpose               |
+| --------------------------- | --------- | --------------------- |
+| `/api/notes`                | GET, POST | Note CRUD with search |
+| `/api/notes/:id`            | GET       | Single note retrieval |
+| `/api/quizzes/:id`          | GET       | Quiz retrieval        |
+| `/api/quizzes/:id/submit`   | POST      | Quiz grading          |
+| `/api/quizzes/:id/attempts` | GET       | User's quiz attempts  |
+| `/api/courses/search`       | GET       | Course search         |
+| `/api/enroll`               | POST      | Enrollment            |
+| `/api/gradebook/course/:id` | GET       | Grades per course     |
+
+## Common Test Scenarios
+
+### Admin Workflows
+
+1. **Create Course:** Navigate to `/admin/collections/courses` → click "Create" → fill title, slug, description → set status → save
+2. **Add Lesson:** Open course → navigate to modules → add lesson with title, type, content
+3. **Review Submission:** Go to `/admin/collections/submissions` → select submission → view content, add grade/feedback
+
+### Frontend Workflows
+
+1. **User Login:** POST credentials to `/login` → verify JWT cookie → access `/dashboard`
+2. **Browse Notes:** Visit `/notes` → search → click note → view details
+3. **Take Quiz:** Start quiz → answer questions → submit → view score
+
+## Environment Setup
+
+Required env vars:
 
 - `DATABASE_URL`
 - `PAYLOAD_SECRET`
 
 ## Dev Server
 
-- Command: `pnpm dev`
-- URL: `http://localhost:3000`
+```bash
+pnpm dev
+```
+
+- **URL:** http://localhost:3000
+
+## Rules
+
+- Be SPECIFIC to this project — reference actual URLs, collection names, component names
+- For admin panels (Payload CMS), include the exact `/admin/collections/{slug}` paths
+- Include visual assertions: "you should see X", "verify Y is visible"
+- Include interaction tests: "click button X", "fill field Y", "drag item Z"
+- Keep under 200 lines total

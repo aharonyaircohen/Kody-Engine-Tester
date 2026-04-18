@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -77,13 +97,14 @@ Guidelines:
 
 ## Repo Patterns
 
-- **Utility modules**: Single-function files in `src/utils/` (e.g., `debounce.ts`, `retry.ts`, `flatten.ts`) with co-located `.test.ts` files
-- **Auth HOC**: `src/auth/withAuth.ts` wraps route handlers with JWT validation and RBAC via `checkRole`
+- **Payload collections**: `src/collections/*.ts` define data models (e.g., `Notes.ts`, `Users.ts`, `Courses.ts`); use Payload SDK, avoid direct DB calls
+- **Auth HOC**: `src/auth/withAuth.ts` wraps route handlers with JWT validation and `checkRole` for RBAC
+- **Service layer**: `src/services/` (e.g., `GradebookService.ts`, `GradingService.ts`) with typed dependency interfaces like `GradebookServiceDeps<T>`
 - **Result type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling
 - **DI container**: `src/utils/di-container.ts` with token-based registration and singleton/transient lifecycles
+- **Validation middleware**: `src/middleware/validation.ts` — schema-driven field validation for `body|query|params` targets
+- **Utility modules**: Single-function files in `src/utils/` (e.g., `debounce.ts`, `retry.ts`, `schema.ts`) with co-located `.test.ts`
 - **Middleware chain**: `src/middleware/request-logger.ts` and `rate-limiter.ts` use Express-style chainable pattern
-- **Service layer**: `src/services/` (e.g., `GradebookService`, `GradingService`) with typed dependency interfaces like `GradebookServiceDeps`
-- **Payload collections**: `src/collections/*.ts` define data models; avoid direct DB calls, use Payload SDK
 
 ## Improvement Areas
 
@@ -94,12 +115,12 @@ Guidelines:
 
 ## Acceptance Criteria
 
-- [ ] Scope contains exact file paths from Glob/Grep discovery
+- [ ] Scope contains exact file paths discovered via Glob/Grep
 - [ ] Title is actionable (starts with verb: Add, Fix, Refactor, Update)
 - [ ] Description captures intent and acceptance criteria from task
-- [ ] Risk level matches scope size and impact (low/medium/high heuristics)
+- [ ] Risk level matches scope size (low: 1 file, medium: 2-3 files, high: 4+ files)
 - [ ] existing_patterns cites specific file paths and patterns to reuse
-- [ ] Questions (if any) are product/requirements only, max 3
+- [ ] Questions are product/requirements only (not technical), max 3
 - [ ] JSON is valid with no markdown fences or extra text
 
 {{TASK_CONTEXT}}
