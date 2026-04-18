@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2615-260418-095151",
+  "source": "stage_diary",
+  "taskId": "2615-260418-095151",
+  "createdAt": "2026-04-18T09:56:25.168Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"The codebase uses kebab-case for utility files (e.g. format-date.ts), so dateUtils.ts was flagged as an exception.\",\"scope\":\"file naming\"},{\"kind\":\"decision\",\"text\":\"When an existing file already implements the exact feature (format-date.ts), the plan chose to create new files as specified rather than modify or alias the existing one, to match task scope.\",\"scope\":\"src/utils\"},{\"kind\":\"lesson\",\"text\":\"Existing tests in the codebase use vi.useFakeTimers() from vitest for time-based utilities; reuse this pattern for date formatting tests.\",\"scope\":\"testing\"},{\"kind\":\"gotcha\",\"text\":\"The pipeline expected 4 stages and PR creation; the plan stage must confirm complexity=LOW before proceeding to build.\",\"scope\":\"pipeline\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

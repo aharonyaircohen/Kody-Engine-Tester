@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_file_naming_1436418773900": {
+      "id": "conventions_file_naming_1436418773900",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "file naming",
+      "content": "The codebase uses kebab-case for utility files (e.g. format-date.ts), so dateUtils.ts was flagged as an exception.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:56:25.174Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2615-260418-095151",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutils_1436420237247": {
+      "id": "facts_srcutils_1436420237247",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils",
+      "content": "When an existing file already implements the exact feature (format-date.ts), the plan chose to create new files as specified rather than modify or alias the existing one, to match task scope.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:56:25.176Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2615-260418-095151",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testing_1436421598784": {
+      "id": "facts_testing_1436421598784",
+      "type": "facts",
+      "hall": "facts",
+      "room": "testing",
+      "content": "Existing tests in the codebase use vi.useFakeTimers() from vitest for time-based utilities; reuse this pattern for date formatting tests.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:56:25.177Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2615-260418-095151",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_pipeline_1436423445250": {
+      "id": "thoughts_pipeline_1436423445250",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "pipeline",
+      "content": "The pipeline expected 4 stages and PR creation; the plan stage must confirm complexity=LOW before proceeding to build.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:56:25.179Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2615-260418-095151",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
