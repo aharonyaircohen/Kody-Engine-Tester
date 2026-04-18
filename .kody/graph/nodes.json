@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_srccollectionsusersts_496113768915": {
+      "id": "thoughts_srccollectionsusersts_496113768915",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/collections/Users.ts",
+      "content": "Payload's built-in `auth: true` creates `hash`/`salt` fields automatically; replacing it with a custom `passwordHash` field requires explicit PBKDF2 hooks in `beforeChange` and `afterRead`.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:25.321Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2632-260418-095429",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srccollectionsusersts_496115096141": {
+      "id": "conventions_srccollectionsusersts_496115096141",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/collections/Users.ts",
+      "content": "Use `hidden: true` on sensitive fields like `passwordHash` so they are excluded from API responses but still readable via hooks.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:25.322Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2632-260418-095429",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srccollections_496116478430": {
+      "id": "conventions_srccollections_496116478430",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/collections",
+      "content": "Barrel exports for collections live in `src/collections/index.ts`; add new collections there and reference from `payload.config.ts`.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:25.323Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2632-260418-095429",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcauthauthservicets_496117654535": {
+      "id": "facts_srcauthauthservicets_496117654535",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/auth/auth-service.ts",
+      "content": "The codebase already uses PBKDF2 in `AuthService`; align the collection's `beforeChange`/`afterRead` hooks with the existing `AuthService` hash strategy rather than introducing a new one.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:25.324Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2632-260418-095429",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcauthauthservicets_496118888137": {
+      "id": "facts_srcauthauthservicets_496118888137",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/auth/auth-service.ts",
+      "content": "When replacing a built-in Payload auth collection, `AuthService` must also be updated to read from the new custom field name (`passwordHash`) instead of the default `hash`.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T10:02:25.326Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2632-260418-095429",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

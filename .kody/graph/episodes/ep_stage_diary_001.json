@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2632-260418-095429",
+  "source": "stage_diary",
+  "taskId": "2632-260418-095429",
+  "createdAt": "2026-04-18T10:02:25.315Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Payload's built-in `auth: true` creates `hash`/`salt` fields automatically; replacing it with a custom `passwordHash` field requires explicit PBKDF2 hooks in `beforeChange` and `afterRead`.\",\"scope\":\"src/collections/Users.ts\"},{\"kind\":\"convention\",\"text\":\"Use `hidden: true` on sensitive fields like `passwordHash` so they are excluded from API responses but still readable via hooks.\",\"scope\":\"src/collections/Users.ts\"},{\"kind\":\"convention\",\"text\":\"Barrel exports for collections live in `src/collections/index.ts`; add new collections there and reference from `payload.config.ts`.\",\"scope\":\"src/collections\"},{\"kind\":\"decision\",\"text\":\"The codebase already uses PBKDF2 in `AuthService`; align the collection's `beforeChange`/`afterRead` hooks with the existing `AuthService` hash strategy rather than introducing a new one.\",\"scope\":\"src/auth/auth-service.ts\"},{\"kind\":\"lesson\",\"text\":\"When replacing a built-in Payload auth collection, `AuthS",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

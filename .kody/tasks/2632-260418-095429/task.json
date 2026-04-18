@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. It covers modifying the existing `Use",
+  "description": "The plan is ready for your review. It covers modifying the existing `Users.ts` collection (removing `auth: true`, adding `passwordHash` with PBKDF2 hooks, expanding roles), creating the barrel export `src/collections/index.ts`, updating `payload.config.ts` to use it, updating `AuthService` to read from `passwordHash`, and adding unit + integration tests.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
