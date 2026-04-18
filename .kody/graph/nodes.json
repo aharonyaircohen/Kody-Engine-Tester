@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kodyadeenginedistbinclijs_1278855326100": {
+      "id": "thoughts_kodyadeenginedistbinclijs_1278855326100",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "@kody-ade/engine/dist/bin/cli.js",
+      "content": "skipStateCheck is hardcoded to true when command is 'rerun', completely bypassing the already-completed state lock in cli.js",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:07:46.594Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2503-260418-035425",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kodyadeenginedistbinclijs_1278856576219": {
+      "id": "facts_kodyadeenginedistbinclijs_1278856576219",
+      "type": "facts",
+      "hall": "facts",
+      "room": "@kody-ade/engine/dist/bin/cli.js",
+      "content": "state lock bypasses are implemented as guard conditions (skipStateCheck flag) rather than removing the lock check entirely",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:07:46.595Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2503-260418-035425",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

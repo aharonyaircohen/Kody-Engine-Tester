@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2503-260418-035425",
+  "source": "stage_diary",
+  "taskId": "2503-260418-035425",
+  "createdAt": "2026-04-18T04:07:46.589Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"skipStateCheck is hardcoded to true when command is 'rerun', completely bypassing the already-completed state lock in cli.js\",\"scope\":\"@kody-ade/engine/dist/bin/cli.js\"},{\"kind\":\"lesson\",\"text\":\"state lock bypasses are implemented as guard conditions (skipStateCheck flag) rather than removing the lock check entirely\",\"scope\":\"@kody-ade/engine/dist/bin/cli.js\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
