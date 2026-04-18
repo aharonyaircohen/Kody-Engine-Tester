@@ -7,11 +7,7 @@ import { sanitizeHtml } from '@/security/sanitizers'
 // Admin stats endpoint - returns aggregate student data
 // Requires admin role
 export const GET = withAuth(async (request: NextRequest, { user }) => {
-  if (!user) {
-    return Response.json({ error: 'Authentication required' }, { status: 401 })
-  }
-
-  if (user.role !== 'admin') {
+  if (user!.role !== 'admin') {
     return Response.json({ error: 'Forbidden: requires admin role' }, { status: 403 })
   }
 

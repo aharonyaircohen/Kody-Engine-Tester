@@ -1,0 +1,26 @@
+{
+  "task_type": "refactor",
+  "title": "Remove redundant auth guards and type casts across protected API routes",
+  "description": "All routes in src/app/api/ already use withAuth. This task removes redundant runtime user checks that withAuth already guarantees, and redundant `as unknown as` casts in three routes. Specifically: remove redundant `if (!user)` guards from POST handlers in notes/route.ts (line 54), enroll/route.ts (line 7), notifications/route.ts (line 7), notifications/read-all/route.ts (line 7), gradebook/route.ts (line 12), gradebook/course/[id]/route.ts (line 47), dashboard/admin-stats/route.ts (line 10), quizzes/[id]/attempts/route.ts (line 12), and quizzes/[id]/submit/route.ts (line 13); remove redundant user params from handler signatures in notifications/[id]/read/route.ts (line 9); and fix unsafe type casts in quizzes/[id]/attempts/route.ts (line 19) and quizzes/[id]/submit/route.ts (line 29). health/route.ts and csrf-token/route.ts are intentionally public and require no changes.",
+  "scope": [
+    "src/app/api/notes/route.ts",
+    "src/app/api/enroll/route.ts",
+    "src/app/api/notifications/route.ts",
+    "src/app/api/notifications/read-all/route.ts",
+    "src/app/api/notifications/[id]/read/route.ts",
+    "src/app/api/gradebook/route.ts",
+    "src/app/api/gradebook/course/[id]/route.ts",
+    "src/app/api/dashboard/admin-stats/route.ts",
+    "src/app/api/quizzes/[id]/attempts/route.ts",
+    "src/app/api/quizzes/[id]/submit/route.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/withAuth.ts: HOC that wraps route handlers with JWT auth validation and optional RBAC via checkRole; guarantees user presence when roles are specified or optional is false",
+    "src/app/api/enroll/route.ts: Redundant `if (!user)` guard already covered by withAuth — serves as negative pattern to remove",
+    "src/app/api/quizzes/[id]/attempts/route.ts: Redundant `if (!user)` guard already covered by withAuth; also uses unsafe `as any` casts — serves as negative pattern",
+    "src/app/api/gradebook/route.ts: Pattern of redundant `if (!user)` guard after withAuth — negative pattern to remove",
+    "src/app/api/notes/[id]/route.ts: Correct pattern — withAuth used with roles without any redundant user guards"
+  ],
+  "questions": []
+}

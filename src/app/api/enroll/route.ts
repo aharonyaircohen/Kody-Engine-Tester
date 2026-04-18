@@ -4,15 +4,8 @@ import { withAuth } from '@/auth/withAuth'
 import { getPayloadInstance } from '@/services/progress'
 
 export const POST = withAuth(async (request: NextRequest, { user }) => {
-  if (!user) {
-    return new Response(JSON.stringify({ error: 'Authentication required' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
   // Only viewers (formerly students) can enroll
-  if (user.role !== 'viewer' && user.role !== 'admin') {
+  if (user!.role !== 'viewer' && user!.role !== 'admin') {
     return new Response(JSON.stringify({ error: 'Forbidden: requires viewer role' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },
@@ -35,7 +28,7 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
   const existing = await payload.find({
     collection: 'enrollments' as CollectionSlug,
     where: {
-      student: { equals: user.id },
+      student: { equals: user!.id },
       course: { equals: courseId },
     },
     limit: 1,
@@ -77,7 +70,7 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
     collection: 'enrollments' as CollectionSlug,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: {
-      student: user.id,
+      student: user!.id,
       course: courseId,
       enrolledAt: new Date().toISOString(),
       status: 'active',

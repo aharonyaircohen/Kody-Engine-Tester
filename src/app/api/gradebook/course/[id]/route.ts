@@ -44,7 +44,7 @@ export const GET = withAuth(
     const courseInstructorId =
       typeof course.instructor === 'string' ? course.instructor : course.instructor?.id
 
-    if (user?.role !== 'admin' && courseInstructorId !== String(user?.id)) {
+    if (user!.role !== 'admin' && courseInstructorId !== String(user!.id)) {
       return new Response(JSON.stringify({ error: 'Forbidden: you are not the editor of this course' }), {
         status: 403,
         headers: { 'Content-Type': 'application/json' },

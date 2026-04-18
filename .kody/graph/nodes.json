@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "facts_auth_723528853525": {
+      "id": "facts_auth_723528853525",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "withAuth guarantees a non-null user; redundant if (!user) guards after withAuth can be removed to simplify code.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:14:38.080Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_723530436860": {
+      "id": "conventions_auth_723530436860",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth",
+      "content": "CSRF token endpoints intentionally skip withAuth — they validate session via x-session-id header, not JWT. This is an explicit allowlist exception, not an oversight.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:14:38.081Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_723531928874": {
+      "id": "facts_auth_723531928874",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "withAuth with no roles option means 'any authenticated user' — this is correct for user-specific resources where identity alone suffices.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T13:14:38.083Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

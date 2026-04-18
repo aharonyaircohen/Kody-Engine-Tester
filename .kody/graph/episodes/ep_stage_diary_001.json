@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T13:14:38.073Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"withAuth guarantees a non-null user; redundant if (!user) guards after withAuth can be removed to simplify code.\",\"scope\":\"auth\"},{\"kind\":\"convention\",\"text\":\"CSRF token endpoints intentionally skip withAuth — they validate session via x-session-id header, not JWT. This is an explicit allowlist exception, not an oversight.\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"withAuth with no roles option means 'any authenticated user' — this is correct for user-specific resources where identity alone suffices.\",\"scope\":\"auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

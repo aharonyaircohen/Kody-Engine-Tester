@@ -1,7 +1,16 @@
 import configPromise from '@payload-config'
+import type { CollectionSlug } from 'payload'
 import { getPayload } from 'payload'
 import { NextRequest } from 'next/server'
 import { withAuth } from '@/auth/withAuth'
+
+type QuizAttemptDoc = {
+  id: unknown
+  score: unknown
+  passed: unknown
+  answers: unknown
+  completedAt: unknown
+}
 
 export const GET = withAuth(
   async (
@@ -9,13 +18,6 @@ export const GET = withAuth(
     { user },
     routeParams?: { params: Promise<{ id: string }> },
   ) => {
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'Authentication required' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      })
-    }
-
     const params = await routeParams?.params
     const id = params?.id
 
@@ -29,9 +31,10 @@ export const GET = withAuth(
     const payload = await getPayload({ config: configPromise })
 
     const attempts = await payload.find({
-      collection: 'quiz-attempts' as any,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      collection: 'quiz-attempts' as unknown as CollectionSlug,
       where: {
-        user: { equals: user.id },
+        user: { equals: user!.id },
         quiz: { equals: id },
       },
       sort: '-completedAt',
@@ -40,7 +43,7 @@ export const GET = withAuth(
 
     return new Response(
       JSON.stringify({
-        attempts: attempts.docs.map((doc: any) => ({
+        attempts: (attempts.docs as unknown as QuizAttemptDoc[]).map((doc) => ({
           id: doc.id,
           score: doc.score,
           passed: doc.passed,

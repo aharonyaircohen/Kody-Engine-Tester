@@ -3,17 +3,10 @@ import { withAuth } from '@/auth/withAuth'
 import { getPayloadInstance } from '@/services/progress'
 import { NotificationService } from '@/services/notifications'
 
-export const POST = withAuth(async (request: NextRequest, { user }) => {
-  if (!user) {
-    return new Response(JSON.stringify({ error: 'Authentication required' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
+export const POST = withAuth(async (_request: NextRequest, { user }) => {
   const payload = await getPayloadInstance()
   const service = new NotificationService(payload)
-  await service.markAllRead(String(user.id))
+  await service.markAllRead(String(user!.id))
 
   return new Response(JSON.stringify({ success: true }), {
     status: 200,

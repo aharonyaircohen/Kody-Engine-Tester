@@ -1,8 +1,33 @@
 import configPromise from '@payload-config'
+import type { CollectionSlug } from 'payload'
 import { getPayload } from 'payload'
 import { NextRequest } from 'next/server'
 import { gradeQuiz, type Quiz, type QuizAnswer } from '@/services/quiz-grader'
 import { withAuth } from '@/auth/withAuth'
+
+type QuizQuestionOption = { text: string; isCorrect: boolean }
+type QuizQuestion = {
+  text: string
+  type: 'multiple-choice' | 'true-false' | 'short-answer'
+  options: QuizQuestionOption[]
+  correctAnswer?: string
+  points: number
+}
+type QuizDoc = {
+  id: string
+  title: string
+  passingScore?: number
+  maxAttempts?: number
+  questions?: QuizQuestion[]
+}
+type QuizAttemptData = {
+  user: unknown
+  quiz: unknown
+  score: number
+  passed: boolean
+  answers: { questionIndex: number; answer: string }[]
+  completedAt: string
+}
 
 export const POST = withAuth(
   async (
@@ -10,13 +35,6 @@ export const POST = withAuth(
     { user },
     routeParams?: { params: Promise<{ id: string }> },
   ) => {
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'Authentication required' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      })
-    }
-
     const params = await routeParams?.params
     const id = params?.id
 
@@ -52,11 +70,12 @@ export const POST = withAuth(
     const payload = await getPayload({ config: configPromise })
 
     // Fetch the quiz from Payload
-    const quizDoc = await payload.findByID({
-      collection: 'quizzes' as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const quizDoc = (await payload.findByID({
+      collection: 'quizzes' as unknown as CollectionSlug,
       id,
       depth: 0,
-    }) as any
+    })) as unknown as QuizDoc | null
 
     if (!quizDoc) {
       return new Response(JSON.stringify({ error: 'Quiz not found' }), {
@@ -67,27 +86,28 @@ export const POST = withAuth(
 
     // Convert Payload quiz doc to internal Quiz format
     const quiz: Quiz = {
-      id: quizDoc.id as string,
-      title: quizDoc.title as string,
-      passingScore: (quizDoc.passingScore as number) ?? 70,
-      maxAttempts: (quizDoc.maxAttempts as number) ?? 3,
-      questions: ((quizDoc.questions as any[]) ?? []).map((q) => ({
-        text: q.text as string,
-        type: q.type as 'multiple-choice' | 'true-false' | 'short-answer',
-        options: ((q.options as any[]) ?? []).map((o) => ({
-          text: o.text as string,
-          isCorrect: o.isCorrect as boolean,
+      id: quizDoc.id,
+      title: quizDoc.title,
+      passingScore: quizDoc.passingScore ?? 70,
+      maxAttempts: quizDoc.maxAttempts ?? 3,
+      questions: (quizDoc.questions ?? []).map((q) => ({
+        text: q.text,
+        type: q.type,
+        options: (q.options ?? []).map((o) => ({
+          text: o.text,
+          isCorrect: o.isCorrect,
         })),
-        correctAnswer: q.correctAnswer as string | undefined,
-        points: (q.points as number) ?? 1,
+        correctAnswer: q.correctAnswer,
+        points: q.points ?? 1,
       })),
     }
 
     // Check attempt count
     const existingAttempts = await payload.find({
-      collection: 'quiz-attempts' as any,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      collection: 'quiz-attempts' as unknown as CollectionSlug,
       where: {
-        user: { equals: user.id },
+        user: { equals: user!.id },
         quiz: { equals: id },
       },
       limit: 0,
@@ -112,10 +132,11 @@ export const POST = withAuth(
     const result = gradeQuiz(quiz, answers)
 
     // Record the attempt
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await payload.create({
       collection: 'quiz-attempts' as any,
       data: {
-        user: user.id,
+        user: user!.id,
         quiz: id,
         score: result.score,
         passed: result.passed,
