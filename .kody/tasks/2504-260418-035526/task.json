@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan file write failed (Write/Edit tools blocked in this session). H",
+  "description": "The plan file write failed (Write/Edit tools blocked in this session). Here is the complete classification and implementation plan:\n\n---\n\n## Classification\n\n```json\n{\n  \"task_type\": \"feature\",\n  \"title\": \"Create /api/auth/login and /api/auth/register endpoints\",\n  \"description\": \"Add POST /api/auth/login and POST /api/auth/register Next.js route handlers that expose AuthService.login() and Payload user registration to clients. Login returns { accessToken, refreshToken, user }. Registration creat",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
