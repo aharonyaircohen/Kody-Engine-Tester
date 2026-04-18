@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2516-260418-040123",
+  "source": "stage_diary",
+  "taskId": "2516-260418-040123",
+  "createdAt": "2026-04-18T04:11:15.736Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The local status.json file may lag behind GitHub label state if the pipeline writes to GitHub before updating status.json — always use status.json to determine what SHOULD be present, and gh issue vie\",\"scope\":\".kody/tasks/2516-260418-040123/label-progression.test.ts\"},{\"kind\":\"convention\",\"text\":\"Lifecycle labels are mutually exclusive per stage (kody:planning, kody:building, etc.) — assert the current stage label is present AND future-stage labels are absent.\",\"scope\":\"kody pipeline labels\"},{\"kind\":\"convention\",\"text\":\"Complexity labels (kody:low/medium/high) persist across all pipeline stages and must be asserted as always-present throughout.\",\"scope\":\"kody pipeline labels\"},{\"kind\":\"lesson\",\"text\":\"The test reads current stage from status.json, not from the labels themselves — status.json is the source of truth for which stage label should be active.\",\"scope\":\"kody pipeline testing\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "task_type": "feature",
+  "title": "Verify lifecycle label progression in kody pipeline",
+  "description": "Poll GitHub issue labels during pipeline execution to confirm each stage label (kody:planning, kody:building, kody:verifying, kody:review, kody:done) appears in sequence. Each stage adds its label and removes the previous one. The complexity label (kody:low/medium/high) persists throughout the entire pipeline.",
+  "scope": [".kody/tasks/2516-260418-040123/status.json"],
+  "risk_level": "medium",
+  "existing_patterns": [
+    {
+      "path": ".kody/tasks/2516-260418-040123/status.json",
+      "description": "Multi-stage pipeline state tracker with explicit stage definitions: taskify, plan, build, verify, review, review-fix, ship — each with state (running/pending) and retry tracking. This status.json is the authoritative source of pipeline progress."
+    }
+  ],
+  "questions": []
+}

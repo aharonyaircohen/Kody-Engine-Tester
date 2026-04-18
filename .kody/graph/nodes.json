@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kodytasks2516260418040123labelprogressiontestts_497615465330": {
+      "id": "thoughts_kodytasks2516260418040123labelprogressiontestts_497615465330",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": ".kody/tasks/2516-260418-040123/label-progression.test.ts",
+      "content": "The local status.json file may lag behind GitHub label state if the pipeline writes to GitHub before updating status.json — always use status.json to determine what SHOULD be present, and gh issue vie",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:15.742Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2516-260418-040123",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_pipeline_labels_497616968750": {
+      "id": "conventions_kody_pipeline_labels_497616968750",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody pipeline labels",
+      "content": "Lifecycle labels are mutually exclusive per stage (kody:planning, kody:building, etc.) — assert the current stage label is present AND future-stage labels are absent.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:15.744Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2516-260418-040123",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_kody_pipeline_labels_497618648429": {
+      "id": "conventions_kody_pipeline_labels_497618648429",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "kody pipeline labels",
+      "content": "Complexity labels (kody:low/medium/high) persist across all pipeline stages and must be asserted as always-present throughout.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:15.746Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2516-260418-040123",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_pipeline_testing_497620104742": {
+      "id": "facts_kody_pipeline_testing_497620104742",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody pipeline testing",
+      "content": "The test reads current stage from status.json, not from the labels themselves — status.json is the source of truth for which stage label should be active.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T04:11:15.747Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2516-260418-040123",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
