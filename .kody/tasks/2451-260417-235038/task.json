@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "The plan is ready for your review. It covers:  1. **Sanitizing error mes",
+  "description": "The plan is ready for your review. It covers:\n\n1. **Sanitizing error messages** in `withAuth` and `AuthService` — no more \"jwt expired\" or \"User not found\" leaking in 401 responses\n2. **Removing redundant `if (!user)` checks** across 8 route files (dead code since `withAuth` already guarantees auth)\n3. **Protecting `/api/my-route`** with `withAuth` + `optional: true`\n4. **New integration test file** verifying all protected routes reject unauthenticated/malformed requests",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

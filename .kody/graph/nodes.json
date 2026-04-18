@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcauthwithauthts_708425749079": {
+      "id": "conventions_srcauthwithauthts_708425749079",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth/withAuth.ts",
+      "content": "Use withAuth HOC at route level rather than manual if(!user) guards inside handler bodies; guards become dead code once the HOC is applied.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T00:03:58.602Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2451-260417-235038",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcauthwithauthts_708426956928": {
+      "id": "thoughts_srcauthwithauthts_708426956928",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth/withAuth.ts",
+      "content": "Auth service and JWT verification error messages (e.g. 'jwt expired', 'User not found', 'Token revoked') leak internal details in 401 responses and must be sanitized to generic messages before product",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T00:03:58.603Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2451-260417-235038",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_apimyroute_708428126420": {
+      "id": "facts_apimyroute_708428126420",
+      "type": "facts",
+      "hall": "facts",
+      "room": "/api/my-route",
+      "content": "Apply withAuth with optional:true to /api/my-route — optional:true permits unauthenticated access but still attaches a user if a valid token is present, useful for routes that behave differently based",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T00:03:58.604Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2451-260417-235038",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_integration_tests_708429320091": {
+      "id": "facts_integration_tests_708429320091",
+      "type": "facts",
+      "hall": "facts",
+      "room": "integration tests",
+      "content": "Protected route test strategy: verify both unauthenticated requests (missing/invalid token) and malformed token payloads receive 401, not just one error case.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T00:03:58.606Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2451-260417-235038",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

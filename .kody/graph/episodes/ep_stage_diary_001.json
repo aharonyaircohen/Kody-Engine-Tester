@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2451-260417-235038",
+  "source": "stage_diary",
+  "taskId": "2451-260417-235038",
+  "createdAt": "2026-04-18T00:03:58.597Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Use withAuth HOC at route level rather than manual if(!user) guards inside handler bodies; guards become dead code once the HOC is applied.\",\"scope\":\"src/auth/withAuth.ts\"},{\"kind\":\"gotcha\",\"text\":\"Auth service and JWT verification error messages (e.g. 'jwt expired', 'User not found', 'Token revoked') leak internal details in 401 responses and must be sanitized to generic messages before product\",\"scope\":\"src/auth/withAuth.ts\"},{\"kind\":\"decision\",\"text\":\"Apply withAuth with optional:true to /api/my-route — optional:true permits unauthenticated access but still attaches a user if a valid token is present, useful for routes that behave differently based\",\"scope\":\"/api/my-route\"},{\"kind\":\"lesson\",\"text\":\"Protected route test strategy: verify both unauthenticated requests (missing/invalid token) and malformed token payloads receive 401, not just one error case.\",\"scope\":\"integration tests\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
