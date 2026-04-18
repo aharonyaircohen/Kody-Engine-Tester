@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srccollections_515502676648": {
+      "id": "conventions_srccollections_515502676648",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/collections",
+      "content": "Payload CMS sensitive fields use both access.read/update: () => false AND hidden: true for defense-in-depth.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:55:48.340Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2788-260418-164733",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_tests_515503980369": {
+      "id": "conventions_tests_515503980369",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "tests",
+      "content": "Tests are colocated in the same directory as the collection under test, using findField(name) and makeMockReq() helpers.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:55:48.341Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2788-260418-164733",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_515505175229": {
+      "id": "facts_auth_515505175229",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "PBKDF2 params (25000 iterations, 512 length, sha256) must match AuthService.verifyPassword exactly for cross-verification to work.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:55:48.342Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2788-260418-164733",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcauth_515506318013": {
+      "id": "facts_srcauth_515506318013",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/auth",
+      "content": "Centralize password hashing into a dedicated utility (password-hash.ts) rather than inline in the collection, to keep hashing logic reusable and testable.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T16:55:48.344Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2788-260418-164733",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

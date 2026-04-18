@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2788-260418-164733",
+  "source": "stage_diary",
+  "taskId": "2788-260418-164733",
+  "createdAt": "2026-04-18T16:55:48.334Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Payload CMS sensitive fields use both access.read/update: () => false AND hidden: true for defense-in-depth.\",\"scope\":\"src/collections\"},{\"kind\":\"convention\",\"text\":\"Tests are colocated in the same directory as the collection under test, using findField(name) and makeMockReq() helpers.\",\"scope\":\"tests\"},{\"kind\":\"decision\",\"text\":\"PBKDF2 params (25000 iterations, 512 length, sha256) must match AuthService.verifyPassword exactly for cross-verification to work.\",\"scope\":\"auth\"},{\"kind\":\"decision\",\"text\":\"Centralize password hashing into a dedicated utility (password-hash.ts) rather than inline in the collection, to keep hashing logic reusable and testable.\",\"scope\":\"src/auth\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

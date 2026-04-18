@@ -157,6 +157,7 @@ export interface User {
   lastTokenUsedAt?: string | null;
   lastLogin?: string | null;
   permissions?: string | null;
+  passwordHash?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -712,6 +713,7 @@ export interface UsersSelect<T extends boolean = true> {
   lastTokenUsedAt?: T;
   lastLogin?: T;
   permissions?: T;
+  passwordHash?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

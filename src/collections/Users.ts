@@ -1,5 +1,7 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+import { generatePasswordHash } from '@/utils/password-hash'
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
@@ -143,6 +145,27 @@ export const Users: CollectionConfig = {
       access: {
         read: () => false,
         update: () => false,
+      },
+    },
+    {
+      name: 'passwordHash',
+      type: 'text',
+      required: false,
+      hidden: true,
+      access: {
+        read: () => false,
+        create: () => false,
+        update: () => false,
+      },
+      hooks: {
+        beforeChange: [
+          ({ data }) => {
+            if (data?.password) {
+              return generatePasswordHash(data.password)
+            }
+            return undefined
+          },
+        ],
       },
     },
   ],

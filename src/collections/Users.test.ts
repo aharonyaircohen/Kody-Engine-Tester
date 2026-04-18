@@ -226,6 +226,83 @@ describe('Users fields - organization', () => {
 
 // --- Collection-level Access Control ---
 
+describe('Users fields - passwordHash', () => {
+  it('should have a passwordHash text field', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field).toBeDefined()
+    expect(field.type).toBe('text')
+  })
+
+  it('should have passwordHash hidden from admin UI', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(field.hidden).toBe(true)
+  })
+
+  it('should deny read access on passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.read({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should deny create access on passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.create({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should deny update access on passwordHash', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const req = makeMockReq({ user: { id: 'u1', collection: 'users', role: 'admin' } })
+    const result = field.access.update({ req } as AccessArgs)
+    expect(result).toBe(false)
+  })
+
+  it('should have a beforeChange hook that generates passwordHash when password is present', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    expect(Array.isArray(field.hooks?.beforeChange)).toBe(true)
+    expect(field.hooks.beforeChange.length).toBeGreaterThan(0)
+  })
+
+  it('should set passwordHash to undefined when no password is provided', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const hook = field.hooks.beforeChange[0]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = (hook as any)({ data: { firstName: 'Jane', lastName: 'Doe' }, originalDoc: {} })
+    expect(result).toBeUndefined()
+  })
+
+  it('should generate a non-empty passwordHash when password is provided', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const hook = field.hooks.beforeChange[0]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = (hook as any)({ data: { password: 'Secret123!' }, originalDoc: {} })
+    expect(result).toBeDefined()
+    expect(typeof result).toBe('string')
+    expect(result.length).toBeGreaterThan(0)
+  })
+
+  it('should generate a passwordHash that is not equal to the plaintext password', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const field = findField('passwordHash') as any
+    const hook = field.hooks.beforeChange[0]
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = (hook as any)({ data: { password: 'Secret123!' }, originalDoc: {} })
+    expect(result).not.toBe('Secret123!')
+  })
+})
+
+// --- Collection-level Access Control ---
+
 describe('Users access control - read', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const canRead = (Users.access as any)?.read
