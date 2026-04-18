@@ -7,5 +7,5 @@ jobs:
   health:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "CI health check"
+      - run: echo "CI health check trigger $(date)"
       - run: exit 1
