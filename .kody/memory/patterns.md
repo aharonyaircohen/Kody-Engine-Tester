@@ -1,5 +1,3 @@
-## LearnHub LMS Design Patterns
-
 ### Creational Patterns
 
 - **Dependency Injection Container** (`src/utils/di-container.ts`): Type-safe DI with tokens, factory registration, singleton/transient lifecycles, and circular dependency detection via `resolving` Set.
@@ -8,19 +6,21 @@
 
 ### Structural Patterns
 
-- **Higher-Order Function (HOC)**: `src/auth/withAuth.ts` wraps Next.js route handlers with JWT validation and RBAC checks.
-- **Middleware**: `src/middleware/request-logger.ts` and `rate-limiter.ts` implement Express-style chainable middleware for Next.js.
+- **Higher-Order Function (HOC)** (`src/auth/withAuth.ts`): Wraps Next.js route handlers with JWT validation and RBAC checks.
+- **Middleware Chain**: `src/middleware/request-logger.ts`, `rate-limiter.ts`, `validation.ts` implement Express-style chainable middleware for Next.js.
+- **Field-Level Validation Schema** (`src/middleware/validation.ts`): Schema-driven request validation for body/query/params with type coercion (string/number/boolean) and structured error reporting.
 
 ### Behavioral Patterns
 
 - **Strategy**: `request-logger.ts` switches between `json`/`text` output formats; log level Strategy maps HTTP status codes to `debug|info|warn|error`.
 - **Repository/Store**: `src/collections/contacts.ts` exposes `contactsStore` with `getById|create|update|delete|query` — hybrid repository-pattern store.
 - **Result Type**: `src/utils/result.ts` provides `Result<T, E>` discriminated union for explicit error handling.
+- **Typed Dependency Interfaces**: Services like `GradebookService`, `GradingService`, `AuthService` accept generic dep interfaces (e.g., `GradingServiceDeps<A,S,C>`) to decouple business logic from Payload.
 
 ### Architectural Layers
 
 ```
-Route Handlers (src/api/*, src/app/*)
+Route Handlers (src/app/api/*, src/app/*)
     ↓
 Auth HOC (src/auth/withAuth.ts) → JWT Service → AuthService
     ↓
@@ -43,6 +43,7 @@ Database (PostgreSQL via @payloadcms/db-postgres)
 - `DIDisposable` interface for lifecycle cleanup
 - `createRequestLogger(config)` — configurable middleware factory
 - Zod schemas in `src/validation/` for input validation at API boundaries
+- `validate(schema, data, target)` from `validation.ts` — field-level schema validation
 
 ### Anti-Patterns / Inconsistencies
 

@@ -17,7 +17,7 @@
 ## Patterns
 
 - **Mocks**: `vi.fn()` + `mockResolvedValue` / `mockRejectedValue` for Payload SDK stubs
-- **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data
+- **Fixtures**: `seedTestUser()` / `cleanupTestUser()` pattern for E2E test data (see `tests/helpers/login.ts`, `tests/helpers/seedUser.ts`)
 - **Fake Timers**: `vi.useFakeTimers()` for async queue tests (e.g., `RetryQueue`)
 - **Browser Context**: Shared `Page` instance via `browser.newContext()` in `beforeAll`
 

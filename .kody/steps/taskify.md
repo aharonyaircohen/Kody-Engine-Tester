@@ -16,6 +16,26 @@ Before classifying, you MUST explore the project context:
 3. **Challenge assumptions** — Does the task description assume an approach? Are there simpler alternatives? Apply YAGNI ruthlessly.
 4. **Identify ambiguity** — Could the requirements be interpreted two ways? Are there missing edge case decisions?
 
+## MANDATORY: Surface Assumptions
+
+After exploration, explicitly state any assumptions you are making before writing task.json:
+
+```
+ASSUMPTIONS I'M MAKING:
+1. This is a web application (not native mobile)
+2. Database is PostgreSQL (based on existing schema at db/)
+3. Auth uses session cookies (not JWT)
+→ If wrong, correct me before I proceed.
+```
+
+Assumptions rules:
+
+- State what you are assuming about the project, architecture, or requirements
+- If the assumption is clearly wrong based on your exploration, don't make it
+- If you are unsure about a key assumption, list it and note your uncertainty
+- If no significant assumptions are being made, omit this section entirely
+- Do NOT assume technology choices the task description didn't specify (e.g., don't assume React if it wasn't mentioned)
+
 ## Output
 
 Output ONLY valid JSON. No markdown fences. No explanation. No extra text before or after the JSON.
@@ -101,5 +121,33 @@ Guidelines:
 - [ ] existing_patterns cites specific file paths and patterns to reuse
 - [ ] Questions (if any) are product/requirements only, max 3
 - [ ] JSON is valid with no markdown fences or extra text
+
+## Repo Patterns
+
+- **API Route → Service delegation**: `src/app/api/gradebook/route.ts` calls `GradebookService` which uses `GradebookServiceDeps` interface; delegates to Payload collections
+- **Schema validation middleware**: `src/middleware/validation.ts` exports `validate(schema, data, target)` with field-level coercion and structured errors
+- **Chainable middleware**: `src/middleware/request-logger.ts` uses `next()` chaining; `rate-limiter.ts` uses sliding window counter
+- **Result type for errors**: `src/utils/result.ts` — `Result<T, E>` with `.isOk()`, `.isErr()`, `.unwrap()`; services return `Result<_, string>` for explicit error handling
+- **Service constructor DI**: `src/services/GradebookService` accepts `GradebookServiceDeps` interface; `GradingService` accepts `GradingServiceDeps<A,S,C>`
+- **Payload collection config**: `src/collections/Courses.ts` extends `CollectionConfig` with `hooks`, `access`, `fields`; avoids raw SQL
+
+## Improvement Areas
+
+- **Duplicate auth paths**: `src/auth/user-store.ts:12` uses `crypto.createHash('sha256')` for passwords while `src/auth/auth-service.ts:8` uses PBKDF2 —不一致; prefer AuthService统一认证
+- **Role enum drift**: `UserStore.UserRole` (`'admin'|'user'|'guest'|'student'|'instructor'`) vs `RbacRole` (`'admin'|'editor'|'viewer'`) — task should align or add mapping layer
+- **Unsafe type casts**: `src/app/(frontend)/dashboard/page.tsx:89` uses `data as unknown as DashboardData` — should use type guards or Zod parsing
+- **Missing error wrapping**: `src/app/api/notes/route.ts` returns raw Payload errors to client — should wrap with `Result.error()` from `src/utils/result.ts`
+- **Hardcoded magic strings**: API paths like `/api/gradebook` appear in multiple files — should use constants from `src/utils/api-paths.ts` (does not exist yet — candidate for extraction)
+
+## Acceptance Criteria
+
+- [ ] Scope contains exact file paths discovered via Glob/Grep (e.g., `src/app/api/**/*.ts`, `src/services/*.ts`)
+- [ ] Title is actionable and max 72 chars (starts with verb: Add, Fix, Refactor, Update, Verify)
+- [ ] Description captures intent and acceptance criteria — not just a restatement of title
+- [ ] Risk level matches scope size: low=1 file, medium=2-3 files, high=4+ or core logic
+- [ ] existing_patterns cites specific file paths and patterns to reuse (not generic descriptions)
+- [ ] Questions are product/requirements only (max 3) — not technical implementation questions
+- [ ] JSON output has no markdown fences, no explanatory text before or after
+- [ ] If task already implemented, output JSON with task_type=chore, risk_level=low
 
 {{TASK_CONTEXT}}
