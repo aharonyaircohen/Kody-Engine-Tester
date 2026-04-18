@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Now I have a complete picture of the codebase. Let me compile the classi",
+  "description": "Now I have a complete picture of the codebase. Let me compile the classification.\n\n```json\n{\n  \"task_type\": \"refactor\",\n  \"title\": \"Migrate login to Payload auth and deprecate UserStore\",\n  \"description\": \"Unify the dual auth system by routing all login through AuthService (Payload-based PBKDF2) instead of UserStore (in-memory SHA-256). Specifically: (1) add explicit `hash` and `salt` text fields to the Users collection with admin-only read access to expose Payload's built-in auth credentials fo",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

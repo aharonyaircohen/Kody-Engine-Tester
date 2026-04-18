@@ -2,6 +2,13 @@ import crypto from 'crypto'
 
 export type UserRole = 'admin' | 'user' | 'guest' | 'student' | 'instructor'
 
+/**
+ * @deprecated UserStore is deprecated. Use AuthService (Payload-based PBKDF2 auth) instead.
+ * UserStore uses in-memory storage with SHA-256 hashing — inconsistent with the Payload-based
+ * PBKDF2 (25000 iter, sha256, 512-bit) approach used by AuthService. The dual auth system
+ * is a known anti-pattern. This store will be removed in a future release.
+ */
+
 export interface User {
   id: string
   email: string

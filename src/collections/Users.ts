@@ -145,5 +145,40 @@ export const Users: CollectionConfig = {
         update: () => false,
       },
     },
+    // PBKDF2 password credentials — populated by Payload's built-in auth (auth: true).
+    // 25000 iterations, sha256, 512 bits — used by AuthService for password verification.
+    // Admin-only read access prevents exposure to lower-privileged roles.
+    {
+      name: 'salt',
+      type: 'text',
+      required: false,
+      hidden: true,
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: ({ req: { user } }) => {
+          return (user as { role?: string } | null)?.role === 'admin'
+        },
+        create: () => false,
+        update: () => false,
+      },
+    },
+    {
+      name: 'hash',
+      type: 'text',
+      required: false,
+      hidden: true,
+      admin: {
+        readOnly: true,
+      },
+      access: {
+        read: ({ req: { user } }) => {
+          return (user as { role?: string } | null)?.role === 'admin'
+        },
+        create: () => false,
+        update: () => false,
+      },
+    },
   ],
 }

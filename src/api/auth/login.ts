@@ -1,3 +1,8 @@
+/**
+ * @deprecated This login function uses UserStore (in-memory SHA-256). Use AuthService
+ * (Payload-based PBKDF2) for all new login flows. This function will be removed once
+ * all callers are migrated to AuthService.login().
+ */
 import type { UserStore } from '../../auth/user-store'
 import type { SessionStore } from '../../auth/session-store'
 import type { JwtService } from '../../auth/jwt-service'
