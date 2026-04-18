@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2480-260418-035044",
+  "source": "stage_diary",
+  "taskId": "decompose-2480-260418-035044",
+  "createdAt": "2026-04-18T03:58:26.772Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Result types use discriminated union { ok: true, value } | { ok: false, errors }, matching src/middleware/validation.ts\",\"scope\":\"typescript\"},{\"kind\":\"convention\",\"text\":\"Test files follow vitest describe/it/expect pattern from existing test files like src/middleware/validation.test.ts\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"The decompose --no-compose flag is verified by checking logs, decompose-state.json, and confirming NO merge/verify/review/ship phases or PR\",\"scope\":\"@kody decompose\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

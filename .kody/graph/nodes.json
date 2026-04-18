@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_typescript_747349605326": {
+      "id": "conventions_typescript_747349605326",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "typescript",
+      "content": "Result types use discriminated union { ok: true, value } | { ok: false, errors }, matching src/middleware/validation.ts",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T03:58:26.778Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2480-260418-035044",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testing_747351114360": {
+      "id": "conventions_testing_747351114360",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Test files follow vitest describe/it/expect pattern from existing test files like src/middleware/validation.test.ts",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T03:58:26.780Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2480-260418-035044",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_decompose_747352277382": {
+      "id": "facts_kody_decompose_747352277382",
+      "type": "facts",
+      "hall": "facts",
+      "room": "@kody decompose",
+      "content": "The decompose --no-compose flag is verified by checking logs, decompose-state.json, and confirming NO merge/verify/review/ship phases or PR",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T03:58:26.781Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2480-260418-035044",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
