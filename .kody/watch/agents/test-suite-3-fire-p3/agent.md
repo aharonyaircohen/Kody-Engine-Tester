@@ -4,6 +4,10 @@ Your job: fire the 17 Phase-3 (complex features) test issues. Runs nightly at 02
 
 **Context:** Running inside Kody-Engine-Tester repo.
 
+**CRITICAL:** For every test below, you MUST do BOTH steps in order:
+1. Create the GitHub issue with the given title and body
+2. **Immediately post the `@kody` command as a comment on that issue.** The comment is what triggers the pipeline.
+
 ---
 
 ## Run ID
@@ -21,7 +25,7 @@ fire_test() {
   local test_id="$1"
   local title="$2"
   local body="$3"
-  local trigger="$4"
+  local command="$4"
 
   echo "[$test_id] Creating issue..."
   local issue_num
@@ -29,17 +33,17 @@ fire_test() {
     --title "$title" \
     --body "$body" \
     --label "test-suite-temp" \
-    2>/dev/null | grep -oP '\d+$' || echo "")
+    | grep -oP '\d+$' || echo "")
 
   if [ -z "$issue_num" ]; then
     echo "[$test_id] FAILED: could not create issue"
     return 1
   fi
 
-  echo "[$test_id] Issue #$issue_num created. Triggering..."
-  $trigger "$issue_num" 2>/dev/null
+  echo "[$test_id] Issue #$issue_num created. Posting trigger comment..."
+  gh issue comment "$issue_num" --body "$command"
 
-  echo "[$test_id] Fired. Pipeline running in background."
+  echo "[$test_id] Fired."
   sleep 3
 }
 
@@ -70,7 +74,7 @@ Command: @kody --complexity low
 
 ## Verification
 Logs show Complexity override: low. 4 stages run." \
-  'n=$1; gh issue comment $n --body "@kody --complexity low"'
+  "@kody --complexity low"
 
 batch_fire P3T11 "[${RUN_ID}] P3T11: --feedback injection" \
   "Verify --feedback flag is injected into build stage.
@@ -79,7 +83,7 @@ Command: @kody --feedback \"Use functional style\"
 
 ## Verification
 Logs show feedback: line during build stage." \
-  'n=$1; gh issue comment $n --body "@kody --feedback \"Use functional style\""'
+  "@kody --feedback \"Use functional style\""
 
 batch_fire P3T12 "[${RUN_ID}] P3T12: --from stage flag" \
   "Two-step test: trigger @kody (pipeline starts), then after it completes fire @kody --from build.
@@ -89,7 +93,7 @@ Command (step 1): @kody
 ## Verification
 Step 1: Pipeline completes normally.
 Step 2: Logs show 'Resuming from: build' — taskify and plan stages skipped." \
-  'n=$1; gh issue comment $n --body "@kody"'
+  "@kody"
 
 batch_fire P3T13 "[${RUN_ID}] P3T13: State bypass on rerun" \
   "Two-step test: trigger @kody (pipeline completes), then after it finishes fire @kody rerun.
@@ -99,7 +103,7 @@ Command (step 1): @kody
 ## Verification
 Step 1: Pipeline completes with kody:done label.
 Step 2: Pipeline re-executes (not blocked by 'already completed')." \
-  'n=$1; gh issue comment $n --body "@kody"'
+  "@kody"
 
 batch_fire P3T14 "[${RUN_ID}] P3T14: Dry-run mode" \
   "Verify --dry-run skips all stages without creating PRs.
@@ -108,7 +112,7 @@ Command: @kody --dry-run
 
 ## Verification
 Logs show all stages skipped; no PR created." \
-  'n=$1; gh issue comment $n --body "@kody --dry-run"'
+  "@kody --dry-run"
 
 batch_fire P3T15 "[${RUN_ID}] P3T15: PR title from issue title" \
   "Verify bare @kody uses issue title as PR title.
@@ -117,7 +121,7 @@ Command: @kody
 
 ## Verification
 PR title matches issue title, not hardcoded." \
-  'n=$1; gh issue comment $n --body "@kody"'
+  "@kody"
 
 batch_fire P3T16 "[${RUN_ID}] P3T16: Issue stays open after ship" \
   "Verify issue remains OPEN after PR is shipped.
@@ -126,7 +130,7 @@ Command: @kody
 
 ## Verification
 Issue still OPEN after ship. PR is merged." \
-  'n=$1; gh issue comment $n --body "@kody"'
+  "@kody"
 
 batch_fire P3T17 "[${RUN_ID}] P3T17: Special characters in feedback" \
   "Verify special characters handled without shell injection.
@@ -135,7 +139,7 @@ Command: @kody --feedback 'Use \"quotes\" and handle \$(dollar) signs'
 
 ## Verification
 Pipeline completes without bad substitution errors." \
-  'n=$1; gh issue comment $n --body "Please use \"quotes\" and handle \$(dollar) signs"'
+  "Please use \"quotes\" and handle \$(dollar) signs"
 
 batch_fire P3T18 "[${RUN_ID}] P3T18: UI task gets Playwright MCP" \
   "Verify UI tasks get Playwright MCP auto-injected.
@@ -146,16 +150,16 @@ Command: @kody
 
 ## Verification
 task.json has hasUI: true; logs show MCP config injection." \
-  'n=$1; gh issue comment $n --body "@kody
+  "@kody
 
-Task: Add a new dashboard page with charts and data tables."'
+Task: Add a new dashboard page with charts and data tables."
 
 batch_fire P3T19 "[${RUN_ID}] P3T19: Force-with-lease retry on rerun push" \
   "Verify force-with-lease retry when push is rejected during rerun.
 
 ## Verification
 Logs show force-with-lease on push retry. Either outcome accepted." \
-  'n=$1; gh issue comment $n --body "@kody"'
+  "@kody"
 
 batch_fire P3T23 "[${RUN_ID}] P3T23: Issue attachments and metadata enrichment" \
   "Verify image attachments are downloaded and labels/comments enrich task.md.
@@ -164,12 +168,12 @@ batch_fire P3T23 "[${RUN_ID}] P3T23: Issue attachments and metadata enrichment" 
 1. Logs show 'Downloaded attachment:' and task.md has local paths
 2. If image URL unreachable, verify graceful fallback
 3. PASS: attachments/ downloaded, Labels: and Discussion: sections present" \
-  'n=$1; gh issue comment $n --body "@kody
+  "@kody
 
 Task: Add a footer component.
 
 ## Design
-![mockup](https://github.com/user-attachments/assets/test-uuid/footer-design.png)"'
+![mockup](https://github.com/user-attachments/assets/test-uuid/footer-design.png)"
 
 batch_fire P3T27 "[${RUN_ID}] P3T27: Decompose with config disabled" \
   "Verify decompose.enabled=false causes immediate fallback to normal pipeline.
@@ -178,9 +182,9 @@ Command: @kody decompose
 
 ## Verification
 Logs should show 'decompose disabled in config — falling back'." \
-  'n=$1; gh issue comment $n --body "@kody decompose
+  "@kody decompose
 
-Task: Add pagination to the course list page."'
+Task: Add pagination to the course list page."
 
 batch_fire P3T30 "[${RUN_ID}] P3T30: Decompose sub-task failure triggers fallback" \
   "Verify sub-task failure in decompose triggers worktree cleanup and fallback.
@@ -189,9 +193,9 @@ Command: @kody decompose
 
 ## Verification
 Logs show sub-task failure detected, worktrees cleaned up, fallback to runPipeline()." \
-  'n=$1; gh issue comment $n --body "@kody decompose
+  "@kody decompose
 
-Task: Implement a caching system: Redis adapter in src/cache/redisAdapter.ts (requires ioredis NOT installed), in-memory adapter, cache manager."'
+Task: Implement a caching system: Redis adapter in src/cache/redisAdapter.ts (requires ioredis NOT installed), in-memory adapter, cache manager."
 
 batch_fire P3T33b "[${RUN_ID}] P3T33b: Lifecycle label progression" \
   "Verify lifecycle labels progress through planning→building→verifying→review→done.
@@ -200,7 +204,7 @@ Command: @kody
 
 ## Verification
 Label history shows correct progression." \
-  'n=$1; gh issue comment $n --body "@kody"'
+  "@kody"
 
 batch_fire P3T34 "[${RUN_ID}] P3T34: Token ROI in retrospective" \
   "Verify retrospective.md includes token usage and ROI metrics.
@@ -208,8 +212,8 @@ batch_fire P3T34 "[${RUN_ID}] P3T34: Token ROI in retrospective" \
 Command: @kody
 
 ## Verification
-retrospective.md file has Token ROI section with prompt/completion token counts." \
-  'n=$1; gh issue comment $n --body "@kody"'
+retrospective.md file has Token ROI section." \
+  "@kody"
 
 batch_fire P3T35 "[${RUN_ID}] P3T35: Auto-learn memory in PR" \
   "Verify auto-learned memory is attached to PR.
@@ -217,8 +221,8 @@ batch_fire P3T35 "[${RUN_ID}] P3T35: Auto-learn memory in PR" \
 Command: @kody
 
 ## Verification
-PR body contains auto-learn memory section. .kody/memory/ updated in PR." \
-  'n=$1; gh issue comment $n --body "@kody"'
+PR body contains auto-learn memory section." \
+  "@kody"
 
 batch_fire P3T36 "[${RUN_ID}] P3T36: Engine-managed dev server" \
   "Verify engine starts/stops dev server for UI tasks.
@@ -229,9 +233,9 @@ Command: @kody
 
 ## Verification
 Logs show KODY_DEV_SERVER_READY and dev server lifecycle." \
-  'n=$1; gh issue comment $n --body "@kody
+  "@kody
 
-Task: Add a new dashboard page with charts and data tables."'
+Task: Add a new dashboard page with charts and data tables."
 ```
 
 ---
@@ -244,7 +248,6 @@ P3T12_ISSUE=$(gh issue list --label test-suite-temp --state open \
   --json number --jq '.[0].number' 2>/dev/null)
 
 if [ -n "$P3T12_ISSUE" ] && [ "$P3T12_ISSUE" != "null" ]; then
-  echo "[P3T12] Launching nohup second-step monitor for #$P3T12_ISSUE..."
   nohup bash -c "
     for i in \$(seq 1 60); do
       sleep 30
@@ -262,7 +265,6 @@ P3T13_ISSUE=$(gh issue list --label test-suite-temp --state open \
   --json number --jq '.[0].number' 2>/dev/null)
 
 if [ -n "$P3T13_ISSUE" ] && [ "$P3T13_ISSUE" != "null" ]; then
-  echo "[P3T13] Launching nohup second-step monitor for #$P3T13_ISSUE..."
   nohup bash -c "
     for i in \$(seq 1 60); do
       sleep 30
@@ -275,5 +277,5 @@ if [ -n "$P3T13_ISSUE" ] && [ "$P3T13_ISSUE" != "null" ]; then
   " > /tmp/P3T13-step2.log 2>&1 &
 fi
 
-echo "=== Phase 3 fire complete. Tally runs at 04:00. ==="
+echo "=== Phase 3 fire complete. ==="
 ```
