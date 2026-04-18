@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "2793-260418-164941",
+  "source": "stage_diary",
+  "taskId": "2793-260418-164941",
+  "createdAt": "2026-04-18T18:26:31.748Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Error message strings must match exactly — a trailing period difference ('User not found.' vs 'User not found') causes assertion failures.\",\"scope\":\"src/auth\"},{\"kind\":\"gotcha\",\"text\":\"HTTP status codes must match the actual source — 403 returned for missing roles but tests asserted 401.\",\"scope\":\"src/auth\"},{\"kind\":\"lesson\",\"text\":\"When writing tests for existing HOCs, assert on the actual source code behavior (e.g., check createError calls in auth-service.ts) rather than inferring expected values.\",\"scope\":\"src/auth\"},{\"kind\":\"convention\",\"text\":\"withAuth returns 403 (Forbidden) for insufficient roles, not 401 (Unauthorized) — use 403 for role/permission checks.\",\"scope\":\"src/auth/withAuth.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "2793-260418-164941",
+  "source": "stage_diary",
+  "taskId": "2793-260418-164941",
+  "createdAt": "2026-04-18T18:39:46.015Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"withAuth catch block uses `authContext.status ?? 401`, silently coercing any thrown status to 401 even when the underlying service threw a different code.\",\"scope\":\"src/auth/withAuth.ts\"},{\"kind\":\"lesson\",\"text\":\"Complete auth flow coverage requires both unit tests (HOC 401/403/200 behavior, role inheritance, optional token mode) and integration tests (register→login→protected route→refresh→logout).\",\"scope\":\"auth testing\"},{\"kind\":\"convention\",\"text\":\"Use `makeAuthenticatedContext()` helper to create user+tokens+sessions for test context, consistent across all auth test files.\",\"scope\":\"auth testing\"},{\"kind\":\"convention\",\"text\":\"Use `vi.mock('@/getPayload')` to mock Payload instance for AuthService unit tests.\",\"scope\":\"auth testing\"},{\"kind\":\"decision\",\"text\":\"Integration tests under `tests/int/` (not `src/`) for end-to-end auth flow; unit tests under `src/auth/` next to the module they test.\",\"scope\":\"auth testing\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "2793-260418-164941",
+  "source": "stage_diary",
+  "taskId": "2793-260418-164941",
+  "createdAt": "2026-04-18T18:22:48.208Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"lesson\",\"text\":\"New integration test files must pass linting before the task is considered complete — lint errors count as failures in review.\",\"scope\":\"tests/int\"},{\"kind\":\"lesson\",\"text\":\"When a unit test file is planned (e.g. withAuth.test.ts) but not created, the task is not done even if integration tests pass.\",\"scope\":\"auth\"},{\"kind\":\"gotcha\",\"text\":\"Pre-existing typecheck errors in other files can cause a task to fail review even if the new code is correct.\",\"scope\":\"typecheck\"},{\"kind\":\"convention\",\"text\":\"Integration test files live under tests/int/ and must co-exist with any planned unit tests in src/ to be considered complete.\",\"scope\":\"tests/int\"},{\"kind\":\"gotcha\",\"text\":\"Failing tests in tests/int/api.int.spec.ts that appear unrelated still cause review FAIL if the task modified files in the same directory.\",\"scope\":\"tests/int/api.int.spec.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

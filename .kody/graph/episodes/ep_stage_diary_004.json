@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "2793-260418-164941",
+  "source": "stage_diary",
+  "taskId": "2793-260418-164941",
+  "createdAt": "2026-04-18T18:35:37.692Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"When mocking `@/getPayload`, test assertions for error messages and HTTP status codes must match the actual response strings/codes in the source exactly—test failures here reveal real mismatches, not \",\"scope\":\"src/auth/withAuth.test.ts\"},{\"kind\":\"convention\",\"text\":\"Auth HOC tests are split into a unit file (`src/auth/withAuth.test.ts`) and an integration file (`tests/int/auth-protected-routes.int.spec.ts`).\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"Error message assertions in tests (e.g., `'No token provided'`) must exactly match the string returned by the HOC; discrepancies are caught as test failures indicating source/test drift.\",\"scope\":\"testing\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

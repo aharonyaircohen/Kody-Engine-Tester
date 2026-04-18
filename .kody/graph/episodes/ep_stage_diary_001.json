@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2793-260418-164941",
+  "source": "stage_diary",
+  "taskId": "2793-260418-164941",
+  "createdAt": "2026-04-18T18:02:57.256Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The test file passed all 15 tests but had 13 lint errors, causing FAIL verification — always run lint checks before marking a stage done.\",\"scope\":\"tests/int/auth-protected-routes.int.spec.ts\"},{\"kind\":\"gotcha\",\"text\":\"`as any` on mockPayload bypasses type checking in stubs — prefer explicit interface types for mock objects to catch contract mismatches early.\",\"scope\":\"src/auth/AuthService\"},{\"kind\":\"lesson\",\"text\":\"Co-located unit test (src/auth/withAuth.test.ts) was planned but never created — track sub-deliverables explicitly to avoid incomplete implementations.\",\"scope\":\"test planning\"},{\"kind\":\"lesson\",\"text\":\"Pre-existing typecheck errors in api.int.spec.ts surfaced during this stage — unrelated failures can block review even when your changeset is correct.\",\"scope\":\"CI review\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

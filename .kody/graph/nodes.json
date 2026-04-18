@@ -1,0 +1,341 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_testsintauthprotectedroutesintspects_4478317907438": {
+      "id": "thoughts_testsintauthprotectedroutesintspects_4478317907438",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "tests/int/auth-protected-routes.int.spec.ts",
+      "content": "The test file passed all 15 tests but had 13 lint errors, causing FAIL verification — always run lint checks before marking a stage done.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:02:57.263Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcauthauthservice_4478319427597": {
+      "id": "thoughts_srcauthauthservice_4478319427597",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth/AuthService",
+      "content": "`as any` on mockPayload bypasses type checking in stubs — prefer explicit interface types for mock objects to catch contract mismatches early.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:02:57.264Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_test_planning_4478320882022": {
+      "id": "facts_test_planning_4478320882022",
+      "type": "facts",
+      "hall": "facts",
+      "room": "test planning",
+      "content": "Co-located unit test (src/auth/withAuth.test.ts) was planned but never created — track sub-deliverables explicitly to avoid incomplete implementations.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:02:57.266Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_ci_review_4478322485626": {
+      "id": "facts_ci_review_4478322485626",
+      "type": "facts",
+      "hall": "facts",
+      "room": "CI review",
+      "content": "Pre-existing typecheck errors in api.int.spec.ts surfaced during this stage — unrelated failures can block review even when your changeset is correct.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T18:02:57.267Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testsint_5669265974067": {
+      "id": "facts_testsint_5669265974067",
+      "type": "facts",
+      "hall": "facts",
+      "room": "tests/int",
+      "content": "New integration test files must pass linting before the task is considered complete — lint errors count as failures in review.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:22:48.211Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_5669267610562": {
+      "id": "facts_auth_5669267610562",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "When a unit test file is planned (e.g. withAuth.test.ts) but not created, the task is not done even if integration tests pass.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:22:48.212Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_typecheck_5669269176353": {
+      "id": "thoughts_typecheck_5669269176353",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "typecheck",
+      "content": "Pre-existing typecheck errors in other files can cause a task to fail review even if the new code is correct.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:22:48.214Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testsint_5669270530318": {
+      "id": "conventions_testsint_5669270530318",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "tests/int",
+      "content": "Integration test files live under tests/int/ and must co-exist with any planned unit tests in src/ to be considered complete.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:22:48.215Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_testsintapiintspects_5669272252092": {
+      "id": "thoughts_testsintapiintspects_5669272252092",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "tests/int/api.int.spec.ts",
+      "content": "Failing tests in tests/int/api.int.spec.ts that appear unrelated still cause review FAIL if the task modified files in the same directory.",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-18T18:22:48.217Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcauth_5892806891787": {
+      "id": "thoughts_srcauth_5892806891787",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth",
+      "content": "Error message strings must match exactly — a trailing period difference ('User not found.' vs 'User not found') causes assertion failures.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T18:26:31.752Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcauth_5892808405190": {
+      "id": "thoughts_srcauth_5892808405190",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth",
+      "content": "HTTP status codes must match the actual source — 403 returned for missing roles but tests asserted 401.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T18:26:31.753Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcauth_5892810367063": {
+      "id": "facts_srcauth_5892810367063",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/auth",
+      "content": "When writing tests for existing HOCs, assert on the actual source code behavior (e.g., check createError calls in auth-service.ts) rather than inferring expected values.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T18:26:31.755Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcauthwithauthts_5892812423312": {
+      "id": "conventions_srcauthwithauthts_5892812423312",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/auth/withAuth.ts",
+      "content": "withAuth returns 403 (Forbidden) for insufficient roles, not 401 (Unauthorized) — use 403 for role/permission checks.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-18T18:26:31.757Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcauthwithauthtestts_6438750579089": {
+      "id": "thoughts_srcauthwithauthtestts_6438750579089",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth/withAuth.test.ts",
+      "content": "When mocking `@/getPayload`, test assertions for error messages and HTTP status codes must match the actual response strings/codes in the source exactly—test failures here reveal real mismatches, not ",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T18:35:37.695Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testing_6438751941772": {
+      "id": "conventions_testing_6438751941772",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Auth HOC tests are split into a unit file (`src/auth/withAuth.test.ts`) and an integration file (`tests/int/auth-protected-routes.int.spec.ts`).",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T18:35:37.697Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testing_6438753526660": {
+      "id": "facts_testing_6438753526660",
+      "type": "facts",
+      "hall": "facts",
+      "room": "testing",
+      "content": "Error message assertions in tests (e.g., `'No token provided'`) must exactly match the string returned by the HOC; discrepancies are caught as test failures indicating source/test drift.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-18T18:35:37.698Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:2793-260418-164941",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcauthwithauthts_6687073086559": {
+      "id": "thoughts_srcauthwithauthts_6687073086559",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/auth/withAuth.ts",
+      "content": "withAuth catch block uses `authContext.status ?? 401`, silently coercing any thrown status to 401 even when the underlying service threw a different code.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T18:39:46.018Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_testing_6687075081855": {
+      "id": "facts_auth_testing_6687075081855",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth testing",
+      "content": "Complete auth flow coverage requires both unit tests (HOC 401/403/200 behavior, role inheritance, optional token mode) and integration tests (register→login→protected route→refresh→logout).",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T18:39:46.020Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_testing_6687076620355": {
+      "id": "conventions_auth_testing_6687076620355",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth testing",
+      "content": "Use `makeAuthenticatedContext()` helper to create user+tokens+sessions for test context, consistent across all auth test files.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T18:39:46.021Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_testing_6687078293847": {
+      "id": "conventions_auth_testing_6687078293847",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth testing",
+      "content": "Use `vi.mock('@/getPayload')` to mock Payload instance for AuthService unit tests.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T18:39:46.023Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_testing_6687080151144": {
+      "id": "facts_auth_testing_6687080151144",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth testing",
+      "content": "Integration tests under `tests/int/` (not `src/`) for end-to-end auth flow; unit tests under `src/auth/` next to the module they test.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-18T18:39:46.025Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:2793-260418-164941",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
