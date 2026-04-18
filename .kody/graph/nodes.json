@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_environment_880042110542": {
+      "id": "thoughts_environment_880042110542",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "environment",
+      "content": "The agent sandbox was isolated from the actual codebase; it could not read src/ files until the user confirmed the correct working directory.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:40.466Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2592-260418-091719",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_validation_880043621738": {
+      "id": "facts_validation_880043621738",
+      "type": "facts",
+      "hall": "facts",
+      "room": "validation",
+      "content": "Use `zod` for request body validation in the new HTTP endpoints (already in use elsewhere in the codebase).",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:40.467Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2592-260418-091719",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_planning_880045188787": {
+      "id": "facts_planning_880045188787",
+      "type": "facts",
+      "hall": "facts",
+      "room": "planning",
+      "content": "When a plan references files the agent cannot access, the agent should ask for directory confirmation before proceeding — not assume the path.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:25:40.469Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:2592-260418-091719",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

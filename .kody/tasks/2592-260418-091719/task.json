@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I've asked a clarifying question — the session is sandboxed to only the ",
+  "description": "I've asked a clarifying question — the session is sandboxed to only the task directory and I cannot reach the `src/` files described in the task. Please let me know where the codebase lives so I can explore it before writing the plan.",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

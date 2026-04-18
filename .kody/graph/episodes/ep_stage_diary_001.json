@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "2592-260418-091719",
+  "source": "stage_diary",
+  "taskId": "2592-260418-091719",
+  "createdAt": "2026-04-18T09:25:40.460Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The agent sandbox was isolated from the actual codebase; it could not read src/ files until the user confirmed the correct working directory.\",\"scope\":\"environment\"},{\"kind\":\"decision\",\"text\":\"Use `zod` for request body validation in the new HTTP endpoints (already in use elsewhere in the codebase).\",\"scope\":\"validation\"},{\"kind\":\"lesson\",\"text\":\"When a plan references files the agent cannot access, the agent should ask for directory confirmation before proceeding — not assume the path.\",\"scope\":\"planning\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
