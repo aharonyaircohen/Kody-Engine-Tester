@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "-Engine-Tester/pull/2862",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/pull/2862",
+  "createdAt": "2026-04-18T21:59:22.511Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Tests live co-located with source: src/utils/format-bytes.test.ts next to src/utils/format-bytes.ts\",\"scope\":\"testing\"},{\"kind\":\"convention\",\"text\":\"Use src/security/csrf-token.test.ts as the pattern/template for new vitest test files in this repo\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"Branch coverage in vitest tests is straightforward: one describe/it block per threshold, no mocking needed for pure utilities\",\"scope\":\"src/utils\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

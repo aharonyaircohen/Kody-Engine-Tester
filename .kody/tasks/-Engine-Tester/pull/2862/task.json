@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "{\"path\":\"task_type\",\"content\":\"feature\",\"title\":\"Add format-bytes utilit",
+  "description": "{\"path\":\"task_type\",\"content\":\"feature\",\"title\":\"Add format-bytes utility with tests\",\"description\":\"Create src/utils/format-bytes.ts exporting formatBytes(bytes: number): string with four branching thresholds (B, KB, MB, GB) and co-located src/utils/format-bytes.test.ts covering each branch using vitest.\",\"scope\":[\"src/utils/format-bytes.ts\",\"src/utils/format-bytes.test.ts\"],\"risk_level\":\"low\",\"existing_patterns\":[{\"file\":\"src/security/csrf-token.test.ts\",\"description\":\"Vitest test file with de",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

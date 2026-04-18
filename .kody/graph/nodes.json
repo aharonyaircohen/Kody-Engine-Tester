@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_testing_304131251095": {
+      "id": "conventions_testing_304131251095",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Tests live co-located with source: src/utils/format-bytes.test.ts next to src/utils/format-bytes.ts",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T21:59:22.516Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2862",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_testing_304132683949": {
+      "id": "conventions_testing_304132683949",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Use src/security/csrf-token.test.ts as the pattern/template for new vitest test files in this repo",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T21:59:22.518Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2862",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutils_304133992282": {
+      "id": "facts_srcutils_304133992282",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils",
+      "content": "Branch coverage in vitest tests is straightforward: one describe/it block per threshold, no mocking needed for pure utilities",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T21:59:22.519Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2862",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
