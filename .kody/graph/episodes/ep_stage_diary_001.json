@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T12:09:13.530Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The 'approve' stage does not exist in the default kody.config schema — it must be explicitly added to both the config and as a .kody/steps/approve.md file\",\"scope\":\"kody pipeline\"},{\"kind\":\"decision\",\"text\":\"kody.config.json stores github.owner and github.repo explicitly; these must match the target repo for gh CLI calls to work correctly\",\"scope\":\"kody github integration\"},{\"kind\":\"lesson\",\"text\":\"gh CLI is available and can be used within Kody pipeline stages to verify GitHub API state such as issue open/closed status\",\"scope\":\"kody github integration\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

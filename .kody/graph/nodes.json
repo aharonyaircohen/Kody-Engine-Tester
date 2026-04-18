@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_kody_pipeline_471534669581": {
+      "id": "thoughts_kody_pipeline_471534669581",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "kody pipeline",
+      "content": "The 'approve' stage does not exist in the default kody.config schema — it must be explicitly added to both the config and as a .kody/steps/approve.md file",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:09:13.536Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_github_integration_471536504378": {
+      "id": "facts_kody_github_integration_471536504378",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody github integration",
+      "content": "kody.config.json stores github.owner and github.repo explicitly; these must match the target repo for gh CLI calls to work correctly",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:09:13.537Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_kody_github_integration_471537888812": {
+      "id": "facts_kody_github_integration_471537888812",
+      "type": "facts",
+      "hall": "facts",
+      "room": "kody github integration",
+      "content": "gh CLI is available and can be used within Kody pipeline stages to verify GitHub API state such as issue open/closed status",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:09:13.539Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
