@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Here's what I've found and my proposed plan:  ---  ## Classification  **",
+  "description": "Here's what I've found and my proposed plan:\n\n---\n\n## Classification\n\n**`src/utils/configValidator.ts`** — this file does **not** exist yet. The task is to create it.\n\n---\n\n## Pattern Discovery\n\n| Pattern | Source | How to reuse |\n|---|---|---|\n| Single-function utility files | `src/utils/debounce.ts`, `flatten.ts` | New file at `src/utils/configValidator.ts` |\n| Co-located tests | `src/utils/*.test.ts` | `configValidator.test.ts` next to source |\n| `Result<T, E>` discriminated union | `src/util",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "decompose-2625-260418-095233",
+  "source": "stage_diary",
+  "taskId": "decompose-2625-260418-095233",
+  "createdAt": "2026-04-18T09:59:16.049Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Utilities live in src/utils/ as single-function-per-file modules (e.g., debounce.ts, flatten.ts). Follow this pattern for new validators.\",\"scope\":\"src/utils/\"},{\"kind\":\"convention\",\"text\":\"Co-located tests use *.test.ts suffix next to source files in the same directory.\",\"scope\":\"src/utils/\"},{\"kind\":\"convention\",\"text\":\"Use Result<T, E> discriminated union from src/utils/result.ts for error handling instead of throwing.\",\"scope\":\"src/utils/result.ts\"},{\"kind\":\"decision\",\"text\":\"validateKodyConfig narrows unknown input to Record<string, unknown> via type guards before field validation.\",\"scope\":\"src/utils/configValidator.ts\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_srcutils_604694772387": {
+      "id": "conventions_srcutils_604694772387",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/",
+      "content": "Utilities live in src/utils/ as single-function-per-file modules (e.g., debounce.ts, flatten.ts). Follow this pattern for new validators.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:16.054Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2625-260418-095233",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutils_604696271390": {
+      "id": "conventions_srcutils_604696271390",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/",
+      "content": "Co-located tests use *.test.ts suffix next to source files in the same directory.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:16.056Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2625-260418-095233",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcutilsresultts_604697787726": {
+      "id": "conventions_srcutilsresultts_604697787726",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/utils/result.ts",
+      "content": "Use Result<T, E> discriminated union from src/utils/result.ts for error handling instead of throwing.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:16.057Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2625-260418-095233",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcutilsconfigvalidatorts_604699098468": {
+      "id": "facts_srcutilsconfigvalidatorts_604699098468",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/utils/configValidator.ts",
+      "content": "validateKodyConfig narrows unknown input to Record<string, unknown> via type guards before field validation.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T09:59:16.058Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:decompose-2625-260418-095233",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}
