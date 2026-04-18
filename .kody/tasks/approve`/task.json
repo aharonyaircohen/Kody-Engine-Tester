@@ -1,0 +1,43 @@
+{
+  "task_type": "chore",
+  "title": "Verify existing implementation of JWT-based auth with RBAC",
+  "description": "The task describes replacing session-based auth with JWT-based auth and adding RBAC roles (admin/editor/viewer), but the implementation already exists in this codebase. JwtService (src/auth/jwt-service.ts) provides HS256-signed access and refresh tokens with iat/exp fields. AuthService (src/auth/auth-service.ts) handles login/refresh/logout using Payload-backed users with PBKDF2 hashing and stores refreshToken/tokenExpiresAt/lastTokenUsedAt/lastLogin on user documents. The Users collection (src/collections/Users.ts) already has role field with admin/editor/viewer options. The withAuth HOC (src/auth/withAuth.ts) wraps all API routes with JWT validation and RBAC checks via checkRole. The SessionStore (src/auth/session-store.ts) is only used in tests, not in production auth routes. This task is to verify the existing implementation is complete and correct.",
+  "scope": [
+    "src/auth/jwt-service.ts",
+    "src/auth/jwt-service.test.ts",
+    "src/auth/auth-service.ts",
+    "src/auth/auth-service.test.ts",
+    "src/auth/withAuth.ts",
+    "src/auth/_auth.ts",
+    "src/auth/index.ts",
+    "src/collections/Users.ts",
+    "src/collections/Users.test.ts",
+    "src/middleware/auth-middleware.ts",
+    "src/middleware/auth-middleware.test.ts",
+    "src/middleware/role-guard.ts",
+    "src/middleware/role-guard.test.ts",
+    "src/app/api/auth/login.ts",
+    "src/app/api/auth/login.test.ts",
+    "src/app/api/auth/refresh.ts",
+    "src/app/api/auth/refresh.test.ts",
+    "src/app/api/auth/logout.ts",
+    "src/app/api/auth/logout.test.ts",
+    "src/app/api/auth/profile.ts",
+    "src/app/api/auth/profile.test.ts",
+    "src/app/api/auth/register.ts",
+    "src/app/api/auth/register.test.ts",
+    "src/migrations/20260322_233123_initial.ts",
+    "src/migrations/20260405_000000_add_users_permissions_lastLogin.ts",
+    "src/migrations/index.ts"
+  ],
+  "risk_level": "low",
+  "existing_patterns": [
+    "src/auth/jwt-service.ts: HS256 HMAC JWT service with sign/verify/blacklist and access/refresh token helpers",
+    "src/auth/auth-service.ts: Payload-backed AuthService with login/refresh/verifyAccessToken/logout using JwtService; PBKDF2 password verification matching Payload's 25000-iteration SHA-256",
+    "src/auth/withAuth.ts: HOC wrapper using extractBearerToken and checkRole for JWT auth with optional RBAC role enforcement",
+    "src/collections/Users.ts: Payload Users collection with role select (admin/editor/viewer), refreshToken, tokenExpiresAt, lastTokenUsedAt, lastLogin fields",
+    "src/auth/user-store.ts: Legacy in-memory UserStore with SHA-256 hashing and UserRole (admin/user/guest/student/instructor) — unused in production auth flow",
+    "src/auth/session-store.ts: In-memory SessionStore — unused in production auth routes, only in tests"
+  ],
+  "questions": []
+}

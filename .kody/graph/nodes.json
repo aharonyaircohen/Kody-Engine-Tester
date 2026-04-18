@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_sandboxexecution_environment_595207694542": {
+      "id": "thoughts_sandboxexecution_environment_595207694542",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "sandbox/execution environment",
+      "content": "Glob returned no files and sandbox was constrained to task directory only — code context was not available",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:52:31.994Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelinerisk_gates_595209994778": {
+      "id": "facts_pipelinerisk_gates_595209994778",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/risk gates",
+      "content": "HIGH complexity tasks (like auth migrations) trigger the risk gate and pause the pipeline at the plan stage",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:52:31.996Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_pipelinekody_595211699257": {
+      "id": "facts_pipelinekody_595211699257",
+      "type": "facts",
+      "hall": "facts",
+      "room": "pipeline/kody",
+      "content": "The @kody command initiates the full pipeline including risk gates and approval stages",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-18T12:52:31.998Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:approve`",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

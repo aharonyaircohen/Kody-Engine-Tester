@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "approve`",
+  "source": "stage_diary",
+  "taskId": "approve`",
+  "createdAt": "2026-04-18T12:52:31.987Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Glob returned no files and sandbox was constrained to task directory only — code context was not available\",\"scope\":\"sandbox/execution environment\"},{\"kind\":\"decision\",\"text\":\"HIGH complexity tasks (like auth migrations) trigger the risk gate and pause the pipeline at the plan stage\",\"scope\":\"pipeline/risk gates\"},{\"kind\":\"decision\",\"text\":\"The @kody command initiates the full pipeline including risk gates and approval stages\",\"scope\":\"pipeline/kody\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
