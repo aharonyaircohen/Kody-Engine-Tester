@@ -42,5 +42,8 @@
   },
   "watch": {
     "enabled": true
-  }
+  },
+  "testRequirements": [
+    { "pattern": "src/app/api/**/route.ts", "requireSibling": "{name}.test{ext}" }
+  ]
 }
