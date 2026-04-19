@@ -5,7 +5,7 @@
  * formatDuration(500)        // "500ms"
  * formatDuration(1500)      // "1.5s"
  * formatDuration(65000)     // "1m 5s"
- * formatDuration(3661000)   // "1h 1m 1s"
+ * formatDuration(3661000)   // "1h 1m"
  */
 export function formatDuration(ms: number): string {
   if (ms < 1000) {
