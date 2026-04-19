@@ -6,15 +6,9 @@ vi.mock('@/services/progress', () => ({
   getPayloadInstance: (...args: unknown[]) => mockGetPayloadInstance(...args),
 }))
 
-// Mirrors the route.ts handler logic — tests behaviour without the withAuth wrapper
-async function getUnreadCountHandler(userId: string | undefined, mockService: { getUnread: (userId: string) => Promise<unknown[]> }) {
-  if (!userId) {
-    return new Response(JSON.stringify({ error: 'Authentication required' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
+// Mirrors the route.ts handler logic — withAuth handles 401 before this is called,
+// so this tests only the authenticated path
+async function getUnreadCountHandler(userId: string, mockService: { getUnread: (userId: string) => Promise<unknown[]> }) {
   const unread = await mockService.getUnread(userId)
 
   return new Response(
@@ -26,14 +20,6 @@ async function getUnreadCountHandler(userId: string | undefined, mockService: { 
 describe('GET /api/notifications/unread-count', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-  })
-
-  it('returns 401 when not authenticated', async () => {
-    const response = await getUnreadCountHandler(undefined, { getUnread: vi.fn() })
-
-    expect(response.status).toBe(401)
-    const body = await response.json()
-    expect(body).toHaveProperty('error', 'Authentication required')
   })
 
   it('returns unreadCount for authenticated user', async () => {
