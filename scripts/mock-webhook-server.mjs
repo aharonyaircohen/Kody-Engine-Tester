@@ -1,3 +1,4 @@
+// kody2-v0.2.7 live verification
 #!/usr/bin/env node
 /**
  * Mock webhook server for local chat E2E testing.
