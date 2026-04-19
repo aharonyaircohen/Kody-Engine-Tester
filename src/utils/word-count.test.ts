@@ -6,6 +6,13 @@ describe('wordCount', () => {
     expect(wordCount('')).toBe(0)
   })
 
+  it('returns 0 for whitespace-only string', () => {
+    expect(wordCount('   ')).toBe(0)
+    expect(wordCount('\t')).toBe(0)
+    expect(wordCount('\n')).toBe(0)
+    expect(wordCount(' \t\n ')).toBe(0)
+  })
+
   it('returns 1 for a single word', () => {
     expect(wordCount('hello')).toBe(1)
     expect(wordCount('x')).toBe(1)
