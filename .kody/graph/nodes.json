@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "thoughts_testing_1657466087209": {
+      "id": "thoughts_testing_1657466087209",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "testing",
+      "content": "Tests that reference internal spy refs like `_gradebookSpyRef` on a module will fail if that property was never exported — always verify the property actually exists on the module before using it in t",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-19T04:57:00.265Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/src/services/gradebook-payload\")'.",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_testing_1657467741543": {
+      "id": "facts_testing_1657467741543",
+      "type": "facts",
+      "hall": "facts",
+      "room": "testing",
+      "content": "When a spy ref is unavailable, the correct substitute is calling the actual service method directly (e.g., `PayloadGradebookService.getStudentGradebook()`) rather than trying to patch a non-existent e",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-19T04:57:00.266Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/src/services/gradebook-payload\")'.",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcservicespayload_1657468842678": {
+      "id": "conventions_srcservicespayload_1657468842678",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/services/payload",
+      "content": "Payload service methods are accessed via the class itself, not via module-level spy references — prefer direct class instantiation or static method calls in test setup.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-19T04:57:00.267Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/src/services/gradebook-payload\")'.",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

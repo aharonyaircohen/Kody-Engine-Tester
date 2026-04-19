@@ -1,0 +1,42 @@
+{
+  "taskId": "-Engine-Tester/src/services/gradebook-payload\")'.",
+  "state": "running",
+  "stages": {
+    "taskify": {
+      "state": "completed",
+      "completedAt": "2026-04-19T04:46:46.258Z",
+      "retries": 1,
+      "outputFile": "task.json",
+      "promptTokens": 2490
+    },
+    "plan": {
+      "state": "completed",
+      "retries": 0
+    },
+    "build": {
+      "state": "pending",
+      "retries": 0
+    },
+    "verify": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review": {
+      "state": "pending",
+      "retries": 0
+    },
+    "review-fix": {
+      "state": "pending",
+      "retries": 0
+    },
+    "ship": {
+      "state": "pending",
+      "retries": 0
+    }
+  },
+  "createdAt": "2026-04-19T04:37:59.008Z",
+  "updatedAt": "2026-04-19T04:46:48.897Z",
+  "sessions": {
+    "explore": "3a041326-1b8f-4684-ac87-17cbac8f333b"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "I can't write directly to the project directory without permission. Let ",
+  "description": "I can't write directly to the project directory without permission. Let me present the complete implementation here as text:\n\n---\n\n**Diagnosis of previous failure:**  \nThe test at lines 80 and 147 referenced `_gradebookSpyRef` on `gradebook-payload.ts`, but that property does not exist on the module. The previous implementation attempted to export an internal spy reference that was never defined.\n\n**Fix:** Use `PayloadGradebookService.getStudentGradebook()` directly (which exists) instead of the",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}

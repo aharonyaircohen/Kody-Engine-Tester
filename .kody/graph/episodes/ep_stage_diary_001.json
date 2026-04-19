@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "-Engine-Tester/src/services/gradebook-payload\")'.",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/src/services/gradebook-payload\")'.",
+  "createdAt": "2026-04-19T04:57:00.260Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Tests that reference internal spy refs like `_gradebookSpyRef` on a module will fail if that property was never exported — always verify the property actually exists on the module before using it in t\",\"scope\":\"testing\"},{\"kind\":\"lesson\",\"text\":\"When a spy ref is unavailable, the correct substitute is calling the actual service method directly (e.g., `PayloadGradebookService.getStudentGradebook()`) rather than trying to patch a non-existent e\",\"scope\":\"testing\"},{\"kind\":\"convention\",\"text\":\"Payload service methods are accessed via the class itself, not via module-level spy references — prefer direct class instantiation or static method calls in test setup.\",\"scope\":\"src/services/payload\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}
