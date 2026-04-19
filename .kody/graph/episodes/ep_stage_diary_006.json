@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_006",
+  "runId": "-Engine-Tester/pull/2868",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/pull/2868",
+  "createdAt": "2026-04-19T04:43:48.838Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Tests using PostgreSQL constraint names (e.g., 'submissions_assignment_student_unique') will break on different backends; abstract the error or mock generically.\",\"scope\":\"src/app/api/assignments/[id]/submit/route.test.ts\"},{\"kind\":\"decision\",\"text\":\"Duplicate submission detection is delegated to the DB unique constraint on (assignment, student) — no pre-check needed, race-safe by default.\",\"scope\":\"Submissions collection\"},{\"kind\":\"convention\",\"text\":\"Student-facing endpoints read user identity from withAuth context (user.id), never from the request body — body carries only business data.\",\"scope\":\"api routes\"},{\"kind\":\"convention\",\"text\":\"API responses follow { success, data } | { success: false, error } shape, mirroring the quiz submit reference pattern.\",\"scope\":\"api routes\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_004",
+  "runId": "-Engine-Tester/pull/2868",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/pull/2868",
+  "createdAt": "2026-04-19T04:39:09.921Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"If a route returns 409 for duplicate submissions, the DB unique constraint must actually exist in the schema — code comments asserting it are not enough.\",\"scope\":\"Submissions schema\"},{\"kind\":\"decision\",\"text\":\"Quiz submit pattern (getPayload, withAuth, findByID, {success,data}/{success:false,error}) is the canonical reference for entity-submission endpoints in this codebase.\",\"scope\":\"API route patterns\"},{\"kind\":\"gotcha\",\"text\":\"For submission endpoints, always use user.id from the authenticated context (withAuth) rather than studentId from the request body to prevent auth bypass.\",\"scope\":\"auth/submission routes\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

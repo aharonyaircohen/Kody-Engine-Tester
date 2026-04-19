@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_005",
+  "runId": "-Engine-Tester/pull/2868",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/pull/2868",
+  "createdAt": "2026-04-19T04:41:44.274Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"409 duplicate-detection logic that relies on a DB unique constraint is fragile — if the constraint doesn't exist in the schema, concurrent submissions silently create duplicates. Always verify the con\",\"scope\":\"src/app/api/assignments/[id]/submit/route.ts\"},{\"kind\":\"lesson\",\"text\":\"studentId must come from the authenticated user context (user.id), never from the request body, to prevent auth bypass.\",\"scope\":\"auth\"},{\"kind\":\"convention\",\"text\":\"This codebase uses getPayload({ config: configPromise }) and withAuth middleware for API routes, not direct payload access.\",\"scope\":\"src/app/api\"},{\"kind\":\"convention\",\"text\":\"Success responses follow { success, data } shape; errors follow { success: false, error } — matching the quiz submit pattern.\",\"scope\":\"API responses\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_002",
+  "runId": "-Engine-Tester/pull/2868",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/pull/2868",
+  "createdAt": "2026-04-19T04:31:20.152Z",
+  "rawContent": "{\"stage\":\"review\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"Accepting studentId from request body allows any authenticated student to impersonate another student — always use user.id from the authenticated session instead\",\"scope\":\"auth\"},{\"kind\":\"gotcha\",\"text\":\"A check-then-insert pattern (find duplicate, then create) has a race condition window where concurrent requests can both pass the check and insert duplicates\",\"scope\":\"src/app/api/assignments/[id]/submit\"},{\"kind\":\"convention\",\"text\":\"Use withAuth middleware to gate endpoints and extract user.id from the authenticated context — never trust client-supplied identity fields\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"Duplicate submission protection must use a database constraint or transaction, not a find-then-insert in two separate calls\",\"scope\":\"data integrity\"},{\"kind\":\"decision\",\"text\":\"The reference pattern for quiz submission (findByID validation + {success, data} response shape) is correct and should be replicated, but auth must",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review"
+  }
+}

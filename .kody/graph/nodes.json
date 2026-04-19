@@ -48,6 +48,278 @@
         "kind:lesson"
       ],
       "confidence": 0.7
+    },
+    "thoughts_auth_943550408574": {
+      "id": "thoughts_auth_943550408574",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth",
+      "content": "Accepting studentId from request body allows any authenticated student to impersonate another student — always use user.id from the authenticated session instead",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-19T04:31:20.156Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiassignmentsidsubmit_943552199263": {
+      "id": "thoughts_srcappapiassignmentsidsubmit_943552199263",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/assignments/[id]/submit",
+      "content": "A check-then-insert pattern (find duplicate, then create) has a race condition window where concurrent requests can both pass the check and insert duplicates",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-19T04:31:20.158Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_auth_943553543274": {
+      "id": "conventions_auth_943553543274",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "auth",
+      "content": "Use withAuth middleware to gate endpoints and extract user.id from the authenticated context — never trust client-supplied identity fields",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-19T04:31:20.159Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_data_integrity_943555143235": {
+      "id": "facts_data_integrity_943555143235",
+      "type": "facts",
+      "hall": "facts",
+      "room": "data integrity",
+      "content": "Duplicate submission protection must use a database constraint or transaction, not a find-then-insert in two separate calls",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-19T04:31:20.161Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcappapi_943556575592": {
+      "id": "facts_srcappapi_943556575592",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/app/api",
+      "content": "The reference pattern for quiz submission (findByID validation + {success, data} response shape) is correct and should be replicated, but auth must use user.id not body params",
+      "episodeId": "ep_stage_diary_002",
+      "validFrom": "2026-04-19T04:31:20.162Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_1330842406635": {
+      "id": "facts_auth_1330842406635",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "The authenticated user identity must come from the session or token, never from client-supplied body parameters — body studentId should be ignored or validated against the auth identity.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-19T04:37:47.448Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:-Engine-Tester/pull/2868",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "facts_srcappapiassignmentsidsubmitroutets_1330843900096": {
+      "id": "facts_srcappapiassignmentsidsubmitroutets_1330843900096",
+      "type": "facts",
+      "hall": "facts",
+      "room": "src/app/api/assignments/[id]/submit/route.ts",
+      "content": "To prevent race-condition duplicate submissions, use a unique database constraint on (assignmentId, studentId) and handle the constraint violation error, rather than a check-then-insert pattern.",
+      "episodeId": "ep_stage_diary_003",
+      "validFrom": "2026-04-19T04:37:47.450Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:-Engine-Tester/pull/2868",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_submissions_schema_1413318597116": {
+      "id": "thoughts_submissions_schema_1413318597116",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "Submissions schema",
+      "content": "If a route returns 409 for duplicate submissions, the DB unique constraint must actually exist in the schema — code comments asserting it are not enough.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-19T04:39:09.924Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_api_route_patterns_1413320068605": {
+      "id": "facts_api_route_patterns_1413320068605",
+      "type": "facts",
+      "hall": "facts",
+      "room": "API route patterns",
+      "content": "Quiz submit pattern (getPayload, withAuth, findByID, {success,data}/{success:false,error}) is the canonical reference for entity-submission endpoints in this codebase.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-19T04:39:09.926Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_authsubmission_routes_1413321428795": {
+      "id": "thoughts_authsubmission_routes_1413321428795",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "auth/submission routes",
+      "content": "For submission endpoints, always use user.id from the authenticated context (withAuth) rather than studentId from the request body to prevent auth bypass.",
+      "episodeId": "ep_stage_diary_004",
+      "validFrom": "2026-04-19T04:39:09.927Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiassignmentsidsubmitroutets_1567671207278": {
+      "id": "thoughts_srcappapiassignmentsidsubmitroutets_1567671207278",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/assignments/[id]/submit/route.ts",
+      "content": "409 duplicate-detection logic that relies on a DB unique constraint is fragile — if the constraint doesn't exist in the schema, concurrent submissions silently create duplicates. Always verify the con",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-19T04:41:44.277Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:-Engine-Tester/pull/2868",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_auth_1567673003186": {
+      "id": "facts_auth_1567673003186",
+      "type": "facts",
+      "hall": "facts",
+      "room": "auth",
+      "content": "studentId must come from the authenticated user context (user.id), never from the request body, to prevent auth bypass.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-19T04:41:44.279Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:-Engine-Tester/pull/2868",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_srcappapi_1567674803241": {
+      "id": "conventions_srcappapi_1567674803241",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "src/app/api",
+      "content": "This codebase uses getPayload({ config: configPromise }) and withAuth middleware for API routes, not direct payload access.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-19T04:41:44.280Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:-Engine-Tester/pull/2868",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_api_responses_1567676239726": {
+      "id": "conventions_api_responses_1567676239726",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "API responses",
+      "content": "Success responses follow { success, data } shape; errors follow { success: false, error } — matching the quiz submit pattern.",
+      "episodeId": "ep_stage_diary_005",
+      "validFrom": "2026-04-19T04:41:44.282Z",
+      "validTo": null,
+      "tags": [
+        "stage:review-fix",
+        "task:-Engine-Tester/pull/2868",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "thoughts_srcappapiassignmentsidsubmitroutetestts_1692236242514": {
+      "id": "thoughts_srcappapiassignmentsidsubmitroutetestts_1692236242514",
+      "type": "thoughts",
+      "hall": "thoughts",
+      "room": "src/app/api/assignments/[id]/submit/route.test.ts",
+      "content": "Tests using PostgreSQL constraint names (e.g., 'submissions_assignment_student_unique') will break on different backends; abstract the error or mock generically.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-19T04:43:48.842Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:gotcha"
+      ],
+      "confidence": 0.7
+    },
+    "facts_submissions_collection_1692238105317": {
+      "id": "facts_submissions_collection_1692238105317",
+      "type": "facts",
+      "hall": "facts",
+      "room": "Submissions collection",
+      "content": "Duplicate submission detection is delegated to the DB unique constraint on (assignment, student) — no pre-check needed, race-safe by default.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-19T04:43:48.844Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:decision"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_api_routes_1692239604027": {
+      "id": "conventions_api_routes_1692239604027",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "api routes",
+      "content": "Student-facing endpoints read user identity from withAuth context (user.id), never from the request body — body carries only business data.",
+      "episodeId": "ep_stage_diary_006",
+      "validFrom": "2026-04-19T04:43:48.845Z",
+      "validTo": null,
+      "tags": [
+        "stage:review",
+        "task:-Engine-Tester/pull/2868",
+        "kind:convention"
+      ],
+      "confidence": 0.7
     }
   }
 }

@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_003",
+  "runId": "-Engine-Tester/pull/2868",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/pull/2868",
+  "createdAt": "2026-04-19T04:37:47.445Z",
+  "rawContent": "{\"stage\":\"review-fix\",\"insights\":[{\"kind\":\"gotcha\",\"text\":\"The route accepts studentId from the request body and uses it directly, bypassing the authenticated user's identity — any student can impersonate another by passing a different studentId in the body.\",\"scope\":\"auth\"},{\"kind\":\"gotcha\",\"text\":\"A check-then-insert pattern (find duplicate then create) has a race condition: two concurrent requests can both pass the duplicate check and create two submissions.\",\"scope\":\"src/app/api/assignments/[id]/submit/route.ts\"},{\"kind\":\"lesson\",\"text\":\"The authenticated user identity must come from the session or token, never from client-supplied body parameters — body studentId should be ignored or validated against the auth identity.\",\"scope\":\"auth\"},{\"kind\":\"lesson\",\"text\":\"To prevent race-condition duplicate submissions, use a unique database constraint on (assignmentId, studentId) and handle the constraint violation error, rather than a check-then-insert pattern.\",\"scope\":\"src/app/api/assign",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "review-fix"
+  }
+}
