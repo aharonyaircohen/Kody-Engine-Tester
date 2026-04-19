@@ -1,0 +1,13 @@
+{
+  "id": "ep_stage_diary_001",
+  "runId": "-Engine-Tester/pull/2868",
+  "source": "stage_diary",
+  "taskId": "-Engine-Tester/pull/2868",
+  "createdAt": "2026-04-19T04:28:19.373Z",
+  "rawContent": "{\"stage\":\"build\",\"insights\":[{\"kind\":\"convention\",\"text\":\"Tests live co-located next to route files as route.test.ts, not in a separate __tests__ dir.\",\"scope\":\"testing\"},{\"kind\":\"convention\",\"text\":\"Response envelope is always { success, data } or { success: false, error: string } — never raw throw/catch.\",\"scope\":\"API routes\"},{\"kind\":\"lesson\",\"text\":\"When implementing a submit endpoint, validate existence first (404), then business rules (400), then duplicates (409), before creating (201). Order matters for correct error precedence.\",\"scope\":\"API routes\"}]}",
+  "extractedNodeIds": [],
+  "linkedFiles": [],
+  "metadata": {
+    "stage": "build"
+  }
+}

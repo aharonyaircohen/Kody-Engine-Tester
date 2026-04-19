@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "nodes": {
+    "conventions_testing_762773408812": {
+      "id": "conventions_testing_762773408812",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "testing",
+      "content": "Tests live co-located next to route files as route.test.ts, not in a separate __tests__ dir.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-19T04:28:19.379Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2868",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "conventions_api_routes_762774714190": {
+      "id": "conventions_api_routes_762774714190",
+      "type": "conventions",
+      "hall": "conventions",
+      "room": "API routes",
+      "content": "Response envelope is always { success, data } or { success: false, error: string } — never raw throw/catch.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-19T04:28:19.380Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2868",
+        "kind:convention"
+      ],
+      "confidence": 0.7
+    },
+    "facts_api_routes_762775940179": {
+      "id": "facts_api_routes_762775940179",
+      "type": "facts",
+      "hall": "facts",
+      "room": "API routes",
+      "content": "When implementing a submit endpoint, validate existence first (404), then business rules (400), then duplicates (409), before creating (201). Order matters for correct error precedence.",
+      "episodeId": "ep_stage_diary_001",
+      "validFrom": "2026-04-19T04:28:19.382Z",
+      "validTo": null,
+      "tags": [
+        "stage:build",
+        "task:-Engine-Tester/pull/2868",
+        "kind:lesson"
+      ],
+      "confidence": 0.7
+    }
+  }
+}

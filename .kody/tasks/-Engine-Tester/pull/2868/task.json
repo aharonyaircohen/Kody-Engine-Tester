@@ -1,0 +1,27 @@
+{
+  "task_type": "feature",
+  "title": "Add assignment submission endpoint",
+  "description": "Add a POST /api/assignments/[id]/submit endpoint that accepts { studentId, content, attachmentIds? }, returns 404 if assignment not found, 400 if past due, 409 if duplicate submission, and 201 with the created Submissions record on success. Follow the quiz submit endpoint pattern, use getPayload, and add route tests covering all four cases.",
+  "scope": [
+    "src/app/api/assignments/[id]/submit/route.ts",
+    "src/app/api/assignments/[id]/submit/route.test.ts",
+    "src/collections/Submissions.ts",
+    "src/app/api/quizzes/[id]/submit/route.ts"
+  ],
+  "risk_level": "medium",
+  "existing_patterns": [
+    {
+      "file": "src/app/api/quizzes/[id]/submit/route.ts",
+      "description": "Reference pattern for submit-style endpoint using getPayload, returning { success, data } or { success: false, error } responses"
+    },
+    {
+      "file": "src/collections/Submissions.ts",
+      "description": "Existing Submissions Payload collection to reuse without schema changes"
+    },
+    {
+      "file": "src/utils/result.ts",
+      "description": "Result<T, E> discriminated union for explicit error handling"
+    }
+  ],
+  "questions": []
+}
