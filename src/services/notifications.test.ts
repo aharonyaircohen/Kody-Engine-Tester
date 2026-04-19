@@ -37,7 +37,7 @@ describe('NotificationService', () => {
     it('should create notification without optional link', async () => {
       mockPayload.create.mockResolvedValue({ id: '2' })
 
-      await service.notify('user-1', 'grade', 'Graded', 'Your assignment was graded')
+      await service.notify('user-1', 'discussion_reply', 'New reply', 'Someone replied to your post')
 
       expect(mockPayload.create).toHaveBeenCalledWith({
         collection: 'notifications',

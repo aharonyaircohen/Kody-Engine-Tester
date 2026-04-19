@@ -1,4 +1,4 @@
-export type RbacRole = 'admin' | 'editor' | 'viewer'
+export type RbacRole = 'admin' | 'editor' | 'viewer' | 'instructor' | 'student'
 
 export interface TokenPayload {
   userId: string

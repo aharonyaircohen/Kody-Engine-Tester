@@ -1,6 +1,6 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
-export type NotificationType = 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'announcement'
+export type NotificationType = 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'discussion_reply' | 'announcement'
 
 export const Notifications: CollectionConfig = {
   slug: 'notifications',
@@ -41,6 +41,7 @@ export const Notifications: CollectionConfig = {
         { label: 'Grade', value: 'grade' },
         { label: 'Deadline', value: 'deadline' },
         { label: 'Discussion', value: 'discussion' },
+        { label: 'Discussion Reply', value: 'discussion_reply' },
         { label: 'Announcement', value: 'announcement' },
       ],
     },

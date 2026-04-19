@@ -28,6 +28,7 @@ describe('DiscussionsStore', () => {
       expect(post.parentPost).toBeNull()
       expect(post.isPinned).toBe(false)
       expect(post.isResolved).toBe(false)
+      expect(post.isDeleted).toBe(false)
       expect(post.createdAt).toBeInstanceOf(Date)
       expect(post.updatedAt).toBeInstanceOf(Date)
     })
@@ -179,6 +180,73 @@ describe('DiscussionsStore', () => {
       store.resolve(post.id)
       const unresolved = store.unresolve(post.id)
       expect(unresolved.isResolved).toBe(false)
+    })
+  })
+
+  // ─── softDelete ─────────────────────────────────────────────────────────────
+
+  describe('softDelete', () => {
+    it('should set isDeleted to true', () => {
+      const post = store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Test') })
+      expect(post.isDeleted).toBe(false)
+      const deleted = store.softDelete(post.id)
+      expect(deleted).not.toBeNull()
+      expect(deleted!.isDeleted).toBe(true)
+    })
+
+    it('should return null for non-existent id', () => {
+      expect(store.softDelete('missing')).toBeNull()
+    })
+
+    it('should exclude soft-deleted posts from getAll', () => {
+      const p1 = store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Visible') })
+      store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Deleted') })
+      store.softDelete(store.getAll()[1]!.id)
+      const all = store.getAll()
+      expect(all).toHaveLength(1)
+      expect(all[0].id).toBe(p1.id)
+    })
+
+    it('should exclude soft-deleted posts from getByLesson', () => {
+      store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Visible') })
+      const deleted = store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Gone') })
+      store.softDelete(deleted.id)
+      const results = store.getByLesson('l1')
+      expect(results).toHaveLength(1)
+      expect(results[0].content.root.children[0].text).toBe('Visible')
+    })
+
+    it('should exclude soft-deleted posts from getReplies', () => {
+      const parent = store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Parent') })
+      store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Visible reply'), parentPost: parent.id })
+      const deletedReply = store.create({
+        lesson: 'l1',
+        author: 'a1',
+        content: makeRichText('Gone reply'),
+        parentPost: parent.id,
+      })
+      store.softDelete(deletedReply.id)
+      const replies = store.getReplies(parent.id)
+      expect(replies).toHaveLength(1)
+      expect(replies[0].content.root.children[0].text).toBe('Visible reply')
+    })
+  })
+
+  // ─── getReplyCount ─────────────────────────────────────────────────────────
+
+  describe('getReplyCount', () => {
+    it('should return 0 for a post with no replies', () => {
+      const post = store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Alone') })
+      expect(store.getReplyCount(post.id)).toBe(0)
+    })
+
+    it('should return correct count of non-deleted replies', () => {
+      const parent = store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Parent') })
+      store.create({ lesson: 'l1', author: 'a1', content: makeRichText('R1'), parentPost: parent.id })
+      store.create({ lesson: 'l1', author: 'a1', content: makeRichText('R2'), parentPost: parent.id })
+      const deleted = store.create({ lesson: 'l1', author: 'a1', content: makeRichText('Deleted'), parentPost: parent.id })
+      store.softDelete(deleted.id)
+      expect(store.getReplyCount(parent.id)).toBe(2)
     })
   })
 })

@@ -12,12 +12,14 @@ export interface AuthOptions {
 
 /**
  * Role hierarchy: higher numbers include permissions of lower numbers
- * admin (3) > editor (2) > viewer (1)
+ * admin (4) > editor (3) > instructor (2) > student (1) > viewer (0)
  */
 export const ROLE_HIERARCHY: Record<RbacRole, number> = {
-  admin: 3,
-  editor: 2,
-  viewer: 1,
+  admin: 4,
+  editor: 3,
+  instructor: 2,
+  student: 1,
+  viewer: 0,
 }
 
 /**

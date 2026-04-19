@@ -16,6 +16,7 @@ export interface DiscussionPost {
   parentPost: string | null
   isPinned: boolean
   isResolved: boolean
+  isDeleted: boolean
   createdAt: Date
   updatedAt: Date
 }
@@ -37,9 +38,9 @@ export class DiscussionsStore {
   private posts: Map<string, DiscussionPost> = new Map()
 
   getAll(): DiscussionPost[] {
-    return Array.from(this.posts.values()).sort(
-      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
-    )
+    return Array.from(this.posts.values())
+      .filter((p) => !p.isDeleted)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
   }
 
   getById(id: string): DiscussionPost | null {
@@ -56,6 +57,7 @@ export class DiscussionsStore {
       parentPost: input.parentPost ?? null,
       isPinned: false,
       isResolved: false,
+      isDeleted: false,
       createdAt: now,
       updatedAt: now,
     }
@@ -81,12 +83,24 @@ export class DiscussionsStore {
     return this.posts.delete(id)
   }
 
+  softDelete(id: string): DiscussionPost | null {
+    const post = this.posts.get(id)
+    if (!post) return null
+    const updated: DiscussionPost = { ...post, isDeleted: true, updatedAt: new Date() }
+    this.posts.set(id, updated)
+    return updated
+  }
+
+  getReplyCount(postId: string): number {
+    return this.getAll().filter((p) => p.parentPost === postId && !p.isDeleted).length
+  }
+
   getByLesson(lessonId: string): DiscussionPost[] {
     return this.getAll().filter((p) => p.lesson === lessonId)
   }
 
   getReplies(parentId: string): DiscussionPost[] {
-    return this.getAll().filter((p) => p.parentPost === parentId)
+    return this.getAll().filter((p) => p.parentPost === parentId && !p.isDeleted)
   }
 
   pin(id: string): DiscussionPost {

@@ -30,6 +30,7 @@ describe('Notifications collection config', () => {
     expect(values).toContain('grade')
     expect(values).toContain('deadline')
     expect(values).toContain('discussion')
+    expect(values).toContain('discussion_reply')
     expect(values).toContain('announcement')
   })
 

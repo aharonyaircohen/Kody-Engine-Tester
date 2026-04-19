@@ -549,7 +549,7 @@ export interface QuizAttempt {
 export interface Notification {
   id: number;
   recipient: number | User;
-  type: 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'announcement';
+  type: 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'discussion_reply' | 'announcement';
   title: string;
   message: string;
   link?: string | null;
