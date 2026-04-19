@@ -57,7 +57,10 @@ export function withAuth(
   handler: (req: NextRequest, context: RouteContext, routeParams?: any) => Promise<Response>,
   options: WithAuthOptions = {}
 ) {
-  return async (req: NextRequest, routeParams?: unknown): Promise<Response> => {
+  return async (
+    req: NextRequest,
+    routeParams?: unknown
+  ): Promise<Response> => {
     const authHeader = req.headers.get('authorization')
     const token = extractBearerToken(authHeader)
 

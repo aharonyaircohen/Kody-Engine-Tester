@@ -1,0 +1,8 @@
+{
+  "task_type": "chore",
+  "title": "Now I have full context from the task description and discussion. Let me",
+  "description": "Now I have full context from the task description and discussion. Let me classify this task.\n\n```json\n{\n  \"task_type\": \"feature\",\n  \"title\": \"Add REST API for discussions\",\n  \"description\": \"Implement a complete REST API surface for discussions under src/app/api/discussions/ using the existing DiscussionsStore from src/collections/Discussions.ts. Four route files are required: GET (list by lesson, newest first), POST (create a post), PATCH (update content/pin/resolve flags), and DELETE (remove a",
+  "scope": [],
+  "risk_level": "low",
+  "questions": []
+}
