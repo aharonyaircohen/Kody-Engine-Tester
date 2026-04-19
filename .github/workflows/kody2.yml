@@ -23,57 +23,20 @@ jobs:
       issues: write
       pull-requests: write
       contents: write
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.KODY_TOKEN || github.token }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
 
-      - name: Setup Python (for LiteLLM)
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install LiteLLM
-        run: pip install 'litellm[proxy]'
-
-      - name: Install project dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Configure git identity
-        run: |
-          git config user.name  "kody2-bot"
-          git config user.email "kody2-bot@users.noreply.github.com"
-
-      - name: Run kody-lean
-        env:
-          GH_TOKEN:           ${{ secrets.GH_PAT }}
-          GH_PAT:             ${{ secrets.GH_PAT }}
-          MINIMAX_API_KEY:    ${{ secrets.MINIMAX_API_KEY }}
-          ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
-          OPENAI_API_KEY:     ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          ISSUE="${{ github.event.inputs.issue_number || github.event.issue.number }}"
-          npx -y -p @kody-ade/engine@latest kody-lean run --issue "$ISSUE"
-
-      - name: Upload run artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: kody2-run-${{ github.run_id }}
-          path: .kody-lean/
-          if-no-files-found: ignore
-          retention-days: 14
+      - env:
+          ALL_SECRETS: ${{ toJSON(secrets) }}
+        run: npx -y -p @kody-ade/engine@latest kody-lean kody2 --issue ${{ github.event.inputs.issue_number || github.event.issue.number }}
