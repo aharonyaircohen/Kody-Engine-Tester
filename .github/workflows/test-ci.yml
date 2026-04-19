@@ -7,5 +7,11 @@ jobs:
   health:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: corepack enable && pnpm install --frozen-lockfile
       - run: echo "CI health check trigger $(date)"
       - run: pnpm run test:int
