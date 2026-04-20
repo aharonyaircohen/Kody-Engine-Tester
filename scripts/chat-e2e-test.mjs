@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// End-to-end test for the kody chat --poll flow, orchestrating workflow trigger, message enqueue, and webhook verification.
 /**
  * E2E test for the kody chat --poll flow.
  *
