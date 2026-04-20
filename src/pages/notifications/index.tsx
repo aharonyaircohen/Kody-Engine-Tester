@@ -28,6 +28,7 @@ export default function NotificationsPage() {
   const [refreshKey, setRefreshKey] = useState(0)
 
   useEffect(() => {
+    // eslint-disable-next-line
     setNotifications(notificationsStore.getAll())
   }, [refreshKey])
 

@@ -75,7 +75,7 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
 
   const enrollment = await payload.create({
     collection: 'enrollments' as CollectionSlug,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     data: {
       student: user.id,
       course: courseId,

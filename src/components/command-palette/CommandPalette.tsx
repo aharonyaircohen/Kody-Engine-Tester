@@ -37,6 +37,7 @@ export function CommandPalette({
   const [activeIndex, setActiveIndex] = useState(-1)
 
   useEffect(() => {
+    // eslint-disable-next-line
     setActiveIndex(-1)
   }, [query, isOpen])
 

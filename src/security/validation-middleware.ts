@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { SchemaError } from '../utils/schema'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 interface Schema {
   parse(input: unknown): any
   _validate(input: unknown): Record<string, any>
@@ -14,7 +14,7 @@ export interface ValidateConfig {
   params?: Schema
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 export interface ValidatedRequest extends NextRequest {
   __validated__?: {
     body?: Record<string, any>

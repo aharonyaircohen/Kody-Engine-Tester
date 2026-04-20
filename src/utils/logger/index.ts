@@ -77,7 +77,7 @@ function createLoggerInternal(options: LoggerOptions = {}): Logger {
   const minLevel: LogLevel = options.level ?? 'info'
   const formatter: LogFormatter = options.formatter ?? prettyFormatter
   const transports: LogTransport[] = options.transports ?? [consoleTransport as unknown as LogTransport]
-  let context: Record<string, unknown> = options.context ?? {}
+  const context: Record<string, unknown> = options.context ?? {}
 
   function dispatch(level: LogLevel, message: string, ctx?: Record<string, unknown>): void {
     if (LEVEL_ORDER[level] < LEVEL_ORDER[minLevel]) return

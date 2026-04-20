@@ -13,7 +13,7 @@ function isValidEmail(email: string): boolean {
 export default function ContactFormPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const editId = searchParams.get('id')
+  const editId = searchParams?.get('id') ?? null
   const isEditMode = Boolean(editId)
 
   const [firstName, setFirstName] = useState('')

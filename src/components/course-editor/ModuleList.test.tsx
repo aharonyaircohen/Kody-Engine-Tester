@@ -53,8 +53,8 @@ describe('ModuleList', () => {
     })
 
     it('should render a module with its title', () => {
-      const module = makeModule({ title: 'Intro to React' })
-      render(<ModuleList {...defaultProps} modules={[module]} />)
+      const mod = makeModule({ title: 'Intro to React' })
+      render(<ModuleList {...defaultProps} modules={[mod]} />)
       expect(screen.getByText('Intro to React')).toBeDefined()
     })
 
@@ -69,12 +69,12 @@ describe('ModuleList', () => {
     })
 
     it('should render lessons inside their module', () => {
-      const module = makeModule()
+      const mod = makeModule()
       const lesson = makeLesson({ title: 'Hello World Lesson' })
       render(
         <ModuleList
           {...defaultProps}
-          modules={[module]}
+          modules={[mod]}
           lessons={{ 'mod-1': [lesson] }}
         />,
       )
@@ -100,9 +100,9 @@ describe('ModuleList', () => {
     })
 
     it('should not call onReorder when dropping a module on itself', () => {
-      const module = makeModule({ id: 'm1', order: 0 })
+      const mod = makeModule({ id: 'm1', order: 0 })
       const onReorder = vi.fn()
-      render(<ModuleList {...defaultProps} modules={[module]} onReorder={onReorder} />)
+      render(<ModuleList {...defaultProps} modules={[mod]} onReorder={onReorder} />)
 
       const item = screen.getByTestId('module-item')
       fireEvent.dragStart(item, { dataTransfer: { setData: vi.fn(), effectAllowed: '' } })
@@ -122,17 +122,17 @@ describe('ModuleList', () => {
     })
 
     it('should call onDeleteModule with module id when delete clicked', () => {
-      const module = makeModule({ id: 'mod-42', title: 'Delete Me' })
+      const mod = makeModule({ id: 'mod-42', title: 'Delete Me' })
       const onDeleteModule = vi.fn()
-      render(<ModuleList {...defaultProps} modules={[module]} onDeleteModule={onDeleteModule} />)
+      render(<ModuleList {...defaultProps} modules={[mod]} onDeleteModule={onDeleteModule} />)
       fireEvent.click(screen.getByTestId('delete-module'))
       expect(onDeleteModule).toHaveBeenCalledWith('mod-42')
     })
 
     it('should call onAddLesson with module id when add lesson clicked', () => {
-      const module = makeModule({ id: 'mod-1' })
+      const mod = makeModule({ id: 'mod-1' })
       const onAddLesson = vi.fn()
-      render(<ModuleList {...defaultProps} modules={[module]} onAddLesson={onAddLesson} />)
+      render(<ModuleList {...defaultProps} modules={[mod]} onAddLesson={onAddLesson} />)
       fireEvent.click(screen.getByTestId('add-lesson'))
       expect(onAddLesson).toHaveBeenCalledWith('mod-1')
     })

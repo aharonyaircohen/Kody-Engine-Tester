@@ -79,35 +79,26 @@ export function ToastContainer() {
 
 export function useToast() {
   const ctx = useContext(ToastContext)
-  if (!ctx) {
-    // Return no-op functions if used outside provider
-    return {
-      info: (_message: string, _title?: string) => {},
-      success: (_message: string, _title?: string) => {},
-      warning: (_message: string, _title?: string) => {},
-      error: (_message: string, _title?: string) => {},
-    }
-  }
-  const { addToast } = ctx
+  const addToast = ctx?.addToast
 
   const info = useCallback(
     (message: string, title?: string) =>
-      addToast({ type: 'info', title: title ?? 'Info', message, duration: 4000 }),
+      addToast?.({ type: 'info', title: title ?? 'Info', message, duration: 4000 }),
     [addToast],
   )
   const success = useCallback(
     (message: string, title?: string) =>
-      addToast({ type: 'success', title: title ?? 'Success', message, duration: 4000 }),
+      addToast?.({ type: 'success', title: title ?? 'Success', message, duration: 4000 }),
     [addToast],
   )
   const warning = useCallback(
     (message: string, title?: string) =>
-      addToast({ type: 'warning', title: title ?? 'Warning', message, duration: 5000 }),
+      addToast?.({ type: 'warning', title: title ?? 'Warning', message, duration: 5000 }),
     [addToast],
   )
   const error = useCallback(
     (message: string, title?: string) =>
-      addToast({ type: 'error', title: title ?? 'Error', message, duration: 6000 }),
+      addToast?.({ type: 'error', title: title ?? 'Error', message, duration: 6000 }),
     [addToast],
   )
 
