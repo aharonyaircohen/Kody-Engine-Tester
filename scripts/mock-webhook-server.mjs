@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Mock webhook server for local chat E2E testing — receives and logs events POSTed by the Kody Engine's webhook hook.
+// Intended for local development only; do not use in production.
 /**
  * Mock webhook server for local chat E2E testing.
  *
