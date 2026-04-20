@@ -5,7 +5,7 @@
     "lint": "pnpm lint",
     "lintFix": "",
     "formatFix": "",
-    "testUnit": "pnpm test"
+    "testUnit": "pnpm test:int"
   },
   "git": {
     "defaultBranch": "main"
