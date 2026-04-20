@@ -54,7 +54,7 @@ describe('omit', () => {
 
   it('should preserve the original values of remaining keys', () => {
     const input: { x: { foo: string }; y: number[]; z: number } = { x: { foo: 'bar' }, y: [1, 2, 3], z: 42 }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     
     const result = omit(input, ['z'])
     expect(result).toEqual({ x: { foo: 'bar' }, y: [1, 2, 3] })
   })

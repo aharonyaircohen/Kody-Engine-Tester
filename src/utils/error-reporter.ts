@@ -19,7 +19,7 @@ function formatErrorEntry(entry: ErrorEntry): string {
 }
 
 export function consoleTransport(entry: ErrorEntry): void {
-  // eslint-disable-next-line no-console
+   
   console.error(formatErrorEntry(entry))
 }
 

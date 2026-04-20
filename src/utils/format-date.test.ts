@@ -109,6 +109,7 @@ describe('formatDate', () => {
           day: 'numeric',
           hour: 'numeric',
           minute: 'numeric',
+          timeZone: 'UTC',
         },
       })
       expect(result).toContain('2024')
@@ -130,7 +131,7 @@ describe('formatDate', () => {
     })
 
     it('handles far future date', () => {
-      const farFuture = new Date('2099-12-31T23:59:59Z')
+      const farFuture = new Date('2099-06-15T12:00:00Z')
       const result = formatDate(farFuture, { format: 'locale' })
       expect(result).toContain('2099')
     })

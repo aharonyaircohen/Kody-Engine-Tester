@@ -5,7 +5,7 @@ export const Courses: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   access: {
     create: ({ req: { user } }) => {
       if (!user) return false

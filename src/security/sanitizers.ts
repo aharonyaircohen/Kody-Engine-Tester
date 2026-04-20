@@ -136,7 +136,7 @@ function _sanitizeWithShape(obj: Record<string, any>, shape: Record<string, any>
   return result
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 function _sanitizeArray(arr: unknown[], _itemSchema: unknown[]): unknown[] {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return arr.map((item: any) => {

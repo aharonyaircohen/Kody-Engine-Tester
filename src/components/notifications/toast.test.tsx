@@ -60,7 +60,7 @@ describe('ToastContainer', () => {
     timers = []
     originalSetTimeout = global.setTimeout
     originalClearTimeout = global.clearTimeout
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     global.setTimeout = vi.fn((handler: TimerHandler, ms?: number) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const id = originalSetTimeout(handler, ms) as any

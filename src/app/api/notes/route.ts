@@ -81,7 +81,7 @@ export const POST = withAuth(async (request: NextRequest, { user }) => {
   }
 
   const payload = await getPayloadInstance()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const doc = await payload.create({
     collection: 'notes' as CollectionSlug,
     data: { title, content, tags } as any,

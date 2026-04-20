@@ -35,7 +35,7 @@ function normalizeLessonIds(raw: (string | { id: string })[] | undefined): strin
  * when Payload starts, so this returns that instance at runtime.
  */
 export async function getPayloadInstance(): Promise<Payload> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const { getPayload } = await import('payload')
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return getPayload({} as any) as Promise<Payload>
@@ -128,7 +128,7 @@ export class ProgressService {
       await this.payload.update({
         collection: 'enrollments' as CollectionSlug,
         id: enrollmentId,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         data: {
           status: 'completed',
           completedAt: new Date().toISOString(),
