@@ -26,7 +26,7 @@ const eslintConfig = [
     },
   },
   {
-    ignores: ['.next/'],
+    ignores: ['.next/', 'playwright-report/', 'test-results/', 'dist/', 'coverage/'],
   },
 ]
 
