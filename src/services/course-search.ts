@@ -82,6 +82,7 @@ export class CourseSearchService {
       where,
       page,
       limit: pageSize,
+      overrideAccess: true,
     })
 
     const totalPages = result.totalDocs > 0 ? Math.ceil(result.totalDocs / pageSize) : 0

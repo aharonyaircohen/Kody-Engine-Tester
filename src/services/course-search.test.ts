@@ -174,6 +174,12 @@ describe('CourseSearchService', () => {
       const whereStr = JSON.stringify(call.where)
       expect(whereStr).toContain('published')
     })
+
+    it('always passes overrideAccess: true so unauthenticated callers can query published courses', async () => {
+      await service.search({})
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.overrideAccess).toBe(true)
+    })
   })
 
   // ─── Pagination math ────────────────────────────────────────────────────────
