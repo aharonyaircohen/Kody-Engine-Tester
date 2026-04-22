@@ -13,7 +13,7 @@ vi.mock('@/services/progress', () => ({
           shortDescription: 'Learn TS from scratch',
           status: 'published',
           difficulty: 'beginner',
-          instructor: { id: 'u1', name: 'Alice Smith' },
+          instructor: { id: 'u1', displayName: 'Alice Smith' },
         },
       ],
       totalDocs: 1,

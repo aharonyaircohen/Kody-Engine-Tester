@@ -4,6 +4,10 @@ import { CourseSearchService } from '@/services/course-search'
 
 const VALID_DIFFICULTIES = new Set(['beginner', 'intermediate', 'advanced'])
 
+// This endpoint is intentionally unauthenticated (no withAuth wrapper).
+// Data-access control is enforced at the service layer: CourseSearchService.search()
+// unconditionally filters to status=published, so no auth is needed for public
+// read-only access to published course metadata.
 export const GET = async (request: NextRequest) => {
   const { searchParams } = request.nextUrl
 

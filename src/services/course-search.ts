@@ -67,7 +67,7 @@ export class CourseSearchService {
 
     // Substring match on instructor name
     if (query.instructor && query.instructor.trim() !== '') {
-      conditions.push({ 'instructor.name': { like: query.instructor.trim() } })
+      conditions.push({ 'instructor.displayName': { like: query.instructor.trim() } })
     }
 
     // Exact match on difficulty

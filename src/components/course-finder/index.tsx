@@ -29,7 +29,7 @@ function CourseCard({ course }: { course: Record<string, unknown> }) {
         ) : null}
         {course.instructor ? (
           <span>
-            {(course.instructor as { name?: string })?.name ?? String(course.instructor)}
+            {(course.instructor as { displayName?: string })?.displayName ?? String(course.instructor)}
           </span>
         ) : null}
       </div>
@@ -91,6 +91,8 @@ export function CourseFinder({ apiBase = '/api/courses/search' }: CourseFinderPr
     // page and difficulty must be in deps so that any change (including setPage(1)
     // after a difficulty change) fires fetchCourses immediately via cleanup.
     // q and instructor are intentionally excluded so they debounce independently.
+    // fetchCourses is intentionally excluded — it's memoized with useCallback and its
+    // identity is stable; adding it would cause an extra fetch on every render.
   }, [page, difficulty]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

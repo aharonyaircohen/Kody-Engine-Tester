@@ -14,7 +14,7 @@ const publishedCourse = {
   shortDescription: 'Learn TS from scratch',
   status: 'published',
   difficulty: 'beginner',
-  instructor: { id: 'u1', name: 'Alice Smith' },
+  instructor: { id: 'u1', displayName: 'Alice Smith' },
 }
 
 describe('CourseSearchService', () => {
@@ -136,11 +136,11 @@ describe('CourseSearchService', () => {
   })
 
   describe('instructor filter — substring match', () => {
-    it('adds instructor.name substring condition', async () => {
+    it('adds instructor.displayName substring condition', async () => {
       await service.search({ instructor: 'Alice' })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       const whereStr = JSON.stringify(call.where)
-      expect(whereStr).toContain('instructor.name')
+      expect(whereStr).toContain('instructor.displayName')
       expect(whereStr).toContain('Alice')
     })
 
@@ -155,7 +155,7 @@ describe('CourseSearchService', () => {
       await service.search({})
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       const whereStr = JSON.stringify(call.where ?? '')
-      expect(whereStr).not.toContain('instructor.name')
+      expect(whereStr).not.toContain('instructor.displayName')
     })
   })
 
