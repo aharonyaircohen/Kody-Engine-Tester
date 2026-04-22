@@ -1,223 +1,269 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { CourseSearchService } from './course-search'
 import type { Payload } from 'payload'
 
-function createMockPayload(findResult: unknown = { docs: [], totalDocs: 0, totalPages: 0, page: 1 }) {
+function makeMockPayload(findResult?: unknown) {
   return {
-    find: vi.fn().mockResolvedValue(findResult),
+    find: vi.fn().mockResolvedValue(findResult ?? { docs: [], totalDocs: 0, totalPages: 0, page: 1 }),
   } as unknown as Payload
 }
 
-const sampleCourse = {
+const publishedCourse = {
   id: '1',
   title: 'Intro to TypeScript',
-  description: 'Learn TS from scratch',
+  shortDescription: 'Learn TS from scratch',
   status: 'published',
   difficulty: 'beginner',
-  tags: [{ label: 'typescript' }, { label: 'programming' }],
-  instructor: 'inst-1',
+  instructor: { id: 'u1', name: 'Alice Smith' },
 }
 
 describe('CourseSearchService', () => {
+  let mockPayload: ReturnType<typeof makeMockPayload>
   let service: CourseSearchService
-  let mockPayload: ReturnType<typeof createMockPayload>
 
   beforeEach(() => {
-    mockPayload = createMockPayload()
-    service = new CourseSearchService(mockPayload as unknown as Payload)
+    mockPayload = makeMockPayload() as Payload
+    service = new CourseSearchService(mockPayload)
   })
 
-  describe('searchCourses — empty results', () => {
-    it('returns empty data and zero meta when no courses exist', async () => {
-      const result = await service.searchCourses('')
-      expect(result.data).toEqual([])
-      expect(result.meta.total).toBe(0)
-      expect(result.meta.page).toBe(1)
-      expect(result.meta.totalPages).toBe(0)
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  // ─── Input validation ────────────────────────────────────────────────────────
+
+  describe('pageSize clamping', () => {
+    it('defaults pageSize to 10 when not provided', async () => {
+      await service.search({})
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.limit).toBe(10)
     })
 
-    it('calls payload.find with collection courses', async () => {
-      await service.searchCourses('')
-      expect(mockPayload.find).toHaveBeenCalledWith(
-        expect.objectContaining({ collection: 'courses' }),
-      )
+    it('clamps pageSize to 50 when caller passes 100', async () => {
+      await service.search({ pageSize: 100 })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.limit).toBe(50)
+    })
+
+    it('clamps pageSize to 10 when caller passes 0', async () => {
+      await service.search({ pageSize: 0 })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.limit).toBe(10)
+    })
+
+    it('clamps pageSize to 10 when caller passes negative', async () => {
+      await service.search({ pageSize: -5 })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.limit).toBe(10)
+    })
+
+    it('accepts a valid pageSize of 25', async () => {
+      await service.search({ pageSize: 25 })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.limit).toBe(25)
     })
   })
 
-  describe('searchCourses — search matching', () => {
-    it('includes title and description in the search when q is provided', async () => {
-      await service.searchCourses('typescript')
+  describe('page defaults', () => {
+    it('defaults page to 1 when not provided', async () => {
+      await service.search({})
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.page).toBe(1)
+    })
+
+    it('defaults page to 1 when NaN', async () => {
+      await service.search({ page: NaN })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.page).toBe(1)
+    })
+
+    it('defaults page to 1 when negative', async () => {
+      await service.search({ page: -3 })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(call.page).toBe(1)
+    })
+  })
+
+  // ─── Filter logic ───────────────────────────────────────────────────────────
+
+  describe('q filter — case-insensitive match on title and shortDescription', () => {
+    it('adds title and shortDescription conditions when q is provided', async () => {
+      await service.search({ q: 'typescript' })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      const whereStr = JSON.stringify(call.where)
+      expect(whereStr).toContain('title')
+      expect(whereStr).toContain('shortDescription')
+    })
+
+    it('trims whitespace from q', async () => {
+      await service.search({ q: '  typescript  ' })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       const whereStr = JSON.stringify(call.where)
       expect(whereStr).toContain('typescript')
-      expect(whereStr).toContain('title')
-      expect(whereStr).toContain('description')
     })
 
-    it('does not add search condition when query is empty', async () => {
-      await service.searchCourses('')
+    it('does not add search conditions when q is empty', async () => {
+      await service.search({ q: '' })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      const whereStr = JSON.stringify(call.where) ?? ''
+      const whereStr = JSON.stringify(call.where ?? '')
       expect(whereStr).not.toContain('title')
-      expect(whereStr).not.toContain('description')
+      expect(whereStr).not.toContain('shortDescription')
     })
 
-    it('returns matching courses', async () => {
-      mockPayload = createMockPayload({ docs: [sampleCourse], totalDocs: 1, totalPages: 1, page: 1 })
-      service = new CourseSearchService(mockPayload as unknown as Payload)
-
-      const result = await service.searchCourses('TypeScript')
-      expect(result.data).toHaveLength(1)
-      expect(result.meta.total).toBe(1)
+    it('does not add search conditions when q is only whitespace', async () => {
+      await service.search({ q: '   ' })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      const whereStr = JSON.stringify(call.where ?? '')
+      expect(whereStr).not.toContain('title')
     })
   })
 
-  describe('searchCourses — filter combinations', () => {
-    it('filters by status when provided', async () => {
-      await service.searchCourses('', { status: 'published' })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(JSON.stringify(call.where)).toContain('published')
-    })
-
-    it('does not add status condition when status is not provided', async () => {
-      await service.searchCourses('')
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      const whereStr = JSON.stringify(call.where) ?? ''
-      expect(whereStr).not.toContain('status')
-    })
-
-    it('filters by difficulty level', async () => {
-      await service.searchCourses('', { difficulty: 'beginner' })
+  describe('difficulty filter — exact match', () => {
+    it('adds exact difficulty condition', async () => {
+      await service.search({ difficulty: 'beginner' })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       const whereStr = JSON.stringify(call.where)
       expect(whereStr).toContain('difficulty')
       expect(whereStr).toContain('beginner')
     })
 
-    it('filters by instructor id', async () => {
-      await service.searchCourses('', { instructor: 'inst-42' })
+    it('does not add difficulty condition when not provided', async () => {
+      await service.search({})
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      const whereStr = JSON.stringify(call.where ?? '')
+      expect(whereStr).not.toContain('difficulty')
+    })
+  })
+
+  describe('instructor filter — substring match', () => {
+    it('adds instructor.name substring condition', async () => {
+      await service.search({ instructor: 'Alice' })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       const whereStr = JSON.stringify(call.where)
-      expect(whereStr).toContain('instructor')
-      expect(whereStr).toContain('inst-42')
+      expect(whereStr).toContain('instructor.name')
+      expect(whereStr).toContain('Alice')
     })
 
-    it('filters by tags in OR mode (default)', async () => {
-      await service.searchCourses('', { tags: ['typescript', 'react'] })
+    it('trims whitespace from instructor filter', async () => {
+      await service.search({ instructor: '  Smith  ' })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       const whereStr = JSON.stringify(call.where)
-      expect(whereStr).toContain('typescript')
-      expect(whereStr).toContain('react')
+      expect(whereStr).toContain('Smith')
     })
 
-    it('filters by tags in AND mode (separate conditions per tag)', async () => {
-      await service.searchCourses('', { tags: ['typescript', 'react'], tagMode: 'and' })
+    it('does not add instructor condition when not provided', async () => {
+      await service.search({})
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      const andConditions = call.where?.and ?? []
-      // Each tag becomes its own AND condition in AND mode
-      const tagConditions = andConditions.filter((c: unknown) =>
-        JSON.stringify(c).includes('tags.label'),
-      )
-      expect(tagConditions.length).toBe(2)
+      const whereStr = JSON.stringify(call.where ?? '')
+      expect(whereStr).not.toContain('instructor.name')
     })
+  })
 
-    it('does not add tag condition when tags array is empty', async () => {
-      await service.searchCourses('', { tags: [] })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(JSON.stringify(call.where) ?? '').not.toContain('tags')
-    })
-
-    it('combines multiple filters', async () => {
-      await service.searchCourses('react', { difficulty: 'intermediate', status: 'published' })
+  describe('unpublished courses excluded', () => {
+    it('always adds status=published filter', async () => {
+      await service.search({})
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       const whereStr = JSON.stringify(call.where)
-      expect(whereStr).toContain('react')
-      expect(whereStr).toContain('intermediate')
+      expect(whereStr).toContain('status')
+      expect(whereStr).toContain('published')
+    })
+
+    it('keeps status filter even when other filters are present', async () => {
+      await service.search({ q: 'react', difficulty: 'advanced' })
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      const whereStr = JSON.stringify(call.where)
       expect(whereStr).toContain('published')
     })
   })
 
-  describe('searchCourses — sort ordering', () => {
-    it('sorts by -createdAt when sort is newest', async () => {
-      await service.searchCourses('', {}, 'newest')
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.sort).toBe('-createdAt')
+  // ─── Pagination math ────────────────────────────────────────────────────────
+
+  describe('pagination math', () => {
+    it('returns totalPages = ceil(total / pageSize) — exact division', async () => {
+      mockPayload = makeMockPayload({ docs: [], totalDocs: 30, totalPages: 3, page: 1 })
+      service = new CourseSearchService(mockPayload)
+      const result = await service.search({ pageSize: 10 })
+      expect(result.totalPages).toBe(3)
     })
 
-    it('does not set sort for relevance', async () => {
-      await service.searchCourses('', {}, 'relevance')
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.sort).toBeUndefined()
+    it('returns totalPages = ceil(total / pageSize) — remainder rounds up', async () => {
+      mockPayload = makeMockPayload({ docs: [], totalDocs: 25, totalPages: 3, page: 1 })
+      service = new CourseSearchService(mockPayload)
+      const result = await service.search({ pageSize: 10 })
+      expect(result.totalPages).toBe(3)
     })
 
-    it('does not set sort for popularity', async () => {
-      await service.searchCourses('', {}, 'popularity')
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.sort).toBeUndefined()
+    it('returns totalPages = 0 when total is 0', async () => {
+      mockPayload = makeMockPayload({ docs: [], totalDocs: 0, totalPages: 0, page: 1 })
+      service = new CourseSearchService(mockPayload)
+      const result = await service.search({})
+      expect(result.totalPages).toBe(0)
     })
 
-    it('does not set sort for rating', async () => {
-      await service.searchCourses('', {}, 'rating')
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.sort).toBeUndefined()
-    })
-
-    it('defaults to no sort when sort is not specified', async () => {
-      await service.searchCourses('')
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.sort).toBeUndefined()
+    it('returns correct page and pageSize in result', async () => {
+      mockPayload = makeMockPayload({ docs: [publishedCourse], totalDocs: 7, totalPages: 1, page: 2 })
+      service = new CourseSearchService(mockPayload)
+      const result = await service.search({ page: 2, pageSize: 5 })
+      expect(result.page).toBe(2)
+      expect(result.pageSize).toBe(5)
+      expect(result.total).toBe(7)
+      expect(result.items).toHaveLength(1)
     })
   })
 
-  describe('searchCourses — pagination', () => {
-    it('passes page and limit to payload.find', async () => {
-      await service.searchCourses('', {}, 'relevance', { page: 2, limit: 5 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.page).toBe(2)
-      expect(call.limit).toBe(5)
+  // ─── Cache ───────────────────────────────────────────────────────────────────
+
+  describe('cache — 5 minute TTL', () => {
+    beforeEach(() => {
+      vi.useFakeTimers()
     })
 
-    it('defaults to page 1 and limit 10', async () => {
-      await service.searchCourses('')
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.page).toBe(1)
-      expect(call.limit).toBe(10)
+    it('returns cached result for identical query within TTL', async () => {
+      mockPayload = makeMockPayload({ docs: [publishedCourse], totalDocs: 1, totalPages: 1, page: 1 })
+      service = new CourseSearchService(mockPayload)
+
+      // First call
+      await service.search({ q: 'typescript', page: 1, pageSize: 10 })
+      // Second call — should be cached
+      const result = await service.search({ q: 'typescript', page: 1, pageSize: 10 })
+
+      expect(mockPayload.find).toHaveBeenCalledTimes(1)
+      expect(result.items).toHaveLength(1)
     })
 
-    it('returns correct meta for multi-page results', async () => {
-      mockPayload = createMockPayload({ docs: [sampleCourse], totalDocs: 25, totalPages: 3, page: 2 })
-      service = new CourseSearchService(mockPayload as unknown as Payload)
+    it('cache miss after TTL expiry', async () => {
+      mockPayload = makeMockPayload({ docs: [publishedCourse], totalDocs: 1, totalPages: 1, page: 1 })
+      service = new CourseSearchService(mockPayload)
 
-      const result = await service.searchCourses('', {}, 'relevance', { page: 2, limit: 10 })
-      expect(result.meta).toEqual({ total: 25, page: 2, limit: 10, totalPages: 3 })
+      await service.search({ q: 'typescript' })
+
+      // Advance clock past 5 minutes
+      vi.advanceTimersByTime(5 * 60 * 1000 + 1)
+
+      await service.search({ q: 'typescript' })
+
+      expect(mockPayload.find).toHaveBeenCalledTimes(2)
     })
 
-    it('returns meta.page from payload response when available', async () => {
-      mockPayload = createMockPayload({ docs: [], totalDocs: 0, totalPages: 0, page: 3 })
-      service = new CourseSearchService(mockPayload as unknown as Payload)
+    it('different query does not hit cache', async () => {
+      mockPayload = makeMockPayload({ docs: [], totalDocs: 0, totalPages: 0, page: 1 })
+      service = new CourseSearchService(mockPayload)
 
-      const result = await service.searchCourses('', {}, 'relevance', { page: 3, limit: 10 })
-      expect(result.meta.page).toBe(3)
+      await service.search({ q: 'typescript' })
+      await service.search({ q: 'react' })
+
+      expect(mockPayload.find).toHaveBeenCalledTimes(2)
     })
 
-    it('falls back to requested page when payload response has no page', async () => {
-      mockPayload = createMockPayload({ docs: [], totalDocs: 0, totalPages: 0 })
-      service = new CourseSearchService(mockPayload as unknown as Payload)
+    it('cache key is normalized (case-insensitive)', async () => {
+      mockPayload = makeMockPayload({ docs: [publishedCourse], totalDocs: 1, totalPages: 1, page: 1 })
+      service = new CourseSearchService(mockPayload)
 
-      const result = await service.searchCourses('', {}, 'relevance', { page: 4, limit: 10 })
-      expect(result.meta.page).toBe(4)
-    })
+      await service.search({ q: 'TYPESCRIPT' })
+      await service.search({ q: 'typescript' })
 
-    it('handles first page edge case', async () => {
-      await service.searchCourses('', {}, 'relevance', { page: 1, limit: 10 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.page).toBe(1)
-    })
-
-    it('handles large limit values', async () => {
-      await service.searchCourses('', {}, 'relevance', { page: 1, limit: 100 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.limit).toBe(100)
+      // Should only call payload once because cache key normalizes case
+      expect(mockPayload.find).toHaveBeenCalledTimes(1)
     })
   })
 })

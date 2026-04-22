@@ -67,6 +67,13 @@ export const Courses: CollectionConfig = {
       required: true,
     },
     {
+      name: 'shortDescription',
+      type: 'text',
+      admin: {
+        description: 'A brief summary shown in course search results and cards.',
+      },
+    },
+    {
       name: 'thumbnail',
       type: 'relationship',
       relationTo: 'media',

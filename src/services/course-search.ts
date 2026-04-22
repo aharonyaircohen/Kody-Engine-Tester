@@ -1,102 +1,114 @@
-import type { Payload, CollectionSlug, Where } from 'payload'
+import type { Payload, CollectionSlug, Where, WhereField } from 'payload'
 
-export interface SearchFilters {
-  difficulty?: string
-  tags?: string[]
+export interface SearchQuery {
+  q?: string
   instructor?: string
-  status?: string
-  tagMode?: 'and' | 'or'
+  difficulty?: 'beginner' | 'intermediate' | 'advanced'
+  page?: number
+  pageSize?: number
 }
 
-export type SortOption = 'relevance' | 'newest' | 'popularity' | 'rating'
-
-export interface SearchPagination {
+export interface SearchResult {
+  items: unknown[]
+  total: number
   page: number
-  limit: number
+  pageSize: number
+  totalPages: number
 }
 
-export interface CourseSearchResult {
-  data: unknown[]
-  meta: {
-    total: number
-    page: number
-    limit: number
-    totalPages: number
-  }
+interface CacheEntry {
+  result: SearchResult
+  expiresAt: number
+}
+
+const CACHE_TTL_MS = 5 * 60 * 1000 // 5 minutes
+
+function normalizeCacheKey(q: string, instructor: string, difficulty: string, page: number, pageSize: number): string {
+  return JSON.stringify({ q: q.toLowerCase(), instructor: instructor.toLowerCase(), difficulty, page, pageSize })
 }
 
 export class CourseSearchService {
+  private cache = new Map<string, CacheEntry>()
+
   constructor(private payload: Payload) {}
 
-  async searchCourses(
-    query: string,
-    filters: SearchFilters = {},
-    sort: SortOption = 'relevance',
-    pagination: SearchPagination = { page: 1, limit: 10 },
-  ): Promise<CourseSearchResult> {
-    const { page, limit } = pagination
-    const conditions: Where[] = []
+  async search(query: SearchQuery): Promise<SearchResult> {
+    const page = this.clampPage(query.page)
+    const pageSize = this.clampPageSize(query.pageSize)
 
-    // Status filter (only added when explicitly provided)
-    if (filters.status) {
-      conditions.push({ status: { equals: filters.status } })
+    const cacheKey = normalizeCacheKey(
+      query.q ?? '',
+      query.instructor ?? '',
+      query.difficulty ?? '',
+      page,
+      pageSize,
+    )
+
+    const cached = this.cache.get(cacheKey)
+    if (cached && cached.expiresAt > Date.now()) {
+      return cached.result
     }
 
-    // Full-text search across title and description
-    if (query) {
+    const conditions: (Where | WhereField)[] = []
+
+    // Always filter to published only
+    conditions.push({ status: { equals: 'published' } } as WhereField)
+
+    // Free-text search on title and shortDescription (case-insensitive via SQL like)
+    if (query.q && query.q.trim() !== '') {
+      const q = query.q.trim()
       conditions.push({
         or: [
-          { title: { like: query } },
-          { description: { like: query } },
+          { title: { like: q } } as WhereField,
+          { shortDescription: { like: q } } as WhereField,
         ],
-      } as Where)
+      } as unknown as Where)
     }
 
-    // Difficulty filter
-    if (filters.difficulty) {
-      conditions.push({ difficulty: { equals: filters.difficulty } })
+    // Substring match on instructor name
+    if (query.instructor && query.instructor.trim() !== '') {
+      conditions.push({ 'instructor.name': { like: query.instructor.trim() } } as WhereField)
     }
 
-    // Instructor filter
-    if (filters.instructor) {
-      conditions.push({ instructor: { equals: filters.instructor } })
+    // Exact match on difficulty
+    if (query.difficulty) {
+      conditions.push({ difficulty: { equals: query.difficulty } } as WhereField)
     }
 
-    // Tags filter — AND mode: one condition per tag; OR mode (default): single or condition
-    if (filters.tags && filters.tags.length > 0) {
-      if (filters.tagMode === 'and') {
-        for (const tag of filters.tags) {
-          conditions.push({ 'tags.label': { equals: tag } } as unknown as Where)
-        }
-      } else {
-        conditions.push({
-          or: filters.tags.map((tag) => ({ 'tags.label': { equals: tag } } as unknown as Where)),
-        } as Where)
-      }
-    }
-
-    // Sort field: only 'newest' maps to a concrete field; others use Payload default
-    let sortField: string | undefined
-    if (sort === 'newest') {
-      sortField = '-createdAt'
-    }
+    const where = conditions.length > 0 ? ({ and: conditions } as unknown as Where) : undefined
 
     const result = await this.payload.find({
       collection: 'courses' as CollectionSlug,
-      where: conditions.length > 0 ? ({ and: conditions } as Where) : undefined,
-      sort: sortField,
+      where,
       page,
-      limit,
+      limit: pageSize,
     })
 
-    return {
-      data: result.docs,
-      meta: {
-        total: result.totalDocs,
-        page: result.page ?? page,
-        limit,
-        totalPages: result.totalPages,
-      },
+    const totalPages = result.totalDocs > 0 ? Math.ceil(result.totalDocs / pageSize) : 0
+
+    const searchResult: SearchResult = {
+      items: result.docs,
+      total: result.totalDocs,
+      page,
+      pageSize,
+      totalPages,
     }
+
+    this.cache.set(cacheKey, { result: searchResult, expiresAt: Date.now() + CACHE_TTL_MS })
+
+    return searchResult
+  }
+
+  private clampPage(page: unknown): number {
+    const p = typeof page === 'number' ? page : parseInt(String(page), 10)
+    if (isNaN(p) || p < 1) return 1
+    return p
+  }
+
+  private clampPageSize(pageSize: unknown): number {
+    const ps = typeof pageSize === 'number' ? pageSize : parseInt(String(pageSize), 10)
+    if (isNaN(ps) || ps < 1) return 10
+    if (ps > 50) return 50
+    return ps
   }
 }

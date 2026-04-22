@@ -1,71 +1,39 @@
 import { NextRequest } from 'next/server'
-import { withAuth } from '@/auth/withAuth'
 import { getPayloadInstance } from '@/services/progress'
 import { CourseSearchService } from '@/services/course-search'
-import { sanitizeHtml } from '@/security/sanitizers'
-import type { SortOption } from '@/services/course-search'
 
-const VALID_SORT_OPTIONS = new Set<SortOption>(['relevance', 'newest', 'popularity', 'rating'])
 const VALID_DIFFICULTIES = new Set(['beginner', 'intermediate', 'advanced'])
-const MAX_LIMIT = 100
-const DEFAULT_LIMIT = 10
 
-export const GET = withAuth(async (request: NextRequest, { user }) => {
+export const GET = async (request: NextRequest) => {
   const { searchParams } = request.nextUrl
 
-  const rawQuery = searchParams.get('q') ?? ''
-  const rawDifficulty = searchParams.get('difficulty') ?? ''
-  const rawTags = searchParams.get('tags') ?? ''
-  const rawSort = searchParams.get('sort') ?? 'relevance'
-  const rawPage = searchParams.get('page') ?? '1'
-  const rawLimit = searchParams.get('limit') ?? String(DEFAULT_LIMIT)
-  const rawInstructor = searchParams.get('instructor') ?? ''
-  const tagMode = searchParams.get('tagMode') === 'and' ? 'and' : ('or' as const)
-
-  // Sanitize string inputs at the boundary
-  const query = sanitizeHtml(rawQuery)
-  const difficulty = rawDifficulty ? sanitizeHtml(rawDifficulty) : undefined
-  const instructor = rawInstructor ? sanitizeHtml(rawInstructor) : undefined
-  const tags = rawTags
-    ? rawTags
-        .split(',')
-        .map((t) => sanitizeHtml(t.trim()))
-        .filter(Boolean)
-    : []
+  const q = searchParams.get('q') ?? undefined
+  const instructor = searchParams.get('instructor') ?? undefined
+  const rawDifficulty = searchParams.get('difficulty') ?? undefined
+  const rawPage = searchParams.get('page') ?? undefined
+  const rawPageSize = searchParams.get('pageSize') ?? undefined
 
   // Validate difficulty
-  if (difficulty && !VALID_DIFFICULTIES.has(difficulty)) {
+  if (rawDifficulty !== null && rawDifficulty !== undefined && !VALID_DIFFICULTIES.has(rawDifficulty)) {
     return new Response(
       JSON.stringify({ error: 'Invalid difficulty. Must be one of: beginner, intermediate, advanced' }),
       { status: 400, headers: { 'Content-Type': 'application/json' } },
     )
   }
 
-  // Validate and normalize sort
-  const sort: SortOption = VALID_SORT_OPTIONS.has(rawSort as SortOption)
-    ? (rawSort as SortOption)
-    : 'relevance'
+  const difficulty = rawDifficulty as 'beginner' | 'intermediate' | 'advanced' | undefined
 
-  // Parse and clamp pagination
-  const page = Math.max(1, parseInt(rawPage, 10) || 1)
-  const limit = Math.min(MAX_LIMIT, Math.max(1, parseInt(rawLimit, 10) || DEFAULT_LIMIT))
-
-  // Admin and editor can see all courses; viewers see only published
-  const canSeeAll = user?.role === 'admin' || user?.role === 'editor'
-  const status = canSeeAll ? undefined : 'published'
+  // Parse pagination
+  const page = rawPage ? Math.max(1, parseInt(rawPage, 10) || 1) : undefined
+  const pageSize = rawPageSize ? parseInt(rawPageSize, 10) || undefined : undefined
 
   const payload = await getPayloadInstance()
   const searchService = new CourseSearchService(payload)
 
-  const result = await searchService.searchCourses(
-    query,
-    { difficulty, tags, instructor, tagMode, ...(status ? { status } : {}) },
-    sort,
-    { page, limit },
-  )
+  const result = await searchService.search({ q, instructor, difficulty, page, pageSize })
 
   return new Response(JSON.stringify(result), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   })
-}, { optional: true })
+}
