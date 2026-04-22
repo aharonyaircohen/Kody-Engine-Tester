@@ -1,4 +1,4 @@
-import type { Payload, CollectionSlug, Where, WhereField } from 'payload'
+import type { Payload, CollectionSlug, Where } from 'payload'
 
 export interface SearchQuery {
   q?: string
@@ -49,33 +49,33 @@ export class CourseSearchService {
       return cached.result
     }
 
-    const conditions: (Where | WhereField)[] = []
+    const conditions: Where[] = []
 
     // Always filter to published only
-    conditions.push({ status: { equals: 'published' } } as WhereField)
+    conditions.push({ status: { equals: 'published' } })
 
     // Free-text search on title and shortDescription (case-insensitive via SQL like)
     if (query.q && query.q.trim() !== '') {
       const q = query.q.trim()
       conditions.push({
         or: [
-          { title: { like: q } } as WhereField,
-          { shortDescription: { like: q } } as WhereField,
+          { title: { like: q } },
+          { shortDescription: { like: q } },
         ],
-      } as unknown as Where)
+      })
     }
 
     // Substring match on instructor name
     if (query.instructor && query.instructor.trim() !== '') {
-      conditions.push({ 'instructor.name': { like: query.instructor.trim() } } as WhereField)
+      conditions.push({ 'instructor.name': { like: query.instructor.trim() } })
     }
 
     // Exact match on difficulty
     if (query.difficulty) {
-      conditions.push({ difficulty: { equals: query.difficulty } } as WhereField)
+      conditions.push({ difficulty: { equals: query.difficulty } })
     }
 
-    const where = conditions.length > 0 ? ({ and: conditions } as unknown as Where) : undefined
+    const where = conditions.length > 0 ? ({ and: conditions }) : undefined
 
     const result = await this.payload.find({
       collection: 'courses' as CollectionSlug,
