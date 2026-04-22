@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import type { Lesson, LessonType, UpdateLessonInput } from '@/collections/Lessons'
 import styles from './LessonEditor.module.css'
+// Added by kody2 M3 orchestrator live-test on 2026-04-22.
 
 interface LessonEditorProps {
   lesson: Lesson
