@@ -18,3 +18,4 @@
 {"role":"user","content":"?","timestamp":"2026-04-22T14:48:40.432Z","toolCalls":[]}
 {"role":"assistant","content":"","timestamp":"2026-04-22T14:48:40.972Z","toolCalls":[]}
 {"role":"user","content":"?","timestamp":"2026-04-22T14:51:04.460Z","toolCalls":[]}
+{"role":"assistant","content":"Hey there! 👋 I'm **Kody**, your AI assistant for the Kody Operations Dashboard.\n\nI can help you with:\n\n- **Writing & editing code** — files, functions, components, APIs\n- **Exploring codebases** — understanding structure, finding patterns\n- **Git operations** — commits, branches, PRs, workflow dispatches\n- **Running commands** — builds, tests, scripts, dev servers\n- **Debugging** — tracking down bugs and fixing them\n- **Automation** — scheduling recurring tasks, CI/CD integration\n\nWhat would you like to work on today?","timestamp":"2026-04-22T14:52:04.227Z","toolCalls":[]}
