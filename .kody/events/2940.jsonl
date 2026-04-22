@@ -1,0 +1,2 @@
+{"event":"chat.message","payload":{"sessionId":"2940","role":"assistant","content":"Hey! How can I help you today?","timestamp":"2026-04-22T15:08:04.404Z"},"runId":"chat-2940-message","emittedAt":"2026-04-22T15:08:04.404Z"}
+{"event":"chat.done","payload":{"sessionId":"2940"},"runId":"chat-2940-done","emittedAt":"2026-04-22T15:08:04.749Z"}
