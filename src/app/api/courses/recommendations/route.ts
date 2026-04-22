@@ -15,7 +15,7 @@ export const GET = withAuth(
     const rawExcludeCompleted = searchParams.get('excludeCompleted') ?? ''
 
     // Validate userId
-    const userId = sanitizeHtml(rawUserId).trim()
+    const userId = sanitizeHtml(rawUserId.trim())
     if (!userId) {
       return Response.json(
         { error: 'Invalid userId: must be a non-empty string' },
@@ -24,13 +24,11 @@ export const GET = withAuth(
     }
 
     // Authorization: user may request own ID, or elevated roles may request any
-    const userIdMatch =
-      String(user?.id) === userId ||
-      userId === String(user?.id)
+    const isSelf = String(user?.id) === userId
     const elevatedRoles: RbacRole[] = ['admin', 'editor']
     const isElevated = elevatedRoles.includes(user?.role as RbacRole)
 
-    if (!userIdMatch && !isElevated) {
+    if (!isSelf && !isElevated) {
       return Response.json(
         { error: 'Forbidden: you may only request recommendations for yourself' },
         { status: 403, headers: { 'Content-Type': 'application/json' } },

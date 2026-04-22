@@ -243,7 +243,7 @@ describe('GET /api/courses/recommendations — auth / authz', () => {
     expect(res.status).toBe(403)
     const body = await res.json()
     expect(body).toHaveProperty('error')
-    expect(body.error).toContain('Forbidden')
+    expect(body.error).toBe('Forbidden: you may only request recommendations for yourself')
   })
 })
 
