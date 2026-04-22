@@ -28,4 +28,16 @@ describe('parseCsv', () => {
   it('trims whitespace from fields', () => {
     expect(parseCsv('  a  ,  b  ,  c  ')).toEqual([['a', 'b', 'c']])
   })
+
+  it('returns empty array for null input', () => {
+    expect(parseCsv(null as any)).toEqual([])
+  })
+
+  it('returns empty array for undefined input', () => {
+    expect(parseCsv(undefined as any)).toEqual([])
+  })
+
+  it('handles CRLF (\\r\\n) multi-line input', () => {
+    expect(parseCsv('a,b\r\nc,d')).toEqual([['a', 'b'], ['c', 'd']])
+  })
 })
