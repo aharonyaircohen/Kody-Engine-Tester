@@ -6,3 +6,4 @@
 {"role":"assistant","content":"","timestamp":"2026-04-22T16:57:34.316Z","toolCalls":[]}
 {"role":"assistant","content":"Hi there! 👋 How can I help you today?","timestamp":"2026-04-22T16:58:36.812Z","toolCalls":[]}
 {"role":"user","content":"who r u ?","timestamp":"2026-04-22T17:01:09.434Z","toolCalls":[]}
+{"role":"assistant","content":"I'm **Kody**, your AI assistant for the Kody Operations Dashboard. I can help you with:\n\n- 🔍 **Exploring the codebase** — find files, understand patterns, read code\n- 🛠️ **Writing & editing code** — components, API routes, utilities, tests\n- 🐛 **Debugging** — track down bugs and suggest fixes\n- 📖 **Answering questions** about the project architecture and decisions\n- ⚙️ **Running commands** — tests, builds, linting, and more\n\nWhat are you working on today?","timestamp":"2026-04-22T17:02:13.196Z","toolCalls":[]}
