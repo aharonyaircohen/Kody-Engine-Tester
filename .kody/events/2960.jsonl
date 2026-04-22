@@ -1,0 +1,2 @@
+{"event":"chat.message","payload":{"sessionId":"2960","role":"assistant","content":"pong RE2E-moa93voo-oumygi","timestamp":"2026-04-22T16:13:34.531Z"},"runId":"chat-2960-message","emittedAt":"2026-04-22T16:13:34.531Z"}
+{"event":"chat.done","payload":{"sessionId":"2960"},"runId":"chat-2960-done","emittedAt":"2026-04-22T16:13:34.938Z"}
