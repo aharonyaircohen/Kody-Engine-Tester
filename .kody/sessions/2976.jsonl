@@ -1,0 +1,8 @@
+{"role":"user","content":"hi","timestamp":"2026-04-22T16:09:55.778Z","toolCalls":[]}
+{"role":"assistant","content":"","timestamp":"2026-04-22T16:09:56.335Z","toolCalls":[]}
+{"role":"user","content":"hi","timestamp":"2026-04-22T16:45:48.144Z","toolCalls":[]}
+{"role":"assistant","content":"","timestamp":"2026-04-22T16:45:48.793Z","toolCalls":[]}
+{"role":"user","content":"hi","timestamp":"2026-04-22T16:57:33.755Z","toolCalls":[]}
+{"role":"assistant","content":"","timestamp":"2026-04-22T16:57:34.316Z","toolCalls":[]}
+{"role":"assistant","content":"Hi there! 👋 How can I help you today?","timestamp":"2026-04-22T16:58:36.812Z","toolCalls":[]}
+{"role":"user","content":"who r u ?","timestamp":"2026-04-22T17:01:09.434Z","toolCalls":[]}
