@@ -7,6 +7,14 @@ import type { RbacRole } from '@/auth/auth-service'
 
 export const GET = withAuth(
   async (request: NextRequest, { user }) => {
+    // withAuth({ optional: false }) guarantees a user; guard defensively
+    if (!user) {
+      return Response.json(
+        { error: 'Unauthorized' },
+        { status: 401, headers: { 'Content-Type': 'application/json' } },
+      )
+    }
+
     const { searchParams } = request.nextUrl
 
     // Parse query params
@@ -24,9 +32,9 @@ export const GET = withAuth(
     }
 
     // Authorization: user may request own ID, or elevated roles may request any
-    const isSelf = String(user?.id) === userId
+    const isSelf = String(user.id) === userId
     const elevatedRoles: RbacRole[] = ['admin', 'editor']
-    const isElevated = elevatedRoles.includes(user?.role as RbacRole)
+    const isElevated = elevatedRoles.includes(user.role as RbacRole)
 
     if (!isSelf && !isElevated) {
       return Response.json(

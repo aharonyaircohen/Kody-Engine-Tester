@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { RecommendationService } from './recommendations'
+import { RecommendationService, clearRecommendationCache } from './recommendations'
 import type { Payload } from 'payload'
 
 // ---------------------------------------------------------------------------
@@ -71,6 +71,7 @@ function createMockPayload(
 describe('RecommendationService — tag-overlap scoring', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('score reflects Jaccard=1.0 for identical tag sets', async () => {
@@ -92,11 +93,14 @@ describe('RecommendationService — tag-overlap scoring', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c-completed', status: 'completed' })],
       totalDocs: 1,
     })
-    // 2. Fetch completed course (with tags)
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
-    // 3. All published courses
+    // 2. All published courses
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
+      totalDocs: 1,
+    })
+    // 3. Batched fetch of completed courses (with tags)
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
       totalDocs: 1,
     })
     // 4. Co-enrolled users (none)
@@ -131,9 +135,12 @@ describe('RecommendationService — tag-overlap scoring', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c-completed', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
+      totalDocs: 1,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
       totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
@@ -164,9 +171,12 @@ describe('RecommendationService — tag-overlap scoring', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c-completed', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
+      totalDocs: 1,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
       totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
@@ -189,6 +199,7 @@ describe('RecommendationService — tag-overlap scoring', () => {
 describe('RecommendationService — cohort popularity scoring', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('cohort fraction 3/5 → cohort component = 0.18; tag score from identical tags = 0.6; total ≈ 0.78', async () => {
@@ -211,14 +222,17 @@ describe('RecommendationService — cohort popularity scoring', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c1', status: 'completed' })],
       totalDocs: 1,
     })
-    // 2. Completed course
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
-    // 3. All published courses
+    // 2. All published courses
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
       totalDocs: 1,
     })
-    // 4. Co-enrolled users: 5 users share course c1 (excluding user-1)
+    // 3. Batched fetch of completed courses (with tags)
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
+      totalDocs: 1,
+    })
+    // 4. Co-enrolled users (batched): 5 users share course c1 (excluding user-1)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [
         makeEnrollment({ id: 'e2', student: 'user-2', course: 'c1' }),
@@ -266,9 +280,12 @@ describe('RecommendationService — cohort popularity scoring', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c1', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
+      totalDocs: 1,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
       totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
@@ -297,6 +314,7 @@ describe('RecommendationService — cohort popularity scoring', () => {
 describe('RecommendationService — recency bonus', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('applies +0.1 recency bonus for courses published within last 60 days', async () => {
@@ -319,9 +337,12 @@ describe('RecommendationService — recency bonus', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c1', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
+      totalDocs: 1,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
       totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
@@ -355,9 +376,12 @@ describe('RecommendationService — recency bonus', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c1', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
+      totalDocs: 1,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
       totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
@@ -380,6 +404,7 @@ describe('RecommendationService — recency bonus', () => {
 describe('RecommendationService — score bounds and weighting', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('final score is always in [0, 1]', async () => {
@@ -402,9 +427,12 @@ describe('RecommendationService — score bounds and weighting', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c-completed', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [candidate],
+      totalDocs: 1,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
       totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
@@ -437,12 +465,13 @@ describe('RecommendationService — score bounds and weighting', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c-completed', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
-      makeCourse({ id: 'c-completed', tags: [], createdAt: OLD_DATE }),
-    )
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: courses,
       totalDocs: courses.length,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [makeCourse({ id: 'c-completed', tags: [], createdAt: OLD_DATE })],
+      totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
@@ -461,6 +490,7 @@ describe('RecommendationService — score bounds and weighting', () => {
 describe('RecommendationService — cold-start', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('returns results when user has 0 completed enrollments', async () => {
@@ -493,6 +523,7 @@ describe('RecommendationService — cold-start', () => {
 describe('RecommendationService — excludeCompleted', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('omits completed courses from results when excludeCompleted=true', async () => {
@@ -505,10 +536,13 @@ describe('RecommendationService — excludeCompleted', () => {
       docs: [makeEnrollment({ student: 'user-1', course: 'c-completed', status: 'completed' })],
       totalDocs: 1,
     })
-    ;(mockPayload.findByID as ReturnType<typeof vi.fn>).mockResolvedValueOnce(completedCourse)
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       docs: [completedCourse, candidate],
       totalDocs: 2,
+    })
+    ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      docs: [completedCourse],
+      totalDocs: 1,
     })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
     ;(mockPayload.find as ReturnType<typeof vi.fn>).mockResolvedValueOnce({ docs: [], totalDocs: 0 })
@@ -529,6 +563,7 @@ describe('RecommendationService — excludeCompleted', () => {
 describe('RecommendationService — cache', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('cache hit returns same result object reference for identical query within TTL', async () => {
@@ -586,6 +621,7 @@ describe('RecommendationService — cache', () => {
 describe('RecommendationService — unpublished courses', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
+    clearRecommendationCache()
   })
 
   it('never returns unpublished courses', async () => {

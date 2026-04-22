@@ -45,12 +45,37 @@ interface EnrollmentDoc {
 }
 
 // ---------------------------------------------------------------------------
-// Module-level cache singleton
+// Module-level cache singleton (survives across requests)
 // ---------------------------------------------------------------------------
 
 interface CacheEntry {
   result: RecommendationResult
   expiresAt: number
+}
+
+/** Shared cache keyed by cache-string → entry. Survives across service instances. */
+const _moduleCache = new Map<string, CacheEntry>()
+let _cacheTtlMs = 10 * 60 * 1000
+
+function _getCached(key: string): RecommendationResult | null {
+  const entry = _moduleCache.get(key)
+  if (!entry) return null
+  if (Date.now() > entry.expiresAt) {
+    _moduleCache.delete(key)
+    return null
+  }
+  return entry.result
+}
+
+function _setCache(key: string, result: RecommendationResult): void {
+  _moduleCache.set(key, { result, expiresAt: Date.now() + _cacheTtlMs })
+}
+
+/**
+ * Clears the module-level cache. Exported for use in tests.
+ */
+export function clearRecommendationCache(): void {
+  _moduleCache.clear()
 }
 
 // ---------------------------------------------------------------------------
@@ -103,11 +128,10 @@ function extractCourseId(raw: string | { id: string }): string {
 // ---------------------------------------------------------------------------
 
 export class RecommendationService {
-  private readonly cache: Map<string, CacheEntry> = new Map()
-  private readonly cacheTtlMs: number
-
   constructor(private readonly payload: Payload, cacheTtlMs = 10 * 60 * 1000) {
-    this.cacheTtlMs = cacheTtlMs
+    // Update the module-level TTL from the first instance; subsequent instances
+    // use whatever TTL was set on the first construction (they share the cache).
+    _cacheTtlMs = cacheTtlMs
   }
 
   private cacheKey(query: RecommendationQuery): string {
@@ -115,18 +139,11 @@ export class RecommendationService {
   }
 
   private getCached(query: RecommendationQuery): RecommendationResult | null {
-    const entry = this.cache.get(this.cacheKey(query))
-    if (!entry) return null
-    if (Date.now() > entry.expiresAt) {
-      this.cache.delete(this.cacheKey(query))
-      return null
-    }
-    return entry.result
+    return _getCached(this.cacheKey(query))
   }
 
   private setCache(query: RecommendationQuery, result: RecommendationResult): void {
-    const key = this.cacheKey(query)
-    this.cache.set(key, { result, expiresAt: Date.now() + this.cacheTtlMs })
+    _setCache(this.cacheKey(query), result)
   }
 
   /**
@@ -190,16 +207,14 @@ export class RecommendationService {
     // Filter out courses the user has already completed (if excludeCompleted)
     const candidateCourses = allCourses.filter((c) => !completedCourseIds.includes(c.id))
 
-    // Fetch tags for completed courses (for tag-overlap scoring)
+    // Fetch tags for completed courses in a single batched query (avoids N findByID calls)
     const completedCourses: Course[] = []
-    if (!isColdStart) {
-      for (const cid of completedCourseIds) {
-        const course = (await this.payload.findByID({
-          collection: 'courses' as CollectionSlug,
-          id: cid,
-        })) as unknown as Course
-        completedCourses.push(course)
-      }
+    if (!isColdStart && completedCourseIds.length > 0) {
+      const batch = await this.payload.find({
+        collection: 'courses' as CollectionSlug,
+        where: { id: { in: completedCourseIds } } as Parameters<typeof this.payload.find>[0]['where'],
+      })
+      completedCourses.push(...(batch.docs as unknown as Course[]))
     }
 
     // Compute union of tags from completed courses
@@ -210,12 +225,12 @@ export class RecommendationService {
       }
     }
 
-    // Fetch cohort: users who share at least one course enrollment with the user
+    // Fetch cohort: all users who share at least one course with the user (single batched query)
     const cohortUserIds = new Set<string>()
-    for (const cid of completedCourseIds) {
+    if (completedCourseIds.length > 0) {
       const coEnrolled = await this.payload.find({
         collection: 'enrollments' as CollectionSlug,
-        where: { course: { equals: cid } } as Parameters<typeof this.payload.find>[0]['where'],
+        where: { course: { in: completedCourseIds } } as Parameters<typeof this.payload.find>[0]['where'],
         limit: 0,
       })
       for (const e of coEnrolled.docs as unknown as EnrollmentDoc[]) {

@@ -55,7 +55,6 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  vi.runAllTimers()
   vi.useRealTimers()
   vi.restoreAllMocks()
 })
