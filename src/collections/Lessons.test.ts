@@ -180,6 +180,88 @@ describe('LessonStore', () => {
     })
   })
 
+  describe('search', () => {
+    beforeEach(() => {
+      // lesson A: 5 min, order 0
+      store.create({ title: 'Intro to React', moduleId: 'mod-a', order: 0, estimatedMinutes: 5 })
+      // lesson B: 15 min, order 1
+      store.create({ title: 'Advanced Hooks', moduleId: 'mod-a', order: 1, estimatedMinutes: 15 })
+      // lesson C: null min, order 2
+      store.create({ title: 'Context API Deep Dive', moduleId: 'mod-a', order: 2, estimatedMinutes: null })
+      // lesson D: 8 min, order 3
+      store.create({ title: 'Performance Tips', moduleId: 'mod-a', order: 3, estimatedMinutes: 8 })
+      // lesson E: 30 min, different module
+      store.create({ title: 'Testing React Apps', moduleId: 'mod-b', order: 0, estimatedMinutes: 30 })
+    })
+
+    it('should return all lessons ordered by order when no filters are given', () => {
+      const results = store.search({}, 'mod-a')
+      expect(results).toHaveLength(4)
+      expect(results.map((l) => l.title)).toEqual([
+        'Intro to React',
+        'Advanced Hooks',
+        'Context API Deep Dive',
+        'Performance Tips',
+      ])
+    })
+
+    it('should filter by query case-insensitively with partial substring', () => {
+      const results = store.search({ query: 'react' }, 'mod-a')
+      expect(results).toHaveLength(1)
+      expect(results[0].title).toBe('Intro to React')
+
+      // case-insensitive: 'ADVANCED' matches 'Advanced'
+      const results2 = store.search({ query: 'AdVaNced' }, 'mod-a')
+      expect(results2).toHaveLength(1)
+      expect(results2[0].title).toBe('Advanced Hooks')
+    })
+
+    it('should return all lessons in module when query matches all', () => {
+      const results = store.search({ query: 'e' }, 'mod-a')
+      expect(results).toHaveLength(4)
+    })
+
+    it('should return empty array when query matches nothing', () => {
+      const results = store.search({ query: 'zzznomatch' }, 'mod-a')
+      expect(results).toHaveLength(0)
+    })
+
+    it('should filter by maxMinutes — excludes lessons over the threshold', () => {
+      const results = store.search({ maxMinutes: 10 }, 'mod-a')
+      expect(results.map((l) => l.title)).toEqual([
+        'Intro to React',      // 5 <= 10
+        'Context API Deep Dive', // null — always included
+        'Performance Tips',     // 8 <= 10
+      ])
+      expect(results.map((l) => l.title)).not.toContain('Advanced Hooks') // 15 > 10
+    })
+
+    it('should include lessons with null estimatedMinutes even when maxMinutes is set', () => {
+      const results = store.search({ maxMinutes: 5 }, 'mod-a')
+      const nullLesson = results.find((l) => l.title === 'Context API Deep Dive')
+      expect(nullLesson).toBeDefined()
+    })
+
+    it('should combine both filters with AND semantics', () => {
+      const results = store.search({ query: 'i', maxMinutes: 10 }, 'mod-a')
+      // "i" matches: Intro to React, Advanced Hooks, Context API Deep Dive, Performance Tips
+      // maxMinutes 10: Intro(5), Context(null), Performance(8)
+      // Intersection: Intro, Context, Performance
+      expect(results.map((l) => l.title)).toEqual([
+        'Intro to React',
+        'Context API Deep Dive',
+        'Performance Tips',
+      ])
+      expect(results.map((l) => l.title)).not.toContain('Advanced Hooks') // "i" matches but 15 > 10
+    })
+
+    it('should search across all modules when moduleId is omitted', () => {
+      const results = store.search({ maxMinutes: 10 })
+      expect(results).toHaveLength(3) // only mod-a ones; mod-b Testing = 30 > 10
+      expect(results.map((l) => l.title)).not.toContain('Testing React Apps')
+    })
+  })
+
   describe('ordering logic', () => {
     it('should maintain correct order across multiple modules', () => {
       store.create({ title: 'Mod1 Lesson A', moduleId: 'module1', order: 0 })

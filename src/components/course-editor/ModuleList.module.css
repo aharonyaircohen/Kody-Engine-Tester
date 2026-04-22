@@ -79,6 +79,66 @@
   background: rgba(255, 107, 107, 0.1);
 }
 
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 160px;
+  background: #2a2a3e;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  outline: none;
+}
+
+.searchInput:focus {
+  border-color: #6c63ff;
+}
+
+.searchInput::placeholder {
+  color: #666;
+}
+
+.maxDurationWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.maxDurationLabel {
+  color: #888;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.maxDurationInput {
+  width: 80px;
+  background: #2a2a3e;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  outline: none;
+}
+
+.maxDurationInput:focus {
+  border-color: #6c63ff;
+}
+
+.maxDurationInput::-webkit-inner-spin-button,
+.maxDurationInput::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
 .lessons {
   display: flex;
   flex-direction: column;

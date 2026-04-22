@@ -98,6 +98,32 @@ export class LessonStore {
   delete(id: string): boolean {
     return this.lessons.delete(id)
   }
+
+  search(
+    opts: { query?: string; maxMinutes?: number } = {},
+    moduleId?: string,
+  ): Lesson[] {
+    const { query, maxMinutes } = opts
+
+    let results = Array.from(this.lessons.values())
+
+    if (moduleId !== undefined) {
+      results = results.filter((l) => l.moduleId === moduleId)
+    }
+
+    if (query && query.trim() !== '') {
+      const lower = query.toLowerCase()
+      results = results.filter((l) => l.title.toLowerCase().includes(lower))
+    }
+
+    if (maxMinutes !== undefined && maxMinutes !== null && maxMinutes > 0) {
+      results = results.filter(
+        (l) => l.estimatedMinutes === null || l.estimatedMinutes <= maxMinutes,
+      )
+    }
+
+    return results.sort((a, b) => a.order - b.order)
+  }
 }
 
 export const lessonStore = new LessonStore()
