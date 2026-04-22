@@ -1,0 +1,2 @@
+{"event":"chat.message","payload":{"sessionId":"2942","role":"assistant","content":"Hi! 👋 I'm Kody, your AI assistant for the Kody Operations Dashboard. How can I help you today?","timestamp":"2026-04-22T15:12:55.231Z"},"runId":"chat-2942-message","emittedAt":"2026-04-22T15:12:55.232Z"}
+{"event":"chat.done","payload":{"sessionId":"2942"},"runId":"chat-2942-done","emittedAt":"2026-04-22T15:12:55.296Z"}
