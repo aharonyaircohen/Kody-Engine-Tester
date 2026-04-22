@@ -40,4 +40,9 @@ describe('parseCsv', () => {
   it('handles CRLF (\\r\\n) multi-line input', () => {
     expect(parseCsv('a,b\r\nc,d')).toEqual([['a', 'b'], ['c', 'd']])
   })
+
+  it('strips trailing \\r from last field of CRLF rows', () => {
+    // After normalizing \r\n to \n, the \r on the last field must be gone
+    expect(parseCsv('a,b\r')).toEqual([['a', 'b']])
+  })
 })

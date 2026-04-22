@@ -1,12 +1,11 @@
 /**
  * Parses a minimal CSV string into a 2D array of trimmed fields.
- * Splits on LF (\\n); CRLF (\\r\\n) is accepted but \\r characters on
- * trailing fields are trimmed away by the field-level trim() call.
+ * Handles both LF (\\n) and CRLF (\\r\\n) line endings.
  * @param input - The CSV string to parse
  * @returns A 2D array of trimmed field strings
  */
 export function parseCsv(input: string): string[][] {
-  const rows = (input || '').split('\n')
+  const rows = (input || '').replace(/\r\n/g, '\n').split('\n')
   // Discard trailing empty row from a trailing newline
   if (rows.length > 0 && rows[rows.length - 1] === '') {
     rows.pop()
