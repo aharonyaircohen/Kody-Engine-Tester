@@ -38,4 +38,9 @@ describe('isEmail', () => {
   it('returns false for non-string input', () => {
     expect(isEmail(123 as unknown as string)).toBe(false)
   })
+
+  it('returns false for null/undefined', () => {
+    expect(isEmail(null as unknown as string)).toBe(false)
+    expect(isEmail(undefined as unknown as string)).toBe(false)
+  })
 })
