@@ -14,7 +14,7 @@ export const GET = async (request: NextRequest) => {
   const rawPageSize = searchParams.get('pageSize') ?? undefined
 
   // Validate difficulty
-  if (rawDifficulty !== null && rawDifficulty !== undefined && !VALID_DIFFICULTIES.has(rawDifficulty)) {
+  if (rawDifficulty && !VALID_DIFFICULTIES.has(rawDifficulty)) {
     return new Response(
       JSON.stringify({ error: 'Invalid difficulty. Must be one of: beginner, intermediate, advanced' }),
       { status: 400, headers: { 'Content-Type': 'application/json' } },

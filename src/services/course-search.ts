@@ -9,7 +9,7 @@ export interface SearchQuery {
 }
 
 export interface SearchResult {
-  items: unknown[]
+  items: Record<string, unknown>[]
   total: number
   page: number
   pageSize: number
@@ -87,7 +87,7 @@ export class CourseSearchService {
     const totalPages = result.totalDocs > 0 ? Math.ceil(result.totalDocs / pageSize) : 0
 
     const searchResult: SearchResult = {
-      items: result.docs,
+      items: result.docs as unknown as Record<string, unknown>[],
       total: result.totalDocs,
       page,
       pageSize,
