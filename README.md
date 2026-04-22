@@ -100,3 +100,5 @@ These step files are auto-generated during `kody init` and can be manually refin
 | Grade assignments | no | own courses | all |
 | Manage users | no | no | yes |
 | View analytics | own progress | own courses | all |
+
+> Last touched by kody2 M1 live-test on $(date).
