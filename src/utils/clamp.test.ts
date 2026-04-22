@@ -36,6 +36,10 @@ describe('clamp', () => {
   })
 
   it('throws when min is greater than max', () => {
-    expect(() => clamp(5, 10, 0)).toThrow('min cannot be greater than max')
+    expect(() => clamp(5, 10, 0)).toThrow('clamp: min must be <= max')
+  })
+
+  it('returns NaN unchanged when value is NaN', () => {
+    expect(Number.isNaN(clamp(NaN, 0, 10))).toBe(true)
   })
 })

@@ -1,6 +1,7 @@
 export function clamp(value: number, min: number, max: number): number {
+  if (Number.isNaN(value)) return NaN
   if (min > max) {
-    throw new Error('min cannot be greater than max')
+    throw new RangeError('clamp: min must be <= max')
   }
   if (value < min) return min
   if (value > max) return max
