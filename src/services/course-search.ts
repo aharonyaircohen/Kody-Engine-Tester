@@ -24,7 +24,7 @@ interface CacheEntry {
 const CACHE_TTL_MS = 5 * 60 * 1000 // 5 minutes
 
 function normalizeCacheKey(q: string, instructor: string, difficulty: string, page: number, pageSize: number): string {
-  return JSON.stringify({ q: q.toLowerCase(), instructor: instructor.toLowerCase(), difficulty, page, pageSize })
+  return JSON.stringify({ q: q.trim().toLowerCase(), instructor: instructor.trim().toLowerCase(), difficulty, page, pageSize })
 }
 
 export class CourseSearchService {

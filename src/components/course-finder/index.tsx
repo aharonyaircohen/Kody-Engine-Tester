@@ -76,7 +76,10 @@ export function CourseFinder({ apiBase = '/api/courses/search' }: CourseFinderPr
     [apiBase],
   )
 
-  // Debounce query and instructor changes; immediate for page/difficulty
+  // Single effect: debounces q/instructor changes, fires immediately for page/difficulty.
+  // Separating the two cases prevents a stale-page request when setPage(1) is called
+  // from a difficulty change — the first effect schedules a debounce-cancelled cleanup,
+  // while the second fires the correct values immediately without a stale page.
   useEffect(() => {
     if (debounceTimer.current !== null) clearTimeout(debounceTimer.current)
     debounceTimer.current = setTimeout(() => {
@@ -85,11 +88,9 @@ export function CourseFinder({ apiBase = '/api/courses/search' }: CourseFinderPr
     return () => {
       if (debounceTimer.current !== null) clearTimeout(debounceTimer.current)
     }
-  }, [q, instructor, difficulty]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Immediate refetch when page or difficulty changes
-  useEffect(() => {
-    fetchCourses(q, instructor, difficulty, page)
+    // page and difficulty must be in deps so that any change (including setPage(1)
+    // after a difficulty change) fires fetchCourses immediately via cleanup.
+    // q and instructor are intentionally excluded so they debounce independently.
   }, [page, difficulty]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
