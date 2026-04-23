@@ -71,6 +71,7 @@ export function LessonEditor({ lesson, onUpdate, onDelete }: LessonEditorProps) 
       {isExpanded && (
         <div className={styles.lessonBody} data-testid="lesson-body">
           <button
+            type="button"
             className={styles.previewToggle}
             onClick={() => setPreview((v) => !v)}
             aria-pressed={preview}
@@ -118,6 +119,7 @@ export function LessonEditor({ lesson, onUpdate, onDelete }: LessonEditorProps) 
                 placeholder="https://..."
                 value={lesson.videoUrl ?? ''}
                 onChange={(e) => handleVideoUrlChange(e.target.value)}
+                readOnly={preview}
                 data-testid="video-url-input"
               />
             </div>
@@ -134,6 +136,7 @@ export function LessonEditor({ lesson, onUpdate, onDelete }: LessonEditorProps) 
                 rows={6}
                 value={lesson.content}
                 onChange={(e) => handleContentChange(e.target.value)}
+                readOnly={preview}
                 data-testid="content-textarea"
               />
             </div>

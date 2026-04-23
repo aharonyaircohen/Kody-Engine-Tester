@@ -95,29 +95,47 @@ describe('LessonEditor', () => {
   })
 
   describe('preview toggle', () => {
-    it('should render toggle with initial aria-pressed false', () => {
+    it('should render toggle with initial aria-pressed false and content editable', () => {
       render(<LessonEditor lesson={makeLesson()} onUpdate={vi.fn()} onDelete={vi.fn()} />)
       fireEvent.click(screen.getByRole('button', { name: 'expand lesson' }))
       const toggle = screen.getByTestId('preview-toggle')
       expect(toggle).toBeDefined()
       expect(toggle.getAttribute('aria-pressed')).toBe('false')
+      expect(screen.getByTestId('content-textarea').getAttribute('readonly')).toBeNull()
     })
 
-    it('should flip aria-pressed to true on click', () => {
+    it('should make content textarea readOnly when preview is on', () => {
       render(<LessonEditor lesson={makeLesson()} onUpdate={vi.fn()} onDelete={vi.fn()} />)
       fireEvent.click(screen.getByRole('button', { name: 'expand lesson' }))
       const toggle = screen.getByTestId('preview-toggle')
       fireEvent.click(toggle)
       expect(toggle.getAttribute('aria-pressed')).toBe('true')
+      expect(screen.getByTestId('content-textarea').getAttribute('readonly')).toBe('')
     })
 
-    it('should flip aria-pressed back to false on second click', () => {
+    it('should make content textarea editable again when preview is toggled off', () => {
       render(<LessonEditor lesson={makeLesson()} onUpdate={vi.fn()} onDelete={vi.fn()} />)
       fireEvent.click(screen.getByRole('button', { name: 'expand lesson' }))
       const toggle = screen.getByTestId('preview-toggle')
       fireEvent.click(toggle)
       fireEvent.click(toggle)
       expect(toggle.getAttribute('aria-pressed')).toBe('false')
+      expect(screen.getByTestId('content-textarea').getAttribute('readonly')).toBeNull()
+    })
+
+    it('should make video url input readOnly when preview is on', () => {
+      render(
+        <LessonEditor
+          lesson={makeLesson({ type: 'video', videoUrl: 'https://youtube.com/watch?v=abc' })}
+          onUpdate={vi.fn()}
+          onDelete={vi.fn()}
+        />,
+      )
+      fireEvent.click(screen.getByRole('button', { name: 'expand lesson' }))
+      const toggle = screen.getByTestId('preview-toggle')
+      expect(screen.getByTestId('video-url-input').getAttribute('readonly')).toBeNull()
+      fireEvent.click(toggle)
+      expect(screen.getByTestId('video-url-input').getAttribute('readonly')).toBe('')
     })
   })
 })
