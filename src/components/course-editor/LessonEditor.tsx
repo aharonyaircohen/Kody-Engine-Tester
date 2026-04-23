@@ -4,7 +4,7 @@ import { useState } from 'react'
 import type { Lesson, LessonType, UpdateLessonInput } from '@/collections/Lessons'
 import styles from './LessonEditor.module.css'
 
-<!-- kody2 N2 live-test 2026-04-23 -->
+// kody2 N2 live-test 2026-04-23
 
 interface LessonEditorProps {
   lesson: Lesson
