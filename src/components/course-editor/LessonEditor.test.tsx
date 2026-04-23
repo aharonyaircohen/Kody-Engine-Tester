@@ -93,4 +93,31 @@ describe('LessonEditor', () => {
       expect(onDelete).toHaveBeenCalledOnce()
     })
   })
+
+  describe('preview toggle', () => {
+    it('should render toggle with initial aria-pressed false', () => {
+      render(<LessonEditor lesson={makeLesson()} onUpdate={vi.fn()} onDelete={vi.fn()} />)
+      fireEvent.click(screen.getByRole('button', { name: 'expand lesson' }))
+      const toggle = screen.getByTestId('preview-toggle')
+      expect(toggle).toBeDefined()
+      expect(toggle.getAttribute('aria-pressed')).toBe('false')
+    })
+
+    it('should flip aria-pressed to true on click', () => {
+      render(<LessonEditor lesson={makeLesson()} onUpdate={vi.fn()} onDelete={vi.fn()} />)
+      fireEvent.click(screen.getByRole('button', { name: 'expand lesson' }))
+      const toggle = screen.getByTestId('preview-toggle')
+      fireEvent.click(toggle)
+      expect(toggle.getAttribute('aria-pressed')).toBe('true')
+    })
+
+    it('should flip aria-pressed back to false on second click', () => {
+      render(<LessonEditor lesson={makeLesson()} onUpdate={vi.fn()} onDelete={vi.fn()} />)
+      fireEvent.click(screen.getByRole('button', { name: 'expand lesson' }))
+      const toggle = screen.getByTestId('preview-toggle')
+      fireEvent.click(toggle)
+      fireEvent.click(toggle)
+      expect(toggle.getAttribute('aria-pressed')).toBe('false')
+    })
+  })
 })

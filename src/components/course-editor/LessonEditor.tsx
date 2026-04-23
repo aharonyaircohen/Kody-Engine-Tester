@@ -12,6 +12,7 @@ interface LessonEditorProps {
 
 export function LessonEditor({ lesson, onUpdate, onDelete }: LessonEditorProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [preview, setPreview] = useState<boolean>(false)
 
   function handleTypeChange(type: LessonType) {
     onUpdate({ type })
@@ -69,6 +70,14 @@ export function LessonEditor({ lesson, onUpdate, onDelete }: LessonEditorProps) 
 
       {isExpanded && (
         <div className={styles.lessonBody} data-testid="lesson-body">
+          <button
+            className={styles.previewToggle}
+            onClick={() => setPreview((v) => !v)}
+            aria-pressed={preview}
+            data-testid="preview-toggle"
+          >
+            Preview / Edit
+          </button>
           <div className={styles.field}>
             <label className={styles.label} htmlFor={`title-${lesson.id}`}>
               Title
