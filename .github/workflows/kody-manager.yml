@@ -38,6 +38,9 @@ jobs:
           cache: "pip"
           cache-dependency-path: .kody-pip-requirements.txt
 
+      - name: Install LiteLLM proxy (for non-Anthropic models)
+        run: pip install 'litellm[proxy]'
+
       - env:
           ALL_SECRETS: ${{ toJSON(secrets) }}
           GH_TOKEN: ${{ secrets.KODY_TOKEN || secrets.GH_PAT || github.token }}
