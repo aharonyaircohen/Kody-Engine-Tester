@@ -99,9 +99,12 @@ describe('TaskModal', () => {
   it('should render all three priority options', () => {
     render(<TaskModal onSubmit={vi.fn()} onClose={vi.fn()} />)
 
-    expect(screen.getByRole('option', { name: 'Low' })).toBeDefined()
-    expect(screen.getByRole('option', { name: 'Medium' })).toBeDefined()
-    expect(screen.getByRole('option', { name: 'High' })).toBeDefined()
+    const prioritySelect = screen.getByLabelText('Priority') as HTMLSelectElement
+    const options = prioritySelect.options
+    const values = Array.from(options).map((o) => o.value)
+    expect(values).toContain('low')
+    expect(values).toContain('medium')
+    expect(values).toContain('high')
   })
 
   it('should show "Create Task" submit button when no initialValues', () => {
@@ -122,5 +125,31 @@ describe('TaskModal', () => {
     )
 
     expect(screen.getByRole('button', { name: 'Save Changes' })).toBeDefined()
+  })
+
+  it('should call onSubmit with updated values when editing an existing task', () => {
+    const onSubmit = vi.fn()
+    render(
+      <TaskModal
+        initialValues={{
+          title: 'Original Task',
+          description: 'Original description',
+          priority: 'low',
+          assignee: 'Charlie',
+        }}
+        onSubmit={onSubmit}
+        onClose={vi.fn()}
+      />
+    )
+
+    fireEvent.change(screen.getByLabelText('Title'), { target: { value: 'Updated Task' } })
+    fireEvent.submit(screen.getByRole('button', { name: 'Save Changes' }))
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      title: 'Updated Task',
+      description: 'Original description',
+      priority: 'low',
+      assignee: 'Charlie',
+    })
   })
 })

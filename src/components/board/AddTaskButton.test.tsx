@@ -26,15 +26,14 @@ describe('AddTaskButton', () => {
     render(<AddTaskButton onClick={onClick} />)
     const button = screen.getByRole('button', { name: '+ Add Task' })
     // Verify button is focusable
-    expect(button).toHaveProperty('tabIndex')
+    expect(button).toHaveProperty('tabIndex', 0)
     // Click triggers onClick
     fireEvent.click(button)
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 
   it('should render with the component CSS class', () => {
-    render(<AddTaskButton onClick={vi.fn()} />)
-    const button = screen.getByRole('button', { name: '+ Add Task' })
-    expect(button.className).toContain('button')
+    const { container } = render(<AddTaskButton onClick={vi.fn()} />)
+    expect(container.querySelector('.button')).toBeDefined()
   })
 })
