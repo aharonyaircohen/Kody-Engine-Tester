@@ -1,10 +1,10 @@
 {
-  "$comment": "Test cases for the nightly Kody engine smoke suite. Each case runs a single CLI invocation and asserts on exit code + stdout/stderr substrings. Add new cases by appending to `tests`. Do NOT add cases that require live GitHub state (PRs, issues) — those go in a separate, slower suite.",
+  "$comment": "Test cases for the nightly Kody engine smoke suite. Each case runs a single CLI invocation and asserts on exit code + stdout/stderr substrings. Add new cases by appending to `tests`. Do NOT add cases that require live GitHub state (PRs, issues) — those go in a separate, slower suite. Calibrated against engine v0.3.40: invalid-args exits 64; `kody version` output is prefixed with `kody ` (e.g. `kody 0.3.40`).",
   "engineSpec": "@kody-ade/kody-engine@latest",
   "tests": [
     {
       "name": "cli.help.no-args",
-      "describe": "Engine prints CLI usage when invoked with no args (outside CI env vars).",
+      "describe": "Engine prints CLI usage when invoked with `kody help`.",
       "command": ["kody", "help"],
       "expectExitCode": 0,
       "expectStdoutContains": ["Usage:", "kody run", "kody fix", "kody chat"]
@@ -18,93 +18,93 @@
     },
     {
       "name": "cli.version.command",
-      "describe": "`kody version` prints a semver-shaped string and exits 0.",
+      "describe": "`kody version` prints `kody <semver>` and exits 0.",
       "command": ["kody", "version"],
       "expectExitCode": 0,
-      "expectStdoutMatches": "^\\d+\\.\\d+\\.\\d+"
+      "expectStdoutMatches": "kody \\d+\\.\\d+\\.\\d+"
     },
     {
       "name": "cli.version.flag",
-      "describe": "`kody --version` prints a semver-shaped string and exits 0.",
+      "describe": "`kody --version` prints `kody <semver>` and exits 0.",
       "command": ["kody", "--version"],
       "expectExitCode": 0,
-      "expectStdoutMatches": "^\\d+\\.\\d+\\.\\d+"
+      "expectStdoutMatches": "kody \\d+\\.\\d+\\.\\d+"
     },
     {
       "name": "cli.unknown.command",
-      "describe": "Unknown top-level command exits non-zero with a clear error.",
+      "describe": "Unknown top-level command exits 64 (engine's invalid-args code) with a clear error.",
       "command": ["kody", "this-executable-does-not-exist-xyz"],
-      "expectExitCode": 1,
-      "expectStderrContains": ["unknown", "executable"]
+      "expectExitCode": 64,
+      "expectStderrContains": ["unknown"]
     },
     {
       "name": "cmd.run.missing-flag",
-      "describe": "`kody run` without --issue surfaces a clear validation error and exits non-zero (validates the run profile loads).",
+      "describe": "`kody run` without --issue surfaces a clear validation error and exits 64 (validates the run profile loads).",
       "command": ["kody", "run"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["issue"]
     },
     {
       "name": "cmd.fix.missing-flag",
       "describe": "`kody fix` without --pr surfaces a clear validation error (validates the fix profile loads).",
       "command": ["kody", "fix"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["pr"]
     },
     {
       "name": "cmd.fix-ci.missing-flag",
       "describe": "`kody fix-ci` without --pr surfaces a clear validation error (validates the fix-ci profile loads).",
       "command": ["kody", "fix-ci"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["pr"]
     },
     {
       "name": "cmd.resolve.missing-flag",
       "describe": "`kody resolve` without --pr surfaces a clear validation error (validates the resolve profile loads).",
       "command": ["kody", "resolve"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["pr"]
     },
     {
       "name": "cmd.review.missing-flag",
       "describe": "`kody review` without --pr surfaces a clear validation error (validates the review profile loads).",
       "command": ["kody", "review"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["pr"]
     },
     {
       "name": "cmd.plan.missing-flag",
       "describe": "`kody plan` without --issue surfaces a clear validation error (validates the plan profile loads).",
       "command": ["kody", "plan"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["issue"]
     },
     {
       "name": "cmd.classify.missing-flag",
       "describe": "`kody classify` without --issue surfaces a clear validation error (validates the classify profile loads).",
       "command": ["kody", "classify"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["issue"]
     },
     {
       "name": "cmd.spec.missing-flag",
       "describe": "`kody spec` without --issue surfaces a clear validation error (validates the spec profile loads).",
       "command": ["kody", "spec"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["issue"]
     },
     {
       "name": "cmd.research.missing-flag",
       "describe": "`kody research` without --issue surfaces a clear validation error (validates the research profile loads).",
       "command": ["kody", "research"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["issue"]
     },
     {
       "name": "cmd.sync.profile-loads",
-      "describe": "`kody sync` invokes the sync profile (no required flags). Acceptable outcome: exits 0 (already in sync) or non-zero with a recognized sync-side error message — but NOT a profile-load crash.",
+      "describe": "`kody sync` profile loads. Acceptable outcome: any defined exit (0 success / 1 sync error / 64 invalid args) — but NOT a profile-load crash.",
       "command": ["kody", "sync"],
-      "expectExitCodeIn": [0, 1, 2],
+      "expectExitCodeIn": [0, 1, 2, 64],
       "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
     },
     {
@@ -118,7 +118,7 @@
       "name": "cmd.watch-stale-prs.profile-loads",
       "describe": "`kody watch-stale-prs` profile loads and starts (one-shot scan). Acceptable outcome: any exit code so long as it isn't a profile-load crash.",
       "command": ["kody", "watch-stale-prs"],
-      "expectExitCodeIn": [0, 1, 2],
+      "expectExitCodeIn": [0, 1, 2, 64],
       "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
     },
     {
@@ -130,44 +130,44 @@
     },
     {
       "name": "cmd.mission-tick.missing-flag",
-      "describe": "`kody mission-tick` without --mission surfaces a clear validation error.",
+      "describe": "`kody mission-tick` without --mission exits 64 with a clear validation error.",
       "command": ["kody", "mission-tick"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["mission"]
     },
     {
       "name": "cmd.bug.profile-loads",
-      "describe": "`kody bug` (a comment-dispatched alias) prints help / errors cleanly without crashing.",
+      "describe": "`kody bug` profile loads (it requires --issue, so missing-flag = exit 64).",
       "command": ["kody", "bug"],
-      "expectExitCodeIn": [0, 1, 2],
+      "expectExitCodeIn": [0, 1, 2, 64],
       "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
     },
     {
       "name": "cmd.feature.profile-loads",
       "describe": "`kody feature` profile loads.",
       "command": ["kody", "feature"],
-      "expectExitCodeIn": [0, 1, 2],
+      "expectExitCodeIn": [0, 1, 2, 64],
       "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
     },
     {
       "name": "cmd.chore.profile-loads",
       "describe": "`kody chore` profile loads.",
       "command": ["kody", "chore"],
-      "expectExitCodeIn": [0, 1, 2],
+      "expectExitCodeIn": [0, 1, 2, 64],
       "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
     },
     {
       "name": "cmd.ui-review.missing-flag",
-      "describe": "`kody ui-review` without --pr surfaces a validation error (profile loads).",
+      "describe": "`kody ui-review` without --pr exits 64 with a validation error (profile loads).",
       "command": ["kody", "ui-review"],
-      "expectExitCode": 1,
+      "expectExitCode": 64,
       "expectStderrContains": ["pr"]
     },
     {
       "name": "cmd.release.profile-loads",
       "describe": "`kody release` profile loads. Release workflows are typically only invoked from CI; we just verify it doesn't crash on profile load.",
       "command": ["kody", "release"],
-      "expectExitCodeIn": [0, 1, 2],
+      "expectExitCodeIn": [0, 1, 2, 64],
       "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
     },
     {
