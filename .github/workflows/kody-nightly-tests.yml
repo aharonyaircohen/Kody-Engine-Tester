@@ -44,6 +44,9 @@ jobs:
           cache: "pip"
           cache-dependency-path: .kody-pip-requirements.txt
 
+      - name: Install litellm for engine model proxy
+        run: pip install 'litellm[proxy]'
+
       # Unpack ALL_SECRETS into the environment so the kody engine and
       # gh CLI both pick up GH_PAT, MINIMAX_API_KEY, etc. without requiring
       # the executable itself to do the same preflight kody-cli.ts does for
