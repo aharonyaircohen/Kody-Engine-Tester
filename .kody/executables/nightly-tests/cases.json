@@ -194,7 +194,7 @@
         "exitCode": 0,
         "prOpened": true,
         "prBodyContains": ["ping"],
-        "issueCommentMatches": "DONE"
+        "issueCommentMatches": "RUN_COMPLETED"
       },
       "teardown": {
         "closePrAndDeleteBranch": true,
