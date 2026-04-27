@@ -1,7 +1,7 @@
 {
-  "$comment": "Test cases for the nightly Kody engine smoke suite. Each case runs a single CLI invocation and asserts on exit code + stdout/stderr substrings. Add new cases by appending to `tests`. Do NOT add cases that require live GitHub state (PRs, issues) — those go in a separate, slower suite. Calibrated against engine v0.3.40: invalid-args exits 64; `kody version` output is prefixed with `kody ` (e.g. `kody 0.3.40`).",
+  "$comment": "Two tiers. `smoke` = fast CLI validation (no GitHub state). `live` = end-to-end runs that create real fixtures (issues/PRs) in this repo and tear them down. Smoke runs first; live only if smoke fully passes. On any failure (smoke or live), a NEW issue is opened summarizing the failures.",
   "engineSpec": "@kody-ade/kody-engine@latest",
-  "tests": [
+  "smoke": [
     {
       "name": "cli.help.no-args",
       "describe": "Engine prints CLI usage when invoked with `kody help`.",
@@ -176,6 +176,30 @@
       "command": ["kody", "version"],
       "expectExitCode": 0,
       "expectStderrLacks": ["kody.config.json", "schema validation"]
+    }
+  ],
+  "live": [
+    {
+      "name": "run.add-api-route",
+      "describe": "kody run on a tiny additive feature issue (add /api/ping route + test). Verifies the run flow opens a green PR end-to-end against the published engine.",
+      "fixture": {
+        "type": "issue",
+        "title": "[nightly-test {{ts}}] add /api/ping route",
+        "body": "Add a Next.js App Router API route at `src/app/api/ping/route.ts` that handles GET and returns `{ \"ok\": true }` with HTTP 200 and `Content-Type: application/json`. Mirror the shape of the existing `src/app/api/health/route.ts`.\n\nAdd a vitest integration test at `tests/int/ping.int.spec.ts` that invokes the GET handler directly (no HTTP server) and asserts the JSON body contains `ok: true` and the response status is 200. The test must NOT depend on a database — do not gate it with `describeIfDb`.\n\nNo new dependencies. Keep changes minimal.",
+        "labels": ["kody:nightly-test"]
+      },
+      "command": ["kody", "run", "--issue", "{{issueNumber}}"],
+      "timeoutSec": 600,
+      "expect": {
+        "exitCode": 0,
+        "prOpened": true,
+        "prBodyContains": ["ping"],
+        "issueCommentMatches": "DONE"
+      },
+      "teardown": {
+        "closePrAndDeleteBranch": true,
+        "closeIssue": true
+      }
     }
   ]
 }
