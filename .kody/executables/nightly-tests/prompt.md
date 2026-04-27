@@ -57,7 +57,9 @@ Evaluate assertions. Pass iff every declared assertion holds.
 
 Each live case has:
 
-- `fixture` — describes a disposable GitHub fixture to create.
+- `fixture` — describes a disposable GitHub fixture to create. Two shapes:
+  - `fixture.type: "issue"` — `gh issue create` with `title`, `body`, `labels`.
+  - `fixture.type: "pr"` — branch off `main` (via `git worktree`), apply `changes[]`, push, `gh pr create`. Each `change` is `{ "path": "<rel>", "append": "..." }` or `{ "path": "<rel>", "write": "..." }`.
 - `command` — kody invocation (with `{{issueNumber}}` and `{{prNumber}}` tokens substituted).
 - `timeoutSec` — wall-clock cap for the kody run.
 - `expect` — assertions about observed GitHub state after kody completes.
@@ -107,12 +109,54 @@ echo "EXIT_CODE=$exit_code"
 
 You synthesize the actual bash from each case's data. Don't templatize — just build the right command per case and run it as one tool call.
 
+### PR-fixture lifecycle (when fixture.type == "pr")
+
+For PR fixtures, the setup creates a real branch + commit + PR via `git worktree` (keeps the main checkout clean) and `gh`. Sketch:
+
+```bash
+bash -c '
+set -u
+ts=$(date -u +%Y-%m-%d-%H%M)
+title="<rendered>"
+body="<rendered>"
+branch="<rendered fixture.headBranch with {{ts}} substituted>"
+labels="kody:nightly-test"
+worktree="/tmp/kody-nightly-fixture-$ts-$$"
+
+git fetch origin main >/dev/null 2>&1
+git worktree add -b "$branch" "$worktree" origin/main >/dev/null 2>&1
+( cd "$worktree" \
+  # Apply each change in fixture.changes — append or write per the op:
+  && printf "%s" "<append-content>" >> "<rel/path>" \
+  && git add -A \
+  && git commit -m "chore(test): nightly-test fixture" >/dev/null \
+  && git push -u origin "$branch" >/dev/null 2>&1 )
+
+prN=$(gh pr create --title "$title" --body "$body" --base main --head "$branch" --label "$labels" --json number --jq ".number")
+echo "FIXTURE_PR=$prN"
+
+cleanup() {
+  gh pr close "$prN" --delete-branch 2>/dev/null || true
+  git worktree remove --force "$worktree" 2>/dev/null || true
+  git branch -D "$branch" 2>/dev/null || true
+}
+trap cleanup EXIT
+
+# Invoke kody (rendered command with {{prNumber}} → $prN)
+out=$(mktemp); err=$(mktemp)
+timeout <timeoutSec> npx -y -p <engineSpec> kody review --pr "$prN" >"$out" 2>"$err"
+exit_code=$?
+echo "EXIT_CODE=$exit_code"
+'
+```
+
 ### Live-case asserts (detail)
 
 - `expect.exitCode`: integer match.
-- `expect.prOpened: true`: `gh pr list --search "head:kody/issue-<issueN>" --state all --json number,headRefName,body` returns ≥1 row.
-- `expect.prBodyContains: [...]`: PR body (from above) contains every substring (case-insensitive).
+- `expect.prOpened: true`: `gh pr list --search "head:kody/issue-<issueN>" --state all --json number,headRefName,body` returns ≥1 row. Only meaningful for issue-fixture cases where kody is expected to OPEN a new PR (e.g. `kody run`).
+- `expect.prBodyContains: [...]`: PR body (the kody-opened one) contains every substring (case-insensitive).
 - `expect.issueCommentMatches: "regex"`: `gh issue view <issueN> --json comments --jq '.comments[].body'` matches the regex on at least one comment.
+- `expect.prCommentMatches: "regex"`: `gh pr view <prN> --json comments --jq '.comments[].body'` matches the regex on at least one comment. Used for review-style cases that post on the input PR.
 
 If the kody invocation timed out, set the case status to `failed` with reason `timeout` — but still run teardown.
 
@@ -169,7 +213,7 @@ If the kody invocation timed out, set the case status to `failed` with reason `t
 ## Rules
 
 - Allowed shell tools: `npx`, `gh`, `bash`, `timeout`, `jq`, basic POSIX (`mktemp`, `cat`, `rm`, `date`, `grep`, `sed`).
-- **Never edit any source file in this repo.** All changes happen inside ephemeral kody-opened PRs that you tear down.
+- **Never modify the working tree of `main` directly.** Branch-based fixtures (PR fixtures) are allowed via `git worktree` so the main checkout stays clean; they MUST be torn down.
 - Never post comments outside the tracking issue and the per-failure-run issue. No PR comments, no comments on the fixture issues themselves.
 - Always run teardown for live cases — even on timeout, exception, or interrupt. Use `trap cleanup EXIT` inside the bash invocation.
 - One pass per run. The cron will fire again tomorrow.
