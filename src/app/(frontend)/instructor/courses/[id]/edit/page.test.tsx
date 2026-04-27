@@ -30,6 +30,7 @@ function renderWithFallback({ shouldThrow }: { shouldThrow: boolean }) {
   )
 }
 
+// v0.3.33 sync-before-fix validation test
 describe('CourseEditPage ErrorBoundary', () => {
   beforeEach(() => {
     vi.clearAllMocks()
