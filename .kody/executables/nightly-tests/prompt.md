@@ -81,9 +81,18 @@ labels="kody:nightly-test"
 issueN=$(gh issue create --title "$title" --body "$body" --label "$labels" --json number --jq ".number")
 echo "FIXTURE_ISSUE=$issueN"
 
+# Find PR by parsing kody's "✅ kody PR opened: <url>" comment. kody's branch
+# naming is <issueN>-<slug>, NOT a fixed kody/issue-N pattern, so a head-branch
+# search won't work — the kody-posted PR URL on the issue is the source of truth.
+find_pr_for_issue() {
+  local issueN=$1
+  gh issue view "$issueN" --json comments \
+    --jq '[.comments[].body | scan("https://github\\.com/[^/ ]+/[^/ ]+/pull/([0-9]+)") | .[0]][0] // ""'
+}
+
 # Teardown trap (always runs)
 cleanup() {
-  prN=$(gh pr list --search "head:kody/issue-$issueN" --state all --json number --jq ".[0].number" 2>/dev/null || true)
+  prN=$(find_pr_for_issue "$issueN")
   if [ -n "$prN" ] && [ "$prN" != "null" ]; then
     gh pr close "$prN" --delete-branch 2>/dev/null || true
   fi
@@ -99,8 +108,8 @@ echo "EXIT_CODE=$exit_code"
 
 # Assertions (driven by case.expect)
 # - exitCode: $exit_code vs expect.exitCode
-# - prOpened: gh pr list --search "head:kody/issue-$issueN" --json number; expect.prOpened means non-empty
-# - prBodyContains: gh pr view <prN> --json body --jq ".body" → grep each substring
+# - prOpened: prN=$(find_pr_for_issue "$issueN"); expect.prOpened means non-empty
+# - prBodyContains: gh pr view "$prN" --json body --jq ".body" → grep each substring
 # - issueCommentMatches: gh issue view "$issueN" --json comments --jq ".comments[].body" → match regex
 
 # Emit a one-line JSON result on stdout for the agent to parse
@@ -153,7 +162,7 @@ echo "EXIT_CODE=$exit_code"
 ### Live-case asserts (detail)
 
 - `expect.exitCode`: integer match.
-- `expect.prOpened: true`: `gh pr list --search "head:kody/issue-<issueN>" --state all --json number,headRefName,body` returns ≥1 row. Only meaningful for issue-fixture cases where kody is expected to OPEN a new PR (e.g. `kody run`).
+- `expect.prOpened: true`: kody posts a comment on the fixture issue with a `https://github.com/.../pull/<N>` URL when it opens a PR. Find it via `gh issue view <issueN> --json comments --jq '[.comments[].body | match("https://github\\.com/[^/ ]+/[^/ ]+/pull/[0-9]+") | .string][0]'`. If the URL is non-empty, capture the PR number from its trailing `/<N>`. Only meaningful for issue-fixture cases where kody is expected to OPEN a new PR (e.g. `kody run`).
 - `expect.prBodyContains: [...]`: PR body (the kody-opened one) contains every substring (case-insensitive).
 - `expect.issueCommentMatches: "regex"`: `gh issue view <issueN> --json comments --jq '.comments[].body'` matches the regex on at least one comment.
 - `expect.prCommentMatches: "regex"`: `gh pr view <prN> --json comments --jq '.comments[].body'` matches the regex on at least one comment. Used for review-style cases that post on the input PR.
