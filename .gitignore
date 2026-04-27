@@ -59,4 +59,6 @@ node_modules/
 !.kody/executables/**
 !.kody/missions/
 !.kody/missions/**
+!.kody/vault/
+!.kody/vault/**
 .kody/executables/**/last-run.json
