@@ -44,8 +44,36 @@ jobs:
           cache: "pip"
           cache-dependency-path: .kody-pip-requirements.txt
 
-      - env:
+      # Unpack ALL_SECRETS into the environment so the kody engine and
+      # gh CLI both pick up GH_PAT, MINIMAX_API_KEY, etc. without requiring
+      # the executable itself to do the same preflight kody-cli.ts does for
+      # `kody ci` / `kody chat`. Also pin GH_TOKEN to GH_PAT (or the runner's
+      # github.token) so `gh auth status` passes.
+      - name: Unpack secrets into env
+        env:
           ALL_SECRETS: ${{ toJSON(secrets) }}
+        run: |
+          python3 <<'PY' >> "$GITHUB_ENV"
+          import json, os, sys
+          raw = os.environ.get("ALL_SECRETS") or "{}"
+          for k, v in json.loads(raw).items():
+              if not v or "\n" in str(v):
+                  continue
+              print(f"{k}={v}")
+          PY
+
+      - name: Configure GH_TOKEN for gh CLI
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          DEFAULT_TOKEN: ${{ secrets.KODY_TOKEN || github.token }}
+        run: |
+          if [ -n "$GH_PAT" ]; then
+            echo "GH_TOKEN=$GH_PAT" >> "$GITHUB_ENV"
+          else
+            echo "GH_TOKEN=$DEFAULT_TOKEN" >> "$GITHUB_ENV"
+          fi
+
+      - env:
           FILTER: ${{ inputs.filter }}
         run: |
           if [ -n "$FILTER" ]; then
