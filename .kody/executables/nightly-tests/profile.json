@@ -1,0 +1,62 @@
+{
+  "name": "nightly-tests",
+  "role": "watch",
+  "describe": "Nightly end-to-end smoke suite for the Kody engine. Iterates over cases.json, runs each command, asserts outcome, writes a results report, and opens or updates a tracking issue.",
+  "kind": "scheduled",
+  "schedule": "0 2 * * *",
+  "inputs": [
+    {
+      "name": "filter",
+      "flag": "--filter",
+      "type": "string",
+      "required": false,
+      "describe": "Optional regex; only test cases whose `name` matches are run. Lets a human re-run a single failing case via workflow_dispatch."
+    }
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 60,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": ["Bash", "Read", "Write"],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Use `gh` to open or update the tracking issue (search by title, then `gh issue create` or `gh issue edit`). Use `gh issue comment` to post the run summary. Avoid any other GitHub mutations.",
+      "allowedUses": ["issue", "api"]
+    },
+    {
+      "name": "npx",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v npx"
+      },
+      "verify": "npx --version",
+      "usage": "Each test case dispatches the kody CLI via `npx -y -p @kody-ade/kody-engine@latest kody <args>`. Capture stdout, stderr, and exit code separately; npx caches the package after the first call so subsequent ones are fast.",
+      "allowedUses": []
+    }
+  ],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": []
+  }
+}

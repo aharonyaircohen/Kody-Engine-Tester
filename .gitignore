@@ -50,4 +50,13 @@ node_modules/
 /playwright/.cache/
 
 
-.kody/
+# Runtime state under .kody/ is ignored, but consumer-repo-controlled
+# assets (executables, missions) are tracked as code. The negation only
+# works if the parent directory itself isn't ignored — hence `.kody/*` not
+# `.kody/`.
+.kody/*
+!.kody/executables/
+!.kody/executables/**
+!.kody/missions/
+!.kody/missions/**
+.kody/executables/**/last-run.json
