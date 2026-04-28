@@ -7,10 +7,10 @@ import {
   jsonFormatter,
   prettyFormatter,
   consoleTransport,
-  fileTransport,
   type LogEntry,
   type LogLevel,
 } from './index'
+import { fileTransport } from './file-transport'
 
 // --- Helpers ---
 
