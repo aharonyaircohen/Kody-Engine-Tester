@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "rev": 2,
-  "cursor": "scanned-all-passing",
+  "rev": 3,
+  "cursor": "scanned-no-failures",
   "data": {},
   "done": false
 }
