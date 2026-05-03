@@ -22,12 +22,25 @@ You do **not** edit source code in this repo. You do **not** modify the engine. 
 8. **Save** full results to `.kody/executables/nightly-tests/last-run.json` via Write.
 9. **Final assistant message** = the report inline (so a human reader sees pass/fail without opening other surfaces).
 
+## Portable timeout (REQUIRED — `timeout` and `gtimeout` are missing on macOS dev machines)
+
+Wrap every kody/npx invocation with this perl-based wrapper. **Never use `timeout` or `gtimeout` directly** — they're absent on the runner used in this project, and a missing `timeout` silently runs commands without bound.
+
+```bash
+ptimeout() {
+  # Usage: ptimeout <secs> <cmd> [args...]
+  perl -e '$SIG{ALRM}=sub{kill 9,@PIDS;exit 124}; my $secs=shift @ARGV; alarm $secs; my $pid=fork; if($pid==0){exec @ARGV;exit 127} push @PIDS,$pid; waitpid($pid,0); exit($?>>8)' "$@"
+}
+```
+
+Exit 124 = timeout fired. Use this in every per-case bash invocation.
+
 ## Smoke case (CLI)
 
 Build the shell command:
 
 ```
-timeout 120 npx -y -p <engineSpec> <command...>
+ptimeout 120 npx -y -p <engineSpec> <command...>
 ```
 
 …where `<command...>` is the case's `command` array. If the first element is `bash`, run as-is (escape hatch).
@@ -61,8 +74,9 @@ Each live case has:
   - `fixture.type: "issue"` — `gh issue create` with `title`, `body`, `labels`.
   - `fixture.type: "pr"` — branch off `main` (via `git worktree`), apply `changes[]`, push, `gh pr create`. Each `change` is `{ "path": "<rel>", "append": "..." }` or `{ "path": "<rel>", "write": "..." }`.
 - `command` — kody invocation (with `{{issueNumber}}` and `{{prNumber}}` tokens substituted).
-- `timeoutSec` — wall-clock cap for the kody run.
-- `expect` — assertions about observed GitHub state after kody completes.
+- `timeoutSec` — wall-clock cap for the kody invocation itself (NOT the polling loop). For multi-stage flows (`feature`, `bug`, `spec`), this is just the bootstrap dispatch — kody returns in seconds and the chain runs via GHA over the next 30–60 min. The poll loop's `intervalSec * maxAttempts` is the cap for the chain's total wall-clock.
+- `pollFor` *(optional)* — used for orchestrator flows (`feature`, etc.) that finish via GHA-driven dispatch chain, not in-process. Shape: `{ issueLabelOneOf: [...], intervalSec: 60, maxAttempts: 60 }`. After kody bootstraps, poll the issue's labels every `intervalSec` until one of `issueLabelOneOf` appears (terminal) or `maxAttempts` is reached.
+- `expect` — assertions about observed GitHub state after kody completes (or after polling terminates).
 - `teardown` — what to dispose at the end.
 
 ### Lifecycle (atomic per case)
@@ -81,9 +95,18 @@ labels="kody:nightly-test"
 issueN=$(gh issue create --title "$title" --body "$body" --label "$labels" --json number --jq ".number")
 echo "FIXTURE_ISSUE=$issueN"
 
+# Find PR by parsing kody's "✅ kody PR opened: <url>" comment. kody's branch
+# naming is <issueN>-<slug>, NOT a fixed kody/issue-N pattern, so a head-branch
+# search won't work — the kody-posted PR URL on the issue is the source of truth.
+find_pr_for_issue() {
+  local issueN=$1
+  gh issue view "$issueN" --json comments \
+    --jq '[.comments[].body | scan("https://github\\.com/[^/ ]+/[^/ ]+/pull/([0-9]+)") | .[0]][0] // ""'
+}
+
 # Teardown trap (always runs)
 cleanup() {
-  prN=$(gh pr list --search "head:kody/issue-$issueN" --state all --json number --jq ".[0].number" 2>/dev/null || true)
+  prN=$(find_pr_for_issue "$issueN")
   if [ -n "$prN" ] && [ "$prN" != "null" ]; then
     gh pr close "$prN" --delete-branch 2>/dev/null || true
   fi
@@ -99,8 +122,8 @@ echo "EXIT_CODE=$exit_code"
 
 # Assertions (driven by case.expect)
 # - exitCode: $exit_code vs expect.exitCode
-# - prOpened: gh pr list --search "head:kody/issue-$issueN" --json number; expect.prOpened means non-empty
-# - prBodyContains: gh pr view <prN> --json body --jq ".body" → grep each substring
+# - prOpened: prN=$(find_pr_for_issue "$issueN"); expect.prOpened means non-empty
+# - prBodyContains: gh pr view "$prN" --json body --jq ".body" → grep each substring
 # - issueCommentMatches: gh issue view "$issueN" --json comments --jq ".comments[].body" → match regex
 
 # Emit a one-line JSON result on stdout for the agent to parse
@@ -152,11 +175,48 @@ echo "EXIT_CODE=$exit_code"
 
 ### Live-case asserts (detail)
 
-- `expect.exitCode`: integer match.
-- `expect.prOpened: true`: `gh pr list --search "head:kody/issue-<issueN>" --state all --json number,headRefName,body` returns ≥1 row. Only meaningful for issue-fixture cases where kody is expected to OPEN a new PR (e.g. `kody run`).
+- `expect.exitCode`: integer match — exit code of the kody invocation itself (the bootstrap call for orchestrator flows).
+- `expect.prOpened: true`: kody posts a comment on the fixture issue with a `https://github.com/.../pull/<N>` URL when it opens a PR. Find it via `gh issue view <issueN> --json comments --jq '[.comments[].body | scan("https://github\\.com/[^/ ]+/[^/ ]+/pull/([0-9]+)") | .[0]][0] // ""'`. If the URL is non-empty, capture the PR number from its trailing `/<N>`. Only meaningful for issue-fixture cases where kody is expected to OPEN a new PR (e.g. `kody run`, `kody feature`).
 - `expect.prBodyContains: [...]`: PR body (the kody-opened one) contains every substring (case-insensitive).
 - `expect.issueCommentMatches: "regex"`: `gh issue view <issueN> --json comments --jq '.comments[].body'` matches the regex on at least one comment.
-- `expect.prCommentMatches: "regex"`: `gh pr view <prN> --json comments --jq '.comments[].body'` matches the regex on at least one comment. Used for review-style cases that post on the input PR.
+- `expect.prCommentMatches: "regex"`: `gh pr view <prN> --json comments --jq '.comments[].body'` matches the regex on at least one comment.
+- `expect.terminalLabel: "kody:done" | "kody:failed"`: after polling concludes, the fixture issue's label set must contain this exact label. Pass iff the polled terminal matches.
+
+### Polling loop (for orchestrator cases)
+
+When `pollFor` is set, after the bootstrap kody call returns, run:
+
+```bash
+attempt=0
+maxAttempts=<pollFor.maxAttempts>
+intervalSec=<pollFor.intervalSec>
+terminal=""
+poll_start=$(date +%s)
+while [ $attempt -lt $maxAttempts ]; do
+  labels=$(gh issue view "$issueN" --json labels --jq '[.labels[].name] | join(",")')
+  for t in <pollFor.issueLabelOneOf as space-separated>; do
+    case ",$labels," in *",$t,"*) terminal=$t; break 2 ;; esac
+  done
+  sleep "$intervalSec"
+  attempt=$((attempt + 1))
+done
+poll_elapsed=$(( $(date +%s) - poll_start ))
+echo "POLL_TERMINAL=$terminal POLL_ELAPSED=${poll_elapsed}s ATTEMPTS=$attempt"
+```
+
+If `$terminal` is empty after the loop, the case is a TIMEOUT (status `failed`, reason `poll-timeout`).
+
+### Honesty checks (REQUIRED before declaring a case `pass`)
+
+The agent MUST verify each of these from real GitHub state — never claim a pass based on the kody command's exit code alone:
+
+1. **Real elapsed time**: capture `start=$(date +%s)` before the kody call, `elapsed=$(($(date +%s) - start))` after, including any polling. Report this exact number, not an estimate.
+2. **Fixture issue created**: `gh issue view <issueN> --json state --jq .state` returns a value (otherwise setup failed silently).
+3. **For `expect.prOpened: true`**: the URL extraction regex above MUST yield a non-empty PR number, AND `gh pr view <prN> --json state --jq .state` MUST return `OPEN` or `MERGED`. If empty or absent, the case fails — even if the kody exit code was 0.
+4. **Teardown ran**: after `cleanup`, verify `gh issue view <issueN> --json state --jq .state` returns `CLOSED` and (if a PR was opened) `gh pr view <prN> --json state --jq .state` returns `CLOSED` or `MERGED`. If teardown failed, mark the case `pass-with-leak` (still a fail at suite level — surface in failure issue).
+5. **Real exit code**: capture `$?` directly after the kody call. Don't assume 0.
+
+If any honesty check disagrees with the kody exit code, the GitHub-state truth wins.
 
 If the kody invocation timed out, set the case status to `failed` with reason `timeout` — but still run teardown.
 

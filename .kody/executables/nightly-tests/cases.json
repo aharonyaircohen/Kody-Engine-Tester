@@ -180,12 +180,12 @@
   ],
   "live": [
     {
-      "name": "run.add-api-route",
-      "describe": "kody run on a tiny additive feature issue (add /api/ping route + test). Verifies the run flow opens a green PR end-to-end against the published engine.",
+      "name": "run.add-utility",
+      "describe": "kody run on a pure-utility additive issue (add greet(name) helper + colocated unit test). Bulletproof fixture — no Next.js, no DB, no network — so the test only fails if the engine is broken.",
       "fixture": {
         "type": "issue",
-        "title": "[nightly-test {{ts}}] add /api/ping route",
-        "body": "Add a Next.js App Router API route at `src/app/api/ping/route.ts` that handles GET and returns `{ \"ok\": true }` with HTTP 200 and `Content-Type: application/json`. Mirror the shape of the existing `src/app/api/health/route.ts`.\n\nAdd a vitest integration test at `tests/int/ping.int.spec.ts` that invokes the GET handler directly (no HTTP server) and asserts the JSON body contains `ok: true` and the response status is 200. The test must NOT depend on a database — do not gate it with `describeIfDb`.\n\nNo new dependencies. Keep changes minimal.",
+        "title": "[nightly-test {{ts}}] add greet utility",
+        "body": "Add a pure utility function in `src/utils/greet.ts`:\n\n```ts\nexport function greet(name: string): string {\n  return 'hello, ' + name\n}\n```\n\nAdd a colocated unit test in `src/utils/greet.test.ts` using vitest that imports `greet` from `./greet` and asserts `greet('world') === 'hello, world'`. The test MUST be a plain unit test — no fetch, no HTTP, no database, no Payload, no Next.js handler invocation. Vitest will auto-discover it via the existing `src/**/*.test.ts` include pattern.\n\nNo new dependencies. Keep changes minimal.",
         "labels": ["kody:nightly-test"]
       },
       "command": ["kody", "run", "--issue", "{{issueNumber}}"],
@@ -193,7 +193,7 @@
       "expect": {
         "exitCode": 0,
         "prOpened": true,
-        "prBodyContains": ["ping"],
+        "prBodyContains": ["greet"],
         "issueCommentMatches": "RUN_COMPLETED"
       },
       "teardown": {
@@ -202,64 +202,30 @@
       }
     },
     {
-      "name": "plan.basic-issue",
-      "describe": "kody plan reads an issue and posts a structured implementation plan as an issue comment.",
+      "name": "feature.full-flow",
+      "describe": "End-to-end feature orchestrator: bootstraps the chain (research → plan → run → review) on a small additive issue, then polls until the issue reaches a terminal label. Verifies dispatch comments, runWhen transitions, and cross-stage taskState wiring — the things single-stage cases can't catch.",
       "fixture": {
         "type": "issue",
-        "title": "[nightly-test {{ts}}] add /api/pong route",
-        "body": "Add a Next.js App Router API route at `src/app/api/pong/route.ts` that handles GET and returns `{ \"ok\": true }` with HTTP 200 and `Content-Type: application/json`. Mirror the shape of the existing `src/app/api/health/route.ts`. Add a vitest integration test at `tests/int/pong.int.spec.ts` that invokes the GET handler directly and asserts on the JSON body and status. Plan only — no implementation.",
-        "labels": ["kody:nightly-test"]
+        "title": "[nightly-test {{ts}}] feature flow: add greet utility",
+        "body": "Add a pure utility function in `src/utils/greet.ts`:\n\n```ts\nexport function greet(name: string): string {\n  return 'hello, ' + name\n}\n```\n\nAdd a colocated unit test in `src/utils/greet.test.ts` using vitest that imports `greet` from `./greet` and asserts `greet('world') === 'hello, world'`. Plain unit test — no fetch, no HTTP, no database, no Payload, no Next.js handler invocation. Vitest auto-discovers it via the existing `src/**/*.test.ts` include pattern.\n\nNo new dependencies. Keep changes minimal.",
+        "labels": ["kody:nightly-test", "kody:feature"]
       },
-      "command": ["kody", "plan", "--issue", "{{issueNumber}}"],
-      "timeoutSec": 600,
+      "command": ["kody", "feature", "--issue", "{{issueNumber}}"],
+      "timeoutSec": 30,
+      "pollFor": {
+        "issueLabelOneOf": ["kody:done", "kody:failed"],
+        "intervalSec": 60,
+        "maxAttempts": 60
+      },
       "expect": {
         "exitCode": 0,
-        "issueCommentMatches": "## Changes \\(per file\\)"
+        "terminalLabel": "kody:done",
+        "prOpened": true,
+        "prBodyContains": ["greet"]
       },
       "teardown": {
+        "closePrAndDeleteBranch": true,
         "closeIssue": true
-      }
-    },
-    {
-      "name": "classify.basic-issue",
-      "describe": "kody classify reads an issue and posts a triage comment naming the chosen class.",
-      "fixture": {
-        "type": "issue",
-        "title": "[nightly-test {{ts}}] fix typo in README",
-        "body": "Fix the typo in `README.md`: change `recieve` to `receive`. One-character correction; no design or planning needed.",
-        "labels": ["kody:nightly-test"]
-      },
-      "command": ["kody", "classify", "--issue", "{{issueNumber}}"],
-      "timeoutSec": 300,
-      "expect": {
-        "exitCode": 0,
-        "issueCommentMatches": "classification:"
-      },
-      "teardown": {
-        "closeIssue": true
-      }
-    },
-    {
-      "name": "review.basic-pr",
-      "describe": "kody review reads a small PR diff and posts a structured review comment with verdict.",
-      "fixture": {
-        "type": "pr",
-        "title": "[nightly-test {{ts}}] touch README footer",
-        "body": "Test fixture for nightly review case. Appends a single comment line to README.md.",
-        "headBranch": "kody-nightly-fixture/review-{{ts}}",
-        "changes": [
-          { "path": "README.md", "append": "\n<!-- nightly-test {{ts}} -->\n" }
-        ],
-        "labels": ["kody:nightly-test"]
-      },
-      "command": ["kody", "review", "--pr", "{{prNumber}}"],
-      "timeoutSec": 300,
-      "expect": {
-        "exitCode": 0,
-        "prCommentMatches": "## Verdict:"
-      },
-      "teardown": {
-        "closePrAndDeleteBranch": true
       }
     }
   ]
