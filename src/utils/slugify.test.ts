@@ -27,6 +27,10 @@ describe('slugify', () => {
     expect(slugify('hello   world')).toBe('hello-world')
   })
 
+  it('trims leading/trailing spaces and collapses multiple internal spaces', () => {
+    expect(slugify('  Foo   Bar  ')).toBe('foo-bar')
+  })
+
   it('collapses multiple hyphens into one', () => {
     expect(slugify('hello---world')).toBe('hello-world')
     expect(slugify('hello--world--test')).toBe('hello-world-test')
