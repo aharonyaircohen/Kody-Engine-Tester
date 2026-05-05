@@ -1,7 +1,15 @@
 {
   "version": 1,
-  "rev": 5,
-  "cursor": "scanned-no-conflicts",
-  "data": {},
+  "rev": 6,
+  "cursor": "scanned-one-conflict",
+  "data": {
+    "perPr": {
+      "3165": {
+        "lastSha": "42c6e53c0aec7bca3e96ee36ef2bb8381d43a31f",
+        "attempts": 1,
+        "stuck": false
+      }
+    }
+  },
   "done": false
 }
