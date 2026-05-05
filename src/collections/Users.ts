@@ -145,5 +145,19 @@ export const Users: CollectionConfig = {
         update: () => false,
       },
     },
+    {
+      name: 'locale',
+      type: 'select',
+      options: [
+        { label: 'English', value: 'en' },
+        { label: 'Español', value: 'es' },
+        { label: 'Français', value: 'fr' },
+      ],
+      defaultValue: 'en',
+      required: true,
+      admin: {
+        description: 'Preferred language for greetings and UI',
+      },
+    },
   ],
 }
