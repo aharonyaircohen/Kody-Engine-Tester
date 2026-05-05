@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.8 — 2026-05-05
+
+_No notable commits since the last release._
 ## v1.0.7 — 2026-05-05
 
 _No notable commits since the last release._
