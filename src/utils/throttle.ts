@@ -1,11 +1,7 @@
-export function throttle<T extends (...args: unknown[]) => unknown>(fn: T, delay: number): T {
-  let lastCall = 0
-
-  return function (this: unknown, ...args: unknown[]) {
+export function throttle<T extends (...args: any[]) => void>(fn: T, ms: number) {
+  let last = 0
+  return (...args: Parameters<T>) => {
     const now = Date.now()
-    if (now - lastCall >= delay) {
-      lastCall = now
-      return fn.apply(this, args)
-    }
-  } as T
+    if (now - last >= ms) { last = now; fn(...args) }
+  }
 }
