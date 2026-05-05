@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.10 — 2026-05-05
+
+### Features
+- add range helper to generate numeric sequences (cba81b53)
+- add sleep helper for awaiting milliseconds (64b474fd)
+
+### Chores
+- bump to 0.3.70-beta.6 (f5a27748)
 ## v1.0.9 — 2026-05-05
 
 _No notable commits since the last release._
