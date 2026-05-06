@@ -1,0 +1,2 @@
+{"event":"chat.ready","payload":{"sessionId":"live-1778081816885-wekn9v","startedAt":"2026-05-06T15:38:11.072Z","idleExitMs":300000,"hardCapMs":1800000},"runId":"chat-live-1778081816885-wekn9v-ready","emittedAt":"2026-05-06T15:38:11.072Z"}
+{"event":"chat.exit","payload":{"sessionId":"live-1778081816885-wekn9v","reason":"idle-timeout","turnsCompleted":0,"endedAt":"2026-05-06T15:43:12.246Z"},"runId":"chat-live-1778081816885-wekn9v-exit","emittedAt":"2026-05-06T15:43:12.246Z"}

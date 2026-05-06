@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 6,
-  "cursor": "scanned-one-conflict",
+  "rev": 8,
+  "cursor": "conflict-actioned-3165",
   "data": {
     "perPr": {
       "3165": {
-        "lastSha": "42c6e53c0aec7bca3e96ee36ef2bb8381d43a31f",
+        "lastSha": "f697327a19915092d0e1ce0ae3792a3725426f2a",
         "attempts": 1,
         "stuck": false
       }
