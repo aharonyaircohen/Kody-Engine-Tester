@@ -38,4 +38,8 @@ describe('clamp', () => {
   it('throws when min is greater than max', () => {
     expect(() => clamp(5, 10, 0)).toThrow('min cannot be greater than max')
   })
+
+  it('returns value when min equals max equals value', () => {
+    expect(clamp(5, 5, 5)).toBe(5)
+  })
 })
