@@ -104,7 +104,7 @@ jobs:
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
         run: |
           if [ -n "$SESSION_ID" ]; then
-            npx -y -p @kody-ade/kody-engine@0.3.79 kody chat
+            npx -y -p @kody-ade/kody-engine@0.3.80 kody chat
           else
-            npx -y -p @kody-ade/kody-engine@0.3.79 kody ci
+            npx -y -p @kody-ade/kody-engine@0.3.80 kody ci
           fi
