@@ -23,13 +23,22 @@ describe('truncate', () => {
     expect(truncate('Hello World', 11, '...')).toBe('Hello World')
   })
 
-  it('handles empty string', () => {
-    expect(truncate('', 5)).toBe('')
+  it('handles null input consistently with default and custom suffix', () => {
+    expect(truncate(null as unknown as string, 5)).toBe('')
+    expect(truncate(null as unknown as string, 5, '…')).toBe('')
+    expect(truncate(null as unknown as string, 10, '>>>')).toBe('')
   })
 
-  it('handles null/undefined as falsy', () => {
-    expect(truncate(null as unknown as string, 5)).toBe('')
+  it('handles undefined input consistently with default and custom suffix', () => {
     expect(truncate(undefined as unknown as string, 5)).toBe('')
+    expect(truncate(undefined as unknown as string, 5, '…')).toBe('')
+    expect(truncate(undefined as unknown as string, 10, '>>>')).toBe('')
+  })
+
+  it('handles empty string with default and custom suffix', () => {
+    expect(truncate('', 5)).toBe('')
+    expect(truncate('', 5, '…')).toBe('')
+    expect(truncate('', 10, '>>>')).toBe('')
   })
 
   it('handles maxLen of zero', () => {
