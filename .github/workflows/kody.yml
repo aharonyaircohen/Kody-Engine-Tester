@@ -76,7 +76,11 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
-          ref: refs/heads/dev
+          # For chat sessions (workflow_dispatch with sessionId), check out
+          # the dispatch ref so the session JSONL written by the dashboard
+          # is on the runner. For CI events (issue/PR), fall back to dev
+          # where the project code lives.
+          ref: ${{ inputs.sessionId != '' && github.ref || 'refs/heads/dev' }}
           token: ${{ secrets.KODY_TOKEN || github.token }}
 
       - uses: actions/setup-node@v4
@@ -100,7 +104,7 @@ jobs:
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
         run: |
           if [ -n "$SESSION_ID" ]; then
-            npx -y -p @kody-ade/kody-engine@0.3.72 kody chat
+            npx -y -p @kody-ade/kody-engine@0.3.77 kody chat
           else
-            npx -y -p @kody-ade/kody-engine@0.3.72 kody ci
+            npx -y -p @kody-ade/kody-engine@0.3.77 kody ci
           fi
