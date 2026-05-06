@@ -1,0 +1,5 @@
+{"type":"meta","mode":"interactive","idleExitMs":120000,"hardCapMs":420000,"createdAt":"2026-05-06T13:18:24Z"}
+{"role":"user","content":"Hello! This is the live test of interactive mode. Please reply with the literal phrase INTERACTIVE-MODE-CONFIRMED so I know you got this first message.","timestamp":"2026-05-06T13:18:24Z"}
+{"role":"assistant","content":"INTERACTIVE-MODE-CONFIRMED","timestamp":"2026-05-06T13:19:31.558Z","toolCalls":[]}
+{"role":"user","content":"Great. Now please answer this second question to prove the inbox loop works: what was the literal phrase I asked you to reply with in my first message?","timestamp":"2026-05-06T13:20:02Z"}
+{"role":"assistant","content":"You asked me to reply with the literal phrase: **INTERACTIVE-MODE-CONFIRMED**","timestamp":"2026-05-06T13:20:38.367Z","toolCalls":[]}
