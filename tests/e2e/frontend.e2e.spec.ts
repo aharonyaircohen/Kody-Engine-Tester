@@ -17,4 +17,10 @@ test.describe('Frontend', () => {
 
     await expect(heading).toHaveText('Welcome to your new project.')
   })
+
+  test('footer displays current year', async ({ page }) => {
+    await page.goto('http://localhost:3000')
+    const year = new Date().getFullYear()
+    await expect(page.getByText(`© ${year} LearnHub`)).toBeVisible()
+  })
 })
