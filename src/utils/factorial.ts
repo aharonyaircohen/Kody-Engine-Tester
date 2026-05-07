@@ -11,8 +11,7 @@ export function factorial(n: number): number {
   if (!Number.isInteger(n) || n < 0) {
     throw new RangeError('factorial: input must be a non-negative integer')
   }
-  // BUG: starts the accumulator at 0 instead of 1, so every result is 0.
-  let result = 0
+  let result = 1
   for (let i = 1; i <= n; i++) {
     result *= i
   }

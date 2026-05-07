@@ -1,0 +1,422 @@
+- generic [ref=e2]:
+  - region
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e9]:
+        - button "Toggle navigation" [ref=e11] [cursor=pointer]
+        - link "Homepage" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+        - generic [ref=e20]:
+          - link "Sign in" [ref=e21] [cursor=pointer]:
+            - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Faharonyaircohen%2FKody-Engine-Tester%2Fpull%2F3187
+          - button "Appearance settings" [ref=e24] [cursor=pointer]:
+            - img
+  - main [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - link "aharonyaircohen" [ref=e36] [cursor=pointer]:
+            - /url: /aharonyaircohen
+          - generic [ref=e37]: /
+          - strong [ref=e38]:
+            - link "Kody-Engine-Tester" [ref=e39] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester
+          - generic [ref=e40]: Public
+        - generic [ref=e41]:
+          - list:
+            - listitem [ref=e42]:
+              - link "You must be signed in to change notification settings" [ref=e43] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e44]
+                - text: Notifications
+            - listitem [ref=e46]:
+              - link "Fork 0" [ref=e47] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e48]
+                - text: Fork
+                - generic "0" [ref=e50]
+            - listitem [ref=e51]:
+              - link "You must be signed in to star a repository" [ref=e53] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e54]
+                - text: Star
+                - generic "0 users starred this repository" [ref=e56]: "0"
+      - navigation "Repository" [ref=e57]:
+        - list [ref=e58]:
+          - listitem [ref=e59]:
+            - link "Code" [ref=e60] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester
+              - img [ref=e61]
+              - generic [ref=e63]: Code
+          - listitem [ref=e64]:
+            - link "Issues 57" [ref=e65] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/issues
+              - img [ref=e66]
+              - generic [ref=e69]: Issues
+              - generic "57" [ref=e70]
+          - listitem [ref=e71]:
+            - link "Pull requests 16" [ref=e72] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/pulls
+              - img [ref=e73]
+              - generic [ref=e75]: Pull requests
+              - generic "16" [ref=e76]
+          - listitem [ref=e77]:
+            - link "Actions" [ref=e78] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/actions
+              - img [ref=e79]
+              - generic [ref=e81]: Actions
+          - listitem [ref=e82]:
+            - link "Projects" [ref=e83] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/projects
+              - img [ref=e84]
+              - generic [ref=e86]: Projects
+          - listitem [ref=e87]
+          - listitem [ref=e88]
+        - button "Additional navigation options" [ref=e92] [cursor=pointer]:
+          - img
+    - generic [ref=e99]:
+      - generic [ref=e102]:
+        - 'heading "#3186: [live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3187" [level=1] [ref=e104]':
+          - text: "#3186: [live-test reproduce v2] factorial(n) returns 0 for all n>=1"
+          - generic [ref=e106]: "#3187"
+        - generic [ref=e109]:
+          - generic [ref=e111]:
+            - img "Pull request" [ref=e112]
+            - text: Open
+          - generic [ref=e115]:
+            - link "aharonyaircohen" [ref=e116] [cursor=pointer]:
+              - /url: /aharonyaircohen
+            - text: wants to merge 1 commit into
+            - link "dev" [ref=e117] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/tree/dev
+            - generic [ref=e118]: from
+            - generic [ref=e119]:
+              - link "3186-live-test-reproduce-v2-factorialn-returns-0-for-al" [ref=e120] [cursor=pointer]:
+                - /url: /aharonyaircohen/Kody-Engine-Tester/tree/3186-live-test-reproduce-v2-factorialn-returns-0-for-al
+              - button "Copy head branch name to clipboard" [ref=e121] [cursor=pointer]:
+                - img [ref=e122]
+        - generic [ref=e125]:
+          - generic [ref=e127]:
+            - generic [ref=e128]: "+29"
+            - generic [ref=e129]: "Lines changed: 29 additions & 0 deletions"
+          - navigation "Pull request navigation tabs" [ref=e138]:
+            - tablist [ref=e139]:
+              - tab "Conversation (2)" [selected] [ref=e140] [cursor=pointer]:
+                - img [ref=e141]
+                - text: Conversation
+                - generic [ref=e143]: "2"
+                - generic [ref=e144]: (2)
+              - tab "Commits (1)" [ref=e145] [cursor=pointer]:
+                - img [ref=e146]
+                - text: Commits
+                - generic [ref=e148]: "1"
+                - generic [ref=e149]: (1)
+              - tab "Checks (1)" [ref=e150] [cursor=pointer]:
+                - img [ref=e151]
+                - text: Checks
+                - generic [ref=e153]: "1"
+                - generic [ref=e154]: (1)
+              - tab "Files changed (1)" [ref=e155] [cursor=pointer]:
+                - img [ref=e156]
+                - text: Files changed
+                - generic [ref=e158]: "1"
+                - generic [ref=e159]: (1)
+      - generic [ref=e164]:
+        - generic [ref=e166]:
+          - heading "Conversation" [level=2] [ref=e167]
+          - generic [ref=e168]:
+            - generic [ref=e169]:
+              - generic [ref=e171]:
+                - link "@aharonyaircohen" [ref=e172] [cursor=pointer]:
+                  - /url: /aharonyaircohen
+                  - img "@aharonyaircohen" [ref=e173]
+                - generic [ref=e175]:
+                  - generic [ref=e176]:
+                    - generic [ref=e177]:
+                      - group [ref=e179]:
+                        - button "Show options" [ref=e180] [cursor=pointer]:
+                          - img "Show options" [ref=e183]
+                      - generic "This user is the owner of the Kody-Engine-Tester repository." [ref=e186]:
+                        - generic [ref=e187]: Owner
+                    - heading "aharonyaircohen commented May 7, 20266 minutes ago" [level=3] [ref=e188]:
+                      - generic [ref=e189]:
+                        - strong [ref=e190]:
+                          - link "aharonyaircohen" [ref=e191] [cursor=pointer]:
+                            - /url: /aharonyaircohen
+                        - text: commented
+                        - link "May 7, 20266 minutes ago" [ref=e192] [cursor=pointer]:
+                          - /url: "#issue-4397266096"
+                  - generic [ref=e196]:
+                    - heading "Summary" [level=2] [ref=e197]
+                    - list [ref=e198]:
+                      - listitem [ref=e199]: "Test file: src/utils/factorial.test.ts"
+                      - listitem [ref=e200]: "What it asserts: factorial(0)=1, factorial(1)=1, factorial(5)=120, factorial(6)=720, and that negative/non-integer inputs throw RangeError"
+                      - listitem [ref=e201]: "Why it fails today: The accumulator in factorial.ts is initialized to 0 (line 15) instead of 1, so the multiply loop always produces 0 for any n ≥ 1, and for n=0 the loop never executes so it also returns 0"
+                      - listitem [ref=e202]: "How to verify locally: npx vitest run src/utils/factorial.test.ts"
+                    - heading "Changes" [level=2] [ref=e203]
+                    - list [ref=e204]:
+                      - listitem [ref=e205]:
+                        - code [ref=e206]: src/utils/factorial.test.ts
+                    - paragraph [ref=e207]:
+                      - text: Closes
+                      - link "#3186" [ref=e208] [cursor=pointer]:
+                        - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3186
+                    - separator [ref=e209]
+                    - paragraph [ref=e210]:
+                      - emphasis [ref=e211]: Opened by kody (single-session autonomous run).
+              - generic [ref=e212]:
+                - generic [ref=e216]:
+                  - img [ref=e218]
+                  - generic [ref=e223]:
+                    - link "@github-actions" [ref=e226] [cursor=pointer]:
+                      - /url: /apps/github-actions
+                      - img "@github-actions" [ref=e227]
+                    - code [ref=e229]:
+                      - 'link "test: add failing repro for" [ref=e230] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/pull/3187/commits/c0eb4f494a7d08213146a0e47b495e4b8f16cdd7
+                      - link "#3186" [ref=e231] [cursor=pointer]:
+                        - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3186
+                    - group [ref=e235]:
+                      - generic "2 / 2 checks OK" [ref=e236] [cursor=pointer]:
+                        - img "2 / 2 checks OK" [ref=e237]
+                    - code [ref=e240]:
+                      - link "c0eb4f4" [ref=e241] [cursor=pointer]:
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/pull/3187/commits/c0eb4f494a7d08213146a0e47b495e4b8f16cdd7
+                - generic [ref=e243]:
+                  - link "@vercel" [ref=e245] [cursor=pointer]:
+                    - /url: /apps/vercel
+                    - img "@vercel" [ref=e246]
+                  - generic [ref=e248]:
+                    - generic [ref=e249]:
+                      - group [ref=e252]:
+                        - button "Show options" [ref=e253] [cursor=pointer]:
+                          - img "Show options" [ref=e256]
+                      - heading "vercel Bot commented May 7, 20266 minutes ago •" [level=3] [ref=e258]:
+                        - generic [ref=e259]:
+                          - strong [ref=e260]:
+                            - link "vercel" [ref=e261] [cursor=pointer]:
+                              - /url: /apps/vercel
+                            - generic [ref=e262]: Bot
+                          - text: commented
+                          - link "May 7, 20266 minutes ago" [ref=e263] [cursor=pointer]:
+                            - /url: "#issuecomment-4395444601"
+                          - generic [ref=e264]:
+                            - generic [ref=e265]: •
+                            - group [ref=e266]:
+                              - button "edited" [ref=e267] [cursor=pointer]:
+                                - generic [ref=e268]:
+                                  - text: edited
+                                  - img [ref=e269]
+                    - table [ref=e273]:
+                      - rowgroup [ref=e274]:
+                        - row "The latest updates on your projects. Learn more about Vercel for GitHub. Project Deployment Actions Updated (UTC) kody-engine-tester Ready Ready Preview, Comment May 7, 2026 8:27am" [ref=e275]:
+                          - cell "The latest updates on your projects. Learn more about Vercel for GitHub. Project Deployment Actions Updated (UTC) kody-engine-tester Ready Ready Preview, Comment May 7, 2026 8:27am" [ref=e276]:
+                            - paragraph [ref=e277]:
+                              - text: The latest updates on your projects. Learn more about
+                              - link "Vercel for GitHub" [ref=e278] [cursor=pointer]:
+                                - /url: https://vercel.link/github-learn-more
+                              - text: .
+                            - table [ref=e280]:
+                              - rowgroup [ref=e281]:
+                                - row "Project Deployment Actions Updated (UTC)" [ref=e282]:
+                                  - columnheader "Project" [ref=e283]
+                                  - columnheader "Deployment" [ref=e284]
+                                  - columnheader "Actions" [ref=e285]
+                                  - columnheader "Updated (UTC)" [ref=e286]
+                              - rowgroup [ref=e287]:
+                                - row "kody-engine-tester Ready Ready Preview, Comment May 7, 2026 8:27am" [ref=e288]:
+                                  - cell "kody-engine-tester" [ref=e289]:
+                                    - link "kody-engine-tester" [ref=e290] [cursor=pointer]:
+                                      - /url: https://vercel.com/aharon-yair-cohens-projects/kody-engine-tester
+                                  - cell "Ready Ready" [ref=e291]:
+                                    - link "Ready" [ref=e292] [cursor=pointer]:
+                                      - /url: https://camo.githubusercontent.com/2d058aa4937109084c3b00dc259081ef9f01257a8504a292a286041635575d96/68747470733a2f2f76657263656c2e636f6d2f7374617469632f7374617475732f72656164792e737667
+                                      - img "Ready" [ref=e293]
+                                    - link "Ready" [ref=e294] [cursor=pointer]:
+                                      - /url: https://vercel.com/aharon-yair-cohens-projects/kody-engine-tester/D5qntxwNLmsdWRQs5GAgpmgjm5LB
+                                  - cell "Preview, Comment" [ref=e295]:
+                                    - link "Preview" [ref=e296] [cursor=pointer]:
+                                      - /url: https://kody-engine-tester-git-3186-e3b408-aharon-yair-cohens-projects.vercel.app
+                                    - text: ","
+                                    - link "Comment" [ref=e297] [cursor=pointer]:
+                                      - /url: https://vercel.live/open-feedback/kody-engine-tester-git-3186-e3b408-aharon-yair-cohens-projects.vercel.app?via=pr-comment-feedback-link
+                                  - cell "May 7, 2026 8:27am" [ref=e298]
+                - generic [ref=e300]:
+                  - img [ref=e302]
+                  - generic [ref=e304]:
+                    - generic [ref=e305]:
+                      - link "@aharonyaircohen" [ref=e306] [cursor=pointer]:
+                        - /url: /aharonyaircohen
+                        - img "@aharonyaircohen" [ref=e307]
+                      - link "aharonyaircohen" [ref=e308] [cursor=pointer]:
+                        - /url: /aharonyaircohen
+                      - text: mentioned this pull request
+                      - link "May 7, 20266 minutes ago" [ref=e309] [cursor=pointer]:
+                        - /url: "#ref-issue-4397247240"
+                    - generic [ref=e310]:
+                      - 'link "[live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3186" [ref=e312] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/issues/3186
+                      - 'generic "Status: Open" [ref=e314]':
+                        - img [ref=e315]
+                        - text: Open
+                - generic [ref=e319]:
+                  - link "@aharonyaircohen" [ref=e321] [cursor=pointer]:
+                    - /url: /aharonyaircohen
+                    - img "@aharonyaircohen" [ref=e322]
+                  - generic [ref=e324]:
+                    - generic [ref=e325]:
+                      - generic [ref=e326]:
+                        - group [ref=e328]:
+                          - button "Show options" [ref=e329] [cursor=pointer]:
+                            - img "Show options" [ref=e332]
+                        - generic [ref=e334]:
+                          - generic "This user is the owner of the Kody-Engine-Tester repository." [ref=e335]:
+                            - generic [ref=e336]: Owner
+                          - generic "This user is the author of this pull request." [ref=e337]:
+                            - generic [ref=e338]: Author
+                      - heading "aharonyaircohen commented May 7, 20266 minutes ago" [level=3] [ref=e339]:
+                        - generic [ref=e340]:
+                          - strong [ref=e341]:
+                            - link "aharonyaircohen" [ref=e342] [cursor=pointer]:
+                              - /url: /aharonyaircohen
+                          - text: commented
+                          - link "May 7, 20266 minutes ago" [ref=e343] [cursor=pointer]:
+                            - /url: "#issuecomment-4395444782"
+                    - table [ref=e346]:
+                      - rowgroup [ref=e347]:
+                        - 'row "📋 kody task state Phase: idle Status: succeeded Last executable: reproduce Last action: REPRODUCE_COMPLETED Attempts: reproduce:1 PR: #3186: [live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3187 Artifacts: repro, repro.testPath, repro.failureSignature Recent history 2026-05-07T08:25:25.976Z reproduce → REPRODUCE_COMPLETED — test: add failing repro for [live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3186" [ref=e348]':
+                          - 'cell "📋 kody task state Phase: idle Status: succeeded Last executable: reproduce Last action: REPRODUCE_COMPLETED Attempts: reproduce:1 PR: #3186: [live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3187 Artifacts: repro, repro.testPath, repro.failureSignature Recent history 2026-05-07T08:25:25.976Z reproduce → REPRODUCE_COMPLETED — test: add failing repro for [live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3186" [ref=e349]':
+                            - heading "📋 kody task state" [level=2] [ref=e350]
+                            - list [ref=e351]:
+                              - listitem [ref=e352]:
+                                - strong [ref=e353]: "Phase:"
+                                - code [ref=e354]: idle
+                                - strong [ref=e355]: "Status:"
+                                - code [ref=e356]: succeeded
+                              - listitem [ref=e357]:
+                                - strong [ref=e358]: "Last executable:"
+                                - code [ref=e359]: reproduce
+                              - listitem [ref=e360]:
+                                - strong [ref=e361]: "Last action:"
+                                - code [ref=e362]: REPRODUCE_COMPLETED
+                              - listitem [ref=e363]:
+                                - strong [ref=e364]: "Attempts:"
+                                - text: reproduce:1
+                              - listitem [ref=e365]:
+                                - strong [ref=e366]: "PR:"
+                                - generic [ref=e367]:
+                                  - img [ref=e368]
+                                  - 'link "#3186: [live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3187" [ref=e370] [cursor=pointer]':
+                                    - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3187
+                              - listitem [ref=e371]:
+                                - strong [ref=e372]: "Artifacts:"
+                                - code [ref=e373]: repro
+                                - text: ","
+                                - code [ref=e374]: repro.testPath
+                                - text: ","
+                                - code [ref=e375]: repro.failureSignature
+                            - heading "Recent history" [level=3] [ref=e376]
+                            - list [ref=e377]:
+                              - listitem [ref=e378]:
+                                - code [ref=e379]: 2026-05-07T08:25:25.976Z
+                                - strong [ref=e380]: reproduce
+                                - text: →
+                                - code [ref=e381]: REPRODUCE_COMPLETED
+                                - text: "— test: add failing repro for"
+                                - generic [ref=e382]:
+                                  - img [ref=e383]
+                                  - 'link "[live-test reproduce v2] factorial(n) returns 0 for all n>=1 #3186" [ref=e386] [cursor=pointer]':
+                                    - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3186
+                            - group [ref=e387]:
+                              - generic "Raw state (JSON)" [ref=e388] [cursor=pointer]
+                - generic [ref=e391]:
+                  - img [ref=e393]
+                  - generic [ref=e395]:
+                    - link "@vercel" [ref=e396] [cursor=pointer]:
+                      - /url: /apps/vercel
+                      - img "@vercel" [ref=e397]
+                    - link "vercel" [ref=e398] [cursor=pointer]:
+                      - /url: /apps/vercel
+                    - generic [ref=e399]: Bot
+                    - link "deployed" [ref=e400] [cursor=pointer]:
+                      - /url: https://kody-engine-tester-jpvz2mdf2-aharon-yair-cohens-projects.vercel.app
+                    - text: to
+                    - link "Preview" [ref=e401] [cursor=pointer]:
+                      - /url: https://kody-engine-tester-jpvz2mdf2-aharon-yair-cohens-projects.vercel.app
+                    - link "May 7, 2026 08:274 minutes ago" [ref=e402] [cursor=pointer]:
+                      - /url: "#event-25252514217"
+                    - link "View deployment" [ref=e403] [cursor=pointer]:
+                      - /url: https://kody-engine-tester-jpvz2mdf2-aharon-yair-cohens-projects.vercel.app
+            - generic [ref=e407]:
+              - link "Sign up for free" [ref=e408] [cursor=pointer]:
+                - /url: /join?source=comment-repo
+              - strong [ref=e409]: to join this conversation on GitHub
+              - text: . Already have an account?
+              - link "Sign in to comment" [ref=e410] [cursor=pointer]:
+                - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Faharonyaircohen%2FKody-Engine-Tester%2Fpull%2F3187
+        - generic [ref=e414]:
+          - form "Select reviewers" [ref=e416]:
+            - heading "Reviewers" [level=3] [ref=e417]
+            - text: No reviews
+          - form "Select assignees" [ref=e419]:
+            - heading "Assignees" [level=3] [ref=e420]
+            - text: No one assigned
+          - generic [ref=e421]:
+            - heading "Labels" [level=3] [ref=e422]
+            - generic [ref=e423]: None yet
+          - form "Select projects" [ref=e425]:
+            - heading "Projects" [level=3] [ref=e426]
+            - text: None yet
+          - form "Select milestones" [ref=e428]:
+            - heading "Milestone" [level=3] [ref=e429]
+            - text: No milestone
+          - form "Link issues" [ref=e435]:
+            - heading "Development" [level=3] [ref=e436]
+            - paragraph [ref=e437]: Successfully merging this pull request may close these issues.
+            - paragraph [ref=e439]: None yet
+          - generic [ref=e441]:
+            - heading "1 participant" [level=3] [ref=e442]
+            - link "@aharonyaircohen" [ref=e444] [cursor=pointer]:
+              - /url: /aharonyaircohen
+              - img "@aharonyaircohen" [ref=e445]
+  - contentinfo [ref=e446]:
+    - heading "Footer" [level=2] [ref=e447]
+    - generic [ref=e448]:
+      - generic [ref=e449]:
+        - link "GitHub Homepage" [ref=e450] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e451]
+        - generic [ref=e453]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e454]:
+        - heading "Footer navigation" [level=3] [ref=e455]
+        - list "Footer navigation" [ref=e456]:
+          - listitem [ref=e457]:
+            - link "Terms" [ref=e458] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e459]:
+            - link "Privacy" [ref=e460] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e461]:
+            - link "Security" [ref=e462] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e463]:
+            - link "Status" [ref=e464] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e465]:
+            - link "Community" [ref=e466] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e467]:
+            - link "Docs" [ref=e468] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e469]:
+            - link "Contact" [ref=e470] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e471]:
+            - button "Manage cookies" [ref=e473] [cursor=pointer]
+          - listitem [ref=e474]:
+            - button "Do not share my personal information" [ref=e476] [cursor=pointer]
