@@ -4,6 +4,6 @@
   "description": "Three dependent tasks that must build on top of each other. Validates the shared goal-<id> branch flow shipped in @kody-ade/kody-engine v0.4.8.",
   "state": "active",
   "createdAt": "2026-05-08T11:55:00Z",
-  "updatedAt": "2026-05-08T12:16:47.076707Z",
+  "updatedAt": "2026-05-08T12:49:27.473044Z",
   "lastDispatchedIssue": 3197
 }
