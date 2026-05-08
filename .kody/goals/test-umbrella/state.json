@@ -4,7 +4,7 @@
   "description": "Validates the umbrella-issue creation path shipped in @kody-ade/kody-engine v0.4.15. Single trivial task; goal-tick should open a GitHub issue with labels goal:test-umbrella + kody:building, write goalIssueNumber to this state.json, and add Closes #N to the final goal PR.",
   "state": "active",
   "createdAt": "2026-05-08T15:00:00Z",
-  "updatedAt": "2026-05-08T18:52:20.182809Z",
+  "updatedAt": "2026-05-08T20:06:29.681820Z",
   "lastDispatchedIssue": 3242,
   "goalIssueNumber": 3247
 }
