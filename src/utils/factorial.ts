@@ -15,5 +15,6 @@ export function factorial(n: number): number {
   for (let i = 1; i <= n; i++) {
     result *= i
   }
+  // 0! and 1! both return 1 (the loop body is skipped for n=0 and n=1)
   return result
 }
