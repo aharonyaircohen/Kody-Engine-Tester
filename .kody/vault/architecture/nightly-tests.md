@@ -1,9 +1,10 @@
 ---
 title: Nightly Tests
 type: architecture
-updated: 2026-05-05
+updated: 2026-05-08
 sources:
   - https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3174
+  - https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3170
 ---
 
 The `nightly-tests` executable smoke-tests the published `@kody-ade/kody-engine@latest` package every night. It is not a unit-test suite for this repo — it validates that the engine itself works correctly across all top-level executables and the consumer config.
@@ -43,7 +44,7 @@ Creates a real GitHub issue (fixture), invokes kody, polls for terminal state, a
 
 **`run.add-utility`**: `kody run --issue {{issueNumber}}` on a pure-utility additive issue. Asserts `prOpened: true`, `prBodyContains: ["greet"]`, and `issueCommentMatches: "RUN_COMPLETED"`. Teardown: close PR + delete branch, close issue.
 
-**`feature.full-flow`**: `kody feature --issue {{issueNumber}}` on the same utility issue but with `kody:feature` label. Exercises the full chain (research → plan → run → review) and verifies the issue reaches `kody:done` terminal label within 30s (polled every 60s). Asserts PR opened with `greet` in body. Teardown: close PR + delete branch, close issue.
+**`feature.full-flow`**: `kody feature --issue {{issueNumber}}` on a small additive issue labeled `kody:feature`. Exercises the full chain (research → plan → run → review) and polls until the issue reaches `kody:done` (max 60 attempts × 60s intervals). Asserts terminal label `kody:done`, PR opened, and `greet` in PR body. Teardown: close PR + delete branch, close issue.
 
 ## Fixture lifecycle
 
