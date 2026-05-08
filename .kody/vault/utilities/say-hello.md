@@ -20,3 +20,4 @@ Returns `"Hello, ${name}!"`. Tested via `src/utils/say-hello.test.ts` (Vitest).
 
 - [../architecture/nightly-tests](../architecture/nightly-tests.md) — uses `sayHello` output in PR body assertions (`prBodyContains: ["greet"]`)
 - [./say-goodbye.md](./say-goodbye.md) — composes `sayHello`
+- [./say-both.md](./say-both.md) — composes both `sayHello` and `sayGoodbye`

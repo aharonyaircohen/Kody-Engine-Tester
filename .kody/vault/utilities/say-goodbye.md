@@ -20,3 +20,8 @@ Returns `` `${sayHello(name)} Goodbye, ${name}!` `` — e.g. `sayGoodbye('World'
 
 - `sayGoodbye` intentionally imports `sayHello` from `./say-hello` to demonstrate cross-file composition
 - Both utilities live under `src/utils/`
+
+## See also
+
+- [./say-hello.md](./say-hello.md) — the utility it composes
+- [./say-both.md](./say-both.md) — composes both `sayHello` and `sayGoodbye`
