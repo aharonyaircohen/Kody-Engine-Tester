@@ -61,4 +61,6 @@ node_modules/
 !.kody/missions/**
 !.kody/vault/
 !.kody/vault/**
+!.kody/goals/
+!.kody/goals/**
 .kody/executables/**/last-run.json
