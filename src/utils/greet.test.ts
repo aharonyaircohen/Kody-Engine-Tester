@@ -5,4 +5,8 @@ describe('greet', () => {
   it('returns hello, name', () => {
     expect(greet('world')).toBe('hello, world')
   })
+
+  it('handles empty string', () => {
+    expect(greet('')).toBe('hello, ')
+  })
 })
