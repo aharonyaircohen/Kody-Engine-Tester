@@ -2,6 +2,8 @@
  * Truncates a string to a maximum length and appends a suffix if truncated.
  * The total output length (string content + suffix) equals maxLen.
  * If the string length is less than or equal to maxLen, it is returned unchanged.
+ *
+ * @example truncate('hello world', 5) // returns 'he...'
  */
 export function truncate(str: string, maxLen: number, suffix: string = '...'): string {
   if (!str) return ''
