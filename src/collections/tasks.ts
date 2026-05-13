@@ -8,6 +8,7 @@ export interface Task {
   status: TaskStatus
   priority: TaskPriority
   assignee: string | null
+  ticketId: string | null
   createdAt: Date
   updatedAt: Date
   order: number
@@ -18,6 +19,7 @@ export interface CreateTaskInput {
   description?: string
   priority?: TaskPriority
   assignee?: string | null
+  ticketId?: string | null
 }
 
 export type UpdateTaskInput = Partial<{
@@ -26,6 +28,7 @@ export type UpdateTaskInput = Partial<{
   status: TaskStatus
   priority: TaskPriority
   assignee: string | null
+  ticketId: string | null
   order: number
 }>
 
@@ -50,6 +53,7 @@ export class TaskStore {
       status: 'todo',
       priority: input.priority ?? 'medium',
       assignee: input.assignee ?? null,
+      ticketId: input.ticketId ?? null,
       createdAt: now,
       updatedAt: now,
       order: maxOrder + 1,
