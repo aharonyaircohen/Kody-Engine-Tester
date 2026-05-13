@@ -23,3 +23,4 @@
 {"event":"chat.thinking","payload":{"text":"Done! Let me provide the user with the branch name and PR URL."},"runId":"chat-global-1778674203855-odxxzd-think-22","emittedAt":"2026-05-13T12:12:05.490Z"}
 {"event":"chat.message","payload":{"sessionId":"global-1778674203855-odxxzd","role":"assistant","content":"**Branch:** `kody-smoke-3383-greet`\n\n**Draft PR:** https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3384","timestamp":"2026-05-13T12:12:05.928Z"},"runId":"chat-global-1778674203855-odxxzd-message","emittedAt":"2026-05-13T12:12:05.928Z"}
 {"event":"chat.done","payload":{"sessionId":"global-1778674203855-odxxzd"},"runId":"chat-global-1778674203855-odxxzd-done","emittedAt":"2026-05-13T12:12:05.928Z"}
+{"event":"chat.exit","payload":{"sessionId":"global-1778674203855-odxxzd","reason":"idle-timeout","turnsCompleted":1,"endedAt":"2026-05-13T12:17:07.236Z"},"runId":"chat-global-1778674203855-odxxzd-exit","emittedAt":"2026-05-13T12:17:07.236Z"}
