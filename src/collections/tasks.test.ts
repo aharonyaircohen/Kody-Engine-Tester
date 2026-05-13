@@ -17,6 +17,7 @@ describe('TaskStore', () => {
       expect(task.status).toBe('todo')
       expect(task.priority).toBe('high')
       expect(task.assignee).toBe('Alice')
+      expect(task.ticketId).toBeNull()
       expect(task.createdAt).toBeInstanceOf(Date)
       expect(task.updatedAt).toBeInstanceOf(Date)
     })
@@ -26,6 +27,7 @@ describe('TaskStore', () => {
       expect(task.description).toBe('')
       expect(task.priority).toBe('medium')
       expect(task.assignee).toBeNull()
+      expect(task.ticketId).toBeNull()
     })
 
     it('should assign incrementing order values', () => {
@@ -35,6 +37,13 @@ describe('TaskStore', () => {
       expect(t1.order).toBe(0)
       expect(t2.order).toBe(1)
       expect(t3.order).toBe(2)
+    })
+
+    it('should create a task with ticketId for external ticket reference', () => {
+      const task = store.create({ title: 'Task from Issue', ticketId: '1597' })
+      expect(task.ticketId).toBe('1597')
+      expect(task.id).toBeDefined()
+      expect(task.title).toBe('Task from Issue')
     })
   })
 
@@ -83,6 +92,13 @@ describe('TaskStore', () => {
 
     it('should throw for non-existent id', () => {
       expect(() => store.update('missing', { title: 'X' })).toThrow('Task with id "missing" not found')
+    })
+
+    it('should update ticketId to link to external ticket', () => {
+      const task = store.create({ title: 'Task' })
+      expect(task.ticketId).toBeNull()
+      const updated = store.update(task.id, { ticketId: '1597' })
+      expect(updated.ticketId).toBe('1597')
     })
   })
 
