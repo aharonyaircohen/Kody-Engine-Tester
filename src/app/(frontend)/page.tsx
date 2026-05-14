@@ -27,8 +27,7 @@ export default async function HomePage() {
             width={65}
           />
         </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
+        <h1>Welcome from kody — verify run 1778739418051</h1>
         <div className="links">
           <a
             className="admin"
