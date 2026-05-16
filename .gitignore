@@ -63,4 +63,8 @@ node_modules/
 !.kody/vault/**
 !.kody/goals/
 !.kody/goals/**
+!.kody/workers/
+!.kody/workers/**
+!.kody/jobs/
+!.kody/jobs/**
 .kody/executables/**/last-run.json
