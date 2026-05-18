@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "rev": 17,
+  "rev": 18,
   "cursor": "idle",
   "data": {
     "tasks": {
       "3044": {
-        "fp": "|backlog-flagged",
-        "lastRecFp": "|backlog-flagged",
-        "stage": "backlog-flagged",
-        "lastRecAt": "2026-05-18T10:17:42Z"
+        "fp": "|execute-recommended",
+        "lastRecFp": "|execute-recommended",
+        "stage": "execute-recommended",
+        "lastRecAt": "2026-05-18T10:32:00Z"
       },
       "3045": {
         "fp": "|approve-recommended",
@@ -71,7 +71,7 @@
         "lastRecAt": "2026-05-16T21:00:41Z"
       }
     },
-    "lastFiredAt": "2026-05-18T10:17:53.892Z"
+    "lastFiredAt": "2026-05-18T12:28:29.356Z"
   },
   "done": false
 }
