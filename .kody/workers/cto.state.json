@@ -1,62 +1,62 @@
 {
   "version": 1,
-  "rev": 18,
+  "rev": 19,
   "cursor": "idle",
   "data": {
     "tasks": {
       "3044": {
-        "fp": "|execute-recommended",
-        "lastRecFp": "|execute-recommended",
+        "fp": "backlog|execute-recommended",
+        "lastRecFp": "backlog|execute-recommended",
         "stage": "execute-recommended",
         "lastRecAt": "2026-05-18T10:32:00Z"
       },
       "3045": {
-        "fp": "|approve-recommended",
-        "lastRecFp": "|approve-recommended",
+        "fp": "done|approve-recommended",
+        "lastRecFp": "done|approve-recommended",
         "stage": "approve-recommended",
         "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3050": {
-        "fp": "|approve-recommended",
-        "lastRecFp": "|approve-recommended",
+        "fp": "done|approve-recommended",
+        "lastRecFp": "done|approve-recommended",
         "stage": "approve-recommended",
         "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3056": {
-        "fp": "|qa-requested",
-        "lastRecFp": "|qa-requested",
+        "fp": "done|qa-requested",
+        "lastRecFp": "done|qa-requested",
         "stage": "qa-requested",
         "lastRecAt": "2026-05-17T20:31:55Z"
       },
       "3059": {
-        "fp": "|qa-requested",
-        "lastRecFp": "|qa-requested",
+        "fp": "done|qa-requested",
+        "lastRecFp": "done|qa-requested",
         "stage": "qa-requested",
         "lastRecAt": "2026-05-17T20:31:55Z"
       },
       "3160": {
-        "fp": "|approve-recommended",
-        "lastRecFp": "|approve-recommended",
+        "fp": "done|approve-recommended",
+        "lastRecFp": "done|approve-recommended",
         "stage": "approve-recommended",
         "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3429": {
-        "fp": "|execute-recommended",
-        "lastRecFp": "|execute-recommended",
+        "fp": "backlog|execute-recommended",
+        "lastRecFp": "backlog|execute-recommended",
         "stage": "execute-recommended",
         "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3431": {
-        "fp": "|execute-recommended",
-        "lastRecFp": "|execute-recommended",
+        "fp": "backlog|execute-recommended",
+        "lastRecFp": "backlog|execute-recommended",
         "stage": "execute-recommended",
         "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3432": {
-        "fp": "|qa-requested",
-        "lastRecFp": "|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
+        "fp": "done|approve-recommended",
+        "lastRecFp": "done|approve-recommended",
+        "stage": "approve-recommended",
+        "lastRecAt": "2026-05-18T13:25:00Z"
       },
       "3434": {
         "fp": "backlog|execute-recommended",
@@ -65,13 +65,19 @@
         "lastRecAt": "2026-05-18T00:00:00Z"
       },
       "3436": {
-        "fp": "|qa-requested",
-        "lastRecFp": "|qa-requested",
+        "fp": "done|qa-requested",
+        "lastRecFp": "done|qa-requested",
         "stage": "qa-requested",
         "lastRecAt": "2026-05-16T21:00:41Z"
+      },
+      "3445": {
+        "fp": "backlog|execute-recommended",
+        "lastRecFp": "backlog|execute-recommended",
+        "stage": "execute-recommended",
+        "lastRecAt": "2026-05-18T13:25:00Z"
       }
     },
-    "lastFiredAt": "2026-05-18T12:28:29.356Z"
+    "lastFiredAt": "2026-05-18T13:25:46.019Z"
   },
   "done": false
 }
