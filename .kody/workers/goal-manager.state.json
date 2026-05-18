@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rev": 3,
+  "rev": 4,
   "cursor": "managing",
   "data": {
-    "lastTick": "2026-05-18T14:05:07Z",
+    "lastTick": "2026-05-18T14:26:00Z",
     "goals": {
       "status-page": {
         "cursor": "qa",
@@ -11,12 +11,12 @@
           3445
         ],
         "gate": 3446,
-        "qaRound": 1,
+        "qaRound": 2,
         "stall": {},
-        "lastQaTick": "2026-05-18T14:05:07Z"
+        "lastQaTick": "2026-05-18T14:26:00Z"
       }
     },
-    "lastFiredAt": "2026-05-18T14:05:12.210Z"
+    "lastFiredAt": "2026-05-18T17:14:18.311Z"
   },
   "done": false
 }
