@@ -1,13 +1,6 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 test.describe('Status', () => {
-  let _page: Page
-
-  test.beforeAll(async ({ browser }, _testInfo) => {
-    const context = await browser.newContext()
-    _page = await context.newPage()
-  })
-
   test('status page returns 200 and shows green Operational badge', async ({ page }) => {
     const response = await page.goto('/status')
     expect(response?.status()).toBe(200)
