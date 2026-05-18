@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "rev": 4,
+  "rev": 5,
   "cursor": "managing",
   "data": {
-    "lastTick": "2026-05-18T14:26:00Z",
+    "lastTick": "2026-05-18T17:14:19Z",
     "goals": {
       "status-page": {
-        "cursor": "qa",
+        "cursor": "escalated",
         "tasks": [
           3445
         ],
@@ -16,7 +16,7 @@
         "lastQaTick": "2026-05-18T14:26:00Z"
       }
     },
-    "lastFiredAt": "2026-05-18T17:14:18.311Z"
+    "lastFiredAt": "2026-05-18T19:08:23.267Z"
   },
   "done": false
 }
