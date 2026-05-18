@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rev": 1,
+  "rev": 2,
   "cursor": "managing",
   "data": {
-    "lastTick": "2026-05-18T12:27:00Z",
+    "lastTick": "2026-05-18T13:26:43Z",
     "goals": {
       "status-page": {
         "cursor": "building",
@@ -12,11 +12,16 @@
         ],
         "gate": 3446,
         "qaRound": 0,
-        "stall": {},
+        "stall": {
+          "3445": {
+            "ticks": 1,
+            "attempts": 0
+          }
+        },
         "lastQaTick": null
       }
     },
-    "lastFiredAt": "2026-05-18T12:29:23.227Z"
+    "lastFiredAt": "2026-05-18T13:26:49.969Z"
   },
   "done": false
 }
