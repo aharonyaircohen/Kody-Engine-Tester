@@ -1,27 +1,22 @@
 {
   "version": 1,
-  "rev": 2,
+  "rev": 3,
   "cursor": "managing",
   "data": {
-    "lastTick": "2026-05-18T13:26:43Z",
+    "lastTick": "2026-05-18T14:05:07Z",
     "goals": {
       "status-page": {
-        "cursor": "building",
+        "cursor": "qa",
         "tasks": [
           3445
         ],
         "gate": 3446,
-        "qaRound": 0,
-        "stall": {
-          "3445": {
-            "ticks": 1,
-            "attempts": 0
-          }
-        },
-        "lastQaTick": null
+        "qaRound": 1,
+        "stall": {},
+        "lastQaTick": "2026-05-18T14:05:07Z"
       }
     },
-    "lastFiredAt": "2026-05-18T13:26:49.969Z"
+    "lastFiredAt": "2026-05-18T14:05:12.210Z"
   },
   "done": false
 }
