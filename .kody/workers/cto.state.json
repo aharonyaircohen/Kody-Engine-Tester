@@ -1,102 +1,60 @@
 {
   "version": 1,
-  "rev": 16,
+  "rev": 17,
   "cursor": "idle",
   "data": {
     "tasks": {
       "3044": {
-        "fp": "backlog-flagged|backlog-flagged",
-        "lastRecFp": "backlog-flagged|backlog-flagged",
+        "fp": "|backlog-flagged",
+        "lastRecFp": "|backlog-flagged",
         "stage": "backlog-flagged",
-        "lastRecAt": "2026-05-18T00:00:00Z"
+        "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3045": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
-      },
-      "3047": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
+        "fp": "|approve-recommended",
+        "lastRecFp": "|approve-recommended",
+        "stage": "approve-recommended",
+        "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3050": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
+        "fp": "|approve-recommended",
+        "lastRecFp": "|approve-recommended",
+        "stage": "approve-recommended",
+        "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3056": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
+        "fp": "|qa-requested",
+        "lastRecFp": "|qa-requested",
         "stage": "qa-requested",
         "lastRecAt": "2026-05-17T20:31:55Z"
       },
       "3059": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
+        "fp": "|qa-requested",
+        "lastRecFp": "|qa-requested",
         "stage": "qa-requested",
         "lastRecAt": "2026-05-17T20:31:55Z"
       },
       "3160": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
-      },
-      "3192": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
-      },
-      "3271": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
-      },
-      "3279": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
-      },
-      "3379": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
-      },
-      "3381": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-16T21:00:44Z"
-      },
-      "3388": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T18:03:00Z"
+        "fp": "|approve-recommended",
+        "lastRecFp": "|approve-recommended",
+        "stage": "approve-recommended",
+        "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3429": {
-        "fp": "backlog|backlog-flagged",
-        "lastRecFp": null,
-        "stage": "backlog-flagged",
-        "lastRecAt": null
+        "fp": "|execute-recommended",
+        "lastRecFp": "|execute-recommended",
+        "stage": "execute-recommended",
+        "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3431": {
-        "fp": "backlog|backlog-flagged",
-        "lastRecFp": null,
-        "stage": "backlog-flagged",
-        "lastRecAt": null
+        "fp": "|execute-recommended",
+        "lastRecFp": "|execute-recommended",
+        "stage": "execute-recommended",
+        "lastRecAt": "2026-05-18T10:17:42Z"
       },
       "3432": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
+        "fp": "|qa-requested",
+        "lastRecFp": "|qa-requested",
         "stage": "qa-requested",
         "lastRecAt": "2026-05-17T20:31:55Z"
       },
@@ -107,13 +65,13 @@
         "lastRecAt": "2026-05-18T00:00:00Z"
       },
       "3436": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
+        "fp": "|qa-requested",
+        "lastRecFp": "|qa-requested",
         "stage": "qa-requested",
         "lastRecAt": "2026-05-16T21:00:41Z"
       }
     },
-    "lastFiredAt": "2026-05-18T06:00:21.281Z"
+    "lastFiredAt": "2026-05-18T10:17:53.892Z"
   },
   "done": false
 }
