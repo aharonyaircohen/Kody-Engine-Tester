@@ -1,9 +1,15 @@
 {
   "version": 1,
-  "rev": 15,
+  "rev": 16,
   "cursor": "idle",
   "data": {
     "tasks": {
+      "3044": {
+        "fp": "backlog-flagged|backlog-flagged",
+        "lastRecFp": "backlog-flagged|backlog-flagged",
+        "stage": "backlog-flagged",
+        "lastRecAt": "2026-05-18T00:00:00Z"
+      },
       "3045": {
         "fp": "kody:done|qa-requested",
         "lastRecFp": "kody:done|qa-requested",
@@ -77,16 +83,16 @@
         "lastRecAt": "2026-05-17T18:03:00Z"
       },
       "3429": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
+        "fp": "backlog|backlog-flagged",
+        "lastRecFp": null,
+        "stage": "backlog-flagged",
+        "lastRecAt": null
       },
       "3431": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
+        "fp": "backlog|backlog-flagged",
+        "lastRecFp": null,
+        "stage": "backlog-flagged",
+        "lastRecAt": null
       },
       "3432": {
         "fp": "kody:done|qa-requested",
@@ -95,10 +101,10 @@
         "lastRecAt": "2026-05-17T20:31:55Z"
       },
       "3434": {
-        "fp": "kody:done|qa-requested",
-        "lastRecFp": "kody:done|qa-requested",
-        "stage": "qa-requested",
-        "lastRecAt": "2026-05-17T20:31:55Z"
+        "fp": "backlog|execute-recommended",
+        "lastRecFp": "backlog|execute-recommended",
+        "stage": "execute-recommended",
+        "lastRecAt": "2026-05-18T00:00:00Z"
       },
       "3436": {
         "fp": "kody:done|qa-requested",
@@ -107,7 +113,7 @@
         "lastRecAt": "2026-05-16T21:00:41Z"
       }
     },
-    "lastFiredAt": "2026-05-17T23:33:58.552Z"
+    "lastFiredAt": "2026-05-18T06:00:21.281Z"
   },
   "done": false
 }
