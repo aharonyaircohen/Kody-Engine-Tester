@@ -33,4 +33,18 @@ describe('padStart', () => {
   it('handles string equal to target length with spaces', () => {
     expect(padStart('abc', 3, ' ')).toBe('abc')
   })
+
+  it('pads with multi-char padChar and exact length match', () => {
+    expect(padStart('1', 4, 'ab')).toBe('aba1')
+  })
+
+  it('pads with multi-char padChar shorter than padChar length', () => {
+    expect(padStart('7', 3, 'xy')).toBe('xy7')
+  })
+
+  it('result length equals targetLength with multi-char padChar', () => {
+    const result = padStart('abc', 7, 'xy')
+    expect(result).toBe('xyxyabc')
+    expect(result.length).toBe(7)
+  })
 })
