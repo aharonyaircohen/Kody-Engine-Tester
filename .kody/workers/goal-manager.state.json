@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "managing",
+  "data": {
+    "lastTick": "2026-05-18T12:27:00Z",
+    "goals": {
+      "status-page": {
+        "cursor": "building",
+        "tasks": [
+          3445
+        ],
+        "gate": 3446,
+        "qaRound": 0,
+        "stall": {},
+        "lastQaTick": null
+      }
+    },
+    "lastFiredAt": "2026-05-18T12:29:23.227Z"
+  },
+  "done": false
+}
