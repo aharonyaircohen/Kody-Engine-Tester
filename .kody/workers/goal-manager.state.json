@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rev": 14,
+  "rev": 15,
   "cursor": "managing",
   "data": {
     "lastTick": "2026-05-19T14:20:39Z",
@@ -17,7 +17,7 @@
         "deliverablePr": 3453
       }
     },
-    "lastFiredAt": "2026-05-19T17:28:50.266Z"
+    "lastFiredAt": "2026-05-19T19:28:55.226Z"
   },
   "done": false
 }
