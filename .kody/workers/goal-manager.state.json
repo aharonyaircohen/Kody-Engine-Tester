@@ -1,22 +1,23 @@
 {
   "version": 1,
-  "rev": 9,
+  "rev": 10,
   "cursor": "managing",
   "data": {
-    "lastTick": "2026-05-19T00:00:00Z",
+    "lastTick": "2026-05-19T04:39:31Z",
     "goals": {
       "status-page": {
-        "cursor": "escalated",
+        "cursor": "done",
         "tasks": [
           3445
         ],
         "gate": 3446,
         "qaRound": 2,
         "stall": {},
-        "lastQaTick": "2026-05-18T14:26:00Z"
+        "lastQaTick": "2026-05-18T14:26:00Z",
+        "deliverablePr": 3453
       }
     },
-    "lastFiredAt": "2026-05-19T00:17:43.272Z"
+    "lastFiredAt": "2026-05-19T04:40:14.296Z"
   },
   "done": false
 }
