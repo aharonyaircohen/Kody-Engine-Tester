@@ -38,4 +38,8 @@ describe('clamp', () => {
   it('throws when min is greater than max', () => {
     expect(() => clamp(5, 10, 0)).toThrow('min cannot be greater than max')
   })
+
+  it('throws when value is NaN', () => {
+    expect(() => clamp(NaN, 0, 10)).toThrow('value must be a finite number')
+  })
 })
