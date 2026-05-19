@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rev": 25,
+  "rev": 26,
   "cursor": "idle",
   "data": {
     "tasks": {
@@ -39,6 +39,18 @@
         "lastRecFp": "done|execute-recommended",
         "stage": "execute-recommended",
         "lastRecAt": "2026-05-19T17:28:14Z"
+      },
+      "3188": {
+        "fp": "done|qa-requested",
+        "lastRecFp": "done|qa-requested",
+        "stage": "qa-requested",
+        "lastRecAt": "2026-05-16T21:00:50Z"
+      },
+      "3192": {
+        "fp": "done|qa-requested",
+        "lastRecFp": "done|qa-requested",
+        "stage": "qa-requested",
+        "lastRecAt": "2026-05-16T21:00:49Z"
       },
       "3271": {
         "fp": "done|execute-recommended",
@@ -143,7 +155,7 @@
         "lastRecAt": "2026-05-19T17:28:14Z"
       }
     },
-    "lastFiredAt": "2026-05-19T19:28:30.067Z"
+    "lastFiredAt": "2026-05-19T22:24:33.543Z"
   },
   "done": false
 }
