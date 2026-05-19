@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rev": 10,
+  "rev": 11,
   "cursor": "managing",
   "data": {
-    "lastTick": "2026-05-19T04:39:31Z",
+    "lastTick": "2026-05-19T04:40:14Z",
     "goals": {
       "status-page": {
         "cursor": "done",
@@ -17,7 +17,7 @@
         "deliverablePr": 3453
       }
     },
-    "lastFiredAt": "2026-05-19T04:40:14.296Z"
+    "lastFiredAt": "2026-05-19T08:08:44.579Z"
   },
   "done": false
 }
