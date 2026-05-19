@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rev": 22,
+  "rev": 23,
   "cursor": "idle",
   "data": {
     "tasks": {
@@ -77,10 +77,10 @@
         "lastRecAt": "2026-05-18T13:45:00Z"
       },
       "3455": {
-        "fp": "done|needs-qa",
+        "fp": "done|qa-requested",
         "lastRecFp": "done|needs-qa",
-        "stage": "needs-qa",
-        "lastRecAt": "2026-05-19T00:00:00Z"
+        "stage": "qa-requested",
+        "lastRecAt": "2026-05-19T00:30:00Z"
       },
       "3457": {
         "fp": "done|needs-qa",
@@ -113,7 +113,7 @@
         "lastRecAt": "2026-05-19T00:00:00Z"
       }
     },
-    "lastFiredAt": "2026-05-19T00:17:12.490Z"
+    "lastFiredAt": "2026-05-19T08:08:27.835Z"
   },
   "done": false
 }
