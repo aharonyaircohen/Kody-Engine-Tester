@@ -1,14 +1,23 @@
 {
   "version": 1,
-  "rev": 1,
-  "cursor": "waiting-on-verdict",
+  "rev": 2,
+  "cursor": "waiting-on-signal",
   "data": {
-    "active_proposal": {
-      "number": 3468,
-      "title": "secret-leak-scan",
-      "status": "open"
-    },
-    "lastFiredAt": "2026-05-20T12:09:17.919Z"
+    "active_proposal": null,
+    "lastFiredAt": "2026-05-20T19:55:02.038Z",
+    "lastTickAt": "2026-05-20T13:35:00.000Z",
+    "proposals_history": [
+      {
+        "number": 3468,
+        "title": "secret-leak-scan",
+        "verdict": "closed-synthetic"
+      },
+      {
+        "number": 3467,
+        "title": "sentry-digest",
+        "verdict": "closed-no-comment"
+      }
+    ]
   },
   "done": false
 }
