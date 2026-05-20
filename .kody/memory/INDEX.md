@@ -12,3 +12,5 @@ Each entry: `- [Title](id.md) — one-line hook (type: <type>)`.
 - [Answers must be terse](answers-must-be-terse.md) — Lead with the answer in one sentence; expand only on request. (type: preference)
 
 - [fix-ci must not edit __snapshots__ files](fix-ci-do-not-edit-snapshot-files.md) — Editing Vitest snapshot files inside fix-ci masks real assertion failures; regenerate or update tests instead. (type: lesson)
+
+- [Stick with Vitest; do not migrate to Jest](use-vitest-not-jest.md) — Vitest is the canonical test runner here — migration to Jest was considered and rejected. (type: decision)
