@@ -124,18 +124,26 @@ def git(args: list[str], check: bool = True) -> subprocess.CompletedProcess:
     return subprocess.run(["git", "-C", str(REPO_ROOT), *args], check=check, capture_output=True, text=True)
 
 
-def git_commit_and_push(paths: list[pathlib.Path], summary: str) -> bool:
-    if not paths:
+def git_commit_and_push(summary: str) -> bool:
+    # Stage every change under .kody/memory/ — covers new memory files,
+    # the INDEX.md edit, and the (already-unlinked) inbox sticky notes.
+    add_result = git(["add", "-A", "--", ".kody/memory/"], check=False)
+    if add_result.returncode != 0:
+        log(f"git add failed: {add_result.stderr.strip()}")
         return False
-    rels = [str(p.relative_to(REPO_ROOT)) for p in paths]
-    git(["add", "--", *rels])
-    status = git(["status", "--porcelain", "--", *rels]).stdout.strip()
+
+    status = git(["status", "--porcelain", "--", ".kody/memory/"], check=False).stdout.strip()
     if not status:
         return False
-    git(["commit", "-m", summary])
+
+    commit_result = git(["commit", "-m", summary], check=False)
+    if commit_result.returncode != 0:
+        log(f"git commit failed: {commit_result.stderr.strip()}")
+        return False
+
     push_result = git(["push", "origin", "HEAD"], check=False)
     if push_result.returncode != 0:
-        log(f"push failed: {push_result.stderr.strip()}")
+        log(f"git push failed: {push_result.stderr.strip()}")
         return False
     return True
 
@@ -167,12 +175,6 @@ def main() -> int:
         log(f"tick complete: 0 filed, {skipped} skipped")
         return 0
 
-    touched_paths = (
-        [MEMORY_DIR / f"{n.name}.md" for n in processed]
-        + [INDEX_PATH]
-        + [INBOX_DIR / p.name for p in notes_files]
-    )
-
     summary_lines = [
         f"chore(memory): file {len(processed)} sticky note(s)",
         "",
@@ -183,7 +185,7 @@ def main() -> int:
         log(f"tick complete: {len(processed)} filed, {skipped} skipped (commit suppressed)")
         return 0
 
-    committed = git_commit_and_push(touched_paths, summary)
+    committed = git_commit_and_push(summary)
     if committed:
         log(f"tick complete: {len(processed)} filed, {skipped} skipped, committed + pushed")
     else:

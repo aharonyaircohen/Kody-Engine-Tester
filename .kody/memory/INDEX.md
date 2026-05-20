@@ -10,3 +10,5 @@ Each entry: `- [Title](id.md) — one-line hook (type: <type>)`.
 - [Phase 1 smoke test sticky note](phase1-smoke-test.md) — Verify the memory inbox accepts and files a sticky note end-to-end (type: lesson)
 
 - [Answers must be terse](answers-must-be-terse.md) — Lead with the answer in one sentence; expand only on request. (type: preference)
+
+- [fix-ci must not edit __snapshots__ files](fix-ci-do-not-edit-snapshot-files.md) — Editing Vitest snapshot files inside fix-ci masks real assertion failures; regenerate or update tests instead. (type: lesson)
