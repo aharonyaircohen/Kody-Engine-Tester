@@ -1,0 +1,10 @@
+{
+  "type": "verdict",
+  "name": "verdict-ceo-proposal-sentry-digest",
+  "title": "Verdict: dismiss on CEO proposal sentry-digest",
+  "hook": "Operator dismissed the CEO proposal to add a sentry-digest job (issue #3467).",
+  "body": "**Proposal:** sentry-digest\n**Decision:** dismiss\n**Source issue:** #3467\n\nThe operator dismissed this CEO proposal. The CEO must not re-surface the same slug for at least 30 days, and only then if signal grows.",
+  "source": "dashboard:cto:dismiss",
+  "ts": "2026-05-20T15:30:00Z",
+  "links": []
+}
