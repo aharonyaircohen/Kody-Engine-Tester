@@ -3,7 +3,11 @@
     "sentry-digest": {
       "firstSuggestedISO": "2026-05-20T11:57:29Z",
       "openIssue": 3467
+    },
+    "secret-leak-scan": {
+      "firstSuggestedISO": "2026-05-20T11:58:41Z",
+      "openIssue": 3468
     }
   },
-  "lastRunISO": "2026-05-20T11:57:29Z"
+  "lastRunISO": "2026-05-20T11:58:41Z"
 }
