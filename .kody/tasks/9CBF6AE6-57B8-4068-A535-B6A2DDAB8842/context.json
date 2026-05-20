@@ -1,0 +1,14 @@
+{
+  "taskId": "9CBF6AE6-57B8-4068-A535-B6A2DDAB8842",
+  "taskType": "chat",
+  "target": "9CBF6AE6-57B8-4068-A535-B6A2DDAB8842",
+  "outcome": "success",
+  "exitCode": 0,
+  "reason": "Listed memory index entries from system prompt context",
+  "prUrl": null,
+  "runUrl": null,
+  "filesTouched": [],
+  "sessionLog": null,
+  "startedAt": "2026-05-20T00:00:00.000Z",
+  "finishedAt": "2026-05-20T00:00:01.000Z"
+}
