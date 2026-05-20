@@ -67,6 +67,8 @@ node_modules/
 !.kody/workers/**
 !.kody/jobs/
 !.kody/jobs/**
+!.kody/tasks/
+!.kody/tasks/**
 !.kody/memory/
 !.kody/memory/**
 !.kody/scripts/
