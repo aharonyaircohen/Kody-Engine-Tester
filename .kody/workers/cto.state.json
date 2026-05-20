@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "rev": 30,
+  "rev": 31,
   "cursor": "idle",
   "data": {
     "tasks": {
@@ -29,7 +29,7 @@
         "lastRecAt": "2026-05-18T00:00:00Z"
       }
     },
-    "lastFiredAt": "2026-05-20T16:00:21.465Z"
+    "lastFiredAt": "2026-05-20T18:19:51.733Z"
   },
   "done": false
 }
