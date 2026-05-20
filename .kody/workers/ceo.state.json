@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "waiting-on-verdict",
+  "data": {
+    "active_proposal": {
+      "number": 3468,
+      "title": "secret-leak-scan",
+      "status": "open"
+    },
+    "lastFiredAt": "2026-05-20T12:09:17.919Z"
+  },
+  "done": false
+}
