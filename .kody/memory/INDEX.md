@@ -14,3 +14,5 @@ Each entry: `- [Title](id.md) — one-line hook (type: <type>)`.
 - [fix-ci must not edit __snapshots__ files](fix-ci-do-not-edit-snapshot-files.md) — Editing Vitest snapshot files inside fix-ci masks real assertion failures; regenerate or update tests instead. (type: lesson)
 
 - [Stick with Vitest; do not migrate to Jest](use-vitest-not-jest.md) — Vitest is the canonical test runner here — migration to Jest was considered and rejected. (type: decision)
+
+- [Verdict: dismiss on CTO execute for #42](verdict-cto-42-execute-dismiss.md) — Operator dismissed the CTO execute recommendation on task #42 (by @aguyaharonyair). (type: verdict)
