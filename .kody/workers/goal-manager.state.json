@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "rev": 22,
+  "rev": 23,
   "cursor": "managing",
   "data": {
-    "lastTick": "2026-05-20T12:08:00Z",
+    "lastTick": "2026-05-20T12:34:00Z",
     "goals": {
       "status-page": {
         "cursor": "done",
@@ -15,9 +15,19 @@
         "stall": {},
         "lastQaTick": "2026-05-18T14:26:00Z",
         "deliverablePr": 3453
+      },
+      "test-greet-chain": {
+        "cursor": "done",
+        "state": "done",
+        "goalPrUrl": "https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3236"
+      },
+      "test-umbrella": {
+        "cursor": "done",
+        "state": "done",
+        "goalPrUrl": "https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3255"
       }
     },
-    "lastFiredAt": "2026-05-20T12:12:08.306Z"
+    "lastFiredAt": "2026-05-20T16:00:53.473Z"
   },
   "done": false
 }
