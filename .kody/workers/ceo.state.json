@@ -1,11 +1,14 @@
 {
   "version": 1,
-  "rev": 2,
-  "cursor": "waiting-on-signal",
+  "rev": 3,
+  "cursor": "proposal-raised",
   "data": {
-    "active_proposal": null,
-    "lastFiredAt": "2026-05-20T19:55:02.038Z",
-    "lastTickAt": "2026-05-20T13:35:00.000Z",
+    "active_proposal": {
+      "number": 3469,
+      "title": "enrollment-pulse"
+    },
+    "lastFiredAt": "2026-05-20T20:33:43.562Z",
+    "lastTickAt": "2026-05-20T13:55:00.000Z",
     "proposals_history": [
       {
         "number": 3468,
@@ -16,6 +19,11 @@
         "number": 3467,
         "title": "sentry-digest",
         "verdict": "closed-no-comment"
+      },
+      {
+        "number": 3469,
+        "title": "enrollment-pulse",
+        "verdict": "pending"
       }
     ]
   },
