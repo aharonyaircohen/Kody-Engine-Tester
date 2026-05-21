@@ -1,7 +1,10 @@
 ---
 every: 30m
 worker: kody
+disabled: true
 ---
+
+# task-memory-extractor
 
 # task-memory-extractor
 
