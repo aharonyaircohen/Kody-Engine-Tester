@@ -1,7 +1,9 @@
 ---
-every: 24h
 worker: ceo
+disabled: true
 ---
+
+# job-gap-scan
 
 # job-gap-scan
 
