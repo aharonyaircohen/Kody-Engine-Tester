@@ -1,0 +1,1 @@
+Fixed the misspelling "recieve" -> "receive" in LIVETEST.md line 3. This was a straightforward typo correction per the PR feedback. No other changes were made.

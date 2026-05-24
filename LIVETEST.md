@@ -1,3 +1,3 @@
 # Live fix test
 
-The word "recieve" is misspelled in this sentence.
+The word "receive" is misspelled in this sentence.
