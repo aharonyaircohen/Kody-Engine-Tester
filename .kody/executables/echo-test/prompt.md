@@ -1,6 +1,8 @@
-Read issue #{{issueNumber}} below and answer it directly and concisely.
+Read issue #{{issue.number}} below and answer it directly and concisely.
 
-{{issueBody}}
+Title: {{issue.title}}
+
+{{issue.body}}
 
 Use Read/Grep/Glob to look at the repository if it helps you answer. Do not
 edit any files — this is a read-and-answer task. Begin your answer with the
