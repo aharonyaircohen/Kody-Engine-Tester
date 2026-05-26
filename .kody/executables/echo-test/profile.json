@@ -1,0 +1,39 @@
+{
+  "name": "echo-test",
+  "role": "primitive",
+  "describe": "Live test: read the issue and answer it as a comment.",
+  "inputs": [
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": true,
+      "describe": "GitHub issue number to work on."
+    }
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxTurnTimeoutSec": 1200,
+    "systemPromptAppend": "\n\n# Final message format (required)\nYour FINAL message MUST be exactly this block:\n\nDONE\nPR_SUMMARY:\n<your complete answer to the issue — this text is posted verbatim as a comment>\n\nIf you cannot answer, output a single line instead: FAILED: <reason>",
+    "cacheable": true,
+    "enableVerifyTool": false,
+    "verifyAttempts": 4,
+    "tools": ["Read", "Grep", "Glob"],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [{ "script": "loadIssueContext" }, { "script": "composePrompt" }],
+    "postflight": [
+      { "script": "parseAgentResult" },
+      { "script": "postAgentComment" }
+    ]
+  }
+}
