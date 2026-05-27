@@ -10,6 +10,7 @@
   "git": {
     "defaultBranch": "dev"
   },
+  "defaultExecutable": "plan",
   "github": {
     "owner": "aharonyaircohen",
     "repo": "Kody-Engine-Tester"
