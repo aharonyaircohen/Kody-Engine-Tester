@@ -10,8 +10,6 @@
   "git": {
     "defaultBranch": "dev"
   },
-  "defaultExecutable": "classify",
-  "defaultPrExecutable": "fix",
   "github": {
     "owner": "aharonyaircohen",
     "repo": "Kody-Engine-Tester"
