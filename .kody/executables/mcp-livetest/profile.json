@@ -23,7 +23,8 @@
     "tools": [
       "Read",
       "Grep",
-      "mcp__codegraph"
+      "mcp__codegraph",
+      "mcp__memory"
     ],
     "hooks": [],
     "skills": [],
@@ -36,7 +37,16 @@
         "command": "codegraph",
         "args": [
           "serve",
-          "--mcp"
+          "--mcp",
+          "--quiet"
+        ]
+      },
+      {
+        "name": "memory",
+        "command": "npx",
+        "args": [
+          "-y",
+          "mcp-memory"
         ]
       }
     ]
