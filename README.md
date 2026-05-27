@@ -73,7 +73,7 @@ Organization (tenant)
 
 ## Autonomous Development with Kody
 
-This project uses [Kody Engine Lite](https://github.com/aharonyaircohen/Kody-Engine-Lite) for autonomous issue-to-PR development. Comment `@kody` on any GitHub issue and Kody will classify, plan, build, test, review, and ship a pull request.
+This project uses [Kody Engine Lite](https://github.com/aharonyaircohen/Kody-Engine-Lite) for autonomous issue-to-PR development. The thin engine (bare `kody` without subcommand) successfully routes to the run executable. Comment `@kody` on any GitHub issue and Kody will classify, plan, build, test, review, and ship a pull request.
 
 Kody's pipeline is customized to this repo via `.kody/steps/` — each stage (taskify, plan, build, verify, review, review-fix) has tailored instructions that include:
 - **Repo Patterns**: Payload CMS collection patterns, service layer with constructor injection, input sanitization via `src/security/sanitizers.ts`
