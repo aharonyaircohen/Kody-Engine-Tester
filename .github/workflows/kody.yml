@@ -120,6 +120,17 @@ jobs:
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: npx -y -p @kody-ade/kody-engine@0.4.194 kody-engine
+        run: |
+          F=.kody/executables/bug/prompt.md
+          ( last=present; while true; do
+              if [ -f "$F" ]; then cur=present; else cur=ABSENT; fi
+              if [ "$cur" != "$last" ]; then echo "POLLER $(date +%H:%M:%S.%N) prompt.md -> $cur (cwd=$(pwd))"; last=$cur; fi
+              sleep 0.3
+            done ) &
+          POLLER=$!
+          npx -y -p @kody-ade/kody-engine@0.4.194 kody-engine; RC=$?
+          kill $POLLER 2>/dev/null || true
+          echo "POLLER final: $([ -f "$F" ] && echo present || echo ABSENT)"
+          exit $RC
 
 
