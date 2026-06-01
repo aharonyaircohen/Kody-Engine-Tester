@@ -89,22 +89,6 @@ jobs:
           ref: ${{ github.event.pull_request.base.ref || github.ref }}
           token: ${{ secrets.KODY_TOKEN || github.token }}
 
-      - name: DEBUG probe executables on disk
-        run: |
-          probe() { test -f .kody/executables/bug/prompt.md && echo "$1 PRESENT" || echo "$1 ABSENT"; }
-          probe "MARKER_A_after_checkout"
-          corepack pnpm install > /dev/null 2>&1 || true
-          probe "MARKER_B_after_pnpm"
-          git reset --hard HEAD > /dev/null 2>&1 || true
-          git clean -fd > /dev/null 2>&1 || true
-          probe "MARKER_C_after_reset_clean"
-          git fetch origin > /dev/null 2>&1 || true
-          git checkout -b dbg-feat origin/main > /dev/null 2>&1 || true
-          probe "MARKER_D_after_checkout_b"
-          git checkout - > /dev/null 2>&1 || true
-          echo "MARKER_LS $(ls .kody/executables/ | tr '\n' ' ')"
-          node -e "const fs=require('fs'),p=require('path');const d=p.join(process.cwd(),'.kody','executables','bug');const f=p.join(d,'prompt.md');console.log('NODEPROBE cwd='+process.cwd());console.log('NODEPROBE dir='+d);console.log('NODEPROBE existsSync='+fs.existsSync(f));try{console.log('NODEPROBE readdir='+fs.readdirSync(d).join(','))}catch(e){console.log('NODEPROBE readdir ERR '+e.message)}"
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -120,17 +104,6 @@ jobs:
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: |
-          F=.kody/executables/bug/prompt.md
-          ( last=present; while true; do
-              if [ -f "$F" ]; then cur=present; else cur=ABSENT; fi
-              if [ "$cur" != "$last" ]; then echo "POLLER $(date +%H:%M:%S.%N) prompt.md -> $cur (cwd=$(pwd))"; last=$cur; fi
-              sleep 0.3
-            done ) &
-          POLLER=$!
-          npx -y -p @kody-ade/kody-engine@0.4.194 kody-engine; RC=$?
-          kill $POLLER 2>/dev/null || true
-          echo "POLLER final: $([ -f "$F" ] && echo present || echo ABSENT)"
-          exit $RC
+        run: npx -y -p @kody-ade/kody-engine@0.4.194 kody-engine
 
 
