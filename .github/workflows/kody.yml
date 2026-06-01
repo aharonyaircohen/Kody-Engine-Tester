@@ -91,15 +91,18 @@ jobs:
 
       - name: DEBUG probe executables on disk
         run: |
-          set +e
-          echo "=A= after checkout:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
-          echo "workspace=$GITHUB_WORKSPACE pwd=$(pwd)"
-          corepack pnpm install >/dev/null 2>&1; echo "=B= after pnpm install:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
-          git reset --hard HEAD >/dev/null 2>&1; git clean -fd >/dev/null 2>&1; echo "=C= after reset+clean:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
-          git fetch origin >/dev/null 2>&1; git checkout -b dbg-feat origin/main 2>&1 | tail -1; echo "=D= after checkout -b origin/main:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
-          echo "=E= git check-ignore after branch:"; git check-ignore -v .kody/executables/bug/prompt.md || echo "not ignored"
-          echo "=F= ls executables:"; ls .kody/executables/ | tr '
-' ' '; echo
+          probe() { test -f .kody/executables/bug/prompt.md && echo "$1 PRESENT" || echo "$1 ABSENT"; }
+          probe "MARKER_A_after_checkout"
+          corepack pnpm install > /dev/null 2>&1 || true
+          probe "MARKER_B_after_pnpm"
+          git reset --hard HEAD > /dev/null 2>&1 || true
+          git clean -fd > /dev/null 2>&1 || true
+          probe "MARKER_C_after_reset_clean"
+          git fetch origin > /dev/null 2>&1 || true
+          git checkout -b dbg-feat origin/main > /dev/null 2>&1 || true
+          probe "MARKER_D_after_checkout_b"
+          git checkout - > /dev/null 2>&1 || true
+          echo "MARKER_LS $(ls .kody/executables/ | tr '\n' ' ')"
 
       - uses: actions/setup-node@v4
         with:
