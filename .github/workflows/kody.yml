@@ -91,12 +91,15 @@ jobs:
 
       - name: DEBUG probe executables on disk
         run: |
-          echo "cwd=$(pwd) ref=$GITHUB_REF sha=$GITHUB_SHA"
-          echo "--- ls .kody/executables/bug ---"; ls -la .kody/executables/bug/ || echo "DIR MISSING"
-          echo "--- prompt.md test ---"; test -f .kody/executables/bug/prompt.md && echo "PROMPT PRESENT ($(wc -c < .kody/executables/bug/prompt.md) bytes)" || echo "PROMPT ABSENT"
-          echo "--- git ls-files ---"; git ls-files .kody/executables/bug/
-          echo "--- git check-ignore ---"; git check-ignore -v .kody/executables/bug/prompt.md || echo "not ignored"
-          echo "--- all executables dirs ---"; ls .kody/executables/
+          set +e
+          echo "=A= after checkout:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
+          echo "workspace=$GITHUB_WORKSPACE pwd=$(pwd)"
+          corepack pnpm install >/dev/null 2>&1; echo "=B= after pnpm install:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
+          git reset --hard HEAD >/dev/null 2>&1; git clean -fd >/dev/null 2>&1; echo "=C= after reset+clean:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
+          git fetch origin >/dev/null 2>&1; git checkout -b dbg-feat origin/main 2>&1 | tail -1; echo "=D= after checkout -b origin/main:"; test -f .kody/executables/bug/prompt.md && echo PRESENT || echo ABSENT
+          echo "=E= git check-ignore after branch:"; git check-ignore -v .kody/executables/bug/prompt.md || echo "not ignored"
+          echo "=F= ls executables:"; ls .kody/executables/ | tr '
+' ' '; echo
 
       - uses: actions/setup-node@v4
         with:
