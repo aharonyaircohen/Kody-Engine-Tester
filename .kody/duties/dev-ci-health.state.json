@@ -1,13 +1,19 @@
 {
   "version": 1,
-  "rev": 3,
+  "rev": 4,
   "cursor": "idle",
   "data": {
-    "lastFiredAt": "2026-06-01T07:25:43.729Z",
+    "lastFiredAt": "2026-06-01T07:32:42.795Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 17148,
+    "lastDurationMs": 38928,
     "trackingIssue": 3559,
-    "dispatchedAt": "2026-06-01T07:15:00.000Z"
+    "dispatchedAt": "2026-06-01T07:15:00.000Z",
+    "ciStateAtFiring": "RED",
+    "ciShaAtFiring": "5737447b92e5655f611bbf4d9bd061721f4c7894",
+    "failingChecksAtFiring": [
+      "red"
+    ],
+    "fixAlreadyInFlight": true
   },
   "done": false
 }
