@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 2,
+  "rev": 3,
   "cursor": "idle",
   "data": {
-    "lastFiredAt": "2026-06-01T07:23:34.203Z",
+    "lastFiredAt": "2026-06-01T07:25:43.729Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 31849,
+    "lastDurationMs": 17148,
     "trackingIssue": 3559,
     "dispatchedAt": "2026-06-01T07:15:00.000Z"
   },
