@@ -89,6 +89,15 @@ jobs:
           ref: ${{ github.event.pull_request.base.ref || github.ref }}
           token: ${{ secrets.KODY_TOKEN || github.token }}
 
+      - name: DEBUG probe executables on disk
+        run: |
+          echo "cwd=$(pwd) ref=$GITHUB_REF sha=$GITHUB_SHA"
+          echo "--- ls .kody/executables/bug ---"; ls -la .kody/executables/bug/ || echo "DIR MISSING"
+          echo "--- prompt.md test ---"; test -f .kody/executables/bug/prompt.md && echo "PROMPT PRESENT ($(wc -c < .kody/executables/bug/prompt.md) bytes)" || echo "PROMPT ABSENT"
+          echo "--- git ls-files ---"; git ls-files .kody/executables/bug/
+          echo "--- git check-ignore ---"; git check-ignore -v .kody/executables/bug/prompt.md || echo "not ignored"
+          echo "--- all executables dirs ---"; ls .kody/executables/
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
