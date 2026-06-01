@@ -1,0 +1,12 @@
+name: force-red
+# TEMPORARY — live test of dev-ci-health dedup. Makes dev's CI red on purpose.
+# Remove after the test.
+on:
+  push:
+    branches: [dev]
+jobs:
+  red:
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail on purpose
+        run: exit 1
