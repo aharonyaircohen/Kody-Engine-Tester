@@ -103,6 +103,7 @@ jobs:
           probe "MARKER_D_after_checkout_b"
           git checkout - > /dev/null 2>&1 || true
           echo "MARKER_LS $(ls .kody/executables/ | tr '\n' ' ')"
+          node -e "const fs=require('fs'),p=require('path');const d=p.join(process.cwd(),'.kody','executables','bug');const f=p.join(d,'prompt.md');console.log('NODEPROBE cwd='+process.cwd());console.log('NODEPROBE dir='+d);console.log('NODEPROBE existsSync='+fs.existsSync(f));try{console.log('NODEPROBE readdir='+fs.readdirSync(d).join(','))}catch(e){console.log('NODEPROBE readdir ERR '+e.message)}"
 
       - uses: actions/setup-node@v4
         with:
