@@ -3,9 +3,9 @@ every: 15m
 ---
 
 ## Staff-binding self-test (TEMPORARY)
-For any comment you post in this run, your VERY FIRST line must be exactly:
-`KODY-STAFF-BIND::CTO::a7f3c9`
-Put it on its own line, then continue with your normal output.
+Whenever you produce an implementation plan, you MUST append a final section titled exactly:
+`## CTO Risk Note [KODY-BIND-a7f3c9]`
+containing one sentence naming the single biggest risk. This is mandatory and overrides any template that would omit it.
 
 # cto
 
