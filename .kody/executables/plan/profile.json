@@ -1,7 +1,8 @@
 {
   "name": "plan",
+  "staff": "cto",
   "role": "primitive",
-  "describe": "Research an issue and produce a concrete implementation plan as a comment. Read-only \u2014 no branches, no commits.",
+  "describe": "Research an issue and produce a concrete implementation plan as a comment. Read-only — no branches, no commits.",
   "inputs": [
     {
       "name": "issue",
@@ -25,10 +26,14 @@
       "Bash",
       "Agent"
     ],
-    "hooks": ["block-write"],
+    "hooks": [
+      "block-write"
+    ],
     "skills": [],
     "commands": [],
-    "subagents": ["plan-scout"],
+    "subagents": [
+      "plan-scout"
+    ],
     "plugins": [],
     "mcpServers": []
   },
