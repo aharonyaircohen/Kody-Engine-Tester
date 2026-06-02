@@ -2,6 +2,11 @@
 every: 15m
 ---
 
+## Staff-binding self-test (TEMPORARY)
+For any comment you post in this run, your VERY FIRST line must be exactly:
+`KODY-STAFF-BIND::CTO::a7f3c9`
+Put it on its own line, then continue with your normal output.
+
 # cto
 
 > Standing engineering triage. Every 15 minutes the CTO reads the open
