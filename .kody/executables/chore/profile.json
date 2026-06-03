@@ -1,5 +1,6 @@
 {
   "name": "chore",
+  "staff": "kody",
   "role": "primitive",
   "describe": "Make a chore / docs / dep-bump change end-to-end in ONE session: minimal investigation → change → verify, then branch, commit, open PR. Low-ceremony (no heavy planning) — single-session, no multi-stage orchestration.",
   "inputs": [

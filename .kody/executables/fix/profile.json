@@ -1,5 +1,6 @@
 {
   "name": "fix",
+  "staff": "kody",
   "role": "primitive",
   "describe": "Apply review feedback to an existing PR branch.",
   "inputs": [

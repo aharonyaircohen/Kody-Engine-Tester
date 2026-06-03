@@ -1,5 +1,6 @@
 {
   "name": "reproduce",
+  "staff": "qa",
   "role": "primitive",
   "describe": "Write a failing test that reproduces a bug. Do NOT fix the bug — leave the test failing and capture the failure signature so subsequent fix verification can confirm the same failure mode.",
   "inputs": [

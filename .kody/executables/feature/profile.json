@@ -1,5 +1,6 @@
 {
   "name": "feature",
+  "staff": "kody",
   "role": "primitive",
   "describe": "Implement a feature / refactor issue end-to-end in ONE session: research → plan → build → test → verify, then branch, commit, open PR. Single-session — no multi-stage orchestration.",
   "inputs": [
