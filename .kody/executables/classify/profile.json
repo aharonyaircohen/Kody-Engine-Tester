@@ -1,5 +1,6 @@
 {
   "name": "classify",
+  "staff": "engineer",
   "role": "primitive",
   "describe": "Classify an issue into one of {feature, bug, spec, chore} and dispatch the matching sub-orchestrator. Label-first fast path; LLM fallback when labels don't decide.",
   "inputs": [
@@ -47,17 +48,35 @@
           "description": "kody: classifying the issue"
         }
       },
-      { "script": "loadIssueContext" },
-      { "script": "loadTaskState" },
-      { "script": "classifyByLabel" },
-      { "script": "loadConventions" },
-      { "script": "composePrompt" }
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "classifyByLabel"
+      },
+      {
+        "script": "loadConventions"
+      },
+      {
+        "script": "composePrompt"
+      }
     ],
     "postflight": [
-      { "script": "parseAgentResult" },
-      { "script": "recordClassification" },
-      { "script": "writeRunSummary" },
-      { "script": "dispatchClassified" }
+      {
+        "script": "parseAgentResult"
+      },
+      {
+        "script": "recordClassification"
+      },
+      {
+        "script": "writeRunSummary"
+      },
+      {
+        "script": "dispatchClassified"
+      }
     ]
   },
   "output": {
