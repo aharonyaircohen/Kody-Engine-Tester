@@ -1,9 +1,3 @@
----
-disabled: false
-staff: kody
-every: 1d
----
-
 # Kody Health Check
 
 ## Job 
