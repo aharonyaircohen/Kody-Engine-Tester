@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "counted",
+  "data": {
+    "count": 1,
+    "lastFiredAt": "2026-06-03T10:53:59.985Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 7808
+  },
+  "done": false
+}
