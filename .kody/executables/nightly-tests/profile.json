@@ -1,5 +1,6 @@
 {
   "name": "nightly-tests",
+  "staff": "qa",
   "role": "watch",
   "describe": "Nightly end-to-end smoke suite for the Kody engine. Iterates over cases.json, runs each command, asserts outcome, writes a results report, and opens or updates a tracking issue.",
   "kind": "scheduled",
@@ -19,7 +20,11 @@
     "maxTurns": 60,
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
-    "tools": ["Bash", "Read", "Write"],
+    "tools": [
+      "Bash",
+      "Read",
+      "Write"
+    ],
     "hooks": [],
     "skills": [],
     "commands": [],
@@ -36,7 +41,10 @@
       },
       "verify": "gh auth status",
       "usage": "Use `gh` to open or update the tracking issue (search by title, then `gh issue create` or `gh issue edit`). Use `gh issue comment` to post the run summary. Avoid any other GitHub mutations.",
-      "allowedUses": ["issue", "api"]
+      "allowedUses": [
+        "issue",
+        "api"
+      ]
     },
     {
       "name": "npx",
