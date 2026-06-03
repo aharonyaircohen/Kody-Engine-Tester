@@ -1,5 +1,6 @@
 {
   "name": "ui-review",
+  "staff": "designer",
   "role": "primitive",
   "describe": "UI/UX review of an open PR: browses the running preview with Playwright, compares behavior to diff intent, posts one structured review comment. Read-only on the repo (no commits); writes a throwaway Playwright spec under .kody/.",
   "kind": "oneshot",
@@ -34,7 +35,9 @@
       "Edit",
       "mcp__playwright"
     ],
-    "hooks": ["block-git"],
+    "hooks": [
+      "block-git"
+    ],
     "skills": [],
     "commands": [],
     "subagents": [],
@@ -43,7 +46,12 @@
       {
         "name": "playwright",
         "command": "npx",
-        "args": ["-y", "--package=@playwright/mcp@latest", "--", "playwright-mcp"]
+        "args": [
+          "-y",
+          "--package=@playwright/mcp@latest",
+          "--",
+          "playwright-mcp"
+        ]
       }
     ]
   },
@@ -67,19 +75,46 @@
   "outputArtifacts": [],
   "scripts": {
     "preflight": [
-      { "script": "setLifecycleLabel", "with": { "label": "kody:reviewing-ui", "color": "d93f0b", "description": "kody: UI-reviewing a PR" } },
-      { "script": "reviewFlow" },
-      { "script": "loadLinkedFinding" },
-      { "script": "loadTaskState" },
-      { "script": "loadConventions" },
-      { "script": "discoverQaContext" },
-      { "script": "loadQaContext" },
-      { "script": "resolvePreviewUrl" },
-      { "script": "composePrompt" }
+      {
+        "script": "setLifecycleLabel",
+        "with": {
+          "label": "kody:reviewing-ui",
+          "color": "d93f0b",
+          "description": "kody: UI-reviewing a PR"
+        }
+      },
+      {
+        "script": "reviewFlow"
+      },
+      {
+        "script": "loadLinkedFinding"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "loadConventions"
+      },
+      {
+        "script": "discoverQaContext"
+      },
+      {
+        "script": "loadQaContext"
+      },
+      {
+        "script": "resolvePreviewUrl"
+      },
+      {
+        "script": "composePrompt"
+      }
     ],
     "postflight": [
-      { "script": "postReviewResult" },
-      { "script": "saveTaskState" }
+      {
+        "script": "postReviewResult"
+      },
+      {
+        "script": "saveTaskState"
+      }
     ]
   }
 }
