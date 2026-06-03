@@ -1,26 +1,29 @@
 # Kody Performance Review
 _Cadence: weekly — delivery of owned responsibilities, not subjective quality._
 
-All seven staff members have active duties defined. No delivery evidence exists yet — no duty state files contain a lastRunISO, indicating this is the system's first operational week.
+Two of seven staff produced observable output this week: kody (health-check) and qa (nightly-tests). coo partially delivered through duty-review. The remaining four staff — ceo, cto, tech-writer, ux-designer — show no evidence of active delivery.
 
 ## Scoring Table
 
 | Staff | Owned duties | Delivery | Consistency | Signal | Grade |
-|-------|------------|----------|-----------|-------|--------|-------|
-| ceo    | 1 (1 active)| Unclear  | Unclear     | Unclear| unclear |
-| coo    | 4 (4 active)| Unclear  | Unclear     | Unclear| unclear |
-| cto    | 6 (5 active)| Unclear  | Unclear     | Unclear| unclear |
-| kody   | 7 (2 active)| Unclear  | Unclear     | Unclear| unclear |
-| qa     | 3 (3 active)| Unclear  | Unclear     | Unclear| unclear |
-| tech-writer | 2 (2 active)| Unclear | Unclear    | Unclear| unclear |
-| ux-designer | 1 (1 active)| Unclear | Unclear   | Unclear| unclear |
+|-------|-------------|----------|-------------|--------|-------|
+| ceo    | 1 (1 active)| Low      | Unclear     | Low    | unclear |
+| coo    | 7 (7 active)| Med      | Med         | Med    | weak |
+| cto    | 8 (7 active)| Low      | Low         | Low    | weak |
+| kody   | 7 (2 active)| Med      | Med         | Med    | steady |
+| qa     | 6 (1 active)| Med      | High        | Med    | steady |
+| tech-writer | 2 (2 active)| None  | None        | None   | idle |
+| ux-designer | 2 (2 active)| None  | None        | None   | idle |
 
 ## Notes
 
-- **All staff — unclear:** No duty state files contain a lastRunISO. No reports have been written. No delivery evidence exists to assess — the system appears to be in its first week of operation.
-- **cto** has one disabled duty (architecture-audit), not penalised.
-- **kody** has five disabled duties (coverage-floor, dead-code-sweep, dependency-bump, flaky-test-quarantine, type-debt), not penalised; two active duties (health-check, redispatch).
+- **coo — weak:** duty-review produced a partial report (1 broken duty, 23 pending) but 6 other coo duties (heartbeat 15m, classify 15m, system-audit 30m, task-memory-extractor 30m, cleanup-branches, counter) show no delivery evidence this week. **Effect:** system coordination is unmonitored.
+- **cto — weak:** approval-gate flagged broken by duty-review (no cadence guard, never persisted state). dev-ci-health, pr-health-triage, and security-audit show no run evidence. **Effect:** CI health and security posture unwatched.
+- **kody — steady:** health-check runs daily and produced a report listing 12 stale kody-assigned issues (some 600+ hours old). Output is real but reflects a large backlog of unattended tasks.
+- **qa — steady:** nightly-tests runs ~weekly (Jun 3, May 27, May 18) and posts issues with test results. This week: 11 passed, 14 failed (of 25). Failures are engine-version mismatches (commands not yet implemented), not code bugs. **Effect:** test coverage gap visible but not actionable yet.
+- **tech-writer — idle:** docs-code and docs-readme (both 1d) have produced no reports. No docs drift detected or addressed.
+- **ux-designer — idle:** design-review (7d) and ui-review (oneshot) have produced no output this week.
 
 ## Delta
 
-- Changes since last week: N/A — first report.
+- Changes since last week: All staff shifted from unclear → observed. kody steady, qa steady (both producing real output). coo and cto weak (partial or broken delivery). tech-writer and ux-designer idle. ceo unclear.
