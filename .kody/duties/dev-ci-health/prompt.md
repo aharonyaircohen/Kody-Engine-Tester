@@ -1,10 +1,8 @@
----
-every: 15m
-staff: cto
-mentions: aguyaharonyair
-tools: read_check_runs, ensure_issue, dispatch_workflow, ensure_comment
-disabled: false
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # Dev CI health
 
