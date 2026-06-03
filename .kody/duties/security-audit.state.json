@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "awaiting-result",
+  "data": {
+    "lastRunISO": "2026-06-03T10:47:00Z",
+    "nextEligibleISO": "2026-06-04T06:47:00Z",
+    "openIssue": 3585,
+    "lastFiredAt": "2026-06-03T05:40:15.969Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 30782
+  },
+  "done": false
+}
