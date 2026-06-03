@@ -1,5 +1,6 @@
 {
   "name": "feature",
+  "staff": "engineer",
   "role": "primitive",
   "describe": "Implement a feature / refactor issue end-to-end in ONE session: research → plan → build → test → verify, then branch, commit, open PR. Single-session — no multi-stage orchestration.",
   "inputs": [
@@ -36,7 +37,9 @@
       "Glob",
       "mcp__kody-verify"
     ],
-    "hooks": ["block-git"],
+    "hooks": [
+      "block-git"
+    ],
     "skills": [],
     "commands": [],
     "subagents": [],
@@ -60,7 +63,9 @@
   },
   "scripts": {
     "preflight": [
-      { "script": "runFlow" }
+      {
+        "script": "runFlow"
+      }
     ],
     "postflight": []
   },
