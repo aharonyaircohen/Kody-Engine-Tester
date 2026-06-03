@@ -1,23 +1,23 @@
 {
   "version": 1,
-  "rev": 1,
+  "rev": 2,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-03T05:26:27Z",
-    "nextEligibleISO": "2026-06-10T05:26:27Z",
-    "cycle": 1,
+    "lastRunISO": "2026-06-03T11:44:41Z",
+    "nextEligibleISO": "2026-06-10T11:44:41Z",
+    "cycle": 2,
     "lastGrades": {
       "ceo": "unclear",
-      "coo": "unclear",
-      "cto": "unclear",
-      "kody": "unclear",
-      "qa": "unclear",
-      "tech-writer": "unclear",
-      "ux-designer": "unclear"
+      "coo": "weak",
+      "cto": "weak",
+      "kody": "steady",
+      "qa": "steady",
+      "tech-writer": "idle",
+      "ux-designer": "idle"
     },
-    "lastFiredAt": "2026-06-03T05:26:36.840Z",
+    "lastFiredAt": "2026-06-03T11:44:46.896Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 151115
+    "lastDurationMs": 333285
   },
   "done": false
 }
