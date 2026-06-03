@@ -1,14 +1,15 @@
 {
   "version": 1,
-  "rev": 2,
+  "rev": 3,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-03T11:39:54Z",
-    "nextEligibleISO": "2026-06-03T17:39:54Z",
+    "lastRunISO": "2026-06-03T19:17:36Z",
+    "nextEligibleISO": "2026-06-04T01:17:36Z",
     "cycle": 1,
     "reviewed": [
       "approval-gate",
-      "architecture-audit"
+      "architecture-audit",
+      "coverage-floor"
     ],
     "verdicts": {
       "approval-gate": {
@@ -18,11 +19,15 @@
       "architecture-audit": {
         "verdict": "broken",
         "note": "script missing; state path nonexistent; allowed-commands contradicts procedure"
+      },
+      "coverage-floor": {
+        "verdict": "broken",
+        "note": "disabled; script .kody/scripts/coverage-floor-tick.py does not exist"
       }
     },
-    "lastFiredAt": "2026-06-03T19:10:45.920Z",
+    "lastFiredAt": "2026-06-03T19:17:44.789Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 152098
+    "lastDurationMs": 357256
   },
   "done": false
 }
