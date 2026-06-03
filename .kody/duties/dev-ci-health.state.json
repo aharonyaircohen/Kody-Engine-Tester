@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "rev": 10,
+  "rev": 11,
   "cursor": "idle",
   "data": {
     "ciShaAtFiring": "c5ccb17c14ece1e586c9bc4b4b52b0e04b899077",
     "ciStateAtFiring": "GREEN",
     "fixAlreadyInFlight": false,
-    "lastFiredAt": "2026-06-03T10:03:07.470Z",
+    "lastFiredAt": "2026-06-03T10:24:02.598Z",
     "lastOutcome": "completed",
     "trackingIssue": 3559,
-    "lastDurationMs": 21183
+    "lastDurationMs": 13969
   },
   "done": false
 }
