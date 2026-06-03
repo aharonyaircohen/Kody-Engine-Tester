@@ -1,5 +1,6 @@
 {
   "name": "review",
+  "staff": "cto",
   "role": "primitive",
   "phase": "reviewing",
   "describe": "Read-only structured review of an open PR. Posts one comment, never commits.",
@@ -26,10 +27,17 @@
       "Bash",
       "Agent"
     ],
-    "hooks": ["block-write"],
+    "hooks": [
+      "block-write"
+    ],
     "skills": [],
     "commands": [],
-    "subagents": ["review-security", "review-correctness", "review-style", "review-architecture"],
+    "subagents": [
+      "review-security",
+      "review-correctness",
+      "review-style",
+      "review-architecture"
+    ],
     "plugins": [],
     "mcpServers": []
   },
