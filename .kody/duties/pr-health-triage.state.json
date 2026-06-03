@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "rev": 6,
+  "rev": 7,
   "cursor": "idle",
   "data": {
-    "lastFiredAt": "2026-06-03T15:20:49.734Z",
+    "lastFiredAt": "2026-06-03T15:22:22.432Z",
     "lastOutcome": "completed",
     "note": "pr-health-triage-tick.py not found in .kody/scripts/ — script missing, cannot execute tick as specified. Available scripts: task-memory-extractor-tick.py, job-gap-scan-tick.py",
-    "lastDurationMs": 9582
+    "lastDurationMs": 17046
   },
   "done": false
 }
