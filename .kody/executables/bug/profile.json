@@ -1,6 +1,5 @@
 {
   "name": "bug",
-  "staff": "engineer",
   "role": "primitive",
   "describe": "Fix a bug / enhancement issue end-to-end in ONE session: reproduce with a failing test → research → plan → fix → verify, then branch, commit, open PR. Single-session — no multi-stage orchestration.",
   "inputs": [

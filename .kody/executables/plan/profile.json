@@ -1,6 +1,5 @@
 {
   "name": "plan",
-  "staff": "cto",
   "role": "primitive",
   "describe": "Research an issue and produce a concrete implementation plan as a comment. Read-only — no branches, no commits.",
   "inputs": [

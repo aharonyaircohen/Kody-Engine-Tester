@@ -1,6 +1,5 @@
 {
   "name": "nightly-tests",
-  "staff": "qa",
   "role": "watch",
   "describe": "Nightly end-to-end smoke suite for the Kody engine. Iterates over cases.json, runs each command, asserts outcome, writes a results report, and opens or updates a tracking issue.",
   "kind": "scheduled",
