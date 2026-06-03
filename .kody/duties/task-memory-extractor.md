@@ -1,10 +1,7 @@
 ---
 every: 30m
-staff: kody
-disabled: true
+staff: coo
 ---
-
-# task-memory-extractor
 
 # task-memory-extractor
 
