@@ -1,7 +1,8 @@
----
-staff: cto
-every: 1d
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # Security Audit
 
@@ -56,3 +57,10 @@ Daily **security posture sweep** — three layers, delegated to a Kody executabl
 - `data.openIssue`: number of the currently-open tracking issue (or null)
 - `data.nextEligibleISO`: UTC ISO timestamp this job will next be eligible to act, computed from the cadence guard above. **Always emit this, every tick.** For this job: `data.lastRunISO + 20h`. Surfaced as "next run" on the dashboard.
 - `done`: always `false`
+
+## Emit your next state (required)
+Where the steps above say to *emit state*, output it as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON, e.g.:
+
+```kody-job-next-state
+{"cursor": "awaiting-result", "data": {"openIssue": 123, "lastRunISO": "2026-06-03T00:00:00Z"}, "done": false}
+```
