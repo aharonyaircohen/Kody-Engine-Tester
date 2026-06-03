@@ -1,19 +1,15 @@
 {
   "version": 1,
-  "rev": 6,
+  "rev": 7,
   "cursor": "idle",
   "data": {
-    "ciShaAtFiring": "5737447b92e5655f611bbf4d9bd061721f4c7894",
-    "ciStateAtFiring": "RED",
-    "dispatchedAt": "2026-06-01T07:15:00.000Z",
-    "failingChecksAtFiring": [
-      "red"
-    ],
-    "fixAlreadyInFlight": true,
-    "lastFiredAt": "2026-06-01T07:46:48.609Z",
+    "ciShaAtFiring": "c5ccb17c14ece1e586c9bc4b4b52b0e04b899077",
+    "ciStateAtFiring": "GREEN",
+    "fixAlreadyInFlight": false,
+    "lastFiredAt": "2026-06-03T05:27:33.375Z",
     "lastOutcome": "completed",
     "trackingIssue": 3559,
-    "lastDurationMs": 35831
+    "lastDurationMs": 15475
   },
   "done": false
 }
