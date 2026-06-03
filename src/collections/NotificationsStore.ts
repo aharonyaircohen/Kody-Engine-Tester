@@ -1,3 +1,10 @@
+/**
+ * @ai-summary
+ * In-memory notification store with category filtering, quiet-hours suppression, and expiry.
+ *
+ * **Gotcha:** Notifications are lost on restart. Migrate to the `Notifications` Payload
+ * collection for persistence.
+ */
 export type NotificationType = 'info' | 'success' | 'warning' | 'error'
 
 export type NotificationCategory = 'system' | 'task' | 'social'

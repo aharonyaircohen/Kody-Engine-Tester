@@ -1,5 +1,12 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * Read-public record of student quiz attempts with answers, scores, and pass/fail state.
+ *
+ * **Trap:** `access.read: () => true` makes all attempts visible to unauthenticated users.
+ * Ensure student consent or anonymization before using this data externally.
+ */
 export const QuizAttempts: CollectionConfig = {
   slug: 'quiz-attempts',
   admin: {

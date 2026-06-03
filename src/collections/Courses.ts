@@ -1,5 +1,12 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * Course definition with instructor ownership, weighted grade components, and enrollment caps.
+ *
+ * **Trap:** `quizWeight` + `assignmentWeight` default to 40/60 but are not validated to sum
+ * to 100 — a misconfigured course will silently produce incorrect final grades.
+ */
 export const Courses: CollectionConfig = {
   slug: 'courses',
   admin: {

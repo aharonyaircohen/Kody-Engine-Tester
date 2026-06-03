@@ -1,6 +1,14 @@
 // Mock enrollment store for LMS course enrollment checks.
 // Replace with a real Payload/DB-backed collection when Enrollments is implemented.
 
+/**
+ * @ai-summary
+ * In-memory mock enrollment store — process-local, resets on restart, not DB-backed.
+ *
+ * **Gotcha:** `isEnrolled` is the only query this store supports; there is no way to
+ * retrieve enrollment metadata (status, completed lessons) without replacing it with the
+ * actual `Enrollments` Payload collection.
+ */
 export interface Enrollment {
   userId: string
   courseId: string

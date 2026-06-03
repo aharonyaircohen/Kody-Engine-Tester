@@ -1,3 +1,12 @@
+/**
+ * @ai-summary
+ * In-memory threaded discussion store with pinning and resolve toggles — no Payload persistence.
+ *
+ * **Gotcha:** Posts are held in a `Map` scoped to the process; lost on restart.
+ * `RichTextContent` is a minimal tree shape used by the frontend lexical editor — it is
+ * not validated against the Payload richText schema. Migrate to a Payload-backed
+ * collection once the discussions feature is wired to the DB.
+ */
 export interface RichTextContent {
   root: {
     children: Array<{

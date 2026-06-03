@@ -1,3 +1,11 @@
+/**
+ * @ai-summary
+ * In-memory task/kanban store — no Payload persistence; resets on server restart.
+ *
+ * **Gotcha:** `reorderInColumn` updates a single task's `order` field but does not
+ * reindex sibling tasks, so gaps and collisions can accumulate. Migrate to a
+ * Payload-backed collection for production use.
+ */
 export type TaskStatus = 'todo' | 'in-progress' | 'done'
 export type TaskPriority = 'low' | 'medium' | 'high'
 
