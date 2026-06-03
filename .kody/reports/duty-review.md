@@ -6,7 +6,7 @@ Cycle 1 — 0 healthy, 0 warn, 1 broken of 25 duties.
 | Duty | Staff | Cadence | Verdict | Note |
 |------|-------|---------|---------|------|
 | approval-gate | cto | 15m | broken | no cadence guard in procedure; never persisted state |
-| architecture-audit | - | - | pending | not yet reviewed |
+| architecture-audit | cto | 7d (disabled) | broken | script missing; state path nonexistent; allowed-commands contradicts procedure |
 | ceo-performance-review | ceo | - | pending | not yet reviewed |
 | cleanup-branches | - | - | pending | not yet reviewed |
 | clear-empty-goals | - | - | pending | not yet reviewed |
@@ -29,4 +29,4 @@ Cycle 1 — 0 healthy, 0 warn, 1 broken of 25 duties.
 | security-audit | - | - | pending | not yet reviewed |
 | system-audit | - | - | pending | not yet reviewed |
 | task-memory-extractor | - | - | pending | not yet reviewed |
-| type-debt | - | - | pending | not yet reviewed |
+| type-debt | - | - | pending | not yet reviewed
