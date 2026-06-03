@@ -1,8 +1,8 @@
----
-disabled: false
-staff: coo
-every: 30m
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # System Audit
 
@@ -169,3 +169,6 @@ than its interval (default `every: 30m`).
 - `data.lastFindingCount`: total violations found in the most recent
   scan (0 on a clean tick).
 - `done`: always `false` — this duty is evergreen.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

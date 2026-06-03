@@ -1,8 +1,8 @@
----
-every: 15m
-staff: cto
-mentions: aguyaharonyair
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # PR health
 
@@ -249,3 +249,6 @@ prune entries for PRs no longer in the open list.
   "done": false
 }
 ```
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

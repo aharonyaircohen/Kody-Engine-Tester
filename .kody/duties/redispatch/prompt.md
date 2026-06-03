@@ -1,8 +1,8 @@
----
-disabled: false
-staff: kody
-every: 30m
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # redispatch
 
@@ -52,3 +52,6 @@ If the script exits non-zero, surface its stderr and emit a state block with `cu
 `data.perIssue` is a map of issue number → `{ lastResumedAt: ISO, lastResumedHistoryTimestamp: ISO, attemptsToday: number, stuck: boolean }`.
 
 `data.dryRunLog` is an array (FIFO, capped at 50) of `{ issueNumber, action, reason, plannedAt }` entries, populated only while dry-run mode is enabled.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

@@ -1,8 +1,8 @@
----
-every: 30m
-staff: qa
-mentions: aguyaharonyair
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # QA Fix Verification
 
@@ -156,3 +156,6 @@ Approve re-opens work on the existing PR branch with the concern as feedback.
 - `data.inflightSinceISO`: ISO timestamp of the dispatch (for the 90-min stall).
 - `data.nextEligibleISO`: always emit — surfaced as "next run" on the dashboard.
 - `done`: always `false` — QA is evergreen.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

@@ -1,8 +1,8 @@
----
-every: 1d
-staff: qa
-mentions: aguyaharonyair
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # QA Sweep
 
@@ -105,3 +105,6 @@ itself; it's gated behind your approval.
 - `data.nextEligibleISO`: always emit — `data.lastRunISO + 24h`. Surfaced as
   "next run" on the dashboard.
 - `done`: always `false` — QA is evergreen.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

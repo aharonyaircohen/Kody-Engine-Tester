@@ -1,7 +1,8 @@
----
-every: 7d
-staff: ux-designer
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # Design Review
 
@@ -56,3 +57,6 @@ Scope of the delegated sweep:
 - `data.openIssue`: number of the currently-open tracking issue (or null)
 - `data.nextEligibleISO`: UTC ISO timestamp this job will next be eligible to act, computed from the cadence guard above. **Always emit this, every tick.** For this job: `data.lastRunISO + 6d`. Surfaced as "next run" on the dashboard.
 - `done`: always `false`
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

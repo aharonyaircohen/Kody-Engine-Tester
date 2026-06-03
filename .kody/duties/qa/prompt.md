@@ -1,8 +1,8 @@
----
-every: 30m
-staff: qa
-mentions: aguyaharonyair
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # QA Changelog Verification
 
@@ -140,3 +140,6 @@ The **changelog markers are the state** — no separate ledger.
   authoritative.
 - `data.nextEligibleISO`: always emit — surfaced as "next run" on the dashboard.
 - `done`: always `false` — QA is evergreen.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

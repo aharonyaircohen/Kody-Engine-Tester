@@ -1,9 +1,8 @@
----
-every: 1d
-staff: tech-writer
-mentions: aguyaharonyair
-disabled: false
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # Docs Drift — feature READMEs
 
@@ -131,3 +130,6 @@ verb.
   PRs. Authoritative anti-re-scan guard. Set to "now" on the first ever run.
 - `data.nextEligibleISO`: always emit — surfaced as "next run" on the dashboard.
 - `done`: always `false` — doc maintenance is evergreen.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

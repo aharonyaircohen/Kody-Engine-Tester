@@ -1,8 +1,3 @@
----
-every: 30m
-staff: coo
----
-
 # task-memory-extractor
 
 ## Job

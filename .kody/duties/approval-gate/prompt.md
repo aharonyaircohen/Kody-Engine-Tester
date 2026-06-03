@@ -1,8 +1,8 @@
----
-every: 15m
-staff: cto
-mentions: aguyaharonyair
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # Approval Gate
 
@@ -197,3 +197,6 @@ Carry forward prior `data.prs`, mutate what you acted on, prune closed PRs.
   "done": false
 }
 ```
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

@@ -1,8 +1,8 @@
----
-every: manual
-staff: coo
-mentions: aguyaharonyair
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # clean up branches
 
@@ -27,3 +27,6 @@ This job is **manual** by default — trigger it from the Jobs page ("Run now").
 ## State shape
 
 `data.lastSweep` is `{ ranAt: ISO, deleted: string[], skipped: number }` for the most recent run — informational only; branch eligibility is recomputed fresh each tick from live issue/PR state.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

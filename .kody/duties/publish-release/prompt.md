@@ -1,7 +1,8 @@
----
-every: manual
-staff: cto
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # publish a release
 
@@ -25,3 +26,6 @@ This job is **manual** — it never fires on a tick. Trigger it from the Jobs pa
 ## State shape
 
 `data.lastRelease` is `{ date: string, issueNumber: number, triggeredAt: ISO }` for the most recent release this job kicked off — used only to guard against double-triggering on the same day.
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.

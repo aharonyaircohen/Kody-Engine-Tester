@@ -1,7 +1,8 @@
----
-staff: ceo
-mentions: aguyaharonyair
----
+## Current persisted state
+
+```
+{{jobStateJson}}
+```
 
 # job-gap-scan
 
@@ -82,3 +83,6 @@ this file. Schema:
   }
 }
 ```
+
+## Emit your next state (required when the steps above mention state)
+Output your next state as the LAST thing you write, as a fenced block labeled exactly `kody-job-next-state` containing JSON like `{"cursor":"<state>","data":{...},"done":false}`. Omit it only if nothing changed.
