@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "rev": 2,
+  "rev": 3,
   "cursor": "counted",
   "data": {
-    "count": 2,
-    "lastFiredAt": "2026-06-03T11:01:39.089Z",
+    "count": 3,
+    "lastFiredAt": "2026-06-03T11:03:29.388Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 7593
+    "lastDurationMs": 4252
   },
   "done": false
 }
