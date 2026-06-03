@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "reported",
+  "data": {
+    "cycle": 1,
+    "lastRunISO": "2026-06-03T05:33:30Z",
+    "nextEligibleISO": "2026-06-03T11:33:30Z",
+    "reviewed": [
+      "approval-gate"
+    ],
+    "verdicts": {
+      "approval-gate": {
+        "note": "no cadence guard in procedure; never persisted state",
+        "verdict": "broken"
+      }
+    },
+    "lastFiredAt": "2026-06-03T05:33:42.854Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 107016
+  },
+  "done": false
+}
