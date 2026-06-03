@@ -6,7 +6,7 @@
     "ciShaAtFiring": "c5ccb17c14ece1e586c9bc4b4b52b0e04b899077",
     "ciStateAtFiring": "GREEN",
     "fixAlreadyInFlight": false,
-    "lastFiredAt": "2026-06-03T11:33:05.922Z",
+    "lastFiredAt": "2026-06-03T15:20:49.734Z",
     "lastOutcome": "completed",
     "trackingIssue": 3559,
     "lastDurationMs": 11788
