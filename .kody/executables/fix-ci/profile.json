@@ -1,5 +1,6 @@
 {
   "name": "fix-ci",
+  "staff": "engineer",
   "role": "primitive",
   "describe": "Fix a failing CI workflow on an existing PR.",
   "inputs": [
@@ -36,7 +37,9 @@
       "Glob",
       "mcp__kody-verify"
     ],
-    "hooks": ["block-git"],
+    "hooks": [
+      "block-git"
+    ],
     "skills": [],
     "commands": [],
     "subagents": [],
@@ -57,7 +60,9 @@
   },
   "scripts": {
     "preflight": [
-      { "script": "fixCiFlow" }
+      {
+        "script": "fixCiFlow"
+      }
     ],
     "postflight": []
   },
