@@ -1,5 +1,6 @@
 {
   "name": "research",
+  "staff": "cto",
   "role": "primitive",
   "describe": "Research an issue: understand the ask, map relevant repo context, and surface clarifying questions + gaps. Read-only — no branches, no commits, no prescribed next steps.",
   "inputs": [
@@ -25,16 +26,25 @@
       "Agent",
       "mcp__playwright"
     ],
-    "hooks": ["block-write"],
+    "hooks": [
+      "block-write"
+    ],
     "skills": [],
     "commands": [],
-    "subagents": ["research-scout"],
+    "subagents": [
+      "research-scout"
+    ],
     "plugins": [],
     "mcpServers": [
       {
         "name": "playwright",
         "command": "npx",
-        "args": ["-y", "--package=@playwright/mcp@latest", "--", "playwright-mcp"]
+        "args": [
+          "-y",
+          "--package=@playwright/mcp@latest",
+          "--",
+          "playwright-mcp"
+        ]
       }
     ]
   },
