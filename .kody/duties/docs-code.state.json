@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "flagged",
+  "data": {
+    "lastRunISO": "2026-06-03T05:30:07Z",
+    "nextEligibleISO": "2026-06-04T05:30:07Z",
+    "flaggedFolder": "src/collections/",
+    "issueNumber": 3582,
+    "lastFiredAt": "2026-06-03T05:30:18.290Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 155557
+  },
+  "done": false
+}
