@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "reported",
+  "data": {
+    "lastRunISO": "2026-06-03T05:26:27Z",
+    "nextEligibleISO": "2026-06-10T05:26:27Z",
+    "cycle": 1,
+    "lastGrades": {
+      "ceo": "unclear",
+      "coo": "unclear",
+      "cto": "unclear",
+      "kody": "unclear",
+      "qa": "unclear",
+      "tech-writer": "unclear",
+      "ux-designer": "unclear"
+    },
+    "lastFiredAt": "2026-06-03T05:26:36.840Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 151115
+  },
+  "done": false
+}
