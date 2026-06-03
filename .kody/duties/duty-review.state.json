@@ -1,23 +1,28 @@
 {
   "version": 1,
-  "rev": 1,
+  "rev": 2,
   "cursor": "reported",
   "data": {
+    "lastRunISO": "2026-06-03T11:39:54Z",
+    "nextEligibleISO": "2026-06-03T17:39:54Z",
     "cycle": 1,
-    "lastRunISO": "2026-06-03T05:33:30Z",
-    "nextEligibleISO": "2026-06-03T11:33:30Z",
     "reviewed": [
-      "approval-gate"
+      "approval-gate",
+      "architecture-audit"
     ],
     "verdicts": {
       "approval-gate": {
-        "note": "no cadence guard in procedure; never persisted state",
-        "verdict": "broken"
+        "verdict": "broken",
+        "note": "no cadence guard in procedure; never persisted state"
+      },
+      "architecture-audit": {
+        "verdict": "broken",
+        "note": "script missing; state path nonexistent; allowed-commands contradicts procedure"
       }
     },
-    "lastFiredAt": "2026-06-03T05:33:42.854Z",
+    "lastFiredAt": "2026-06-03T11:42:05.561Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 107016
+    "lastDurationMs": 152098
   },
   "done": false
 }
