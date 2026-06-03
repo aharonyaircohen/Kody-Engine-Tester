@@ -3,7 +3,7 @@
   "rev": 5,
   "cursor": "redispatch-error-missing-script-20260603T090000",
   "data": {
-    "lastFiredAt": "2026-06-03T15:24:29.274Z",
+    "lastFiredAt": "2026-06-03T19:10:45.920Z",
     "lastOutcome": "completed",
     "lastDurationMs": 27101,
     "lastError": "Script .kody/scripts/redispatch-tick.py not found"
