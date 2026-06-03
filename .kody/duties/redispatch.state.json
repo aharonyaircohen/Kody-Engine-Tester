@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "redispatch-error-missing-script-20260603T000000",
+  "data": {
+    "lastFiredAt": "2026-06-03T05:39:35.682Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 37175
+  },
+  "done": false
+}
