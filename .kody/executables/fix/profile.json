@@ -1,5 +1,6 @@
 {
   "name": "fix",
+  "staff": "engineer",
   "role": "primitive",
   "describe": "Apply review feedback to an existing PR branch.",
   "inputs": [
@@ -38,8 +39,12 @@
       "mcp__playwright",
       "mcp__kody-verify"
     ],
-    "hooks": ["block-git"],
-    "skills": ["systematic-debugging"],
+    "hooks": [
+      "block-git"
+    ],
+    "skills": [
+      "systematic-debugging"
+    ],
     "commands": [],
     "subagents": [],
     "plugins": [],
@@ -47,7 +52,12 @@
       {
         "name": "playwright",
         "command": "npx",
-        "args": ["-y", "--package=@playwright/mcp@latest", "--", "playwright-mcp"]
+        "args": [
+          "-y",
+          "--package=@playwright/mcp@latest",
+          "--",
+          "playwright-mcp"
+        ]
       }
     ]
   },
@@ -75,10 +85,14 @@
   },
   "scripts": {
     "preflight": [
-      { "script": "fixFlow" }
+      {
+        "script": "fixFlow"
+      }
     ],
     "postflight": [
-      { "script": "requireFeedbackActions" }
+      {
+        "script": "requireFeedbackActions"
+      }
     ]
   },
   "output": {
