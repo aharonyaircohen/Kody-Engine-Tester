@@ -187,8 +187,11 @@ export function createRequestLogger(config: RequestLoggerConfig = {}): RequestLo
   function middleware(request: NextRequest): NextResponse {
     const path = request.nextUrl.pathname
 
+    // Normalize path for exclude check: remove trailing slash unless root
+    const normalizedPath = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path
+
     // Skip excluded paths
-    if (excludePaths.has(path)) {
+    if (excludePaths.has(normalizedPath)) {
       return NextResponse.next()
     }
 
