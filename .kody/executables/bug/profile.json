@@ -1,5 +1,6 @@
 {
   "name": "bug",
+  "staff": "engineer",
   "role": "primitive",
   "describe": "Fix a bug / enhancement issue end-to-end in ONE session: reproduce with a failing test → research → plan → fix → verify, then branch, commit, open PR. Single-session — no multi-stage orchestration.",
   "inputs": [
@@ -36,8 +37,12 @@
       "Glob",
       "mcp__kody-verify"
     ],
-    "hooks": ["block-git"],
-    "skills": ["systematic-debugging"],
+    "hooks": [
+      "block-git"
+    ],
+    "skills": [
+      "systematic-debugging"
+    ],
     "commands": [],
     "subagents": [],
     "plugins": [],
@@ -60,7 +65,9 @@
   },
   "scripts": {
     "preflight": [
-      { "script": "runFlow" }
+      {
+        "script": "runFlow"
+      }
     ],
     "postflight": []
   },
