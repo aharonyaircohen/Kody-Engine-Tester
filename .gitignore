@@ -57,6 +57,8 @@ node_modules/
 .kody/*
 !.kody/executables/
 !.kody/executables/**
+!.kody/duties/
+!.kody/duties/**
 !.kody/missions/
 !.kody/missions/**
 !.kody/vault/
