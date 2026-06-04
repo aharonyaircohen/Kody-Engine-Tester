@@ -2,6 +2,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextRequest } from 'next/server'
 import { withAuth } from '@/auth/withAuth'
+import { GradingEngine } from '@/services/grading-engine'
 
 export const GET = withAuth(
   async (
@@ -27,28 +28,12 @@ export const GET = withAuth(
     }
 
     const payload = await getPayload({ config: configPromise })
+    const engine = new GradingEngine({ payload })
 
-    const attempts = await payload.find({
-      collection: 'quiz-attempts' as any,
-      where: {
-        user: { equals: user.id },
-        quiz: { equals: id },
-      },
-      sort: '-completedAt',
-      limit: 100,
-    })
+    const { attempts, total } = await engine.getQuizAttempts(String(user.id), id)
 
     return new Response(
-      JSON.stringify({
-        attempts: attempts.docs.map((doc: any) => ({
-          id: doc.id,
-          score: doc.score,
-          passed: doc.passed,
-          answers: doc.answers,
-          completedAt: doc.completedAt,
-        })),
-        total: attempts.totalDocs,
-      }),
+      JSON.stringify({ attempts, total }),
       {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
