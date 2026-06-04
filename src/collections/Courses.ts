@@ -1,3 +1,8 @@
+/**
+ * @ai-summary The top-level course entity: title, description, instructor, status, difficulty, and grade weights (quizWeight/assignmentWeight).
+ * @ai-summary Slugs are auto-generated from the title on create/change via a beforeChange hook.
+ * @ai-summary Access control is role-based (instructor/admin) and enforces that instructors can only update their own courses.
+ */
 import type { CollectionConfig } from 'payload'
 
 export const Courses: CollectionConfig = {
