@@ -1,13 +1,13 @@
 # Kody Duty Review
 _Rolling 6h cycle — one duty deep-reviewed per tick._
 
-Cycle 1 — 0 healthy, 0 warn, 2 broken of 30 duties.
+Cycle 1 — 1 healthy, 0 warn, 3 broken of 39 duties.
 
 | Duty | Staff | Cadence | Verdict | Note |
 |------|-------|---------|---------|------|
 | approval-gate | cto | 15m | broken | no cadence guard in procedure; never persisted state |
 | architecture-audit | kody | 7d (disabled) | broken | script missing; state path nonexistent; allowed-commands contradicts procedure |
-| bug | kody | - | pending | not yet reviewed |
+| bug | kody | - | healthy | passes every check; event-driven issue-triggered duty, design is sound |
 | ceo-performance-review | ceo | - | pending | not yet reviewed |
 | chore | kody | - | pending | not yet reviewed |
 | classify | coo | - | pending | not yet reviewed |
