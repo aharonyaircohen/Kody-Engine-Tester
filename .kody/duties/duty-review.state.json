@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "rev": 4,
+  "rev": 5,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-04T05:14:53Z",
-    "nextEligibleISO": "2026-06-04T11:14:53Z",
+    "lastRunISO": "2026-06-04T12:27:26Z",
+    "nextEligibleISO": "2026-06-04T18:27:26Z",
     "cycle": 1,
     "reviewed": [
       "approval-gate",
       "architecture-audit",
       "coverage-floor",
-      "bug"
+      "bug",
+      "ceo-performance-review"
     ],
     "verdicts": {
       "approval-gate": {
@@ -28,11 +29,15 @@
       "bug": {
         "verdict": "healthy",
         "note": "passes every check; event-driven issue-triggered duty, design is sound"
+      },
+      "ceo-performance-review": {
+        "verdict": "broken",
+        "note": "state file never written; 404 on both .kody/duties and .kody/jobs paths despite procedure defining state contract"
       }
     },
-    "lastFiredAt": "2026-06-04T12:22:01.431Z",
+    "lastFiredAt": "2026-06-04T12:27:34.582Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 278195
+    "lastDurationMs": 163334
   },
   "done": false
 }
