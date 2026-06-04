@@ -35,7 +35,7 @@
         "note": "state file never written; 404 on both .kody/duties and .kody/jobs paths despite procedure defining state contract"
       }
     },
-    "lastFiredAt": "2026-06-04T12:27:34.582Z",
+    "lastFiredAt": "2026-06-04T18:31:01.920Z",
     "lastOutcome": "completed",
     "lastDurationMs": 163334
   },
