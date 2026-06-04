@@ -104,6 +104,6 @@ jobs:
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: npx -y -p @kody-ade/kody-engine@latest kody-engine
+        run: npx -y -p @kody-ade/kody-engine@next kody-engine
 
 
