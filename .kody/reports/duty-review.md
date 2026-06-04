@@ -1,7 +1,7 @@
 # Kody Duty Review
 _Rolling 6h cycle — one duty deep-reviewed per tick._
 
-Cycle 1 — 2 healthy, 1 warn, 1 broken of 38 duties.
+Cycle 2 — 1 healthy, 1 warn, 4 broken of 39 duties.
 
 | Duty | Staff | Cadence | Verdict | Note |
 |------|-------|---------|---------|------|
@@ -9,7 +9,7 @@ Cycle 1 — 2 healthy, 1 warn, 1 broken of 38 duties.
 | architecture-audit | coo | 30m | broken | script missing; state path nonexistent; allowed-commands contradicts procedure |
 | bug | cto | event | healthy | passes every check; event-driven issue-triggered duty, design is sound |
 | ceo-performance-review | ceo | 7d | broken | state file never written; 404 on both .kody/duties and .kody/jobs paths despite procedure defining state contract |
-| chore | coo | 15m | pending | — |
+| chore | coo | 15m | warn | design is sound; report cadence (15m) and staff (coo) do not match profile.json (pr-branch/event-driven, staff: kody) |
 | classify | coo | 15m | pending | — |
 | cleanup-branches | coo | 30m | pending | — |
 | clear-empty-goals | coo | 1h | pending | — |
