@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 14,
+  "rev": 15,
   "cursor": "idle",
   "data": {
-    "lastFiredAt": "2026-06-04T22:13:28.705Z",
+    "lastFiredAt": "2026-06-04T22:15:24.023Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 12765,
+    "lastDurationMs": 15166,
     "note": "no unreleased section in changelog — nothing to QA"
   },
   "done": false
