@@ -26,4 +26,14 @@ describe('GET /api/health', () => {
     expect(body.uptime).toBeGreaterThanOrEqual(0)
     expect(body).toHaveProperty('timestamp', '2026-04-05T12:00:00.000Z')
   })
+
+  it('returns healthy: true in the response body', async () => {
+    const request = new NextRequest('http://localhost/api/health')
+    const response = await GET(request)
+
+    expect(response.status).toBe(200)
+
+    const body = await response.json()
+    expect(body).toHaveProperty('healthy', true)
+  })
 })
