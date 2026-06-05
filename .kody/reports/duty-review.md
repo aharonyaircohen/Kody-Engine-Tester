@@ -1,11 +1,11 @@
 # Kody Duty Review
 _Rolling 6h cycle — one duty deep-reviewed per tick._
 
-Cycle 1 — 2 healthy, 1 warn, 4 broken of 39 duties.
+Cycle 3 — 2 healthy, 1 warn, 4 broken of 39 duties.
 
 | Duty | Staff | Cadence | Verdict | Note |
 |------|-------|---------|---------|------|
-| approval-gate | coo | 30m | broken | no cadence guard in procedure; never persisted state |
+| approval-gate | cto | 15m | broken | step 5 fans out to two comment writes; no internal cadence guard; state never persisted |
 | architecture-audit | cto | 7d (disabled) | broken | script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/; procedure cannot execute |
 | bug | cto | event | healthy | passes every check; event-driven issue-triggered duty, design is sound |
 | ceo-performance-review | ceo | 7d | broken | state file never written; 404 on both .kody/duties and .kody/jobs paths despite procedure defining state contract |
@@ -44,4 +44,4 @@ Cycle 1 — 2 healthy, 1 warn, 4 broken of 39 duties.
 | system-audit | coo | 30m | pending | — |
 | task-memory-extractor | coo | 30m | pending | — |
 | type-debt | cto | 7d | pending | — |
-| ui-review | ux-designer | 1d | pending | — |
+| ui-review | ux-designer | 1d | pending | —
