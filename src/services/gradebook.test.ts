@@ -1,3 +1,10 @@
+/**
+ * @ai-summary
+ * Integration tests for GradebookService — verifies student gradebook (multiple
+ * enrollments), course gradebook (all students), quiz averaging (best attempt
+ * selection), assignment averaging (latest graded submission), progress
+ * calculation, and default weight fallback behavior.
+ */
 import { describe, it, expect, beforeEach } from 'vitest'
 import { GradebookService } from './gradebook'
 

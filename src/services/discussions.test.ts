@@ -1,3 +1,9 @@
+/**
+ * @ai-summary
+ * Integration tests for DiscussionService — verifies thread retrieval (sorted by
+ * pinned first), post creation with enrollment gating, reply depth enforcement,
+ * pin/resolve/unresolve auth (instructor/admin only), and error cases.
+ */
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { DiscussionService } from './discussions'
 import { DiscussionsStore } from '../collections/Discussions'

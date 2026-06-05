@@ -1,3 +1,16 @@
+/**
+ * @ai-summary
+ * Discussion thread management with enrollment-gated posting and instructor-only
+ * pin/resolve controls.
+ *
+ * WHY: Provides a reusable DiscussionService that wraps the DiscussionsStore
+ * with auth and business logic (enrollment checks, role checks) so route handlers
+ * stay thin.
+ *
+ * TRAP: Reply depth is hard-capped at 3 levels by getThreadDepth — posts beyond
+ * that depth are silently excluded from the thread tree. No error is thrown;
+ * callers that need deeper threads must chunk replies server-side.
+ */
 import type { User } from '../auth/user-store'
 import type { RichTextContent } from '../collections/Discussions'
 import { DiscussionsStore } from '../collections/Discussions'
