@@ -1,19 +1,19 @@
 # Kody Duty Review
 _Rolling 6h cycle — one duty deep-reviewed per tick._
 
-Cycle 2 — 1 healthy, 1 warn, 4 broken of 39 duties.
+Cycle 1 — 2 healthy, 1 warn, 4 broken of 39 duties.
 
 | Duty | Staff | Cadence | Verdict | Note |
 |------|-------|---------|---------|------|
 | approval-gate | coo | 30m | broken | no cadence guard in procedure; never persisted state |
-| architecture-audit | coo | 30m | broken | script missing; state path nonexistent; allowed-commands contradicts procedure |
+| architecture-audit | cto | 7d (disabled) | broken | script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/; procedure cannot execute |
 | bug | cto | event | healthy | passes every check; event-driven issue-triggered duty, design is sound |
 | ceo-performance-review | ceo | 7d | broken | state file never written; 404 on both .kody/duties and .kody/jobs paths despite procedure defining state contract |
 | chore | coo | 15m | warn | design is sound; report cadence (15m) and staff (coo) do not match profile.json (pr-branch/event-driven, staff: kody) |
 | classify | coo | 15m | pending | — |
 | cleanup-branches | coo | 30m | pending | — |
 | clear-empty-goals | coo | 1h | pending | — |
-| coverage-floor | cto | 1h | broken | disabled; script path .kody/scripts/coverage-floor-tick.py does not exist |
+| coverage-floor | cto | 1h (disabled) | broken | disabled; script path .kody/scripts/coverage-floor-tick.py does not exist |
 | dead-code-sweep | cto | 7d | pending | — |
 | dependency-bump | cto | 30m | pending | — |
 | design-review | ux-designer | 7d | pending | — |
