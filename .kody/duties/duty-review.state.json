@@ -1,18 +1,19 @@
 {
   "version": 1,
-  "rev": 7,
+  "rev": 8,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-05T01:55:17Z",
-    "nextEligibleISO": "2026-06-05T07:55:17Z",
+    "lastRunISO": "2026-06-05T10:45:57Z",
+    "nextEligibleISO": "2026-06-05T16:45:57Z",
     "cycle": 3,
     "reviewed": [
-      "architecture-audit"
+      "architecture-audit",
+      "approval-gate"
     ],
     "verdicts": {
       "approval-gate": {
         "verdict": "broken",
-        "note": "no cadence guard in procedure; never persisted state"
+        "note": "step 5 fans out to two comment writes; no internal cadence guard; state never persisted"
       },
       "architecture-audit": {
         "verdict": "broken",
@@ -39,9 +40,9 @@
         "note": "healthy — passes every check"
       }
     },
-    "lastFiredAt": "2026-06-05T10:38:23.399Z",
+    "lastFiredAt": "2026-06-05T10:46:08.415Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 277863
+    "lastDurationMs": 210891
   },
   "done": false
 }
