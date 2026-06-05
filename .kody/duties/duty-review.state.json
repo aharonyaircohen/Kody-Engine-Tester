@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "rev": 6,
+  "rev": 7,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-04T18:35:42Z",
-    "nextEligibleISO": "2026-06-05T00:35:42Z",
-    "cycle": 2,
+    "lastRunISO": "2026-06-05T01:55:17Z",
+    "nextEligibleISO": "2026-06-05T07:55:17Z",
+    "cycle": 3,
     "reviewed": [
-      "chore"
+      "architecture-audit"
     ],
     "verdicts": {
       "approval-gate": {
@@ -16,7 +16,7 @@
       },
       "architecture-audit": {
         "verdict": "broken",
-        "note": "script missing; state path nonexistent; allowed-commands contradicts procedure"
+        "note": "script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/; procedure cannot execute"
       },
       "bug": {
         "verdict": "healthy",
@@ -39,9 +39,9 @@
         "note": "healthy — passes every check"
       }
     },
-    "lastFiredAt": "2026-06-05T01:55:17.426Z",
+    "lastFiredAt": "2026-06-05T02:00:41.890Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 243204
+    "lastDurationMs": 277863
   },
   "done": false
 }
