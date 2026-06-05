@@ -3,7 +3,7 @@
   "rev": 22,
   "cursor": "idle",
   "data": {
-    "lastFiredAt": "2026-06-05T18:29:11.189Z",
+    "lastFiredAt": "2026-06-05T20:28:47.819Z",
     "lastOutcome": "completed",
     "lastDurationMs": 19636,
     "note": "no unreleased section in changelog — nothing to QA"
