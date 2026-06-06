@@ -1,16 +1,17 @@
 {
   "version": 1,
-  "rev": 10,
+  "rev": 11,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-06T01:55:11Z",
-    "nextEligibleISO": "2026-06-06T07:55:11Z",
-    "cycle": 3,
+    "lastRunISO": "2026-06-06T08:52:42Z",
+    "nextEligibleISO": "2026-06-06T14:52:42Z",
+    "cycle": 4,
     "reviewed": [
       "architecture-audit",
       "approval-gate",
       "bug",
-      "ceo-performance-review"
+      "ceo-performance-review",
+      "chore"
     ],
     "verdicts": {
       "approval-gate": {
@@ -30,8 +31,8 @@
         "note": "duty.md missing; directory only contains profile.json and prompt.md — cannot execute"
       },
       "chore": {
-        "verdict": "warn",
-        "note": "design is sound; report cadence (15m) and staff (coo) do not match profile.json (pr-branch/event-driven, staff: kody)"
+        "verdict": "healthy",
+        "note": "passes every check; event-driven primitive, design is sound"
       },
       "coverage-floor": {
         "verdict": "broken",
@@ -42,9 +43,9 @@
         "note": "passes every check"
       }
     },
-    "lastFiredAt": "2026-06-06T08:45:39.122Z",
+    "lastFiredAt": "2026-06-06T08:52:57.915Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 193617
+    "lastDurationMs": 195358
   },
   "done": false
 }
