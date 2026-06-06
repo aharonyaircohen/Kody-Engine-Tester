@@ -1,0 +1,1 @@
+{"name":"Nightly bug sweep","describe":"Sweep triaged bugs nightly as the QA engineer","executable":"bug","duty":"coverage-floor","staff":"qa","schedule":"0 2 * * *","every":"1d","flavor":"scheduled","cliArgs":{}}
