@@ -11,7 +11,7 @@ Cycle 4 — 5 healthy, 1 warn, 3 broken of 40 duties.
 | bug | kody | event-driven | healthy | passes every check; event-driven issue-triggered duty, design is sound |
 | ceo-performance-review | kody | event-driven | broken | duty.md missing; directory only contains profile.json and prompt.md — cannot execute |
 | chore | kody | event-driven | healthy | passes every check; event-driven primitive, design is sound |
-| classify | kody | event-driven | pending | |
+| classify | coo | event-driven | healthy | passes every check; event-driven primitive, design is sound |
 | cleanup-branches | kody | event-driven | pending | |
 | clear-empty-goals.md | kody | 7d (disabled) | pending | |
 | coverage-floor.md | kody | 1d (disabled) | broken | disabled; script path .kody/scripts/coverage-floor-tick.py does not exist |
