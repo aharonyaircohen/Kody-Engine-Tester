@@ -1,5 +1,245 @@
 # Changelog
 
+## [1.0.12] - 2026-06-06
+
+### Bug Fixes
+
+- resolve merge conflicts with main
+- resolve merge conflicts with main
+- **kody.yml:** bump to 0.3.77 + checkout dispatch ref for chat sessions
+- **lint:** demote no-this-alias to warn (false positive on JSX)
+- **utils:** bring impls in line with their test specs
+
+### CI/CD
+
+- **kody:** bump engine 0.3.81 -> 0.3.83 (push retry on non-fast-forward)
+
+### Documentation
+
+- add docs/stack-v10.md with step 1 seed (#3341) (#3341)
+- add stack-v9.md seed document (#3326) (#3326)
+
+### Maintenance
+
+- **goals:** reset stacked-test for v12 (0.4.62 leaf-only finalize)
+- **goals:** reset stacked-test for v11 (0.4.57)
+- **goals:** reset stacked-test for v10 (0.4.54)
+- **goals:** reset stacked-test for v9 (0.4.52)
+- **goals:** reset stacked-test for v8
+- **goals:** reset stacked-test for v7
+- **goals:** reset stacked-test for v6 (0.4.49)
+- **goals:** reset stacked-test for v5 (0.4.47)
+- **goals:** reset stacked-test for v4 live test
+- **goals:** reset stacked-test state for live test on 0.4.46
+- **goals:** reset stacked-test state for live test on 0.4.41
+- **kody:** bump engine pin dev → @latest (stacked-PR refactor)
+- **goals:** seed stacked-test goal for live test
+- **missions:** update state for auto-resolve (rev 11)
+- **ci:** bump kody-engine to 0.3.82
+- **ci:** bump kody-engine to 0.3.81 on main (reproduce phase)
+- add buggy factorial util for live bug-container test
+- **ci:** bump kody-engine to 0.3.81 (reproduce phase)
+- **missions:** update state for auto-resolve (rev 10)
+- **missions:** update state for auto-resolve (rev 9)
+- **missions:** update state for auto-resolve (rev 8)
+- bump engine to 0.3.80 (faster runner inbox poll)
+- bump engine to 0.3.79 (chat.ready includes runUrl)
+- bump engine to 0.3.77 (chat.ready commit fix)
+- bump engine to 0.3.76 (chat.exit commit fix)
+- **missions:** update state for auto-resolve (rev 7)
+- **test:** bump to 0.3.72 (title refresh fix)
+
+### Other Changes
+
+- #3361: Stacked test 2 (v12) — append step 2 (#3373)
+- #3351: Stacked test 1 (v11) — seed docs/stack-v11.md (#3354)
+- start interactive session live-1778143072673-t2edbg
+- interactive turn for live-1778142618802-bgrcja
+- interactive turn for live-1778142618802-bgrcja
+- start interactive session live-1778142618802-bgrcja
+- interactive turn for live-1778139661694-hcrwzg
+- interactive turn for live-allow-1778139560
+- interactive turn for live-1778139661694-hcrwzg
+- start interactive session live-1778139661694-hcrwzg
+- interactive turn for live-allow-1778139560
+- stage2
+- interactive turn for live-debug-1778136901
+- interactive turn for live-debug-1778136901
+- debug
+- interactive turn for live-1778135937695-6rb6jt
+- interactive turn for live-direct-1778136115
+- probe
+- interactive turn for live-1778135937695-6rb6jt
+- start interactive session live-1778135937695-6rb6jt
+- interactive turn for live-1778100226720-xs9ah3
+- interactive turn for live-1778100226720-xs9ah3
+- start interactive session live-1778100226720-xs9ah3
+- interactive turn for live-1778098099968-a626i4
+- interactive turn for live-1778098099968-a626i4
+- start interactive session live-1778098099968-a626i4
+- interactive turn for live-1778097296945-gj66y9
+- interactive turn for live-1778097296945-gj66y9
+- start interactive session live-1778097296945-gj66y9
+- interactive turn for live-1778096388947-dtbvb4
+- interactive turn for live-1778096388947-dtbvb4
+- start interactive session live-1778096388947-dtbvb4
+- interactive turn for live-1778095856529-2mkdrv
+- interactive turn for live-1778096069792-yernlm
+- start interactive session live-1778096069792-yernlm
+- interactive turn for live-1778095856529-2mkdrv
+- start interactive session live-1778095856529-2mkdrv
+- interactive turn for live-1778095331106-tu43zx
+- interactive turn for live-1778095331106-tu43zx
+- start interactive session live-1778095331106-tu43zx
+- start interactive session live-1778095296111-kwhz19
+- interactive turn for live-1778094244330-dfwf09
+- start interactive session live-1778094244330-dfwf09
+- interactive turn for live-direct-1778093401
+- interactive turn for live-direct-1778093401
+- test
+- interactive turn for live-direct-1778084198
+- interactive turn for live-direct-1778084198
+- test session
+- interactive turn for live-1778083198074-yh705g
+- interactive turn for live-1778083198074-yh705g
+- start interactive session live-1778083198074-yh705g
+- interactive turn for live-1778082718407-xfqzch
+- interactive turn for live-1778082718407-xfqzch
+- start interactive session live-1778082718407-xfqzch
+- interactive turn for live-1778081816885-wekn9v
+- interactive turn for live-1778081816885-wekn9v
+- start interactive session live-1778081816885-wekn9v
+- interactive turn for interactive-live-1778073503
+- interactive turn for interactive-live-1778073503
+
+### Tests
+
+- remove temporary force-red check (dev-ci-health live test done)
+- temporary force-red check on dev (dev-ci-health dedup live test)
+- follow-up message for interactive-live-1778073503
+- interactive runner live test interactive-live-1778073503
+
+
+## [1.0.12] - 2026-06-06
+
+### Bug Fixes
+
+- resolve merge conflicts with main
+- resolve merge conflicts with main
+- **kody.yml:** bump to 0.3.77 + checkout dispatch ref for chat sessions
+- **lint:** demote no-this-alias to warn (false positive on JSX)
+- **utils:** bring impls in line with their test specs
+
+### CI/CD
+
+- **kody:** bump engine 0.3.81 -> 0.3.83 (push retry on non-fast-forward)
+
+### Documentation
+
+- add docs/stack-v10.md with step 1 seed (#3341) (#3341)
+- add stack-v9.md seed document (#3326) (#3326)
+
+### Maintenance
+
+- **goals:** reset stacked-test for v12 (0.4.62 leaf-only finalize)
+- **goals:** reset stacked-test for v11 (0.4.57)
+- **goals:** reset stacked-test for v10 (0.4.54)
+- **goals:** reset stacked-test for v9 (0.4.52)
+- **goals:** reset stacked-test for v8
+- **goals:** reset stacked-test for v7
+- **goals:** reset stacked-test for v6 (0.4.49)
+- **goals:** reset stacked-test for v5 (0.4.47)
+- **goals:** reset stacked-test for v4 live test
+- **goals:** reset stacked-test state for live test on 0.4.46
+- **goals:** reset stacked-test state for live test on 0.4.41
+- **kody:** bump engine pin dev → @latest (stacked-PR refactor)
+- **goals:** seed stacked-test goal for live test
+- **missions:** update state for auto-resolve (rev 11)
+- **ci:** bump kody-engine to 0.3.82
+- **ci:** bump kody-engine to 0.3.81 on main (reproduce phase)
+- add buggy factorial util for live bug-container test
+- **ci:** bump kody-engine to 0.3.81 (reproduce phase)
+- **missions:** update state for auto-resolve (rev 10)
+- **missions:** update state for auto-resolve (rev 9)
+- **missions:** update state for auto-resolve (rev 8)
+- bump engine to 0.3.80 (faster runner inbox poll)
+- bump engine to 0.3.79 (chat.ready includes runUrl)
+- bump engine to 0.3.77 (chat.ready commit fix)
+- bump engine to 0.3.76 (chat.exit commit fix)
+- **missions:** update state for auto-resolve (rev 7)
+- **test:** bump to 0.3.72 (title refresh fix)
+
+### Other Changes
+
+- #3361: Stacked test 2 (v12) — append step 2 (#3373)
+- #3351: Stacked test 1 (v11) — seed docs/stack-v11.md (#3354)
+- start interactive session live-1778143072673-t2edbg
+- interactive turn for live-1778142618802-bgrcja
+- interactive turn for live-1778142618802-bgrcja
+- start interactive session live-1778142618802-bgrcja
+- interactive turn for live-1778139661694-hcrwzg
+- interactive turn for live-allow-1778139560
+- interactive turn for live-1778139661694-hcrwzg
+- start interactive session live-1778139661694-hcrwzg
+- interactive turn for live-allow-1778139560
+- stage2
+- interactive turn for live-debug-1778136901
+- interactive turn for live-debug-1778136901
+- debug
+- interactive turn for live-1778135937695-6rb6jt
+- interactive turn for live-direct-1778136115
+- probe
+- interactive turn for live-1778135937695-6rb6jt
+- start interactive session live-1778135937695-6rb6jt
+- interactive turn for live-1778100226720-xs9ah3
+- interactive turn for live-1778100226720-xs9ah3
+- start interactive session live-1778100226720-xs9ah3
+- interactive turn for live-1778098099968-a626i4
+- interactive turn for live-1778098099968-a626i4
+- start interactive session live-1778098099968-a626i4
+- interactive turn for live-1778097296945-gj66y9
+- interactive turn for live-1778097296945-gj66y9
+- start interactive session live-1778097296945-gj66y9
+- interactive turn for live-1778096388947-dtbvb4
+- interactive turn for live-1778096388947-dtbvb4
+- start interactive session live-1778096388947-dtbvb4
+- interactive turn for live-1778095856529-2mkdrv
+- interactive turn for live-1778096069792-yernlm
+- start interactive session live-1778096069792-yernlm
+- interactive turn for live-1778095856529-2mkdrv
+- start interactive session live-1778095856529-2mkdrv
+- interactive turn for live-1778095331106-tu43zx
+- interactive turn for live-1778095331106-tu43zx
+- start interactive session live-1778095331106-tu43zx
+- start interactive session live-1778095296111-kwhz19
+- interactive turn for live-1778094244330-dfwf09
+- start interactive session live-1778094244330-dfwf09
+- interactive turn for live-direct-1778093401
+- interactive turn for live-direct-1778093401
+- test
+- interactive turn for live-direct-1778084198
+- interactive turn for live-direct-1778084198
+- test session
+- interactive turn for live-1778083198074-yh705g
+- interactive turn for live-1778083198074-yh705g
+- start interactive session live-1778083198074-yh705g
+- interactive turn for live-1778082718407-xfqzch
+- interactive turn for live-1778082718407-xfqzch
+- start interactive session live-1778082718407-xfqzch
+- interactive turn for live-1778081816885-wekn9v
+- interactive turn for live-1778081816885-wekn9v
+- start interactive session live-1778081816885-wekn9v
+- interactive turn for interactive-live-1778073503
+- interactive turn for interactive-live-1778073503
+
+### Tests
+
+- remove temporary force-red check (dev-ci-health live test done)
+- temporary force-red check on dev (dev-ci-health dedup live test)
+- follow-up message for interactive-live-1778073503
+- interactive runner live test interactive-live-1778073503
+
+
 ## v1.0.11 — 2026-05-05
 
 ### Features
