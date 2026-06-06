@@ -1,17 +1,18 @@
 {
   "version": 1,
-  "rev": 11,
+  "rev": 12,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-06T08:52:42Z",
-    "nextEligibleISO": "2026-06-06T14:52:42Z",
+    "lastRunISO": "2026-06-06T15:49:10Z",
+    "nextEligibleISO": "2026-06-06T21:49:10Z",
     "cycle": 4,
     "reviewed": [
       "architecture-audit",
       "approval-gate",
       "bug",
       "ceo-performance-review",
-      "chore"
+      "chore",
+      "classify"
     ],
     "verdicts": {
       "approval-gate": {
@@ -34,6 +35,10 @@
         "verdict": "healthy",
         "note": "passes every check; event-driven primitive, design is sound"
       },
+      "classify": {
+        "verdict": "healthy",
+        "note": "passes every check; event-driven primitive, design is sound"
+      },
       "coverage-floor": {
         "verdict": "broken",
         "note": "disabled; script path .kody/scripts/coverage-floor-tick.py does not exist"
@@ -43,9 +48,9 @@
         "note": "passes every check"
       }
     },
-    "lastFiredAt": "2026-06-06T15:42:37.840Z",
+    "lastFiredAt": "2026-06-06T15:49:25.856Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 195358
+    "lastDurationMs": 150106
   },
   "done": false
 }
