@@ -9,7 +9,7 @@ Cycle 3 — healthy 2, warn 1, broken 4 of 41 duties.
 | approval-gate | kody | event-driven | broken | step 5 fans out to two comment writes; no internal cadence guard; state never persisted |
 | architecture-audit | kody | 1h | broken | script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/ |
 | bug | kody | event-driven | healthy | passes every check; event-driven issue-triggered duty, design is sound |
-| ceo-performance-review | ceo | 1d | broken | state file never written; 404 on both .kody/duties and .kody/jobs paths despite procedure defining state contract |
+| ceo-performance-review | ceo | 7d | broken | duty.md missing; directory only contains profile.json and prompt.md — cannot execute |
 | chore | kody | 15m | warn | design is sound; report cadence (15m) and staff (coo) do not match profile.json (pr-branch/event-driven, staff: kody) |
 | classify | — | — | pending | not yet reviewed |
 | cleanup-branches | — | — | pending | not yet reviewed |
