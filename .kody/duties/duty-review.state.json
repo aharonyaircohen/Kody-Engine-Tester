@@ -1,15 +1,16 @@
 {
   "version": 1,
-  "rev": 9,
+  "rev": 10,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-05T18:28:04Z",
-    "nextEligibleISO": "2026-06-06T00:28:04Z",
+    "lastRunISO": "2026-06-06T01:55:11Z",
+    "nextEligibleISO": "2026-06-06T07:55:11Z",
     "cycle": 3,
     "reviewed": [
       "architecture-audit",
       "approval-gate",
-      "bug"
+      "bug",
+      "ceo-performance-review"
     ],
     "verdicts": {
       "approval-gate": {
@@ -26,7 +27,7 @@
       },
       "ceo-performance-review": {
         "verdict": "broken",
-        "note": "state file never written; 404 on both .kody/duties and .kody/jobs paths despite procedure defining state contract"
+        "note": "duty.md missing; directory only contains profile.json and prompt.md — cannot execute"
       },
       "chore": {
         "verdict": "warn",
@@ -41,9 +42,9 @@
         "note": "passes every check"
       }
     },
-    "lastFiredAt": "2026-06-06T01:48:02.495Z",
+    "lastFiredAt": "2026-06-06T01:55:29.857Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 158297
+    "lastDurationMs": 193617
   },
   "done": false
 }
