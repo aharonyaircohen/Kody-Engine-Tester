@@ -55,7 +55,7 @@
         "note": "scripted procedure references .kody/scripts/coverage-floor-tick.py which does not exist; no state file ever created; state contract points to .kody/jobs/ not .kody/duties/"
       }
     },
-    "lastFiredAt": "2026-06-07T14:11:42.680Z",
+    "lastFiredAt": "2026-06-07T21:21:49.646Z",
     "lastOutcome": "completed",
     "lastDurationMs": 114855
   },
