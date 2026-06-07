@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 14,
+  "rev": 15,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-07T06:40:45Z",
-    "nextEligibleISO": "2026-06-07T12:40:45Z",
-    "cycle": 5,
+    "lastRunISO": "2026-06-07T14:11:32Z",
+    "nextEligibleISO": "2026-06-07T20:11:32Z",
+    "cycle": 6,
     "reviewed": [
       "architecture-audit",
       "approval-gate",
@@ -14,7 +14,8 @@
       "chore",
       "classify",
       "cleanup-branches",
-      "clear-empty-goals"
+      "clear-empty-goals",
+      "coverage-floor"
     ],
     "verdicts": {
       "approval-gate": {
@@ -48,11 +49,15 @@
       "clear-empty-goals": {
         "verdict": "broken",
         "note": "no procedure; no state; never ticked; jargon goal"
+      },
+      "coverage-floor": {
+        "verdict": "broken",
+        "note": "scripted procedure references .kody/scripts/coverage-floor-tick.py which does not exist; no state file ever created; state contract points to .kody/jobs/ not .kody/duties/"
       }
     },
-    "lastFiredAt": "2026-06-07T14:08:56.420Z",
+    "lastFiredAt": "2026-06-07T14:11:42.680Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 133043
+    "lastDurationMs": 114855
   },
   "done": false
 }
