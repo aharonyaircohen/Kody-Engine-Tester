@@ -1,3 +1,11 @@
+/**
+ * @ai-summary In-memory task store for kanban-style todo tracking used in tests.
+ *
+ * TRAP: no Payload collection backs this store — it exists solely as a test fixture and
+ * dev convenience. There is no persistence layer. Also, `order` is managed manually; moving
+ * a task between columns does not automatically re-order other tasks, so gaps can accumulate
+ * if tasks are deleted or reordered frequently.
+ */
 export type TaskStatus = 'todo' | 'in-progress' | 'done'
 export type TaskPriority = 'low' | 'medium' | 'high'
 

@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary Payload collection for student assignment submissions with rubric-based grading.
+ *
+ * TRAP: `rubricScores` is a read-only array populated by the grading service — instructors
+ * must write scores through the service layer, not directly in the admin panel, or the
+ * read-only guard will silently discard their changes. Also, the `attachments` field
+ * requires the Upload plugin to be enabled.
+ */
 export const Submissions: CollectionConfig = {
   slug: 'submissions',
   admin: {

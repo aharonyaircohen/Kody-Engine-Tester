@@ -1,3 +1,11 @@
+/**
+ * @ai-summary In-memory discussion post store for lesson discussions; no Payload collection backs it yet.
+ *
+ * TRAP: `DiscussionsStore` is a pure in-memory implementation used in services. There is no
+ * `Discussions` Payload collection — attempts to use Payload's find/create operations on a
+ * `discussions` collection will fail at runtime. Seed a real Payload collection before using
+ * this in production.
+ */
 export interface RichTextContent {
   root: {
     children: Array<{

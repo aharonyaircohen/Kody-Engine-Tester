@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary Payload collection for student course enrollments with a unique constraint on (student, course).
+ *
+ * TRAP: the DB-level unique index `[student, course]` is defined as a Payload `indexes` option,
+ * but Payload does NOT enforce uniqueness at the application level — concurrent creates can still
+ * race past the index. Use a `beforeChange` hook with a manual uniqueness check or handle the
+ * duplicate-key error from the DB adapter.
+ */
 export type EnrollmentStatus = 'active' | 'completed' | 'dropped'
 
 export interface EnrollmentFields {
