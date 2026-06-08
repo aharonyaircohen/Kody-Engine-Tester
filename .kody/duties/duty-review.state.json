@@ -1,13 +1,14 @@
 {
   "version": 1,
-  "rev": 18,
+  "rev": 19,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-08T13:55:14Z",
-    "nextEligibleISO": "2026-06-08T19:55:14Z",
+    "lastRunISO": "2026-06-08T21:35:35Z",
+    "nextEligibleISO": "2026-06-09T03:35:35Z",
     "cycle": 7,
     "reviewed": [
-      "approval-gate"
+      "approval-gate",
+      "bug"
     ],
     "verdicts": {
       "architecture-audit": {
@@ -20,7 +21,7 @@
       },
       "bug": {
         "verdict": "healthy",
-        "note": "passes every check; event-driven issue-triggered duty, design is sound"
+        "note": "passes every check; event-driven primitive, design is sound"
       },
       "ceo-performance-review": {
         "verdict": "broken",
@@ -55,9 +56,9 @@
         "note": "script .kody/scripts/dependency-bump-tick.py does not exist; state never created; procedure cannot execute"
       }
     },
-    "lastFiredAt": "2026-06-08T21:29:28.097Z",
+    "lastFiredAt": "2026-06-08T21:35:45.588Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 110767
+    "lastDurationMs": 137844
   },
   "done": false
 }
