@@ -104,8 +104,14 @@ jobs:
           MINIMAX_API_KEY: ${{ secrets.MINIMAX_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SESSION_ID:    ${{ inputs.sessionId }}
+          ISSUE_NUMBER:  ${{ inputs.issue_number }}
           INIT_MESSAGE:  ${{ inputs.message }}
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: npx -y -p @kody-ade/kody-engine@0.4.214-live.2 kody-engine duty-scheduler --duty live-duty-multi-04214
+        run: |
+          if [ -n "$ISSUE_NUMBER" ]; then
+            npx -y -p @kody-ade/kody-engine@0.4.214-live.2 kody-engine task-jobs --issue "$ISSUE_NUMBER"
+          else
+            npx -y -p @kody-ade/kody-engine@0.4.214-live.2 kody-engine duty-scheduler --duty live-duty-multi-04214
+          fi
