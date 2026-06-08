@@ -108,7 +108,4 @@ jobs:
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: |
-          python3 -m pip install "litellm[proxy]"
-          npx -y -p @kody-ade/kody-engine@0.4.214-live.0 kody-engine duty-scheduler
-
+        run: npx -y -p @kody-ade/kody-engine@0.4.214-live.0 kody-engine
