@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "rev": 0,
+  "cursor": "seed",
+  "data": {
+    "lastFiredAt": "2026-06-08T17:55:55.987Z",
+    "lastTaskIssue": 3669,
+    "lastTaskUrl": "https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3669"
+  },
+  "done": false
+}
