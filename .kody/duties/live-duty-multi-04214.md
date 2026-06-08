@@ -1,7 +1,7 @@
 ---
 every: 15m
 staff: kody
-executables: plan-verify, probe-skill
+executables: task-job-pass-a, task-job-pass-b
 ---
 
 # Live Duty Multi 0.4.214
