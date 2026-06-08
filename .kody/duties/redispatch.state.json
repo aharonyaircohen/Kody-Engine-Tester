@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 49,
-  "cursor": "redispatch-tick",
+  "rev": 50,
+  "cursor": "redispatch-error-2026-06-08T05:16:00Z",
   "data": {
-    "lastFiredAt": "2026-06-08T04:46:32.271Z",
+    "lastFiredAt": "2026-06-08T04:57:10.898Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 354636
+    "lastDurationMs": 21673
   },
   "done": false
 }
