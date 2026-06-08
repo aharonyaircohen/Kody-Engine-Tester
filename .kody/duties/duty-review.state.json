@@ -1,32 +1,22 @@
 {
   "version": 1,
-  "rev": 17,
+  "rev": 18,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-08T04:50:49Z",
-    "nextEligibleISO": "2026-06-08T10:50:49Z",
-    "cycle": 6,
+    "lastRunISO": "2026-06-08T13:55:14Z",
+    "nextEligibleISO": "2026-06-08T19:55:14Z",
+    "cycle": 7,
     "reviewed": [
-      "architecture-audit",
-      "approval-gate",
-      "bug",
-      "ceo-performance-review",
-      "chore",
-      "classify",
-      "cleanup-branches",
-      "clear-empty-goals",
-      "coverage-floor",
-      "dead-code-sweep",
-      "dependency-bump"
+      "approval-gate"
     ],
     "verdicts": {
-      "approval-gate": {
-        "verdict": "broken",
-        "note": "step 5 fans out to two comment writes; no internal cadence guard; state never persisted"
-      },
       "architecture-audit": {
         "verdict": "broken",
         "note": "script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/"
+      },
+      "approval-gate": {
+        "verdict": "broken",
+        "note": "step 5 fans out to two comment writes; no internal cadence guard; state never persisted"
       },
       "bug": {
         "verdict": "healthy",
@@ -65,9 +55,9 @@
         "note": "script .kody/scripts/dependency-bump-tick.py does not exist; state never created; procedure cannot execute"
       }
     },
-    "lastFiredAt": "2026-06-08T13:52:42.057Z",
+    "lastFiredAt": "2026-06-08T13:55:26.124Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 196002
+    "lastDurationMs": 110767
   },
   "done": false
 }
