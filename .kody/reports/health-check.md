@@ -1,3 +1,23 @@
+---
+generatedAt: "2026-06-08T14:31:09Z"
+dutySlug: health-check
+findings:
+  - id: stale-running-issues
+    severity: high
+    title: Three running issues are stale beyond the six-hour threshold
+    data:
+      thresholdHours: 6
+      count: 3
+      issues: [3029, 3153, 3175]
+  - id: stale-failed-issues
+    severity: high
+    title: Thirteen failed issues are stale beyond the six-hour threshold
+    data:
+      thresholdHours: 6
+      count: 13
+      newestIssue: 3646
+---
+
 # Kody Health Check
 
 _Threshold: 6h_

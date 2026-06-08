@@ -1,3 +1,30 @@
+---
+generatedAt: "2026-06-08T14:31:09Z"
+dutySlug: ceo-performance-review
+findings:
+  - id: staff-delivery-two-observed
+    severity: medium
+    title: Two of seven staff produced observable output this week
+    data:
+      steadyStaff: [kody, qa]
+      partialStaff: [coo]
+      weakStaff: [cto]
+      idleStaff: [tech-writer, ux-designer]
+      unclearStaff: [ceo]
+  - id: coordination-unmonitored
+    severity: high
+    title: COO coordination remains partly unmonitored
+    data:
+      staff: coo
+      issue: six other COO duties show no delivery evidence this week
+  - id: ci-security-unwatched
+    severity: high
+    title: CTO CI and security duties show weak delivery signal
+    data:
+      staff: cto
+      issue: approval-gate broken; dev-ci-health, pr-health-triage, and security-audit show no run evidence
+---
+
 # Kody Performance Review
 _Cadence: weekly — delivery of owned responsibilities, not subjective quality._
 

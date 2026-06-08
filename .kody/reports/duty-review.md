@@ -1,3 +1,28 @@
+---
+generatedAt: "2026-06-08T04:50:49Z"
+dutySlug: duty-review
+findings:
+  - id: duty-review-cycle-7
+    severity: high
+    title: Ten of eleven reviewed duties are broken
+    data:
+      cycle: 7
+      healthy: 1
+      warn: 0
+      broken: 10
+      reviewed: 11
+  - id: missing-duty-scripts
+    severity: high
+    title: Several duties reference missing scripts or state paths
+    data:
+      examples: [architecture-audit, coverage-floor, dead-code-sweep, dependency-bump]
+  - id: event-duties-healthy
+    severity: low
+    title: Event-driven primitive duties remain healthy
+    data:
+      healthyDuties: [bug, chore, classify]
+---
+
 # Kody Duty Review
 
 _Rolling 6h cycle — one duty deep-reviewed per tick._
