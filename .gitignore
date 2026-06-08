@@ -75,4 +75,6 @@ node_modules/
 !.kody/memory/**
 !.kody/scripts/
 !.kody/scripts/**
+!.kody/reports/
+!.kody/reports/_schema.yaml
 .kody/executables/**/last-run.json
