@@ -60,7 +60,7 @@
         "note": "procedure calls .kody/scripts/dead-code-sweep-tick.py which does not exist; state file never created"
       }
     },
-    "lastFiredAt": "2026-06-07T21:24:28.584Z",
+    "lastFiredAt": "2026-06-08T04:46:32.271Z",
     "lastOutcome": "completed",
     "lastDurationMs": 109826
   },
