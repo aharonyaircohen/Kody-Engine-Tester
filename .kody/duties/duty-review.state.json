@@ -1,15 +1,16 @@
 {
   "version": 1,
-  "rev": 20,
+  "rev": 21,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-09T04:55:27Z",
-    "nextEligibleISO": "2026-06-09T10:55:27Z",
+    "lastRunISO": "2026-06-09T11:57:41Z",
+    "nextEligibleISO": "2026-06-09T17:57:41Z",
     "cycle": 7,
     "reviewed": [
       "approval-gate",
       "bug",
-      "architecture-audit"
+      "architecture-audit",
+      "ceo-performance-review"
     ],
     "verdicts": {
       "approval-gate": {
@@ -26,7 +27,7 @@
       },
       "ceo-performance-review": {
         "verdict": "broken",
-        "note": "duty.md missing; directory only contains profile.json and prompt.md — cannot execute"
+        "note": "no state file ever created; procedure says engine writes .kody/duties/ceo-performance-review.state.json but it does not exist; no commit history for any state file"
       },
       "chore": {
         "verdict": "healthy",
@@ -69,9 +70,9 @@
         "note": "state frozen 9 days; no sweep ran"
       }
     },
-    "lastFiredAt": "2026-06-09T11:47:49.788Z",
+    "lastFiredAt": "2026-06-09T11:57:51.208Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 184204
+    "lastDurationMs": 346250
   },
   "done": false
 }
