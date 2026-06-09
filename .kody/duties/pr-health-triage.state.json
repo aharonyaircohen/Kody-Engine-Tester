@@ -4,7 +4,7 @@
   "cursor": "idle",
   "data": {
     "prs": {},
-    "lastFiredAt": "2026-06-09T04:56:10.742Z",
+    "lastFiredAt": "2026-06-09T08:36:03.252Z",
     "lastOutcome": "completed",
     "lastError": "script missing: .kody/scripts/pr-health-triage-tick.py not found",
     "lastDurationMs": 17577
