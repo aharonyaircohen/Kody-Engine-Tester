@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 61,
-  "cursor": "redispatch-error-2026-06-08T23-32-00Z",
+  "rev": 62,
+  "cursor": "redispatch-error-2026-06-09T20-02-00Z",
   "data": {
-    "lastFiredAt": "2026-06-09T19:49:58.520Z",
+    "lastFiredAt": "2026-06-09T20:02:52.118Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 21973,
+    "lastDurationMs": 25937,
     "perIssue": {},
     "dryRunLog": []
   },
