@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Course module — an ordered grouping of lessons. `ModuleStore` is an in-memory stub;
+ * the `Modules` CollectionConfig is the prod source.
+ *
+ * TRAP: `courseId` is required; passing an empty string to `create` or `update` throws.
+ * The Payload collection does not enforce this invariant — validation lives only in the store.
+ */
 export interface Module {
   id: string
   title: string

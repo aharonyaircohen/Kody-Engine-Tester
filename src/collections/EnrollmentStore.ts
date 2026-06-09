@@ -1,6 +1,12 @@
 // Mock enrollment store for LMS course enrollment checks.
 // Replace with a real Payload/DB-backed collection when Enrollments is implemented.
 
+/**
+ * @ai-summary
+ * In-memory enrollment check stub — keys are `${userId}:${courseId}` strings.
+ * TRAP: Seed data uses hardcoded string IDs (`seed-student-enrolled`, `seed-course-1`)
+ * which will never match real Payload-generated UUIDs. Replace before using in prod.
+ */
 export interface Enrollment {
   userId: string
   courseId: string

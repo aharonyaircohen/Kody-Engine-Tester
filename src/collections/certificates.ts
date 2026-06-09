@@ -1,5 +1,14 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Payload collection for issued course certificates. Companion `CertificatesStore`
+ * issues certificates and calculates final grades from weighted quiz/assignment scores.
+ *
+ * TRAP: `calculateFinalGrade` weights missing quiz or assignment results as 0 — a
+ * course with only quizzes contributes only the quiz average; ensure both types exist
+ * before relying on the weighted average.
+ */
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
   fields: [

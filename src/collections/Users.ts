@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Auth-enabled user collection. Email is the auth identifier (used as title).
+ * `displayName` is auto-computed from firstName + lastName before save.
+ *
+ * TRAP: JWT contains only `role` and `email` by default — `displayName` and other fields
+ * are not included. If access logic relies on `displayName` in the JWT, it will be undefined.
+ */
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
