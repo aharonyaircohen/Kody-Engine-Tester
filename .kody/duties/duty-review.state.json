@@ -1,23 +1,24 @@
 {
   "version": 1,
-  "rev": 19,
+  "rev": 20,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-08T21:35:35Z",
-    "nextEligibleISO": "2026-06-09T03:35:35Z",
+    "lastRunISO": "2026-06-09T04:55:27Z",
+    "nextEligibleISO": "2026-06-09T10:55:27Z",
     "cycle": 7,
     "reviewed": [
       "approval-gate",
-      "bug"
+      "bug",
+      "architecture-audit"
     ],
     "verdicts": {
-      "architecture-audit": {
-        "verdict": "broken",
-        "note": "script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/"
-      },
       "approval-gate": {
         "verdict": "broken",
         "note": "step 5 fans out to two comment writes; no internal cadence guard; state never persisted"
+      },
+      "architecture-audit": {
+        "verdict": "broken",
+        "note": "script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/"
       },
       "bug": {
         "verdict": "healthy",
@@ -54,11 +55,23 @@
       "dependency-bump": {
         "verdict": "broken",
         "note": "script .kody/scripts/dependency-bump-tick.py does not exist; state never created; procedure cannot execute"
+      },
+      "fix": {
+        "verdict": "healthy",
+        "note": "passes every check; event-driven primitive, design is sound"
+      },
+      "fix-ci": {
+        "verdict": "healthy",
+        "note": "passes every check; event-driven primitive, design is sound"
+      },
+      "qa-sweep": {
+        "verdict": "broken",
+        "note": "state frozen 9 days; no sweep ran"
       }
     },
-    "lastFiredAt": "2026-06-09T04:48:26.493Z",
+    "lastFiredAt": "2026-06-09T04:55:43.512Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 137844
+    "lastDurationMs": 184204
   },
   "done": false
 }
