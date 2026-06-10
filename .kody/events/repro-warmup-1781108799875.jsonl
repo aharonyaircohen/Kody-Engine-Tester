@@ -1,0 +1,1 @@
+{"event":"chat.ready","payload":{"sessionId":"repro-warmup-1781108799875","startedAt":"2026-06-10T16:27:43.694Z","idleExitMs":120000,"hardCapMs":300000},"runId":"chat-repro-warmup-1781108799875-ready","emittedAt":"2026-06-10T16:27:43.701Z"}
