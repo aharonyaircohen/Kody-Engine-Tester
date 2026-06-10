@@ -12,7 +12,7 @@ _Rolling 6h cycle — one duty deep-reviewed per tick._
 | ceo-performance-review | ceo | 7d | broken | no state file ever created; procedure says engine writes .kody/duties/ceo-performance-review.state.json but it does not exist; no commit history for any state file |
 | chore | kody | event-driven | healthy | passes every check; event-driven primitive, design is sound |
 | classify | coo | event-driven | healthy | passes every check; event-driven primitive, design is sound |
-| cleanup-branches | coo | manual | broken | one-action-max violated: procedure fans out to N branch deletions per tick; no per-branch gating |
+| cleanup-branches | coo | manual | broken | one-action-max violated: procedure fans out to N branch deletions per tick; no per-branch gating; state file never created; never run |
 | clear-empty-goals | ceo | — | broken | no procedure; no state; never ticked; jargon goal |
 | coverage-floor | cto | 1d | broken | scripted procedure references .kody/scripts/coverage-floor-tick.py which does not exist; no state file ever created; state contract points to .kody/jobs/ not .kody/duties/ |
 | dead-code-sweep | cto | 7d | broken | procedure calls .kody/scripts/dead-code-sweep-tick.py which does not exist; state file never created |
