@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "rev": 23,
+  "rev": 24,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-10T06:08:50Z",
-    "nextEligibleISO": "2026-06-10T12:08:50Z",
+    "lastRunISO": "2026-06-10T14:14:07Z",
+    "nextEligibleISO": "2026-06-10T20:14:07Z",
     "cycle": 7,
     "reviewed": [
       "approval-gate",
@@ -12,7 +12,8 @@
       "architecture-audit",
       "ceo-performance-review",
       "chore",
-      "classify"
+      "classify",
+      "cleanup-branches"
     ],
     "verdicts": {
       "approval-gate": {
@@ -41,7 +42,7 @@
       },
       "cleanup-branches": {
         "verdict": "broken",
-        "note": "one-action-max violated: procedure fans out to N branch deletions per tick; no per-branch gating"
+        "note": "one-action-max violated: procedure fans out to N branch deletions per tick; no per-branch gating; state file never created; never run"
       },
       "clear-empty-goals": {
         "verdict": "broken",
@@ -72,9 +73,9 @@
         "note": "state frozen 9 days; no sweep ran"
       }
     },
-    "lastFiredAt": "2026-06-10T14:04:09.460Z",
+    "lastFiredAt": "2026-06-10T14:14:29.152Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 199126
+    "lastDurationMs": 154126
   },
   "done": false
 }
