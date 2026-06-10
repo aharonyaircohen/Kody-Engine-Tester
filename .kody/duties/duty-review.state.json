@@ -1,17 +1,18 @@
 {
   "version": 1,
-  "rev": 22,
+  "rev": 23,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-09T19:58:16Z",
-    "nextEligibleISO": "2026-06-10T01:58:16Z",
+    "lastRunISO": "2026-06-10T06:08:50Z",
+    "nextEligibleISO": "2026-06-10T12:08:50Z",
     "cycle": 7,
     "reviewed": [
       "approval-gate",
       "bug",
       "architecture-audit",
       "ceo-performance-review",
-      "chore"
+      "chore",
+      "classify"
     ],
     "verdicts": {
       "approval-gate": {
@@ -71,9 +72,9 @@
         "note": "state frozen 9 days; no sweep ran"
       }
     },
-    "lastFiredAt": "2026-06-10T06:08:50.013Z",
+    "lastFiredAt": "2026-06-10T06:16:21.780Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 253173
+    "lastDurationMs": 199126
   },
   "done": false
 }
