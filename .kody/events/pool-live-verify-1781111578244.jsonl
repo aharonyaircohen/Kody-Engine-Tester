@@ -1,1 +1,2 @@
 {"event":"chat.ready","payload":{"sessionId":"pool-live-verify-1781111578244","startedAt":"2026-06-10T17:13:20.221Z","idleExitMs":120000,"hardCapMs":300000},"runId":"chat-pool-live-verify-1781111578244-ready","emittedAt":"2026-06-10T17:13:20.222Z"}
+{"event":"chat.exit","payload":{"sessionId":"pool-live-verify-1781111578244","reason":"idle-timeout","turnsCompleted":0,"endedAt":"2026-06-10T17:15:25.065Z"},"runId":"chat-pool-live-verify-1781111578244-exit","emittedAt":"2026-06-10T17:15:25.065Z"}
