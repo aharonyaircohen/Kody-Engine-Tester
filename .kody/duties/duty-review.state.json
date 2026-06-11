@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 26,
+  "rev": 27,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-11T04:55:59Z",
-    "nextEligibleISO": "2026-06-11T10:55:59Z",
-    "cycle": 7,
+    "lastRunISO": "2026-06-11T13:06:58Z",
+    "nextEligibleISO": "2026-06-11T19:06:58Z",
+    "cycle": 8,
     "reviewed": [
       "approval-gate",
       "bug",
@@ -15,7 +15,8 @@
       "classify",
       "cleanup-branches",
       "clear-empty-goals",
-      "coverage-floor"
+      "coverage-floor",
+      "dead-code-sweep"
     ],
     "verdicts": {
       "approval-gate": {
@@ -56,7 +57,7 @@
       },
       "dead-code-sweep": {
         "verdict": "broken",
-        "note": "procedure calls .kody/scripts/dead-code-sweep-tick.py which does not exist; state file never created"
+        "note": "script does not exist (.kody/scripts/dead-code-sweep-tick.py); one-action-max violated: state write + commit + push in one tick; no kody-job-next-state block in procedure body"
       },
       "dependency-bump": {
         "verdict": "broken",
@@ -83,9 +84,9 @@
         "note": "procedure calls .kody/scripts/type-debt-tick.py which does not exist; state file never created"
       }
     },
-    "lastFiredAt": "2026-06-11T13:03:27.032Z",
+    "lastFiredAt": "2026-06-11T13:07:10.769Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 115380
+    "lastDurationMs": 169575
   },
   "done": false
 }
