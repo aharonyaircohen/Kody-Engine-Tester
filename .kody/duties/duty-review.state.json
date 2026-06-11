@@ -84,7 +84,7 @@
         "note": "procedure calls .kody/scripts/type-debt-tick.py which does not exist; state file never created"
       }
     },
-    "lastFiredAt": "2026-06-11T13:07:10.769Z",
+    "lastFiredAt": "2026-06-11T19:47:30.793Z",
     "lastOutcome": "completed",
     "lastDurationMs": 169575
   },
