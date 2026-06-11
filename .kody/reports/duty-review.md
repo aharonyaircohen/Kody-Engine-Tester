@@ -15,7 +15,7 @@ Cycle 8 — 5 healthy, 9 warn, 26 broken of 40 duties.
 | cleanup-branches | | | broken | one-action-max violated: procedure fans out to N branch deletions per tick; no per-branch gating; state file never created; never run |
 | clear-empty-goals | | | broken | no procedure; no state; never ticked; jargon goal ("gods") |
 | coverage-floor | kody | 1d (disabled) | broken | procedure calls missing script (.kody/scripts/coverage-floor-tick.py); state never created; cadence inconsistency (every: 1d vs nextEligibleISO: +20h in state contract) |
-| dead-code-sweep | | | broken | procedure calls .kody/scripts/dead-code-sweep-tick.py which does not exist; state file never created |
+| dead-code-sweep | kody | 30d (disabled) | broken | script does not exist (.kody/scripts/dead-code-sweep-tick.py); one-action-max violated: state write + commit + push in one tick; no kody-job-next-state block in procedure body |
 | dependency-bump | | | broken | script .kody/scripts/dependency-bump-tick.py does not exist; state never created; procedure cannot execute |
 | design-review | | | — | pending |
 | dev-ci-health | | | — | pending |
