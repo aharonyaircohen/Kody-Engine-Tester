@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "rev": 75,
+  "rev": 76,
   "cursor": "idle",
   "data": {
     "gap": "script missing: .kody/scripts/pr-health-triage-tick.py",
-    "lastFiredAt": "2026-06-11T04:53:38.903Z",
+    "lastFiredAt": "2026-06-11T04:56:36.258Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 15997,
+    "lastDurationMs": 14879,
     "prs": {}
   },
   "done": false
