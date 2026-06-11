@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "rev": 75,
+  "rev": 76,
   "cursor": "tick-2026-06-11T00-04-23Z",
   "data": {
-    "lastFiredAt": "2026-06-11T17:03:07.257Z",
+    "lastFiredAt": "2026-06-11T17:09:50.869Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 51167,
+    "lastDurationMs": 19846,
     "perIssue": {},
     "dryRunLog": []
   },
