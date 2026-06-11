@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "rev": 27,
+  "rev": 28,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-11T13:06:58Z",
-    "nextEligibleISO": "2026-06-11T19:06:58Z",
+    "lastRunISO": "2026-06-11T19:53:27Z",
+    "nextEligibleISO": "2026-06-12T01:53:27Z",
     "cycle": 8,
     "reviewed": [
       "approval-gate",
@@ -16,7 +16,8 @@
       "cleanup-branches",
       "clear-empty-goals",
       "coverage-floor",
-      "dead-code-sweep"
+      "dead-code-sweep",
+      "dependency-bump"
     ],
     "verdicts": {
       "approval-gate": {
@@ -84,9 +85,9 @@
         "note": "procedure calls .kody/scripts/type-debt-tick.py which does not exist; state file never created"
       }
     },
-    "lastFiredAt": "2026-06-11T19:47:30.793Z",
+    "lastFiredAt": "2026-06-11T19:53:40.056Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 169575
+    "lastDurationMs": 112720
   },
   "done": false
 }
