@@ -31,4 +31,4 @@ Runs the [`nightly-tests`](../architecture/nightly-tests.md) executable on a cro
 npx -y -p @kody-ade/kody-engine@latest kody nightly-tests [--filter "<regex>"]
 ```
 
-`npx` is used directly (not `kody run`) because the intent is to exercise the **published** package, not a local copy.
+`npx` is used directly (not `kody-engine run`) because the intent is to exercise the **published** package, not a local copy.

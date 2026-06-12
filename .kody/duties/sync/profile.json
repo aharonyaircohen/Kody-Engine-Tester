@@ -1,0 +1,6 @@
+{
+  "name": "sync",
+  "action": "sync",
+  "executable": "sync",
+  "describe": "Synchronize PR or task state."
+}

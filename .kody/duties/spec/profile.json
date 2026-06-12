@@ -1,0 +1,6 @@
+{
+  "name": "spec",
+  "action": "spec",
+  "executable": "spec",
+  "describe": "Drive a spec or design-doc issue to a plan artifact."
+}

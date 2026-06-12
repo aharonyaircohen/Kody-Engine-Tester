@@ -1,0 +1,6 @@
+{
+  "name": "run",
+  "action": "run",
+  "executable": "run",
+  "describe": "Implement a standard issue through the built-in run flow."
+}

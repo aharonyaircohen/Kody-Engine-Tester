@@ -1,0 +1,6 @@
+{
+  "name": "ui-review",
+  "action": "ui-review",
+  "executable": "ui-review",
+  "describe": "Perform a UI and UX review of an open PR."
+}

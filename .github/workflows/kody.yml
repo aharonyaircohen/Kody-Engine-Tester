@@ -47,8 +47,8 @@ on:
         description: "Dashboard event ingest URL with inline ?token=... (chat mode)"
         type: string
         default: ""
-      executable:
-        description: "Stage to run for issue_number (default: run). goal-tick sets classify."
+      duty:
+        description: "Duty action to run for issue_number (default: run). goal-tick sets classify."
         type: string
         default: ""
       base:
@@ -60,8 +60,8 @@ on:
   pull_request:
     types: [closed]
   schedule:
-    # Wakes every 30 minutes; kody fans out to whichever scheduled executables
-    # (job-scheduler, memorize, watch-stale-prs, …) match this tick.
+    # Wakes every 15 minutes; kody fans out to whichever scheduled duties
+    # match this tick.
     #
     # `memorize` writes to `.kody/vault/` and opens a daily PR. If your
     # `.gitignore` ignores `.kody/*`, add `!.kody/vault/` and `!.kody/vault/**`
@@ -104,5 +104,4 @@ jobs:
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: npx -y -p @kody-ade/kody-engine@0.4.219 kody-engine
-
+        run: npx -y -p @kody-ade/kody-engine@0.4.222 kody-engine

@@ -33,7 +33,7 @@ Executables are Kody's versioned action definitions: JSON profiles (`.kody/execu
 
 ## Invoking an executable
 
-- **In-repo:** `kody run --executable <name> [--arg value ...]`
-- **Published engine:** `npx -y -p @kody-ade/kody-engine@latest kody <name> [args]`
+- **In-repo:** `kody-engine <duty> [--arg value ...]`
+- **Published engine:** `npx -y -p @kody-ade/kody-engine@latest kody-engine <name> [args]`
 
 The `nightly-tests` executable uses the latter pattern to exercise the published package.

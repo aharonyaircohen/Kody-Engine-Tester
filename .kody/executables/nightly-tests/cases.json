@@ -4,196 +4,377 @@
   "smoke": [
     {
       "name": "cli.help.no-args",
-      "describe": "Engine prints CLI usage when invoked with `kody help`.",
-      "command": ["kody", "help"],
+      "describe": "Engine prints CLI usage when invoked with `kody-engine help`.",
+      "command": [
+        "kody-engine",
+        "help"
+      ],
       "expectExitCode": 0,
-      "expectStdoutContains": ["Usage:", "kody run", "kody fix", "kody chat"]
+      "expectStdoutContains": [
+        "Usage:",
+        "kody-engine run",
+        "kody-engine fix",
+        "kody-engine chat"
+      ]
     },
     {
       "name": "cli.help.flag",
       "describe": "Engine prints CLI usage for --help flag.",
-      "command": ["kody", "--help"],
+      "command": [
+        "kody-engine",
+        "--help"
+      ],
       "expectExitCode": 0,
-      "expectStdoutContains": ["Usage:"]
+      "expectStdoutContains": [
+        "Usage:"
+      ]
     },
     {
       "name": "cli.version.command",
-      "describe": "`kody version` prints `kody <semver>` and exits 0.",
-      "command": ["kody", "version"],
+      "describe": "`kody-engine version` prints `kody-engine <semver>` and exits 0.",
+      "command": [
+        "kody-engine",
+        "version"
+      ],
       "expectExitCode": 0,
       "expectStdoutMatches": "kody \\d+\\.\\d+\\.\\d+"
     },
     {
       "name": "cli.version.flag",
-      "describe": "`kody --version` prints `kody <semver>` and exits 0.",
-      "command": ["kody", "--version"],
+      "describe": "`kody-engine --version` prints `kody-engine <semver>` and exits 0.",
+      "command": [
+        "kody-engine",
+        "--version"
+      ],
       "expectExitCode": 0,
       "expectStdoutMatches": "kody \\d+\\.\\d+\\.\\d+"
     },
     {
       "name": "cli.unknown.command",
       "describe": "Unknown top-level command exits 64 (engine's invalid-args code) with a clear error.",
-      "command": ["kody", "this-executable-does-not-exist-xyz"],
+      "command": [
+        "kody-engine",
+        "this-executable-does-not-exist-xyz"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["unknown"]
+      "expectStderrContains": [
+        "unknown"
+      ]
     },
     {
       "name": "cmd.run.missing-flag",
-      "describe": "`kody run` without --issue surfaces a clear validation error and exits 64 (validates the run profile loads).",
-      "command": ["kody", "run"],
+      "describe": "`kody-engine run` without --issue surfaces a clear validation error and exits 64 (validates the run profile loads).",
+      "command": [
+        "kody-engine",
+        "run"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["issue"]
+      "expectStderrContains": [
+        "issue"
+      ]
     },
     {
       "name": "cmd.fix.missing-flag",
-      "describe": "`kody fix` without --pr surfaces a clear validation error (validates the fix profile loads).",
-      "command": ["kody", "fix"],
+      "describe": "`kody-engine fix` without --pr surfaces a clear validation error (validates the fix profile loads).",
+      "command": [
+        "kody-engine",
+        "fix"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["pr"]
+      "expectStderrContains": [
+        "pr"
+      ]
     },
     {
       "name": "cmd.fix-ci.missing-flag",
-      "describe": "`kody fix-ci` without --pr surfaces a clear validation error (validates the fix-ci profile loads).",
-      "command": ["kody", "fix-ci"],
+      "describe": "`kody-engine fix-ci` without --pr surfaces a clear validation error (validates the fix-ci profile loads).",
+      "command": [
+        "kody-engine",
+        "fix-ci"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["pr"]
+      "expectStderrContains": [
+        "pr"
+      ]
     },
     {
       "name": "cmd.resolve.missing-flag",
-      "describe": "`kody resolve` without --pr surfaces a clear validation error (validates the resolve profile loads).",
-      "command": ["kody", "resolve"],
+      "describe": "`kody-engine resolve` without --pr surfaces a clear validation error (validates the resolve profile loads).",
+      "command": [
+        "kody-engine",
+        "resolve"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["pr"]
+      "expectStderrContains": [
+        "pr"
+      ]
     },
     {
       "name": "cmd.review.missing-flag",
-      "describe": "`kody review` without --pr surfaces a clear validation error (validates the review profile loads).",
-      "command": ["kody", "review"],
+      "describe": "`kody-engine review` without --pr surfaces a clear validation error (validates the review profile loads).",
+      "command": [
+        "kody-engine",
+        "review"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["pr"]
+      "expectStderrContains": [
+        "pr"
+      ]
     },
     {
       "name": "cmd.plan.missing-flag",
-      "describe": "`kody plan` without --issue surfaces a clear validation error (validates the plan profile loads).",
-      "command": ["kody", "plan"],
+      "describe": "`kody-engine plan` without --issue surfaces a clear validation error (validates the plan profile loads).",
+      "command": [
+        "kody-engine",
+        "plan"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["issue"]
+      "expectStderrContains": [
+        "issue"
+      ]
     },
     {
       "name": "cmd.classify.missing-flag",
-      "describe": "`kody classify` without --issue surfaces a clear validation error (validates the classify profile loads).",
-      "command": ["kody", "classify"],
+      "describe": "`kody-engine classify` without --issue surfaces a clear validation error (validates the classify profile loads).",
+      "command": [
+        "kody-engine",
+        "classify"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["issue"]
+      "expectStderrContains": [
+        "issue"
+      ]
     },
     {
       "name": "cmd.spec.missing-flag",
-      "describe": "`kody spec` without --issue surfaces a clear validation error (validates the spec profile loads).",
-      "command": ["kody", "spec"],
+      "describe": "`kody-engine spec` without --issue surfaces a clear validation error (validates the spec profile loads).",
+      "command": [
+        "kody-engine",
+        "spec"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["issue"]
+      "expectStderrContains": [
+        "issue"
+      ]
     },
     {
       "name": "cmd.research.missing-flag",
-      "describe": "`kody research` without --issue surfaces a clear validation error (validates the research profile loads).",
-      "command": ["kody", "research"],
+      "describe": "`kody-engine research` without --issue surfaces a clear validation error (validates the research profile loads).",
+      "command": [
+        "kody-engine",
+        "research"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["issue"]
+      "expectStderrContains": [
+        "issue"
+      ]
     },
     {
       "name": "cmd.sync.profile-loads",
-      "describe": "`kody sync` profile loads. Acceptable outcome: any defined exit (0 success / 1 sync error / 64 invalid args) — but NOT a profile-load crash.",
-      "command": ["kody", "sync"],
-      "expectExitCodeIn": [0, 1, 2, 64],
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "describe": "`kody-engine sync` profile loads. Acceptable outcome: any defined exit (0 success / 1 sync error / 64 invalid args) — but NOT a profile-load crash.",
+      "command": [
+        "kody-engine",
+        "sync"
+      ],
+      "expectExitCodeIn": [
+        0,
+        1,
+        2,
+        64
+      ],
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
       "name": "cmd.init.profile-loads",
-      "describe": "`kody init` runs the init profile end-to-end on a synthetic empty cwd. Should exit cleanly without a profile-load crash.",
-      "command": ["bash", "-lc", "tmp=$(mktemp -d) && cd $tmp && kody init || true"],
+      "describe": "`kody-engine init` runs the init profile end-to-end on a synthetic empty cwd. Should exit cleanly without a profile-load crash.",
+      "command": [
+        "bash",
+        "-lc",
+        "tmp=$(mktemp -d) && cd $tmp && kody-engine init || true"
+      ],
       "expectExitCode": 0,
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
-      "name": "cmd.watch-stale-prs.profile-loads",
-      "describe": "`kody watch-stale-prs` profile loads and starts (one-shot scan). Acceptable outcome: any exit code so long as it isn't a profile-load crash.",
-      "command": ["kody", "watch-stale-prs"],
-      "expectExitCodeIn": [0, 1, 2, 64],
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "name": "cmd.duty-scheduler.profile-loads",
+      "describe": "`kody-engine duty-scheduler` profile loads and scans folder duties. It may skip disabled/no-staff duties, but must not crash on profile load.",
+      "command": [
+        "kody-engine",
+        "duty-scheduler"
+      ],
+      "expectExitCodeIn": [
+        0,
+        1,
+        2,
+        64
+      ],
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
-      "name": "cmd.mission-scheduler.profile-loads",
-      "describe": "`kody mission-scheduler` runs one tick (no missions in this repo's .kody/missions = no-op). Validates the new file-based dispatcher is wired.",
-      "command": ["kody", "mission-scheduler"],
+      "name": "cmd.duty-action-smoke.profile-loads",
+      "describe": "`kody-engine duty-action-smoke` verifies a public duty action lowers to its private implementation executable.",
+      "command": [
+        "kody-engine",
+        "duty-action-smoke"
+      ],
       "expectExitCode": 0,
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
-      "name": "cmd.mission-tick.missing-flag",
-      "describe": "`kody mission-tick` without --mission exits 64 with a clear validation error.",
-      "command": ["kody", "mission-tick"],
+      "name": "cmd.duty-tick.missing-flag",
+      "describe": "`kody-engine duty-tick` without --duty exits 64 with a clear validation error.",
+      "command": [
+        "kody-engine",
+        "duty-tick"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["mission"]
+      "expectStderrContains": [
+        "duty"
+      ]
     },
     {
       "name": "cmd.bug.profile-loads",
-      "describe": "`kody bug` profile loads (it requires --issue, so missing-flag = exit 64).",
-      "command": ["kody", "bug"],
-      "expectExitCodeIn": [0, 1, 2, 64],
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "describe": "`kody-engine bug` profile loads (it requires --issue, so missing-flag = exit 64).",
+      "command": [
+        "kody-engine",
+        "bug"
+      ],
+      "expectExitCodeIn": [
+        0,
+        1,
+        2,
+        64
+      ],
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
       "name": "cmd.feature.profile-loads",
-      "describe": "`kody feature` profile loads.",
-      "command": ["kody", "feature"],
-      "expectExitCodeIn": [0, 1, 2, 64],
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "describe": "`kody-engine feature` profile loads.",
+      "command": [
+        "kody-engine",
+        "feature"
+      ],
+      "expectExitCodeIn": [
+        0,
+        1,
+        2,
+        64
+      ],
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
       "name": "cmd.chore.profile-loads",
-      "describe": "`kody chore` profile loads.",
-      "command": ["kody", "chore"],
-      "expectExitCodeIn": [0, 1, 2, 64],
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "describe": "`kody-engine chore` profile loads.",
+      "command": [
+        "kody-engine",
+        "chore"
+      ],
+      "expectExitCodeIn": [
+        0,
+        1,
+        2,
+        64
+      ],
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
       "name": "cmd.ui-review.missing-flag",
-      "describe": "`kody ui-review` without --pr exits 64 with a validation error (profile loads).",
-      "command": ["kody", "ui-review"],
+      "describe": "`kody-engine ui-review` without --pr exits 64 with a validation error (profile loads).",
+      "command": [
+        "kody-engine",
+        "ui-review"
+      ],
       "expectExitCode": 64,
-      "expectStderrContains": ["pr"]
+      "expectStderrContains": [
+        "pr"
+      ]
     },
     {
       "name": "cmd.release.profile-loads",
-      "describe": "`kody release` profile loads. Release workflows are typically only invoked from CI; we just verify it doesn't crash on profile load.",
-      "command": ["kody", "release"],
-      "expectExitCodeIn": [0, 1, 2, 64],
-      "expectStderrLacks": ["Cannot find module", "TypeError", "is not a function"]
+      "describe": "`kody-engine release` profile loads. Release workflows are typically only invoked from CI; we just verify it doesn't crash on profile load.",
+      "command": [
+        "kody-engine",
+        "release"
+      ],
+      "expectExitCodeIn": [
+        0,
+        1,
+        2,
+        64
+      ],
+      "expectStderrLacks": [
+        "Cannot find module",
+        "TypeError",
+        "is not a function"
+      ]
     },
     {
       "name": "config.validates",
       "describe": "Engine accepts the consumer repo's kody.config.json without complaint when running a no-op-style invocation.",
-      "command": ["kody", "version"],
+      "command": [
+        "kody-engine",
+        "version"
+      ],
       "expectExitCode": 0,
-      "expectStderrLacks": ["kody.config.json", "schema validation"]
+      "expectStderrLacks": [
+        "kody.config.json",
+        "schema validation"
+      ]
     }
   ],
   "live": [
     {
       "name": "run.add-utility",
-      "describe": "kody run on a pure-utility additive issue (add greet(name) helper + colocated unit test). Bulletproof fixture — no Next.js, no DB, no network — so the test only fails if the engine is broken.",
+      "describe": "kody-engine run on a pure-utility additive issue (add greet(name) helper + colocated unit test). Bulletproof fixture — no Next.js, no DB, no network — so the test only fails if the engine is broken.",
       "fixture": {
         "type": "issue",
         "title": "[nightly-test {{ts}}] add greet utility",
         "body": "Add a pure utility function in `src/utils/greet.ts`:\n\n```ts\nexport function greet(name: string): string {\n  return 'hello, ' + name\n}\n```\n\nAdd a colocated unit test in `src/utils/greet.test.ts` using vitest that imports `greet` from `./greet` and asserts `greet('world') === 'hello, world'`. The test MUST be a plain unit test — no fetch, no HTTP, no database, no Payload, no Next.js handler invocation. Vitest will auto-discover it via the existing `src/**/*.test.ts` include pattern.\n\nNo new dependencies. Keep changes minimal.",
-        "labels": ["kody:nightly-test"]
+        "labels": [
+          "kody:nightly-test"
+        ]
       },
-      "command": ["kody", "run", "--issue", "{{issueNumber}}"],
+      "command": [
+        "kody-engine",
+        "run",
+        "--issue",
+        "{{issueNumber}}"
+      ],
       "timeoutSec": 600,
       "expect": {
         "exitCode": 0,
         "prOpened": true,
-        "prBodyContains": ["greet"],
+        "prBodyContains": [
+          "greet"
+        ],
         "issueCommentMatches": "RUN_COMPLETED"
       },
       "teardown": {
@@ -208,12 +389,23 @@
         "type": "issue",
         "title": "[nightly-test {{ts}}] feature flow: add greet utility",
         "body": "Add a pure utility function in `src/utils/greet.ts`:\n\n```ts\nexport function greet(name: string): string {\n  return 'hello, ' + name\n}\n```\n\nAdd a colocated unit test in `src/utils/greet.test.ts` using vitest that imports `greet` from `./greet` and asserts `greet('world') === 'hello, world'`. Plain unit test — no fetch, no HTTP, no database, no Payload, no Next.js handler invocation. Vitest auto-discovers it via the existing `src/**/*.test.ts` include pattern.\n\nNo new dependencies. Keep changes minimal.",
-        "labels": ["kody:nightly-test", "kody:feature"]
+        "labels": [
+          "kody:nightly-test",
+          "kody:feature"
+        ]
       },
-      "command": ["kody", "feature", "--issue", "{{issueNumber}}"],
+      "command": [
+        "kody-engine",
+        "feature",
+        "--issue",
+        "{{issueNumber}}"
+      ],
       "timeoutSec": 30,
       "pollFor": {
-        "issueLabelOneOf": ["kody:done", "kody:failed"],
+        "issueLabelOneOf": [
+          "kody:done",
+          "kody:failed"
+        ],
         "intervalSec": 60,
         "maxAttempts": 60
       },
@@ -221,7 +413,9 @@
         "exitCode": 0,
         "terminalLabel": "kody:done",
         "prOpened": true,
-        "prBodyContains": ["greet"]
+        "prBodyContains": [
+          "greet"
+        ]
       },
       "teardown": {
         "closePrAndDeleteBranch": true,

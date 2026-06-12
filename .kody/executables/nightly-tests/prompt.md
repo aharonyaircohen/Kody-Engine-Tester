@@ -116,7 +116,7 @@ trap cleanup EXIT
 
 # Invoke kody (rendered command with {{issueNumber}} → $issueN)
 out=$(mktemp); err=$(mktemp)
-timeout <timeoutSec> npx -y -p <engineSpec> kody run --issue "$issueN" >"$out" 2>"$err"
+timeout <timeoutSec> npx -y -p <engineSpec> kody-engine run --issue "$issueN" >"$out" 2>"$err"
 exit_code=$?
 echo "EXIT_CODE=$exit_code"
 
@@ -167,7 +167,7 @@ trap cleanup EXIT
 
 # Invoke kody (rendered command with {{prNumber}} → $prN)
 out=$(mktemp); err=$(mktemp)
-timeout <timeoutSec> npx -y -p <engineSpec> kody review --pr "$prN" >"$out" 2>"$err"
+timeout <timeoutSec> npx -y -p <engineSpec> kody-engine review --pr "$prN" >"$out" 2>"$err"
 exit_code=$?
 echo "EXIT_CODE=$exit_code"
 '
@@ -176,7 +176,7 @@ echo "EXIT_CODE=$exit_code"
 ### Live-case asserts (detail)
 
 - `expect.exitCode`: integer match — exit code of the kody invocation itself (the bootstrap call for orchestrator flows).
-- `expect.prOpened: true`: kody posts a comment on the fixture issue with a `https://github.com/.../pull/<N>` URL when it opens a PR. Find it via `gh issue view <issueN> --json comments --jq '[.comments[].body | scan("https://github\\.com/[^/ ]+/[^/ ]+/pull/([0-9]+)") | .[0]][0] // ""'`. If the URL is non-empty, capture the PR number from its trailing `/<N>`. Only meaningful for issue-fixture cases where kody is expected to OPEN a new PR (e.g. `kody run`, `kody feature`).
+- `expect.prOpened: true`: kody posts a comment on the fixture issue with a `https://github.com/.../pull/<N>` URL when it opens a PR. Find it via `gh issue view <issueN> --json comments --jq '[.comments[].body | scan("https://github\\.com/[^/ ]+/[^/ ]+/pull/([0-9]+)") | .[0]][0] // ""'`. If the URL is non-empty, capture the PR number from its trailing `/<N>`. Only meaningful for issue-fixture cases where kody is expected to OPEN a new PR (e.g. `kody-engine run`, `kody-engine feature`).
 - `expect.prBodyContains: [...]`: PR body (the kody-opened one) contains every substring (case-insensitive).
 - `expect.issueCommentMatches: "regex"`: `gh issue view <issueN> --json comments --jq '.comments[].body'` matches the regex on at least one comment.
 - `expect.prCommentMatches: "regex"`: `gh pr view <prN> --json comments --jq '.comments[].body'` matches the regex on at least one comment.

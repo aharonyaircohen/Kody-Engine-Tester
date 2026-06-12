@@ -1,0 +1,6 @@
+{
+  "name": "qa-engineer",
+  "action": "qa-engineer",
+  "executable": "qa-engineer",
+  "describe": "Run exploratory QA against a deployed or local site."
+}

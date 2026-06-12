@@ -1,0 +1,6 @@
+{
+  "name": "chore",
+  "action": "chore",
+  "executable": "chore",
+  "describe": "Make a bounded chore, docs, or dependency change."
+}

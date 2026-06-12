@@ -1,0 +1,8 @@
+{
+  "name": "task-memory-extractor",
+  "action": "task-memory-extractor",
+  "every": "30m",
+  "disabled": true,
+  "staff": "kody",
+  "describe": "Promote high-confidence task memory recommendations."
+}

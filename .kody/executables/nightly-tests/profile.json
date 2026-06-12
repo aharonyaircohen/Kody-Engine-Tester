@@ -45,7 +45,7 @@
         "checkCommand": "command -v npx"
       },
       "verify": "npx --version",
-      "usage": "Each test case dispatches the kody CLI via `npx -y -p @kody-ade/kody-engine@latest kody <args>`. Capture stdout, stderr, and exit code separately; npx caches the package after the first call so subsequent ones are fast.",
+      "usage": "Each test case dispatches the kody CLI via `npx -y -p @kody-ade/kody-engine@latest kody-engine <args>`. Capture stdout, stderr, and exit code separately; npx caches the package after the first call so subsequent ones are fast.",
       "allowedUses": []
     }
   ],

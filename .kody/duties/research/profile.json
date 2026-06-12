@@ -1,0 +1,6 @@
+{
+  "name": "research",
+  "action": "research",
+  "executable": "research",
+  "describe": "Research an issue and surface context, gaps, and questions."
+}

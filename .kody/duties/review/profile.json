@@ -1,0 +1,6 @@
+{
+  "name": "review",
+  "action": "review",
+  "executable": "review",
+  "describe": "Perform a read-only structured PR review."
+}

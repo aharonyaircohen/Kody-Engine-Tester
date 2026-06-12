@@ -1,0 +1,6 @@
+{
+  "name": "nightly-tests",
+  "action": "nightly-tests",
+  "executable": "nightly-tests",
+  "describe": "Run Kody engine smoke and live test cases."
+}

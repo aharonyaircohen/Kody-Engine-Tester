@@ -1,0 +1,8 @@
+{
+  "name": "duty-action-smoke",
+  "action": "duty-action-smoke",
+  "executable": "duty-action-smoke-impl",
+  "disabled": true,
+  "staff": "kody",
+  "describe": "No-agent smoke fixture for public duty action dispatch."
+}
