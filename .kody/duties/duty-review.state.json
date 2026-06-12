@@ -1,28 +1,18 @@
 {
   "version": 1,
-  "rev": 28,
+  "rev": 29,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-11T19:53:27Z",
-    "nextEligibleISO": "2026-06-12T01:53:27Z",
-    "cycle": 8,
+    "lastRunISO": "2026-06-12T04:53:01Z",
+    "nextEligibleISO": "2026-06-12T10:53:01Z",
+    "cycle": 9,
     "reviewed": [
-      "approval-gate",
-      "bug",
-      "architecture-audit",
-      "ceo-performance-review",
-      "chore",
-      "classify",
-      "cleanup-branches",
-      "clear-empty-goals",
-      "coverage-floor",
-      "dead-code-sweep",
-      "dependency-bump"
+      "approval-gate"
     ],
     "verdicts": {
       "approval-gate": {
         "verdict": "broken",
-        "note": "step 5 fans out to two comment writes; no internal cadence guard; state never persisted"
+        "note": "step 5 fans out to two comment writes (merge dispatch + silent audit); no internal cadence guard; nextEligibleISO never written to state; state file never created"
       },
       "architecture-audit": {
         "verdict": "broken",
@@ -85,9 +75,9 @@
         "note": "procedure calls .kody/scripts/type-debt-tick.py which does not exist; state file never created"
       }
     },
-    "lastFiredAt": "2026-06-12T04:44:50.347Z",
+    "lastFiredAt": "2026-06-12T04:53:21.835Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 112720
+    "lastDurationMs": 250260
   },
   "done": false
 }
