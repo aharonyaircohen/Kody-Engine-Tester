@@ -1,13 +1,14 @@
 {
   "version": 1,
-  "rev": 29,
+  "rev": 30,
   "cursor": "reported",
   "data": {
-    "lastRunISO": "2026-06-12T04:53:01Z",
-    "nextEligibleISO": "2026-06-12T10:53:01Z",
+    "lastRunISO": "2026-06-12T12:30:15Z",
+    "nextEligibleISO": "2026-06-12T18:30:15Z",
     "cycle": 9,
     "reviewed": [
-      "approval-gate"
+      "approval-gate",
+      "architecture-audit"
     ],
     "verdicts": {
       "approval-gate": {
@@ -16,7 +17,7 @@
       },
       "architecture-audit": {
         "verdict": "broken",
-        "note": "script missing (.kody/scripts/architecture-audit-tick.py does not exist); state lives at .kody/jobs/ not .kody/duties/"
+        "note": "disabled: true (idle by intent) but procedure broken — script .kody/scripts/architecture-audit-tick.py does not exist; state file never created"
       },
       "bug": {
         "verdict": "healthy",
@@ -44,15 +45,15 @@
       },
       "coverage-floor": {
         "verdict": "broken",
-        "note": "procedure calls missing script (.kody/scripts/coverage-floor-tick.py); state never created; cadence inconsistency (every: 1d vs nextEligibleISO: +20h in state contract); disabled: true (idle by intent)"
+        "note": "procedure calls missing script (.kody/scripts/coverage-floor-tick.py); state never created; cadence inconsistency; disabled: true (idle by intent)"
       },
       "dead-code-sweep": {
         "verdict": "broken",
-        "note": "script does not exist (.kody/scripts/dead-code-sweep-tick.py); one-action-max violated: state write + commit + push in one tick; no kody-job-next-state block in procedure body"
+        "note": "script does not exist (.kody/scripts/dead-code-sweep-tick.py); one-action-max violated; disabled: true (idle by intent)"
       },
       "dependency-bump": {
         "verdict": "broken",
-        "note": "script .kody/scripts/dependency-bump-tick.py does not exist; state never created; procedure cannot execute"
+        "note": "script .kody/scripts/dependency-bump-tick.py does not exist; state never created; disabled: true (idle by intent)"
       },
       "fix": {
         "verdict": "healthy",
@@ -64,7 +65,7 @@
       },
       "flaky-test-quarantine": {
         "verdict": "broken",
-        "note": "procedure calls .kody/scripts/flaky-test-quarantine-tick.py which does not exist; state file never created"
+        "note": "procedure calls .kody/scripts/flaky-test-quarantine-tick.py which does not exist; disabled: true (idle by intent)"
       },
       "qa-sweep": {
         "verdict": "broken",
@@ -72,12 +73,12 @@
       },
       "type-debt": {
         "verdict": "broken",
-        "note": "procedure calls .kody/scripts/type-debt-tick.py which does not exist; state file never created"
+        "note": "procedure calls .kody/scripts/type-debt-tick.py which does not exist; disabled: true (idle by intent)"
       }
     },
-    "lastFiredAt": "2026-06-12T12:25:34.938Z",
+    "lastFiredAt": "2026-06-12T12:30:40.745Z",
     "lastOutcome": "completed",
-    "lastDurationMs": 250260
+    "lastDurationMs": 261966
   },
   "done": false
 }
