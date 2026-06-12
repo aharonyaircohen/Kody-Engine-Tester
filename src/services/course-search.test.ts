@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { CourseSearchService } from './course-search'
+import { CourseSearchService, slugifyCourseTitle } from './course-search'
 import type { Payload } from 'payload'
 
 function createMockPayload(findResult: unknown = { docs: [], totalDocs: 0, totalPages: 0, page: 1 }) {
@@ -219,5 +219,44 @@ describe('CourseSearchService', () => {
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       expect(call.limit).toBe(100)
     })
+  })
+})
+
+describe('slugifyCourseTitle', () => {
+  it('trims whitespace and lowercases', () => {
+    expect(slugifyCourseTitle('  Hello World  ')).toBe('hello-world')
+  })
+
+  it('replaces runs of non-alphanumeric characters with a single hyphen', () => {
+    expect(slugifyCourseTitle('Hello@World!')).toBe('hello-world')
+    expect(slugifyCourseTitle('foo...bar')).toBe('foo-bar')
+    expect(slugifyCourseTitle('a   b c')).toBe('a-b-c')
+  })
+
+  it('strips leading and trailing hyphens', () => {
+    expect(slugifyCourseTitle('---hello')).toBe('hello')
+    expect(slugifyCourseTitle('hello---')).toBe('hello')
+    expect(slugifyCourseTitle('---hello world---')).toBe('hello-world')
+  })
+
+  it('handles empty string', () => {
+    expect(slugifyCourseTitle('')).toBe('')
+  })
+
+  it('handles title with only special characters', () => {
+    expect(slugifyCourseTitle('@#$%')).toBe('')
+  })
+
+  it('handles single word', () => {
+    expect(slugifyCourseTitle('Hello')).toBe('hello')
+  })
+
+  it('handles mixed case', () => {
+    expect(slugifyCourseTitle('HeLLo WoRLD')).toBe('hello-world')
+  })
+
+  it('handles real-world course titles', () => {
+    expect(slugifyCourseTitle('Intro to TypeScript')).toBe('intro-to-typescript')
+    expect(slugifyCourseTitle('Advanced React Patterns!')).toBe('advanced-react-patterns')
   })
 })
