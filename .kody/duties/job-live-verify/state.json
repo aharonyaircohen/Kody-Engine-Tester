@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "verified",
+  "data": {
+    "commentStatus": "posted",
+    "description": "Live-test executable that verifies job reference injection, staff persona injection, synthetic skill loading, locked duty tools, and state postflight.",
+    "duty": "job-live-verify",
+    "executable": "job-live-verify",
+    "issueNumber": 3680,
+    "skillDescription": "Internal Kody live-test skill.",
+    "skillToken": "SKILL_LOADED_OK",
+    "staff": "(none)",
+    "staffToken": "MISSING",
+    "toolsUsed": [
+      "ensure_issue",
+      "ensure_comment",
+      "submit_state"
+    ],
+    "lastFiredAt": "2026-06-13T05:55:24.068Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 35714
+  },
+  "done": true
+}
