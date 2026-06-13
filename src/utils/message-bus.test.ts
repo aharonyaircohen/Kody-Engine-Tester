@@ -243,6 +243,14 @@ describe('createBus', () => {
       unsub1()
       expect(bus.listenerCount()).toBe(1)
     })
+
+    it('same handler subscribed twice to same channel counts as one listener (Set deduplication)', () => {
+      const handler = vi.fn()
+      bus.subscribe('greet', handler)
+      bus.subscribe('greet', handler)
+      expect(bus.listenerCount('greet')).toBe(1)
+      expect(bus.listenerCount()).toBe(1)
+    })
   })
 
   describe('type safety', () => {
