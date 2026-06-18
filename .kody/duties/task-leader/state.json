@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "rev": 5,
+  "rev": 6,
   "cursor": "blocked-missing-rules",
   "data": {
-    "blocked_reason": "SKILL.md still missing: .kody/executables/task-leader/skills/task-leader-rules/SKILL.md does not exist — task-leader executable directory is absent from .kody/executables/ and has no git history",
-    "lastFiredAt": "2026-06-18T20:35:33.883Z",
+    "blocked_reason": "SKILL.md still missing: .kody/executables/task-leader/skills/task-leader-rules/SKILL.md does not exist — task-leader executable directory is absent from .kody/executables/",
+    "lastFiredAt": "2026-06-18T22:36:12.182Z",
     "lastOutcome": "completed",
     "pipeline_snapshot": {
       "open_prs": 84,
@@ -14,8 +14,8 @@
       "conflicting_prs": 6,
       "no_rules_file": true
     },
-    "lastDurationMs": 25590,
-    "thisFiredAt": "2026-06-18T20:40:00Z"
+    "lastDurationMs": 30830,
+    "thisFiredAt": "2026-06-18T20:55:01Z"
   },
   "done": false
 }
