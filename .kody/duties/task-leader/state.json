@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "blocked-missing-rules",
+  "data": {
+    "blocked_reason": "SKILL.md missing: .kody/executables/task-leader/skills/task-leader-rules/SKILL.md",
+    "pipeline_snapshot": {
+      "open_prs": 20,
+      "live_duty_prs": 4,
+      "release_prs": 0,
+      "no_rules_file": true
+    },
+    "lastFiredAt": "2026-06-18T07:16:24.065Z",
+    "lastOutcome": "completed",
+    "lastDurationMs": 229307
+  },
+  "done": false
+}
