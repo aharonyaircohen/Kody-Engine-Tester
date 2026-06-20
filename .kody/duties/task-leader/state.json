@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "rev": 16,
+  "rev": 17,
   "cursor": "blocked-missing-rules",
   "data": {
     "blocked_reason": "SKILL.md still missing: .kody/executables/task-leader/skills/task-leader-rules/SKILL.md does not exist — task-leader executable directory is absent from .kody/executables/",
-    "lastFiredAt": "2026-06-20T01:32:11.999Z",
+    "lastFiredAt": "2026-06-20T06:06:25.438Z",
     "lastOutcome": "completed",
     "pipeline_snapshot": {
       "open_prs": 52,
@@ -17,8 +17,8 @@
       "draft_prs": 20,
       "clean_prs_without_reviews": 21
     },
-    "lastDurationMs": 34728,
-    "thisFiredAt": "2026-06-20T01:32:00Z",
+    "lastDurationMs": 43459,
+    "thisFiredAt": "2026-06-20T01:47:00Z",
     "prior_cursor": "blocked-missing-rules",
     "skills_installed": false,
     "report_url": "https://github.com/aharonyaircohen/Kody-Engine-Tester/blob/main/.kody/reports/task-leader.md"
