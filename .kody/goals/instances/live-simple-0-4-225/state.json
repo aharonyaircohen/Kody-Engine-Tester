@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "kind": "instance",
+  "sourceTemplate": "simple",
+  "state": "active",
+  "type": "simple",
+  "title": "Live simple goal smoke test v0.4.225",
+  "description": "Validate that goal-scheduler invokes goal-manager and completes a simple managed goal from labelled issue evidence.",
+  "destination": {
+    "outcome": "All tasks labelled with goal:live-simple-0-4-225 are complete.",
+    "evidence": [
+      "labelledTasksComplete"
+    ]
+  },
+  "duties": [],
+  "route": [],
+  "stage": "waiting",
+  "facts": {
+    "label": "goal:live-simple-0-4-225",
+    "evidenceIssue": 3689,
+    "simpleAttachedTaskCount": 0,
+    "simpleOpenTaskCount": 0,
+    "labelledTasksComplete": false
+  },
+  "blockers": [],
+  "createdAt": "2026-06-20T00:00:00.000Z",
+  "updatedAt": "2026-06-20T00:00:00.000Z"
+}
