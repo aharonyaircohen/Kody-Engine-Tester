@@ -1,11 +1,13 @@
 # task-leader duty report
 
-## Status: BLOCKED
+## Status: BLOCKED (persisted)
 
 task-leader cannot execute — its rules file is absent:
 `.kody/executables/task-leader/skills/task-leader-rules/SKILL.md` does not exist.
 
 The task-leader executable directory is missing from `.kody/executables/`.
+
+Checked: 2026-06-20T10:00Z — still absent.
 
 ## Available executables
     bug chore classify feature fix fix-ci plan reproduce research review spec ui-review
