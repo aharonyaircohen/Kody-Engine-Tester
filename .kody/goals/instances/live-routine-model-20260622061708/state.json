@@ -16,6 +16,28 @@
     "goalType": "routine"
   },
   "blockers": [],
+  "scheduleState": {
+    "mode": "duty-cadence",
+    "lastGoalTickAt": "2026-06-22T07:41:32.343Z",
+    "lastDecision": {
+      "kind": "dispatch",
+      "duty": "live-scheduler-probe",
+      "executable": "duty-tick-scripted",
+      "reason": "first check for 15m",
+      "at": "2026-06-22T07:41:32.343Z"
+    },
+    "duties": {
+      "live-scheduler-probe": {
+        "slug": "live-scheduler-probe",
+        "title": "Live Scheduler Probe",
+        "cadence": "15m",
+        "state": "due",
+        "reason": "first check for 15m",
+        "lastFiredAt": "2026-06-22T07:41:32.343Z",
+        "nextEligibleAt": "2026-06-22T07:56:32.343Z"
+      }
+    }
+  },
   "state": "active",
-  "updatedAt": "2026-06-22T07:40:23Z"
+  "updatedAt": "2026-06-22T07:41:32Z"
 }
