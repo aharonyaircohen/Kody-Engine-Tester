@@ -1,0 +1,55 @@
+{
+  "name": "design-review",
+  "agent": "ux-designer",
+  "role": "primitive",
+  "describe": "# Design Review",
+  "inputs": [],
+  "every": "7d",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": [],
+    "tools": [
+      "Bash",
+      "Read",
+      "Grep",
+      "Glob"
+    ]
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadAgentResponsibilityState"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      }
+    ]
+  },
+  "output": {
+    "actionTypes": [
+      "DESIGN_REVIEW_DONE"
+    ]
+  }
+}

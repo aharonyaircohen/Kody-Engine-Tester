@@ -1,0 +1,58 @@
+{
+  "name": "qa-verify",
+  "agent": "qa",
+  "role": "primitive",
+  "describe": "# QA Fix Verification",
+  "inputs": [],
+  "every": "30m",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": [],
+    "tools": [
+      "Bash",
+      "Read",
+      "Grep",
+      "Glob"
+    ]
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadAgentResponsibilityState"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      }
+    ]
+  },
+  "output": {
+    "actionTypes": [
+      "QA_VERIFY_DONE"
+    ]
+  }
+}

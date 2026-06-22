@@ -12,7 +12,7 @@ data:
 _Threshold: 6h_
 
 ## Running
-- [#3029](https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3029) — test mission — 1139h since last update
+- [#3029](https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3029) — test agent goal — 1139h since last update
 - [#3153](https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3153) — [live-test v0.3.58] add a one-line greet utility — 925h since last update
 - [#3175](https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3175) — [live-test bug-container] clamp() returns NaN for NaN input — 872h since last update
 

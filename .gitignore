@@ -51,22 +51,21 @@ node_modules/
 
 
 # Runtime state under .kody/ is ignored, but consumer-repo-controlled
-# assets (executables, missions) are tracked as code. The negation only
-# works if the parent directory itself isn't ignored — hence `.kody/*` not
-# `.kody/`.
+# assets are tracked as code. The negation only works if the parent directory
+# itself isn't ignored, hence `.kody/*` instead of `.kody/`.
 .kody/*
-!.kody/executables/
-!.kody/executables/**
-!.kody/duties/
-!.kody/duties/**
-!.kody/missions/
-!.kody/missions/**
+!.kody/agent-actions/
+!.kody/agent-actions/**
+!.kody/agent-responsibilities/
+!.kody/agent-responsibilities/**
+!.kody/agents/
+!.kody/agents/**
+!.kody/agent-loops/
+!.kody/agent-loops/**
 !.kody/vault/
 !.kody/vault/**
 !.kody/goals/
 !.kody/goals/**
-!.kody/workers/
-!.kody/workers/**
 !.kody/jobs/
 !.kody/jobs/**
 !.kody/tasks/
@@ -77,4 +76,4 @@ node_modules/
 !.kody/scripts/**
 !.kody/reports/
 !.kody/reports/_schema.yaml
-.kody/executables/**/last-run.json
+.kody/agent-actions/**/last-run.json

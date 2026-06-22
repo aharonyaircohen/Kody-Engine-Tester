@@ -1,15 +1,15 @@
-# Kody Duty Review
+# Kody AgentResponsibility Review
 
-_Rolling 6h cycle — one duty deep-reviewed per tick._
+_Rolling 6h cycle — one agentResponsibility deep-reviewed per tick._
 
-Cycle 10 — 5 healthy, 11 broken, 22 pending of 38 duties.
+Cycle 10 — 5 healthy, 11 broken, 22 pending of 38 agentResponsibilities.
 
-| Duty | Staff | Cadence | Verdict | Note |
+| AgentResponsibility | Agent | Cadence | Verdict | Note |
 |------|-------|---------|---------|------|
 | approval-gate | cto | 15m | broken | step 5 fans out to two comment writes (merge dispatch + silent audit); no internal cadence guard; nextEligibleISO never written to state; state file never created |
 | architecture-audit | cto | 7d (disabled) | broken | disabled: true (idle by intent) but procedure broken — script .kody/scripts/architecture-audit-tick.py does not exist; state file never created |
 | bug | kody | — | healthy | passes every check; event-driven primitive, design is sound |
-| ceo-performance-review | ceo | 7d | broken | no state file ever created; procedure says engine writes .kody/duties/ceo-performance-review.state.json but it does not exist; no commit history for any state file |
+| ceo-performance-review | ceo | 7d | broken | no state file ever created; procedure says engine writes .kody/agent-responsibilities/ceo-performance-review.state.json but it does not exist; no commit history for any state file |
 | chore | kody | — | healthy | passes every check; event-driven primitive, design is sound |
 | classify | coo | — | healthy | passes every check; event-driven primitive, design is sound |
 | cleanup-branches | coo | manual | broken | one-action-max violated: procedure fans out to N branch deletions per tick; no per-branch gating; state file never created; never run |
