@@ -69,5 +69,10 @@
   ],
   "release": {
     "releaseBranch": "main"
+  },
+  "company": {
+    "activeGoals": [
+      "live-routine-model-20260622061708"
+    ]
   }
 }
