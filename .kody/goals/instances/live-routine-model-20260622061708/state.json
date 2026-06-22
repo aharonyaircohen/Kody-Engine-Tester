@@ -18,26 +18,24 @@
   "blockers": [],
   "scheduleState": {
     "mode": "duty-cadence",
-    "lastGoalTickAt": "2026-06-22T07:41:32.343Z",
+    "lastGoalTickAt": "2026-06-22T07:43:08.820Z",
     "lastDecision": {
-      "kind": "dispatch",
-      "duty": "live-scheduler-probe",
-      "executable": "duty-tick-scripted",
-      "reason": "first check for 15m",
-      "at": "2026-06-22T07:41:32.343Z"
+      "kind": "idle",
+      "reason": "no duty due now",
+      "at": "2026-06-22T07:43:08.820Z"
     },
     "duties": {
       "live-scheduler-probe": {
         "slug": "live-scheduler-probe",
         "title": "Live Scheduler Probe",
         "cadence": "15m",
-        "state": "due",
-        "reason": "first check for 15m",
+        "state": "waiting",
+        "reason": "next due 2026-06-22T07:56:32.343Z",
         "lastFiredAt": "2026-06-22T07:41:32.343Z",
         "nextEligibleAt": "2026-06-22T07:56:32.343Z"
       }
     }
   },
   "state": "active",
-  "updatedAt": "2026-06-22T07:41:32Z"
+  "updatedAt": "2026-06-22T07:43:08Z"
 }
