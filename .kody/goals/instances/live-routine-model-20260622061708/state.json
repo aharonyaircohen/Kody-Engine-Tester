@@ -18,11 +18,11 @@
   "blockers": [],
   "scheduleState": {
     "mode": "duty-cadence",
-    "lastGoalTickAt": "2026-06-22T07:43:08.820Z",
+    "lastGoalTickAt": "2026-06-22T07:53:26.316Z",
     "lastDecision": {
       "kind": "idle",
       "reason": "no duty due now",
-      "at": "2026-06-22T07:43:08.820Z"
+      "at": "2026-06-22T07:53:26.316Z"
     },
     "duties": {
       "live-scheduler-probe": {
@@ -37,5 +37,5 @@
     }
   },
   "state": "active",
-  "updatedAt": "2026-06-22T07:43:08Z"
+  "updatedAt": "2026-06-22T07:53:26Z"
 }
