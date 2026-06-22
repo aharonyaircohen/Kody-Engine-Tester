@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "state": "active",
+  "type": "improve",
+  "destination": {
+    "outcome": "Live objective waits on missing evidence without completing.",
+    "evidence": ["planReady"]
+  },
+  "schedule": "manual",
+  "duties": ["plan"],
+  "route": [
+    {
+      "stage": "plan",
+      "evidence": "planReady",
+      "duty": "plan",
+      "executable": "plan"
+    }
+  ],
+  "stage": "plan",
+  "facts": {
+    "goalType": "improve",
+    "pendingEvidence": "planReady"
+  },
+  "blockers": ["seed blocker should clear on wait"]
+}
