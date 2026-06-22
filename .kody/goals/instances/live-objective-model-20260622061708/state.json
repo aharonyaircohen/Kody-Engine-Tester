@@ -1,17 +1,20 @@
 {
   "version": 1,
-  "state": "active",
   "type": "improve",
   "destination": {
     "outcome": "Live objective waits on missing evidence without completing.",
-    "evidence": ["planReady"]
+    "evidence": [
+      "planReady"
+    ]
   },
   "schedule": "manual",
-  "duties": ["plan"],
+  "duties": [
+    "plan"
+  ],
   "route": [
     {
-      "stage": "plan",
       "evidence": "planReady",
+      "stage": "plan",
       "duty": "plan",
       "executable": "plan"
     }
@@ -21,5 +24,7 @@
     "goalType": "improve",
     "pendingEvidence": "planReady"
   },
-  "blockers": ["seed blocker should clear on wait"]
+  "blockers": [],
+  "state": "active",
+  "updatedAt": "2026-06-22T06:50:01Z"
 }
