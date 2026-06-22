@@ -18,11 +18,11 @@
   "blockers": [],
   "scheduleState": {
     "mode": "duty-cadence",
-    "lastGoalTickAt": "2026-06-22T06:51:02.074Z",
+    "lastGoalTickAt": "2026-06-22T07:37:27.824Z",
     "lastDecision": {
       "kind": "blocked",
       "reason": "no runnable due duty; blocked duties need attention",
-      "at": "2026-06-22T06:51:02.074Z"
+      "at": "2026-06-22T07:37:27.824Z"
     },
     "duties": {
       "cleanup-branches": {
@@ -33,5 +33,5 @@
     }
   },
   "state": "active",
-  "updatedAt": "2026-06-22T06:51:02Z"
+  "updatedAt": "2026-06-22T07:37:27Z"
 }
