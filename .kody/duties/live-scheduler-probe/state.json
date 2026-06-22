@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "rev": 1,
+  "cursor": "live-scheduler-probe",
+  "data": {
+    "lastProbe": "ok",
+    "lastFiredAt": "2026-06-22T07:41:33.911Z"
+  },
+  "done": false
+}
