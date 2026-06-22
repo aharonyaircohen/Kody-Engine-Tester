@@ -1,6 +1,5 @@
 {
   "version": 1,
-  "state": "active",
   "type": "routine",
   "destination": {
     "outcome": "Live routine records duty cadence state without completing.",
@@ -8,11 +7,31 @@
   },
   "schedule": "1d",
   "scheduleMode": "duty-cadence",
-  "duties": ["cleanup-branches"],
+  "duties": [
+    "cleanup-branches"
+  ],
   "route": [],
   "stage": "watching",
   "facts": {
     "goalType": "routine"
   },
-  "blockers": []
+  "blockers": [],
+  "scheduleState": {
+    "mode": "duty-cadence",
+    "lastGoalTickAt": "2026-06-22T06:51:02.074Z",
+    "lastDecision": {
+      "kind": "blocked",
+      "reason": "no runnable due duty; blocked duties need attention",
+      "at": "2026-06-22T06:51:02.074Z"
+    },
+    "duties": {
+      "cleanup-branches": {
+        "slug": "cleanup-branches",
+        "state": "blocked",
+        "reason": "duty folder missing"
+      }
+    }
+  },
+  "state": "active",
+  "updatedAt": "2026-06-22T06:51:02Z"
 }
