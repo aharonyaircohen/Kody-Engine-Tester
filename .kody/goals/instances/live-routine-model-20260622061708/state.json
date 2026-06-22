@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "state": "active",
+  "type": "routine",
+  "destination": {
+    "outcome": "Live routine records duty cadence state without completing.",
+    "evidence": []
+  },
+  "schedule": "1d",
+  "scheduleMode": "duty-cadence",
+  "duties": ["cleanup-branches"],
+  "route": [],
+  "stage": "watching",
+  "facts": {
+    "goalType": "routine"
+  },
+  "blockers": []
+}
