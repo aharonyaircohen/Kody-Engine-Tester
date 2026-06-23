@@ -15,6 +15,10 @@
     "owner": "aharonyaircohen",
     "repo": "Kody-Engine-Tester"
   },
+  "state": {
+    "repo": "https://github.com/A-Guy-educ/kody-state",
+    "path": "Kody-Engine-Tester"
+  },
   "agent": {
     "model": "minimax/MiniMax-M2.7-highspeed",
     "modelMap": {
