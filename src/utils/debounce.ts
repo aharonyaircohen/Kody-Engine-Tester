@@ -1,48 +1,59 @@
-export interface DebounceOptions {
+interface DebounceOptions {
   leading?: boolean
   trailing?: boolean
 }
 
-export function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
+export function debounce<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number,
-  options: DebounceOptions = {}
-): (...args: Parameters<T>) => void {
-  const leading = options.leading
-  const trailing = options.trailing
+  ms: number,
+  options: DebounceOptions = {},
+) {
+  // Semantics:
+  // - No options: trailing only (count=1 after delay).
+  // - {leading:true}: leading only (count=1 even if many calls in window).
+  // - {trailing:false}: implies leading=true (otherwise nothing fires).
+  // - {leading:true, trailing:true}: both fire when multiple calls in window.
+  const explicitL = options.leading
+  const explicitT = options.trailing
+  let leading: boolean
+  let trailing: boolean
+  if (explicitL === true && explicitT === true) {
+    leading = true
+    trailing = true
+  } else if (explicitL === true) {
+    leading = true
+    trailing = false
+  } else if (explicitT === false) {
+    leading = true
+    trailing = false
+  } else {
+    leading = false
+    trailing = true
+  }
 
-  // Leading executes if explicitly set to true, or if trailing is explicitly false (immediate mode)
-  const shouldLeading = leading === true || (trailing === false)
-  // Trailing executes by default (standard debounce), unless leading is true (leading-only mode)
-  const shouldTrailing = leading === true ? trailing === true : trailing !== false
+  let id: ReturnType<typeof setTimeout> | null = null
+  let pendingArgs: Parameters<T> | null = null
+  let invocations = 0
 
-  let timeoutId: ReturnType<typeof setTimeout> | undefined
-  let lastArgs: Parameters<T> | undefined
-  let inDebounceWindow = false
+  return function (this: unknown, ...args: Parameters<T>) {
+    invocations++
+    pendingArgs = args
+    const ctx = this
 
-  return function (this: unknown, ...args: Parameters<T>): void {
-    lastArgs = args
-
-    // Clear any pending execution
-    if (timeoutId) {
-      clearTimeout(timeoutId)
+    if (leading && invocations === 1 && !id) {
+      fn.apply(ctx, args)
     }
 
-    // Execute leading edge if enabled and we're not already in a debounce window
-    if (shouldLeading && !inDebounceWindow) {
-      fn.apply(this, args)
-    }
+    if (id) clearTimeout(id)
 
-    // Track debounce window and set up trailing execution
-    if (shouldTrailing || shouldLeading) {
-      inDebounceWindow = true
-      timeoutId = setTimeout(() => {
-        if (shouldTrailing && lastArgs !== undefined) {
-          fn.apply(this, lastArgs)
-        }
-        timeoutId = undefined
-        inDebounceWindow = false
-      }, delay)
-    }
+    id = setTimeout(() => {
+      const shouldFireTrailing = trailing && (!leading || invocations > 1)
+      if (shouldFireTrailing && pendingArgs) {
+        fn.apply(ctx, pendingArgs)
+      }
+      id = null
+      pendingArgs = null
+      invocations = 0
+    }, ms)
   }
 }
