@@ -77,7 +77,8 @@
   "company": {
     "activeGoals": [
       "live-agent-loop-model-20260622061708",
-      "ci-health"
+      "ci-health",
+      "prs-stay-mergeable"
     ]
   }
 }
