@@ -1,0 +1,7 @@
+{
+  "name": "auto-resolve",
+  "agent": "cto",
+  "agentAction": "resolve",
+  "every": "15m",
+  "describe": "Watch open pull requests for merge conflicts and dispatch resolve when trusted."
+}

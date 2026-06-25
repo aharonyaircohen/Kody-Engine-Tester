@@ -1,0 +1,58 @@
+{
+  "name": "cleanup-branches",
+  "agent": "coo",
+  "role": "primitive",
+  "describe": "# clean up branches",
+  "inputs": [],
+  "every": "manual",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": [],
+    "tools": [
+      "Bash",
+      "Read",
+      "Grep",
+      "Glob"
+    ]
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadAgentResponsibilityState"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      }
+    ]
+  },
+  "output": {
+    "actionTypes": [
+      "CLEANUP_BRANCHES_DONE"
+    ]
+  }
+}
