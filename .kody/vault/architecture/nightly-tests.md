@@ -6,14 +6,14 @@ sources:
   - https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3063
 ---
 
-The `nightly-tests` executable smoke-tests the published `@kody-ade/kody-engine@latest` package every night. It is not a unit-test suite for this repo — it validates that the engine itself works correctly across all top-level executables and the consumer config.
+The `nightly-tests` agentAction smoke-tests the published `@kody-ade/kody-engine@latest` package every night. It is not a unit-test suite for this repo — it validates that the engine itself works correctly across all top-level agentActions and the consumer config.
 
 ## Structure
 
 ```
-.kody/executables/nightly-tests/
+.kody/agent-actions/nightly-tests/
   cases.json   — 25 test cases (read-only input)
-  profile.json — executable profile definition
+  profile.json — agentAction profile definition
   prompt.md   — agent prompt consumed by the engine
   last-run.json — runtime artifact (gitignored)
 ```
@@ -23,7 +23,7 @@ The `nightly-tests` executable smoke-tests the published `@kody-ade/kody-engine@
 Cases are grouped into three categories:
 
 - **CLI behavior** (5 cases): `help`, `--help`, `version`, `--version`, and unknown-command error.
-- **Profile-load validation** (18 cases): each top-level executable (`run`, `fix`, `fix-ci`, `resolve`, `review`, `plan`, `classify`, `spec`, `research`, `sync`, `init`, `watch-stale-prs`, `mission-scheduler`, `mission-tick`, `bug`, `feature`, `chore`, `ui-review`, `release`) is invoked and must either accept valid input or fail with a clear missing-flag error. A profile-load crash (e.g. `Cannot find module`) always fails.
+- **Profile-load validation** (18 cases): each top-level agentAction (`run`, `fix`, `fix-ci`, `resolve`, `review`, `plan`, `classify`, `spec`, `research`, `sync`, `init`, `watch-stale-prs`, `agent-responsibility-scheduler`, `agent-responsibility-tick`, `bug`, `feature`, `chore`, `ui-review`, `release`) is invoked and must either accept valid input or fail with a clear missing-flag error. A profile-load crash (e.g. `Cannot find module`) always fails.
 - **Config validation** (1 case): running `kody version` must not surface any `kody.config.json` schema errors.
 
 ## Assertion types
@@ -47,4 +47,4 @@ After each run, the agent searches for an open issue titled "Nightly Kody engine
 
 ## See also
 
-- [../architecture/ci-workflow](./ci-workflow.md) — GitHub Actions workflow that runs this executable
+- [../architecture/ci-workflow](./ci-workflow.md) — GitHub Actions workflow that runs this agentAction
