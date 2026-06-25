@@ -1,0 +1,58 @@
+{
+  "name": "docs-readme",
+  "agent": "tech-writer",
+  "role": "primitive",
+  "describe": "# Docs Drift \u2014 feature READMEs",
+  "inputs": [],
+  "every": "1d",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": [],
+    "tools": [
+      "Bash",
+      "Read",
+      "Grep",
+      "Glob"
+    ]
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadAgentResponsibilityState"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      }
+    ]
+  },
+  "output": {
+    "actionTypes": [
+      "DOCS_README_DONE"
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "dev-ci-health",
+  "agent": "cto",
+  "every": "15m",
+  "role": "primitive",
+  "describe": "Watch dev CI; open one tracking issue + dispatch a fix when red (locked toolbox).",
+  "agentResponsibilityTools": [
+    "read_check_runs",
+    "ensure_issue",
+    "dispatch_workflow",
+    "ensure_comment"
+  ],
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "enableSubmitTool": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadAgentResponsibilityState"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      }
+    ]
+  },
+  "output": {
+    "actionTypes": [
+      "DEV_CI_HEALTH_DONE"
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "security-audit",
+  "agent": "cto",
+  "every": "1d",
+  "role": "primitive",
+  "describe": "Daily security posture sweep; opens/tracks a kody:security-audit issue.",
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "tools": [
+      "Bash",
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadAgentResponsibilityState"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      }
+    ]
+  },
+  "output": {
+    "actionTypes": [
+      "SECURITY_AUDIT_DONE"
+    ]
+  }
+}

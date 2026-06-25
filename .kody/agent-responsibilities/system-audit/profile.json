@@ -1,0 +1,55 @@
+{
+  "name": "system-audit",
+  "agent": "coo",
+  "role": "primitive",
+  "describe": "# System Audit",
+  "inputs": [],
+  "every": "30m",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": [],
+    "tools": [
+      "Bash",
+      "Read",
+      "Grep",
+      "Glob"
+    ]
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadAgentResponsibilityState"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      }
+    ]
+  },
+  "output": {
+    "actionTypes": [
+      "SYSTEM_AUDIT_DONE"
+    ]
+  }
+}
