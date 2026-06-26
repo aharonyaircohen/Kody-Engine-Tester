@@ -90,6 +90,5 @@
     ]
   },
   "action": "review",
-  "capabilityKind": "verify",
   "agent": "cto"
 }

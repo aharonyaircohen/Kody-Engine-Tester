@@ -140,6 +140,5 @@
     ]
   },
   "action": "research",
-  "capabilityKind": "observe",
   "agent": "cto"
 }

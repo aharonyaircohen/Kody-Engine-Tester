@@ -2,7 +2,6 @@
   "name": "security-audit",
   "action": "security-audit",
   "describe": "Daily security posture sweep; opens/tracks a kody:security-audit issue.",
-  "capabilityKind": "observe",
   "agent": "cto",
   "every": "1d"
 }

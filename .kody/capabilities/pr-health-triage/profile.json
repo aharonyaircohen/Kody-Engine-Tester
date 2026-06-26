@@ -2,7 +2,6 @@
   "name": "pr-health-triage",
   "action": "pr-health-triage",
   "describe": "# PR health",
-  "capabilityKind": "observe",
   "agent": "cto",
   "mentions": [
     "aguyaharonyair"

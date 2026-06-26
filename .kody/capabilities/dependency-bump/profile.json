@@ -1,6 +1,5 @@
 {
   "name": "dependency-bump",
   "action": "dependency-bump",
-  "capabilityKind": "act",
   "describe": "dependency bump"
 }

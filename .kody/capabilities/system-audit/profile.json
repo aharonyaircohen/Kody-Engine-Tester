@@ -2,7 +2,6 @@
   "name": "system-audit",
   "action": "system-audit",
   "describe": "# System Audit",
-  "capabilityKind": "observe",
   "agent": "coo",
   "every": "30m"
 }

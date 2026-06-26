@@ -1,6 +1,5 @@
 {
   "name": "clear-empty-goals",
   "action": "clear-empty-goals",
-  "capabilityKind": "act",
   "describe": "clear empty goals"
 }

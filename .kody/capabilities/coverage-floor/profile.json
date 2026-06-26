@@ -1,6 +1,5 @@
 {
   "name": "coverage-floor",
   "action": "coverage-floor",
-  "capabilityKind": "act",
   "describe": "coverage floor"
 }

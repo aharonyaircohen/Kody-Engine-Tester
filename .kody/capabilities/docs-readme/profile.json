@@ -2,7 +2,6 @@
   "name": "docs-readme",
   "action": "docs-readme",
   "describe": "# Docs Drift — feature READMEs",
-  "capabilityKind": "observe",
   "agent": "tech-writer",
   "mentions": [
     "aguyaharonyair"

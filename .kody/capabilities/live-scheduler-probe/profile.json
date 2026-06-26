@@ -2,7 +2,6 @@
   "name": "live-scheduler-probe",
   "action": "live-scheduler-probe",
   "describe": "Deterministic live-test capability for agentLoop scheduler cadence.",
-  "capabilityKind": "act",
   "agent": "kody",
   "tickScript": ".kody/scripts/live-scheduler-probe.sh",
   "every": "15m"

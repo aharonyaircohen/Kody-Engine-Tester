@@ -2,7 +2,6 @@
   "name": "docs-code",
   "action": "docs-code",
   "describe": "# Docs Coverage — in-code / folder headers",
-  "capabilityKind": "observe",
   "agent": "tech-writer",
   "mentions": [
     "aguyaharonyair"

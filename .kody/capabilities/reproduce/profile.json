@@ -119,6 +119,5 @@
     ]
   },
   "action": "reproduce",
-  "capabilityKind": "act",
   "agent": "qa"
 }

@@ -2,7 +2,6 @@
   "name": "design-review",
   "action": "design-review",
   "describe": "# Design Review",
-  "capabilityKind": "verify",
   "agent": "ux-designer",
   "every": "7d"
 }

@@ -88,6 +88,5 @@
     ]
   },
   "action": "classify",
-  "capabilityKind": "act",
   "agent": "coo"
 }
