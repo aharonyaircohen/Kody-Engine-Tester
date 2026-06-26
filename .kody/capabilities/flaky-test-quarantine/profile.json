@@ -1,0 +1,6 @@
+{
+  "name": "flaky-test-quarantine",
+  "action": "flaky-test-quarantine",
+  "capabilityKind": "act",
+  "describe": "flaky test quarantine"
+}

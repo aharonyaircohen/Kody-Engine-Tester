@@ -1,0 +1,9 @@
+{
+  "name": "auto-fix-ci",
+  "action": "auto-fix-ci",
+  "describe": "Watch open pull requests for failing CI and dispatch fix-ci when trusted.",
+  "capabilityKind": "act",
+  "agent": "cto",
+  "every": "15m",
+  "implementation": "fix-ci"
+}

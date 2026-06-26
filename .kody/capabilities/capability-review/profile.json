@@ -1,0 +1,8 @@
+{
+  "name": "capability-review",
+  "action": "capability-review",
+  "describe": "# Capability Review",
+  "capabilityKind": "verify",
+  "agent": "coo",
+  "every": "6h"
+}

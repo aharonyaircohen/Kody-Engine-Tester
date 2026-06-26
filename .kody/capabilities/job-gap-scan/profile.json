@@ -1,0 +1,10 @@
+{
+  "name": "job-gap-scan",
+  "action": "job-gap-scan",
+  "describe": "# job-gap-scan",
+  "capabilityKind": "observe",
+  "agent": "ceo",
+  "mentions": [
+    "aguyaharonyair"
+  ]
+}

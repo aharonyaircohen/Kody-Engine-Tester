@@ -1,7 +1,0 @@
-{
-  "name": "live-scheduler-probe",
-  "describe": "Deterministic live-test agentResponsibility for agentLoop scheduler cadence.",
-  "every": "15m",
-  "agent": "kody",
-  "tickScript": ".kody/scripts/live-scheduler-probe.sh"
-}

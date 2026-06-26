@@ -1,0 +1,8 @@
+{
+  "name": "redispatch",
+  "action": "redispatch",
+  "describe": "# redispatch",
+  "capabilityKind": "observe",
+  "agent": "kody",
+  "every": "30m"
+}

@@ -1,7 +1,0 @@
-{
-  "name": "auto-fix-ci",
-  "agent": "cto",
-  "agentAction": "fix-ci",
-  "every": "15m",
-  "describe": "Watch open pull requests for failing CI and dispatch fix-ci when trusted."
-}

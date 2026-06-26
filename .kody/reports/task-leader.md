@@ -1,4 +1,4 @@
-# task-leader agentResponsibility report
+# task-leader capability report
 
 ## Status: BLOCKED (persistent)
 
@@ -6,11 +6,11 @@ task-leader cannot execute — its rules file is absent:
 
 SKILL.md does not exist.
 
-The task-leader agentAction directory is missing from .kody/agent-actions/.
+The task-leader executable directory is missing from .kody/executables/.
 
 Checked: 2026-06-20T12:00Z — still absent.
 
-## Available agentActions
+## Available executables
   bug chore classify feature fix fix-ci plan reproduce research review spec ui-review
 
 ## Pipeline snapshot (prior tick)

@@ -1,0 +1,8 @@
+{
+  "name": "ceo-performance-review",
+  "action": "ceo-performance-review",
+  "describe": "# CEO Performance Review",
+  "capabilityKind": "verify",
+  "agent": "ceo",
+  "every": "7d"
+}

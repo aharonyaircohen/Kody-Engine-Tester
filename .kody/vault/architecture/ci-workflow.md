@@ -12,7 +12,7 @@ GitHub Actions workflows live in `.github/workflows/`. PR #3063 added the nightl
 
 **File:** `.github/workflows/kody-nightly-tests.yml`
 
-Runs the [`nightly-tests`](../architecture/nightly-tests.md) agentAction on a cron schedule and via `workflow_dispatch`.
+Runs the [`nightly-tests`](../architecture/nightly-tests.md) executable on a cron schedule and via `workflow_dispatch`.
 
 ### Schedule
 

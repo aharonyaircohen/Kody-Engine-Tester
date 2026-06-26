@@ -1,0 +1,8 @@
+{
+  "name": "publish-release",
+  "action": "publish-release",
+  "describe": "# publish a release",
+  "capabilityKind": "act",
+  "agent": "cto",
+  "every": "manual"
+}

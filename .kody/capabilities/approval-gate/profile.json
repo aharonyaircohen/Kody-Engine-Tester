@@ -1,0 +1,11 @@
+{
+  "name": "approval-gate",
+  "action": "approval-gate",
+  "describe": "# Approval Gate",
+  "capabilityKind": "verify",
+  "agent": "cto",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "15m"
+}

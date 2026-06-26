@@ -10,7 +10,7 @@
   "git": {
     "defaultBranch": "dev"
   },
-  "defaultAgentAction": "classify",
+  "defaultExecutable": "classify",
   "github": {
     "owner": "aharonyaircohen",
     "repo": "Kody-Engine-Tester"

@@ -1,0 +1,11 @@
+{
+  "name": "qa",
+  "action": "qa",
+  "describe": "# QA Changelog Verification",
+  "capabilityKind": "verify",
+  "agent": "qa",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "30m"
+}

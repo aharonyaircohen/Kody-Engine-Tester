@@ -1,0 +1,17 @@
+{
+  "name": "dev-ci-health",
+  "action": "dev-ci-health",
+  "describe": "Watch dev CI; open one tracking issue + dispatch a fix when red (locked toolbox).",
+  "capabilityKind": "observe",
+  "agent": "cto",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "capabilityTools": [
+    "read_check_runs",
+    "ensure_issue",
+    "dispatch_workflow",
+    "ensure_comment"
+  ],
+  "every": "15m"
+}

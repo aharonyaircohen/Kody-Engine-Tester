@@ -1,0 +1,8 @@
+{
+  "name": "nightly-tests",
+  "action": "nightly-tests",
+  "describe": "Nightly end-to-end smoke suite for the Kody engine. Iterates over cases.json, runs each command, asserts outcome, writes a results report, and opens or updates a tracking issue.",
+  "capabilityKind": "verify",
+  "agent": "qa",
+  "schedule": "0 2 * * *"
+}

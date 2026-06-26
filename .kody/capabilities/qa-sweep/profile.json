@@ -1,0 +1,11 @@
+{
+  "name": "qa-sweep",
+  "action": "qa-sweep",
+  "describe": "# QA Sweep",
+  "capabilityKind": "verify",
+  "agent": "qa",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "1d"
+}

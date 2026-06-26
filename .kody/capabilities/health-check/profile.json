@@ -1,0 +1,8 @@
+{
+  "name": "health-check",
+  "action": "health-check",
+  "describe": "Daily digest of stale Kody-assigned tasks; writes .kody/reports/health-check.md.",
+  "capabilityKind": "observe",
+  "agent": "kody",
+  "every": "1d"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "dead-code-sweep",
+  "action": "dead-code-sweep",
+  "capabilityKind": "act",
+  "describe": "dead code sweep"
+}

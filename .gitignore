@@ -54,10 +54,10 @@ node_modules/
 # assets are tracked as code. The negation only works if the parent directory
 # itself isn't ignored, hence `.kody/*` instead of `.kody/`.
 .kody/*
-!.kody/agent-actions/
-!.kody/agent-actions/**
-!.kody/agent-responsibilities/
-!.kody/agent-responsibilities/**
+!.kody/executables/
+!.kody/executables/**
+!.kody/capabilities/
+!.kody/capabilities/**
 !.kody/agents/
 !.kody/agents/**
 !.kody/agent-loops/
@@ -76,4 +76,4 @@ node_modules/
 !.kody/scripts/**
 !.kody/reports/
 !.kody/reports/_schema.yaml
-.kody/agent-actions/**/last-run.json
+.kody/executables/**/last-run.json
