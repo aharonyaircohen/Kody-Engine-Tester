@@ -1,3 +1,8 @@
+/**
+ * @ai-summary Payload auth collection providing email/password login. Hides token fields (refreshToken, tokenExpiresAt, etc.) from all reads.
+ * @ai-summary role is a select (admin/editor/viewer) with field-level update access restricted to admins only.
+ * @ai-summary displayName is computed from firstName + lastName via a beforeChange hook — do not set it directly.
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export const Users: CollectionConfig = {

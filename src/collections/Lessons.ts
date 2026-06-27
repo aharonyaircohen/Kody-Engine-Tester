@@ -1,3 +1,8 @@
+/**
+ * @ai-summary Lessons belong to a module and support three content types: text, video, and interactive. Both a LessonStore (in-memory) and a Payload collection are exported.
+ * @ai-summary The in-memory LessonStore is not persisted — use the Payload collection for durability.
+ * @ai-summary When type changes away from 'video', videoUrl is auto-nullified by the LessonStore update method.
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export type LessonType = 'text' | 'video' | 'interactive'

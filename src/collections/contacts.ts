@@ -1,3 +1,7 @@
+/**
+ * @ai-summary In-memory ContactStore with seeded sample data. Provides query, search, filter, sort, and pagination — NO Payload collection backing.
+ * @ai-summary Replace with a real Payload/DB-backed collection before using in production; the current store is development-only.
+ */
 export interface Contact {
   id: string
   firstName: string

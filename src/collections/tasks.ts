@@ -1,3 +1,7 @@
+/**
+ * @ai-summary In-memory TaskStore for Kanban-style task management with status, priority, and assignee. NO Payload collection backing.
+ * @ai-summary Replace with a real Payload/DB-backed collection before using in production; the current store is development-only.
+ */
 export type TaskStatus = 'todo' | 'in-progress' | 'done'
 export type TaskPriority = 'low' | 'medium' | 'high'
 
