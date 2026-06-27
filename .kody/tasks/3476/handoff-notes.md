@@ -1,0 +1,1 @@
+Added `quintuple(n: number): number` returning n*5 in src/utils/quintuple.ts, following the same pattern as clamp.ts. Created matching test file quintuple.test.ts covering positive integers, negative numbers, and floating point inputs. All quality gates (typecheck, lint, tests) pass.
