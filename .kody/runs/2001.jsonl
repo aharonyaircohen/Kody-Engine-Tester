@@ -1,0 +1,1 @@
+{"runId":"task-2001-v6","issueNumber":2001,"command":"run","startedAt":"2026-04-11T22:57:56.174Z","completedAt":"2026-04-11T23:04:17.161Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}

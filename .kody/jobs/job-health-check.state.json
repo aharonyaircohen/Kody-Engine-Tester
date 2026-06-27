@@ -1,9 +1,0 @@
-{
-  "cursor": "reported",
-  "data": {
-    "lastRunISO": "2026-06-07T11:59:40Z",
-    "lastStuckCount": 16,
-    "nextEligibleISO": "2026-06-08T07:59:40Z"
-  },
-  "done": false
-}

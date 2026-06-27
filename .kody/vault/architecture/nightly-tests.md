@@ -23,7 +23,7 @@ The `nightly-tests` executable smoke-tests the published `@kody-ade/kody-engine@
 Cases are grouped into three categories:
 
 - **CLI behavior** (5 cases): `help`, `--help`, `version`, `--version`, and unknown-command error.
-- **Profile-load validation** (18 cases): each top-level executable (`run`, `fix`, `fix-ci`, `resolve`, `review`, `plan`, `classify`, `spec`, `research`, `sync`, `init`, `watch-stale-prs`, `capability-scheduler`, `capability-tick`, `bug`, `feature`, `chore`, `ui-review`, `release`) is invoked and must either accept valid input or fail with a clear missing-flag error. A profile-load crash (e.g. `Cannot find module`) always fails.
+- **Profile-load validation** (18 cases): each top-level executable (`run`, `fix`, `fix-ci`, `resolve`, `review`, `plan`, `classify`, `spec`, `research`, `sync`, `init`, `watch-stale-prs`, `mission-scheduler`, `mission-tick`, `bug`, `feature`, `chore`, `ui-review`, `release`) is invoked and must either accept valid input or fail with a clear missing-flag error. A profile-load crash (e.g. `Cannot find module`) always fails.
 - **Config validation** (1 case): running `kody version` must not surface any `kody.config.json` schema errors.
 
 ## Assertion types

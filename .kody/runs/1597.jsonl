@@ -1,0 +1,1 @@
+{"runId":"taskify-1597-260410-121346","issueNumber":1597,"command":"rerun","startedAt":"2026-04-10T12:23:25.461Z","completedAt":"2026-04-10T12:49:43.489Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":"\""}

@@ -1,0 +1,1 @@
+{"runId":"2010-retest","issueNumber":2010,"command":"run","startedAt":"2026-04-11T20:50:42.164Z","completedAt":"2026-04-11T21:04:34.750Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}
