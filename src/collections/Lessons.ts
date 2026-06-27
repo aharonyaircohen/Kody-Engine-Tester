@@ -1,5 +1,14 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Course lesson content unit (text, video, or interactive) belonging to a module. Both a
+ * Payload `CollectionConfig` (admin/CMS) and a runtime `LessonStore` (services) are exported.
+ *
+ * **Trap — store/collection divergence:** `LessonStore` is the runtime source of truth used
+ * by the grading pipeline; the Payload collection is the admin edit surface. They are not
+ * automatically kept in sync — any schema change must be propagated to both.
+ */
 export type LessonType = 'text' | 'video' | 'interactive'
 
 export interface Lesson {

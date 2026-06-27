@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Student course enrollment records with a unique DB constraint (student + course).
+ *
+ * **Trap:** The `completedLessons` relationship array is write-once via the `beforeChange`
+ * hook — students cannot mark a lesson complete through Payload's API directly; the
+ * enrollment record must be updated through the service layer that correctly populates it.
+ */
 export type EnrollmentStatus = 'active' | 'completed' | 'dropped'
 
 export interface EnrollmentFields {
