@@ -11,6 +11,7 @@ interface Bus<TMessages extends Record<string, unknown>> {
   subscribeOnce<K extends keyof TMessages>(channel: K, handler: Handler<TMessages[K]>): () => void
   history<K extends keyof TMessages>(channel: K, limit?: number): TMessages[K][]
   clear(channel?: keyof TMessages): void
+  listenerCount(channel?: keyof TMessages): number
 }
 
 export function createBus<TMessages extends Record<string, unknown>>(): Bus<TMessages> {
@@ -74,6 +75,17 @@ export function createBus<TMessages extends Record<string, unknown>>(): Bus<TMes
       } else {
         historyMap.clear()
       }
+    },
+
+    listenerCount(channel?: keyof TMessages): number {
+      if (channel !== undefined) {
+        return getSubscribers(channel).size
+      }
+      let total = 0
+      for (const set of subscribers.values()) {
+        total += set.size
+      }
+      return total
     },
   }
 }
