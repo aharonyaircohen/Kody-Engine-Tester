@@ -1,0 +1,10 @@
+{
+  "name": "qa-verify",
+  "action": "qa-verify",
+  "describe": "# QA Fix Verification",
+  "agent": "qa",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "30m"
+}

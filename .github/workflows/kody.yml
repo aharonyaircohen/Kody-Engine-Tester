@@ -47,13 +47,21 @@ on:
         description: "Dashboard event ingest URL with inline ?token=... (chat mode)"
         type: string
         default: ""
+      capability:
+        description: "Capability to run for issue_number (default: run)."
+        type: string
+        default: ""
+      base:
+        description: "Stacked-PR base branch for issue_number (goal-tick stacked dispatch)."
+        type: string
+        default: ""
   issue_comment:
     types: [created]
   pull_request:
     types: [closed]
   schedule:
-    # Wakes every 30 minutes; kody fans out to whichever scheduled executables
-    # (job-scheduler, memorize, watch-stale-prs, …) match this tick.
+    # Wakes every 30 minutes; kody fans out to whichever scheduled capabilities
+    # match this tick.
     #
     # `memorize` writes to `.kody/vault/` and opens a daily PR. If your
     # `.gitignore` ignores `.kody/*`, add `!.kody/vault/` and `!.kody/vault/**`
@@ -66,13 +74,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 360
     concurrency:
-      group: kody-${{ inputs.sessionId || inputs.issue_number || github.event.issue.number || github.sha }}
+      group: kody-${{ inputs.sessionId || inputs.issue_number || inputs.capability || github.event.issue.number || github.sha }}
       cancel-in-progress: false
     permissions:
       issues: write
       pull-requests: write
       contents: write
       actions: read
+      id-token: write # OIDC: federate into Namespace remote builders
     steps:
       - uses: actions/checkout@v4
         with:
@@ -95,4 +104,4 @@ jobs:
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: npx -y -p @kody-ade/kody-engine@0.4.108 kody-engine
+        run: npx -y -p @kody-ade/kody-engine@latest kody-engine

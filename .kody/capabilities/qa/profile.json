@@ -1,0 +1,10 @@
+{
+  "name": "qa",
+  "action": "qa",
+  "describe": "# QA Changelog Verification",
+  "agent": "qa",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "30m"
+}

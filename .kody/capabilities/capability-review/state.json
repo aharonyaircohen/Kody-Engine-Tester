@@ -1,0 +1,28 @@
+{
+  "cursor": "reported",
+  "data": {
+    "lastRunISO": "2026-06-12T12:30:15Z",
+    "nextEligibleISO": "2026-06-12T18:30:15Z",
+    "cycle": 9,
+    "reviewed": ["approval-gate", "architecture-audit"],
+    "verdicts": {
+      "approval-gate": { "verdict": "broken", "note": "step 5 fans out to two comment writes (merge dispatch + silent audit); no internal cadence guard; nextEligibleISO never written to state; state file never created" },
+      "architecture-audit": { "verdict": "broken", "note": "disabled: true (idle by intent) but procedure broken — script .kody/scripts/architecture-audit-tick.py does not exist; state file never created" },
+      "bug": { "verdict": "healthy", "note": "passes every check; event-driven primitive, design is sound" },
+      "ceo-performance-review": { "verdict": "broken", "note": "no state file ever created; procedure says engine writes .kody/capabilities/ceo-performance-review/state.json but it does not exist; no commit history for any state file" },
+      "chore": { "verdict": "healthy", "note": "passes every check; event-driven primitive, design is sound" },
+      "classify": { "verdict": "healthy", "note": "passes every check; event-driven primitive, design is sound" },
+      "cleanup-branches": { "verdict": "broken", "note": "one-action-max violated: procedure fans out to N branch deletions per tick; no per-branch gating; state file never created; never run" },
+      "clear-empty-goals": { "verdict": "broken", "note": "no procedure; no state; never ticked; jargon goal (\"gods\")" },
+      "coverage-floor": { "verdict": "broken", "note": "procedure calls missing script (.kody/scripts/coverage-floor-tick.py); state never created; cadence inconsistency (every: 1d vs nextEligibleISO: +20h in state contract); disabled: true (idle by intent)" },
+      "dead-code-sweep": { "verdict": "broken", "note": "script does not exist (.kody/scripts/dead-code-sweep-tick.py); one-action-max violated: state write + commit + push in one tick; no kody-job-next-state block in procedure body; disabled: true (idle by intent)" },
+      "dependency-bump": { "verdict": "broken", "note": "script .kody/scripts/dependency-bump-tick.py does not exist; state never created; procedure cannot execute; disabled: true (idle by intent)" },
+      "fix": { "verdict": "healthy", "note": "passes every check; event-driven primitive, design is sound" },
+      "fix-ci": { "verdict": "healthy", "note": "passes every check; event-driven primitive, design is sound" },
+      "flaky-test-quarantine": { "verdict": "broken", "note": "procedure calls .kody/scripts/flaky-test-quarantine-tick.py which does not exist; state file never created; disabled: true (idle by intent)" },
+      "qa-sweep": { "verdict": "broken", "note": "state frozen 9 days; no sweep ran" },
+      "type-debt": { "verdict": "broken", "note": "procedure calls .kody/scripts/type-debt-tick.py which does not exist; state file never created; disabled: true (idle by intent)" }
+    }
+  },
+  "done": false
+}
