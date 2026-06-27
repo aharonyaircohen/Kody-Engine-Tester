@@ -62,6 +62,14 @@ describe('CourseSearchService', () => {
       expect(whereStr).not.toContain('description')
     })
 
+    it('does not add search condition when query is whitespace-only', async () => {
+      await service.searchCourses('   ')
+      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      const whereStr = JSON.stringify(call.where) ?? ''
+      expect(whereStr).not.toContain('title')
+      expect(whereStr).not.toContain('description')
+    })
+
     it('returns matching courses', async () => {
       mockPayload = createMockPayload({ docs: [sampleCourse], totalDocs: 1, totalPages: 1, page: 1 })
       service = new CourseSearchService(mockPayload as unknown as Payload)
