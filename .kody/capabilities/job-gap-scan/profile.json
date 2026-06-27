@@ -1,0 +1,9 @@
+{
+  "name": "job-gap-scan",
+  "action": "job-gap-scan",
+  "describe": "# job-gap-scan",
+  "agent": "ceo",
+  "mentions": [
+    "aguyaharonyair"
+  ]
+}
