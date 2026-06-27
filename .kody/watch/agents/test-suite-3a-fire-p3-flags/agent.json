@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-3a-fire-p3-flags",
+  "description": "Fire Phase 3 flag-variant tests (T10-T17, 8 tests) at 02:00 UTC. Launches P3T12/P3T13 second-step monitors.",
+  "cron": "0 2 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}

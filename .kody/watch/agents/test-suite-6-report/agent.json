@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-6-report",
+  "description": "Post test-suite digest — runs nightly at 06:00. Reads the results file written by the wait agent and posts a markdown digest comment to the dedicated test-suite digest issue.",
+  "cron": "0 6 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 120000
+}
