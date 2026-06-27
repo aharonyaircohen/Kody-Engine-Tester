@@ -1,8 +1,8 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextRequest } from 'next/server'
-import { gradeQuiz, type Quiz, type QuizAnswer } from '@/services/quiz-grader'
 import { withAuth } from '@/auth/withAuth'
+import { GradingEngine, type Quiz, type QuizAnswer } from '@/services/grading-engine'
 
 export const POST = withAuth(
   async (
@@ -50,6 +50,7 @@ export const POST = withAuth(
     }
 
     const payload = await getPayload({ config: configPromise })
+    const engine = new GradingEngine({ payload })
 
     // Fetch the quiz from Payload
     const quizDoc = await payload.findByID({
@@ -108,24 +109,11 @@ export const POST = withAuth(
       )
     }
 
-    // Grade the quiz
-    const result = gradeQuiz(quiz, answers)
+    // Grade the quiz using the engine
+    const result = engine.gradeQuiz(quiz, answers)
 
-    // Record the attempt
-    await payload.create({
-      collection: 'quiz-attempts' as any,
-      data: {
-        user: user.id,
-        quiz: id,
-        score: result.score,
-        passed: result.passed,
-        answers: answers.map((a) => ({
-          questionIndex: a.questionIndex,
-          answer: String(a.answer),
-        })),
-        completedAt: new Date().toISOString(),
-      } as any,
-    })
+    // Record the attempt using the engine
+    await engine.recordQuizAttempt(String(user.id), id, result, answers)
 
     return new Response(JSON.stringify(result), {
       status: 200,
