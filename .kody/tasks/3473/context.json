@@ -1,0 +1,21 @@
+{
+  "taskId": "3473",
+  "taskType": "issue",
+  "target": "3473-add-a-summarize-stats-utility-apistats-route-stats",
+  "outcome": "success",
+  "exitCode": 0,
+  "reason": "All three deliverables implemented with tests: summarize utility (9 tests), /api/stats route (4 tests), StatsCard component (5 tests). All 130 test files pass.",
+  "prUrl": null,
+  "runUrl": null,
+  "filesTouched": [
+    "src/utils/summarize.ts",
+    "src/utils/summarize.test.ts",
+    "src/app/api/stats/route.ts",
+    "src/app/api/stats/route.test.ts",
+    "src/components/stats/StatsCard.tsx",
+    "src/components/stats/StatsCard.test.tsx"
+  ],
+  "sessionLog": ".kody/sessions/3473.jsonl",
+  "startedAt": "2026-05-21T15:49:00.000Z",
+  "finishedAt": "2026-05-21T16:12:00.000Z"
+}

@@ -1,0 +1,8 @@
+[
+  {
+    "title": "Verify /api/stats query syntax for hasMany relationship",
+    "body": "The route uses `completedLessons: { in: [lessonId] }` to query enrollments containing a specific lesson. Payload's query syntax for hasMany array membership should be verified against the actual Payload version — the `in` operator may not be the correct way to check if a hasMany relationship array contains a specific ID.",
+    "rationale": "If the query syntax is wrong, the stats route returns incorrect completion counts silently.",
+    "priority": "medium"
+  }
+]
