@@ -1139,3 +1139,68 @@ For deeper exploration of specific topics, refer to the context files located in
 - GitHub: https://github.com/payloadcms/payload
 - Examples: https://github.com/payloadcms/payload/tree/main/examples
 - Templates: https://github.com/payloadcms/payload/tree/main/templates
+
+---
+
+## Kody memory protocol
+
+You have a persistent memory at `.kody/memory/`. `INDEX.md` is the cheap
+table of contents; read it at the start of any session and read individual
+memory files only when they look relevant. Never edit memory files
+directly — they are owned by the `task-memory-extractor` job.
+
+### When to record a memory
+
+- **Preference** — you learn how the operator wants kody to behave.
+- **Decision** — a non-obvious choice was made (and especially *why*).
+- **Lesson** — you tried something that broke or surprised you; future
+  sessions should not repeat it.
+
+If the thing is already in the code, the commit history, or current
+session context, don't bother — memory is for things that would
+otherwise evaporate.
+
+### What not to record
+
+- The current shape of the code (it's in the code).
+- A summary of what you just committed (it's in `git log`).
+- Ephemeral task state (already in `*.state.json`).
+- Information already documented in `AGENTS.md` or `CLAUDE.md`.
+
+### Per-task memory artifacts (REQUIRED at task end)
+
+Before you finish a task (issue mode, chat session, or scheduled job
+tick), write two small files into `.kody/tasks/<task-id>/`:
+
+- `<task-id>` is the issue number (issue mode), the sessionId (chat),
+  or the job slug (scheduled job).
+- `context.json` — task metadata: `taskId`, `taskType`, `outcome`
+  (`completed | failed | partial`), `filesTouched` (array, paths only),
+  `startedAt`, `finishedAt` (UTC ISO).
+- `memory-recs.json` — array of memory recommendations you saw while
+  doing the task. Each entry has:
+
+  ```json
+  {
+    "type": "preference | decision | lesson",
+    "name": "kebab-case-slug",
+    "title": "...",
+    "hook": "one-line",
+    "body": "...",
+    "why": "why is this load-bearing (one line)",
+    "how_to_apply": "when does this rule kick in (one line)",
+    "confidence": "high | medium | low"
+  }
+  ```
+
+  - Output `[]` if there's nothing worth remembering. **Most tasks are
+    routine** — `[]` is the common case, not a failure.
+  - High-confidence means: surprising, load-bearing, stable for 6+
+    months, and not already captured in code/git/memory.
+  - **You write the recommendations only.** A separate
+    `task-memory-extractor` job decides which ones become real
+    memories (it dedupes against existing memory, drops sticky notes
+    for high-confidence picks, archives the rest).
+
+Commit both files alongside your task's normal commits. Do not also
+drop sticky notes for the same content — that would double-file.
