@@ -1,3 +1,17 @@
+/**
+ * @ai-summary
+ * Validates and persists rubric-based grading for assignments, enforcing
+ * instructor/admin permissions and a no-regrade guard.
+ *
+ * WHY: Centralizes grading validation logic (rubric completeness, score bounds,
+ * permission checks) so it cannot be bypassed by calling updateSubmission directly.
+ *
+ * TRAP: Re-grading is blocked only when the submission status is 'graded' — if
+ * status is stored differently (e.g. null, 'pending'), the guard does not fire.
+ * Also does NOT check the assignment dueDate for lateness — only compares
+ * submittedAt vs dueDate; a submission received after the deadline but processed
+ * later is not flagged unless it arrived after the cut-off.
+ */
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface RubricCriterion {
