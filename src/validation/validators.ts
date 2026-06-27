@@ -7,12 +7,12 @@ export const required = (): Validator<unknown> => (value) =>
     : { valid: false, error: 'This field is required' }
 
 export const minLength = (n: number): Validator<string> => (value) =>
-  String(value).length >= n
+  String(value).trim().length >= n
     ? { valid: true }
     : { valid: false, error: `Must be at least ${n} characters` }
 
 export const maxLength = (n: number): Validator<string> => (value) =>
-  String(value).length <= n
+  String(value).trim().length <= n
     ? { valid: true }
     : { valid: false, error: `Must be at most ${n} characters` }
 
