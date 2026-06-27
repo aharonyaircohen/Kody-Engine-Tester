@@ -1,0 +1,7 @@
+{
+  "name": "security-audit",
+  "action": "security-audit",
+  "describe": "Daily security posture sweep; opens/tracks a kody:security-audit issue.",
+  "agent": "cto",
+  "every": "1d"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "flaky-test-quarantine",
+  "action": "flaky-test-quarantine",
+  "describe": "flaky test quarantine"
+}

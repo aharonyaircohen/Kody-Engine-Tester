@@ -1,0 +1,7 @@
+{
+  "name": "task-memory-extractor",
+  "action": "task-memory-extractor",
+  "describe": "# task-memory-extractor",
+  "agent": "coo",
+  "every": "30m"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "test-greet-chain",
+  "title": "Add greet utilities and chain them",
+  "description": "Three dependent tasks that must build on top of each other. Validates the shared goal-<id> branch flow shipped in @kody-ade/kody-engine v0.4.8.",
+  "state": "done",
+  "createdAt": "2026-05-08T11:55:00Z",
+  "updatedAt": "2026-05-08T13:57:49.629868Z",
+  "lastDispatchedIssue": 3199,
+  "completedAt": "2026-05-08T13:57:49.629868Z",
+  "goalPrUrl": "https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3236"
+}

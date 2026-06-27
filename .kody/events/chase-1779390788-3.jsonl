@@ -1,0 +1,2 @@
+{"event":"chat.ready","payload":{"sessionId":"chase-1779390788-3","startedAt":"2026-05-21T19:13:41.220Z","idleExitMs":120000,"hardCapMs":300000},"runId":"chat-chase-1779390788-3-ready","emittedAt":"2026-05-21T19:13:41.232Z"}
+{"event":"chat.exit","payload":{"sessionId":"chase-1779390788-3","reason":"idle-timeout","turnsCompleted":0,"endedAt":"2026-05-21T19:15:46.126Z"},"runId":"chat-chase-1779390788-3-exit","emittedAt":"2026-05-21T19:15:46.126Z"}
