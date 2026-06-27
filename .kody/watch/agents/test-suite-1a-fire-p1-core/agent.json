@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-1a-fire-p1-core",
+  "description": "Fire Phase 1 core tests (T01-T22, 8 tests) at 00:00 UTC. Launches P1T03 auto-approve monitor.",
+  "cron": "0 0 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}

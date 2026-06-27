@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-2a-fire-p2-review-fix",
+  "description": "Fire Phase 2 review/fix/approve tests (5 tests) at 01:00 UTC. Needs Phase 1 PRs.",
+  "cron": "0 1 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}

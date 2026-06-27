@@ -1,0 +1,1353 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e9]:
+        - button "Toggle navigation" [ref=e11] [cursor=pointer]
+        - link "Homepage" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+        - generic [ref=e20]:
+          - link "Sign in" [ref=e21] [cursor=pointer]:
+            - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Faharonyaircohen%2FKody-Engine-Tester
+          - button "Appearance settings" [ref=e24] [cursor=pointer]:
+            - img
+  - main [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - link "aharonyaircohen" [ref=e36] [cursor=pointer]:
+            - /url: /aharonyaircohen
+          - generic [ref=e37]: /
+          - strong [ref=e38]:
+            - link "Kody-Engine-Tester" [ref=e39] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester
+          - generic [ref=e40]: Public
+        - generic [ref=e41]:
+          - list:
+            - listitem [ref=e42]:
+              - link "You must be signed in to change notification settings" [ref=e43] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e44]
+                - text: Notifications
+            - listitem [ref=e46]:
+              - link "Fork 0" [ref=e47] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e48]
+                - text: Fork
+                - generic "0" [ref=e50]
+            - listitem [ref=e51]:
+              - link "You must be signed in to star a repository" [ref=e53] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e54]
+                - text: Star
+                - generic "0 users starred this repository" [ref=e56]: "0"
+      - navigation "Repository" [ref=e57]:
+        - list [ref=e58]:
+          - listitem [ref=e59]:
+            - link "Code" [ref=e60] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester
+              - img [ref=e61]
+              - generic [ref=e63]: Code
+          - listitem [ref=e64]:
+            - link "Issues 60" [ref=e65] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/issues
+              - img [ref=e66]
+              - generic [ref=e69]: Issues
+              - generic "60" [ref=e70]
+          - listitem [ref=e71]:
+            - link "Pull requests 16" [ref=e72] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/pulls
+              - img [ref=e73]
+              - generic [ref=e75]: Pull requests
+              - generic "16" [ref=e76]
+          - listitem [ref=e77]:
+            - link "Actions" [ref=e78] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/actions
+              - img [ref=e79]
+              - generic [ref=e81]: Actions
+          - listitem [ref=e82]:
+            - link "Projects" [ref=e83] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/projects
+              - img [ref=e84]
+              - generic [ref=e86]: Projects
+          - listitem [ref=e87]
+          - listitem [ref=e88]
+        - button "Additional navigation options" [ref=e92] [cursor=pointer]:
+          - img
+    - generic [ref=e105]:
+      - heading "aharonyaircohen/Kody-Engine-Tester" [level=1] [ref=e107]
+      - generic [ref=e108]:
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - button "main branch" [ref=e115] [cursor=pointer]:
+                - generic [ref=e116]:
+                  - generic [ref=e118]:
+                    - img [ref=e120]
+                    - generic [ref=e123]: main
+                  - generic:
+                    - img
+              - generic [ref=e124]:
+                - link "Go to Branches page" [ref=e125] [cursor=pointer]:
+                  - /url: /aharonyaircohen/Kody-Engine-Tester/branches
+                  - img [ref=e126]
+                - link "Go to Tags page" [ref=e128] [cursor=pointer]:
+                  - /url: /aharonyaircohen/Kody-Engine-Tester/tags
+                  - img [ref=e129]
+            - generic [ref=e131]:
+              - button "Go to file" [ref=e134] [cursor=pointer]:
+                - generic [ref=e136]: Go to file
+              - button "Code" [ref=e137] [cursor=pointer]:
+                - generic [ref=e138]:
+                  - generic:
+                    - img
+                  - generic [ref=e139]: Code
+                  - generic:
+                    - img
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - heading "Folders and files" [level=2] [ref=e142]
+              - table "Folders and files" [ref=e143]:
+                - rowgroup:
+                  - row "Name Last commit message Last commit date":
+                    - columnheader "Name"
+                    - columnheader "Last commit message":
+                      - generic "Last commit message"
+                    - columnheader "Last commit date":
+                      - generic "Last commit date"
+                - rowgroup [ref=e144]:
+                  - 'row "Latest commit aguyaharonyair commits by aguyaharonyair ops(kody): sync kody.yml with engine template (v0.4.x, @latest) success Commit d4c3e0f · May 7, 202631 minutes ago History View commit history for this file." [ref=e145]':
+                    - 'cell "Latest commit aguyaharonyair commits by aguyaharonyair ops(kody): sync kody.yml with engine template (v0.4.x, @latest) success Commit d4c3e0f · May 7, 202631 minutes ago History View commit history for this file." [ref=e146]':
+                      - generic [ref=e147]:
+                        - heading "Latest commit" [level=2] [ref=e148]
+                        - generic [ref=e149]:
+                          - generic [ref=e151]:
+                            - link "aguyaharonyair" [ref=e152] [cursor=pointer]:
+                              - /url: /aguyaharonyair
+                              - img "aguyaharonyair" [ref=e153]
+                            - link "commits by aguyaharonyair" [ref=e154] [cursor=pointer]:
+                              - /url: /aharonyaircohen/Kody-Engine-Tester/commits?author=aguyaharonyair
+                              - text: aguyaharonyair
+                          - generic [ref=e155]:
+                            - generic [ref=e157]:
+                              - 'link "ops(kody): sync kody.yml with engine template (v0.4.x," [ref=e158] [cursor=pointer]':
+                                - /url: /aharonyaircohen/Kody-Engine-Tester/commit/d4c3e0f056d4eef303e85bc560cd3be5a593cd83
+                              - link "@latest" [ref=e159] [cursor=pointer]:
+                                - /url: https://github.com/latest
+                              - link ")" [ref=e160] [cursor=pointer]:
+                                - /url: /aharonyaircohen/Kody-Engine-Tester/commit/d4c3e0f056d4eef303e85bc560cd3be5a593cd83
+                            - button "success" [ref=e161] [cursor=pointer]:
+                              - img [ref=e162]
+                        - generic [ref=e164]:
+                          - generic [ref=e166]:
+                            - link "Commit d4c3e0f" [ref=e167] [cursor=pointer]:
+                              - /url: /aharonyaircohen/Kody-Engine-Tester/commit/d4c3e0f056d4eef303e85bc560cd3be5a593cd83
+                              - text: d4c3e0f
+                            - text: ·
+                            - generic "May 7, 2026, 7:08 PM UTC" [ref=e168]: May 7, 202631 minutes ago
+                          - generic [ref=e169]:
+                            - heading "History" [level=2] [ref=e170]
+                            - link "View commit history for this file." [ref=e172] [cursor=pointer]:
+                              - /url: /aharonyaircohen/Kody-Engine-Tester/commits/main/
+                              - generic [ref=e173]:
+                                - generic:
+                                  - img
+                  - 'row ".adal/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e174]':
+                    - cell ".adal/skills, (Directory)" [ref=e175]:
+                      - generic [ref=e176]:
+                        - img [ref=e177]
+                        - link ".adal/skills, (Directory)" [ref=e182] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.adal/skills
+                          - text: .adal/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e183]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e186] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e187]:
+                      - generic [ref=e188]: Apr 4, 2026last month
+                  - 'row ".agents/skills, (Directory) feat(1998-retrigger-234839): implement task Apr 11, 2026last month" [ref=e189]':
+                    - cell ".agents/skills, (Directory)" [ref=e190]:
+                      - generic [ref=e191]:
+                        - img [ref=e192]
+                        - link ".agents/skills, (Directory)" [ref=e197] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.agents/skills
+                          - text: .agents/skills
+                    - 'cell "feat(1998-retrigger-234839): implement task" [ref=e198]':
+                      - 'link "feat(1998-retrigger-234839): implement task" [ref=e201] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/c71eda67681aa72de537354183784faa4279da0b
+                    - cell "Apr 11, 2026last month" [ref=e202]:
+                      - generic [ref=e203]: Apr 11, 2026last month
+                  - 'row ".augment/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e204]':
+                    - cell ".augment/skills, (Directory)" [ref=e205]:
+                      - generic [ref=e206]:
+                        - img [ref=e207]
+                        - link ".augment/skills, (Directory)" [ref=e212] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.augment/skills
+                          - text: .augment/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e213]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e216] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e217]:
+                      - generic [ref=e218]: Apr 4, 2026last month
+                  - 'row ".bob/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e219]':
+                    - cell ".bob/skills, (Directory)" [ref=e220]:
+                      - generic [ref=e221]:
+                        - img [ref=e222]
+                        - link ".bob/skills, (Directory)" [ref=e227] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.bob/skills
+                          - text: .bob/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e228]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e231] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e232]:
+                      - generic [ref=e233]: Apr 4, 2026last month
+                  - 'row ".claude, (Directory) chore: Add Kody Engine workflow and config Apr 16, 20263 weeks ago" [ref=e234]':
+                    - cell ".claude, (Directory)" [ref=e235]:
+                      - generic [ref=e236]:
+                        - img [ref=e237]
+                        - link ".claude, (Directory)" [ref=e242] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.claude
+                          - text: .claude
+                    - 'cell "chore: Add Kody Engine workflow and config" [ref=e243]':
+                      - 'link "chore: Add Kody Engine workflow and config" [ref=e246] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/ca2d388d7fd4f19a7016132138d94a814163a631
+                    - cell "Apr 16, 20263 weeks ago" [ref=e247]:
+                      - generic [ref=e248]: Apr 16, 20263 weeks ago
+                  - 'row ".codebuddy/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e249]':
+                    - cell ".codebuddy/skills, (Directory)" [ref=e250]:
+                      - generic [ref=e251]:
+                        - img [ref=e252]
+                        - link ".codebuddy/skills, (Directory)" [ref=e257] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.codebuddy/skills
+                          - text: .codebuddy/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e258]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e261] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e262]:
+                      - generic [ref=e263]: Apr 4, 2026last month
+                  - 'row ".commandcode/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e264]':
+                    - cell ".commandcode/skills, (Directory)" [ref=e265]:
+                      - generic [ref=e266]:
+                        - img [ref=e267]
+                        - link ".commandcode/skills, (Directory)" [ref=e272] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.commandcode/skills
+                          - text: .commandcode/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e273]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e276] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e277]:
+                      - generic [ref=e278]: Apr 4, 2026last month
+                  - 'row ".continue/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e279]':
+                    - cell ".continue/skills, (Directory)" [ref=e280]:
+                      - generic [ref=e281]:
+                        - img [ref=e282]
+                        - link ".continue/skills, (Directory)" [ref=e287] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.continue/skills
+                          - text: .continue/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e288]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e291] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e292]:
+                      - generic [ref=e293]: Apr 4, 2026last month
+                  - 'row ".cortex/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e294]':
+                    - cell ".cortex/skills, (Directory)" [ref=e295]:
+                      - generic [ref=e296]:
+                        - img [ref=e297]
+                        - link ".cortex/skills, (Directory)" [ref=e302] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.cortex/skills
+                          - text: .cortex/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e303]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e306] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e307]:
+                      - generic [ref=e308]: Apr 4, 2026last month
+                  - 'row ".crush/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e309]':
+                    - cell ".crush/skills, (Directory)" [ref=e310]:
+                      - generic [ref=e311]:
+                        - img [ref=e312]
+                        - link ".crush/skills, (Directory)" [ref=e317] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.crush/skills
+                          - text: .crush/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e318]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e321] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e322]:
+                      - generic [ref=e323]: Apr 4, 2026last month
+                  - 'row ".cursor/rules, (Directory) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e324]':
+                    - cell ".cursor/rules, (Directory)" [ref=e325]:
+                      - generic [ref=e326]:
+                        - img [ref=e327]
+                        - link ".cursor/rules, (Directory)" [ref=e332] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.cursor/rules
+                          - text: .cursor/rules
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e333]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e336] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e337]:
+                      - generic [ref=e338]: Mar 24, 20262 months ago
+                  - 'row ".factory/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e339]':
+                    - cell ".factory/skills, (Directory)" [ref=e340]:
+                      - generic [ref=e341]:
+                        - img [ref=e342]
+                        - link ".factory/skills, (Directory)" [ref=e347] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.factory/skills
+                          - text: .factory/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e348]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e351] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e352]:
+                      - generic [ref=e353]: Apr 4, 2026last month
+                  - 'row ".github, (Directory) ops(kody): sync kody.yml with engine template (v0.4.x, @latest) May 7, 202631 minutes ago" [ref=e354]':
+                    - cell ".github, (Directory)" [ref=e355]:
+                      - generic [ref=e356]:
+                        - img [ref=e357]
+                        - link ".github, (Directory)" [ref=e362] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.github
+                          - text: .github
+                    - 'cell "ops(kody): sync kody.yml with engine template (v0.4.x, @latest)" [ref=e363]':
+                      - generic [ref=e365]:
+                        - 'link "ops(kody): sync kody.yml with engine template (v0.4.x," [ref=e366] [cursor=pointer]':
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/d4c3e0f056d4eef303e85bc560cd3be5a593cd83
+                        - link "@latest" [ref=e367] [cursor=pointer]:
+                          - /url: https://github.com/latest
+                        - link ")" [ref=e368] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/d4c3e0f056d4eef303e85bc560cd3be5a593cd83
+                    - cell "May 7, 202631 minutes ago" [ref=e369]:
+                      - generic [ref=e370]: May 7, 202631 minutes ago
+                  - 'row ".goose/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e371]':
+                    - cell ".goose/skills, (Directory)" [ref=e372]:
+                      - generic [ref=e373]:
+                        - img [ref=e374]
+                        - link ".goose/skills, (Directory)" [ref=e379] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.goose/skills
+                          - text: .goose/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e380]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e383] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e384]:
+                      - generic [ref=e385]: Apr 4, 2026last month
+                  - 'row ".iflow/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e386]':
+                    - cell ".iflow/skills, (Directory)" [ref=e387]:
+                      - generic [ref=e388]:
+                        - img [ref=e389]
+                        - link ".iflow/skills, (Directory)" [ref=e394] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.iflow/skills
+                          - text: .iflow/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e395]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e398] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e399]:
+                      - generic [ref=e400]: Apr 4, 2026last month
+                  - 'row ".junie/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e401]':
+                    - cell ".junie/skills, (Directory)" [ref=e402]:
+                      - generic [ref=e403]:
+                        - img [ref=e404]
+                        - link ".junie/skills, (Directory)" [ref=e409] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.junie/skills
+                          - text: .junie/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e410]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e413] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e414]:
+                      - generic [ref=e415]: Apr 4, 2026last month
+                  - 'row ".kilocode/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e416]':
+                    - cell ".kilocode/skills, (Directory)" [ref=e417]:
+                      - generic [ref=e418]:
+                        - img [ref=e419]
+                        - link ".kilocode/skills, (Directory)" [ref=e424] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.kilocode/skills
+                          - text: .kilocode/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e425]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e428] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e429]:
+                      - generic [ref=e430]: Apr 4, 2026last month
+                  - 'row ".kiro/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e431]':
+                    - cell ".kiro/skills, (Directory)" [ref=e432]:
+                      - generic [ref=e433]:
+                        - img [ref=e434]
+                        - link ".kiro/skills, (Directory)" [ref=e439] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.kiro/skills
+                          - text: .kiro/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e440]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e443] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e444]:
+                      - generic [ref=e445]: Apr 4, 2026last month
+                  - 'row ".kode/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e446]':
+                    - cell ".kode/skills, (Directory)" [ref=e447]:
+                      - generic [ref=e448]:
+                        - img [ref=e449]
+                        - link ".kode/skills, (Directory)" [ref=e454] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.kode/skills
+                          - text: .kode/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e455]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e458] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e459]:
+                      - generic [ref=e460]: Apr 4, 2026last month
+                  - 'row ".kody-engine, (Directory) chore: update chat session state Apr 15, 20263 weeks ago" [ref=e461]':
+                    - cell ".kody-engine, (Directory)" [ref=e462]:
+                      - generic [ref=e463]:
+                        - img [ref=e464]
+                        - link ".kody-engine, (Directory)" [ref=e469] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.kody-engine
+                          - text: .kody-engine
+                    - 'cell "chore: update chat session state" [ref=e470]':
+                      - 'link "chore: update chat session state" [ref=e473] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/c040b9c5fc6eba3f1637c465b02803581cfd8f7c
+                    - cell "Apr 15, 20263 weeks ago" [ref=e474]:
+                      - generic [ref=e475]: Apr 15, 20263 weeks ago
+                  - 'row ".kody, (Directory) chat: interactive turn for live-1778147892267-r293op May 7, 20269 hours ago" [ref=e476]':
+                    - cell ".kody, (Directory)" [ref=e477]:
+                      - generic [ref=e478]:
+                        - img [ref=e479]
+                        - link ".kody, (Directory)" [ref=e484] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.kody
+                          - text: .kody
+                    - 'cell "chat: interactive turn for live-1778147892267-r293op" [ref=e485]':
+                      - 'link "chat: interactive turn for live-1778147892267-r293op" [ref=e488] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/aff8233b5d23c3f8302e91eb41e743d408bf5f43
+                    - cell "May 7, 20269 hours ago" [ref=e489]:
+                      - generic [ref=e490]: May 7, 20269 hours ago
+                  - 'row ".mcpjam/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e491]':
+                    - cell ".mcpjam/skills, (Directory)" [ref=e492]:
+                      - generic [ref=e493]:
+                        - img [ref=e494]
+                        - link ".mcpjam/skills, (Directory)" [ref=e499] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.mcpjam/skills
+                          - text: .mcpjam/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e500]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e503] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e504]:
+                      - generic [ref=e505]: Apr 4, 2026last month
+                  - 'row ".mux/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e506]':
+                    - cell ".mux/skills, (Directory)" [ref=e507]:
+                      - generic [ref=e508]:
+                        - img [ref=e509]
+                        - link ".mux/skills, (Directory)" [ref=e514] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.mux/skills
+                          - text: .mux/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e515]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e518] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e519]:
+                      - generic [ref=e520]: Apr 4, 2026last month
+                  - 'row ".neovate/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e521]':
+                    - cell ".neovate/skills, (Directory)" [ref=e522]:
+                      - generic [ref=e523]:
+                        - img [ref=e524]
+                        - link ".neovate/skills, (Directory)" [ref=e529] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.neovate/skills
+                          - text: .neovate/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e530]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e533] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e534]:
+                      - generic [ref=e535]: Apr 4, 2026last month
+                  - 'row ".openhands/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e536]':
+                    - cell ".openhands/skills, (Directory)" [ref=e537]:
+                      - generic [ref=e538]:
+                        - img [ref=e539]
+                        - link ".openhands/skills, (Directory)" [ref=e544] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.openhands/skills
+                          - text: .openhands/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e545]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e548] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e549]:
+                      - generic [ref=e550]: Apr 4, 2026last month
+                  - 'row ".pi/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e551]':
+                    - cell ".pi/skills, (Directory)" [ref=e552]:
+                      - generic [ref=e553]:
+                        - img [ref=e554]
+                        - link ".pi/skills, (Directory)" [ref=e559] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.pi/skills
+                          - text: .pi/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e560]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e563] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e564]:
+                      - generic [ref=e565]: Apr 4, 2026last month
+                  - row ".playwright-mcp, (Directory) Merge remote-tracking branch 'origin/417--test-suite-add-a-base64-enc… Apr 5, 2026last month" [ref=e566]:
+                    - cell ".playwright-mcp, (Directory)" [ref=e567]:
+                      - generic [ref=e568]:
+                        - img [ref=e569]
+                        - link ".playwright-mcp, (Directory)" [ref=e574] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.playwright-mcp
+                          - text: .playwright-mcp
+                    - cell "Merge remote-tracking branch 'origin/417--test-suite-add-a-base64-enc…" [ref=e575]:
+                      - link "Merge remote-tracking branch 'origin/417--test-suite-add-a-base64-enc…" [ref=e578] [cursor=pointer]:
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/b68c39541995a36dd9996de2b909a2f6ebc27e2d
+                    - cell "Apr 5, 2026last month" [ref=e579]:
+                      - generic [ref=e580]: Apr 5, 2026last month
+                  - 'row ".pochi/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e581]':
+                    - cell ".pochi/skills, (Directory)" [ref=e582]:
+                      - generic [ref=e583]:
+                        - img [ref=e584]
+                        - link ".pochi/skills, (Directory)" [ref=e589] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.pochi/skills
+                          - text: .pochi/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e590]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e593] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e594]:
+                      - generic [ref=e595]: Apr 4, 2026last month
+                  - 'row ".qoder/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e596]':
+                    - cell ".qoder/skills, (Directory)" [ref=e597]:
+                      - generic [ref=e598]:
+                        - img [ref=e599]
+                        - link ".qoder/skills, (Directory)" [ref=e604] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.qoder/skills
+                          - text: .qoder/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e605]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e608] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e609]:
+                      - generic [ref=e610]: Apr 4, 2026last month
+                  - 'row ".qwen/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e611]':
+                    - cell ".qwen/skills, (Directory)" [ref=e612]:
+                      - generic [ref=e613]:
+                        - img [ref=e614]
+                        - link ".qwen/skills, (Directory)" [ref=e619] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.qwen/skills
+                          - text: .qwen/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e620]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e623] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e624]:
+                      - generic [ref=e625]: Apr 4, 2026last month
+                  - 'row ".roo/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e626]':
+                    - cell ".roo/skills, (Directory)" [ref=e627]:
+                      - generic [ref=e628]:
+                        - img [ref=e629]
+                        - link ".roo/skills, (Directory)" [ref=e634] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.roo/skills
+                          - text: .roo/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e635]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e638] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e639]:
+                      - generic [ref=e640]: Apr 4, 2026last month
+                  - 'row ".tasks, (Directory) fix(test-gh-issue1): address review Mar 27, 20262 months ago" [ref=e641]':
+                    - cell ".tasks, (Directory)" [ref=e642]:
+                      - generic [ref=e643]:
+                        - img [ref=e644]
+                        - link ".tasks, (Directory)" [ref=e649] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.tasks
+                          - text: .tasks
+                    - 'cell "fix(test-gh-issue1): address review" [ref=e650]':
+                      - 'link "fix(test-gh-issue1): address review" [ref=e653] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/592f20cd156de3549bbc11df8a1e313e884f8e22
+                    - cell "Mar 27, 20262 months ago" [ref=e654]:
+                      - generic [ref=e655]: Mar 27, 20262 months ago
+                  - 'row ".trae/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e656]':
+                    - cell ".trae/skills, (Directory)" [ref=e657]:
+                      - generic [ref=e658]:
+                        - img [ref=e659]
+                        - link ".trae/skills, (Directory)" [ref=e664] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.trae/skills
+                          - text: .trae/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e665]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e668] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e669]:
+                      - generic [ref=e670]: Apr 4, 2026last month
+                  - 'row ".vibe/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e671]':
+                    - cell ".vibe/skills, (Directory)" [ref=e672]:
+                      - generic [ref=e673]:
+                        - img [ref=e674]
+                        - link ".vibe/skills, (Directory)" [ref=e679] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.vibe/skills
+                          - text: .vibe/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e680]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e683] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e684]:
+                      - generic [ref=e685]: Apr 4, 2026last month
+                  - 'row ".vscode, (Directory) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e686]':
+                    - cell ".vscode, (Directory)" [ref=e687]:
+                      - generic [ref=e688]:
+                        - img [ref=e689]
+                        - link ".vscode, (Directory)" [ref=e694] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.vscode
+                          - text: .vscode
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e695]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e698] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e699]:
+                      - generic [ref=e700]: Mar 24, 20262 months ago
+                  - 'row ".windsurf/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e701]':
+                    - cell ".windsurf/skills, (Directory)" [ref=e702]:
+                      - generic [ref=e703]:
+                        - img [ref=e704]
+                        - link ".windsurf/skills, (Directory)" [ref=e709] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.windsurf/skills
+                          - text: .windsurf/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e710]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e713] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e714]:
+                      - generic [ref=e715]: Apr 4, 2026last month
+                  - 'row ".zencoder/skills, (Directory) fix(403-260404-211531): address review Apr 4, 2026last month" [ref=e716]':
+                    - cell ".zencoder/skills, (Directory)" [ref=e717]:
+                      - generic [ref=e718]:
+                        - img [ref=e719]
+                        - link ".zencoder/skills, (Directory)" [ref=e724] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/.zencoder/skills
+                          - text: .zencoder/skills
+                    - 'cell "fix(403-260404-211531): address review" [ref=e725]':
+                      - 'link "fix(403-260404-211531): address review" [ref=e728] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/9a8a5c4a632899bbdc0b49b1224eb7ff2a88376d
+                    - cell "Apr 4, 2026last month" [ref=e729]:
+                      - generic [ref=e730]: Apr 4, 2026last month
+                  - 'row "docs, (Directory) chore: conflict-8 main side Apr 19, 20263 weeks ago" [ref=e731]':
+                    - cell "docs, (Directory)" [ref=e732]:
+                      - generic [ref=e733]:
+                        - img [ref=e734]
+                        - link "docs, (Directory)" [ref=e739] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/docs
+                          - text: docs
+                    - 'cell "chore: conflict-8 main side" [ref=e740]':
+                      - 'link "chore: conflict-8 main side" [ref=e743] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/c22b5e720b6ee355f54a6e6249040a9688668c93
+                    - cell "Apr 19, 20263 weeks ago" [ref=e744]:
+                      - generic [ref=e745]: Apr 19, 20263 weeks ago
+                  - 'row "scripts, (Directory) feat: add chat workflow and E2E test tooling Apr 13, 20263 weeks ago" [ref=e746]':
+                    - cell "scripts, (Directory)" [ref=e747]:
+                      - generic [ref=e748]:
+                        - img [ref=e749]
+                        - link "scripts, (Directory)" [ref=e754] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/scripts
+                          - text: scripts
+                    - 'cell "feat: add chat workflow and E2E test tooling" [ref=e755]':
+                      - 'link "feat: add chat workflow and E2E test tooling" [ref=e758] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/02cd40ca3130d7a7b070dcc9a07cf2004733b964
+                    - cell "Apr 13, 20263 weeks ago" [ref=e759]:
+                      - generic [ref=e760]: Apr 13, 20263 weeks ago
+                  - row "skills, (Directory) Merge remote-tracking branch 'origin/417--test-suite-add-a-base64-enc… Apr 5, 2026last month" [ref=e761]:
+                    - cell "skills, (Directory)" [ref=e762]:
+                      - generic [ref=e763]:
+                        - img [ref=e764]
+                        - link "skills, (Directory)" [ref=e769] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/skills
+                          - text: skills
+                    - cell "Merge remote-tracking branch 'origin/417--test-suite-add-a-base64-enc…" [ref=e770]:
+                      - link "Merge remote-tracking branch 'origin/417--test-suite-add-a-base64-enc…" [ref=e773] [cursor=pointer]:
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/b68c39541995a36dd9996de2b909a2f6ebc27e2d
+                    - cell "Apr 5, 2026last month" [ref=e774]:
+                      - generic [ref=e775]: Apr 5, 2026last month
+                  - 'row "src, (Directory) fix(db): fall back to Neon-provided POSTGRES_URL vars Apr 24, 20262 weeks ago" [ref=e776]':
+                    - cell "src, (Directory)" [ref=e777]:
+                      - generic [ref=e778]:
+                        - img [ref=e779]
+                        - link "src, (Directory)" [ref=e784] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/src
+                          - text: src
+                    - 'cell "fix(db): fall back to Neon-provided POSTGRES_URL vars" [ref=e785]':
+                      - 'link "fix(db): fall back to Neon-provided POSTGRES_URL vars" [ref=e788] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/82d07bff59f634c0d15138253694e5b924ace67e
+                    - cell "Apr 24, 20262 weeks ago" [ref=e789]:
+                      - generic [ref=e790]: Apr 24, 20262 weeks ago
+                  - 'row "tests, (Directory) chore: fix latent verify failures (typecheck + lint + tests) Apr 20, 20263 weeks ago" [ref=e791]':
+                    - cell "tests, (Directory)" [ref=e792]:
+                      - generic [ref=e793]:
+                        - img [ref=e794]
+                        - link "tests, (Directory)" [ref=e799] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/tree/main/tests
+                          - text: tests
+                    - 'cell "chore: fix latent verify failures (typecheck + lint + tests)" [ref=e800]':
+                      - 'link "chore: fix latent verify failures (typecheck + lint + tests)" [ref=e803] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/ad4b962ab29e56494c5a744a93dd180e7183b6e6
+                    - cell "Apr 20, 20263 weeks ago" [ref=e804]:
+                      - generic [ref=e805]: Apr 20, 20263 weeks ago
+                  - 'row ".env.example, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e806]':
+                    - cell ".env.example, (File)" [ref=e807]:
+                      - generic [ref=e808]:
+                        - img [ref=e809]
+                        - link ".env.example, (File)" [ref=e814] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/.env.example
+                          - text: .env.example
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e815]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e818] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e819]:
+                      - generic [ref=e820]: Mar 24, 20262 months ago
+                  - 'row ".gitignore, (File) chore: track .kody/vault/ for kody memorize Apr 27, 2026last week" [ref=e821]':
+                    - cell ".gitignore, (File)" [ref=e822]:
+                      - generic [ref=e823]:
+                        - img [ref=e824]
+                        - link ".gitignore, (File)" [ref=e829] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/.gitignore
+                          - text: .gitignore
+                    - 'cell "chore: track .kody/vault/ for kody memorize" [ref=e830]':
+                      - 'link "chore: track .kody/vault/ for kody memorize" [ref=e833] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/7d2ae83fba4f9d554e9b57c36324fd2d2cac5e92
+                    - cell "Apr 27, 2026last week" [ref=e834]:
+                      - generic [ref=e835]: Apr 27, 2026last week
+                  - 'row ".prettierrc.json, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e836]':
+                    - cell ".prettierrc.json, (File)" [ref=e837]:
+                      - generic [ref=e838]:
+                        - img [ref=e839]
+                        - link ".prettierrc.json, (File)" [ref=e844] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/.prettierrc.json
+                          - text: .prettierrc.json
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e845]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e848] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e849]:
+                      - generic [ref=e850]: Mar 24, 20262 months ago
+                  - 'row ".yarnrc, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e851]':
+                    - cell ".yarnrc, (File)" [ref=e852]:
+                      - generic [ref=e853]:
+                        - img [ref=e854]
+                        - link ".yarnrc, (File)" [ref=e859] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/.yarnrc
+                          - text: .yarnrc
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e860]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e863] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e864]:
+                      - generic [ref=e865]: Mar 24, 20262 months ago
+                  - 'row "AGENTS.md, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e866]':
+                    - cell "AGENTS.md, (File)" [ref=e867]:
+                      - generic [ref=e868]:
+                        - img [ref=e869]
+                        - link "AGENTS.md, (File)" [ref=e874] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/AGENTS.md
+                          - text: AGENTS.md
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e875]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e878] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e879]:
+                      - generic [ref=e880]: Mar 24, 20262 months ago
+                  - 'row "CHANGELOG.md, (File) chore: release v1.0.3 May 5, 20262 days ago" [ref=e881]':
+                    - cell "CHANGELOG.md, (File)" [ref=e882]:
+                      - generic [ref=e883]:
+                        - img [ref=e884]
+                        - link "CHANGELOG.md, (File)" [ref=e889] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/CHANGELOG.md
+                          - text: CHANGELOG.md
+                    - 'cell "chore: release v1.0.3" [ref=e890]':
+                      - 'link "chore: release v1.0.3" [ref=e893] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/602960ee2530ad74d19201601d0a68b3f0906b2f
+                    - cell "May 5, 20262 days ago" [ref=e894]:
+                      - generic [ref=e895]: May 5, 20262 days ago
+                  - 'row "CLAUDE.md, (File) chore: migrate to @kody (renamed from @Kody2) Apr 23, 20262 weeks ago" [ref=e896]':
+                    - cell "CLAUDE.md, (File)" [ref=e897]:
+                      - generic [ref=e898]:
+                        - img [ref=e899]
+                        - link "CLAUDE.md, (File)" [ref=e904] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/CLAUDE.md
+                          - text: CLAUDE.md
+                    - 'cell "chore: migrate to @kody (renamed from @Kody2)" [ref=e905]':
+                      - generic [ref=e907]:
+                        - 'link "chore: migrate to" [ref=e908] [cursor=pointer]':
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/228cfd22798b27b43c6cb8117e700ca8a9eb62e2
+                        - link "@kody" [ref=e909] [cursor=pointer]:
+                          - /url: https://github.com/kody
+                        - link "(renamed from" [ref=e910] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/228cfd22798b27b43c6cb8117e700ca8a9eb62e2
+                        - link "@Kody2" [ref=e911] [cursor=pointer]:
+                          - /url: https://github.com/Kody2
+                        - link ")" [ref=e912] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/228cfd22798b27b43c6cb8117e700ca8a9eb62e2
+                    - cell "Apr 23, 20262 weeks ago" [ref=e913]:
+                      - generic [ref=e914]: Apr 23, 20262 weeks ago
+                  - 'row "Dockerfile, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e915]':
+                    - cell "Dockerfile, (File)" [ref=e916]:
+                      - generic [ref=e917]:
+                        - img [ref=e918]
+                        - link "Dockerfile, (File)" [ref=e923] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/Dockerfile
+                          - text: Dockerfile
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e924]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e927] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e928]:
+                      - generic [ref=e929]: Mar 24, 20262 months ago
+                  - 'row "KODY_CONFLICT_TEST.md, (File) test: base commit for kody resolve --prefer test (#3017) Apr 24, 20262 weeks ago" [ref=e930]':
+                    - cell "KODY_CONFLICT_TEST.md, (File)" [ref=e931]:
+                      - generic [ref=e932]:
+                        - img [ref=e933]
+                        - link "KODY_CONFLICT_TEST.md, (File)" [ref=e938] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/KODY_CONFLICT_TEST.md
+                          - text: KODY_CONFLICT_TEST.md
+                    - 'cell "test: base commit for kody resolve --prefer test (#3017)" [ref=e939]':
+                      - generic [ref=e941]:
+                        - 'link "test: base commit for kody resolve --prefer test (" [ref=e942] [cursor=pointer]':
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/0840f1c9e0bf8c056b54449eab6a5bb31c38e911
+                        - link "#3017" [ref=e943] [cursor=pointer]:
+                          - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3017
+                        - link ")" [ref=e944] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/0840f1c9e0bf8c056b54449eab6a5bb31c38e911
+                    - cell "Apr 24, 20262 weeks ago" [ref=e945]:
+                      - generic [ref=e946]: Apr 24, 20262 weeks ago
+                  - 'row "README.md, (File) docs: add Kody autonomous development section to README Mar 28, 20262 months ago" [ref=e947]':
+                    - cell "README.md, (File)" [ref=e948]:
+                      - generic [ref=e949]:
+                        - img [ref=e950]
+                        - link "README.md, (File)" [ref=e955] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/README.md
+                          - text: README.md
+                    - 'cell "docs: add Kody autonomous development section to README" [ref=e956]':
+                      - 'link "docs: add Kody autonomous development section to README" [ref=e959] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/062c7d722583a6dfad00672cbc6190e1ac5d576c
+                    - cell "Mar 28, 20262 months ago" [ref=e960]:
+                      - generic [ref=e961]: Mar 28, 20262 months ago
+                  - 'row "docker-compose.yml, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e962]':
+                    - cell "docker-compose.yml, (File)" [ref=e963]:
+                      - generic [ref=e964]:
+                        - img [ref=e965]
+                        - link "docker-compose.yml, (File)" [ref=e970] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/docker-compose.yml
+                          - text: docker-compose.yml
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e971]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e974] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e975]:
+                      - generic [ref=e976]: Mar 24, 20262 months ago
+                  - 'row "eslint.config.mjs, (File) chore: verify-only test script + ignore generated dirs in lint Apr 20, 20263 weeks ago" [ref=e977]':
+                    - cell "eslint.config.mjs, (File)" [ref=e978]:
+                      - generic [ref=e979]:
+                        - img [ref=e980]
+                        - link "eslint.config.mjs, (File)" [ref=e985] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/eslint.config.mjs
+                          - text: eslint.config.mjs
+                    - 'cell "chore: verify-only test script + ignore generated dirs in lint" [ref=e986]':
+                      - 'link "chore: verify-only test script + ignore generated dirs in lint" [ref=e989] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/fcaf1002b384d37926424892a119b14c1032d3f3
+                    - cell "Apr 20, 20263 weeks ago" [ref=e990]:
+                      - generic [ref=e991]: Apr 20, 20263 weeks ago
+                  - 'row "kody.config.json, (File) chore(test): switch to dev/main release branching for refactor smoke … May 5, 20262 days ago" [ref=e992]':
+                    - cell "kody.config.json, (File)" [ref=e993]:
+                      - generic [ref=e994]:
+                        - img [ref=e995]
+                        - link "kody.config.json, (File)" [ref=e1000] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/kody.config.json
+                          - text: kody.config.json
+                    - 'cell "chore(test): switch to dev/main release branching for refactor smoke …" [ref=e1001]':
+                      - 'link "chore(test): switch to dev/main release branching for refactor smoke …" [ref=e1004] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/b525f8b9a12809729b95f0d72c856420dbc1d4f4
+                    - cell "May 5, 20262 days ago" [ref=e1005]:
+                      - generic [ref=e1006]: May 5, 20262 days ago
+                  - 'row "next.config.ts, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e1007]':
+                    - cell "next.config.ts, (File)" [ref=e1008]:
+                      - generic [ref=e1009]:
+                        - img [ref=e1010]
+                        - link "next.config.ts, (File)" [ref=e1015] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/next.config.ts
+                          - text: next.config.ts
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e1016]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e1019] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e1020]:
+                      - generic [ref=e1021]: Mar 24, 20262 months ago
+                  - 'row "opencode.json, (File) feat(13-260326-214938): implement task Mar 26, 20262 months ago" [ref=e1022]':
+                    - cell "opencode.json, (File)" [ref=e1023]:
+                      - generic [ref=e1024]:
+                        - img [ref=e1025]
+                        - link "opencode.json, (File)" [ref=e1030] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/opencode.json
+                          - text: opencode.json
+                    - 'cell "feat(13-260326-214938): implement task" [ref=e1031]':
+                      - 'link "feat(13-260326-214938): implement task" [ref=e1034] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/7af8c12a16a61b70c92eb181cd0870adf8115d08
+                    - cell "Mar 26, 20262 months ago" [ref=e1035]:
+                      - generic [ref=e1036]: Mar 26, 20262 months ago
+                  - 'row "package.json, (File) chore: release v1.0.3 May 5, 20262 days ago" [ref=e1037]':
+                    - cell "package.json, (File)" [ref=e1038]:
+                      - generic [ref=e1039]:
+                        - img [ref=e1040]
+                        - link "package.json, (File)" [ref=e1045] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/package.json
+                          - text: package.json
+                    - 'cell "chore: release v1.0.3" [ref=e1046]':
+                      - 'link "chore: release v1.0.3" [ref=e1049] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/602960ee2530ad74d19201601d0a68b3f0906b2f
+                    - cell "May 5, 20262 days ago" [ref=e1050]:
+                      - generic [ref=e1051]: May 5, 20262 days ago
+                  - 'row "playwright.config.ts, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e1052]':
+                    - cell "playwright.config.ts, (File)" [ref=e1053]:
+                      - generic [ref=e1054]:
+                        - img [ref=e1055]
+                        - link "playwright.config.ts, (File)" [ref=e1060] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/playwright.config.ts
+                          - text: playwright.config.ts
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e1061]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e1064] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e1065]:
+                      - generic [ref=e1066]: Mar 24, 20262 months ago
+                  - 'row "pnpm-lock.yaml, (File) chore: bump @kody-ade/engine 0.4.3 -> 0.4.4 (budget fix) Apr 18, 20263 weeks ago" [ref=e1067]':
+                    - cell "pnpm-lock.yaml, (File)" [ref=e1068]:
+                      - generic [ref=e1069]:
+                        - img [ref=e1070]
+                        - link "pnpm-lock.yaml, (File)" [ref=e1075] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/pnpm-lock.yaml
+                          - text: pnpm-lock.yaml
+                    - 'cell "chore: bump @kody-ade/engine 0.4.3 -> 0.4.4 (budget fix)" [ref=e1076]':
+                      - 'link "chore: bump @kody-ade/engine 0.4.3 -> 0.4.4 (budget fix)" [ref=e1079] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/3a18258bfde51281eddd712618326d9fd3b7c17c
+                    - cell "Apr 18, 20263 weeks ago" [ref=e1080]:
+                      - generic [ref=e1081]: Apr 18, 20263 weeks ago
+                  - 'row "skills-lock.json, (File) feat(1998-retrigger-234839): implement task Apr 11, 2026last month" [ref=e1082]':
+                    - cell "skills-lock.json, (File)" [ref=e1083]:
+                      - generic [ref=e1084]:
+                        - img [ref=e1085]
+                        - link "skills-lock.json, (File)" [ref=e1090] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/skills-lock.json
+                          - text: skills-lock.json
+                    - 'cell "feat(1998-retrigger-234839): implement task" [ref=e1091]':
+                      - 'link "feat(1998-retrigger-234839): implement task" [ref=e1094] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/c71eda67681aa72de537354183784faa4279da0b
+                    - cell "Apr 11, 2026last month" [ref=e1095]:
+                      - generic [ref=e1096]: Apr 11, 2026last month
+                  - 'row "tsconfig.json, (File) Initial commit: Payload CMS with-postgres template Mar 24, 20262 months ago" [ref=e1097]':
+                    - cell "tsconfig.json, (File)" [ref=e1098]:
+                      - generic [ref=e1099]:
+                        - img [ref=e1100]
+                        - link "tsconfig.json, (File)" [ref=e1105] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/tsconfig.json
+                          - text: tsconfig.json
+                    - 'cell "Initial commit: Payload CMS with-postgres template" [ref=e1106]':
+                      - 'link "Initial commit: Payload CMS with-postgres template" [ref=e1109] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90d8dfef291f68d7390db05c0352e608b0b1a4ce
+                    - cell "Mar 24, 20262 months ago" [ref=e1110]:
+                      - generic [ref=e1111]: Mar 24, 20262 months ago
+                  - 'row "vitest.config.mts, (File) feat: Build enrollment system with progress tracking (#145) Mar 28, 20262 months ago" [ref=e1112]':
+                    - cell "vitest.config.mts, (File)" [ref=e1113]:
+                      - generic [ref=e1114]:
+                        - img [ref=e1115]
+                        - link "vitest.config.mts, (File)" [ref=e1120] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/vitest.config.mts
+                          - text: vitest.config.mts
+                    - 'cell "feat: Build enrollment system with progress tracking (#145)" [ref=e1121]':
+                      - generic [ref=e1123]:
+                        - 'link "feat: Build enrollment system with progress tracking (" [ref=e1124] [cursor=pointer]':
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90db86b95b6802615235cc9f2e3677fe413b548a
+                        - link "#145" [ref=e1125] [cursor=pointer]:
+                          - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/145
+                        - link ")" [ref=e1126] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/commit/90db86b95b6802615235cc9f2e3677fe413b548a
+                    - cell "Mar 28, 20262 months ago" [ref=e1127]:
+                      - generic [ref=e1128]: Mar 28, 20262 months ago
+                  - 'row "vitest.setup.ts, (File) feat(24-260327-102047): implement task Mar 27, 20262 months ago" [ref=e1129]':
+                    - cell "vitest.setup.ts, (File)" [ref=e1130]:
+                      - generic [ref=e1131]:
+                        - img [ref=e1132]
+                        - link "vitest.setup.ts, (File)" [ref=e1137] [cursor=pointer]:
+                          - /url: /aharonyaircohen/Kody-Engine-Tester/blob/main/vitest.setup.ts
+                          - text: vitest.setup.ts
+                    - 'cell "feat(24-260327-102047): implement task" [ref=e1138]':
+                      - 'link "feat(24-260327-102047): implement task" [ref=e1141] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/commit/8b53960294860b5d7162445f6d837a26a5aedd1d
+                    - cell "Mar 27, 20262 months ago" [ref=e1142]:
+                      - generic [ref=e1143]: Mar 27, 20262 months ago
+            - generic [ref=e1145]:
+              - generic [ref=e1146]:
+                - heading "Repository files navigation" [level=2] [ref=e1147]
+                - navigation "Repository files" [ref=e1148]:
+                  - list [ref=e1149]:
+                    - listitem [ref=e1150]:
+                      - link "README" [ref=e1151] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e1153]
+                        - generic [ref=e1155]: README
+                - button "Outline" [ref=e1156] [cursor=pointer]:
+                  - img [ref=e1157]
+              - article [ref=e1160]:
+                - generic [ref=e1161]:
+                  - heading "LearnHub LMS" [level=1] [ref=e1162]
+                  - 'link "Permalink: LearnHub LMS" [ref=e1163] [cursor=pointer]':
+                    - /url: "#learnhub-lms"
+                    - img [ref=e1164]
+                - paragraph [ref=e1166]: A full-featured Learning Management System built with Next.js, Payload CMS, and PostgreSQL.
+                - generic [ref=e1167]:
+                  - heading "Vision" [level=2] [ref=e1168]
+                  - 'link "Permalink: Vision" [ref=e1169] [cursor=pointer]':
+                    - /url: "#vision"
+                    - img [ref=e1170]
+                - paragraph [ref=e1172]:
+                  - text: LearnHub is a multi-tenant LMS platform where
+                  - strong [ref=e1173]: organizations
+                  - text: can create and manage courses,
+                  - strong [ref=e1174]: instructors
+                  - text: can build structured curricula with lessons, quizzes, and assignments, and
+                  - strong [ref=e1175]: students
+                  - text: can enroll, track progress, earn certificates, and interact through discussions.
+                - generic [ref=e1176]:
+                  - heading "Architecture" [level=2] [ref=e1177]
+                  - 'link "Permalink: Architecture" [ref=e1178] [cursor=pointer]':
+                    - /url: "#architecture"
+                    - img [ref=e1179]
+                - list [ref=e1181]:
+                  - listitem [ref=e1182]:
+                    - strong [ref=e1183]: Frontend
+                    - text: ": Next.js App Router with React Server Components"
+                  - listitem [ref=e1184]:
+                    - strong [ref=e1185]: Backend/CMS
+                    - text: ": Payload CMS (headless, admin panel at"
+                    - code [ref=e1186]: /admin
+                    - text: )
+                  - listitem [ref=e1187]:
+                    - strong [ref=e1188]: Database
+                    - text: ": PostgreSQL via"
+                    - code [ref=e1189]: "@payloadcms/db-postgres"
+                  - listitem [ref=e1190]:
+                    - strong [ref=e1191]: Auth
+                    - text: ": JWT-based with role guard middleware ("
+                    - code [ref=e1192]: student
+                    - text: ","
+                    - code [ref=e1193]: instructor
+                    - text: ","
+                    - code [ref=e1194]: admin
+                    - text: )
+                  - listitem [ref=e1195]:
+                    - strong [ref=e1196]: Rich Text
+                    - text: ": Lexical editor for lesson content"
+                  - listitem [ref=e1197]:
+                    - strong [ref=e1198]: Media
+                    - text: ": File uploads via Payload Media collection (sharp for image processing)"
+                - generic [ref=e1199]:
+                  - heading "Domain Model" [level=2] [ref=e1200]
+                  - 'link "Permalink: Domain Model" [ref=e1201] [cursor=pointer]':
+                    - /url: "#domain-model"
+                    - img [ref=e1202]
+                - generic [ref=e1204]:
+                  - code [ref=e1206]: "Organization (tenant) ├── Users (roles: admin, instructor, student) ├── Courses │ ├── Modules (ordered sections) │ │ ├── Lessons (video, text, interactive) │ │ ├── Quizzes (multiple choice, free text, code) │ │ └── Assignments (submission + rubric grading) │ ├── Enrollments (student ↔ course, progress tracking) │ └── Discussions (threaded, per-lesson) ├── Certificates (auto-generated on course completion) ├── Gradebook (per-student, per-course aggregation) └── Notifications (enrollment, grades, deadlines)"
+                  - button "Copy" [ref=e1208] [cursor=pointer]:
+                    - img [ref=e1209]
+                - generic [ref=e1212]:
+                  - heading "Current State" [level=2] [ref=e1213]
+                  - 'link "Permalink: Current State" [ref=e1214] [cursor=pointer]':
+                    - /url: "#current-state"
+                    - img [ref=e1215]
+                - generic [ref=e1217]:
+                  - heading "Implemented" [level=3] [ref=e1218]
+                  - 'link "Permalink: Implemented" [ref=e1219] [cursor=pointer]':
+                    - /url: "#implemented"
+                    - img [ref=e1220]
+                - list [ref=e1222]:
+                  - listitem [ref=e1223]: User auth (register, login, JWT sessions, role guard)
+                  - listitem [ref=e1224]: Notes CRUD (prototype — will evolve into Lessons)
+                  - listitem [ref=e1225]: Rate limiting middleware
+                  - listitem [ref=e1226]: Admin panel (Payload CMS)
+                  - listitem [ref=e1227]: Basic frontend pages
+                - generic [ref=e1228]:
+                  - heading "Not Yet Implemented" [level=3] [ref=e1229]
+                  - 'link "Permalink: Not Yet Implemented" [ref=e1230] [cursor=pointer]':
+                    - /url: "#not-yet-implemented"
+                    - img [ref=e1231]
+                - list [ref=e1233]:
+                  - listitem [ref=e1234]: Course/Module/Lesson collections and CRUD
+                  - listitem [ref=e1235]: Enrollment system and progress tracking
+                  - listitem [ref=e1236]: Quiz engine with auto-grading
+                  - listitem [ref=e1237]: Assignment submission and rubric grading
+                  - listitem [ref=e1238]: Discussion forums (threaded, per-lesson)
+                  - listitem [ref=e1239]: Certificate generation
+                  - listitem [ref=e1240]: Gradebook aggregation
+                  - listitem [ref=e1241]: Notification system
+                  - listitem [ref=e1242]: Multi-tenant organization support
+                  - listitem [ref=e1243]: Student dashboard with progress visualization
+                  - listitem [ref=e1244]: Instructor dashboard with analytics
+                  - listitem [ref=e1245]: Search and filtering across courses
+                  - listitem [ref=e1246]: File/video upload for lesson content
+                - generic [ref=e1247]:
+                  - heading "Data Conventions" [level=2] [ref=e1248]
+                  - 'link "Permalink: Data Conventions" [ref=e1249] [cursor=pointer]':
+                    - /url: "#data-conventions"
+                    - img [ref=e1250]
+                - list [ref=e1252]:
+                  - listitem [ref=e1253]: All collections use Payload CMS collection configs
+                  - listitem [ref=e1254]:
+                    - text: Relationships use Payload's
+                    - code [ref=e1255]: relationship
+                    - text: field type
+                  - listitem [ref=e1256]:
+                    - text: Timestamps are auto-managed by Payload (
+                    - code [ref=e1257]: createdAt
+                    - text: ","
+                    - code [ref=e1258]: updatedAt
+                    - text: )
+                  - listitem [ref=e1259]: Slugs are auto-generated from titles where applicable
+                  - listitem [ref=e1260]: Soft deletes preferred over hard deletes for audit trail
+                - generic [ref=e1261]:
+                  - heading "API Patterns" [level=2] [ref=e1262]
+                  - 'link "Permalink: API Patterns" [ref=e1263] [cursor=pointer]':
+                    - /url: "#api-patterns"
+                    - img [ref=e1264]
+                - list [ref=e1266]:
+                  - listitem [ref=e1267]:
+                    - text: REST endpoints auto-generated by Payload at
+                    - code [ref=e1268]: /api/<collection>
+                  - listitem [ref=e1269]:
+                    - text: Custom endpoints in
+                    - code [ref=e1270]: src/app/api/
+                    - text: for business logic (enrollment, grading, progress)
+                  - listitem [ref=e1271]: All custom endpoints use auth middleware + role guard
+                  - listitem [ref=e1272]:
+                    - text: "Response format:"
+                    - code [ref=e1273]: "{ success: boolean, data?: T, error?: string }"
+                - generic [ref=e1274]:
+                  - heading "Autonomous Development with Kody" [level=2] [ref=e1275]
+                  - 'link "Permalink: Autonomous Development with Kody" [ref=e1276] [cursor=pointer]':
+                    - /url: "#autonomous-development-with-kody"
+                    - img [ref=e1277]
+                - paragraph [ref=e1279]:
+                  - text: This project uses
+                  - link "Kody Engine Lite" [ref=e1280] [cursor=pointer]:
+                    - /url: https://github.com/aharonyaircohen/Kody-Engine-Lite
+                  - text: for autonomous issue-to-PR development. Comment
+                  - code [ref=e1281]: "@kody"
+                  - text: on any GitHub issue and Kody will classify, plan, build, test, review, and ship a pull request.
+                - paragraph [ref=e1282]:
+                  - text: Kody's pipeline is customized to this repo via
+                  - code [ref=e1283]: .kody/steps/
+                  - text: "— each stage (taskify, plan, build, verify, review, review-fix) has tailored instructions that include:"
+                - list [ref=e1284]:
+                  - listitem [ref=e1285]:
+                    - strong [ref=e1286]: Repo Patterns
+                    - text: ": Payload CMS collection patterns, service layer with constructor injection, input sanitization via"
+                    - code [ref=e1287]: src/security/sanitizers.ts
+                  - listitem [ref=e1288]:
+                    - strong [ref=e1289]: Improvement Areas
+                    - text: ": Collections missing access control, middleware not applied to API routes, DI container usage"
+                  - listitem [ref=e1290]:
+                    - strong [ref=e1291]: Acceptance Criteria
+                    - text: ": Typecheck, lint, test gates, access control requirements, type generation after schema changes"
+                - paragraph [ref=e1292]:
+                  - text: These step files are auto-generated during
+                  - code [ref=e1293]: kody init
+                  - text: and can be manually refined in
+                  - code [ref=e1294]: .kody/steps/
+                  - text: .
+                - generic [ref=e1295]:
+                  - heading "Testing" [level=2] [ref=e1296]
+                  - 'link "Permalink: Testing" [ref=e1297] [cursor=pointer]':
+                    - /url: "#testing"
+                    - img [ref=e1298]
+                - list [ref=e1300]:
+                  - listitem [ref=e1301]:
+                    - text: "Unit tests: Vitest, co-located as"
+                    - code [ref=e1302]: "*.test.ts"
+                    - text: next to source
+                  - listitem [ref=e1303]:
+                    - text: "Test config:"
+                    - code [ref=e1304]: vitest.config.mts
+                  - listitem [ref=e1305]:
+                    - text: "Run:"
+                    - code [ref=e1306]: pnpm vitest run --config ./vitest.config.mts --exclude 'tests/int/**'
+                  - listitem [ref=e1307]:
+                    - text: "Lint:"
+                    - code [ref=e1308]: pnpm lint
+                    - text: (ESLint with Next.js config)
+                - generic [ref=e1309]:
+                  - heading "Roles & Permissions" [level=2] [ref=e1310]
+                  - 'link "Permalink: Roles & Permissions" [ref=e1311] [cursor=pointer]':
+                    - /url: "#roles--permissions"
+                    - img [ref=e1312]
+                - table [ref=e1315]:
+                  - rowgroup [ref=e1316]:
+                    - row "Action Student Instructor Admin" [ref=e1317]:
+                      - columnheader "Action" [ref=e1318]
+                      - columnheader "Student" [ref=e1319]
+                      - columnheader "Instructor" [ref=e1320]
+                      - columnheader "Admin" [ref=e1321]
+                  - rowgroup [ref=e1322]:
+                    - row "Browse/enroll in courses yes yes yes" [ref=e1323]:
+                      - cell "Browse/enroll in courses" [ref=e1324]
+                      - cell "yes" [ref=e1325]
+                      - cell "yes" [ref=e1326]
+                      - cell "yes" [ref=e1327]
+                    - row "View lesson content enrolled only own courses all" [ref=e1328]:
+                      - cell "View lesson content" [ref=e1329]
+                      - cell "enrolled only" [ref=e1330]
+                      - cell "own courses" [ref=e1331]
+                      - cell "all" [ref=e1332]
+                    - row "Submit assignments yes no no" [ref=e1333]:
+                      - cell "Submit assignments" [ref=e1334]
+                      - cell "yes" [ref=e1335]
+                      - cell "no" [ref=e1336]
+                      - cell "no" [ref=e1337]
+                    - row "Create/edit courses no yes yes" [ref=e1338]:
+                      - cell "Create/edit courses" [ref=e1339]
+                      - cell "no" [ref=e1340]
+                      - cell "yes" [ref=e1341]
+                      - cell "yes" [ref=e1342]
+                    - row "Grade assignments no own courses all" [ref=e1343]:
+                      - cell "Grade assignments" [ref=e1344]
+                      - cell "no" [ref=e1345]
+                      - cell "own courses" [ref=e1346]
+                      - cell "all" [ref=e1347]
+                    - row "Manage users no no yes" [ref=e1348]:
+                      - cell "Manage users" [ref=e1349]
+                      - cell "no" [ref=e1350]
+                      - cell "no" [ref=e1351]
+                      - cell "yes" [ref=e1352]
+                    - row "View analytics own progress own courses all" [ref=e1353]:
+                      - cell "View analytics" [ref=e1354]
+                      - cell "own progress" [ref=e1355]
+                      - cell "own courses" [ref=e1356]
+                      - cell "all" [ref=e1357]
+        - generic [ref=e1361]:
+          - generic [ref=e1364]:
+            - heading "About" [level=2] [ref=e1365]
+            - generic [ref=e1366]:
+              - img [ref=e1367]
+              - link "kody-engine-tester.vercel.app" [ref=e1370] [cursor=pointer]:
+                - /url: https://kody-engine-tester.vercel.app
+            - heading "Resources" [level=3] [ref=e1371]
+            - link "Readme" [ref=e1373] [cursor=pointer]:
+              - /url: "#readme-ov-file"
+              - img [ref=e1374]
+              - text: Readme
+            - link "Activity" [ref=e1377] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/activity
+              - img [ref=e1378]
+              - text: Activity
+            - heading "Stars" [level=3] [ref=e1380]
+            - link "0 stars" [ref=e1382] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/stargazers
+              - img [ref=e1383]
+              - strong [ref=e1385]: "0"
+              - text: stars
+            - heading "Watchers" [level=3] [ref=e1386]
+            - link "0 watching" [ref=e1388] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/watchers
+              - img [ref=e1389]
+              - strong [ref=e1391]: "0"
+              - text: watching
+            - heading "Forks" [level=3] [ref=e1392]
+            - link "0 forks" [ref=e1394] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/forks
+              - img [ref=e1395]
+              - strong [ref=e1397]: "0"
+              - text: forks
+            - link "Report repository" [ref=e1399] [cursor=pointer]:
+              - /url: /contact/report-content?content_url=https%3A%2F%2Fgithub.com%2Faharonyaircohen%2FKody-Engine-Tester&report=aharonyaircohen+%28user%29
+          - generic [ref=e1401]:
+            - heading "Releases 10" [level=2] [ref=e1402]:
+              - link "Releases 10" [ref=e1403] [cursor=pointer]:
+                - /url: /aharonyaircohen/Kody-Engine-Tester/releases
+                - text: Releases
+                - generic "10" [ref=e1404]
+            - link "v1.0.11 Latest May 5, 20262 days ago" [ref=e1405] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/releases/tag/v1.0.11
+              - img [ref=e1406]
+              - generic [ref=e1408]:
+                - generic [ref=e1409]:
+                  - generic [ref=e1410]: v1.0.11
+                  - 'generic "Label: Latest" [ref=e1411]': Latest
+                - generic [ref=e1412]: May 5, 20262 days ago
+            - link "+ 9 releases" [ref=e1414] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/releases
+          - generic [ref=e1416]:
+            - heading "Packages" [level=2] [ref=e1417]:
+              - link "Packages" [ref=e1418] [cursor=pointer]:
+                - /url: /users/aharonyaircohen/packages?repo_name=Kody-Engine-Tester
+            - generic [ref=e1419]: No packages published
+          - generic [ref=e1421]:
+            - heading "Contributors 4" [level=2] [ref=e1422]:
+              - link "Contributors 4" [ref=e1423] [cursor=pointer]:
+                - /url: /aharonyaircohen/Kody-Engine-Tester/graphs/contributors
+                - text: Contributors
+                - generic "4" [ref=e1424]
+            - list [ref=e1425]:
+              - listitem [ref=e1426]:
+                - link "@github-actions[bot]" [ref=e1427] [cursor=pointer]:
+                  - /url: https://github.com/apps/github-actions
+                  - img "@github-actions[bot]" [ref=e1428]
+                - link "github-actions[bot]" [ref=e1430] [cursor=pointer]:
+                  - /url: https://github.com/apps/github-actions
+                  - strong [ref=e1431]: github-actions[bot]
+              - listitem [ref=e1432]:
+                - link "@aharonyaircohen" [ref=e1433] [cursor=pointer]:
+                  - /url: https://github.com/aharonyaircohen
+                  - img "@aharonyaircohen" [ref=e1434]
+                - link "aharonyaircohen Aharon Yair Cohen" [ref=e1436] [cursor=pointer]:
+                  - /url: https://github.com/aharonyaircohen
+                  - strong [ref=e1437]: aharonyaircohen
+                  - text: Aharon Yair Cohen
+              - listitem [ref=e1438]:
+                - link "@aguyaharonyair" [ref=e1439] [cursor=pointer]:
+                  - /url: https://github.com/aguyaharonyair
+                  - img "@aguyaharonyair" [ref=e1440]
+                - link "aguyaharonyair" [ref=e1442] [cursor=pointer]:
+                  - /url: https://github.com/aguyaharonyair
+                  - strong [ref=e1443]: aguyaharonyair
+              - listitem [ref=e1444]:
+                - link "@claude" [ref=e1445] [cursor=pointer]:
+                  - /url: https://github.com/claude
+                  - img "@claude" [ref=e1446]
+                - link "claude Claude" [ref=e1448] [cursor=pointer]:
+                  - /url: https://github.com/claude
+                  - strong [ref=e1449]: claude
+                  - text: Claude
+          - generic [ref=e1451]:
+            - heading "Languages" [level=2] [ref=e1452]
+            - list [ref=e1459]:
+              - listitem [ref=e1460]:
+                - link "TypeScript 95.6%" [ref=e1461] [cursor=pointer]:
+                  - /url: /aharonyaircohen/Kody-Engine-Tester/search?l=typescript
+                  - img [ref=e1462]
+                  - generic [ref=e1464]: TypeScript
+                  - generic [ref=e1465]: 95.6%
+              - listitem [ref=e1466]:
+                - link "CSS 2.7%" [ref=e1467] [cursor=pointer]:
+                  - /url: /aharonyaircohen/Kody-Engine-Tester/search?l=css
+                  - img [ref=e1468]
+                  - generic [ref=e1470]: CSS
+                  - generic [ref=e1471]: 2.7%
+              - listitem [ref=e1472]:
+                - link "JavaScript 1.5%" [ref=e1473] [cursor=pointer]:
+                  - /url: /aharonyaircohen/Kody-Engine-Tester/search?l=javascript
+                  - img [ref=e1474]
+                  - generic [ref=e1476]: JavaScript
+                  - generic [ref=e1477]: 1.5%
+              - listitem [ref=e1478]:
+                - link "Dockerfile 0.2%" [ref=e1479] [cursor=pointer]:
+                  - /url: /aharonyaircohen/Kody-Engine-Tester/search?l=dockerfile
+                  - img [ref=e1480]
+                  - generic [ref=e1482]: Dockerfile
+                  - generic [ref=e1483]: 0.2%
+  - contentinfo [ref=e1485]:
+    - heading "Footer" [level=2] [ref=e1486]
+    - generic [ref=e1487]:
+      - generic [ref=e1488]:
+        - link "GitHub Homepage" [ref=e1489] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e1490]
+        - generic [ref=e1492]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e1493]:
+        - heading "Footer navigation" [level=3] [ref=e1494]
+        - list "Footer navigation" [ref=e1495]:
+          - listitem [ref=e1496]:
+            - link "Terms" [ref=e1497] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e1498]:
+            - link "Privacy" [ref=e1499] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e1500]:
+            - link "Security" [ref=e1501] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e1502]:
+            - link "Status" [ref=e1503] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e1504]:
+            - link "Community" [ref=e1505] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e1506]:
+            - link "Docs" [ref=e1507] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e1508]:
+            - link "Contact" [ref=e1509] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e1510]:
+            - button "Manage cookies" [ref=e1512] [cursor=pointer]
+          - listitem [ref=e1513]:
+            - button "Do not share my personal information" [ref=e1515] [cursor=pointer]
