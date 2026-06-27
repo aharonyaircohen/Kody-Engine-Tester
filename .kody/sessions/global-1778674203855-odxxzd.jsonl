@@ -1,0 +1,2 @@
+{"type":"meta","mode":"interactive","createdAt":"2026-05-13T12:10:04.260Z","idleExitMs":300000,"hardCapMs":1800000}
+{"role":"user","content":"Please open issue #3383, follow its instructions exactly, push to a new branch, and open a draft PR. Reply with the branch name and PR URL when done.","timestamp":"2026-05-13T12:11:31.692Z","toolCalls":[]}

@@ -1,13 +1,9 @@
 # Drop this file at .github/workflows/kody.yml in your repo.
 #
-# Two triggers, two modes:
-#   - issue_comment / workflow_dispatch with issue_number → `kody ci`
-#     (the @kody issue/PR automation flow)
-#   - workflow_dispatch with sessionId                    → `kody chat`
-#     (dashboard-driven Gemini chat session)
-#
-# All orchestration lives in the kody npm package; future capabilities ship
-# via `npm publish`, not by editing this file.
+# Triggers forward every relevant event to `kody`; the engine decides what
+# (if anything) to do. The job runs `npx kody` — no shell branching, no
+# routing logic in YAML. All orchestration lives in the kody npm package;
+# future capabilities ship via `npm publish`, not by editing this file.
 #
 # Required repo secrets: at least one model provider key (e.g. MINIMAX_API_KEY,
 # ANTHROPIC_API_KEY). kody reads any *_API_KEY secret automatically via
@@ -43,62 +39,69 @@ on:
         description: "Model override (optional, e.g. anthropic/claude-haiku-4-5-20251001)"
         type: string
         default: ""
+      title:
+        description: "Chat session title (optional)"
+        type: string
+        default: ""
       dashboardUrl:
         description: "Dashboard event ingest URL with inline ?token=... (chat mode)"
         type: string
         default: ""
+      capability:
+        description: "Capability to run for issue_number (default: run)."
+        type: string
+        default: ""
+      base:
+        description: "Stacked-PR base branch for issue_number (goal-tick stacked dispatch)."
+        type: string
+        default: ""
   issue_comment:
     types: [created]
+  pull_request:
+    types: [closed]
   schedule:
-    - cron: "*/5 * * * *"
+    # Wakes every 30 minutes; kody fans out to whichever scheduled capabilities
+    # match this tick.
+    #
+    # `memorize` writes to `.kody/vault/` and opens a daily PR. If your
+    # `.gitignore` ignores `.kody/*`, add `!.kody/vault/` and `!.kody/vault/**`
+    # so memorize's pages are tracked.
+    - cron: "*/15 * * * *"
 
 jobs:
   run:
-    if: >-
-      ${{ github.event_name == 'workflow_dispatch' ||
-          github.event_name == 'schedule' ||
-          (github.event_name == 'issue_comment' &&
-            contains(github.event.comment.body, '@kody') &&
-            github.event.comment.user.login != 'kody-bot' &&
-            github.event.comment.user.type != 'Bot') }}
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     timeout-minutes: 360
     concurrency:
-      group: kody-${{ inputs.sessionId || inputs.issue_number || github.event.issue.number || github.sha }}
+      group: kody-${{ inputs.sessionId || inputs.issue_number || inputs.capability || github.event.issue.number || github.sha }}
       cancel-in-progress: false
     permissions:
       issues: write
       pull-requests: write
       contents: write
       actions: read
+      id-token: write # OIDC: federate into Namespace remote builders
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.base.ref || github.ref }}
           token: ${{ secrets.KODY_TOKEN || github.token }}
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Write pip cache key for LiteLLM
-        run: echo "litellm[proxy]" > .kody-pip-requirements.txt
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip"
-          cache-dependency-path: .kody-pip-requirements.txt
 
       - env:
           ALL_SECRETS:   ${{ toJSON(secrets) }}
           SESSION_ID:    ${{ inputs.sessionId }}
           INIT_MESSAGE:  ${{ inputs.message }}
           MODEL:         ${{ inputs.model }}
+          KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
-        run: |
-          if [ -n "$SESSION_ID" ]; then
-            npx -y -p @kody-ade/kody-engine@0.3.70-beta.1 kody chat
-          else
-            npx -y -p @kody-ade/kody-engine@0.3.70-beta.1 kody ci
-          fi
+        run: npx -y -p @kody-ade/kody-engine@latest kody-engine
