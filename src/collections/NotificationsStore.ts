@@ -1,3 +1,10 @@
+/**
+ * @ai-summary In-memory notification store with quiet-hours suppression and category preferences.
+ *
+ * TRAP: `NotificationsStore` is completely decoupled from the `Notifications` Payload collection
+ * — they are two separate systems with no shared state. `notificationsStore.markAllRead()` etc.
+ * will not affect documents in the Payload collection and vice versa.
+ */
 export type NotificationType = 'info' | 'success' | 'warning' | 'error'
 
 export type NotificationCategory = 'system' | 'task' | 'social'

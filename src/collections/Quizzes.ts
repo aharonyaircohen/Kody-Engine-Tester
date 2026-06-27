@@ -1,5 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary Payload collection for graded module quizzes with question arrays, scoring, and attempt limits.
+ *
+ * TRAP: `maxAttempts` limits how many times a student can submit, but this is not enforced at
+ * the collection level — it must be enforced in the service layer before creating a `QuizAttempt`.
+ * Also, `correctAnswer` on short-answer questions is stored in plaintext; do not expose the
+ * full quiz object to students via the Local API without stripping it.
+ */
 export const Quizzes: CollectionConfig = {
   slug: 'quizzes',
   admin: {

@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary Payload collection for user-scoped notifications; admins can read/update any notification.
+ *
+ * TRAP: the admin bypass uses string comparison `(req.user as any).role === 'admin'` — if the
+ * `role` field is mutated or missing, any non-admin user could access all notifications.
+ * Additionally, `notificationsStore` (in-memory) is a completely separate implementation and
+ * is NOT backed by this collection; they must be kept in sync manually.
+ */
 export type NotificationType = 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'announcement'
 
 export const Notifications: CollectionConfig = {
