@@ -1,0 +1,5 @@
+{
+  "name": "dependency-bump",
+  "action": "dependency-bump",
+  "describe": "dependency bump"
+}

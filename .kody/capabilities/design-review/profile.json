@@ -1,0 +1,7 @@
+{
+  "name": "design-review",
+  "action": "design-review",
+  "describe": "# Design Review",
+  "agent": "ux-designer",
+  "every": "7d"
+}

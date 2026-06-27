@@ -1,0 +1,2 @@
+{"event":"chat.ready","payload":{"sessionId":"vibe-3427-1778772215241-z61n82","startedAt":"2026-05-14T15:25:00.838Z","idleExitMs":300000,"hardCapMs":1800000},"runId":"chat-vibe-3427-1778772215241-z61n82-ready","emittedAt":"2026-05-14T15:25:00.849Z"}
+{"event":"chat.exit","payload":{"sessionId":"vibe-3427-1778772215241-z61n82","reason":"idle-timeout","turnsCompleted":0,"endedAt":"2026-05-14T15:30:02.646Z"},"runId":"chat-vibe-3427-1778772215241-z61n82-exit","emittedAt":"2026-05-14T15:30:02.646Z"}

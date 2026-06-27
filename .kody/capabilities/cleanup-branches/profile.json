@@ -1,0 +1,10 @@
+{
+  "name": "cleanup-branches",
+  "action": "cleanup-branches",
+  "describe": "# clean up branches",
+  "agent": "coo",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "manual"
+}
