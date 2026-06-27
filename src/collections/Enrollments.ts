@@ -1,5 +1,11 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Student course enrollment record. Unique constraint on (student, course) prevents
+ * duplicate enrollments. `enrolledAt` is auto-set by a beforeChange hook — do not
+ * set it manually or the hook will overwrite it.
+ */
 export type EnrollmentStatus = 'active' | 'completed' | 'dropped'
 
 export interface EnrollmentFields {

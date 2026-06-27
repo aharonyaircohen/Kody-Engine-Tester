@@ -1,5 +1,11 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Student assignment submissions with rubric-scored grades and instructor feedback.
+ * Status transitions: submitted → graded → returned. Does not handle file upload directly —
+ * attachments are stored via the `media` relationship.
+ */
 export const Submissions: CollectionConfig = {
   slug: 'submissions',
   admin: {

@@ -1,3 +1,9 @@
+/**
+ * @ai-summary
+ * In-memory task store with status, priority, and assignee tracking.
+ * `taskStore` is a module-level singleton — state is shared across the process lifetime.
+ * Replace with Payload collection when persistence is required.
+ */
 export type TaskStatus = 'todo' | 'in-progress' | 'done'
 export type TaskPriority = 'low' | 'medium' | 'high'
 

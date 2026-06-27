@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Lesson content within a module. Types: text, video, or interactive.
+ * `LessonStore` is an in-memory stub; the `Lessons` CollectionConfig is the prod source.
+ *
+ * TRAP: When `type` is updated away from 'video', `videoUrl` is forcibly nulled by
+ * LessonStore.update — but this logic is NOT in the Payload collection hooks.
+ */
 export type LessonType = 'text' | 'video' | 'interactive'
 
 export interface Lesson {

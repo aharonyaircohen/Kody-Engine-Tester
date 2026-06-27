@@ -1,5 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * Course entity — the top-level container for modules and lessons.
+ *
+ * TRAP: Access control checks the `instructor` relationship on the document; if the
+ * relationship is not populated (depth=0), the instructor ID is not available and
+ * instructors may be incorrectly denied access.
+ */
 export const Courses: CollectionConfig = {
   slug: 'courses',
   admin: {
