@@ -1,7 +1,0 @@
-{
-  "name": "redispatch",
-  "action": "redispatch",
-  "describe": "# redispatch",
-  "agent": "kody",
-  "every": "30m"
-}

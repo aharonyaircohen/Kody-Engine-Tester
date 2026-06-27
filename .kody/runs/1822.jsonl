@@ -1,0 +1,1 @@
+{"runId":"260410-test-event","issueNumber":1822,"command":"run","startedAt":"2026-04-10T20:00:02.001Z","completedAt":"2026-04-10T20:00:43.776Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}

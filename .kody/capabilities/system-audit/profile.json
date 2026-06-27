@@ -1,7 +1,0 @@
-{
-  "name": "system-audit",
-  "action": "system-audit",
-  "describe": "# System Audit",
-  "agent": "coo",
-  "every": "30m"
-}

@@ -1,0 +1,1 @@
+{"runId":"watch","issueNumber":565,"command":"run","startedAt":"2026-04-07T18:17:39.379Z","completedAt":"2026-04-07T18:18:20.165Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}

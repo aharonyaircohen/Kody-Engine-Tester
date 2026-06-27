@@ -1,0 +1,1 @@
+{"runId":"1766-260410-161230","issueNumber":1766,"command":"run","startedAt":"2026-04-10T16:28:03.131Z","completedAt":"2026-04-10T16:32:12.275Z","outcome":"failed","failedStage":"ship","failedError":"PR creation failed","stagesCompleted":["taskify","plan","build","verify","review","review-fix"],"feedback":""}

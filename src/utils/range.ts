@@ -1,36 +1,27 @@
-export function range(startOrEnd: number, end?: number, step = 1): number[] {
+export function range(end: number): number[]
+export function range(start: number, end: number): number[]
+export function range(start: number, end: number, step: number): number[]
+export function range(a: number, b?: number, step?: number): number[] {
   let start: number
-
-  if (end === undefined) {
+  let end: number
+  let s: number
+  if (b === undefined) {
     start = 0
-    end = startOrEnd
+    end = a
+    s = 1
   } else {
-    start = startOrEnd
+    start = a
+    end = b
+    s = step ?? 1
   }
-
-  if (step === 0) {
-    throw new Error('Step cannot be zero')
-  }
-
-  if (step > 0 && start > end) {
-    throw new Error('Step must be negative when start is greater than end')
-  }
-
-  if (step < 0 && start < end) {
-    throw new Error('Step must be positive when start is less than end')
-  }
-
-  const result: number[] = []
-
-  if (step > 0) {
-    for (let i = start; i < end; i += step) {
-      result.push(i)
-    }
+  if (s === 0) throw new Error('Step cannot be zero')
+  if (s > 0 && start > end) throw new Error('Step direction wrong: positive step but start > end')
+  if (s < 0 && start < end) throw new Error('Step direction wrong: negative step but start < end')
+  const out: number[] = []
+  if (s > 0) {
+    for (let i = start; i < end; i += s) out.push(i)
   } else {
-    for (let i = start; i > end; i += step) {
-      result.push(i)
-    }
+    for (let i = start; i > end; i += s) out.push(i)
   }
-
-  return result
+  return out
 }
