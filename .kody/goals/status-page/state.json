@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "managed": true,
+  "title": "Public status page",
+  "description": "Add a public /status page to the Next.js (App Router) app.",
+  "journey": "1. Navigate to /status on the running app. 2. The page renders with HTTP 200 and no error boundary. 3. It displays the application name as a heading. 4. It shows a clearly green badge whose text is 'Operational'.",
+  "state": "done",
+  "lastDispatchedIssue": 3445,
+  "startedAt": "2026-05-18T12:25:57Z",
+  "updatedAt": "2026-05-19T14:17:01Z"
+}

@@ -1,0 +1,45 @@
+{
+  "name": "feature-chain-live-test",
+  "action": "feature-chain-live-test",
+  "describe": "Live test wrapper for the chained Feature workflow.",
+  "capabilityKind": "act",
+  "agent": "kody",
+  "workflow": {
+    "steps": [
+      {
+        "capability": "research",
+        "target": "issue",
+        "reason": "Research the requested feature or refactor and gather the relevant repo context."
+      },
+      {
+        "capability": "plan",
+        "target": "issue",
+        "reason": "Create the implementation plan before changing code."
+      },
+      {
+        "capability": "run",
+        "target": "issue",
+        "reason": "Implement the planned feature, verify it, and open or update the pull request."
+      },
+      {
+        "capability": "review",
+        "target": "pr",
+        "continueOn": [
+          "REVIEW_FAIL"
+        ],
+        "reason": "Review the generated pull request before calling the feature flow complete."
+      },
+      {
+        "capability": "fix",
+        "target": "pr",
+        "runWhen": {
+          "lastOutcome.type": [
+            "REVIEW_CONCERNS",
+            "REVIEW_FAIL"
+          ]
+        },
+        "reason": "Apply review feedback when the review reports concerns or a blocking failure."
+      }
+    ]
+  }
+}

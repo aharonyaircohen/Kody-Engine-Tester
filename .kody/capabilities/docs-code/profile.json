@@ -1,0 +1,10 @@
+{
+  "name": "docs-code",
+  "action": "docs-code",
+  "describe": "# Docs Coverage — in-code / folder headers",
+  "agent": "tech-writer",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "1d"
+}

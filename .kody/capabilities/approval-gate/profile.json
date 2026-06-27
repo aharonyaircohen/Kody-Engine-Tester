@@ -1,0 +1,10 @@
+{
+  "name": "approval-gate",
+  "action": "approval-gate",
+  "describe": "# Approval Gate",
+  "agent": "cto",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "15m"
+}
