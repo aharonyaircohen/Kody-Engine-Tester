@@ -85,6 +85,7 @@ These step files are auto-generated during `kody init` and can be manually refin
 ## Testing
 
 - Unit tests: Vitest, co-located as `*.test.ts` next to source
+- Integration tests are run with the repo Vitest config.
 - Test config: `vitest.config.mts`
 - Run: `pnpm vitest run --config ./vitest.config.mts --exclude 'tests/int/**'`
 - Lint: `pnpm lint` (ESLint with Next.js config)
