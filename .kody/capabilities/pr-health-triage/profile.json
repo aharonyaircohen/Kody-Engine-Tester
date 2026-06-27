@@ -1,0 +1,10 @@
+{
+  "name": "pr-health-triage",
+  "action": "pr-health-triage",
+  "describe": "# PR health",
+  "agent": "cto",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "every": "15m"
+}

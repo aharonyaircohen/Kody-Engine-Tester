@@ -1,0 +1,1 @@
+User asked to list memory index entries without reading the file. Listed three entries visible in system prompt context: No bullet points, Three different role systems coexist, Test Requirements Sibling Enforcement. Per-task artifacts written successfully.
