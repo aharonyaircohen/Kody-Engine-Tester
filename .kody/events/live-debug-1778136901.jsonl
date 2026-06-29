@@ -1,0 +1,2 @@
+{"event":"chat.ready","payload":{"sessionId":"live-debug-1778136901","startedAt":"2026-05-07T06:55:55.056Z","idleExitMs":120000,"hardCapMs":300000,"runId":"25480851147","runUrl":"https://github.com/aharonyaircohen/Kody-Engine-Tester/actions/runs/25480851147"},"runId":"chat-live-debug-1778136901-ready","emittedAt":"2026-05-07T06:55:55.056Z"}
+{"event":"chat.exit","payload":{"sessionId":"live-debug-1778136901","reason":"idle-timeout","turnsCompleted":0,"endedAt":"2026-05-07T06:57:56.446Z"},"runId":"chat-live-debug-1778136901-exit","emittedAt":"2026-05-07T06:57:56.446Z"}
