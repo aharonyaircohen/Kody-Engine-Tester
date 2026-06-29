@@ -1,0 +1,2 @@
+{"event":"chat.ready","payload":{"sessionId":"live-direct-1778084198","startedAt":"2026-05-06T16:17:47.761Z","idleExitMs":120000,"hardCapMs":300000},"runId":"chat-live-direct-1778084198-ready","emittedAt":"2026-05-06T16:17:47.761Z"}
+{"event":"chat.exit","payload":{"sessionId":"live-direct-1778084198","reason":"idle-timeout","turnsCompleted":0,"endedAt":"2026-05-06T16:19:49.074Z"},"runId":"chat-live-direct-1778084198-exit","emittedAt":"2026-05-06T16:19:49.074Z"}
