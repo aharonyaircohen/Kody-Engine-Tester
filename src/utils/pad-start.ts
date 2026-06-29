@@ -3,6 +3,6 @@ export function padStart(str: string, targetLength: number, padChar: string): st
     return str
   }
   const padLength = targetLength - str.length
-  const padding = padChar.repeat(padLength)
+  const padding = padChar.repeat(Math.ceil(padLength / padChar.length)).slice(0, padLength)
   return padding + str
 }
