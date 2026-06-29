@@ -7,6 +7,7 @@ import { ProgressService } from '@/services/progress'
 import { CourseProgressCard } from '@/components/dashboard/CourseProgressCard'
 import { UpcomingDeadlines } from '@/components/dashboard/UpcomingDeadlines'
 import { RecentActivity } from '@/components/dashboard/RecentActivity'
+import { DarkModeToggle } from '@/components/dark-mode-toggle'
 import type { Deadline } from '@/components/dashboard/UpcomingDeadlines'
 import type { Activity } from '@/components/dashboard/RecentActivity'
 
@@ -167,7 +168,10 @@ export default async function DashboardPage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto', padding: 24 }}>
-      <h1>My Dashboard</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+        <h1 style={{ margin: 0 }}>My Dashboard</h1>
+        <DarkModeToggle />
+      </div>
 
       {courseCards.length === 0 ? (
         <p>You are not enrolled in any courses yet.</p>
