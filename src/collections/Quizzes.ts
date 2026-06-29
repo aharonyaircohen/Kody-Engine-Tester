@@ -1,5 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * Quiz container — holds questions, passing score, and attempt limits.
+ * Questions are stored as an embedded array; there is no separate `Question` collection.
+ *
+ * TRAP: `module` is a text field (not a relationship) — referential integrity is not
+ * enforced by Payload. Keep module IDs in sync manually or via application logic.
+ */
 export const Quizzes: CollectionConfig = {
   slug: 'quizzes',
   admin: {

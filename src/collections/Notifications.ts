@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * In-app notification records scoped to a recipient user. Admins can read/update/delete
+ * any notification; regular users are restricted to their own.
+ *
+ * TRAP: `create` access is open to any authenticated user — implement rate limiting or
+ * access controls if notifications are user-triggered to prevent spam.
+ */
 export type NotificationType = 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'announcement'
 
 export const Notifications: CollectionConfig = {
