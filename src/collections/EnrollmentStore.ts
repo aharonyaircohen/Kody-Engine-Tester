@@ -1,3 +1,12 @@
+/**
+ * @ai-summary In-memory enrollment store; seed data is initialized at module load and lost on server restart.
+ *
+ * TRAP: seed data (`enrollmentStore.enroll('seed-student-enrolled', 'seed-course-1')`) is set
+ * when this module is first imported — it will not survive server restarts, hot reloads, or
+ * any event that re-evaluates the module. Do not use this for any state that must persist.
+ * TODO: replace with the real `Enrollments` Payload collection once it is fully implemented.
+ */
+
 // Mock enrollment store for LMS course enrollment checks.
 // Replace with a real Payload/DB-backed collection when Enrollments is implemented.
 

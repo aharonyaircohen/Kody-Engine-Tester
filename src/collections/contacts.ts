@@ -1,3 +1,11 @@
+/**
+ * @ai-summary In-memory contact store seeded with 20 realistic contacts used in tests and dev.
+ *
+ * TRAP: `ContactStore` is seeded from `SEED_CONTACTS` when `seed=true` (the default). The
+ * singleton `contactsStore` uses `seed=true`. If you instantiate `new ContactStore(false)`,
+ * the store is empty. Because this is in-process memory, data is lost on every hot reload —
+ * do not use this for any persistent state.
+ */
 export interface Contact {
   id: string
   firstName: string
