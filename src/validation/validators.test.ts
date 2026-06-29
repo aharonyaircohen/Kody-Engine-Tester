@@ -41,6 +41,12 @@ describe('minLength', () => {
     expect(minLength(4)('1234')).toEqual({ valid: true })
     expect(minLength(4)('123')).toEqual({ valid: false, error: 'Must be at least 4 characters' })
   })
+
+  it('trims whitespace before measuring length', () => {
+    expect(minLength(3)('  ab  ')).toEqual({ valid: false, error: 'Must be at least 3 characters' })
+    expect(minLength(3)('  abc  ')).toEqual({ valid: true })
+    expect(minLength(3)('  a  ')).toEqual({ valid: false, error: 'Must be at least 3 characters' })
+  })
 })
 
 describe('maxLength', () => {
@@ -55,6 +61,12 @@ describe('maxLength', () => {
 
   it('returns valid for empty string', () => {
     expect(maxLength(5)('')).toEqual({ valid: true })
+  })
+
+  it('trims whitespace before measuring length', () => {
+    expect(maxLength(3)('  abc  ')).toEqual({ valid: true })
+    expect(maxLength(3)('  abcd  ')).toEqual({ valid: false, error: 'Must be at most 3 characters' })
+    expect(maxLength(3)('    ')).toEqual({ valid: true })
   })
 })
 
