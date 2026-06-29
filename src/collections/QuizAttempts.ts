@@ -1,3 +1,8 @@
+/**
+ * @ai-summary Stores individual quiz-taking attempts: user, quiz, score, passed flag, answers array, and timestamps.
+ * @ai-summary Read access is public (read: () => true) — do not store sensitive data in this collection.
+ * @ai-summary user and quiz are stored as text IDs rather than relationships; the application must maintain referential integrity.
+ */
 import type { CollectionConfig } from 'payload'
 
 export const QuizAttempts: CollectionConfig = {

@@ -1,3 +1,8 @@
+/**
+ * @ai-summary Modules are course sections that group lessons in a specific order. Both a ModuleStore (in-memory) and a Payload collection are exported.
+ * @ai-summary The in-memory ModuleStore is not persisted — use the Payload collection for durability.
+ * @ai-summary Creating a module auto-assigns an order one higher than the current max for that course.
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export interface Module {

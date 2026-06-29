@@ -1,3 +1,8 @@
+/**
+ * @ai-summary Tracks which student is enrolled in which course, with a status (active/completed/dropped) and a list of completed lessons.
+ * @ai-summary The unique index on [student, course] prevents duplicate enrollments — enforcement is at the DB level.
+ * @ai-summary completedLessons is read-only and must be populated by the application layer (not by hooks on this collection).
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export type EnrollmentStatus = 'active' | 'completed' | 'dropped'

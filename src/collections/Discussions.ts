@@ -1,3 +1,7 @@
+/**
+ * @ai-summary In-memory discussion store for lesson-linked posts. Supports threading via parentPost, pinning, and resolved/unresolved state.
+ * @ai-summary Data is held in a Map — it does not persist across server restarts. Pair with a Payload collection for persistence.
+ */
 export interface RichTextContent {
   root: {
     children: Array<{

@@ -1,6 +1,7 @@
-// Mock enrollment store for LMS course enrollment checks.
-// Replace with a real Payload/DB-backed collection when Enrollments is implemented.
-
+/**
+ * @ai-summary In-memory mock enrollment store. Replace with the real Payload-backed Enrollments collection before production use.
+ * @ai-summary Key is `${userId}:${courseId}` — does not use the Enrollments collection's DB indexes or constraints.
+ */
 export interface Enrollment {
   userId: string
   courseId: string
