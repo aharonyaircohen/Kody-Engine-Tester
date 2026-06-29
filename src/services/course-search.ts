@@ -25,6 +25,14 @@ export interface CourseSearchResult {
   }
 }
 
+export function slugifyCourseTitle(title: string): string {
+  return title
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
 export class CourseSearchService {
   constructor(private payload: Payload) {}
 
