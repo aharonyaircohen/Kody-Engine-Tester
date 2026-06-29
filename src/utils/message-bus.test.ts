@@ -185,6 +185,74 @@ describe('createBus', () => {
     })
   })
 
+  describe('listenerCount', () => {
+    it('returns 0 when no subscribers exist', () => {
+      expect(bus.listenerCount('greet')).toBe(0)
+    })
+
+    it('returns count of subscribers for a specific channel', () => {
+      const h1 = vi.fn()
+      const h2 = vi.fn()
+      bus.subscribe('greet', h1)
+      bus.subscribe('greet', h2)
+      expect(bus.listenerCount('greet')).toBe(2)
+    })
+
+    it('returns 0 for channel with no subscribers', () => {
+      bus.subscribe('greet', vi.fn())
+      expect(bus.listenerCount('count')).toBe(0)
+    })
+
+    it('subscribeOnce counts as one listener until fired', () => {
+      bus.subscribeOnce('count', vi.fn())
+      expect(bus.listenerCount('count')).toBe(1)
+    })
+
+    it('subscribeOnce is removed after firing', () => {
+      const handler = vi.fn()
+      bus.subscribeOnce('count', handler)
+      bus.publish('count', 1)
+      expect(bus.listenerCount('count')).toBe(0)
+    })
+
+    it('unsubscribe reduces listener count', () => {
+      const h1 = vi.fn()
+      const h2 = vi.fn()
+      const unsub = bus.subscribe('greet', h1)
+      bus.subscribe('greet', h2)
+      expect(bus.listenerCount('greet')).toBe(2)
+      unsub()
+      expect(bus.listenerCount('greet')).toBe(1)
+    })
+
+    it('returns total subscribers across all channels when no channel given', () => {
+      bus.subscribe('greet', vi.fn())
+      bus.subscribe('greet', vi.fn())
+      bus.subscribe('count', vi.fn())
+      expect(bus.listenerCount()).toBe(3)
+    })
+
+    it('returns 0 total when no subscribers anywhere', () => {
+      expect(bus.listenerCount()).toBe(0)
+    })
+
+    it('total count updates when subscribers added/removed across channels', () => {
+      const unsub1 = bus.subscribe('greet', vi.fn())
+      bus.subscribe('count', vi.fn())
+      expect(bus.listenerCount()).toBe(2)
+      unsub1()
+      expect(bus.listenerCount()).toBe(1)
+    })
+
+    it('same handler subscribed twice to same channel counts as one listener (Set deduplication)', () => {
+      const handler = vi.fn()
+      bus.subscribe('greet', handler)
+      bus.subscribe('greet', handler)
+      expect(bus.listenerCount('greet')).toBe(1)
+      expect(bus.listenerCount()).toBe(1)
+    })
+  })
+
   describe('type safety', () => {
     it('buses are independent instances', () => {
       type A = { ping: string }
