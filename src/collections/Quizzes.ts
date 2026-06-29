@@ -1,5 +1,14 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * Graded knowledge-assessment configuration attached to a module; supports multiple-choice,
+ * true/false, and short-answer questions with per-question point values.
+ *
+ * **Trap:** `correctAnswer` for short-answer questions is stored as plain text — no
+ * fuzzy matching or normalization is applied at the collection level. Grading logic
+ * must handle case-insensitivity and whitespace stripping externally.
+ */
 export const Quizzes: CollectionConfig = {
   slug: 'quizzes',
   admin: {

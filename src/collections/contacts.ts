@@ -1,3 +1,10 @@
+/**
+ * @ai-summary
+ * In-memory contact store with CRUD, search, filter, and pagination — no Payload persistence.
+ *
+ * **Gotcha:** Data is held in a `Map` scoped to the process; it resets on server restart.
+ * Replace with a Payload-backed collection once the `contacts` collection is wired to the DB.
+ */
 export interface Contact {
   id: string
   firstName: string

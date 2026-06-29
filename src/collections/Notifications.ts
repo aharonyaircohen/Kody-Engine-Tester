@@ -1,5 +1,14 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Payload-backed notification collection with per-user row-level security via a `recipient`
+ * query constraint on read/update. Non-admins can only see their own notifications.
+ *
+ * **Trap:** `access.create: () => true` allows any authenticated user to create
+ * notifications for any other user. Add sender validation in a `beforeChange` hook if
+ * notifications must originate from the system or verified senders.
+ */
 export type NotificationType = 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'announcement'
 
 export const Notifications: CollectionConfig = {
