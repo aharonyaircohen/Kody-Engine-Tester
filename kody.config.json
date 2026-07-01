@@ -15,11 +15,11 @@
     "repo": "Kody-Engine-Tester"
   },
   "agent": {
-    "model": "minimax/MiniMax-M2.7-highspeed",
+    "model": "minimax/MiniMax-M3",
     "modelMap": {
-      "cheap": "minimax/MiniMax-M2.7-highspeed",
-      "mid": "minimax/MiniMax-M2.7-highspeed",
-      "strong": "minimax/MiniMax-M2.7"
+      "cheap": "minimax/MiniMax-M3",
+      "mid": "minimax/MiniMax-M3",
+      "strong": "minimax/MiniMax-M3"
     },
     "budgets": {
       "taskify": {
