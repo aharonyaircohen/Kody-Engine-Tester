@@ -1,8 +1,0 @@
-{
-  "task_type": "chore",
-  "title": "Based on my exploration, this is a **test verification task** for the Ko",
-  "description": "Based on my exploration, this is a **test verification task** for the Kody Engine. The task is asking to verify that `@kody rerun` bypasses the \"already completed\" state lock when re-executing a pipeline.\n\nKey findings:\n- The Kody Engine is external (installed via `@kody-ade/engine` npm package)\n- The `rerun` command (line 239, 453 in `kody.yml`) explicitly bypasses state checks\n- The workflow uses `kody-engine $CMD $ARGS` where `CMD=\"rerun\"` for rerun mode\n- The current task `2082-260412-130758",
-  "scope": [],
-  "risk_level": "low",
-  "questions": []
-}
