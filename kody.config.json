@@ -67,6 +67,7 @@
     }
   ],
   "release": {
-    "releaseBranch": "main"
+    "releaseBranch": "main",
+    "productionDeployRequired": false
   }
 }
