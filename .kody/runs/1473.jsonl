@@ -1,0 +1,1 @@
+{"runId":"1473-260410-085323","issueNumber":1473,"command":"run","startedAt":"2026-04-10T08:56:54.228Z","completedAt":"2026-04-10T09:34:02.284Z","outcome":"failed","failedStage":"verify","failedError":"Verification failed after autofix attempts","stagesCompleted":["taskify","plan","build"],"feedback":""}

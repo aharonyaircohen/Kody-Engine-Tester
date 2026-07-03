@@ -1,0 +1,1 @@
+{"runId":"1223-260410-004457","issueNumber":1223,"command":"run","startedAt":"2026-04-10T00:46:44.939Z","completedAt":"2026-04-10T01:09:30.896Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}

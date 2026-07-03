@@ -1,2 +1,0 @@
-{"event":"chat.ready","payload":{"sessionId":"repro-warmup-1779390162945","startedAt":"2026-05-21T19:02:56.702Z","idleExitMs":120000,"hardCapMs":300000},"runId":"chat-repro-warmup-1779390162945-ready","emittedAt":"2026-05-21T19:02:56.704Z"}
-{"event":"chat.exit","payload":{"sessionId":"repro-warmup-1779390162945","reason":"idle-timeout","turnsCompleted":0,"endedAt":"2026-05-21T19:05:02.386Z"},"runId":"chat-repro-warmup-1779390162945-exit","emittedAt":"2026-05-21T19:05:02.386Z"}

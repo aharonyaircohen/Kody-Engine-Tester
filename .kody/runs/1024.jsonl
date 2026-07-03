@@ -1,0 +1,1 @@
+{"runId":"compose","issueNumber":1024,"command":"run","startedAt":"2026-04-09T20:56:23.566Z","completedAt":"2026-04-09T21:16:19.276Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}

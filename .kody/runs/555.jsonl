@@ -1,0 +1,1 @@
+{"runId":"555-260407-180822","issueNumber":555,"command":"rerun","startedAt":"2026-04-07T18:08:32.935Z","completedAt":"2026-04-07T18:48:37.286Z","outcome":"completed","stagesCompleted":["taskify","plan","build","verify","review","review-fix","ship"],"feedback":""}

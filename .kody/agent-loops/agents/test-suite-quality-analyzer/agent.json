@@ -1,7 +1,0 @@
-{
-  "name": "test-suite-quality-analyzer",
-  "description": "Analyzes the latest test-suite run results — measures pipeline quality across functional correctness, code quality, timing, cost, and behavioral accuracy",
-  "cron": "0 5 * * *",
-  "reportOnFailure": true,
-  "timeoutMs": 3600000
-}

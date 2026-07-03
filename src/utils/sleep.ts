@@ -1,3 +1,7 @@
+export function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 export class TimeoutError extends Error {
   constructor(ms: number) {
     super(`Operation timed out after ${ms}ms`)
@@ -5,19 +9,18 @@ export class TimeoutError extends Error {
   }
 }
 
-export function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-export async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
-  let timeoutId: ReturnType<typeof setTimeout> | undefined
-  const timeout = new Promise<never>((_, reject) => {
-    timeoutId = setTimeout(() => reject(new TimeoutError(ms)), ms)
+export function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const id = setTimeout(() => reject(new TimeoutError(ms)), ms)
+    promise.then(
+      v => {
+        clearTimeout(id)
+        resolve(v)
+      },
+      e => {
+        clearTimeout(id)
+        reject(e)
+      },
+    )
   })
-
-  try {
-    return await Promise.race([promise, timeout])
-  } finally {
-    if (timeoutId !== undefined) clearTimeout(timeoutId)
-  }
 }
