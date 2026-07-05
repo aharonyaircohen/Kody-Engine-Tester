@@ -69,11 +69,5 @@
   "release": {
     "releaseBranch": "main",
     "productionDeployRequired": false
-  },
-  "company": {
-    "activeGoals": [
-      "live-goal-success-20260705t073908z",
-      "live-goal-needsfix-20260705t073908z"
-    ]
   }
 }
