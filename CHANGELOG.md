@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.17 — 2026-07-09
+
+### Live Test
+
+- live test @kody-ade/kody-engine 0.4.354 (shared trust overrides)
+
 ## v1.0.16 — 2026-07-03
 
 _No notable commits since the last release._
