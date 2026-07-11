@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.359 — Live test (2026-07-11)
+
+- Live test of @kody-ade/kody-engine 0.4.359 from npm latest (manager-agnostic cleanup)
+
 ## v1.0.16 — 2026-07-03
 
 _No notable commits since the last release._
