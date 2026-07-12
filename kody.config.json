@@ -60,6 +60,23 @@
   "watch": {
     "enabled": true
   },
+  "company": {
+    "activeAgents": ["coo", "cto"],
+    "activeCapabilities": [
+      "observe-repo-ci",
+      "operate-findings",
+      "dev-ci-health"
+    ],
+    "activeGoals": [
+      { "template": "agency-observer", "every": "15m" },
+      { "template": "agency-operating-loop", "every": "15m" }
+    ]
+  },
+  "state": {
+    "repo": "https://github.com/aharonyaircohen/kody-state",
+    "path": "Kody-Engine-Tester",
+    "branch": "main"
+  },
   "testRequirements": [
     {
       "pattern": "src/app/api/**/route.ts",
