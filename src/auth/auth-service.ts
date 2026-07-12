@@ -71,6 +71,10 @@ export class AuthService {
     _ipAddress: string,
     _userAgent: string
   ): Promise<AuthResult> {
+    if (!email) {
+      throw createError('Email is required', 400)
+    }
+
     if (!password) {
       throw createError('Password is required', 400)
     }
