@@ -8,3 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "CI health check trigger $(date)"
+      - name: Agency operating loop E2E failure
+        run: |
+          echo "Intentional CI failure for agency operating loop E2E"
+          exit 1
