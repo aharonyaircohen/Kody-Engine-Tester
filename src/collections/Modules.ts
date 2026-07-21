@@ -1,5 +1,14 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Course section that groups lessons and assignments. Both a Payload `CollectionConfig`
+ * (admin/CMS) and a runtime `ModuleStore` (services) are exported here.
+ *
+ * **Trap — store/collection divergence:** The `ModuleStore` class is the runtime source of
+ * truth used by services; the Payload collection is read-only in the admin UI. They are
+ * not kept in sync automatically — schema changes here must be propagated manually.
+ */
 export interface Module {
   id: string
   title: string

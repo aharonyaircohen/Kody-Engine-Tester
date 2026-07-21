@@ -1,5 +1,14 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Course completion certificates with unique certificate numbers and final grade storage.
+ * Also exports a `CertificatesStore` class for programmatic issuance and verification.
+ *
+ * **Trap:** `issueCertificate` validates lesson completion but does NOT check current
+ * enrollment status — a student who dropped may still qualify by completedLessons alone.
+ * Ensure the enrollment is active before issuing.
+ */
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
   fields: [

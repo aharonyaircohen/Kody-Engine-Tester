@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Payload auth collection extended with RBAC roles and hidden token/permission fields.
+ *
+ * **Trap:** `refreshToken`, `tokenExpiresAt`, `lastTokenUsedAt`, `lastLogin`, and
+ * `permissions` are all hidden from API responses via `access.read: () => false`, but
+ * they ARE persisted. Do not assume they are absent from the database.
+ */
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {

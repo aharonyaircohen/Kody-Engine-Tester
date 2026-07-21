@@ -1,5 +1,14 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * User-authored notes with title, content, and tags. A `NotesStore` class wraps the
+ * HTTP API (`/api/notes`) rather than calling Payload's Local API directly.
+ *
+ * **Gotcha:** Because `NotesStore` uses `fetch` against the HTTP API, it cannot be used in
+ * server contexts where the internal HTTP request would be problematic (e.g., server
+ * components during static rendering). Prefer direct Payload Local API calls in that context.
+ */
 export interface Note {
   id: string
   title: string

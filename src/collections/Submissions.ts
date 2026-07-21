@@ -1,5 +1,14 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Student assignment submissions with status lifecycle (submitted → graded → returned) and
+ * per-criterion rubric scoring.
+ *
+ * **Trap:** `rubricScores` is `readOnly` in the admin UI but not enforced at the API level —
+ * a privileged user could POST a grade directly. Grade integrity checks must live in the
+ * service layer or a `beforeChange` hook.
+ */
 export const Submissions: CollectionConfig = {
   slug: 'submissions',
   admin: {
