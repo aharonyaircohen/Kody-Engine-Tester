@@ -43,11 +43,12 @@ export class CourseSearchService {
     }
 
     // Full-text search across title and description
-    if (query) {
+    const trimmedQuery = query?.trim() ?? ''
+    if (trimmedQuery) {
       conditions.push({
         or: [
-          { title: { like: query } },
-          { description: { like: query } },
+          { title: { like: trimmedQuery } },
+          { description: { like: trimmedQuery } },
         ],
       } as Where)
     }
