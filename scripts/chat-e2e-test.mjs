@@ -236,7 +236,7 @@ async function main() {
   const { values: args } = parseArgs({
     options: {
       'session-id': { type: 'string' },
-      'model': { type: 'string', default: 'MiniMax-M2.7-highspeed' },
+      'model': { type: 'string', default: 'MiniMax-M3' },
       'webhook-url': { type: 'string' },
       'cwd': { type: 'string', default: process.cwd() },
       'poll-interval': { type: 'string', default: '5000' },

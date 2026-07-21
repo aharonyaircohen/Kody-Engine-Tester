@@ -41,7 +41,8 @@ export async function generateShortCode(
   url: string,
   options: UrlShortenerOptions = {}
 ): Promise<ShortCodeResult> {
-  if (!url) {
+  const trimmedUrl = url?.trim() ?? ''
+  if (!trimmedUrl) {
     throw new Error('URL is required')
   }
 
@@ -49,7 +50,7 @@ export async function generateShortCode(
   const salt = options.salt ?? ''
 
   // Combine URL with salt for hashing
-  const input = salt ? `${url}:${salt}` : url
+  const input = salt ? `${trimmedUrl}:${salt}` : trimmedUrl
 
   // Hash using SHA-256
   const encoder = new TextEncoder()
@@ -73,7 +74,7 @@ export async function generateShortCode(
 
   return {
     shortCode: shortCode.substring(0, length),
-    originalUrl: url,
+    originalUrl: trimmedUrl,
   }
 }
 
@@ -88,7 +89,8 @@ export function generateShortCodeSync(
   url: string,
   options: UrlShortenerOptions = {}
 ): ShortCodeResult {
-  if (!url) {
+  const trimmedUrl = url?.trim() ?? ''
+  if (!trimmedUrl) {
     throw new Error('URL is required')
   }
 
@@ -96,7 +98,7 @@ export function generateShortCodeSync(
   const salt = options.salt ?? ''
 
   // Combine URL with salt for hashing
-  const input = salt ? `${url}:${salt}` : url
+  const input = salt ? `${trimmedUrl}:${salt}` : trimmedUrl
 
   // Hash using SHA-256 (synchronous via Node.js crypto)
   const hashBuffer = crypto.createHash('sha256').update(input).digest()
@@ -118,7 +120,7 @@ export function generateShortCodeSync(
 
   return {
     shortCode: shortCode.substring(0, length),
-    originalUrl: url,
+    originalUrl: trimmedUrl,
   }
 }
 

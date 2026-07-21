@@ -1,9 +1,0 @@
-{
-  "task_type": "chore",
-  "title": "Verify existing implementation of groupBy utility",
-  "description": "The groupBy utility function already exists at src/utils/group-by.ts with proper TypeScript types (signature: groupBy<T, K extends keyof T>(array: T[], key: K): Record<string, T[]>), named export, and JSDoc comments. The test file src/utils/group-by.test.ts covers all required cases: empty array, single item, multiple items with different key values, nested keys, plus additional edge cases (non-mutation, numeric key conversion, insertion order preservation).",
-  "scope": ["src/utils/group-by.ts", "src/utils/group-by.test.ts"],
-  "risk_level": "low",
-  "existing_patterns": ["src/utils/debounce.ts - single-function utility file pattern", "src/utils/retry.ts - utility module with co-located test file"],
-  "questions": []
-}

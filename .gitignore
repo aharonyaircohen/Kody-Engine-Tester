@@ -50,30 +50,5 @@ node_modules/
 /playwright/.cache/
 
 
-# Runtime state under .kody/ is ignored, but consumer-repo-controlled
-# assets are tracked as code. The negation only works if the parent directory
-# itself isn't ignored, hence `.kody/*` instead of `.kody/`.
-.kody/*
-!.kody/executables/
-!.kody/executables/**
-!.kody/capabilities/
-!.kody/capabilities/**
-!.kody/agents/
-!.kody/agents/**
-!.kody/agent-loops/
-!.kody/agent-loops/**
-!.kody/vault/
-!.kody/vault/**
-!.kody/goals/
-!.kody/goals/**
-!.kody/jobs/
-!.kody/jobs/**
-!.kody/tasks/
-!.kody/tasks/**
-!.kody/memory/
-!.kody/memory/**
-!.kody/scripts/
-!.kody/scripts/**
-!.kody/reports/
-!.kody/reports/_schema.yaml
-.kody/executables/**/last-run.json
+# Kody runtime/state and authored model assets live in configured kody-state repo.
+.kody/
