@@ -5,7 +5,7 @@
     "lint": "pnpm lint",
     "lintFix": "",
     "formatFix": "",
-    "testUnit": "pnpm test:int"
+    "testUnit": "pnpm exec vitest run --config ./vitest.config.mts --maxWorkers=2"
   },
   "git": {
     "defaultBranch": "dev"
@@ -15,7 +15,7 @@
     "repo": "Kody-Engine-Tester"
   },
   "agent": {
-    "model": "minimax/MiniMax-M2.7-highspeed",
+    "model": "minimax/MiniMax-M3",
     "modelMap": {
       "cheap": "minimax/MiniMax-M2.7-highspeed",
       "mid": "minimax/MiniMax-M2.7-highspeed",

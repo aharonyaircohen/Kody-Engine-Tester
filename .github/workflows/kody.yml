@@ -55,6 +55,10 @@ on:
         description: "Stacked-PR base branch for issue_number (goal-tick stacked dispatch)."
         type: string
         default: ""
+      dry_run:
+        description: "Validate agent output without creating a branch or pull request."
+        type: boolean
+        default: false
   issue_comment:
     types: [created]
   pull_request:
@@ -104,4 +108,5 @@ jobs:
           MODEL:         ${{ inputs.model }}
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
+          KODY_DRY_RUN: ${{ inputs.dry_run }}
         run: npx -y -p @kody-ade/kody-engine@latest kody-engine
