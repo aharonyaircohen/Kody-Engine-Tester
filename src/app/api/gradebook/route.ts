@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { withAuth } from '@/auth/withAuth'
 import { getPayloadInstance } from '@/services/progress'
-import { PayloadGradebookService } from '@/services/gradebook-payload'
+import { GradingEngine } from '@/services/grading-engine'
 
 /**
  * GET /api/gradebook
@@ -17,9 +17,9 @@ export const GET = withAuth(async (request: NextRequest, { user }) => {
   }
 
   const payload = await getPayloadInstance()
-  const gradebookSvc = new PayloadGradebookService(payload)
+  const engine = new GradingEngine({ payload })
 
-  const gradebook = await gradebookSvc.getStudentGradebook(String(user.id))
+  const gradebook = await engine.getStudentGradebook(String(user.id))
 
   return new Response(JSON.stringify(gradebook), {
     status: 200,
