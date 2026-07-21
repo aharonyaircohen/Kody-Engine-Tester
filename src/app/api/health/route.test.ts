@@ -21,6 +21,7 @@ describe('GET /api/health', () => {
 
     const body = await response.json()
     expect(body).toHaveProperty('status', 'ok')
+    expect(body).toHaveProperty('healthy', true)
     expect(body).toHaveProperty('uptime')
     expect(typeof body.uptime).toBe('number')
     expect(body.uptime).toBeGreaterThanOrEqual(0)

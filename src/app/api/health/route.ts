@@ -4,6 +4,7 @@ export const GET = async (request: NextRequest) => {
   return new Response(
     JSON.stringify({
       status: 'ok',
+      healthy: true,
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
     }),
