@@ -25,5 +25,6 @@ describe('GET /api/health', () => {
     expect(typeof body.uptime).toBe('number')
     expect(body.uptime).toBeGreaterThanOrEqual(0)
     expect(body).toHaveProperty('timestamp', '2026-04-05T12:00:00.000Z')
+    expect(body).toHaveProperty('version', '1.0.16')
   })
 })
