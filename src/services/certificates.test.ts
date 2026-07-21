@@ -1,3 +1,8 @@
+/**
+ * @ai-summary
+ * Integration tests for CertificatesStore — verifies final grade calculation,
+ * certificate eligibility, and that incomplete enrollments do not generate certs.
+ */
 import { describe, it, expect, beforeEach } from 'vitest'
 import { CertificatesStore } from '../collections/certificates'
 

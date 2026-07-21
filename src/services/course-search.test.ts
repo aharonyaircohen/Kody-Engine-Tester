@@ -1,3 +1,9 @@
+/**
+ * @ai-summary
+ * Integration tests for CourseSearchService — verifies empty results, full-text
+ * query, tag filter modes (and/or), difficulty filter, sort options, and
+ * pagination edge cases.
+ */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { CourseSearchService } from './course-search'
 import type { Payload } from 'payload'

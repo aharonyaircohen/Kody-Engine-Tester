@@ -1,3 +1,17 @@
+/**
+ * @ai-summary
+ * Pure quiz-grading functions and in-memory attempt tracking.
+ *
+ * WHY: Provides a stateless grading function gradeQuiz and stateful attempt
+ * counters checkAttempts/resetAttempts that can be used by API routes without
+ * coupling to a database. Works in isolation from Payload.
+ *
+ * TRAP: attemptCounts is a module-level Map — it is lost on hot reload in
+ * development and on serverless cold starts. Do not rely on it for
+ * audit-critical attempt limits. Also, short-answer and true-false use
+ * case-insensitive string comparison — whitespace is trimmed but punctuation
+ * is not normalized (e.g. "traffic-light." vs "traffic light" would not match).
+ */
 export type QuestionType = 'multiple-choice' | 'true-false' | 'short-answer'
 
 export interface QuestionOption {

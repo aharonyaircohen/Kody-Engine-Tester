@@ -1,13 +1,18 @@
 /**
- * GradebookService aggregates all grades for a student across enrolled courses.
+ * @ai-summary
+ * Aggregates all grades for a student (or all students in a course) across
+ * quizzes and assignments using weighted averages.
  *
- * Grade calculation:
- * - Quiz average: mean of best attempt percentage per quiz
- * - Assignment average: mean of graded submission percentages
- * - Overall grade: quizWeight% × quizAverage + assignmentWeight% × assignmentAverage
- * - Progress: completed lessons / total lessons × 100
+ * WHY: Provides a framework-agnostic gradebook that can be wired to any
+ * backend via dep interfaces. Used by both student dashboard and instructor
+ * gradebook views.
+ *
+ * TRAP: Quiz average uses BEST ATTEMPT percentage per quiz — only the highest
+ * scoring attempt counts, not the latest. If all attempts score 0%, the quiz
+ * contributes 0 to the average. Weights default to 40/60 (quiz/assignment) when
+ * the course document omits them; division-by-zero (no quizzes or no assignments)
+ * returns 0 without throwing.
  */
-
 export interface StudentGradebookEntry {
   courseId: string
   courseTitle: string

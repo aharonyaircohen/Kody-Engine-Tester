@@ -1,6 +1,13 @@
 /**
- * Payload-backed implementation of GradebookService.
+ * @ai-summary
  * Wires the generic GradebookService to Payload CMS collections.
+ *
+ * WHY: Keeps GradebookService framework-agnostic while providing a concrete
+ * Payload implementation that route handlers can import directly.
+ *
+ * TRAP: All find/findByID calls use depth:0 to avoid populating relationships —
+ * if relationship fields are needed downstream, callers must re-query with
+ * higher depth or use the generic service's dep interfaces.
  */
 import type { CollectionSlug, Payload } from 'payload'
 import { GradebookService, type StudentGradebookEntry, type CourseGradebookEntry } from './gradebook'

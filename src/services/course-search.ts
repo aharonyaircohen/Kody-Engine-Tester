@@ -1,3 +1,13 @@
+/**
+ * @ai-summary
+ * Search and filter courses via Payload full-text and structured queries.
+ *
+ * WHY: Decouples course discovery from the route handler so search logic
+ * can be reused across API, admin, and dashboard contexts.
+ *
+ * TRAP: tagMode 'and' produces one filter condition per tag — all must match
+ * (stricter than 'or'). tagMode defaults to 'or' if omitted.
+ */
 import type { Payload, CollectionSlug, Where } from 'payload'
 
 export interface SearchFilters {

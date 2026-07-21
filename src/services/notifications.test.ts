@@ -1,3 +1,9 @@
+/**
+ * @ai-summary
+ * Integration tests for NotificationService — verifies notify creates a
+ * notification, getUnread returns only unread for the target user, markRead
+ * flips isRead, and markAllRead updates all matching notifications.
+ */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NotificationService } from './notifications'
 

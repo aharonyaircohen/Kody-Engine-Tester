@@ -1,3 +1,17 @@
+/**
+ * @ai-summary
+ * Tracks per-enrollment lesson completion and auto-transitions enrollment
+ * status to 'completed' when all lessons are done.
+ *
+ * WHY: Decouples progress tracking from the route handler so lesson completion
+ * logic is reusable and idempotent (re-calling markLessonComplete is a no-op
+ * if the lesson is already recorded).
+ *
+ * TRAP: isComplete mutates the enrollment document's status and completedAt
+ * fields directly — callers should not call it purely as a read-only check
+ * without expecting side effects. isComplete returns true even when the
+ * enrollment was already 'completed' (no-op on status transition in that case).
+ */
 import type { Payload, CollectionSlug } from 'payload'
 
 export interface ProgressResult {

@@ -1,3 +1,10 @@
+/**
+ * @ai-summary
+ * Integration tests for GradingService — verifies canGrade permission logic,
+ * rubric validation (missing criteria, duplicate criteria, out-of-bounds scores,
+ * total exceeds maxScore), permission enforcement for students vs instructors,
+ * re-grading guard, and successful grading flow with late flag.
+ */
 import { describe, it, expect, beforeEach } from 'vitest'
 import { GradingService, RubricScore } from './grading'
 

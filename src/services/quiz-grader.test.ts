@@ -1,3 +1,10 @@
+/**
+ * @ai-summary
+ * Integration tests for quiz-grader — verifies grading across question types
+ * (multiple-choice, true-false, short-answer), attempt counting and limit
+ * enforcement, pass/fail determination against passingScore, score percentage
+ * calculation, and reset functionality.
+ */
 import { describe, it, expect, beforeEach } from 'vitest'
 import {
   gradeQuiz,
