@@ -1,3 +1,8 @@
+/**
+ * @ai-summary
+ * In-memory notification store with quiet-hours suppression and category filtering.
+ * Used for in-app notification preferences; not connected to the `Notifications` Payload collection.
+ */
 export type NotificationType = 'info' | 'success' | 'warning' | 'error'
 
 export type NotificationCategory = 'system' | 'task' | 'social'

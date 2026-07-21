@@ -1,5 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * User notes collection. `NotesStore` delegates to `/api/notes` endpoints — it is not
+ * a local in-memory store. Authenticated users can CRUD; unauthenticated users can only read.
+ *
+ * TRAP: `NotesStore` methods throw on non-2xx responses rather than returning null — callers
+ * must wrap in try/catch.
+ */
 export interface Note {
   id: string
   title: string

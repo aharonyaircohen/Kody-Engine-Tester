@@ -1,3 +1,9 @@
+/**
+ * @ai-summary
+ * In-memory contact store with pagination, search, and tag filtering.
+ * Seeded with realistic data on construction — replace with Payload collection in prod.
+ * Contact IDs are UUIDs generated at runtime; they do not match any external system.
+ */
 export interface Contact {
   id: string
   firstName: string

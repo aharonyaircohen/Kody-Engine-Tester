@@ -1,5 +1,11 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary
+ * Assignments hold grading criteria (rubric) and instructions for a module.
+ * Does NOT track submissions — that is handled by the `Submissions` collection.
+ * Instructors create assignments; students submit work via `Submissions`.
+ */
 export const Assignments: CollectionConfig = {
   slug: 'assignments',
   admin: {

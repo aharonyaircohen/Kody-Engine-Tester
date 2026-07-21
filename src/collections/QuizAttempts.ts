@@ -1,5 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary
+ * Tracks individual quiz attempts and scores. Read access is open to everyone — ensure
+ * this is intentional before relying on it for score privacy.
+ */
 export const QuizAttempts: CollectionConfig = {
   slug: 'quiz-attempts',
   admin: {

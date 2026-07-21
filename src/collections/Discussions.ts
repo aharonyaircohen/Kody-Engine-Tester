@@ -1,3 +1,8 @@
+/**
+ * @ai-summary
+ * In-memory discussion store for lesson-threaded posts with pinning and resolution.
+ * Replace with Payload-backed collection in prod — this stub has no persistence.
+ */
 export interface RichTextContent {
   root: {
     children: Array<{
