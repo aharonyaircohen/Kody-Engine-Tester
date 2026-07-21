@@ -5,7 +5,7 @@
     "lint": "pnpm lint",
     "lintFix": "",
     "formatFix": "",
-    "testUnit": "pnpm test:int"
+    "testUnit": "pnpm exec vitest run --config ./vitest.config.mts --maxWorkers=2"
   },
   "git": {
     "defaultBranch": "dev"
