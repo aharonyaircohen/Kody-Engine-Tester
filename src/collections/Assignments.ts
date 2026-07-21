@@ -1,3 +1,7 @@
+/**
+ * @ai-summary Assignments are graded deliverables attached to a module, with an optional deadline and a rubric for scoring criteria.
+ * @ai-summary Submissions are linked via the `assignment` relationship field — the application (not the DB) is responsible for computing rubricScores.
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export const Assignments: CollectionConfig = {

@@ -1,3 +1,8 @@
+/**
+ * @ai-summary In-memory notification store for client-side notification management with type, category, quiet hours, and read/unread state. NO Payload collection backing.
+ * @ai-summary This is a separate store from Notifications.ts (the Payload collection) — they serve different purposes.
+ * @ai-summary quiet hours comparison handles overnight ranges (e.g. 22:00–08:00) correctly but does not handle crossing midnight in the same day.
+ */
 export type NotificationType = 'info' | 'success' | 'warning' | 'error'
 
 export type NotificationCategory = 'system' | 'task' | 'social'

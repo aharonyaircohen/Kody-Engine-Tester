@@ -1,3 +1,8 @@
+/**
+ * @ai-summary Issued certificates with a unique certificate number, linked to a student and course. Both a CertificatesStore (in-memory) and a Payload collection are exported.
+ * @ai-summary The in-memory CertificatesStore issues certificates only when all course lessons are completed and prevents duplicates per student/course.
+ * @ai-summary calculateFinalGrade weights quiz and assignment averages 50/50 when both are present — this ratio is not configurable per course.
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export const Certificates: CollectionConfig = {

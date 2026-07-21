@@ -1,3 +1,7 @@
+/**
+ * @ai-summary Tracks student assignment submissions: content (rich text), attachments, grade, feedback, and rubricScores.
+ * @ai-summary rubricScores is a read-only array field intended to be populated by the application after grading — it is not automatically filled by hooks.
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export const Submissions: CollectionConfig = {

@@ -1,3 +1,8 @@
+/**
+ * @ai-summary Quizzes belong to a module and contain an ordered array of questions. Each question has a type (multiple-choice/true-false/short-answer).
+ * @ai-summary Multiple-choice correct answers are stored as an isCorrect checkbox on each option — do not expose this to student-facing views.
+ * @ai-summary short-answer correctAnswer is a plain text field compared case-insensitively at grade time.
+ */
 import type { CollectionConfig } from 'payload'
 
 export const Quizzes: CollectionConfig = {

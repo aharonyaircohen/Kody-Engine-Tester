@@ -1,3 +1,8 @@
+/**
+ * @ai-summary System notification records sent to users (enrollment, grade, deadline, discussion, announcement).
+ * @ai-summary Users can only read/update their own notifications; admins have full access.
+ * @ai-summary This is the Payload-backed Notifications collection — do not confuse with NotificationsStore.ts which is a separate in-memory store.
+ */
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
 export type NotificationType = 'enrollment' | 'grade' | 'deadline' | 'discussion' | 'announcement'

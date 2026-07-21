@@ -1,3 +1,8 @@
+/**
+ * @ai-summary User-authored notes with title, content, and tags. Both a NotesStore (HTTP client) and a Payload collection are exported.
+ * @ai-summary The NotesStore fetches via /api/notes endpoints — it could be replaced with the Payload Local API to avoid HTTP round-trips.
+ * @ai-summary This collection is publicly readable but create/update/delete require authentication.
+ */
 import type { CollectionConfig } from 'payload'
 
 export interface Note {
