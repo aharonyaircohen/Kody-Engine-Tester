@@ -1,5 +1,12 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary Payload collection for instructor-graded coursework attached to a module.
+ *
+ * TRAP: no access control is defined — all operations are open to any authenticated user.
+ * Before using this in production, add `access` rules or guard all Local API calls with
+ * `overrideAccess: false`, otherwise the Local API will bypass any future rules silently.
+ */
 export const Assignments: CollectionConfig = {
   slug: 'assignments',
   admin: {

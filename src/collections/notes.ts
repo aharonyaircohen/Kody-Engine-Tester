@@ -1,5 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary Payload collection for user notes plus a store that proxies to `/api/notes` instead of Payload.
+ *
+ * TRAP: `NotesStore` fetches from the Next.js API route (`/api/notes`), NOT from the Payload
+ * collection directly. Creating notes through the Payload collection or `NotesStore.create()` will
+ * end up in different data stores and will not be visible to each other. The store and the
+ * collection are two completely independent write paths.
+ */
 export interface Note {
   id: string
   title: string

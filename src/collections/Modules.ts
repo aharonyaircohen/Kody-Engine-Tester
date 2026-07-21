@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary In-memory module store and Payload collection for course structure.
+ *
+ * TRAP: `ModuleStore` and `Modules` Payload collection are independent implementations —
+ * updates through one are not visible to the other. The store is used in services, the
+ * collection is used by the admin panel. If you seed data in one and query the other, you
+ * will see stale or missing data.
+ */
 export interface Module {
   id: string
   title: string

@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary In-memory lesson store and Payload collection for module content (text/video/interactive).
+ *
+ * TRAP: `LessonStore` and `Lessons` Payload collection are independent — the store is used in
+ * services for fast in-memory access, while the collection is the admin-panel source of truth.
+ * When `type` changes away from `'video'`, the store's `update` method nulls `videoUrl`; the
+ * Payload collection has no such hook and will retain stale video URLs.
+ */
 export type LessonType = 'text' | 'video' | 'interactive'
 
 export interface Lesson {

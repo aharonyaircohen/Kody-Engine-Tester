@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary Payload collection plus `CertificatesStore` singleton for course completion certificates.
+ *
+ * TRAP: `certificatesStore` is the authoritative issuance logic — it is NOT called by any Payload
+ * hook. Creating a `Certificate` document through the Payload API (admin panel or Local API) will
+ * NOT update the store's internal map, and `verifyCertificate` will fail for those entries.
+ * Always use `certificatesStore.issueCertificate()` to create certificates programmatically.
+ */
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
   fields: [

@@ -1,5 +1,12 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary Payload collection for individual quiz submission attempts; `user` and `quiz` are stored as text IDs rather than relationships.
+ *
+ * TRAP: `user` and `quiz` are plain text fields, not relationship fields — this avoids Payload
+ * relationship overhead but means referential integrity is not enforced at the DB level.
+ * If the referenced user or quiz is deleted, stale attempts remain with orphaned IDs.
+ */
 export const QuizAttempts: CollectionConfig = {
   slug: 'quiz-attempts',
   admin: {

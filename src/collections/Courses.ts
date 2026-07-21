@@ -1,5 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
+/**
+ * @ai-summary Payload collection for courses owned by instructors; slug is auto-generated from title.
+ *
+ * TRAP: the read access checks `doc.status` to allow published courses to be publicly visible.
+ * If status is mutated through the Local API without going through hooks, the access function
+ * may receive an incorrect or untyped `doc` — always use `overrideAccess: false` and validate
+ * status transitions in a `beforeChange` hook.
+ */
 export const Courses: CollectionConfig = {
   slug: 'courses',
   admin: {

@@ -1,5 +1,13 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
+/**
+ * @ai-summary Payload auth collection for LMS users; JWT contains the `role` field for fast RBAC checks.
+ *
+ * TRAP: `displayName` is computed client-side in a `beforeChange` hook from `firstName` + `lastName`,
+ * but the `bio` field is unvalidated plaintext — any HTML injected there is stored as-is unless
+ * a sanitization hook is added. Also, `tokenExpiresAt`, `refreshToken`, and `lastTokenUsedAt` are
+ * hidden/admin-only but stored in the JWT payload; keep them small to avoid hitting JWT size limits.
+ */
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
