@@ -230,6 +230,25 @@ describe('createRequestLogger', () => {
       expect(logSpy).not.toHaveBeenCalled()
     })
 
+    it('excludes /health/ with trailing slash as same as /health', () => {
+      const logSpy = vi.fn()
+      const logger = createRequestLogger({
+        logger: {
+          debug: logSpy,
+          info: logSpy,
+          warn: logSpy,
+          error: logSpy,
+        },
+      })
+
+      const healthReqWithSlash = makeRequest('/health/')
+      const response = logger.middleware(healthReqWithSlash)
+
+      // /health/ should also be excluded since it refers to the same resource
+      expect(logSpy).not.toHaveBeenCalled()
+      expect(response.headers.has('X-Request-Id')).toBe(false)
+    })
+
     it('extracts IP from x-forwarded-for header', () => {
       const logSpy = vi.fn()
       const logger = createRequestLogger({
