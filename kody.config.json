@@ -8,7 +8,7 @@
     "testUnit": "pnpm exec vitest run --config ./vitest.config.mts --maxWorkers=2"
   },
   "git": {
-    "defaultBranch": "dev"
+    "defaultBranch": "main"
   },
   "github": {
     "owner": "aharonyaircohen",
