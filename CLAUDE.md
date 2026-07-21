@@ -7,3 +7,5 @@ This is a smoke-test stub. Real project instructions live in AGENTS.md
 and the various .cursor/rules/ files. Once kody's CLAUDE.md auto-load
 is verified, this file should be either removed or expanded with real
 Claude Code-specific guidance.
+
+<!-- live-test: agent terminology smoke (kody-engine v0.4.239) -->
