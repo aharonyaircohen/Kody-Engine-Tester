@@ -69,5 +69,13 @@
   "release": {
     "releaseBranch": "main",
     "productionDeployRequired": false
+  },
+  "company": {
+    "activeAgents": [
+      "kody"
+    ],
+    "activeCapabilities": [
+      "review"
+    ]
   }
 }
