@@ -112,4 +112,5 @@ jobs:
         run: |
           npm install --global @kody-ade/kody-engine@0.4.439
           kody-engine version
+          find .kody-engine/definitions -maxdepth 3 -type f -print
           kody-engine ci
