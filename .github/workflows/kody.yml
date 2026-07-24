@@ -110,7 +110,7 @@ jobs:
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
           KODY_DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          npm install --global @kody-ade/kody-engine@0.4.442
+          npm install --global @kody-ade/kody-engine@latest
           cp -R .kody-engine/definitions /tmp/kody-loop-definitions
           export KODY_DEFINITIONS_ROOT=/tmp/kody-loop-definitions
           export KODY_DEFINITIONS_ROOT_CWD="$GITHUB_WORKSPACE"
