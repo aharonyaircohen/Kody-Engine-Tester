@@ -1,0 +1,37 @@
+{
+  "name": "Web Release",
+  "createdAt": "2026-07-03T00:00:00Z",
+  "updatedAt": "2026-07-03T00:00:00Z",
+  "steps": [
+    {
+      "capability": "release-prepare",
+      "evidence": "releasePrExists",
+      "target": "issue",
+      "cliArgs": {
+        "prefer": "ours"
+      }
+    },
+    {
+      "capability": "release-merge",
+      "evidence": "defaultBranchMerged",
+      "targetFact": "releasePr",
+      "target": "pr"
+    },
+    {
+      "capability": "release-promote",
+      "evidence": "releasePromotionPrExists",
+      "target": "issue"
+    },
+    {
+      "capability": "release-merge",
+      "evidence": "releaseBranchMerged",
+      "targetFact": "promotionPr",
+      "target": "pr"
+    },
+    {
+      "capability": "vercel-production-deploy",
+      "evidence": "productionDeployed"
+    }
+  ],
+  "agent": "kody"
+}
