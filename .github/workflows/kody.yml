@@ -110,6 +110,6 @@ jobs:
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
           KODY_DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          npm install --global @kody-ade/kody-engine@0.4.437
+          npm install --global @kody-ade/kody-engine@0.4.438
           kody-engine version
           kody-engine ci
