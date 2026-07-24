@@ -109,6 +109,4 @@ jobs:
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
           KODY_DRY_RUN: ${{ inputs.dry_run }}
-        run: |
-          find .kody-engine/definitions -maxdepth 3 -type f -print
-          npx --yes --prefer-online --package @kody-ade/kody-engine@0.4.437 kody-engine
+        run: npx --yes --prefer-online --package @kody-ade/kody-engine@0.4.437 kody-engine ci
