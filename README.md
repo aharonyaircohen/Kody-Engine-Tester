@@ -71,6 +71,29 @@ Organization (tenant)
 - All custom endpoints use auth middleware + role guard
 - Response format: `{ success: boolean, data?: T, error?: string }`
 
+## Operations
+
+### Health Endpoints
+
+- `GET /api/health` — Returns runtime health: `status`, `uptime`, `timestamp`. No auth required.
+- `GET /api/healthz` — Returns build metadata for uptime probes and post-deploy verification. No auth required.
+
+  ```json
+  {
+    "status": "ok",
+    "version": "<APP_VERSION or npm_package_version or 'unknown'>",
+    "commit": "<GIT_SHA or 'unknown'>",
+    "builtAt": "<BUILD_TIMESTAMP or runtime ISO string>"
+  }
+  ```
+
+  Build-time values (`version`, `commit`, `builtAt`) are injected via environment variables during `pnpm build`. The three env vars used are:
+  - `APP_VERSION` — explicitly set version string
+  - `GIT_SHA` — git short SHA (`git rev-parse --short HEAD`)
+  - `BUILD_TIMESTAMP` — ISO-8601 build time (`date -u +%T.%3NZ`)
+
+  In environments where these are not set (e.g., local dev), the endpoint returns safe fallback values (`unknown` for `version`/`commit`, runtime ISO string for `builtAt`).
+
 ## Autonomous Development with Kody
 
 This project uses [Kody Engine Lite](https://github.com/aharonyaircohen/Kody-Engine-Lite) for autonomous issue-to-PR development. Comment `@kody` on any GitHub issue and Kody will classify, plan, build, test, review, and ship a pull request.

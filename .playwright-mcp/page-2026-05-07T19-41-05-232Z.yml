@@ -1,0 +1,438 @@
+- generic [ref=e2]:
+  - generic:
+    - generic:
+      - tooltip "This user has been invited to collaborate on the Kody-Engine-Tester repository."
+    - generic:
+      - tooltip "This user is the author of this issue"
+    - generic:
+      - tooltip "This user is the owner of the Kody-Engine-Tester repository."
+    - generic:
+      - tooltip "This user is the owner of the Kody-Engine-Tester repository."
+    - generic:
+      - tooltip "This user is the owner of the Kody-Engine-Tester repository."
+    - generic:
+      - tooltip "This user has been invited to collaborate on the Kody-Engine-Tester repository."
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e9]:
+        - button "Toggle navigation" [ref=e11] [cursor=pointer]
+        - link "Homepage" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+        - generic [ref=e20]:
+          - link "Sign in" [ref=e21] [cursor=pointer]:
+            - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Faharonyaircohen%2FKody-Engine-Tester%2Fissues%2F3192
+          - button "Appearance settings" [ref=e24] [cursor=pointer]:
+            - img
+  - main [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - link "aharonyaircohen" [ref=e36] [cursor=pointer]:
+            - /url: /aharonyaircohen
+          - generic [ref=e37]: /
+          - strong [ref=e38]:
+            - link "Kody-Engine-Tester" [ref=e39] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester
+          - generic [ref=e40]: Public
+        - generic [ref=e41]:
+          - list:
+            - listitem [ref=e42]:
+              - link "You must be signed in to change notification settings" [ref=e43] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e44]
+                - text: Notifications
+            - listitem [ref=e46]:
+              - link "Fork 0" [ref=e47] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e48]
+                - text: Fork
+                - generic "0" [ref=e50]
+            - listitem [ref=e51]:
+              - link "You must be signed in to star a repository" [ref=e53] [cursor=pointer]:
+                - /url: /login?return_to=%2Faharonyaircohen%2FKody-Engine-Tester
+                - img [ref=e54]
+                - text: Star
+                - generic "0 users starred this repository" [ref=e56]: "0"
+      - navigation "Repository" [ref=e57]:
+        - list [ref=e58]:
+          - listitem [ref=e59]:
+            - link "Code" [ref=e60] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester
+              - img [ref=e61]
+              - generic [ref=e63]: Code
+          - listitem [ref=e64]:
+            - link "Issues 60" [ref=e65] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/issues
+              - img [ref=e66]
+              - generic [ref=e69]: Issues
+              - generic "60" [ref=e70]
+          - listitem [ref=e71]:
+            - link "Pull requests 16" [ref=e72] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/pulls
+              - img [ref=e73]
+              - generic [ref=e75]: Pull requests
+              - generic "16" [ref=e76]
+          - listitem [ref=e77]:
+            - link "Actions" [ref=e78] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/actions
+              - img [ref=e79]
+              - generic [ref=e81]: Actions
+          - listitem [ref=e82]:
+            - link "Projects" [ref=e83] [cursor=pointer]:
+              - /url: /aharonyaircohen/Kody-Engine-Tester/projects
+              - img [ref=e84]
+              - generic [ref=e86]: Projects
+          - listitem [ref=e87]
+          - listitem [ref=e88]
+        - button "Additional navigation options" [ref=e92] [cursor=pointer]:
+          - img
+    - generic [ref=e100]:
+      - region "Header" [ref=e102]:
+        - generic [ref=e103]:
+          - 'heading "Feature: Add a /healthz endpoint that returns build metadata #3192" [level=1] [ref=e105]'
+          - generic [ref=e107]:
+            - button "New issue" [ref=e109] [cursor=pointer]:
+              - generic [ref=e111]: New issue
+            - button "Copy link" [ref=e112] [cursor=pointer]:
+              - img [ref=e113]
+      - generic [ref=e121]:
+        - img "Issue" [ref=e122]
+        - text: Open
+      - generic [ref=e126]:
+        - generic [ref=e127]:
+          - generic [ref=e129]:
+            - link "@aguyaharonyair's profile" [ref=e130] [cursor=pointer]:
+              - /url: https://github.com/aguyaharonyair
+              - img "@aguyaharonyair" [ref=e131]
+            - generic [ref=e132]:
+              - heading "Description" [level=2] [ref=e133]
+              - generic [ref=e135]:
+                - generic [ref=e137]:
+                  - generic [ref=e138]:
+                    - link "aguyaharonyair" [ref=e140] [cursor=pointer]:
+                      - /url: https://github.com/aguyaharonyair
+                    - generic [ref=e141]:
+                      - text: opened
+                      - link "on May 7, 20264 minutes ago" [ref=e142] [cursor=pointer]:
+                        - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192#issue-4401477437
+                        - generic "May 7, 2026, 7:36 PM UTC" [ref=e143]: on May 7, 20264 minutes ago
+                  - generic [ref=e145]:
+                    - generic "This user has been invited to collaborate on the Kody-Engine-Tester repository." [ref=e147]: Collaborator
+                    - button "Issue body actions" [ref=e149] [cursor=pointer]:
+                      - img [ref=e150]
+                - generic [ref=e152]:
+                  - generic [ref=e154]:
+                    - paragraph [ref=e155]:
+                      - strong [ref=e156]: Feature
+                    - paragraph [ref=e157]:
+                      - text: Add a small JSON
+                      - code [ref=e158]: /healthz
+                      - text: endpoint that returns the current build metadata (version, commit SHA, build timestamp). Useful for uptime probes and post-deploy verification.
+                    - paragraph [ref=e159]:
+                      - strong [ref=e160]: Behavior
+                    - list [ref=e161]:
+                      - listitem [ref=e162]:
+                        - code [ref=e163]: GET /healthz
+                        - text: returns 200 with JSON body
+                        - code [ref=e164]: "{ \"status\": \"ok\", \"version\": \"<package.json version>\", \"commit\": \"<git short sha>\", \"builtAt\": \"<ISO timestamp>\" }"
+                        - text: .
+                      - listitem [ref=e165]: The values can come from environment variables populated at build time, falling back to safe defaults when missing.
+                    - paragraph [ref=e166]:
+                      - strong [ref=e167]: Acceptance
+                    - list [ref=e168]:
+                      - listitem [ref=e169]: An integration test asserts the route returns 200 and the JSON shape above.
+                      - listitem [ref=e170]: README mentions the endpoint in the operations section.
+                    - paragraph [ref=e171]:
+                      - text: (
+                      - link "@kody" [ref=e172] [cursor=pointer]:
+                        - /url: https://github.com/kody
+                      - text: — testing classify → feature container flow on v0.4.4.)
+                  - generic:
+                    - toolbar "Reactions"
+          - generic [ref=e174]:
+            - generic [ref=e175]:
+              - heading "Activity" [level=2] [ref=e176]
+              - generic [ref=e177]:
+                - generic [ref=e178]:
+                  - link "@aguyaharonyair's profile" [ref=e179] [cursor=pointer]:
+                    - /url: https://github.com/aguyaharonyair
+                    - img "aguyaharonyair" [ref=e180]
+                  - generic [ref=e187]:
+                    - generic [ref=e189]:
+                      - heading "aguyaharonyair commented on May 7, 2026 4 minutes ago" [level=3] [ref=e190]:
+                        - text: aguyaharonyair commented
+                        - generic "May 7, 2026, 7:36 PM UTC" [ref=e191]: on May 7, 2026 4 minutes ago
+                      - generic [ref=e192]:
+                        - link "aguyaharonyair" [ref=e194] [cursor=pointer]:
+                          - /url: /aguyaharonyair
+                        - link "on May 7, 20264 minutes ago" [ref=e197] [cursor=pointer]:
+                          - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192#issuecomment-4400460698
+                          - generic "May 7, 2026, 7:36 PM UTC" [ref=e198]: on May 7, 20264 minutes ago
+                      - generic [ref=e200]:
+                        - generic [ref=e201]:
+                          - generic "This user has been invited to collaborate on the Kody-Engine-Tester repository." [ref=e202]: Collaborator
+                          - generic "This user is the author of this issue" [ref=e203]: Author
+                        - button "Actions for aguyaharonyair's comment, 7:36 PM today" [ref=e205] [cursor=pointer]:
+                          - img [ref=e206]
+                    - generic [ref=e208]:
+                      - paragraph [ref=e211]:
+                        - link "@kody" [ref=e212] [cursor=pointer]:
+                          - /url: https://github.com/kody
+                        - text: classify
+                      - toolbar "Reactions" [ref=e213]:
+                        - switch "👀 1 reaction" [ref=e214]:
+                          - generic [ref=e215]:
+                            - generic: 👀
+                            - generic [ref=e216]:
+                              - generic [ref=e217]: React with 👀
+                              - text: "1"
+                - region "Events" [ref=e218]:
+                  - generic [ref=e225]:
+                    - img [ref=e229]
+                    - generic [ref=e233]:
+                      - link "aharonyaircohen" [ref=e235] [cursor=pointer]:
+                        - /url: /aharonyaircohen
+                        - generic [ref=e236]: aharonyaircohen
+                      - text: added
+                      - 'link "kody:classifying kody2: classifying the issue" [ref=e238] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody%3Aclassifying%22
+                        - generic [ref=e240]: kody:classifying
+                        - generic [ref=e241]: "kody2: classifying the issue"
+                      - link "on May 7, 20263 minutes ago" [ref=e242] [cursor=pointer]:
+                        - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192#event-25277087549
+                        - generic "May 7, 2026, 7:37 PM UTC" [ref=e243]: on May 7, 20263 minutes ago
+                - generic [ref=e244]:
+                  - link "@aharonyaircohen's profile" [ref=e245] [cursor=pointer]:
+                    - /url: https://github.com/aharonyaircohen
+                    - img "aharonyaircohen" [ref=e246]
+                  - generic [ref=e253]:
+                    - generic [ref=e255]:
+                      - heading "aharonyaircohen commented on May 7, 2026 3 minutes ago" [level=3] [ref=e256]:
+                        - text: aharonyaircohen commented
+                        - generic "May 7, 2026, 7:37 PM UTC" [ref=e257]: on May 7, 2026 3 minutes ago
+                      - generic [ref=e258]:
+                        - link "aharonyaircohen" [ref=e260] [cursor=pointer]:
+                          - /url: /aharonyaircohen
+                        - link "on May 7, 20263 minutes ago" [ref=e263] [cursor=pointer]:
+                          - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192#issuecomment-4400471938
+                          - generic "May 7, 2026, 7:37 PM UTC" [ref=e264]: on May 7, 20263 minutes ago
+                      - generic [ref=e266]:
+                        - generic "This user is the owner of the Kody-Engine-Tester repository." [ref=e268]: Owner
+                        - button "Actions for aharonyaircohen's comment, 7:37 PM today" [ref=e270] [cursor=pointer]:
+                          - img [ref=e271]
+                    - generic [ref=e273]:
+                      - paragraph [ref=e276]:
+                        - text: 🔎 kody classified as
+                        - code [ref=e277]: feature
+                        - text: — Adding a new /healthz endpoint with build metadata is a new user-facing capability that involves route creation, environment variable handling, and integration tests — clearly a feature, not a bug, spec, or chore.
+                      - toolbar "Reactions"
+                - generic [ref=e278]:
+                  - link "@aharonyaircohen's profile" [ref=e279] [cursor=pointer]:
+                    - /url: https://github.com/aharonyaircohen
+                    - img "aharonyaircohen" [ref=e280]
+                  - generic [ref=e287]:
+                    - generic [ref=e289]:
+                      - heading "aharonyaircohen commented on May 7, 2026 3 minutes ago" [level=3] [ref=e290]:
+                        - text: aharonyaircohen commented
+                        - generic "May 7, 2026, 7:37 PM UTC" [ref=e291]: on May 7, 2026 3 minutes ago
+                      - generic [ref=e292]:
+                        - link "aharonyaircohen" [ref=e294] [cursor=pointer]:
+                          - /url: /aharonyaircohen
+                        - link "on May 7, 20263 minutes ago" [ref=e297] [cursor=pointer]:
+                          - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192#issuecomment-4400472053
+                          - generic "May 7, 2026, 7:37 PM UTC" [ref=e298]: on May 7, 20263 minutes ago
+                      - generic [ref=e300]:
+                        - generic "This user is the owner of the Kody-Engine-Tester repository." [ref=e302]: Owner
+                        - button "Actions for aharonyaircohen's comment, 7:37 PM today" [ref=e304] [cursor=pointer]:
+                          - img [ref=e305]
+                    - generic [ref=e307]:
+                      - generic [ref=e309]:
+                        - heading "📋 kody task state" [level=2] [ref=e310]
+                        - list [ref=e311]:
+                          - listitem [ref=e312]:
+                            - strong [ref=e313]: "Phase:"
+                            - code [ref=e314]: idle
+                            - strong [ref=e315]: "Status:"
+                            - code [ref=e316]: running
+                          - listitem [ref=e317]:
+                            - strong [ref=e318]: "Last executable:"
+                            - code [ref=e319]: classify
+                          - listitem [ref=e320]:
+                            - strong [ref=e321]: "Last action:"
+                            - code [ref=e322]: CLASSIFIED_AS_FEATURE
+                          - listitem [ref=e323]:
+                            - strong [ref=e324]: "Attempts:"
+                            - text: classify:1
+                        - heading "Recent history" [level=3] [ref=e325]
+                        - list [ref=e326]:
+                          - listitem [ref=e327]:
+                            - code [ref=e328]: 2026-05-07T19:37:40.221Z
+                            - strong [ref=e329]: classify
+                            - text: →
+                            - code [ref=e330]: CLASSIFIED_AS_FEATURE
+                            - text: — Adding a new /healthz endpoint with build metadata is a new user-facing capability that involves route creation, environ
+                        - group [ref=e331]:
+                          - generic "Raw state (JSON)" [ref=e332] [cursor=pointer]
+                      - toolbar "Reactions"
+                - generic [ref=e333]:
+                  - link "@aharonyaircohen's profile" [ref=e334] [cursor=pointer]:
+                    - /url: https://github.com/aharonyaircohen
+                    - img "aharonyaircohen" [ref=e335]
+                  - generic [ref=e342]:
+                    - generic [ref=e344]:
+                      - heading "aharonyaircohen commented on May 7, 2026 3 minutes ago" [level=3] [ref=e345]:
+                        - text: aharonyaircohen commented
+                        - generic "May 7, 2026, 7:37 PM UTC" [ref=e346]: on May 7, 2026 3 minutes ago
+                      - generic [ref=e347]:
+                        - link "aharonyaircohen" [ref=e349] [cursor=pointer]:
+                          - /url: /aharonyaircohen
+                        - link "on May 7, 20263 minutes ago" [ref=e352] [cursor=pointer]:
+                          - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192#issuecomment-4400472120
+                          - generic "May 7, 2026, 7:37 PM UTC" [ref=e353]: on May 7, 20263 minutes ago
+                      - generic [ref=e355]:
+                        - generic "This user is the owner of the Kody-Engine-Tester repository." [ref=e357]: Owner
+                        - button "Actions for aharonyaircohen's comment, 7:37 PM today" [ref=e359] [cursor=pointer]:
+                          - img [ref=e360]
+                    - generic [ref=e362]:
+                      - paragraph [ref=e365]:
+                        - link "@kody" [ref=e366] [cursor=pointer]:
+                          - /url: https://github.com/kody
+                        - text: feature
+                      - toolbar "Reactions" [ref=e367]:
+                        - switch "👀 1 reaction" [ref=e368]:
+                          - generic [ref=e369]:
+                            - generic: 👀
+                            - generic [ref=e370]:
+                              - generic [ref=e371]: React with 👀
+                              - text: "1"
+                - region "Events" [ref=e372]:
+                  - generic [ref=e379]:
+                    - img [ref=e383]
+                    - generic [ref=e387]:
+                      - link "aharonyaircohen" [ref=e389] [cursor=pointer]:
+                        - /url: /aharonyaircohen
+                        - generic [ref=e390]: aharonyaircohen
+                      - text: added
+                      - 'link "kody-flow:feature kody2 flow: feature / refactor" [ref=e392] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody-flow%3Afeature%22
+                        - generic [ref=e394]: kody-flow:feature
+                        - generic [ref=e395]: "kody2 flow: feature / refactor"
+                      - 'link "kody:orchestrating kody2: orchestrating a multi-stage flow" [ref=e397] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody%3Aorchestrating%22
+                        - generic [ref=e399]: kody:orchestrating
+                        - generic [ref=e400]: "kody2: orchestrating a multi-stage flow"
+                      - 'link "kody:researching kody2: researching the issue" [ref=e402] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody%3Aresearching%22
+                        - generic [ref=e404]: kody:researching
+                        - generic [ref=e405]: "kody2: researching the issue"
+                      - text: and removed
+                      - 'link "kody:classifying kody2: classifying the issue" [ref=e407] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody%3Aclassifying%22
+                        - generic [ref=e409]: kody:classifying
+                        - generic [ref=e410]: "kody2: classifying the issue"
+                      - 'link "kody:orchestrating kody2: orchestrating a multi-stage flow" [ref=e412] [cursor=pointer]':
+                        - /url: /aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody%3Aorchestrating%22
+                        - generic [ref=e414]: kody:orchestrating
+                        - generic [ref=e415]: "kody2: orchestrating a multi-stage flow"
+                      - link "on May 7, 20261 minute ago" [ref=e416] [cursor=pointer]:
+                        - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192#event-25277151118
+                        - generic "May 7, 2026, 7:39 PM UTC" [ref=e417]: on May 7, 20261 minute ago
+            - generic [ref=e418]:
+              - link "Sign up for free" [ref=e419] [cursor=pointer]:
+                - /url: /signup?return_to=https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192
+                - generic [ref=e421]: Sign up for free
+              - generic [ref=e422]:
+                - strong [ref=e423]: to join this conversation on GitHub.
+                - text: Already have an account?
+              - link "Sign in to comment" [ref=e424] [cursor=pointer]:
+                - /url: /login?return_to=https://github.com/aharonyaircohen/Kody-Engine-Tester/issues/3192
+        - generic [ref=e426]:
+          - heading "Metadata" [level=2] [ref=e427]
+          - generic [ref=e429]:
+            - generic [ref=e431]:
+              - generic [ref=e432]:
+                - heading "Assignees" [level=3]
+              - generic [ref=e433]: No one assigned
+            - generic [ref=e434]:
+              - generic [ref=e436]:
+                - heading "Labels" [level=3]
+              - generic [ref=e438]:
+                - 'link "kody-flow:feature kody2 flow: feature / refactor" [ref=e439] [cursor=pointer]':
+                  - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody-flow%3Afeature%22
+                  - generic [ref=e441]: kody-flow:feature
+                  - generic [ref=e442]: "kody2 flow: feature / refactor"
+                - 'link "kody:researching kody2: researching the issue" [ref=e443] [cursor=pointer]':
+                  - /url: https://github.com/aharonyaircohen/Kody-Engine-Tester/issues?q=state%3Aopen%20label%3A%22kody%3Aresearching%22
+                  - generic [ref=e445]: kody:researching
+                  - generic [ref=e446]: "kody2: researching the issue"
+            - generic [ref=e448]:
+              - generic [ref=e449]:
+                - heading "Projects" [level=3]
+              - generic [ref=e450]: No projects
+            - generic [ref=e452]:
+              - generic [ref=e453]:
+                - heading "Milestone" [level=3]
+              - generic [ref=e454]: No milestone
+            - generic [ref=e456]:
+              - generic [ref=e457]:
+                - heading "Relationships" [level=3]
+              - generic [ref=e458]: None yet
+            - generic [ref=e459]:
+              - generic [ref=e461]:
+                - heading "Development" [level=3]
+              - generic [ref=e462]:
+                - generic [ref=e463]: No branches or pull requests
+                - list
+            - generic [ref=e464]:
+              - generic [ref=e466]:
+                - heading "Participants" [level=3]
+              - generic [ref=e469]:
+                - link "@aharonyaircohen" [ref=e470] [cursor=pointer]:
+                  - /url: /aharonyaircohen
+                  - img "@aharonyaircohen" [ref=e471]
+                - link "@aguyaharonyair" [ref=e472] [cursor=pointer]:
+                  - /url: /aguyaharonyair
+                  - img "@aguyaharonyair" [ref=e473]
+            - heading "Issue actions" [level=2] [ref=e474]
+            - list
+  - contentinfo [ref=e475]:
+    - heading "Footer" [level=2] [ref=e476]
+    - generic [ref=e477]:
+      - generic [ref=e478]:
+        - link "GitHub Homepage" [ref=e479] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e480]
+        - generic [ref=e482]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e483]:
+        - heading "Footer navigation" [level=3] [ref=e484]
+        - list "Footer navigation" [ref=e485]:
+          - listitem [ref=e486]:
+            - link "Terms" [ref=e487] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e488]:
+            - link "Privacy" [ref=e489] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e490]:
+            - link "Security" [ref=e491] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e492]:
+            - link "Status" [ref=e493] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e494]:
+            - link "Community" [ref=e495] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e496]:
+            - link "Docs" [ref=e497] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e498]:
+            - link "Contact" [ref=e499] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e500]:
+            - button "Manage cookies" [ref=e502] [cursor=pointer]
+          - listitem [ref=e503]:
+            - button "Do not share my personal information" [ref=e505] [cursor=pointer]

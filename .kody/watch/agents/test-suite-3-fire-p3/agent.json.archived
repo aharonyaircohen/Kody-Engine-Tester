@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-3-fire-p3",
+  "description": "Fire Phase 3 (complex features) test issues — runs nightly at 02:00. Fires 17 P3 tests and launches second-step monitors for P3T12 and P3T13.",
+  "cron": "0 2 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}
