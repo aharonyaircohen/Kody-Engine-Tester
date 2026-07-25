@@ -1,0 +1,12 @@
+{
+  "name": "Documentation Health",
+  "steps": [
+    {
+      "capability": "docs-readme"
+    },
+    {
+      "capability": "docs-code"
+    }
+  ],
+  "agent": "kody"
+}
