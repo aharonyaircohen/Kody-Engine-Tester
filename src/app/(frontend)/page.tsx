@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import React from 'react'
 import { fileURLToPath } from 'url'
 
+import { CopyrightFooter } from '@/components/footer/CopyrightFooter'
 import config from '@/payload.config'
 import './styles.css'
 
@@ -53,6 +54,7 @@ export default async function HomePage() {
         <a className="codeLink" href={fileURL}>
           <code>app/(frontend)/page.tsx</code>
         </a>
+        <CopyrightFooter />
       </div>
     </div>
   )

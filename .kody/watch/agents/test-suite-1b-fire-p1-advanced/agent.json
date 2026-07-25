@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-1b-fire-p1-advanced",
+  "description": "Fire Phase 1 advanced tests (T24-T41, 9 tests) at 00:30 UTC — decompose, bootstrap, hotfix, release variants.",
+  "cron": "30 0 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}

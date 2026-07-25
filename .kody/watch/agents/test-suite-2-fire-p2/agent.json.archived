@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-2-fire-p2",
+  "description": "Fire Phase 2 (dependent commands) test issues — runs nightly at 01:00. Fires 10 P2 tests (review, fix, approve, resolve, rerun, compose, revert) that need Phase 1 PRs to exist.",
+  "cron": "0 1 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}
