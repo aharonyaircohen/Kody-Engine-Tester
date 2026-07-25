@@ -1,3 +1,5 @@
+Last live-test: lifecycle DSL smoke v0.4.65
+
 # LearnHub LMS
 
 A full-featured Learning Management System built with Next.js, Payload CMS, and PostgreSQL.
