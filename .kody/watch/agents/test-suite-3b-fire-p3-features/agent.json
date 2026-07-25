@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-3b-fire-p3-features",
+  "description": "Fire Phase 3 complex-feature tests (T18-T36, 9 tests) at 02:30 UTC.",
+  "cron": "30 2 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 600000
+}

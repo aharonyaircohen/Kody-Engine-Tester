@@ -1,0 +1,7 @@
+{
+  "name": "test-suite-4-wait",
+  "description": "Tally test-suite results — runs nightly at 04:00. Reads labels from all test-suite-temp issues matching today's RUN_ID and writes a results file for the report agent to consume.",
+  "cron": "0 4 * * *",
+  "reportOnFailure": true,
+  "timeoutMs": 240000
+}
