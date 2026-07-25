@@ -1,0 +1,13 @@
+{
+  "readyPreviewCap": 20,
+  "smallChangeMaxLines": 200,
+  "smallChangeMaxFiles": 10,
+  "staleReviewHours": 24,
+  "blockAutoMergeLabel": "do-not-merge",
+  "releaseAutoMergeTitlePrefix": "Release",
+  "releaseAutoMergeBranchPrefix": "release/",
+  "releasePromotionTitlePrefix": "Promote",
+  "releaseAutoMergeAllowedPaths": [],
+  "dispatchComment": "run",
+  "tripwirePaths": []
+}

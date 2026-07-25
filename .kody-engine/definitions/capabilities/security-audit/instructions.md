@@ -2,6 +2,9 @@
 
 Use the `security-audit` skill.
 
+When `KODY_DRY_RUN` is `true`, do not create or update GitHub issues, comments,
+pull requests, branches, or files. Report the would-be action instead.
+
 Run only the work requested by the matching capability. Follow the capability profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
 
 # Final message format (required)
