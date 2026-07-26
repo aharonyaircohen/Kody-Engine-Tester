@@ -1,0 +1,15 @@
+{
+  "id": "chore-live-test",
+  "trigger": {
+    "type": "schedule",
+    "every": "24h"
+  },
+  "target": {
+    "kind": "workflow",
+    "id": "chore"
+  },
+  "input": {
+    "issue": 3923
+  },
+  "enabled": false
+}
