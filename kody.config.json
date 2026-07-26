@@ -78,9 +78,6 @@
       "review",
       "run",
       "fix"
-    ],
-    "activeWorkflows": [
-      "chore"
     ]
   }
 }
