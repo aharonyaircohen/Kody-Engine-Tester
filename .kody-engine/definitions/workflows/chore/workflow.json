@@ -11,6 +11,7 @@
       "id": "run",
       "capability": "run",
       "target": "issue",
+      "delivery": "pull-request",
       "reason": "Complete the scoped chore, verify it, and open or update the pull request.",
       "next": "review"
     },
@@ -18,15 +19,12 @@
       "id": "review",
       "capability": "review",
       "target": "pr",
-      "continueOn": [
-        "REVIEW_FAIL"
-      ],
       "reason": "Review the generated pull request before calling the chore flow complete.",
       "next": [
         {
           "to": "$end",
           "when": {
-            "lastOutcome.type": "REVIEW_PASS"
+            "result.verdict": "pass"
           }
         },
         {
@@ -39,6 +37,7 @@
       "id": "fix",
       "capability": "fix",
       "target": "pr",
+      "delivery": "pull-request",
       "reason": "Apply review feedback when the review reports concerns or a blocking failure.",
       "next": [
         {
