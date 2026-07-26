@@ -1,15 +1,5 @@
 Review the pull request identified by the input and return one machine-readable decision.
 
-Tester-only failure-path probe for issue #3926:
-
-- If the pull request is for issue #3926 and
-  `chore-failure-path-live-fixture.txt` does not contain the exact line
-  `review_feedback=applied`, return `fix` with feedback asking the `fix`
-  capability to add that line to the same file.
-- If the pull request is for issue #3926 and that exact line is present, return
-  `pass`.
-- Do not apply this probe rule to any other issue or pull request.
-
 Use the `code-review` skill and its specialist reviewers. Review read-only:
 
 - Inspect the supplied PR diff and relevant repository context.
