@@ -101,6 +101,14 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Hydrate Kody Store definitions
+        uses: actions/checkout@v4
+        with:
+          repository: aharonyaircohen/kody-company-store
+          ref: main
+          path: .kody-engine/store-definitions
+          token: ${{ secrets.GH_PAT || secrets.KODY_TOKEN || github.token }}
+
       - env:
           ALL_SECRETS:   ${{ toJSON(secrets) }}
           SESSION_ID:    ${{ inputs.sessionId }}
@@ -109,7 +117,7 @@ jobs:
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
           KODY_DRY_RUN: ${{ inputs.dry_run }}
-          KODY_DEFINITIONS_ROOT: ${{ github.workspace }}/.kody-engine/definitions
+          KODY_DEFINITIONS_ROOT: ${{ github.workspace }}/.kody-engine/store-definitions
           KODY_DEFINITIONS_ROOT_CWD: ${{ github.workspace }}
         run: |
           npm install --global @kody-ade/kody-engine@latest
