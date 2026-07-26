@@ -109,9 +109,8 @@ jobs:
           KODY_TITLE:    ${{ inputs.title }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
           KODY_DRY_RUN: ${{ inputs.dry_run }}
+          KODY_DEFINITIONS_ROOT: ${{ github.workspace }}/.kody-engine/definitions
+          KODY_DEFINITIONS_ROOT_CWD: ${{ github.workspace }}
         run: |
           npm install --global @kody-ade/kody-engine@latest
-          cp -R .kody-engine/definitions /tmp/kody-loop-definitions
-          export KODY_DEFINITIONS_ROOT=/tmp/kody-loop-definitions
-          export KODY_DEFINITIONS_ROOT_CWD="$GITHUB_WORKSPACE"
           kody-engine ci
