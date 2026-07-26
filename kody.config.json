@@ -84,11 +84,13 @@
       "detect-memory-conflicts",
       "decide-memory-change",
       "apply-memory-changes",
-      "verify-memory-change"
+      "verify-memory-change",
+      "detect-stale-memory"
     ],
     "activeWorkflows": [
       "chore",
-      "learn-from-runs"
+      "learn-from-runs",
+      "maintain-memory-quality"
     ]
   }
 }
