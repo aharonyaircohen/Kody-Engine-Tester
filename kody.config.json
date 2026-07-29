@@ -73,7 +73,8 @@
   "company": {
     "activeAgents": [
       "kody",
-      "memory-steward"
+      "memory-steward",
+      "documentation-lead"
     ],
     "activeCapabilities": [
       "review",
@@ -87,13 +88,15 @@
       "verify-memory-change",
       "detect-stale-memory",
       "build-chat-knowledge-graph",
-      "publish-chat-knowledge-tool"
+      "publish-chat-knowledge-tool",
+      "documentation-draft"
     ],
     "activeWorkflows": [
       "chore",
       "learn-from-runs",
       "maintain-memory-quality",
-      "build-chat-knowledge-graph"
+      "build-chat-knowledge-graph",
+      "documentation-agency"
     ]
   }
 }
