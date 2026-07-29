@@ -89,7 +89,16 @@
       "detect-stale-memory",
       "build-chat-knowledge-graph",
       "publish-chat-knowledge-tool",
-      "documentation-draft"
+      "documentation-draft",
+      "define-documentation-brief",
+      "collect-documentation-evidence",
+      "design-documentation-set",
+      "test-documentation-examples",
+      "verify-documentation-accuracy",
+      "review-documentation-quality",
+      "revise-documentation",
+      "publish-documentation",
+      "verify-published-documentation"
     ],
     "activeWorkflows": [
       "chore",
