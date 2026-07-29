@@ -98,14 +98,16 @@
       "review-documentation-quality",
       "revise-documentation",
       "publish-documentation",
-      "verify-published-documentation"
+      "verify-published-documentation",
+      "detect-documentation-drift"
     ],
     "activeWorkflows": [
       "chore",
       "learn-from-runs",
       "maintain-memory-quality",
       "build-chat-knowledge-graph",
-      "documentation-agency"
+      "documentation-agency",
+      "maintain-documentation"
     ]
   }
 }
