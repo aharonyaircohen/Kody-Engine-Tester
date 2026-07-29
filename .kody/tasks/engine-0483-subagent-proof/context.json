@@ -1,0 +1,10 @@
+{
+  "taskId": "engine-0483-subagent-proof",
+  "taskType": "chat",
+  "outcome": "completed",
+  "filesTouched": [
+    ".kody-engine/definitions/capabilities/review/contract.json"
+  ],
+  "startedAt": "2026-07-29T17:27:00.000Z",
+  "finishedAt": "2026-07-29T17:27:00.000Z"
+}
