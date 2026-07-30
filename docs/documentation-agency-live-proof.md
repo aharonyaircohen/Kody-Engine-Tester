@@ -1,157 +1,98 @@
-## 1. Reader outcome
+# Documentation Agency: Live Wiring Proof
 
-This document is for maintainers of `Kody-Engine-Tester` who read `.kody-engine/definitions/` paths directly and act as the operator of the Documentation Agency.
+## 1. What this document is and who it is for
 
-After reading, you can:
+This document is a peer-to-peer verification aid for maintainers of the `Kody-Engine-Tester` repository who already know what the Kody Engine is but have not read the hydrated Documentation Agency Store definitions. It walks the wiring of the agency as the definitions currently describe it, cites each claim as a path plus line range, and stops at the boundary between what the files on disk actually say and what would require reading engine internals to confirm. Every cited path is either committed in HEAD or present on disk at authoring time.
 
-1. Name the Documentation Lead agent and the three specialist roles that sit under it.
-2. List the 10 main-workflow capabilities in execution order and cite their step ids.
-3. List the 11th capability that lives in the separate maintenance workflow.
-4. Describe the 7-day maintenance loop and its target workflow.
-5. State the four revision-limit caps declared in `workflow.json`.
-6. Explain the explicit-approval gate and the blocked-status contract shape.
-7. Distinguish immediate CMS publication from repository pull-request delivery.
+## 2. Who owns this — documentation-lead and the division of labour
 
-## 2. Who runs the agency
+The accountable editor is `documentation-lead`, identified at `.kody-engine/definitions/agents/documentation-lead.md` lines 8-9 as "the accountable editor for technical documentation produced by a small specialist team." The same file at lines 19-20 carries the division-of-labour sentence: "researchers gather facts, writers shape the narrative, reviewers challenge quality, and you make the final decision."
 
-### 2.1 Documentation Lead agent
+The three specialist roles routed through that lead are documented as per-capability subagent files under each capability's `tools/agents/` directory; the working-tree listing of `.kody-engine/definitions/agents/` contains only `documentation-lead.md` and `kody.md`:
 
-The lead is declared at `.kody-engine/definitions/agents/documentation-lead.md`. Lines 8-11 state its role: "accountable editor for technical documentation" that turns an operator's request into a clear evidence plan, delegates, reconciles disagreements, and delivers one coherent document. Lines 15-26 enumerate the qualities: audience first, evidence before prose, clear ownership (researchers, writers, reviewers, lead), one voice, useful detail, honest uncertainty. Lines 30-32 capture the hard rule: "Never trade correctness for polish."
+- `documentation-researcher.md` is referenced by the capabilities `define-documentation-brief` (`.kody-engine/definitions/capabilities/define-documentation-brief/tools/agents/documentation-researcher.md`), `collect-documentation-evidence` (`.kody-engine/definitions/capabilities/collect-documentation-evidence/tools/agents/documentation-researcher.md`), `documentation-draft` (`.kody-engine/definitions/capabilities/documentation-draft/tools/agents/documentation-researcher.md`), and `detect-documentation-drift` (`.kody-engine/definitions/capabilities/detect-documentation-drift/tools/agents/documentation-researcher.md`).
+- `documentation-writer.md` is referenced by `design-documentation-set` (`.kody-engine/definitions/capabilities/design-documentation-set/tools/agents/documentation-writer.md`), `documentation-draft` (`.kody-engine/definitions/capabilities/documentation-draft/tools/agents/documentation-writer.md`), and `revise-documentation` (`.kody-engine/definitions/capabilities/revise-documentation/tools/agents/documentation-writer.md`).
+- `documentation-reviewer.md` is referenced by `documentation-draft` (`.kody-engine/definitions/capabilities/documentation-draft/tools/agents/documentation-reviewer.md`), `test-documentation-examples` (`.kody-engine/definitions/capabilities/test-documentation-examples/tools/agents/documentation-reviewer.md`), `verify-documentation-accuracy` (`.kody-engine/definitions/capabilities/verify-documentation-accuracy/tools/agents/documentation-reviewer.md`), `review-documentation-quality` (`.kody-engine/definitions/capabilities/review-documentation-quality/tools/agents/documentation-reviewer.md`), and `verify-published-documentation` (`.kody-engine/definitions/capabilities/verify-published-documentation/tools/agents/documentation-reviewer.md`).
+- `publish-documentation` has no `tools/agents/` subagent on disk and is executed by the lead directly.
 
-### 2.2 Three specialist roles
+The `activeAgents` block of `kody.config.json` (lines 74-78) lists only `kody`, `memory-steward`, and `documentation-lead`; the three specialist roles are not registered there, only referenced from each capability's `tools/agents/` directory as set out above.
 
-Each specialist appears as frontmatter `name:` on line 2 of its agent file under the relevant capability's `tools/agents/` folder:
+## 3. The 10-step creation pipeline with maxIterations
 
-- **Researcher** — `.kody-engine/definitions/capabilities/define-documentation-brief/tools/agents/documentation-researcher.md`, `.kody-engine/definitions/capabilities/collect-documentation-evidence/tools/agents/documentation-researcher.md`, `.kody-engine/definitions/capabilities/documentation-draft/tools/agents/documentation-researcher.md` (co-located).
-- **Writer** — `.kody-engine/definitions/capabilities/design-documentation-set/tools/agents/documentation-writer.md`, `.kody-engine/definitions/capabilities/documentation-draft/tools/agents/documentation-writer.md` (co-located), `.kody-engine/definitions/capabilities/revise-documentation/tools/agents/documentation-writer.md`.
-- **Reviewer** — `.kody-engine/definitions/capabilities/documentation-draft/tools/agents/documentation-reviewer.md` (co-located), `.kody-engine/definitions/capabilities/test-documentation-examples/tools/agents/documentation-reviewer.md`, `.kody-engine/definitions/capabilities/verify-documentation-accuracy/tools/agents/documentation-reviewer.md`, `.kody-engine/definitions/capabilities/review-documentation-quality/tools/agents/documentation-reviewer.md`, `.kody-engine/definitions/capabilities/verify-published-documentation/tools/agents/documentation-reviewer.md`.
+The creation pipeline is the workflow `documentation-agency`, defined at `.kody-engine/definitions/workflows/documentation-agency/workflow.json` (name "Documentation Agency" at L2, agent "documentation-lead" at L3). The capabilities array at L4-15 lists exactly ten entries in this order: `define-documentation-brief`, `collect-documentation-evidence`, `design-documentation-set`, `documentation-draft`, `test-documentation-examples`, `verify-documentation-accuracy`, `review-documentation-quality`, `revise-documentation`, `publish-documentation`, `verify-published-documentation`. The step graph mirrors that order: step ids `brief` (L19), `evidence` (L30), `design` (L41), `draft` (L52), `examples` (L63), `accuracy` (L88), `quality` (L113), `revise` (L138), `publish` (L151), `verify-published` (L170). `startAt` is `"brief"` at L175.
 
-### 2.3 Honest gaps
+The ten capabilities are summarised below in pipeline order:
 
-- `.kody-engine/definitions/capabilities/publish-documentation/tools/` contains only `.gitkeep`. The lead owns the publish step by being the workflow agent (`.kody-engine/definitions/workflows/documentation-agency/workflow.json:3`), not by capability-level declaration.
-- `documentation-draft/tools/agents/` co-locates all three specialists; the step executor is not pinned to one.
+- `define-documentation-brief` (step `brief`) opens the pipeline by turning a request into a brief, owned by `documentation-researcher`.
+- `collect-documentation-evidence` (step `evidence`) gathers path-verified facts, owned by `documentation-researcher`.
+- `design-documentation-set` (step `design`) decides document structure, owned by `documentation-writer`.
+- `documentation-draft` (step `draft`) writes the Markdown body, jointly owned by `documentation-researcher` and `documentation-writer` and reviewed by `documentation-reviewer`.
+- `test-documentation-examples` (step `examples`) checks that concrete examples in the draft actually work, owned by `documentation-reviewer`.
+- `verify-documentation-accuracy` (step `accuracy`) cross-checks claims against cited paths, owned by `documentation-reviewer`.
+- `review-documentation-quality` (step `quality`) challenges voice, structure, and limits, owned by `documentation-reviewer`.
+- `revise-documentation` (step `revise`) folds review feedback back into the draft, owned by `documentation-writer`.
+- `publish-documentation` (step `publish`) is executed by the lead directly because no `tools/agents/` subagent exists for it on disk.
+- `verify-published-documentation` (step `verify-published`) checks the publication record, owned by `documentation-reviewer`.
 
-## 3. Main workflow — capability sequence
+The four `maxIterations` values declared in `workflow.json` are exactly:
 
-The 10 capabilities in execution order, with step ids from `workflow.json:4-15` and `startAt: "brief"` from line 175:
+| Edge | Direction | Value |
+|---|---|---|
+| L78 | `examples` -> `revise` | 3 |
+| L103 | `accuracy` -> `revise` | 3 |
+| L128 | `quality` -> `revise` | 3 |
+| L145 | `revise` -> `examples` | 9 |
 
-1. `define-documentation-brief` — step `brief` — define audience, reader outcome, scope, acceptance criteria.
-2. `collect-documentation-evidence` — step `evidence` — build a source-backed fact and unknowns ledger.
-3. `design-documentation-set` — step `design` — design the smallest complete document set and navigation.
-4. `documentation-draft` — step `draft` — write a complete evidence-backed documentation draft.
-5. `test-documentation-examples` — step `examples` — safely test commands, samples, and reader procedures.
-6. `verify-documentation-accuracy` — step `accuracy` — trace material claims to current source evidence.
-7. `review-documentation-quality` — step `quality` — independently verify clarity, completeness, reader success.
-8. `revise-documentation` — step `revise` — apply only verified findings and return the full revised document.
-9. `publish-documentation` — step `publish` — after explicit approval, create or update the selected publishing surface.
-10. `verify-published-documentation` — step `verify-published` — verify the actual published result rather than only the write operation.
+The JSON value is cited; the semantics of how the engine counts those iterations are out of scope and named as unknown in section 10.
 
-## 4. Branching graph and the four revision-limit caps
+Beyond the four workflow-level `maxIterations` edges above, `.kody-engine/definitions/capabilities/documentation-draft/instructions.md` lines 13-15 document a separate single in-capability revision round inside `documentation-draft`: when the reviewer reports material problems, `documentation-writer` is invoked once more with the review notes, and `documentation-reviewer` is then invoked once more on the revision. That round is one further writer invocation followed by one further reviewer invocation, distinct from the workflow-level `maxIterations` budgets in the table and not constrained by a numeric counter.
 
-### 4.1 Linear opening chain
+## 4. Why detect-documentation-drift is not in this pipeline
 
-`brief → evidence → design → draft → examples` is linear (`.kody-engine/definitions/workflows/documentation-agency/workflow.json:17-60`).
+`detect-documentation-drift` is not a step of `documentation-agency`; a grep of `.kody-engine/definitions/workflows/documentation-agency/workflow.json` returns no matches. It is the sole capability of the separate workflow `maintain-documentation`, defined at `.kody-engine/definitions/workflows/maintain-documentation/workflow.json` (agent "documentation-lead" at L3, capabilities `["detect-documentation-drift"]` at L4-6, single step id `detect-drift` with `input.mode "repository-documentation-maintenance"` at L8-15, `startAt "detect-drift"` at L17). The capability itself is read-only: `.kody-engine/definitions/capabilities/detect-documentation-drift/instructions.md` L8 states "Do not rewrite, publish, delete, commit, or silently change documentation." The maintenance sweep therefore never advances into the creation pipeline.
 
-### 4.2 examples branching
+## 5. The weekly maintenance loop
 
-`examples` branches on `result.status` (lines 66-84). `pass` routes to `accuracy` (line 68-72). `fail` routes to `revise` with `maxIterations: 3` (lines 73-79, esp. 78). The default branch ends the run (line 81).
+The maintenance cadence is declared at `.kody-engine/definitions/loops/documentation-maintenance/loop.json`: id `documentation-maintenance` (L2); trigger type `schedule` with `every "7d"` (L3-6); target `{kind: "workflow", id: "maintain-documentation"}` (L7-10); `input.mode "repository-documentation-maintenance"` (L11-13); `enabled true` (L14). That file is tracked in git HEAD, which makes it the committed exception among the cited definitions. The cadence is a weekly interval expressed as `"7d"`, not a cron expression. The loop is registered by definition; the scheduler has not been observed to have executed it — `manifest.json` contains no `loop:` entries and no scheduler state was located — and the document does not claim any execution has happened.
 
-### 4.3 accuracy branching
+## 6. When publication is blocked
 
-`accuracy` branches similarly (lines 91-109). `pass` routes to `quality` (lines 92-97). `fail` routes to `revise` with `maxIterations: 3` (lines 98-104, esp. 103). Default ends the run (line 106).
+`.kody-engine/definitions/capabilities/publish-documentation/instructions.md` lines 6-18 specify the approval rule: explicit human approval must be present, unambiguous, and not older than the reviewed revision; when any of those conditions fails, the capability returns the JSON payload
 
-### 4.4 quality branching
+```
+{
+  "status": "blocked",
+  "location": "",
+  "change_record": "",
+  "summary": "Explicit human approval is required before publication."
+}
+```
 
-`quality` branches (lines 116-134). `pass` routes to `publish` (lines 117-122). `revise` routes to `revise` with `maxIterations: 3` (lines 123-129, esp. 128). Default ends the run (line 131).
+The same file at L20-23 forbids deleting documents, overwriting unrelated content, and creating a parallel publishing store, and requires preserving the selected system's normal permissions, history, and transport. The contract at `.kody-engine/definitions/capabilities/publish-documentation/contract.json` L25-29 fixes the output `status` enum to exactly `"published"`, `"proposed"`, `"blocked"`, and L41-47 requires `status`, `location`, `change_record`, and `summary` with `additionalProperties: false`.
 
-### 4.5 revise loop
+## 7. Repository "proposed" branch vs CMS "published" branch
 
-`revise` loops back to `examples` unconditionally with `maxIterations: 9` (lines 141-146). "Unconditional" here means no result-status gate is applied on the `revise` edge itself — unlike the `examples`, `accuracy`, and `quality` branches above, which each inspect `result.status` before choosing a successor. The 9-iteration cap is the only constraint on the `revise → examples` loop.
+`.kody-engine/definitions/capabilities/publish-documentation/instructions.md` lines 25-30 describe two branches from the `publish-documentation` step:
 
-### 4.6 Cap summary
+- The repository branch: edits to repository files return `"proposed"`; the workflow delivery wrapper at `.kody-engine/definitions/workflows/documentation-agency/workflow.json` L153 (`"delivery": "pull-request"`) owns the branch, the commit, the push, and the pull request, and the pull request is the change record that still needs merge approval.
+- The CMS branch: returns `"published"` together with a canonical location and a durable change identifier.
 
-| Edge | Cap |
-| --- | --- |
-| examples → revise | 3 |
-| accuracy → revise | 3 |
-| quality → revise | 3 |
-| revise → examples | 9 |
+This repository configures a Payload CMS instance for application data at `src/payload.config.ts` in HEAD; that configuration is not in scope here. For the `publish-documentation` capability, however, no CMS adapter is wired as a documentation publication surface, and no prior CMS documentation publication was located. Therefore only the repository path of publish-documentation is reachable here (the conditional path inside the publish-documentation capability — not a git branch and not the application stack). The CMS branch is described only as the conditional alternative spelled out by the capability.
 
-### 4.7 Honest limit
+## 8. Operator example: issue #3935 through the agency
 
-`workflow.json` declares the numeric caps but no inspected file describes the observable end-state when a cap is exhausted. This document stops at the declared values.
+GitHub issue #3935 is open and requests a create-or-update of only `docs/documentation-agency-live-proof.md`, grants explicit human approval for the final independently reviewed revision to be delivered via the normal pull-request delivery wrapper, disallows a direct commit to `main`, and disallows deletion. The pipeline enters at step `brief` (`workflow.json` L175); the `collect-documentation-evidence` (L31), `design-documentation-set` (L42), and `documentation-draft` (L53) steps each declare `target: "issue"`. The `examples`, `accuracy`, and `quality` edges iterate into `revise` under their `maxIterations` caps from section 3; `publish-documentation` returns `"proposed"` and the delivery wrapper opens a pull request whose merge approval is still pending. Because the workflow's `publish` step advances to `verify-published` only when `result.status == "published"` (`workflow.json` L155-166), the proposed path follows the default branch at L162-164 to `$end` and `verify-published-documentation` does not run on the pull-request change record from this repository. Whether skipping verify-published on the repository delivery path is intentional is left open in section 10. No command line is supplied because none is defined in the cited paths.
 
-## 5. Approval gate and blocked-status behavior
+## 9. What is hydrated Store state vs what is in git HEAD
 
-Explicit human approval is mandatory. If approval is absent, ambiguous, or older than the reviewed revision, publish returns a blocked envelope. Cite `.kody-engine/definitions/capabilities/publish-documentation/instructions.md:6-18` for the exact envelope: `status: blocked`, `location: ""`, `change_record: ""`, summary "Explicit human approval is required before publication."
+The cited definition paths other than the loop are hydrated Store state: `agents/documentation-lead.md`, `workflows/documentation-agency/workflow.json`, `workflows/maintain-documentation/workflow.json`, and the cited capability files are present on disk at authoring time but absent from git HEAD. The single committed exception is `.kody-engine/definitions/loops/documentation-maintenance/loop.json`, which is tracked. `manifest.json` records the hydration timestamp at L4 (`hydratedAt: "2026-07-30T11:08:58.885Z"`) and is itself a flat versions map keyed by `kind:id` to sha256; it lists (among other entries) `agent:documentation-lead`, the eleven documentation capabilities (the ten creation capabilities of section 3 plus detect-documentation-drift), and the two documentation workflows plus `asset:company-store-shared`, with no `loop:` entries; the versions map also contains unrelated agents, capabilities, and workflows not enumerated here. `kody.config.json` activates `documentation-lead` in `activeAgents` (lines 74-78), the eleven documentation capabilities — the ten creation capabilities of section 3 plus detect-documentation-drift — in `activeCapabilities` (lines 92-102), and the two documentation workflows in `activeWorkflows` (lines 109-110); the three specialist roles are not registered in `activeAgents` and live only under each capability's `tools/agents/` directory as set out in section 2, and the legacy `documentation-maintenance` capability present in HEAD is not listed in `activeCapabilities`. The `docs/` directory contains `CONFLICT_TEST.md`, `RESOLVE_TEST_1776631230.md`, `stack-v9.md`, `stack-v10.md`, `stack-v11.md`, `stack-v12.md`, and `test-prd.md` in both the working tree and HEAD; `docs/documentation-agency-live-proof.md` exists in neither, so this document is a CREATE.
 
-The publish contract enum is exactly `{published, proposed, blocked}`. Required fields are `status`, `location`, `change_record`, `summary`; `additionalProperties: false` (`.kody-engine/definitions/capabilities/publish-documentation/contract.json:22-47`).
+## 10. What we deliberately did not claim
 
-## 6. CMS publication vs repository pull-request delivery
+The following points are unknown from the cited paths and are stated as unknown rather than filled in:
 
-- **CMS adapter** — returns `status: published` with canonical location and a durable change identifier (`.kody-engine/definitions/capabilities/publish-documentation/instructions.md:28-30`).
-- **Repository files** — returns `status: proposed`. The capability edits the approved files; the workflow delivery wrapper owns branch, commit, push, and pull request. The pull request is the change record and still needs its normal merge approval (`.kody-engine/definitions/capabilities/publish-documentation/instructions.md:25-28`).
-- The publish step declares `delivery: "pull-request"` (`.kody-engine/definitions/workflows/documentation-agency/workflow.json:153`).
-- **Hard rules** (lines 20-23): create or update only; never delete; never overwrite unrelated content; never create a parallel publishing store; preserve the selected system's normal permissions, history, and transport.
-- **Honest limits**: the concrete CMS adapter name and the runtime that creates the branch/commit/PR are not visible in the inspected sources. The line is cited; the runner is not invented.
-
-## 7. Maintenance workflow — Maintain Documentation
-
-Separate workflow, same lead agent (`.kody-engine/definitions/workflows/maintain-documentation/workflow.json:2-3`). Exactly one capability: `detect-documentation-drift` (lines 1-6; step `detect-drift`, lines 7-16, with `input.mode: repository-documentation-maintenance`).
-
-The capability is a read-only drift sweep that invokes `documentation-researcher`. It does not rewrite, publish, delete, commit, or silently change documentation; it returns `current` with empty findings and proposals when no verified drift is found (`.kody-engine/definitions/capabilities/detect-documentation-drift/instructions.md:1-12`). Maintenance observes and proposes; it does not publish.
-
-## 8. Weekly maintenance loop
-
-The loop is defined at `.kody-engine/definitions/loops/documentation-maintenance/loop.json:2-14`:
-
-- **id** — `documentation-maintenance`.
-- **trigger** — `type: schedule`, `every: 7d`.
-- **target** — workflow `maintain-documentation`.
-- **input** — `mode: repository-documentation-maintenance`.
-- **enabled** — `true`.
-
-The main creation workflow is issue-driven. No parallel `loop.json` exists for `documentation-agency`; only the maintenance path has a 7-day loop.
-
-## 9. Operator walk-through
-
-Invocation surface as declared in `workflow.json`:
-
-- `name` and `agent` (`workflow.json:2-3`).
-- Capability sequence (`workflow.json:4-15`).
-- `delivery: pull-request` on the publish step (`workflow.json:153`).
-- `startAt: brief` (`workflow.json:175`).
-
-Step-by-step path a maintainer-operator passes through on an issue:
-
-1. `.kody-engine/definitions/workflows/documentation-agency/workflow.json` — read invocation surface.
-2. `.kody-engine/definitions/agents/documentation-lead.md` — confirm the lead identity.
-3. `.kody-engine/definitions/capabilities/define-documentation-brief/instructions.md` — step `brief`.
-4. `.kody-engine/definitions/capabilities/collect-documentation-evidence/instructions.md` — step `evidence`.
-5. `.kody-engine/definitions/capabilities/design-documentation-set/instructions.md` — step `design`.
-6. `.kody-engine/definitions/capabilities/documentation-draft/instructions.md` — step `draft`.
-7. `.kody-engine/definitions/capabilities/test-documentation-examples/instructions.md` — step `examples`.
-8. `.kody-engine/definitions/capabilities/verify-documentation-accuracy/instructions.md` — step `accuracy`.
-9. `.kody-engine/definitions/capabilities/review-documentation-quality/instructions.md` — step `quality`.
-10. `.kody-engine/definitions/capabilities/revise-documentation/instructions.md` — step `revise` (if invoked by a fail).
-11. `.kody-engine/definitions/capabilities/publish-documentation/instructions.md` and `contract.json` — step `publish`, then branch by `status`.
-12. `.kody-engine/definitions/capabilities/verify-published-documentation/instructions.md` — step `verify-published`.
-
-**Honest note**: no CLI binary, no `tools/scripts/run-*`, and no REST endpoint is present under `.kody-engine/definitions/implementations/`. Describe the `workflow.json` invocation surface and do not invent a command.
-
-## 10. Source-of-truth pin
-
-`.kody-engine/definitions/manifest.json` pins the definitions as hydrated Store state:
-
-- Lines 2-4: `schemaVersion: 1`, `tenantId: aharonyaircohen/Kody-Engine-Tester`, `hydratedAt: 2026-07-29T20:57:18.343Z`.
-- Line 25: `workflow:documentation-agency` pinned at `sha256:0db2b06844f92568495f6b3ddde38a83b2cd4c73594a2d2f5dc915a4b2be7e8a`.
-- Line 27: `workflow:maintain-documentation` pinned at `sha256:38121ca412ef9cffbb2ee0e94d33a9c20c1be9e120ee3aef7b7a9a8654dfef40`.
-
-## 11. Known limits of this document
-
-- Specialist executor for publish is not capability-declared; the lead owns it as workflow agent.
-- Specialist executor for documentation-draft is not pinned; all three specialists co-locate.
-- CMS adapter name is not named in the hydrated definitions; only the contract shape is documented.
-- The runtime that creates the PR is not present in the inspected sources.
-- Cap-exhaustion end-state is not described in the inspected sources.
-- `docs/` contains only test stubs (`CONFLICT_TEST.md`, `RESOLVE_TEST_1776631230.md`, `stack-v9.md` through `stack-v12.md`, `test-prd.md`); this document is the first narrative file in that directory.
+- The implementation of the `"delivery": "pull-request"` wrapper at `workflow.json` L153 — branch naming, commit author, PR template, merge mechanics — is not in this repository and is not asserted here.
+- Whether the `"7d"` schedule trigger has ever been dispatched, when it last ran, and what execution record exists: `manifest.json` contains no loop entries and no scheduler state was located.
+- The semantics of `maxIterations` — whether it counts per edge, whether the cap includes the first attempt or only retries, and how it is reset — is not determinable from `workflow.json` alone; only the JSON values are cited.
+- Whether `publish-documentation` terminating at `$end` on status `"proposed"` (`workflow.json` L163) instead of advancing to `verify-published` is intentional: `workflow.json` and `instructions.md` agree on naming but do not state whether repository delivery should reach `verify-published`, so this is flagged honestly rather than resolved.
+- No CMS adapter is wired to `publish-documentation` as a documentation publication surface, and no prior CMS documentation publication was located in this repository (though `src/payload.config.ts` in HEAD does configure a Payload CMS instance for application data, which is not in scope here); the CMS branch in section 7 is described as the conditional alternative and nothing more.
