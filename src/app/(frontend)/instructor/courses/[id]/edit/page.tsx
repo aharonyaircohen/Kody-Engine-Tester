@@ -7,12 +7,37 @@ import { moduleStore, type Module } from '@/collections/Modules'
 import { lessonStore, type Lesson, type UpdateLessonInput } from '@/collections/Lessons'
 import { ModuleList } from '@/components/course-editor/ModuleList'
 import { CoursePublishToggle, type PublishStatus } from '@/components/course-editor/CoursePublishToggle'
+import { ErrorBoundary, type ErrorInfo } from '@/components/error-boundary'
+import { createLogger } from '@/utils/logger'
 
 const AUTOSAVE_DEBOUNCE_MS = 2000
+
+const logger = createLogger()
+
+function fallbackRender({ error }: ErrorInfo) {
+  return (
+    <div style={{ padding: '2rem', textAlign: 'center' }}>
+      <h2>Something went wrong</h2>
+      <p style={{ color: '#888', marginBottom: '1rem' }}>There was an error loading the course editor.</p>
+      <button onClick={() => window.location.reload()}>Reload</button>
+    </div>
+  )
+}
 
 export default function CourseEditPage() {
   const params = useParams<{ id: string }>()
   const courseId = params?.id ?? ""
+
+  const handleError = useCallback(
+    (error: Error, componentStack: string) => {
+      logger.error('Course editor render error', {
+        message: error.message,
+        stack: componentStack,
+        courseId,
+      })
+    },
+    [courseId],
+  )
 
   const [modules, setModules] = useState<Module[]>([])
   const [lessonsByModule, setLessonsByModule] = useState<Record<string, Lesson[]>>({})
@@ -123,44 +148,46 @@ export default function CourseEditPage() {
   }
 
   return (
-    <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
-        <div>
-          <Link
-            href={`/instructor/courses/${courseId}`}
-            style={{ color: '#6c63ff', textDecoration: 'none', fontSize: '0.9rem' }}
-          >
-            &larr; Back to course
-          </Link>
-          <h1 style={{ color: '#e0e0e0', margin: '8px 0 0' }}>Edit Course Content</h1>
+    <ErrorBoundary fallbackRender={fallbackRender} onError={handleError}>
+      <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+          <div>
+            <Link
+              href={`/instructor/courses/${courseId}`}
+              style={{ color: '#6c63ff', textDecoration: 'none', fontSize: '0.9rem' }}
+            >
+              &larr; Back to course
+            </Link>
+            <h1 style={{ color: '#e0e0e0', margin: '8px 0 0' }}>Edit Course Content</h1>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            {saveState === 'saving' && (
+              <span style={{ color: '#888', fontSize: '0.85rem' }} data-testid="autosave-indicator">
+                Saving…
+              </span>
+            )}
+            {saveState === 'saved' && (
+              <span style={{ color: '#4ecdc4', fontSize: '0.85rem' }} data-testid="autosave-indicator">
+                Saved
+              </span>
+            )}
+            <CoursePublishToggle status={publishStatus} onToggle={handlePublishToggle} />
+          </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          {saveState === 'saving' && (
-            <span style={{ color: '#888', fontSize: '0.85rem' }} data-testid="autosave-indicator">
-              Saving…
-            </span>
-          )}
-          {saveState === 'saved' && (
-            <span style={{ color: '#4ecdc4', fontSize: '0.85rem' }} data-testid="autosave-indicator">
-              Saved
-            </span>
-          )}
-          <CoursePublishToggle status={publishStatus} onToggle={handlePublishToggle} />
-        </div>
+        <ModuleList
+          modules={modules}
+          lessons={lessonsByModule}
+          onReorder={handleReorder}
+          onAddModule={handleAddModule}
+          onUpdateModule={handleUpdateModule}
+          onDeleteModule={handleDeleteModule}
+          onAddLesson={handleAddLesson}
+          onUpdateLesson={handleUpdateLesson}
+          onDeleteLesson={handleDeleteLesson}
+        />
       </div>
-
-      <ModuleList
-        modules={modules}
-        lessons={lessonsByModule}
-        onReorder={handleReorder}
-        onAddModule={handleAddModule}
-        onUpdateModule={handleUpdateModule}
-        onDeleteModule={handleDeleteModule}
-        onAddLesson={handleAddLesson}
-        onUpdateLesson={handleUpdateLesson}
-        onDeleteLesson={handleDeleteLesson}
-      />
-    </div>
+    </ErrorBoundary>
   )
 }
