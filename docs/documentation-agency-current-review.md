@@ -1,185 +1,136 @@
-# The Kody Documentation Agency — Usage Guide
+# Documentation agency usage guide
 
-Practical usage guide for repository maintainers and operators who request, review, and publish documentation through the Kody Documentation Agency workflow.
+This guide explains how repository maintainers and operators use the Kody documentation agency to produce a verified, evidence-backed documentation draft and deliver it for human review by pull request. It is a practical companion to the workflow hydrated in this consumer repository from the Kody company Store.
 
-## 1. Overview
+## Orientation
 
-The Documentation Agency is a Kody workflow that turns a single GitHub issue into a complete, evidence-backed documentation deliverable and opens a pull request for human review. The workflow is bound to the documentation-lead agent — the accountable editor for evidence-backed business, product, and technical documentation. Its hard rule: never trade correctness for polish; a shorter verified document is better than a detailed document that claims behavior the available evidence does not support.
+The documentation agency is run by the **Documentation Lead** agent, the accountable editor for evidence-backed business, product, and technical documentation. The Lead's operating qualities are audience first, evidence before prose, clear ownership, one voice, useful detail, and honest uncertainty.
 
-Use the agency when you need:
+The Lead follows one hard rule:
 
-- A document whose claims are traceable to current source evidence
-- A consistent pipeline through brief → evidence → design → draft → examples → accuracy → quality → revise → publish → verify-published
-- A pull-request delivery surface that requires explicit human approval before any change touches the target branch
+> Never trade correctness for polish. A shorter verified document is better than a detailed document that claims behavior the available evidence does not support.
 
-Do not use the agency for:
+Concretely this means:
 
-- One-off prose rewrites that do not need a structured pipeline
-- Work that should land directly on main or bypass human review — the publish step requires explicit approval and the workflow delivery owns the PR
-- Work that depends on Chat routing behavior — the agency does not declare any Chat routing and the evidence does not support that surface
+- Every claim in the draft must be traceable to an inspected source.
+- Recommendations, hypotheticals, and unverified behavior are separated from current verified behavior rather than blended into prose.
+- Honest uncertainties are flagged rather than smoothed over.
 
-## 2. Prerequisites
+Delivery is pull-request only. The agency drafts the document on a separate branch, opens a pull request for human review, and never merges or writes directly to `main`. The agency is not authorized to claim any Chat routing behavior; such claims are excluded from this guide.
 
-Before launching the workflow, confirm the consumer repository has:
+The agency's identity is documented in `agents/documentation-lead.md`. Concrete scope, tools, inputs, and output rules belong to the capability being executed at each step.
 
-- A GitHub issue that anchors evidence, approval, and repository delivery. The issue number is required; the issue repository is taken from the `GITHUB_REPOSITORY` environment variable of the consumer repository that launched the workflow, and must not be inferred from the subject, authoritative sources, or destination.
-- A defined publishing surface matching `brief.destination`. For this guide that surface is a repository file at `docs/documentation-agency-current-review.md` on a separate branch via a pull request — not a direct write to main.
-- A workflow context where the documentation-lead agent and all 10 capabilities are available: `define-documentation-brief`, `collect-documentation-evidence`, `design-documentation-set`, `documentation-draft`, `test-documentation-examples`, `verify-documentation-accuracy`, `review-documentation-quality`, `revise-documentation`, `publish-documentation`, and `verify-published-documentation`.
-- A human reviewer authorized to approve the publish step. Without that approval the publish step returns `blocked` and the workflow cannot complete.
+## Prerequisites
 
-## 3. Required inputs
+Before starting the workflow, confirm the following with your operator:
 
-The workflow input has two fields:
+- Kody Engine has hydrated the `documentation-agency` workflow and the `define-documentation-brief` capability into this repository. The local files at `.kody-engine/definitions/workflows/documentation-agency/workflow.json` and `.kody-engine/definitions/capabilities/define-documentation-brief/` must be present and not empty.
+- The operator can write to a feature branch and open or review pull requests against `main`.
+- A source issue exists that supplies all six brief fields (see next section).
 
-- `issue` — integer, minimum 1. The GitHub issue used as the evidence, approval, and repository-delivery anchor.
-- `brief` — object with exactly six non-empty fields and no additional properties:
-  - `subject` — what the document is about
-  - `audience` — who the document is for
-  - `desiredOutcome` — what the reader can do after reading
-  - `documentType` — the kind of document to produce
-  - `authoritativeSources` — array, at least one entry; sources the agent will inspect
-  - `destination` — the publishing surface the deliverable will land on
+If any of the above is missing, stop and resolve it before invoking the workflow.
 
-Example input object for this guide:
+## Prepare the request
 
-```json
-{
-  "issue": 3937,
-  "brief": {
-    "subject": "The Kody documentation agency defined in the company Store",
-    "audience": "Repository maintainers and operators who request, review, and publish documentation",
-    "desiredOutcome": "Readers can provide inputs, run the creation workflow, review corrections, and approve publication safely",
-    "documentType": "Practical usage guide",
-    "authoritativeSources": [
-      "https://github.com/aharonyaircohen/kody-company-store/tree/main/catalog/workflows/documentation-agency",
-      "https://github.com/aharonyaircohen/kody-company-store/tree/main/catalog/capabilities",
-      "https://github.com/aharonyaircohen/kody-company-store/blob/main/agents/documentation-lead.md",
-      "Active Kody Engine workflow and capability definitions"
-    ],
-    "destination": "Repository proposal at docs/documentation-agency-current-review.md; create a branch and pull request for human review only; do not merge"
-  }
-}
-```
+The workflow consumes two inputs: an integer `issue` reference and a `brief` object.
 
-Practical guidance before submitting:
+The `brief` object carries six fields. All six are marked required in the Store workflow's `inputSchema`; the local `define-documentation-brief` contract defines `brief` as a bare object and does not enumerate these sub-fields as required.
 
-- Make the first `authoritativeSource` the workflow definition itself when you want the deliverable to match current workflow behavior.
-- For repository files, write `destination` to name a single file or surface and state the review model (separate branch, pull request, no merge, no direct write to main) so the publish step does not have to infer it.
+| Field | Purpose |
+| --- | --- |
+| `subject` | The topic the document covers. |
+| `audience` | The reader the document is written for. |
+| `desiredOutcome` | What the reader should be able to do after reading. |
+| `documentType` | The genre (usage guide, reference, runbook, and so on). |
+| `authoritativeSources` | Sources the Lead may inspect to ground claims. |
+| `destination` | The branch-relative file path the draft will be written to. |
 
-## 4. Workflow steps
+The Lead reconciles these fields against the linked issue. The repository for the issue is resolved from the `GITHUB_REPOSITORY` environment variable; it is not inferred from the `subject`, `authoritativeSources`, or `destination` fields.
 
-The workflow has 10 ordered steps. Every step targets `issue`. Each step calls a single capability that returns a status; the workflow graph uses that status to choose the next step.
+If the request lacks enough evidence to define a safe scope, the Lead returns `status: blocked` rather than proceeding.
 
-| # | Step | Capability | Reason |
-|---|------|------------|--------|
-| 1 | brief | define-documentation-brief | Define the audience, reader outcome, scope, and acceptance criteria. |
-| 2 | evidence | collect-documentation-evidence | Build a source-backed fact and unknowns ledger. |
-| 3 | design | design-documentation-set | Design the smallest complete document set and navigation. |
-| 4 | draft | documentation-draft | Write a complete evidence-backed documentation draft. |
-| 5 | examples | test-documentation-examples | Safely test commands, samples, and reader procedures. |
-| 6 | accuracy | verify-documentation-accuracy | Trace material claims to current source evidence. |
-| 7 | quality | review-documentation-quality | Independently verify clarity, completeness, and reader success. |
-| 8 | revise | revise-documentation | Apply only verified findings and return the full revised document. |
-| 9 | publish | publish-documentation | After explicit approval, create or update the selected publishing surface. |
-| 10 | verify-published | verify-published-documentation | Verify the actual published result rather than only the write operation. |
+## Run the creation workflow
 
-Routing on `pass`:
+The workflow executes ten capabilities in order. Each step in `workflow.json` carries both a `capability` field (the capability name) and an `id` field (the step identifier); these are distinct values. The bolded labels below are the capability names; the corresponding step ids are listed in monospace immediately after.
 
-- `draft` → `examples`
-- `examples` → `accuracy`
-- `accuracy` → `quality`
-- `quality` → `publish`
-- `publish` → `verify-published`
-- `verify-published` is terminal (no `next` step)
+1. **`define-documentation-brief`** (step id `brief`) — Resolve the issue, invoke the `documentation-researcher` subagent, reconcile the six brief fields, and return the structured brief contract.
+2. **`collect-documentation-evidence`** (step id `evidence`) — Inspect each authoritative source and gather citations.
+3. **`design-documentation-set`** (step id `design`) — Plan the document structure against the brief and evidence.
+4. **`documentation-draft`** (step id `draft`) — Produce the prose. Proceeds unconditionally from design.
+5. **`test-documentation-examples`** (step id `examples`) — Exercise every code, command, or path example. Runs only when the draft returns `result.status === 'pass'`.
+6. **`verify-documentation-accuracy`** (step id `accuracy`) — Re-check claims against the inspected sources. Triggered when the prior step (`test-documentation-examples`) returns `result.status` of `pass` or `changed`. Routes to `review-documentation-quality` on `result.status` of `pass` or `changed`.
+7. **`review-documentation-quality`** (step id `quality`) — Editorial pass for clarity, voice, and audience fit. Routes to `publish` on `pass`, or to `revise` on `changed`. The revision loop is bounded by `maxIterations: 3`.
+8. **`revise-documentation`** (step id `revise`) — Apply corrections from the quality review. Default `next` is `test-documentation-examples`. Bounded by `maxIterations: 3`.
+9. **`publish-documentation`** (step id `publish`) — Deliver the draft by pull request. `delivery: pull-request` is the only declared delivery mode. Requires `result.status === 'pass'`.
+10. **`verify-published-documentation`** (step id `verify-published`) — Confirm the published artifact matches the brief and the contract. Terminal state.
 
-Routing on `changed`:
+Transitions that are not declared in `workflow.json` (for example, from statuses outside `pass` and `changed`) are not part of the verified behavior.
 
-- `draft`, `examples`, `accuracy`, and `quality` all route to `revise`
-- `revise` defaults to `examples` so corrections cycle back into testing
-- `publish` passes to `verify-published`; non-pass outcomes route to `$end` by default and do not silently continue
-- `evidence` → `design` is unconditional in the workflow graph; the capability does not declare its own iteration budget for this hop
+## Review corrections and approve publication
 
-Iteration budgets (maximum iterations before the workflow surfaces a non-advancing outcome for human review):
+The `review-documentation-quality` step (step id `quality`) is the editorial gate. It returns `pass` to proceed to `publish-documentation`, or `changed` to route the workflow back into `revise-documentation`.
 
-- `draft` changed → `revise`: 1
-- `examples` changed → `revise`: 3
-- `accuracy` changed → `revise`: 3
-- `quality` changed → `revise`: 3
-- `revise` default → `examples`: 2
+The revision loop is bounded: `maxIterations: 3` is set on the `quality->revise` and `revise->examples` transitions in `workflow.json`. The workflow definition does not declare an exhaustion transition or a post-cap action; the behavior after the third revision is therefore not specified by `workflow.json` and falls to the human reviewer to determine.
 
-## 5. Step outputs
+The `publish-documentation` step (step id `publish`) has only one transition declared in `workflow.json`: its `next` rule contains a single `when` clause, `result.status === 'pass'`. The phrase "After explicit approval" appears in the step's free-text `reason` field but is not a `when` clause in the workflow definition; human approval is therefore a process expectation documented in this guide, not a transition enforced by `workflow.json`.
 
-These are the outputs a reader should expect from each step based on the supplied evidence. The exact schemas may evolve with the capability definitions; rely on the active runtime contract for the precise shape.
+The agency does not merge. Final publication authority belongs to a human reviewer; the agency only prepares the pull request.
 
-- `brief` — a structured brief that fixes audience, outcome, scope, and acceptance criteria for the rest of the pipeline.
-- `evidence` — a fact-and-unknowns ledger with at least the fields `version`, `status` (`pass` / `blocked`), `summary`, `sources`, `verified_facts`, and `unknowns`. The capability inspects every source declared by `brief.authoritativeSources` plus relevant source, tests, configuration, existing documentation, and public interfaces. It returns `blocked` only when missing evidence prevents responsible documentation.
-- `design` — the smallest complete document set and the navigation that connects it.
-- `draft` — the complete evidence-backed Markdown draft. This is the canonical `document` for every later step.
-- `examples` — the same draft annotated with tested commands, samples, and reader procedures, or `changed` if examples need revision.
-- `accuracy` — material claims traced to current source evidence, or `changed` if a trace fails.
-- `quality` — an independent assessment of clarity, completeness, and reader success, or `changed` if the draft is not yet ready.
-- `revise` — the full revised document, applying only verified findings. The step returns the entire draft, not a patch.
-- `publish` — the surface state after the change, or `blocked` if explicit human approval is not present. For repository files the step returns `changed` and does not commit or push; the workflow delivery wrapper owns the branch, commit, push, and pull request.
-- `verify-published` — the outcome of verifying the actual published result, not the write operation. The step returns `blocked` if the surface is unreachable and `fail` if it is reachable but incorrect.
+## Publish and verify by pull request
 
-## 6. Review and approval
+When the publish step is reached with `pass` (and human approval per the process expectation), the agency:
 
-Human review is the explicit control point in the pipeline.
+- Writes the draft to the `destination` path on a separate branch.
+- Opens a pull request against `main` for human review.
+- Transitions to `verify-published-documentation` on `pass`, or ends on the default path.
 
-- The `publish` step must see explicit human approval. Without approval the step returns `blocked` and the workflow cannot complete. Approval is a human signal on the issue or through the operator's existing Kody review surface.
-- Corrections are produced earlier in the pipeline. The `accuracy` and `quality` steps each independently flag material claims, clarity, completeness, and reader success. The `revise` step applies only verified findings and returns the full revised document, not a partial patch. The draft then re-enters the loop at `examples`.
-- Publication happens on a pull request. The `publish` step does not commit or push; the workflow delivery wrapper owns the branch, the commit, the push, and the pull request. For this guide the wrapper creates or updates `docs/documentation-agency-current-review.md` on a separate branch and opens a pull request for human review. The workflow does not merge the pull request and does not write directly to main.
-- The `verify-published` step closes the loop. It invokes an independent documentation reviewer and checks the actual published result, not whether a write or commit succeeded. A green write with a broken rendered surface returns `fail`.
+The destination path proposed by this guide is `docs/documentation-agency-current-review.md` on a separate branch, opened as a pull request. The pull request is not merged and is not written directly to `main`; both actions are excluded by the request that authorizes this guide.
 
-## 7. Failure handling
+Whether the `-current-review` suffix is a temporary review name or a final name is not confirmed by the available evidence; flag this rather than assume.
 
-The pipeline surfaces failure in three shapes:
+## Outputs and contract reference
 
-- `blocked` — the step cannot proceed responsibly. Examples: `collect-documentation-evidence` returns `blocked` when missing evidence prevents responsible documentation; `publish-documentation` returns `blocked` without explicit human approval; `verify-published-documentation` returns `blocked` when the publishing surface is unreachable.
-- `changed` — the step produced a result that needs revision. `draft`, `examples`, `accuracy`, and `quality` all use `changed` to route to `revise`. Each of these routes has its own iteration budget; when the budget is exhausted the workflow surfaces the non-advancing outcome for human review.
-- Iteration exhaustion — the `revise` step itself loops to `examples` by default with a maximum of 2 loops. Once that budget is used, the workflow surfaces the non-advancing result rather than continuing silently.
+A completed run produces:
 
-Practical operator guidance:
+- A separate branch containing the draft at the `destination` path.
+- A pull request URL for human review.
+- A structured record per capability executed.
+- For `define-documentation-brief` specifically: an object containing `version` (constant `1`), `status` (enum `pass` or `blocked`), `summary`, `audience`, `purpose`, `scope` (array), `acceptance_criteria` (array), and `source_evidence` (array). All fields are required and `additionalProperties` is `false`.
 
-- Treat `blocked` outcomes as a request for new evidence or a missing approval signal, not as a content problem.
-- Treat `changed` outcomes as a normal step in the pipeline; expect `revise` to cycle the draft back to `examples`.
-- Treat a `verify-published` `fail` as a real defect on the surface even if the write appeared to succeed.
+The `source_evidence` array must list only sources that were actually inspected. Sources inferred or assumed from the brief fields alone are not permitted.
 
-## 8. Known limits
+## When the workflow cannot proceed
 
-The following are honest limits based on the evidence supplied. They are not gaps in the document — they are what the evidence does and does not support.
+Only the following blocked paths are evidenced:
 
-- No Chat routing. The Documentation Agency workflow, the documentation-lead agent, and all 10 capability files contain no reference to Chat routing. This guide does not claim any Chat routing behavior. Treat any request for a Chat routing surface as out of scope until a future capability release explicitly supports it.
-- Evidence → design hop has no declared iteration budget. The workflow graph moves from `evidence` to `design` unconditionally, and the `collect-documentation-evidence` capability does not declare its own iteration budget for this hop.
-- Input schema divergence. The local definitions copy of the workflow omits the `inputSchema` block; the Store version and the active runtime copy include a matching `inputSchema` for `issue` and `brief`. Treat the Store and active runtime schema as the current input contract and flag the definitions-copy divergence to the maintainer responsible for syncing the workflow definitions.
-- Manifest pins are not a freshness signal. The manifest SHA-256 pins for the workflow, the agent, and `collect-documentation-evidence` differ from the on-disk file hashes, even though the on-disk files are byte-identical to the Store main versions. Do not rely on the manifest to judge whether a definition is up to date; inspect the on-disk files and the Store directly.
-- CMS coverage. The `publish-documentation` capability describes an existing CMS adapter or repository file surface selected by the request; the supplied evidence does not enumerate supported CMS platforms. This guide treats the abstraction, not a specific vendor list.
-- No new limits for the agent beyond the workflow's iteration budgets. The documentation-lead agent file only states a qualitative hard rule (correctness over polish) and does not declare numeric limits such as document length or timeouts.
+- The brief returns `status: blocked` when the request lacks enough evidence to define a safe scope. The workflow halts at `define-documentation-brief`.
+- The revision loop reaches its `maxIterations: 3` bound on the `quality->revise` or `revise->examples` transitions. `workflow.json` declares no exhaustion transition, so behavior after the cap is not specified; the human reviewer decides what happens next.
+- A non-`pass`, non-`changed` status reaches a step whose `next` rule is not declared for that status. The workflow has no documented transition for that case.
 
-## 9. Verified facts vs. recommendations
+In each case, surface the blockage to the human reviewer with the relevant capability output rather than retrying silently.
 
-Verified behavior (traceable to supplied evidence):
+## Known limits and open decisions
 
-- Workflow name `Documentation Agency`, agent `documentation-lead`, ten ordered capabilities, target `issue` on every step, publish delivery `pull-request`, and the routing and iteration budgets above.
-- The `issue` repository is resolved from the `GITHUB_REPOSITORY` environment variable of the consumer repository and must not be inferred from `subject`, `authoritativeSources`, or `destination`.
-- Publish requires explicit human approval; the step does not commit or push; the workflow delivery wrapper owns the branch, commit, push, and pull request.
-- `verify-published` checks the actual published result, not the write operation; it returns `blocked` on an unreachable surface and `fail` on a reachable-but-incorrect surface.
-- `collect-documentation-evidence` is read-only and returns a fact-and-unknowns ledger; it returns `blocked` only when missing evidence prevents responsible documentation.
+The following points are not resolved by the available evidence and are flagged honestly:
 
-Operator recommendations (not workflow behavior):
+- **Final merge authority.** The authorizing issue approves opening a pull request for human review but does not name a specific reviewer, team, or required number of approvals.
+- **Draft retention.** Once merged, whether the draft file is renamed, archived, or deleted is not declared by the workflow or the authorizing issue.
+- **"Safe" publication.** The authorizing issue describes a human-approval gate qualitatively. No checklist or threat model is supplied for what counts as safe, and `workflow.json` does not enforce human approval as a `when` clause.
+- **`-current-review` filename.** Whether the suffix indicates a temporary review name or a final published name is not confirmed.
+- **Per-capability contracts.** Only the `define-documentation-brief` `contract.json` and `instructions.md` were inspected for this guide. The remaining nine capability contracts were not inspected in detail.
+- **Post-revision-cap behavior.** `workflow.json` declares `maxIterations: 3` on the `quality->revise` and `revise->examples` transitions but no exhaustion rule. What happens at or after the third revision is therefore not specified by the workflow definition.
 
-- Keep `brief.authoritativeSources` minimal and authoritative. Each source is a place the agent will read; a tight list keeps the evidence step focused.
-- For repository files, name a single file or surface in `destination` and state the review model (separate branch, pull request, no merge, no direct write to main) so the publish step does not have to infer it.
-- Plan the review capacity. Iteration budgets are small (1, 3, 3, 3, 2); a draft that needs more than the budgeted cycles will surface for human review rather than continuing silently.
-- Treat `unknowns` in the evidence ledger as input to your next brief, not as defects. The agency surfaces them so the next run can resolve them.
+These items are flagged as open decisions for the human reviewer rather than answered by this guide.
 
-## Evidence references
+## Evidence references appendix
 
-- `catalog/workflows/documentation-agency/workflow.json` (Store) — workflow name, agent, `inputSchema`, ten ordered steps, reasons, routes, iteration budgets, pull-request delivery.
-- `agents/documentation-lead.md` (Store) — agent identity and the correctness-over-polish hard rule.
-- `catalog/capabilities/define-documentation-brief/instructions.md` (Store) — `GITHUB_REPOSITORY` issue-resolution rule.
-- `catalog/capabilities/collect-documentation-evidence/instructions.md` and `contract.json` (Store) — read-only evidence behavior and the `version` / `status` / `summary` / `sources` / `verified_facts` / `unknowns` output contract.
-- `catalog/capabilities/publish-documentation/instructions.md` (Store) — explicit human approval and workflow delivery wrapper ownership of branch, commit, push, and pull request.
-- `catalog/capabilities/verify-published-documentation/instructions.md` (Store) — actual-published-result verification and `blocked` / `fail` outcomes.
-- GitHub issue 3937 — the business brief, review constraints, and the explicit approval to create or update the destination on a separate branch and open a pull request for human review, without merge or direct write to main.
-- `.kody-engine/definitions/capabilities/` (local) — the ten hydrated capability folders used by the workflow.
+The following sources were inspected to produce this guide:
+
+- Inspected Store workflow: `catalog/workflows/documentation-agency` (`workflow.json`) in `kody-company-store`. The step `id` values, in execution order, are `brief`, `evidence`, `design`, `draft`, `examples`, `accuracy`, `quality`, `revise`, `publish`, `verify-published`.
+- Inspected Store capabilities catalog: `catalog/capabilities` in `kody-company-store`. A directory exists for every one of the ten workflow capabilities.
+- Inspected Store agent definition: `agents/documentation-lead.md` in `kody-company-store`.
+- Active Kody Engine workflow definition in the consumer repo: `.kody-engine/definitions/workflows/documentation-agency/workflow.json`.
+- Active Kody Engine capability definition for the first step: `.kody-engine/definitions/capabilities/define-documentation-brief/contract.json` and `instructions.md`.
+- Active Kody Engine agent definition in the consumer repo: `.kody-engine/definitions/agents/documentation-lead.md`.
+- GitHub issue #3937, 'Review run: create a complete documentation agency usage guide', state `OPEN`, label `kody:reviewing`, five comments spanning 2026-07-30 to 2026-08-01. Comment 3 (2026-07-30T19:17:30Z) authorizes creating or updating `docs/documentation-agency-current-review.md` on a separate branch and opening a pull request for human review, and explicitly excludes merging the pull request and writing directly to `main`.
+- GitHub PR #3938, state `OPEN`, `merged=false`, `draft=false`, `mergeable_state=clean`, one commit on head branch `3937-review-run-create-a-complete-documentation-agency` (`8686723aab0aec668c3cd08743d7f3f8696eb131`) against `main` (`c909072dbcb3a96fa15f8b067faf9a623ed67060`), label `kody:reviewing`, modifying `docs/documentation-agency-current-review.md` with 185 additions.
