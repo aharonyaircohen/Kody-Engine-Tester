@@ -106,8 +106,7 @@
       "learn-from-runs",
       "maintain-memory-quality",
       "build-chat-knowledge-graph",
-      "maintain-documentation",
-      "documentation-agency"
+      "maintain-documentation"
     ]
   }
 }
