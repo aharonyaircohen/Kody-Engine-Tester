@@ -99,7 +99,9 @@
       "revise-documentation",
       "publish-documentation",
       "verify-published-documentation",
-      "detect-documentation-drift"
+      "detect-documentation-drift",
+      "ci-health-check",
+      "merge"
     ],
     "activeWorkflows": [
       "chore",
@@ -107,7 +109,8 @@
       "maintain-memory-quality",
       "build-chat-knowledge-graph",
       "maintain-documentation",
-      "documentation-agency"
+      "documentation-agency",
+      "ci-repair"
     ]
   }
 }
