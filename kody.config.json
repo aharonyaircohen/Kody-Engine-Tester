@@ -101,7 +101,8 @@
       "verify-published-documentation",
       "detect-documentation-drift",
       "ci-health-check",
-      "merge"
+      "merge",
+      "prepare-ci-repair"
     ],
     "activeWorkflows": [
       "chore",
