@@ -117,7 +117,8 @@
       "documentation-agency",
       "ci-repair",
       "merge",
-      "review-merge"
+      "review-merge",
+      "review-fix"
     ],
     "activePipelines": [
       "review-and-merge"
