@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.0.16 — 2026-07-03
+
+_No notable commits since the last release._
+## v1.0.15 — 2026-07-03
+
+_No notable commits since the last release._
+## v1.0.14 — 2026-07-03
+
+_No notable commits since the last release._
+## v1.0.13 — 2026-07-03
+
+_No notable commits since the last release._
+## v1.0.12 — 2026-07-03
+
+_No notable commits since the last release._
 ## v1.0.11 — 2026-05-05
 
 ### Features
