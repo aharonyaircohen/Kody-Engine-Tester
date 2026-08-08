@@ -1,0 +1,10 @@
+{
+  "taskId": "review-merge-live-test",
+  "taskType": "chat",
+  "outcome": "completed",
+  "filesTouched": [
+    "chore-workflow-live-fixture.txt"
+  ],
+  "startedAt": "2026-08-08T11:18:12Z",
+  "finishedAt": "2026-08-08T11:38:22Z"
+}
