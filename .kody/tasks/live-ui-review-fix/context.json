@@ -1,0 +1,11 @@
+{
+  "taskId": "live-ui-review-fix",
+  "taskType": "live-test",
+  "outcome": "in_progress",
+  "filesTouched": [
+    "public/ui-review-proof.html",
+    ".kody/tasks/live-ui-review-fix/context.json",
+    ".kody/tasks/live-ui-review-fix/memory-recs.json"
+  ],
+  "startedAt": "2026-08-08T14:05:00.000Z"
+}
