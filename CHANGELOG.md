@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- test: verify review and merge automation ([#3947](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3947)) — @aguyaharonyair
 - #3945: Update homepage welcome heading + matching e2e assertion to run … ([#3946](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3946)) — @aharonyaircohen
 - #3942: CI is RED on default branch — repair task ([#3943](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3943)) — @aharonyaircohen
 
