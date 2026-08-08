@@ -115,6 +115,9 @@
       "ci-repair",
       "merge",
       "review-merge"
+    ],
+    "activePipelines": [
+      "review-and-merge"
     ]
   }
 }
