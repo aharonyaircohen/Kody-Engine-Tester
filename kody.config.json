@@ -12,7 +12,10 @@
   },
   "github": {
     "owner": "aharonyaircohen",
-    "repo": "Kody-Engine-Tester"
+    "repo": "Kody-Engine-Tester",
+    "operators": [
+      "aguyaharonyair"
+    ]
   },
   "agent": {
     "model": "minimax/MiniMax-M3",
