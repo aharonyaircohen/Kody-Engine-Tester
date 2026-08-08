@@ -113,7 +113,8 @@
       "maintain-documentation",
       "documentation-agency",
       "ci-repair",
-      "merge"
+      "merge",
+      "review-merge"
     ]
   }
 }
