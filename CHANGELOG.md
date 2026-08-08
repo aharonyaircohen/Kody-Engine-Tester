@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- #3945: Update homepage welcome heading + matching e2e assertion to run … ([#3946](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3946)) — @aharonyaircohen
 - #3942: CI is RED on default branch — repair task ([#3943](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3943)) — @aharonyaircohen
 
 ## v1.0.20 — 2026-07-25
