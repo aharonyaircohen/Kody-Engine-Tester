@@ -111,7 +111,8 @@
       "build-chat-knowledge-graph",
       "maintain-documentation",
       "documentation-agency",
-      "ci-repair"
+      "ci-repair",
+      "review-merge"
     ]
   }
 }
