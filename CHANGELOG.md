@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+
+- #3942: CI is RED on default branch — repair task ([#3943](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3943)) — @aharonyaircohen
+
 ## v1.0.20 — 2026-07-25
 
 ### Features
