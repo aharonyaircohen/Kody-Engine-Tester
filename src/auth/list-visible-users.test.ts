@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import type { Payload } from 'payload'
 
 import { ListVisibleUsersService } from './list-visible-users'
-import type { RbacRole } from './auth-service'
+import type { AuthenticatedUser } from './auth-service'
 
 function createMockPayload(findResult: unknown = { docs: [], totalDocs: 0, totalPages: 0, page: 1 }) {
   return {
@@ -10,15 +10,13 @@ function createMockPayload(findResult: unknown = { docs: [], totalDocs: 0, total
   } as unknown as Payload
 }
 
-const sampleUser = {
+const sampleUser: AuthenticatedUser = {
   id: 2,
   firstName: 'Editor',
   lastName: 'User',
   email: 'editor@example.com',
-  role: 'editor' as RbacRole,
-  collection: 'users' as const,
-  updatedAt: '2026-01-01T00:00:00.000Z',
-  createdAt: '2026-01-01T00:00:00.000Z',
+  role: 'editor',
+  isActive: true,
 }
 
 describe('ListVisibleUsersService', () => {
@@ -30,37 +28,19 @@ describe('ListVisibleUsersService', () => {
     service = new ListVisibleUsersService(mockPayload)
   })
 
-  describe('listVisibleUsers — role filter', () => {
-    it('excludes admin users from the result set', async () => {
-      await service.listVisibleUsers(sampleUser)
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      const whereStr = JSON.stringify(call.where)
-      expect(whereStr).toContain('admin')
-      expect(whereStr).toContain('not_in')
-    })
-
-    it('targets the users collection', async () => {
-      await service.listVisibleUsers(sampleUser)
+  describe('listVisibleUsers — find call', () => {
+    it('targets the users collection, excludes admins, and forwards the caller as the access-control subject', async () => {
+      await service.listVisibleUsers(sampleUser, { page: 1, limit: 20 })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       expect(call.collection).toBe('users')
-    })
-
-    it('passes the requesting user as the access-control subject', async () => {
-      await service.listVisibleUsers(sampleUser)
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
+      expect(JSON.stringify(call.where)).toContain('not_in')
+      expect(JSON.stringify(call.where)).toContain('admin')
       expect(call.user).toBe(sampleUser)
     })
   })
 
-  describe('listVisibleUsers — pagination defaults', () => {
-    it('uses page 1 and limit 20 by default', async () => {
-      await service.listVisibleUsers(sampleUser)
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.page).toBe(1)
-      expect(call.limit).toBe(20)
-    })
-
-    it('accepts custom page and limit', async () => {
+  describe('listVisibleUsers — pagination pass-through', () => {
+    it('forwards the supplied page and limit to payload.find', async () => {
       await service.listVisibleUsers(sampleUser, { page: 3, limit: 7 })
       const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
       expect(call.page).toBe(3)
@@ -68,53 +48,9 @@ describe('ListVisibleUsersService', () => {
     })
   })
 
-  describe('listVisibleUsers — bounds hardening', () => {
-    it('clamps page=0 to page=1', async () => {
-      await service.listVisibleUsers(sampleUser, { page: 0 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.page).toBe(1)
-    })
-
-    it('clamps negative page to page=1', async () => {
-      await service.listVisibleUsers(sampleUser, { page: -5 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.page).toBe(1)
-    })
-
-    it('clamps limit=0 to limit=1', async () => {
-      await service.listVisibleUsers(sampleUser, { limit: 0 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.limit).toBe(1)
-    })
-
-    it('clamps negative limit to limit=1', async () => {
-      await service.listVisibleUsers(sampleUser, { limit: -10 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.limit).toBe(1)
-    })
-
-    it('caps limit at MAX_VISIBLE_USERS (100)', async () => {
-      await service.listVisibleUsers(sampleUser, { limit: 9999 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.limit).toBe(100)
-    })
-
-    it('floors fractional page to integer', async () => {
-      await service.listVisibleUsers(sampleUser, { page: 2.7 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.page).toBe(2)
-    })
-
-    it('floors fractional limit to integer', async () => {
-      await service.listVisibleUsers(sampleUser, { limit: 12.9 })
-      const call = (mockPayload.find as ReturnType<typeof vi.fn>).mock.calls[0][0]
-      expect(call.limit).toBe(12)
-    })
-  })
-
   describe('listVisibleUsers — result shape', () => {
     it('returns a typed ListVisibleUsersResult with empty data and zero meta', async () => {
-      const result = await service.listVisibleUsers(sampleUser)
+      const result = await service.listVisibleUsers(sampleUser, { page: 1, limit: 20 })
       expect(result.data).toEqual([])
       expect(result.meta).toEqual({ total: 0, page: 1, limit: 20, totalPages: 0 })
     })

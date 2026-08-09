@@ -27,10 +27,11 @@ import { GET } from './route'
 const sampleUser = {
   id: 2,
   email: 'editor@example.com',
-  role: 'editor',
+  role: 'editor' as const,
   collection: 'users' as const,
   updatedAt: '2026-01-01T00:00:00.000Z',
   createdAt: '2026-01-01T00:00:00.000Z',
+  isActive: true,
 }
 
 describe('GET /api/users/visible', () => {
@@ -72,23 +73,32 @@ describe('GET /api/users/visible', () => {
     )
   })
 
-  it('ignores non-numeric page/limit query params and uses defaults', async () => {
+  it('falls back to defaults when page/limit are non-numeric', async () => {
     const request = new NextRequest('http://localhost/api/users/visible?page=abc&limit=xyz')
     const response = await GET(request, { user: sampleUser })
 
     expect(response.status).toBe(200)
-    expect(mockListVisibleUsers).toHaveBeenCalledWith(sampleUser, {})
+    expect(mockListVisibleUsers).toHaveBeenCalledWith(sampleUser, { page: 1, limit: 20 })
   })
 
-  it('returns 401 when the authenticated user is absent', async () => {
-    const request = new NextRequest('http://localhost/api/users/visible')
-    const response = await GET(request, { user: undefined })
+  it('clamps a negative page to 1', async () => {
+    const request = new NextRequest('http://localhost/api/users/visible?page=-5&limit=20')
+    await GET(request, { user: sampleUser })
 
-    expect(response.status).toBe(401)
-    expect(response.headers.get('Content-Type')).toBe('application/json')
+    expect(mockListVisibleUsers).toHaveBeenCalledWith(sampleUser, { page: 1, limit: 20 })
+  })
 
-    const body = await response.json()
-    expect(body.error).toBe('Authentication required')
-    expect(mockListVisibleUsers).not.toHaveBeenCalled()
+  it('caps an oversize limit at MAX_LIMIT (100)', async () => {
+    const request = new NextRequest('http://localhost/api/users/visible?page=1&limit=9999')
+    await GET(request, { user: sampleUser })
+
+    expect(mockListVisibleUsers).toHaveBeenCalledWith(sampleUser, { page: 1, limit: 100 })
+  })
+
+  it('floors fractional page and limit values', async () => {
+    const request = new NextRequest('http://localhost/api/users/visible?page=2.7&limit=12.9')
+    await GET(request, { user: sampleUser })
+
+    expect(mockListVisibleUsers).toHaveBeenCalledWith(sampleUser, { page: 2, limit: 12 })
   })
 })

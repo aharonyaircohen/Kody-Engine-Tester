@@ -1,16 +1,13 @@
 import type { Payload, Where, CollectionSlug } from 'payload'
 
 import type { User } from '../payload-types'
-import type { RbacRole } from './auth-service'
+import type { AuthenticatedUser, RbacRole } from './auth-service'
 
-const DEFAULT_PAGE = 1
-const DEFAULT_LIMIT = 20
-const MAX_VISIBLE_USERS = 100
 const HIDDEN_ROLES: RbacRole[] = ['admin']
 
 export interface ListVisibleUsersPagination {
-  page?: number
-  limit?: number
+  page: number
+  limit: number
 }
 
 export interface ListVisibleUsersResult {
@@ -27,13 +24,10 @@ export class ListVisibleUsersService {
   constructor(private payload: Payload) {}
 
   async listVisibleUsers(
-    user: User,
-    pagination: ListVisibleUsersPagination = {},
+    user: AuthenticatedUser,
+    pagination: ListVisibleUsersPagination,
   ): Promise<ListVisibleUsersResult> {
-    const rawPage = pagination.page ?? DEFAULT_PAGE
-    const rawLimit = pagination.limit ?? DEFAULT_LIMIT
-    const page = Math.max(1, Math.floor(rawPage))
-    const limit = Math.min(MAX_VISIBLE_USERS, Math.max(1, Math.floor(rawLimit)))
+    const { page, limit } = pagination
 
     const result = await this.payload.find({
       collection: 'users' as CollectionSlug,
