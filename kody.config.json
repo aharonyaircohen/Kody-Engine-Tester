@@ -106,7 +106,8 @@
       "ci-health-check",
       "merge",
       "prepare-ci-repair",
-      "ui-review"
+      "ui-review",
+      "quality-check"
     ],
     "activeWorkflows": [
       "chore",
@@ -117,7 +118,8 @@
       "documentation-agency",
       "ci-repair",
       "merge",
-      "review-fix"
+      "review-fix",
+      "quality-run"
     ],
     "activePipelines": [
       "review-and-merge"
