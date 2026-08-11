@@ -107,7 +107,8 @@
       "merge",
       "prepare-ci-repair",
       "ui-review",
-      "quality-check"
+      "quality-check",
+      "release-gate-probe"
     ],
     "activeWorkflows": [
       "chore",
@@ -119,7 +120,8 @@
       "ci-repair",
       "merge",
       "review-fix",
-      "quality-run"
+      "quality-run",
+      "engine-release-gate"
     ],
     "activePipelines": [
       "review-and-merge"
