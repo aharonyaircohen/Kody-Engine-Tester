@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 export const GET = async (request: NextRequest) => {
   return new Response(
     JSON.stringify({
-      status: 'ok',
+      status: 'broken',
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
     }),
