@@ -108,7 +108,8 @@
       "prepare-ci-repair",
       "ui-review",
       "quality-check",
-      "release-gate-probe"
+      "release-gate-probe",
+      "fix-ci"
     ],
     "activeWorkflows": [
       "chore",
