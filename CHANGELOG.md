@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- #3942: CI is RED on default branch — repair task ([#3957](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3957)) — @aharonyaircohen
 - test: verify CI repair, review, and merge Pipeline ([#3956](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3956)) — @aguyaharonyair
 - Live proof: Review fixes before Merge ([#3953](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3953)) — @aguyaharonyair
 - Live proof: chain Pipeline workflow facts ([#3952](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3952)) — @aguyaharonyair
