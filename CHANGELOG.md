@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- [WIP] #3967: CI is red on main ([#3968](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3968)) — @aharonyaircohen
 - [WIP] #3965: CI is red on main ([#3966](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3966)) — @aharonyaircohen
 - [WIP] #3963: CI is red on main ([#3964](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3964)) — @aharonyaircohen
 - [WIP] #3961: CI is red on main ([#3962](https://github.com/aharonyaircohen/Kody-Engine-Tester/pull/3962)) — @aharonyaircohen
