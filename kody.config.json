@@ -126,8 +126,7 @@
       "engine-release-gate"
     ],
     "activePipelines": [
-      "review-and-merge",
-      "ci-repair"
+      "review-and-merge"
     ]
   }
 }
