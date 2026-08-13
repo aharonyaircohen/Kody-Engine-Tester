@@ -122,7 +122,8 @@
       "merge",
       "review-fix",
       "quality-run",
-      "engine-release-gate"
+      "engine-release-gate",
+      "ci-repair"
     ],
     "activePipelines": [
       "review-and-merge"
