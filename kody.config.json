@@ -110,7 +110,9 @@
       "quality-check",
       "release-gate-probe",
       "fix-ci",
-      "finalize-ci-repair"
+      "finalize-ci-repair",
+      "prepare-strategy-application",
+      "apply-strategy"
     ],
     "activeWorkflows": [
       "chore",
@@ -123,7 +125,8 @@
       "review-fix",
       "quality-run",
       "engine-release-gate",
-      "ci-repair"
+      "ci-repair",
+      "apply-strategy"
     ],
     "activePipelines": [
       "review-and-merge",
