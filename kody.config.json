@@ -119,7 +119,6 @@
       "build-chat-knowledge-graph",
       "maintain-documentation",
       "documentation-agency",
-      "ci-repair",
       "merge",
       "review-fix",
       "quality-run",
