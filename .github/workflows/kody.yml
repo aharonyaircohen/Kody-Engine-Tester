@@ -10,6 +10,10 @@ name: kody
 on:
   workflow_dispatch:
     inputs:
+      requestId:
+        description: 'Unique Kody execution request ID'
+        type: string
+        default: ''
       issue_number:
         description: 'GitHub issue number (agent mode)'
         type: string
@@ -52,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 360
     concurrency:
-      group: kody-${{ inputs.sessionId || inputs.issue_number || github.event.issue.number || github.sha }}
+      group: kody-${{ inputs.requestId || inputs.sessionId || inputs.issue_number || github.event.issue.number || github.sha }}
       cancel-in-progress: false
     permissions:
       issues: write
@@ -78,6 +82,7 @@ jobs:
           KODY_APP_ID: ${{ secrets.KODY_APP_ID }}
           KODY_APP_PRIVATE_KEY: ${{ secrets.KODY_APP_PRIVATE_KEY }}
           SESSION_ID: ${{ inputs.sessionId }}
+          KODY_REQUEST_ID: ${{ inputs.requestId }}
           INIT_MESSAGE: ${{ inputs.message }}
           MODEL: ${{ inputs.model }}
           DASHBOARD_URL: ${{ inputs.dashboardUrl }}
