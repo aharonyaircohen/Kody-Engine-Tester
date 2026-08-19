@@ -2,7 +2,7 @@
   "id": "learn-from-runs",
   "trigger": {
     "type": "schedule",
-    "every": "1m"
+    "every": "1h"
   },
   "target": {
     "kind": "workflow",
