@@ -8,8 +8,6 @@
     "kind": "workflow",
     "id": "learn-from-runs"
   },
-  "input": {
-    "mode": "unprocessed-completed-runs"
-  },
+  "input": {},
   "enabled": true
 }
