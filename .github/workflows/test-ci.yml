@@ -1,19 +1,49 @@
-name: Test CI
+name: CI
+
 on:
+  pull_request:
   push:
     branches:
-      - '**'
+      - main
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
 jobs:
-  health:
+  build:
+    name: install / lint / typecheck / test / build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
         with:
           version: 10
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm exec vitest run src/utils/capitalize-words.test.ts --config vitest.config.mts
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm tsc --noEmit
+
+      - name: Unit tests
+        run: pnpm exec vitest run --config ./vitest.config.mts
+
+      - name: Build
+        env:
+          DATABASE_URL: postgres://placeholder@localhost:5432/placeholder
+          PAYLOAD_SECRET: ci-placeholder-secret
+        run: pnpm build
