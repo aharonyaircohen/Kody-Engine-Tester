@@ -27,7 +27,7 @@ export default async function HomePage() {
             width={65}
           />
         </picture>
-        {!user && <h1>Welcome from kody — verify run 1786188003358</h1>}
+        {!user && <h1>Kody Tester Repo 1786371174270</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
         <div className="links">
           <a

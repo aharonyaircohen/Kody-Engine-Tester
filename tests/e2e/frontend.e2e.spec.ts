@@ -15,6 +15,6 @@ test.describe('Frontend', () => {
 
     const heading = page.locator('h1').first()
 
-    await expect(heading).toHaveText('Welcome from kody — verify run 1786188003358')
+    await expect(heading).toHaveText('Kody Tester Repo 1786371174270')
   })
 })
