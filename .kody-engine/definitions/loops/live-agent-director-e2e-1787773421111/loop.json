@@ -1,0 +1,16 @@
+{
+  "id": "live-agent-director-e2e-1787773421111",
+  "trigger": {
+    "type": "schedule",
+    "every": "15m"
+  },
+  "target": {
+    "kind": "capability",
+    "id": "live-agent"
+  },
+  "input": {
+    "agent": "director-e2e-1787773421111",
+    "intent": "director-health-1787773421111"
+  },
+  "enabled": true
+}
