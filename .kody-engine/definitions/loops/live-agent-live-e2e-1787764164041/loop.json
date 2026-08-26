@@ -1,0 +1,16 @@
+{
+  "id": "live-agent-live-e2e-1787764164041",
+  "trigger": {
+    "type": "schedule",
+    "every": "1h"
+  },
+  "target": {
+    "kind": "capability",
+    "id": "live-agent"
+  },
+  "input": {
+    "agent": "live-e2e-1787764164041",
+    "intent": "live-intent-1787764164041"
+  },
+  "enabled": true
+}
