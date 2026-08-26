@@ -71,7 +71,14 @@
   ],
   "release": {
     "releaseBranch": "main",
-    "productionDeployRequired": false
+    "productionDeployRequired": false,
+    "timeoutMs": 1800000,
+    "versionFiles": [
+      "package.json"
+    ],
+    "validation": {
+      "workflow": "release-validation.yml"
+    }
   },
   "company": {
     "activeAgents": [
@@ -112,7 +119,13 @@
       "fix-ci",
       "finalize-ci-repair",
       "prepare-strategy-application",
-      "apply-strategy"
+      "apply-strategy",
+      "verify-strategy-application",
+      "release-prepare",
+      "release-validate",
+      "release-merge",
+      "release-promote",
+      "vercel-production-deploy"
     ],
     "activeWorkflows": [
       "chore",
@@ -126,7 +139,8 @@
       "quality-run",
       "engine-release-gate",
       "ci-repair",
-      "apply-strategy"
+      "apply-strategy",
+      "web-release"
     ],
     "activePipelines": [
       "review-and-merge",
