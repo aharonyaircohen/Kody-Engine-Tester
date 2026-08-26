@@ -138,7 +138,8 @@
       "fix-ci",
       "finalize-ci-repair",
       "prepare-strategy-application",
-      "apply-strategy"
+      "apply-strategy",
+      "observe-repo-ci"
     ],
     "activeWorkflows": [
       "chore",
@@ -152,7 +153,8 @@
       "quality-run",
       "engine-release-gate",
       "ci-repair",
-      "apply-strategy"
+      "apply-strategy",
+      "director-ci-monitor"
     ],
     "activePipelines": [
       "review-and-merge",
