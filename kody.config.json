@@ -18,7 +18,7 @@
     ]
   },
   "agent": {
-    "model": "minimax/MiniMax-M3",
+    "model": "openai/ox-alpha",
     "modelMap": {
       "cheap": "minimax/MiniMax-M2.7-highspeed",
       "mid": "minimax/MiniMax-M2.7-highspeed",
@@ -46,6 +46,14 @@
       "ship": {
         "maxBudgetUsd": 5
       }
+    },
+    "modelConfig": {
+      "spec": "openai/ox-alpha",
+      "provider": "custom",
+      "protocol": "openai",
+      "baseURL": "https://oxalpha.run/api/v1",
+      "modelName": "ox-alpha",
+      "apiKeyEnvVar": "OXALPHA_API_KEY"
     }
   },
   "mcp": {
