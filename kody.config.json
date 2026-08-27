@@ -153,8 +153,7 @@
       "quality-run",
       "engine-release-gate",
       "ci-repair",
-      "apply-strategy",
-      "director-ci-monitor"
+      "apply-strategy"
     ],
     "activePipelines": [
       "review-and-merge",
