@@ -1,0 +1,13 @@
+{
+  "id": "mcp-schedule-abb5df9da2",
+  "trigger": {
+    "type": "schedule",
+    "every": "24h"
+  },
+  "target": {
+    "kind": "capability",
+    "id": "ci-health-check"
+  },
+  "input": {},
+  "enabled": false
+}
