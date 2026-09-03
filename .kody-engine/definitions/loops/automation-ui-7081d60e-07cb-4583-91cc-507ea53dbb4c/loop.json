@@ -1,0 +1,13 @@
+{
+  "id": "automation-ui-7081d60e-07cb-4583-91cc-507ea53dbb4c",
+  "trigger": {
+    "type": "schedule",
+    "every": "24h"
+  },
+  "target": {
+    "kind": "capability",
+    "id": "ci-health-check"
+  },
+  "input": {},
+  "enabled": false
+}
