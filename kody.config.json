@@ -18,7 +18,7 @@
     ]
   },
   "agent": {
-    "model": "minimax/MiniMax-M3",
+    "model": "xkiro/deepseek/deepseek-v4-flash",
     "modelMap": {
       "cheap": "minimax/MiniMax-M2.7-highspeed",
       "mid": "minimax/MiniMax-M2.7-highspeed",
@@ -66,12 +66,12 @@
       }
     ],
     "modelConfig": {
-      "spec": "minimax/MiniMax-M3",
-      "provider": "minimax",
+      "spec": "xkiro/deepseek/deepseek-v4-flash",
+      "provider": "xkiro",
       "protocol": "openai",
-      "baseURL": "https://api.minimax.io/v1",
-      "modelName": "MiniMax-M3",
-      "apiKeyEnvVar": "MINIMAX_API_KEY"
+      "baseURL": "https://api.xkiro.com/v1",
+      "modelName": "deepseek/deepseek-v4-flash",
+      "apiKeyEnvVar": "XKIRO_API_KEY"
     }
   },
   "mcp": {
