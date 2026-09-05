@@ -18,7 +18,7 @@
     ]
   },
   "agent": {
-    "model": "openrouter/free",
+    "model": "minimax/MiniMax-M3",
     "modelMap": {
       "cheap": "minimax/MiniMax-M2.7-highspeed",
       "mid": "minimax/MiniMax-M2.7-highspeed",
@@ -66,12 +66,12 @@
       }
     ],
     "modelConfig": {
-      "spec": "openrouter/free",
-      "provider": "openrouter",
+      "spec": "minimax/MiniMax-M3",
+      "provider": "minimax",
       "protocol": "openai",
-      "baseURL": "https://openrouter.ai/api/v1",
-      "modelName": "openrouter/free",
-      "apiKeyEnvVar": "OPENROUTER_API_KEY"
+      "baseURL": "https://api.minimax.io/v1",
+      "modelName": "MiniMax-M3",
+      "apiKeyEnvVar": "MINIMAX_API_KEY"
     }
   },
   "mcp": {
