@@ -18,7 +18,7 @@
     ]
   },
   "agent": {
-    "model": "xkiro/deepseek/deepseek-v4-flash",
+    "model": "openrouter/free",
     "modelMap": {
       "cheap": "minimax/MiniMax-M2.7-highspeed",
       "mid": "minimax/MiniMax-M2.7-highspeed",
@@ -66,12 +66,12 @@
       }
     ],
     "modelConfig": {
-      "spec": "xkiro/deepseek/deepseek-v4-flash",
-      "provider": "xkiro",
+      "spec": "openrouter/free",
+      "provider": "openrouter",
       "protocol": "openai",
-      "baseURL": "https://api.xkiro.com/v1",
-      "modelName": "deepseek/deepseek-v4-flash",
-      "apiKeyEnvVar": "XKIRO_API_KEY"
+      "baseURL": "https://openrouter.ai/api/v1",
+      "modelName": "openrouter/free",
+      "apiKeyEnvVar": "OPENROUTER_API_KEY"
     }
   },
   "mcp": {
