@@ -1,0 +1,17 @@
+{
+  "name": "Engine Release Gate",
+  "agent": "kody",
+  "capabilities": [
+    "release-gate-probe"
+  ],
+  "startAt": "probe",
+  "steps": [
+    {
+      "id": "probe",
+      "capability": "release-gate-probe"
+    }
+  ],
+  "runWithoutApproval": true,
+  "createdAt": "2026-09-05T07:54:49.198Z",
+  "updatedAt": "2026-09-05T07:54:49.198Z"
+}
