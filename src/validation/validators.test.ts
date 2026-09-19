@@ -75,6 +75,17 @@ describe('pattern', () => {
     const validator = pattern(/^\d+$/, 'Must be digits only')
     expect(validator('')).toEqual({ valid: true })
   })
+
+  it('repeatedly validates with a stateful pattern without changing its lastIndex', () => {
+    const regex = /hello/g
+    regex.lastIndex = 2
+    const validator = pattern(regex, 'Must include hello')
+
+    expect(validator('hello')).toEqual({ valid: true })
+    expect(regex.lastIndex).toBe(2)
+    expect(validator('hello')).toEqual({ valid: true })
+    expect(regex.lastIndex).toBe(2)
+  })
 })
 
 describe('email', () => {
