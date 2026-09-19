@@ -16,11 +16,18 @@ export const maxLength = (n: number): Validator<string> => (value) =>
     ? { valid: true }
     : { valid: false, error: `Must be at most ${n} characters` }
 
-export const pattern = (regex: RegExp, message: string): Validator<string> => (value) => {
-  const str = String(value)
-  return str === '' || regex.test(str)
-    ? { valid: true }
-    : { valid: false, error: message }
+export const pattern = (regex: RegExp, message: string): Validator<string> => {
+  const matcher = new RegExp(regex.source, regex.flags)
+
+  return (value) => {
+    const str = String(value)
+    if (str === '') return { valid: true }
+
+    matcher.lastIndex = 0
+    return matcher.test(str)
+      ? { valid: true }
+      : { valid: false, error: message }
+  }
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
