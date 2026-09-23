@@ -36,9 +36,12 @@ describe('chunk', () => {
     expect(chunk(input, 1)).toEqual(expected)
   })
 
-  it('should throw an error for size <= 0', () => {
-    expect(() => chunk([1, 2, 3], 0)).toThrow('Chunk size must be greater than 0')
-    expect(() => chunk([1, 2, 3], -1)).toThrow('Chunk size must be greater than 0')
+  it('should throw an error for non-positive-integer size', () => {
+    expect(() => chunk([1, 2, 3], 0)).toThrow('Chunk size must be a positive integer')
+    expect(() => chunk([1, 2, 3], -1)).toThrow('Chunk size must be a positive integer')
+    expect(() => chunk([1, 2, 3], 0.5)).toThrow('Chunk size must be a positive integer')
+    expect(() => chunk([1, 2, 3], NaN)).toThrow('Chunk size must be a positive integer')
+    expect(() => chunk([1, 2, 3], Infinity)).toThrow('Chunk size must be a positive integer')
   })
 
   it('should handle mixed types', () => {
