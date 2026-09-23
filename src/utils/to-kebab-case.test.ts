@@ -33,4 +33,12 @@ describe('toKebabCase', () => {
   it('converts snake_case to kebab-case', () => {
     expect(toKebabCase('hello_world')).toBe('hello-world')
   })
+
+  it('removes leading separators from surrounding spaces', () => {
+    expect(toKebabCase('  Hello World  ')).toBe('hello-world')
+  })
+
+  it('removes leading separators from surrounding underscores', () => {
+    expect(toKebabCase('__hello_world__')).toBe('hello-world')
+  })
 })
