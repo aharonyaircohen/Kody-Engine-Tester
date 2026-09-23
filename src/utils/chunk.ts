@@ -1,12 +1,12 @@
 /**
  * Divides an array into chunks of a specified size.
  * @param arr - The array to chunk
- * @param size - The maximum number of elements per chunk
+ * @param size - The maximum number of elements per chunk; must be a positive integer
  * @returns An array of arrays, each with at most size elements
  */
 export function chunk<T>(arr: T[], size: number): T[][] {
-  if (size <= 0) {
-    throw new Error('Chunk size must be greater than 0')
+  if (!Number.isInteger(size) || size <= 0) {
+    throw new Error('Chunk size must be a positive integer')
   }
 
   const result: T[][] = []
