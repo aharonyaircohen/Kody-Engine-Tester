@@ -14,6 +14,9 @@ export function range(a: number, b?: number, step?: number): number[] {
     end = b
     s = step ?? 1
   }
+  if (!Number.isFinite(start) || !Number.isFinite(end) || !Number.isFinite(s)) {
+    throw new Error('Range arguments must be finite numbers')
+  }
   if (s === 0) throw new Error('Step cannot be zero')
   if (s > 0 && start > end) throw new Error('Step direction wrong: positive step but start > end')
   if (s < 0 && start < end) throw new Error('Step direction wrong: negative step but start < end')
