@@ -38,4 +38,16 @@ describe('range', () => {
   it('throws when step direction is wrong (negative step, start < end)', () => {
     expect(() => range(0, 5, -1)).toThrow()
   })
+
+  it('throws on Infinity input', () => {
+    expect(() => range(Infinity)).toThrow('Range arguments must be finite numbers')
+  })
+
+  it('throws on -Infinity input', () => {
+    expect(() => range(-Infinity)).toThrow('Range arguments must be finite numbers')
+  })
+
+  it('throws on NaN step', () => {
+    expect(() => range(0, 5, NaN)).toThrow('Range arguments must be finite numbers')
+  })
 })
