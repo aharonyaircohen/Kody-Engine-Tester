@@ -55,14 +55,6 @@ export function consoleTransport(entry: LogEntry): void {
   fn(entry.message)
 }
 
-function createFileTransport(path: string): LogTransport {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const fs = require('fs') as typeof import('fs')
-  return (line: string) => {
-    fs.appendFileSync(path, line + '\n')
-  }
-}
-
 // Logger
 
 interface Logger {
@@ -125,4 +117,3 @@ function createLoggerInternal(options: LoggerOptions = {}): Logger {
 }
 
 export { createLoggerInternal as createLogger }
-export { createFileTransport as fileTransport }
